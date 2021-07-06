@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>计网——运输层 on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/tags/%E8%AE%A1%E7%BD%91%E8%BF%90%E8%BE%93%E5%B1%82/</link>
+    <description>Recent content in 计网——运输层 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Wed, 06 May 2020 21:27:10 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/tags/%E8%AE%A1%E7%BD%91%E8%BF%90%E8%BE%93%E5%B1%82/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>计算机网络学习日志（二）——运输层</title>
+      <link>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
+      <pubDate>Wed, 06 May 2020 21:27:10 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
+      <description>&lt;h2 id=&#34;概述和运输层服务&#34;&gt;概述和运输层服务&lt;/h2&gt;
+&lt;p&gt;运输层协议在不同主机上的应用进程之间提供了&lt;strong&gt;逻辑通信&lt;/strong&gt;，这并非物理上的实际通信。在发送端，运输层将从应用程序接收到的报文转换成运输层分组，该分组称为&lt;strong&gt;运输层报文段&lt;/strong&gt;，实现方法是将应用报文划分为一个个小的块，为每个块加上运输层首部生成运输层报文段，然后在端系统中传递给网络层，网络层将其封装成网络层分组，向目的地发送。&lt;/p&gt;
+&lt;p&gt;因特网由TCP和UDP两种运输层协议。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

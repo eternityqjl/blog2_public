@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>硬件 on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/categories/%E7%A1%AC%E4%BB%B6/</link>
+    <description>Recent content in 硬件 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Sun, 04 Jul 2021 16:09:50 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/categories/%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>存储器详解</title>
+      <link>http://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
+      <description>&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
+&lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
+&lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
+&lt;h3 id=&#34;动态随机存取存储器dram&#34;&gt;动态随机存取存储器（DRAM）&lt;/h3&gt;
+&lt;p&gt;Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong&gt;存储电荷的多寡&lt;/strong&gt;来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong&gt;定时刷新&lt;/strong&gt;的特性，因此被称为“动态”存储器。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Altium Designer画图流程记录(简略)</title>
+      <link>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+      <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+      <description>之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
+共有以下几部分内容：
+ 原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板  PCB各层简介 参考自：PCB各层介绍
+Mechanical layer(机械层) Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。
+Keep out layer(禁止布线层) 用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。
+Signal layer(信号层) 信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。
+Internal plane layer(内部电源/接地层) Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。
+Silkscreen layer(丝印层) 丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。
+Solder mask layer(阻焊层) 在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中匹配焊盘，是自动产生的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)和Bottom Solder(底层)**两个阻焊层。
+Paste mask layer(助焊层，SMD贴片层) 它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。
+Multi layer(多层) 电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。
+Drill layer(钻孔层) 钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。
+原理图库器件画法 放置矩形
+添加Pin
+设置器件的Designator（例如P?）
+器件的PCB封装画法 确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。</description>
+    </item>
+    
+    <item>
+      <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
+      <link>http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</link>
+      <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</guid>
+      <description>SPI、I2C、UART：串行通信协议
+COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
+TTL、RS-232指的是电平标准
+TTL电平：低电平为0，高电平为1
+RS-232电平：正电平(+15V)为0，负电平(-15V)为1
+最近在画PCB研究几个MCU的时候遇到引脚连接方面的一些问题，对于MCU进行串行通信传输数据的过程不太了解，因此写一篇博客来学习一下这些通信协议。
+一些概念 同步(Synchronous)和异步(Asynchronous) 同步就是整个处理过程顺序执行，当各个过程都执行完毕后，返回结果。这是一种线性执行的方式，执行的流程不能跨越。一般用于流程性比较强的程序。
+异步：是只发送了调用的命令，调用者无需等待被调用的方法完全执行完毕，可以继续执行下面的流程，是一种并行处理的方式。比如页面数据架子啊的过程，不需要等待所有数据获取后再显示页面。
+二者的区别就在于同步需要等待，异步不需要等待。
+全双工和半双工 全双工是指可以同时进行双向信号传输。
+半双工是指可以及进行双向信号传输但同一时刻只能向一个方向传输。
+SPI协议 串行外设接口总线（Serial Peripheral Interface Bus，SPI）是一种用于芯片通信的同步串行通信接口规范，设备之间使用全双工模式通信，采用一对一或一对多的主从模式。一般用于短距离通信。
+SPI物理层接口 SPI总线共规定了4个逻辑信号接口：
+ SCLK/SCK（Serial Clock）：时钟信号线，由主机产生，决定了SPI的通信速率。 MOSI（Master Output, Slave Input）：主机输出从机输入信号，数据由主机发出。 MISO（Master Input, Slave Output）：从机输出主机输入信号，数据由从机发出。 nSS（Slave Select）：片选信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。  （图片来自维基百科序列周边接口）
+SPI协议层 （图片来自SPI通讯协议介绍）
+如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。
+通信起始/结束信号 nSS信号由高电平变为低电平即为通信的起始，由低电平变为高电平即为通信的结束。
+有效数据的采集 上图中SCK为偶数边沿时数据得到有效采样，此时MISO和MOSI的数据有效，高电平表示1，低电平表示0，其他时刻的数据无效。
+数据传输时高位在先还是低位在先SPI协议并未规定，需要双方自行约定，一般采用高位在先（MSB）方式传输。
+ 两个概念：
+ 时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。  CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平   时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。  CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样     所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dijkstra双栈 on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/tags/dijkstra%E5%8F%8C%E6%A0%88/</link>
+    <description>Recent content in Dijkstra双栈 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Tue, 21 Jul 2020 20:15:08 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/tags/dijkstra%E5%8F%8C%E6%A0%88/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dijkstra双栈——算术表达式求值</title>
+      <link>http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
+      <pubDate>Tue, 21 Jul 2020 20:15:08 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
+      <description>算数表达式 这里的算术表达式支持常见的二元运算符+-*/以及接受一个参数的平方根运算符sqrt。这里我们假定表达式中未省略所有的括号。
+计算方法  将操作数压入操作数栈 将运算符压入运算符栈 忽略左括号 遇到右括号时，弹出一个运算符，弹出需要数量的操作数进行运算，然后将得到的结果再压入操作数栈。  代码实现 package edu.princeton.cs.algs4; public class Evaluate { public static void main(String[] args) { Stack&amp;lt;String&amp;gt; ops = new Stack&amp;lt;String&amp;gt;(); Stack&amp;lt;Double&amp;gt; vals = new Stack&amp;lt;Double&amp;gt;(); while (!StdIn.isEmpty()) { //读取字符，如果是运算符则压入运算符栈ops 	String s = StdIn.readString(); if (s.equals(&amp;#34;(&amp;#34;)); else if (s.equals(&amp;#34;+&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;-&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;*&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;/&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;sqrt&amp;#34;)) ops.push(s); //如果字符为)，则弹出运算符和操作数，计算结果并压入操作数栈vals 	else if (s.equals(&amp;#34;)&amp;#34;)) { String op = ops.</description>
+    </item>
+    
+  </channel>
+</rss>

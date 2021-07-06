@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>其他 on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/categories/%E5%85%B6%E4%BB%96/</link>
+    <description>Recent content in 其他 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Fri, 18 Oct 2019 13:50:49 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/categories/%E5%85%B6%E4%BB%96/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitBook自动发布脚本</title>
+      <link>http://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Fri, 18 Oct 2019 13:50:49 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</guid>
+      <description>GitBook作为一个非常好用的基于Node.js的命令行工具，可以输出HTML、PDF、eBook等多种格式的电子书，这里就不再详细讲述GitBook的构建以及发布到Github托管的过程，网络上有非常多的教程，可以自行Google查看。
+刚开始在每次更新内容的时候都需要一系列的git命令将原始内容仓库和构建的网页仓库同步到Github上，大概需要10条命令，如果你的更新频率很高的话，发布内容将会是有个痛苦的过程，但这里我们可以通过一个shell脚本只使用$ sh deploy.sh一条命令完成同步内容和构建网页的所有过程。
+首先，在你的GitBook内容根目录下建一个deploy.sh文件，使用文本编辑器打开，然后输入以下内容：
+#!bin/sh git checkout master # 切换到master分支，及内容所在的仓库 git add . git commit -m &amp;#34;Update&amp;#34; git push -u origin master # 添加、提交到Git仓库，然后push到Github上 gitbook build # 构建Gitbook git checkout gh-pages # 切换到gh-pages分支，即生成的HTML网页的仓库 cp -r _book/* . # 复制前面构建的内容 git add . git commit -m &amp;#34;Update&amp;#34; git push -u origin gh-pages # 添加、提交到Git仓库，然后push到Github上 git checkout master # 返回master主分支 然后打开命令行，为这个脚本授权：
+$ chmod +x deploy.sh 至此就完成了，以后在更新的时候只需要输入一条命令$ sh deploy.sh就可以完成所有操作了。</description>
+    </item>
+    
+    <item>
+      <title>测试GitBook格式</title>
+      <link>http://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</link>
+      <pubDate>Fri, 20 Sep 2019 21:43:41 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</guid>
+      <description>FlightMuseum-GitBook 目录层级  Preface Airbus  A320  A319 A320-200 A320-200neo A321 &amp;hellip;&amp;hellip;..   A330  A330-200 A330-300   A350  A350-900 A350-1000     Boeing  B737 B747 B767 B777 B787  B787-8 Dreamliner B787-9 Dreamliner B787-10 Dreamliner     &amp;hellip;&amp;hellip;. Trains  CR TRA JR     一个具体层级的Markdown编辑形式 1.Cathay Pacific | 国泰航空 B-LRA  Serial Number / 生产序列号：29 **First Flight Date / 首飞日期：**24th.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>k-NN on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/tags/k-nn/</link>
+    <description>Recent content in k-NN on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Wed, 09 Jun 2021 17:41:44 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/tags/k-nn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cs231n——1.Nearest Neighbor Classifier</title>
+      <link>http://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</link>
+      <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</guid>
+      <description>图像分类规范化步骤：
+ 输入：输入带有不同标签的图像作为训练集 学习：使用训练集学习每种类别的抽象特征 评估：通过测试集评估分类器的质量。  Nearest Neighbor Classifier CIFAR-10 dataset:
+ 10 classes (airplane, automobile, bird, etc) 60,000 tiny images that are 32 pixels high and wide  k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。
+L1 distance: $$ d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right| $$
+将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。
+通常使用准确率来评估分类器
+Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic function we provide # flatten out all images to be one-dimensional Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3) # Xtr_rows becomes 50000 x 3072 Xte_rows = Xte.</description>
+    </item>
+    
+  </channel>
+</rss>

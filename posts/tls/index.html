@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html><head>
+<title>TLS（HTTPS）协议</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="TLS（HTTPS）协议" />
+<meta property="og:description" content="1. SSL/TLS简介 TLS（Transport Layer Security，传输层安全协议），以及它的前身SSL（Secure Sockets Layer，安全套接层）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。
+SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。
+几个知名的使用SSL加密的协议：
+HTTP over SSL (HTTPS)
+简称为HTTPS，它的产生是为了加密网页，HTTP是第一个使用SSL保障安全的应用层协议。HTTPS在RFC2818被标准化，HTTPS工作在443端口，HTTP默认工作在80端口。
+Email over SSL
+类似于HTTP over SSL，协议如下：
+ SMTP、IMAP能够支持SSL SMTP over TLS在标准文档RFC2487中  2. SSL原理详解 2.0 基本运行过程 SSL/TLS协议是采用公钥加密法实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。
+2.1 SSL建立的总过程 客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及四次握手通信，且该阶段的通信都是明文的。以下一一来分析。
+1. 客户端发出请求（ClientHello） 该步客户端（通常为浏览器）向服务器提供以下信息：
+ 支持的协议版本（Version），如TLSv1.0 一个客户端生成的随机数（Random），之后用于生成”对话密钥“ 会话ID（Session id）：  如果客户端第一次连接到服务器，那么该字段为空。 如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为SSL会话恢复。   支持的加密套件（Cipher Suites），这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。 支持的压缩方法，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。 扩展包。  2. 服务器回应（ServerHello） 该步骤包含以下内容：
+ 确认使用的版本，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。 一个服务器生成的随机数，之后用于生成”对话密钥“ 确认使用的加密套件 会话ID（Session ID）：  服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。 但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入Session Tickets，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。   扩展包 服务器证书  当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://eternityqjl.top/posts/tls/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-04-19T16:15:26+00:00" />
+<meta property="article:modified_time" content="2020-04-19T16:15:26+00:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TLS（HTTPS）协议"/>
+<meta name="twitter:description" content="1. SSL/TLS简介 TLS（Transport Layer Security，传输层安全协议），以及它的前身SSL（Secure Sockets Layer，安全套接层）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。
+SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。
+几个知名的使用SSL加密的协议：
+HTTP over SSL (HTTPS)
+简称为HTTPS，它的产生是为了加密网页，HTTP是第一个使用SSL保障安全的应用层协议。HTTPS在RFC2818被标准化，HTTPS工作在443端口，HTTP默认工作在80端口。
+Email over SSL
+类似于HTTP over SSL，协议如下：
+ SMTP、IMAP能够支持SSL SMTP over TLS在标准文档RFC2487中  2. SSL原理详解 2.0 基本运行过程 SSL/TLS协议是采用公钥加密法实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。
+2.1 SSL建立的总过程 客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及四次握手通信，且该阶段的通信都是明文的。以下一一来分析。
+1. 客户端发出请求（ClientHello） 该步客户端（通常为浏览器）向服务器提供以下信息：
+ 支持的协议版本（Version），如TLSv1.0 一个客户端生成的随机数（Random），之后用于生成”对话密钥“ 会话ID（Session id）：  如果客户端第一次连接到服务器，那么该字段为空。 如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为SSL会话恢复。   支持的加密套件（Cipher Suites），这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。 支持的压缩方法，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。 扩展包。  2. 服务器回应（ServerHello） 该步骤包含以下内容：
+ 确认使用的版本，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。 一个服务器生成的随机数，之后用于生成”对话密钥“ 确认使用的加密套件 会话ID（Session ID）：  服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。 但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入Session Tickets，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。   扩展包 服务器证书  当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。"/>
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+  
+
+
+
+
+<link rel="icon" href="http://blog.eternityqjl.top/faviconJ.ico">
+
+
+
+<link rel="stylesheet" href="http://eternityqjl.top/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+
+
+
+<link rel="stylesheet" href="http://eternityqjl.top/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+
+
+<script src="/js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="/js/toc.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: 'df0192f05fd975a4e951',
+  clientSecret: 'f1ff41cecd43fac4792ed8be020aeb337494c340',
+  repo: 'hugo_gitalk',
+  owner: 'user',
+  admin: ['user'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://eternityqjl.top">
+    
+        <div class="nav-title">
+            Jialong&#39;s Blog
+        </div>
+        
+        <div class="nav-subtitle">
+            沉潜 自由 追寻幸福
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/posts">
+                网志
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#1-ssltls%e7%ae%80%e4%bb%8b" onclick="onNavClick(`#1-ssltls简介-nav`)" id="1-ssltls简介-nav">
+									1. SSL/TLS简介
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#2-ssl%e5%8e%9f%e7%90%86%e8%af%a6%e8%a7%a3" onclick="onNavClick(`#2-ssl原理详解-nav`)" id="2-ssl原理详解-nav">
+									2. SSL原理详解
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#20-%e5%9f%ba%e6%9c%ac%e8%bf%90%e8%a1%8c%e8%bf%87%e7%a8%8b" onclick="onNavClick(`#20-基本运行过程-nav`)" id="20-基本运行过程-nav">
+									2.0 基本运行过程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#21-ssl%e5%bb%ba%e7%ab%8b%e7%9a%84%e6%80%bb%e8%bf%87%e7%a8%8b" onclick="onNavClick(`#21-ssl建立的总过程-nav`)" id="21-ssl建立的总过程-nav">
+									2.1 SSL建立的总过程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#1-%e5%ae%a2%e6%88%b7%e7%ab%af%e5%8f%91%e5%87%ba%e8%af%b7%e6%b1%82clienthello" onclick="onNavClick(`#1-客户端发出请求clienthello-nav`)" id="1-客户端发出请求clienthello-nav">
+									1. 客户端发出请求（ClientHello）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#2-%e6%9c%8d%e5%8a%a1%e5%99%a8%e5%9b%9e%e5%ba%94serverhello" onclick="onNavClick(`#2-服务器回应serverhello-nav`)" id="2-服务器回应serverhello-nav">
+									2. 服务器回应（ServerHello）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#3-%e5%ae%a2%e6%88%b7%e7%ab%af%e5%9b%9e%e5%ba%94" onclick="onNavClick(`#3-客户端回应-nav`)" id="3-客户端回应-nav">
+									3. 客户端回应
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#4-%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%9a%84%e6%9c%80%e5%90%8e%e5%9b%9e%e5%ba%94" onclick="onNavClick(`#4-服务器的最后回应-nav`)" id="4-服务器的最后回应-nav">
+									4. 服务器的最后回应
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#22-ssl%e5%8d%8f%e8%ae%ae%e7%9a%84%e7%bb%93%e6%9e%84%e4%bd%93%e7%b3%bb" onclick="onNavClick(`#22-ssl协议的结构体系-nav`)" id="22-ssl协议的结构体系-nav">
+									2.2 SSL协议的结构体系
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#3-%e5%8f%82%e8%80%83" onclick="onNavClick(`#3-参考-nav`)" id="3-参考-nav">
+									3. 参考
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
+                    网志
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#1-ssltls%e7%ae%80%e4%bb%8b" onclick="onNavClick(`#1-ssltls简介-nav`)" id="1-ssltls简介-nav">
+									1. SSL/TLS简介
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#2-ssl%e5%8e%9f%e7%90%86%e8%af%a6%e8%a7%a3" onclick="onNavClick(`#2-ssl原理详解-nav`)" id="2-ssl原理详解-nav">
+									2. SSL原理详解
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#20-%e5%9f%ba%e6%9c%ac%e8%bf%90%e8%a1%8c%e8%bf%87%e7%a8%8b" onclick="onNavClick(`#20-基本运行过程-nav`)" id="20-基本运行过程-nav">
+									2.0 基本运行过程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#21-ssl%e5%bb%ba%e7%ab%8b%e7%9a%84%e6%80%bb%e8%bf%87%e7%a8%8b" onclick="onNavClick(`#21-ssl建立的总过程-nav`)" id="21-ssl建立的总过程-nav">
+									2.1 SSL建立的总过程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#1-%e5%ae%a2%e6%88%b7%e7%ab%af%e5%8f%91%e5%87%ba%e8%af%b7%e6%b1%82clienthello" onclick="onNavClick(`#1-客户端发出请求clienthello-nav`)" id="1-客户端发出请求clienthello-nav">
+									1. 客户端发出请求（ClientHello）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#2-%e6%9c%8d%e5%8a%a1%e5%99%a8%e5%9b%9e%e5%ba%94serverhello" onclick="onNavClick(`#2-服务器回应serverhello-nav`)" id="2-服务器回应serverhello-nav">
+									2. 服务器回应（ServerHello）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#3-%e5%ae%a2%e6%88%b7%e7%ab%af%e5%9b%9e%e5%ba%94" onclick="onNavClick(`#3-客户端回应-nav`)" id="3-客户端回应-nav">
+									3. 客户端回应
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#4-%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%9a%84%e6%9c%80%e5%90%8e%e5%9b%9e%e5%ba%94" onclick="onNavClick(`#4-服务器的最后回应-nav`)" id="4-服务器的最后回应-nav">
+									4. 服务器的最后回应
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#22-ssl%e5%8d%8f%e8%ae%ae%e7%9a%84%e7%bb%93%e6%9e%84%e4%bd%93%e7%b3%bb" onclick="onNavClick(`#22-ssl协议的结构体系-nav`)" id="22-ssl协议的结构体系-nav">
+									2.2 SSL协议的结构体系
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#3-%e5%8f%82%e8%80%83" onclick="onNavClick(`#3-参考-nav`)" id="3-参考-nav">
+									3. 参考
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="http://eternityqjl.top">
+            Jialong&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://eternityqjl.top">
+        <div class="single-column-header-title">Jialong&#39;s Blog</div>
+        
+        <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    TLS（HTTPS）协议
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2020-04-19 16:15
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97">计算机网络学习日志</a>
+                                &nbsp;
+                        
+
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h2 id="1-ssltls简介">1. SSL/TLS简介</h2>
+<p><strong>TLS</strong>（<strong>T</strong>ransport <strong>L</strong>ayer <strong>S</strong>ecurity，<strong>传输层安全协议</strong>），以及它的前身<strong>SSL</strong>（<strong>S</strong>ecure <strong>S</strong>ockets <strong>L</strong>ayer，<strong>安全套接层</strong>）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。</p>
+<p>SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。</p>
+<p><strong>几个知名的使用SSL加密的协议</strong>：</p>
+<p><strong>HTTP over SSL (HTTPS)</strong></p>
+<p>简称为HTTPS，它的产生是为了加密网页，HTTP是第一个使用SSL保障安全的应用层协议。HTTPS在RFC2818被标准化，HTTPS工作在443端口，HTTP默认工作在80端口。</p>
+<p><strong>Email over SSL</strong></p>
+<p>类似于HTTP over SSL，协议如下：</p>
+<ul>
+<li>SMTP、IMAP能够支持SSL</li>
+<li>SMTP over TLS在标准文档RFC2487中</li>
+</ul>
+<!-- raw HTML omitted -->
+<h2 id="2-ssl原理详解">2. SSL原理详解</h2>
+<h3 id="20-基本运行过程">2.0 基本运行过程</h3>
+<p>SSL/TLS协议是采用<strong>公钥加密法</strong>实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。</p>
+<h3 id="21-ssl建立的总过程">2.1 SSL建立的总过程</h3>
+<p>客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及<strong>四次握手</strong>通信，且该阶段的通信都是明文的。以下一一来分析。</p>
+<h4 id="1-客户端发出请求clienthello">1. 客户端发出请求（ClientHello）</h4>
+<p>该步客户端（通常为浏览器）向服务器提供以下信息：</p>
+<ul>
+<li>支持的协议<strong>版本（Version）</strong>，如TLSv1.0</li>
+<li>一个客户端生成的<strong>随机数（Random）</strong>，之后用于生成”对话密钥“</li>
+<li><strong>会话ID（Session id）</strong>：
+<ul>
+<li>如果客户端第一次连接到服务器，那么该字段为空。</li>
+<li>如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为<strong>SSL会话恢复</strong>。</li>
+</ul>
+</li>
+<li>支持的<strong>加密套件（Cipher Suites）</strong>，这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。</li>
+<li>支持的<strong>压缩方法</strong>，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。</li>
+<li>扩展包。</li>
+</ul>
+<h4 id="2-服务器回应serverhello">2. 服务器回应（ServerHello）</h4>
+<p>该步骤包含以下内容：</p>
+<ul>
+<li>确认使用的<strong>版本</strong>，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。</li>
+<li>一个服务器生成的<strong>随机数</strong>，之后用于生成”对话密钥“</li>
+<li>确认使用的<strong>加密套件</strong></li>
+<li><strong>会话ID</strong>（Session ID）：
+<ul>
+<li>服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。</li>
+<li>但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入<strong>Session Tickets</strong>，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。</li>
+</ul>
+</li>
+<li><strong>扩展包</strong></li>
+<li><strong>服务器证书</strong></li>
+</ul>
+<p>当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。</p>
+<h4 id="3-客户端回应">3. 客户端回应</h4>
+<p>客户端收到服务器回应后首先验证服务器的证书，如果证书存在问题，如证书过期、由非可信机构颁布、或证书域名与实际域名不一致，会想客户端访问者发出警告，询问是否继续通信。</p>
+<p>证书没有问题则客户端会从中取出公钥然后发送以下信息：</p>
+<ul>
+<li>一个<strong>随机数（pre-master-key)</strong>；该随机数用服务器公钥加密，防止被窃听。</li>
+<li>编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。</li>
+<li>客户端结束握手通知，该项同时也是前面发送所有内容的哈希值，用来供服务器验证。</li>
+</ul>
+<p>上面第一项的随机数是握手阶段出现的第三个随机数，称“pre-master-key”，之后客户端和服务器就同时有了3个随机数，接着用双方事先商定的加密方法各自生成本次会话用的同一把“会话密钥”。</p>
+<blockquote>
+<p>pre-master-key与前面服务器和客户端在Hello阶段产生的两个随机数结合在一起生成了Master Secret。</p>
+</blockquote>
+<h4 id="4-服务器的最后回应">4. 服务器的最后回应</h4>
+<p>服务器收到客户端第三个随机数pre-master-key后，计算生成本次会话使用的“会话密钥”，然后向客户端发送以下信息：</p>
+<ul>
+<li>编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。</li>
+<li>服务器握手结束通知，该项同时也是前面发送的所有内容的哈希值，用来供客户端验证。</li>
+</ul>
+<p>至此整个握手阶段就结束了，接下来客户端与服务器进入加密通信，就是完全使用普通的HTTP协议，只是使用了“会话密钥”加密内容。</p>
+<h3 id="22-ssl协议的结构体系">2.2 SSL协议的结构体系</h3>
+<p><img src="http://blog.eternityqjl.top/SSL%E5%8D%8F%E8%AE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84_1.png" alt=""></p>
+<p>SSL体系结构包含两个协议子层，底层为<strong>SSL记录协议层</strong>；高层为<strong>SSL握手协议层</strong>。</p>
+<ul>
+<li><strong>SSL记录协议层</strong>：记录协议为高层协议提供基本的安全服务，如数据封装、压缩、加密等基本功能。所以我们可以知道，所有的传输数据都被封装在记录中。</li>
+<li><strong>SSL握手协议层</strong>包括：
+<ul>
+<li>SSL握手协议：协调客户和服务器的状态，是双方能达到状态的同步</li>
+<li>SSL密码参数修改协议：更新用于当前连接的密码组。</li>
+<li>SSL告警协议：发现异常时为对等方传递警告</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-参考">3. 参考</h2>
+<ul>
+<li><a href="https://cshihong.github.io/2019/05/09/SSL%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/">SSL/TLS协议详解|曹世宏的博客</a></li>
+<li><a href="https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html">SSL/TLS协议运行机制的概述|阮一峰</a></li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2020-04-19</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/">
+			Next<br>计算机网络学习日志（二）——运输层
+                </a>
+                
+                
+                
+                <a class="older-posts" href="http://eternityqjl.top/posts/convertpdftosvg/">
+			Previous<br>PDF转换为SVG
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            },
+            debounce(func, wait, options) {
+                let lastArgs,
+                    lastThis,
+                    maxWait,
+                    result,
+                    timerId,
+                    lastCallTime
+
+                let lastInvokeTime = 0
+                let leading = false
+                let maxing = false
+                let trailing = true
+
+                
+                const useRAF = (!wait && wait !== 0 && typeof root.requestAnimationFrame === 'function')
+
+                if (typeof func !== 'function') {
+                    throw new TypeError('Expected a function')
+                }
+                function isObject(value) {
+                    const type = typeof value
+                    return value != null && (type === 'object' || type === 'function')
+                }
+
+                wait = +wait || 0
+                if (isObject(options)) {
+                    leading = !!options.leading
+                    maxing = 'maxWait' in options
+                    maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait
+                    trailing = 'trailing' in options ? !!options.trailing : trailing
+                }
+
+                function invokeFunc(time) {
+                    const args = lastArgs
+                    const thisArg = lastThis
+
+                    lastArgs = lastThis = undefined
+                    lastInvokeTime = time
+                    result = func.apply(thisArg, args)
+                    return result
+                }
+
+                function startTimer(pendingFunc, wait) {
+                    if (useRAF) {
+                    root.cancelAnimationFrame(timerId)
+                    return root.requestAnimationFrame(pendingFunc)
+                    }
+                    return setTimeout(pendingFunc, wait)
+                }
+
+                function cancelTimer(id) {
+                    if (useRAF) {
+                    return root.cancelAnimationFrame(id)
+                    }
+                    clearTimeout(id)
+                }
+
+                function leadingEdge(time) {
+                    
+                    lastInvokeTime = time
+                    
+                    timerId = startTimer(timerExpired, wait)
+                    
+                    return leading ? invokeFunc(time) : result
+                }
+
+                function remainingWait(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+                    const timeWaiting = wait - timeSinceLastCall
+
+                    return maxing
+                    ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+                    : timeWaiting
+                }
+
+                function shouldInvoke(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+
+                    
+                    
+                    
+                    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+                    (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait))
+                }
+
+                function timerExpired() {
+                    const time = Date.now()
+                    if (shouldInvoke(time)) {
+                    return trailingEdge(time)
+                    }
+                    
+                    timerId = startTimer(timerExpired, remainingWait(time))
+                }
+
+                function trailingEdge(time) {
+                    timerId = undefined
+
+                    
+                    
+                    if (trailing && lastArgs) {
+                    return invokeFunc(time)
+                    }
+                    lastArgs = lastThis = undefined
+                    return result
+                }
+
+                function cancel() {
+                    if (timerId !== undefined) {
+                    cancelTimer(timerId)
+                    }
+                    lastInvokeTime = 0
+                    lastArgs = lastCallTime = lastThis = timerId = undefined
+                }
+
+                function flush() {
+                    return timerId === undefined ? result : trailingEdge(Date.now())
+                }
+
+                function pending() {
+                    return timerId !== undefined
+                }
+
+                function debounced(...args) {
+                    const time = Date.now()
+                    const isInvoking = shouldInvoke(time)
+
+                    lastArgs = args
+                    lastThis = this
+                    lastCallTime = time
+
+                    if (isInvoking) {
+                    if (timerId === undefined) {
+                        return leadingEdge(lastCallTime)
+                    }
+                    if (maxing) {
+                        
+                        timerId = startTimer(timerExpired, wait)
+                        return invokeFunc(lastCallTime)
+                    }
+                    }
+                    if (timerId === undefined) {
+                    timerId = startTimer(timerExpired, wait)
+                    }
+                    return result
+                }
+                debounced.cancel = cancel
+                debounced.flush = flush
+                debounced.pending = pending
+                return debounced
+                }
+
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+        
+        
+
+        document.querySelectorAll("table").forEach(function(elem){
+            elem.classList.add("table-striped");
+            elem.classList.add("table");
+            elem.classList.add("table-responsive");
+            elem.classList.add("table-hover");
+        })
+
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
+        
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+
+
+
+</script>
+    </body>
+</html>

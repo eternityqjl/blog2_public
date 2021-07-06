@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html><head>
+<title>PDF转换为SVG</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="使用Adobe Acrobat和inscape软件将PDF文档中的矢量图导出为SVG格式的图片">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="PDF转换为SVG" />
+<meta property="og:description" content="使用Adobe Acrobat和inscape软件将PDF文档中的矢量图导出为SVG格式的图片" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://eternityqjl.top/posts/convertpdftosvg/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-04-08T00:15:48+00:00" />
+<meta property="article:modified_time" content="2020-04-08T00:15:48+00:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="PDF转换为SVG"/>
+<meta name="twitter:description" content="使用Adobe Acrobat和inscape软件将PDF文档中的矢量图导出为SVG格式的图片"/>
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+  
+
+
+
+
+<link rel="icon" href="http://blog.eternityqjl.top/faviconJ.ico">
+
+
+
+<link rel="stylesheet" href="http://eternityqjl.top/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+
+
+
+<link rel="stylesheet" href="http://eternityqjl.top/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+
+
+<script src="/js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="/js/toc.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: 'df0192f05fd975a4e951',
+  clientSecret: 'f1ff41cecd43fac4792ed8be020aeb337494c340',
+  repo: 'hugo_gitalk',
+  owner: 'user',
+  admin: ['user'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://eternityqjl.top">
+    
+        <div class="nav-title">
+            Jialong&#39;s Blog
+        </div>
+        
+        <div class="nav-subtitle">
+            沉潜 自由 追寻幸福
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/posts">
+                网志
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e8%a8%80" onclick="onNavClick(`#前言-nav`)" id="前言-nav">
+									前言
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9c%a8adobe-acrobat%e4%b8%ad%e9%80%89%e6%8b%a9%e7%bc%96%e8%be%91pdf%e9%80%89%e9%a1%b9" onclick="onNavClick(`#在adobe-acrobat中选择编辑pdf选项-nav`)" id="在adobe-acrobat中选择编辑pdf选项-nav">
+									在Adobe Acrobat中选择编辑PDF选项
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%80%89%e6%8b%a9%e8%a3%81%e5%89%aa%e9%a1%b5%e9%9d%a2" onclick="onNavClick(`#选择裁剪页面-nav`)" id="选择裁剪页面-nav">
+									选择裁剪页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%a1%86%e9%80%89%e6%89%80%e9%9c%80%e5%9b%be%e7%89%87%e7%9a%84%e5%8c%ba%e5%9f%9f" onclick="onNavClick(`#框选所需图片的区域-nav`)" id="框选所需图片的区域-nav">
+									框选所需图片的区域
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%8c%e5%87%bb%e6%a1%86%e9%80%89%e7%9a%84%e5%8c%ba%e5%9f%9f%e6%8c%89%e5%a6%82%e4%b8%8b%e6%89%80%e7%a4%ba%e8%ae%be%e7%bd%ae" onclick="onNavClick(`#双击框选的区域按如下所示设置-nav`)" id="双击框选的区域按如下所示设置-nav">
+									双击框选的区域，按如下所示设置
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%80%89%e6%8b%a9%e7%bb%84%e7%bb%87%e9%a1%b5%e9%9d%a2" onclick="onNavClick(`#选择组织页面-nav`)" id="选择组织页面-nav">
+									选择组织页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%80%89%e5%ae%9a%e8%a3%81%e5%88%87%e5%90%8e%e7%9a%84%e9%a1%b5%e9%9d%a2httpblogeternityqjltopconvertingpdftosvg_6jpg" onclick="onNavClick(`#选定裁切后的页面httpblogeternityqjltopconvertingpdftosvg_6jpg-nav`)" id="选定裁切后的页面httpblogeternityqjltopconvertingpdftosvg_6jpg-nav">
+									选定裁切后的页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%b3%e5%87%bb%e5%90%8e%e9%80%89%e6%8b%a9%e6%89%93%e5%8d%b0%e9%a1%b5%e9%9d%a2httpblogeternityqjltopconvertingpdftosvg_7png" onclick="onNavClick(`#右击后选择打印页面httpblogeternityqjltopconvertingpdftosvg_7png-nav`)" id="右击后选择打印页面httpblogeternityqjltopconvertingpdftosvg_7png-nav">
+									右击后选择打印页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%be%e7%bd%ae%e9%a1%b5%e9%9d%a2%e6%8c%89%e7%85%a7pdf%e9%a1%b5%e9%9d%a2%e5%a4%a7%e5%b0%8f%e9%80%89%e6%8b%a9%e7%ba%b8%e5%bc%a0%e6%9d%a5%e6%ba%90%e8%bf%99%e6%a0%b7%e9%80%89%e6%8b%a9%e5%90%8e%e6%9c%80%e7%bb%88%e5%af%bc%e5%87%ba%e7%9a%84%e5%9b%be%e7%89%87%e8%8c%83%e5%9b%b4%e6%89%8d%e6%98%af%e8%a3%81%e5%88%87%e6%97%b6%e6%89%80%e9%80%89%e8%8c%83%e5%9b%b4%e7%84%b6%e5%90%8e%e6%89%93%e5%8d%b0" onclick="onNavClick(`#设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印-nav`)" id="设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印-nav">
+									设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%94%a8inkscape%e6%89%93%e5%bc%80%e5%88%9a%e6%89%8d%e6%89%93%e5%8d%b0%e7%9a%84pdf%e6%96%87%e4%bb%b6%e6%b3%a8%e6%84%8f%e5%af%bc%e5%85%a5%e6%97%b6%e8%ae%be%e7%bd%ae%e4%b8%ba%e7%ac%ac%e4%b8%80%e9%a1%b9%e4%bb%8epopplercairo%e5%af%bc%e5%85%a5%e7%b1%bb%e4%bc%bc%e4%ba%8eps%e4%b8%ad%e7%9a%84%e6%a0%85%e6%a0%bc%e5%8c%96%e8%bf%99%e6%a0%b7%e6%89%8d%e8%83%bd%e4%bf%9d%e8%af%81%e5%9b%be%e4%b8%ad%e7%9a%84%e5%ad%97%e4%bd%93%e4%b8%8d%e5%8f%91%e7%94%9f%e6%94%b9%e5%8f%98" onclick="onNavClick(`#用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变-nav`)" id="用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变-nav">
+									用inkscape打开刚才打印的PDF文件，注意，导入时设置为第一项从Poppler/Cairo导入，类似于PS中的栅格化，这样才能保证图中的字体不发生改变
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%80%89%e6%8b%a9%e6%96%87%e4%bb%b6rightarrow%e6%96%87%e6%a1%a3%e5%b1%9e%e6%80%a7%e8%ae%be%e7%bd%ae%e8%87%aa%e5%ae%9a%e4%b9%89%e5%b0%ba%e5%af%b8%e4%b8%ba%e7%bc%a9%e6%94%be%e9%a1%b5%e9%9d%a2%e5%88%b0%e5%86%85%e5%ae%b9rightarrow%e7%bc%a9%e6%94%be%e9%a1%b5%e9%9d%a2%e5%88%b0%e7%bb%98%e5%9b%be%e6%88%96%e9%80%89%e5%8c%ba" onclick="onNavClick(`#选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区-nav`)" id="选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区-nav">
+									选择文件$\rightarrow$文档属性，设置自定义尺寸为缩放页面到内容$\rightarrow$缩放页面到绘图或选区
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6rightarrow%e5%8f%a6%e5%ad%98%e4%b8%ba%e9%80%89%e6%8b%a9%e8%87%aa%e5%b7%b1%e6%89%80%e9%9c%80%e7%9a%84%e6%a0%bc%e5%bc%8f%e6%88%91%e4%b8%80%e8%88%ac%e9%80%89svg" onclick="onNavClick(`#文件rightarrow另存为选择自己所需的格式我一般选svg-nav`)" id="文件rightarrow另存为选择自己所需的格式我一般选svg-nav">
+									文件$\rightarrow$另存为，选择自己所需的格式，我一般选SVG
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
+                    网志
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%89%8d%e8%a8%80" onclick="onNavClick(`#前言-nav`)" id="前言-nav">
+									前言
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9c%a8adobe-acrobat%e4%b8%ad%e9%80%89%e6%8b%a9%e7%bc%96%e8%be%91pdf%e9%80%89%e9%a1%b9" onclick="onNavClick(`#在adobe-acrobat中选择编辑pdf选项-nav`)" id="在adobe-acrobat中选择编辑pdf选项-nav">
+									在Adobe Acrobat中选择编辑PDF选项
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%80%89%e6%8b%a9%e8%a3%81%e5%89%aa%e9%a1%b5%e9%9d%a2" onclick="onNavClick(`#选择裁剪页面-nav`)" id="选择裁剪页面-nav">
+									选择裁剪页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%a1%86%e9%80%89%e6%89%80%e9%9c%80%e5%9b%be%e7%89%87%e7%9a%84%e5%8c%ba%e5%9f%9f" onclick="onNavClick(`#框选所需图片的区域-nav`)" id="框选所需图片的区域-nav">
+									框选所需图片的区域
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%8c%e5%87%bb%e6%a1%86%e9%80%89%e7%9a%84%e5%8c%ba%e5%9f%9f%e6%8c%89%e5%a6%82%e4%b8%8b%e6%89%80%e7%a4%ba%e8%ae%be%e7%bd%ae" onclick="onNavClick(`#双击框选的区域按如下所示设置-nav`)" id="双击框选的区域按如下所示设置-nav">
+									双击框选的区域，按如下所示设置
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%80%89%e6%8b%a9%e7%bb%84%e7%bb%87%e9%a1%b5%e9%9d%a2" onclick="onNavClick(`#选择组织页面-nav`)" id="选择组织页面-nav">
+									选择组织页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%80%89%e5%ae%9a%e8%a3%81%e5%88%87%e5%90%8e%e7%9a%84%e9%a1%b5%e9%9d%a2httpblogeternityqjltopconvertingpdftosvg_6jpg" onclick="onNavClick(`#选定裁切后的页面httpblogeternityqjltopconvertingpdftosvg_6jpg-nav`)" id="选定裁切后的页面httpblogeternityqjltopconvertingpdftosvg_6jpg-nav">
+									选定裁切后的页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%b3%e5%87%bb%e5%90%8e%e9%80%89%e6%8b%a9%e6%89%93%e5%8d%b0%e9%a1%b5%e9%9d%a2httpblogeternityqjltopconvertingpdftosvg_7png" onclick="onNavClick(`#右击后选择打印页面httpblogeternityqjltopconvertingpdftosvg_7png-nav`)" id="右击后选择打印页面httpblogeternityqjltopconvertingpdftosvg_7png-nav">
+									右击后选择打印页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%be%e7%bd%ae%e9%a1%b5%e9%9d%a2%e6%8c%89%e7%85%a7pdf%e9%a1%b5%e9%9d%a2%e5%a4%a7%e5%b0%8f%e9%80%89%e6%8b%a9%e7%ba%b8%e5%bc%a0%e6%9d%a5%e6%ba%90%e8%bf%99%e6%a0%b7%e9%80%89%e6%8b%a9%e5%90%8e%e6%9c%80%e7%bb%88%e5%af%bc%e5%87%ba%e7%9a%84%e5%9b%be%e7%89%87%e8%8c%83%e5%9b%b4%e6%89%8d%e6%98%af%e8%a3%81%e5%88%87%e6%97%b6%e6%89%80%e9%80%89%e8%8c%83%e5%9b%b4%e7%84%b6%e5%90%8e%e6%89%93%e5%8d%b0" onclick="onNavClick(`#设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印-nav`)" id="设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印-nav">
+									设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%94%a8inkscape%e6%89%93%e5%bc%80%e5%88%9a%e6%89%8d%e6%89%93%e5%8d%b0%e7%9a%84pdf%e6%96%87%e4%bb%b6%e6%b3%a8%e6%84%8f%e5%af%bc%e5%85%a5%e6%97%b6%e8%ae%be%e7%bd%ae%e4%b8%ba%e7%ac%ac%e4%b8%80%e9%a1%b9%e4%bb%8epopplercairo%e5%af%bc%e5%85%a5%e7%b1%bb%e4%bc%bc%e4%ba%8eps%e4%b8%ad%e7%9a%84%e6%a0%85%e6%a0%bc%e5%8c%96%e8%bf%99%e6%a0%b7%e6%89%8d%e8%83%bd%e4%bf%9d%e8%af%81%e5%9b%be%e4%b8%ad%e7%9a%84%e5%ad%97%e4%bd%93%e4%b8%8d%e5%8f%91%e7%94%9f%e6%94%b9%e5%8f%98" onclick="onNavClick(`#用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变-nav`)" id="用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变-nav">
+									用inkscape打开刚才打印的PDF文件，注意，导入时设置为第一项从Poppler/Cairo导入，类似于PS中的栅格化，这样才能保证图中的字体不发生改变
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%80%89%e6%8b%a9%e6%96%87%e4%bb%b6rightarrow%e6%96%87%e6%a1%a3%e5%b1%9e%e6%80%a7%e8%ae%be%e7%bd%ae%e8%87%aa%e5%ae%9a%e4%b9%89%e5%b0%ba%e5%af%b8%e4%b8%ba%e7%bc%a9%e6%94%be%e9%a1%b5%e9%9d%a2%e5%88%b0%e5%86%85%e5%ae%b9rightarrow%e7%bc%a9%e6%94%be%e9%a1%b5%e9%9d%a2%e5%88%b0%e7%bb%98%e5%9b%be%e6%88%96%e9%80%89%e5%8c%ba" onclick="onNavClick(`#选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区-nav`)" id="选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区-nav">
+									选择文件$\rightarrow$文档属性，设置自定义尺寸为缩放页面到内容$\rightarrow$缩放页面到绘图或选区
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6rightarrow%e5%8f%a6%e5%ad%98%e4%b8%ba%e9%80%89%e6%8b%a9%e8%87%aa%e5%b7%b1%e6%89%80%e9%9c%80%e7%9a%84%e6%a0%bc%e5%bc%8f%e6%88%91%e4%b8%80%e8%88%ac%e9%80%89svg" onclick="onNavClick(`#文件rightarrow另存为选择自己所需的格式我一般选svg-nav`)" id="文件rightarrow另存为选择自己所需的格式我一般选svg-nav">
+									文件$\rightarrow$另存为，选择自己所需的格式，我一般选SVG
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="http://eternityqjl.top">
+            Jialong&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://eternityqjl.top">
+        <div class="single-column-header-title">Jialong&#39;s Blog</div>
+        
+        <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    PDF转换为SVG
+                    
+                    <div class="post-subtitle">
+                        使用Adobe Acrobat和inscape软件将PDF文档中的矢量图导出为SVG格式的图片
+                    </div>
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2020-04-08 00:15
+                        </time>
+                        
+
+                        
+
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h2 id="前言">前言</h2>
+<p>最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用<strong>Adobe Acrobat</strong>和<strong>inkscape</strong>两个软件将PDF中的矢量图导出为<strong>SVG</strong>格式的矢量图。以下为具体步骤：</p>
+<h2 id="在adobe-acrobat中选择编辑pdf选项">在<code>Adobe Acrobat</code>中选择<code>编辑PDF</code>选项</h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_1.JPG" alt=""></p>
+<!-- raw HTML omitted -->
+<h2 id="选择裁剪页面">选择<code>裁剪页面</code></h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_2.JPG" alt=""></p>
+<h2 id="框选所需图片的区域">框选所需图片的区域</h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_3.JPG" alt=""></p>
+<h2 id="双击框选的区域按如下所示设置">双击框选的区域，按如下所示设置</h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_4.JPG" alt=""></p>
+<h2 id="选择组织页面">选择<code>组织页面</code></h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_5.JPG" alt=""></p>
+<h2 id="选定裁切后的页面httpblogeternityqjltopconvertingpdftosvg_6jpg">选定裁切后的页面<img src="http://blog.eternityqjl.top/convertingPDFtoSVG_6.JPG" alt=""></h2>
+<h2 id="右击后选择打印页面httpblogeternityqjltopconvertingpdftosvg_7png">右击后选择<code>打印页面</code><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_7.png" alt=""></h2>
+<h2 id="设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印">设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。</h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_8.JPG" alt=""></p>
+<h2 id="用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变">用<code>inkscape</code>打开刚才打印的PDF文件，注意，导入时设置为第一项<code>从Poppler/Cairo导入</code>，类似于PS中的栅格化，这样才能保证图中的字体不发生改变</h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_9.JPG" alt=""></p>
+<h2 id="选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区">选择<code>文件</code>$\rightarrow$<code>文档属性</code>，设置自定义尺寸为<code>缩放页面到内容</code>$\rightarrow$<code>缩放页面到绘图或选区</code></h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_10_0.png" alt=""></p>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_10.JPG" alt=""></p>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_11.png" alt=""></p>
+<h2 id="文件rightarrow另存为选择自己所需的格式我一般选svg"><code>文件</code>$\rightarrow$<code>另存为</code>，选择自己所需的格式，我一般选<code>SVG</code></h2>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_12.png" alt=""></p>
+<p><img src="http://blog.eternityqjl.top/convertingPDFtoSVG_13.JPG" alt=""></p>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2020-04-08</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="http://eternityqjl.top/posts/tls/">
+			Next<br>TLS（HTTPS）协议
+                </a>
+                
+                
+                
+                <a class="older-posts" href="http://eternityqjl.top/posts/latex-problems1/">
+			Previous<br>第一次使用LaTex——问题整理
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            },
+            debounce(func, wait, options) {
+                let lastArgs,
+                    lastThis,
+                    maxWait,
+                    result,
+                    timerId,
+                    lastCallTime
+
+                let lastInvokeTime = 0
+                let leading = false
+                let maxing = false
+                let trailing = true
+
+                
+                const useRAF = (!wait && wait !== 0 && typeof root.requestAnimationFrame === 'function')
+
+                if (typeof func !== 'function') {
+                    throw new TypeError('Expected a function')
+                }
+                function isObject(value) {
+                    const type = typeof value
+                    return value != null && (type === 'object' || type === 'function')
+                }
+
+                wait = +wait || 0
+                if (isObject(options)) {
+                    leading = !!options.leading
+                    maxing = 'maxWait' in options
+                    maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait
+                    trailing = 'trailing' in options ? !!options.trailing : trailing
+                }
+
+                function invokeFunc(time) {
+                    const args = lastArgs
+                    const thisArg = lastThis
+
+                    lastArgs = lastThis = undefined
+                    lastInvokeTime = time
+                    result = func.apply(thisArg, args)
+                    return result
+                }
+
+                function startTimer(pendingFunc, wait) {
+                    if (useRAF) {
+                    root.cancelAnimationFrame(timerId)
+                    return root.requestAnimationFrame(pendingFunc)
+                    }
+                    return setTimeout(pendingFunc, wait)
+                }
+
+                function cancelTimer(id) {
+                    if (useRAF) {
+                    return root.cancelAnimationFrame(id)
+                    }
+                    clearTimeout(id)
+                }
+
+                function leadingEdge(time) {
+                    
+                    lastInvokeTime = time
+                    
+                    timerId = startTimer(timerExpired, wait)
+                    
+                    return leading ? invokeFunc(time) : result
+                }
+
+                function remainingWait(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+                    const timeWaiting = wait - timeSinceLastCall
+
+                    return maxing
+                    ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+                    : timeWaiting
+                }
+
+                function shouldInvoke(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+
+                    
+                    
+                    
+                    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+                    (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait))
+                }
+
+                function timerExpired() {
+                    const time = Date.now()
+                    if (shouldInvoke(time)) {
+                    return trailingEdge(time)
+                    }
+                    
+                    timerId = startTimer(timerExpired, remainingWait(time))
+                }
+
+                function trailingEdge(time) {
+                    timerId = undefined
+
+                    
+                    
+                    if (trailing && lastArgs) {
+                    return invokeFunc(time)
+                    }
+                    lastArgs = lastThis = undefined
+                    return result
+                }
+
+                function cancel() {
+                    if (timerId !== undefined) {
+                    cancelTimer(timerId)
+                    }
+                    lastInvokeTime = 0
+                    lastArgs = lastCallTime = lastThis = timerId = undefined
+                }
+
+                function flush() {
+                    return timerId === undefined ? result : trailingEdge(Date.now())
+                }
+
+                function pending() {
+                    return timerId !== undefined
+                }
+
+                function debounced(...args) {
+                    const time = Date.now()
+                    const isInvoking = shouldInvoke(time)
+
+                    lastArgs = args
+                    lastThis = this
+                    lastCallTime = time
+
+                    if (isInvoking) {
+                    if (timerId === undefined) {
+                        return leadingEdge(lastCallTime)
+                    }
+                    if (maxing) {
+                        
+                        timerId = startTimer(timerExpired, wait)
+                        return invokeFunc(lastCallTime)
+                    }
+                    }
+                    if (timerId === undefined) {
+                    timerId = startTimer(timerExpired, wait)
+                    }
+                    return result
+                }
+                debounced.cancel = cancel
+                debounced.flush = flush
+                debounced.pending = pending
+                return debounced
+                }
+
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+        
+        
+
+        document.querySelectorAll("table").forEach(function(elem){
+            elem.classList.add("table-striped");
+            elem.classList.add("table");
+            elem.classList.add("table-responsive");
+            elem.classList.add("table-hover");
+        })
+
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
+        
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+
+
+
+</script>
+    </body>
+</html>

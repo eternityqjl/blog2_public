@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/posts/</link>
+    <description>Recent content in Posts on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Sun, 04 Jul 2021 16:09:50 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>存储器详解</title>
+      <link>http://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
+      <description>&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
+&lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
+&lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
+&lt;h3 id=&#34;动态随机存取存储器dram&#34;&gt;动态随机存取存储器（DRAM）&lt;/h3&gt;
+&lt;p&gt;Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong&gt;存储电荷的多寡&lt;/strong&gt;来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong&gt;定时刷新&lt;/strong&gt;的特性，因此被称为“动态”存储器。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>csapp: 1.计算机系统漫游</title>
+      <link>http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
+      <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
+      <description>&lt;p&gt;在本书中我们将会学习到一些使用技巧，比如如何避免由于&lt;strong&gt;计算机表示数字的方式&lt;/strong&gt;引起的错误；通过一些技巧&lt;strong&gt;优化C代码&lt;/strong&gt;，以充分利用现代处理器和存储器系统的设计；了解&lt;strong&gt;编译器&lt;/strong&gt;如何实现过程调用，利用这些知识避免&lt;strong&gt;缓冲区溢出&lt;/strong&gt;错误带来的安全漏洞；学习如何识别和避免&lt;strong&gt;链接&lt;/strong&gt;时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；&lt;strong&gt;并发&lt;/strong&gt;带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。&lt;/p&gt;
+&lt;p&gt;我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;()
+{
+	printf(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Hello, world&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;);
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>cs231n——1.Nearest Neighbor Classifier</title>
+      <link>http://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</link>
+      <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</guid>
+      <description>图像分类规范化步骤：
+ 输入：输入带有不同标签的图像作为训练集 学习：使用训练集学习每种类别的抽象特征 评估：通过测试集评估分类器的质量。  Nearest Neighbor Classifier CIFAR-10 dataset:
+ 10 classes (airplane, automobile, bird, etc) 60,000 tiny images that are 32 pixels high and wide  k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。
+L1 distance: $$ d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right| $$
+将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。
+通常使用准确率来评估分类器
+Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic function we provide # flatten out all images to be one-dimensional Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3) # Xtr_rows becomes 50000 x 3072 Xte_rows = Xte.</description>
+    </item>
+    
+    <item>
+      <title>Python基础和numpy</title>
+      <link>http://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link>
+      <pubDate>Sun, 06 Jun 2021 13:04:49 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid>
+      <description>&lt;h2 id=&#34;basic-of-python&#34;&gt;Basic of Python&lt;/h2&gt;
+&lt;h3 id=&#34;basic-data-types&#34;&gt;Basic data types&lt;/h3&gt;
+&lt;h4 id=&#34;numbers&#34;&gt;Numbers&lt;/h4&gt;
+&lt;h4 id=&#34;bolleans&#34;&gt;Bolleans&lt;/h4&gt;
+&lt;h4 id=&#34;strings&#34;&gt;Strings&lt;/h4&gt;
+&lt;h3 id=&#34;containers&#34;&gt;Containers&lt;/h3&gt;
+&lt;h4 id=&#34;lists&#34;&gt;Lists&lt;/h4&gt;
+&lt;h4 id=&#34;slicing&#34;&gt;Slicing&lt;/h4&gt;
+&lt;h4 id=&#34;loops&#34;&gt;Loops&lt;/h4&gt;</description>
+    </item>
+    
+    <item>
+      <title>WLAN基本内容和802.11ax</title>
+      <link>http://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</link>
+      <pubDate>Thu, 03 Jun 2021 18:09:38 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</guid>
+      <description>&lt;h2 id=&#34;wlan基础内容&#34;&gt;WLAN基础内容&lt;/h2&gt;
+&lt;h3 id=&#34;计算机网络概念&#34;&gt;计算机网络概念&lt;/h3&gt;
+&lt;p&gt;在学习基本无线网络通信的过程中顺便可以来复习以下计算机网络的相关内容。&lt;/p&gt;
+&lt;p&gt;在家庭中我们通常使用路由器联通家中的局域网和外部的广域网，路由器为网络层设备，通过IP和路由表来寻找目的地和转发数据，即为路由功能。&lt;/p&gt;
+&lt;p&gt;交换机是数据链路层设备，通过用于在局域网内传输数据，通过MAC地址寻找目的地，数据转发通过硬件来实现，传输速度相较于上一层网络层有很大的性能提升。每个物理设备都具有一个唯一的MAC地址。&lt;/p&gt;
+&lt;p&gt;路由器和交换机的不同在于，一个工作在网络层，另一个工作在数据链路层，交换机连接的网络必须使用相同的数据链路层协议，一般即为&lt;strong&gt;802.3(以太网)或802.11(无线局域网)&lt;/strong&gt;。路由器工作在网络层，因此路由器连接的网络必须使用相同的网路层协议，一般为&lt;strong&gt;ip协议&lt;/strong&gt;，但路由器可以连接不同的数据链路层，比如eth2和pppoe，eth2和802.11。&lt;/p&gt;
+&lt;p&gt;我们常用的每台终端都有一个MAC地址（即网卡地址），在连接网络后路由器会为其分配一个IP；而一个路由器也拥有一个MAC地址和一个IP。交换机中只有MAC地址表，通过设备的MAC地址来确定数据的目的地。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>字符编码：Unicode, UTF-8</title>
+      <link>http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</link>
+      <pubDate>Wed, 02 Jun 2021 15:29:29 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</guid>
+      <description>&lt;h2 id=&#34;基本&#34;&gt;基本&lt;/h2&gt;
+&lt;p&gt;计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如&amp;rsquo;a&amp;rsquo;用什么表示，称为&amp;quot;&lt;strong&gt;编码&lt;/strong&gt;&amp;quot;；反之，将存储在计算机中的二进制数解析显示出来，称为&amp;quot;&lt;strong&gt;解码&lt;/strong&gt;&amp;quot;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;字符集(charset)&lt;/strong&gt;：是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国文字、标点符号、图形符号、数字等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;字符编码(character Encoding)&lt;/strong&gt;：即在符号集合与数字系统之间建立对应关系，它是信息处理的一项基本技术。通常人们用符号集合（一般情况下就是文字）来表达信息。而以计算机为基础的信息处理系统则是利用元件（硬件）不同状态的组合来存储和处理信息的。元件不同状态的组合能代表数字系统的数字，因此字符编码就是将符号转换为计算机可以接受的数字系统的数，称为数字代码。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>机器学习——k近邻(k-NN)算法</title>
+      <link>http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Wed, 12 May 2021 14:57:17 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
+      <description>&lt;h2 id=&#34;基本概念及原理&#34;&gt;基本概念及原理&lt;/h2&gt;
+&lt;p&gt;k近邻(k-nearest neighbors)算法是一种基本分类和回归方法。&lt;/p&gt;
+&lt;p&gt;该算法是给定一个&lt;strong&gt;训练数据集&lt;/strong&gt;，对新的&lt;strong&gt;输入测试集&lt;/strong&gt;，在训练集中找到与该测试实例&lt;strong&gt;最邻近&lt;/strong&gt;的k个实例，这k个实例的多数属于某个类，就把该输入实例分类到这个类中。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/220px-KnnClassification.svg.png&#34; alt=&#34;220px-KnnClassification.svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有两类不同样本分别用红色三角形和蓝色正方形表示，途中绿色圆形为待分类的数据。这时我们根据k-近邻的思想进行分类。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当k=3时，判定样本属于红色三角形这一类；&lt;/li&gt;
+&lt;li&gt;当k=5时，判定样本属于蓝色正方形这一类。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;回顾2——标准库</title>
+      <link>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
+      <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
+      <description>&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
+&lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
+&lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;头文件iostream：
+&lt;ul&gt;
+&lt;li&gt;istream, wistream类型，从流读取数据&lt;/li&gt;
+&lt;li&gt;ostream, wostream类型，向流写入数据&lt;/li&gt;
+&lt;li&gt;iostream, wiostream类型，读写流&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;头文件fstream：
+&lt;ul&gt;
+&lt;li&gt;ifstream类型，从文件读取数据&lt;/li&gt;
+&lt;li&gt;ofstream类型，向文件写入数据&lt;/li&gt;
+&lt;li&gt;fstream类型，读写文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;头文件sstream
+&lt;ul&gt;
+&lt;li&gt;istringstream类型：从string读取数据&lt;/li&gt;
+&lt;li&gt;ostringstream类型：向string写入数据&lt;/li&gt;
+&lt;li&gt;stringstream类型：读写string&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;类型前加一个w的类型是为了支持宽字符，用来操纵wchart_t类型。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Altium Designer画图流程记录(简略)</title>
+      <link>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+      <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+      <description>之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
+共有以下几部分内容：
+ 原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板  PCB各层简介 参考自：PCB各层介绍
+Mechanical layer(机械层) Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。
+Keep out layer(禁止布线层) 用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。
+Signal layer(信号层) 信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。
+Internal plane layer(内部电源/接地层) Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。
+Silkscreen layer(丝印层) 丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。
+Solder mask layer(阻焊层) 在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中匹配焊盘，是自动产生的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)和Bottom Solder(底层)**两个阻焊层。
+Paste mask layer(助焊层，SMD贴片层) 它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。
+Multi layer(多层) 电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。
+Drill layer(钻孔层) 钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。
+原理图库器件画法 放置矩形
+添加Pin
+设置器件的Designator（例如P?）
+器件的PCB封装画法 确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;回顾1——基础内容</title>
+      <link>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
+      <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
+      <description>&lt;p&gt;这个分类的博客主要为了记录一下我在学习C++过程中记录的知识笔记，主要参考自《C++  Primer 第5版》。&lt;/p&gt;
+&lt;p&gt;第一部分基础部分主要包含以下内容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;变量和基本类型&lt;/li&gt;
+&lt;li&gt;表达式&lt;/li&gt;
+&lt;li&gt;语句&lt;/li&gt;
+&lt;li&gt;函数&lt;/li&gt;
+&lt;li&gt;类&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>机器学习——线性回归和梯度下降</title>
+      <link>http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
+      <pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
+      <description>线性回归Linear Regression 简介 线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。
+注意：
+ 因为是线性回归，所以学习到的函数为线性函数，即一次直线函数； 因为是单变量，所以只有一个x；  所以能够给出单变量线性回归的模型： $$ h(x)=b+mx $$ 我们称$x$为feature，$h(x)$为hypothesis。
+代价函数Cost Function 我们需要根据代价函数来确定线性回归拟合的好不好。Cost Function越小，说明线性回归地越好，最小为0，完全拟合。 $$ J(b,m)=\frac{1}{2n}(h(x^{(i)})-y^{(i)})^2 $$ 如上所示为代价函数的构造，其中，$x^{(i)}$表示向量x的第i个元素，$y^{(i)}$表示向量y的第i个元素，即表示所有输入的训练集的点。$h(x)$表示已知的假设函数，n为训练集的个数。
+梯度下降 梯度下降能够找出代价函数Cost Function的最小值，梯度下降的方法步骤如下所示：
+ 先确定向下一步的步伐大小，我们称为Learning Rate； 任意给定初始值b, m； 确定一个向下的方向，按预定步骤向下走，并且更新b, m； 当下降高度(循环次数)小于某个定义的值时，停止下降。  循环下面的式子直到满足终止条件： $$ b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
+m = m - \alpha\frac{\partial}{\partial m}J(b,m) $$ 上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。
+对Cost Function运用梯度下降 $$ \mathrm{repeat \ until \ convergence}{ \
+b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \
+m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \
+\ } $$</description>
+    </item>
+    
+    <item>
+      <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
+      <link>http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</link>
+      <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</guid>
+      <description>SPI、I2C、UART：串行通信协议
+COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
+TTL、RS-232指的是电平标准
+TTL电平：低电平为0，高电平为1
+RS-232电平：正电平(+15V)为0，负电平(-15V)为1
+最近在画PCB研究几个MCU的时候遇到引脚连接方面的一些问题，对于MCU进行串行通信传输数据的过程不太了解，因此写一篇博客来学习一下这些通信协议。
+一些概念 同步(Synchronous)和异步(Asynchronous) 同步就是整个处理过程顺序执行，当各个过程都执行完毕后，返回结果。这是一种线性执行的方式，执行的流程不能跨越。一般用于流程性比较强的程序。
+异步：是只发送了调用的命令，调用者无需等待被调用的方法完全执行完毕，可以继续执行下面的流程，是一种并行处理的方式。比如页面数据架子啊的过程，不需要等待所有数据获取后再显示页面。
+二者的区别就在于同步需要等待，异步不需要等待。
+全双工和半双工 全双工是指可以同时进行双向信号传输。
+半双工是指可以及进行双向信号传输但同一时刻只能向一个方向传输。
+SPI协议 串行外设接口总线（Serial Peripheral Interface Bus，SPI）是一种用于芯片通信的同步串行通信接口规范，设备之间使用全双工模式通信，采用一对一或一对多的主从模式。一般用于短距离通信。
+SPI物理层接口 SPI总线共规定了4个逻辑信号接口：
+ SCLK/SCK（Serial Clock）：时钟信号线，由主机产生，决定了SPI的通信速率。 MOSI（Master Output, Slave Input）：主机输出从机输入信号，数据由主机发出。 MISO（Master Input, Slave Output）：从机输出主机输入信号，数据由从机发出。 nSS（Slave Select）：片选信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。  （图片来自维基百科序列周边接口）
+SPI协议层 （图片来自SPI通讯协议介绍）
+如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。
+通信起始/结束信号 nSS信号由高电平变为低电平即为通信的起始，由低电平变为高电平即为通信的结束。
+有效数据的采集 上图中SCK为偶数边沿时数据得到有效采样，此时MISO和MOSI的数据有效，高电平表示1，低电平表示0，其他时刻的数据无效。
+数据传输时高位在先还是低位在先SPI协议并未规定，需要双方自行约定，一般采用高位在先（MSB）方式传输。
+ 两个概念：
+ 时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。  CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平   时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。  CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样     所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。</description>
+    </item>
+    
+    <item>
+      <title>《算法（第4版）》学习笔记——（一）排序</title>
+      <link>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
+      <description>初级排序算法 选择排序 算法描述 首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。
+代码实现 public class Selection { public static void sort(Comparable[] a) { //将a按照升序排列  int N = a.length; for (int i = 0; i &amp;lt; N; i++) { int min = i; for (int j = i + 1; j &amp;lt; N; j++) { if (less(a[j], a[min])) min = j; } exch(a, i ,min); } } } 性能分析  对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。 该算法运行时间与输入无关，数据的移动是最少的。  插入排序 算法描述 插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。
+代码实现 public class Insertion { public static void sort(Comparable[] a) { int N = a.</description>
+    </item>
+    
+    <item>
+      <title>Dijkstra双栈——算术表达式求值</title>
+      <link>http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
+      <pubDate>Tue, 21 Jul 2020 20:15:08 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
+      <description>算数表达式 这里的算术表达式支持常见的二元运算符+-*/以及接受一个参数的平方根运算符sqrt。这里我们假定表达式中未省略所有的括号。
+计算方法  将操作数压入操作数栈 将运算符压入运算符栈 忽略左括号 遇到右括号时，弹出一个运算符，弹出需要数量的操作数进行运算，然后将得到的结果再压入操作数栈。  代码实现 package edu.princeton.cs.algs4; public class Evaluate { public static void main(String[] args) { Stack&amp;lt;String&amp;gt; ops = new Stack&amp;lt;String&amp;gt;(); Stack&amp;lt;Double&amp;gt; vals = new Stack&amp;lt;Double&amp;gt;(); while (!StdIn.isEmpty()) { //读取字符，如果是运算符则压入运算符栈ops 	String s = StdIn.readString(); if (s.equals(&amp;#34;(&amp;#34;)); else if (s.equals(&amp;#34;+&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;-&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;*&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;/&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;sqrt&amp;#34;)) ops.push(s); //如果字符为)，则弹出运算符和操作数，计算结果并压入操作数栈vals 	else if (s.equals(&amp;#34;)&amp;#34;)) { String op = ops.</description>
+    </item>
+    
+    <item>
+      <title>计算机网络学习日志（二）——运输层</title>
+      <link>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
+      <pubDate>Wed, 06 May 2020 21:27:10 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
+      <description>&lt;h2 id=&#34;概述和运输层服务&#34;&gt;概述和运输层服务&lt;/h2&gt;
+&lt;p&gt;运输层协议在不同主机上的应用进程之间提供了&lt;strong&gt;逻辑通信&lt;/strong&gt;，这并非物理上的实际通信。在发送端，运输层将从应用程序接收到的报文转换成运输层分组，该分组称为&lt;strong&gt;运输层报文段&lt;/strong&gt;，实现方法是将应用报文划分为一个个小的块，为每个块加上运输层首部生成运输层报文段，然后在端系统中传递给网络层，网络层将其封装成网络层分组，向目的地发送。&lt;/p&gt;
+&lt;p&gt;因特网由TCP和UDP两种运输层协议。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>TLS（HTTPS）协议</title>
+      <link>http://eternityqjl.top/posts/tls/</link>
+      <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/tls/</guid>
+      <description>1. SSL/TLS简介 TLS（Transport Layer Security，传输层安全协议），以及它的前身SSL（Secure Sockets Layer，安全套接层）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。
+SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。
+几个知名的使用SSL加密的协议：
+HTTP over SSL (HTTPS)
+简称为HTTPS，它的产生是为了加密网页，HTTP是第一个使用SSL保障安全的应用层协议。HTTPS在RFC2818被标准化，HTTPS工作在443端口，HTTP默认工作在80端口。
+Email over SSL
+类似于HTTP over SSL，协议如下：
+ SMTP、IMAP能够支持SSL SMTP over TLS在标准文档RFC2487中  2. SSL原理详解 2.0 基本运行过程 SSL/TLS协议是采用公钥加密法实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。
+2.1 SSL建立的总过程 客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及四次握手通信，且该阶段的通信都是明文的。以下一一来分析。
+1. 客户端发出请求（ClientHello） 该步客户端（通常为浏览器）向服务器提供以下信息：
+ 支持的协议版本（Version），如TLSv1.0 一个客户端生成的随机数（Random），之后用于生成”对话密钥“ 会话ID（Session id）：  如果客户端第一次连接到服务器，那么该字段为空。 如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为SSL会话恢复。   支持的加密套件（Cipher Suites），这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。 支持的压缩方法，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。 扩展包。  2. 服务器回应（ServerHello） 该步骤包含以下内容：
+ 确认使用的版本，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。 一个服务器生成的随机数，之后用于生成”对话密钥“ 确认使用的加密套件 会话ID（Session ID）：  服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。 但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入Session Tickets，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。   扩展包 服务器证书  当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。</description>
+    </item>
+    
+    <item>
+      <title>PDF转换为SVG</title>
+      <link>http://eternityqjl.top/posts/convertpdftosvg/</link>
+      <pubDate>Wed, 08 Apr 2020 00:15:48 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/convertpdftosvg/</guid>
+      <description>前言 最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用Adobe Acrobat和inkscape两个软件将PDF中的矢量图导出为SVG格式的矢量图。以下为具体步骤：
+在Adobe Acrobat中选择编辑PDF选项 选择裁剪页面 框选所需图片的区域 双击框选的区域，按如下所示设置 选择组织页面 选定裁切后的页面 右击后选择打印页面 设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。 用inkscape打开刚才打印的PDF文件，注意，导入时设置为第一项从Poppler/Cairo导入，类似于PS中的栅格化，这样才能保证图中的字体不发生改变 选择文件$\rightarrow$文档属性，设置自定义尺寸为缩放页面到内容$\rightarrow$缩放页面到绘图或选区 文件$\rightarrow$另存为，选择自己所需的格式，我一般选SVG </description>
+    </item>
+    
+    <item>
+      <title>第一次使用LaTex——问题整理</title>
+      <link>http://eternityqjl.top/posts/latex-problems1/</link>
+      <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/latex-problems1/</guid>
+      <description>0.前言 第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。
+这是第一次实验报告导出的pdf文档封面展示：
+这是tex源代码。
+章节标题的特殊符号 当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令\texorpdfstring{}{}分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号{}中填写tex文档代码，第二个括号{}填写文本形式的书签，如下所示：
+%1.1 \subsection[第3题（1）]{第3题（1）求\texorpdfstring{$x_1(t)=1.5e^{-2t}u(t)$}{x1}， \texorpdfstring{$x_2(t)=cos(t2)[u(t)-u(t-2)]$}{x2}的卷积积分 \texorpdfstring{$y_1(t)=x_1(t)*x_2(t)$}{y1}。 } 代码段的设置 在文章中添加代码段需要用到listings宏包，代码段的基本设置参数如下所示：
+ listings宏包文档
+ \usepackage{listings} \lstset{ language=Matlab, escapeinside=``, numbers=left, numberstyle=\tiny, breaklines=true, backgroundcolor=\color{lightgray!40!white}, frame=single, framerule=0pt, extendedchars=false, keywordstyle=\color{blue!70}\bfseries, basicstyle=\ttfamily, commentstyle=\ttfamily\color{green!40!black}, showstringspaces=false} 同时，设置代码段颜色高亮时需要用到xcolor宏包。
+注意以下几点问题：
+ 代码段中最好不要出现中文，如果必须要使用中文，需要用逃逸字符` `将中文包括起来，如上面的基本参数中的escapeinside=` ` 所示。 如果代码段中出现tex语言的特殊符号，需要使用转义字符\，如#就需要转换为\#。  如果想要改变代码段中的字体，需要用到fontspec宏包，这个宏包需要用XeLaTex或LuaLaTex进行编译，由于我的实验报告封面使用的有些元素在使用这两者编译时无法识别，我这次就没使用，下次写实验报告一定仔细研究一下，实现这个功能。
+数学公式中的align  参考：“Erroneous nesting of equation structures” message- I can&amp;rsquo;t see what&amp;rsquo;s wrong?
+ 数学公式中需要写等号对齐的公式段是不需要写$$...$$或者begin{equation}...end{equation}，直接将公式写在begin{align}...end{align}的中间即可，如下所示：
+\begin{align} y_2[n] &amp;amp;=x_3[n]*x_4[n] \\ &amp;amp;=((-\frac{2}{3})^n u[n-1])*((-1)^{n+1}u[n-1]-(-2)^{n-2}u[n-2]) \\ &amp;amp;=\sum_{k=-\infty}^{+\infty}(-\frac{2}{3})^k u[k-1]((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]) \\ &amp;amp;=\sum_{k=1}^{+\infty}(-\frac{2}{3})^k ((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]) \\ &amp;amp;= \begin{cases} 0, \ n&amp;lt;0 \\ \sum_{k=1}^{+\infty}(-\frac{2}{3})^k (-1)^{n-k+1}u[n-k+1], \ 0 \leq n \leq 2 \\ \sum_{k=1}^{+\infty}(-\frac{2}{3})^k ((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]),\ n&amp;gt;2 \end{cases} \end{align} </description>
+    </item>
+    
+    <item>
+      <title>信号与系统学习笔记——Chapter01 信号与系统</title>
+      <link>http://eternityqjl.top/posts/signalsystem-ch01/</link>
+      <pubDate>Sat, 14 Mar 2020 13:59:44 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/signalsystem-ch01/</guid>
+      <description>1.3 指数信号与正弦信号 1.3.1 连续时间复指数信号与正弦信号 连续时间复指数信号有如下形式： $$ x(t)=Ce^{at} $$
+实指数信号 上式中的$C$和$a$都为实数的信号。
+周期复指数信号和正弦信号 第二种重要的信号为将上式$a$限制为纯虚数的信号（复指数信号）： $$ x(t)=e^{jw_0t} $$ 当基波周期$T_0 = \left| \frac {2\pi} {w_0} \right|$时，该信号是周期信号。
+与该信号相关的另一种信号是正弦信号： $$ x(t)=A\cos(w_0t+\phi) $$ 利用欧拉公式，可以将复指数信号用与其相同几波周期的正弦信号来表示： $$ e^{jw_0t}=\cos w_0t + j\sin w_0t $$ $w_0$称为基波频率。
+上述复指数信号和正弦信号都是具有无限能量但有有限平均功率的信号。
+计算证明： $$ E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0 \
+P_{period}= \frac {1}{T_0} E_{period}=1 $$
+一般复指数信号 一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示： $$ C = \left| C \right| e^{j \theta} \
+a = r + j\omega_0 $$ 代入得： $$ \begin{align} Ce^{at} &amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t} \</description>
+    </item>
+    
+    <item>
+      <title>数字签名和数字证书</title>
+      <link>http://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</link>
+      <pubDate>Fri, 06 Dec 2019 19:42:38 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</guid>
+      <description>理解本文的基础是公钥密码加密，即非对称加密，比如其中一种非对称加密算法RSA。
+非对称加密使用一对密钥，一个为公钥Pub，另一个为私钥Priv
+明文P经过公钥Pub使用RSA加密算法混淆后变成了密文M，密文M无法用公钥Pub解开，只能用私钥Priv解开
+同样的，明文P经过私钥Priv使用RSA加密算法混淆后变成了密文N，密文N只能用公钥Pub解开
+1.信息安全 在信息安全中共有3个需要解决的问题：
+ 保密性：保证信息在传输时不被泄露 完整性：信息在传输时不被篡改 有效性：信息的使用者是合法的  公钥密码能解决保密性的问题
+数字签名能解决完整性和有效性的问题
+2.数字签名(Digital Signature) 真实世界中，签名是为了表示某些内容是签名者写的或者他所认可的。计算机中，数字签名也有着相似的含义，数字签名用来证实消息是某个特定的人发送的，即有效性；同时还能证明消息没有被篡改，即完整性。这些是怎么实现的呢？这就是接下来要介绍有关于数字签名的内容。
+数字签名是公钥密码加密的逆向应用：
+用私钥加密消息，用公钥解密消息。
+ 签名：用私钥加密的消息，只有拥有私钥的用户可以生成签名，这也确保了数字签名的发送者是该用户。 验证签名：即用公钥解密签名，因为公钥是公开的，所以任何人都可以验证签名。  2.1 生成签名 一般不直接对消息进行签名，而是对消息进行哈希计算后的得到的哈希值进行签名。
+ HASH算法是密码学的基础，其中最重要的两条性质是不可逆和无冲突，
+ 不可逆：当你知道x的HASH值时，无法求出x 无冲突：你知道x，但无法求出一个y使得x与y的HASH值相同  这两个性质在数学上都是不成立的，理论上由无穷多不同的原始值，它们的HASH值都相同。但求逆和求冲突在计算上不可能实现，穷尽人类所有的计算资源都做不到。
+ 生成签名的步骤如下：
+ 对消息进行哈希计算，得到哈希值 利用私钥对哈希值进行加密，生成签名 将签名附在消息后，一起发送  2.2 验证签名  收到签名后，提取消息中的签名 用公钥对签名进行解密，得到哈希值1 对消息中的正文进行哈希计算，得到哈希值2 比较哈希值1和2，如果相同，则验证成功  注：前面提到，哈希值的计算不可逆，因此才能以这种方式验证签名。
+3.数字证书(Digital Certificate) 数字证书是对公钥进行数字签名，是为了对公钥的合法性提供证明，如果公钥的合法性得不到证明，则就存在中间人攻击的风险。
+ 中间人攻击（Man-in-the-middle-attack）：
+攻击者与通讯的两端分别建立滴露的联系，并交换所受到的数据。即中间人通过截获两端通讯使用的公钥，并将双方的两个公钥都更改为自己的公钥来达到截获消息的目的。
+详情可以参考维基百科：中间人攻击
+ 我们对于签名的验证需要使用公钥，而公钥的真实合法性就是通过数字证书来的。证书中包含：公钥、公钥的数字签名、公钥拥有者的信息。如果证书验证成功，则代表该公钥是合法的。
+但是，验证证书中的数字签名需要另一个公钥，该公钥的合法性又怎样保证呢？该问题可以无限地循环下去，那岂不是解决不了了？我们相信银行是一个可信的机构，可以放心地把钱存在里面，那么同样存在一个可信机构来颁发证书和提供公钥，我们相信这个机构提供的密钥是合法的。
+这种机构称为认证机构(Certification Authority, CA)，CA认定“公钥确实属于某个私钥的拥有者”，并能生成公钥的数字签名的组织或机构。
+3.1 如何生成证书？  证书即为公钥、公钥的数字签名、一些其他服务器信息的集合
+  服务器将公钥A交给CA CA通过哈希计算生成公钥A的哈希值，然后用自己的私钥B给公钥A的哈希值加密，生成数字签名A CA把公钥A、数字签名A、一些服务器信息整合，生成证书，发回给服务器  3.</description>
+    </item>
+    
+    <item>
+      <title>写在2019年的最后一个月的开始</title>
+      <link>http://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
+      <pubDate>Sun, 01 Dec 2019 22:06:08 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
+      <description>转眼间2019年就要结束了，依稀记得2019年的刚开始我还在发空间动态说自己又买了一本日历，然而&amp;hellip;明年就不买了吧，我并没有记得经常去看日历，更别说去每天一张一张地撕它。这一年里经历了非常多的事情，从学习、生活、关于未来的各方各面，我都发生了极大的改变，这源于我不断变化的想法，目标总是飘忽不定，我思考过，也经常迷茫，现在也是。
+在写下这些话的时间里，我其实是非常难过和害怕的，这一个周末似乎没干什么事情就又要浑浑噩噩地结束了，直到现在还有一个DDL等着我，明早截止，我还没做完，间歇性拖延症晚期这件事情，一直发生在我身上，毫不夸张地说，我可以不间歇地拖延整整24小时，这过程中总想着做些什么、改变些什么，但除了睡觉，大部分时间眼睛都盯在手机屏幕上，尽管我知道这样做一点儿也不好，但结果还是发生了。我知道学习的重要性，也会去为了一个想要实现的东西不断地思考并找到解决方法，就比如搭建网站这件事情，前前后后花了很多的时间也学习了很多相关知识，基本掌握了中间的原理，结果在我预想的时间之前很久就做出来了，结果还是超乎预期的好。说实话，完成一件能看的到结果的事情能给人的心理带来很大的快感的愉悦，但愉悦过后，又只剩下了迷茫和拖延，并且在为了找到下一个实践目标而苦苦挣扎着。有时候大脑盯着手机屏幕看一些信息的时候，知道这是自己不想接收和浪费时间的，但就是控制不住自己去点开看，这样的人性的弱点也造就了很多的商机，造就了很多企业和公司的成功。
+说点儿别的。在关于情感和人际交往方面，我可能是一个与绝大多数人都不一样的人，在情感上，我很少与他人或者是在公开场合表露（包括我的社交媒体，我发现，自己现在很少在社交媒体上表露自己的情感，更多的是分享一些自己的兴趣爱好，比如我热爱的摄影，因而，我也就把自己的空间对所有人开放了，微信这个东西另当别论，说实话，我挺讨厌这个软件的），但我还是知道自己想要的是什么，纵然我在过去的一年里总是带着一些自卑的情感，很久没有与他人进行深入内心的交谈，KY的与陌生人打电话活动也错过了很多次，每次都是在想和别人深入交流的时候才想起来，结果肯定是已经结束了，今后还是要多多关注，想想能与一同关注KY的人打电话是一件挺幸福的事情，也希望自己能早日找到灵魂伴侣。在人际交往方面，我尝试过学校的很多社团和活动，最终无一例外全都放弃了，我觉得也挺好，这也证明了我确实不喜欢过多的浮于表面和拉帮结派建造复杂人际关系的事情，做好自己就最好了，能认识几个朋友还是随缘了，人也并不需要那么多看上去像是朋友的朋友。
+扯了这么多，还是回到最重要的学习和事业上吧。12月希望自己能好好学习学校的课程知识，好好地应对一下考试。明年下半年就要大三了，这学期结束以后要为成为一个前端工程师立一些目标，毕竟就快要毕业了，还是希望自己能去做自己喜欢的工作，上研究生这件事就暂时不考虑了，我在经历了一些事情以后对于读研这件事一点儿也不感兴趣了，做好自己就好了。
+以上。</description>
+    </item>
+    
+    <item>
+      <title>计算机网络学习日志（一）——应用层</title>
+      <link>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</link>
+      <pubDate>Thu, 28 Nov 2019 19:23:38 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</guid>
+      <description>应用层是计算机网络从上往下的第一层，这一层的主要内容是网络应用的原理和实现，通过学习几种常见的网络应用程序，并且开发运行在TCP和UTP(运输层)上的网络应用程序，这些应用程序包含Web、电子邮件、DNS、P2P等等。
+应用层协议 开发网络应用程序是要开发运行在不同端系统上并且通过网络(下层协议)彼此通信的程序，这过程中不需要为下层的网络核心设备写程序，因为它们不在应用层上起作用。
+网络应用程序体系结构 客户——服务器体系结构  客户：发送主机请求 服务器：总是打开的主机，接收来自客户的请求  举例：Web应用程序
+P2P体系结构  对于数据中心服务器几乎没有依赖。 应用程序在对等方之间直接通信 具有自扩展性，报文在主机之间直接发送，服务器用来追踪IP，有安全隐患。  举例：BitTorrent、Skype
+进程通信 端系统之间的通信实际上是进程，进程通过跨越网络发送报文来进行通信。进程是运行在端系统上的程序，同一个端系统和不同端系统之间的进程都可以进行通信，这里主要讨论不同端系统之间跨越网络的通信。
+客户与服务器之间的进程  客户-服务器体系中，比如Web服务器，一个进程被标识为客户(Client)，另一个进程被标识为服务器(Server)。 P2P体系中，一个进程既可以是客户又可以是服务器。  进程与网络之间的接口——套接字 套接字(端口号)是应用程序和运输层之间的接口，也成为应用程序编程接口。
+进程寻址 为了向特定的目的地发送报文，需要有目的地主机的相关信息，这些信息为：
+ IP地址：用来标识目的地主机。 端口号：用来指定接受进程(即接受套接字)，例如Web服务器用端口号80标识，邮件服务器进程用25标识。  供应用程序使用的运输服务 开发应用程序时，需要选择一种适合的运输层协议，运输层协议能够提供的服务主要有以下：
+可靠数据传输 进程与进程之间的可靠数据传输，有不提供可靠数据传输的应用层协议，使用这种应用层协议的应用被称为容忍丢失的应用。
+吞吐量 发送进程向接收进程交付比特的速率，所以运输层协议可以提供以特定速率确保的可用吞吐量的服务，对此有需求的应用称为带宽敏感应用，如一些多媒体语音和视频应用。
+定时（延迟） 例子：发送方注入比特至套接字到接收方烧到比特的时间不多于100ms，这对于实时交互应用很重要，例如多方射击游戏。
+安全性 因特网提供和未提供的运输服务 因特网为应用程序提供两个运输层协议，TCP和UDP，开发者必须做出选择。
+TCP服务  面向连接服务：报文数据流动前，TCP让客户和服务器交换运输层控制信息(即握手)，之后一个TCP连接就建立了，这条连接是全双工的，应用程序运行结束后要拆除该连接。 可靠数据传输服务：无差错、按顺序交付报文。 拥塞控制机制   安全套接字层(Secure Sockets Layer, SSL)，是加强版的TCP协议，提供了进程之间的安全加密服务，这种强化是在应用层上实现的。
+ UDP服务 是一种轻量运输协议，进程通信时无握手过程，不保证到达，同时无拥塞控制机制。
+ 注，这里只是简要的内容，更多详细内容将在第三章运输层中提到。
+  未提供的服务 以上两个协议提供了可靠数据传输、安全性相关的服务，但并未提供2.3中所述的吞吐量和定时的服务，所以因特网并不提供这两项服务。虽然未提供具体的服务，但因特网已经运行很多年，对于时间敏感的应用已经被设计得尽可能应对这种保证的缺乏。
+应用层协议总结 应用层协议定义了以下内容：
+ 交换的报文类型，如请求和响应报文 报文语法 字段语义 确定进程何时发送报文  Web和HTTP HTTP概况 **超文本传输协议（HyperText Transfer Protocol，HTTP）**是Web的应用层协议，它由客户程序和服务器程序实现，客户和服务器运行在不同端系统中，通过HTTP报文进行会话。</description>
+    </item>
+    
+    <item>
+      <title>GitBook自动发布脚本</title>
+      <link>http://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</link>
+      <pubDate>Fri, 18 Oct 2019 13:50:49 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</guid>
+      <description>GitBook作为一个非常好用的基于Node.js的命令行工具，可以输出HTML、PDF、eBook等多种格式的电子书，这里就不再详细讲述GitBook的构建以及发布到Github托管的过程，网络上有非常多的教程，可以自行Google查看。
+刚开始在每次更新内容的时候都需要一系列的git命令将原始内容仓库和构建的网页仓库同步到Github上，大概需要10条命令，如果你的更新频率很高的话，发布内容将会是有个痛苦的过程，但这里我们可以通过一个shell脚本只使用$ sh deploy.sh一条命令完成同步内容和构建网页的所有过程。
+首先，在你的GitBook内容根目录下建一个deploy.sh文件，使用文本编辑器打开，然后输入以下内容：
+#!bin/sh git checkout master # 切换到master分支，及内容所在的仓库 git add . git commit -m &amp;#34;Update&amp;#34; git push -u origin master # 添加、提交到Git仓库，然后push到Github上 gitbook build # 构建Gitbook git checkout gh-pages # 切换到gh-pages分支，即生成的HTML网页的仓库 cp -r _book/* . # 复制前面构建的内容 git add . git commit -m &amp;#34;Update&amp;#34; git push -u origin gh-pages # 添加、提交到Git仓库，然后push到Github上 git checkout master # 返回master主分支 然后打开命令行，为这个脚本授权：
+$ chmod +x deploy.sh 至此就完成了，以后在更新的时候只需要输入一条命令$ sh deploy.sh就可以完成所有操作了。</description>
+    </item>
+    
+    <item>
+      <title>储存类别、链接和内存管理</title>
+      <link>http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Fri, 18 Oct 2019 10:59:58 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</guid>
+      <description>一、储存类别
+ 对象：具有一定大小空间的一块内存。 标识符：用来指定特定对象的内容。   作用域  描述了程序中可访问标识符的区域。 分类：  块作用域 函数作用域 文件作用域 函数原型作用域：从形参定义处到原型声明结束。   全局变量：也称为文件作用域变量。   链接  C变量的三种链接属性：  外部链接：该类型变量可以在多文件程序中使用 内部链接：该类型变量只能在一个翻译单元中使用 无链接：具有块作用域、函数作用域或函数原型作用域的变量   储存类别说明符static   存储期：  C对象有4种  静态存储期：在程序的执行期间一直存在，文件作用域变量都具有静态存储期。 线性存储期：用于并发程序设计。 自动存储期：所有局部变量都有该性质，在函数调用时被创建，离开函数时被销毁。 动态分配存储期：     自动变量  属于自动存储类别，有自动存储期、块作用域、无链接。 可显式使用关键词auto 块作用域和无链接意味着只有在变量定义的块中才能通过变量名访问该变量。   寄存器变量  特殊的自动变量。也是自动存储期、块作用域、无链接。 可以显式使用关键词register，是一种请求，编译器可能会拒绝你的请求，此时就变成了普通变量，但仍然无法访问该变量的内存。 作用是储存在最快的可用内存中，能够以更快的速度访问。 存储在寄存器中而非内存中，所以无法获取寄存器变量的地址。   块作用域的静态变量  静态指的是在内存中原地不动，但它的值可以改变。 具有块作用域、无链接、有静态存储期。 在块中以static(提供静态存储期)声明这种变量。 如果未显式地初始化静态变量，它们会被初始化为0。   外部链接的静态变量  具有文件作用域、外部链接、静态存储期。 有时又称为外部存储类型、该类别地变量被称为外部变量。 创建过程：在所有函数外面(定义性声明)创建这个外部变量。 函数使用该变量时，为了指出使用的是外部变量，可以用关键字extern再次声明。 如果一个源文件使用的外部变量定义在其他文件中，则必须用extern在该文件中声明该变量。 定义式声明、引用式声明。   内部链接的静态变量  具有静态存储期、文件作用域、内部链接。 在所有函数外部，用存储类别说明符static定义该类变量。 该类型变量只能用于同一个文件中的函数。 可以在函数中使用类别说明符extern重复声明该类型变量，这并不会改变其链接属性。   多文件(多翻译单元)  程序在多个翻译单元中才能体现区别内部和外部变量的重要性。   存储类别的选择  正常情况下多使用自动存储类别，使用外部变量可能在不经意中修改变量的值，count类型变量除外。    二、</description>
+    </item>
+    
+    <item>
+      <title>C语言结构</title>
+      <link>http://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Tue, 15 Oct 2019 20:03:54 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/</guid>
+      <description>1.建立结构变量
+struct book { char title[MAXTITL]; char author[MAXAUTL]; float value; }  该结构描述了由两个字符数组和一个float类型变量组成的结构。  2.定义结构变量
+struct book library;
+  把library声明为一个使用book结构类型的结构变量。
+  所以struct book 相当于过去的int、double等类型。
+struct book { char title[MAXTITL]; char author[MAXAUTL]; float value; } library; 该程序为上面声明的完整版。
+struct { //无结构标记  char title[MAXTITL]; char author[MAXAUTL]; float value; } library; 声明结构和定义结构可以一步完成，如上所示。
+  3.初始化结构
+4.访问结构成员(点运算符)
+5.结构初始化器
+6.结构数组
+struct book library[MAXBKS];
+7.指向结构的指针
+struct guy * him;
+ 指针可以指向任何现有的guy类型如barney、fellow[0]（一个结构数组的一项即为一个结构变量）。  him = &amp;amp;barney or him = &amp;amp;fellow[0];</description>
+    </item>
+    
+    <item>
+      <title>字符串输入、输出和字符串函数</title>
+      <link>http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Sat, 28 Sep 2019 12:15:42 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</guid>
+      <description>字符串输入 1.gets()函数
+ 使用方法：读取整行输入，直到遇到换行符，然后丢弃换行符，储存其余的字符，并在字符末尾添加一个空字符使之成为一个C字符串。 使用中存在的问题：gets(words)（char words[STLEN]）的唯一参数为words，该函数无法检查数组是否装得下输入行。数组名会被转化成该数组首元素的地址，该函数只知道数组的开始处，并不知道数组在何处结束。 如果输入过长，会导致缓存区溢出，详情见书上内容。  2.gets()的替代品：fgets()函数
+ fgets()函数通过第二个参数来限制读入的字符数来解决溢出问题。 相较于gets()的区别：  第二个参数指明了读入字符的最大数量，若该值为n，那么将读入n-1个字符，或遇到第一个换行符为止。 第三个参数指明了要读入的文件，如果要从键盘输入，则参数设置为stdin标识符。 如果读到一个换行符，fgets()会将其储存在数组中，而不是将其丢弃。    3.gets_s()函数
+  于fgets()的区别
+  该函数只从标准输入中读取，所以无需第三个参数。
+  读到换行符会将其丢弃。
+  如果读到最大字符数都没有读到换行符，会进行以下操作：
+ 首先设置目标数组的首字符为空字符
+读取并丢弃随后的输入直至读到换行符或文件结尾
+返回空指针
+然后调用依赖实现的“处理函数”
+     4.s_gets()函数
+ 读取整行输入并用空字符替代换行符，或者(在字符串未结束就遇到了空字符)读取一部分输入，并丢弃其余的部分。  该函数的代码：
+char * s_gets(char * st, int n) { char *ret_val; int i = 0; ret_val = fgets(st, n, stdin); if (ret_val) { while (st[i] !</description>
+    </item>
+    
+    <item>
+      <title>抽象数据类型</title>
+      <link>http://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Tue, 24 Sep 2019 21:33:07 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <description>一、抽象数据类型的实现 //数据类型的实现 public class Counter { //实例变量  private final String name; private int count; //构造函数  public void Counter(String id) { name = id; } //实例方法  public void increment() { count++; } public int tally() { return count; } public String toString() { return count + &amp;#34; &amp;#34; + name; } } //测试该数据类型的用例 public static void main(String[] args) { //创建并初始化对象  Counter heads = new Counter(&amp;#34;heads&amp;#34;); Counter tails = new Counter(&amp;#34;tails&amp;#34;); //调用实例方法  heads.</description>
+    </item>
+    
+    <item>
+      <title>测试GitBook格式</title>
+      <link>http://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</link>
+      <pubDate>Fri, 20 Sep 2019 21:43:41 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</guid>
+      <description>FlightMuseum-GitBook 目录层级  Preface Airbus  A320  A319 A320-200 A320-200neo A321 &amp;hellip;&amp;hellip;..   A330  A330-200 A330-300   A350  A350-900 A350-1000     Boeing  B737 B747 B767 B777 B787  B787-8 Dreamliner B787-9 Dreamliner B787-10 Dreamliner     &amp;hellip;&amp;hellip;. Trains  CR TRA JR     一个具体层级的Markdown编辑形式 1.Cathay Pacific | 国泰航空 B-LRA  Serial Number / 生产序列号：29 **First Flight Date / 首飞日期：**24th.</description>
+    </item>
+    
+    <item>
+      <title>什么是数据结构？什么又是算法？</title>
+      <link>http://eternityqjl.top/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Thu, 19 Sep 2019 13:55:19 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</guid>
+      <description>数据结构及相关概念 0. 要想知道什么是数据结构，首先要了解与“数据”相关的概念，这样才能一步步理解什么是数据结构。
+我们首先用放书这件事情来举例。
+ 如果正常情况下只有你自己一个人的书，那么你把他们一本一本立起来放在书架上就可以了。 那么如果有一个图书馆那么多的书应该怎样办么？总不能把他们乱起八糟的立起来放吧？那么是不是应该先按照社会科学、理科类、工科类、外语类等等的分类方式先分类，然后按照具体所属的类别把他们一个个放进去？其实数据结构的相关的概念就是一个这样简单的道理。  下面我们来进行具体的描述。
+1. 数据
+ 是对客观事物的符号表示，在计算机科学中是指所有能输入到计算机中并被计算机程序处理的符号的总称。 其实就对应了图书馆中的所有书。  2. 数据元素
+ 是数据的基本单位，在计算机程序中通常作为一个整体进行考虑号处理。 对应的就是某一本具体的书，比如”数据结构与算法“这本书。  3. 数据项
+ 一个数据元素可由若干个数据项组成，数据项是数据的不可分割的最小单位。 数据项不就是对应了书中的具体信息，比如书的作者、章节内容、ISBN编号等等。  4. 数据对象
+ 是性质相同的数据元素的集合，是数据的子集。 数据元素是一本具体的书，那么性质相同数据元素的集合不就代表了一类具体的书籍吗，就比如计算机类的书籍，其中包含了”数据机构与算法这本书“。   看到这儿是不是对这几者的关系还有点儿晕？没关系，我们用思维导图来再次说明。
+数据是由每一个具体的数据元素组成的，相同的数据元素同属于一个数据对象，每个数据元素中又有具体的信息——数据项。
+ 接下来让我们再次把这些概念对应到具体的例子”书”中。
+世界上所有书就是一个数据，每一本具体的书例如“数据结构与算法”就是一个数据元素，每本书中的具体信息例如“书名、作者、ISBN码&amp;hellip;”就是多个数据项，一些相同类型的书的类型例如“计算机类书籍”就是一个数据对象。
+现在你应该清楚以上4个概念了吧？
+那我们回到最初的问题，什么是数据结构？
+这里我们同样举例子来说明。
+首先，一个类别的书籍中有许多具体的书，如&amp;quot;C语言&amp;quot;、&amp;ldquo;数据结构与算法&amp;rdquo;、&amp;ldquo;编译原理&amp;rdquo;，而这些书之间又有一些关联，比如*某个算法可以用C语言来实现*，编译过程中需要用到特定的算法等等，这些存在关联的书即&amp;quot;数据元素&amp;quot;的集合就叫做数据结构。
+4. 数据结构
+  相互之间存在一种或多种特定关系的数据元素的集合。
+  大多数算法都需要我们适当地组织数据，而为了组织数据就产生了数据结构。
+  结构
+ 逻辑结构
+ 集合
+线性结构
+树形结构
+网状结构或图状结构
+ 物理结构(储存结构)
+ 顺序储存结构
+链式储存结构
+    (注：这里不具体展开介绍各个数据结构，在后面的附录里进行介绍)</description>
+    </item>
+    
+    <item>
+      <title>C语言指针</title>
+      <link>http://eternityqjl.top/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</link>
+      <pubDate>Thu, 19 Sep 2019 13:10:25 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</guid>
+      <description>一、指针的一些概念 1. 指针的类型  把指针声明语句中的指针名字去掉，剩下的就是指针本身的类型  2. 指针所指向的类型  把指针声明语句中的指针名字和名字前的指针声明符号*去掉，剩下的就是指针指向的类型  3. 指针的值——指针所指向的内存区或地址  指针的值是指针本身存储的数值，该值被编译器当作一个地址（在32位程序中，所有类型的指针的值都是一个32位的整数，因为32位程序的内存地址都是32位长。） 指针所指的内存区就是从指针的值所代表的内存地址开始，长度为sizeof(指针指向的类型)的一篇内存区。 我们说一个指针的值是XX，就相当于说该指针指向了以XX为首地址的一片内存区。 同理，我们说一个指针指向了某个内存区，相当于说该指针的值是该内存区域的首地址。  4. 指针本身所占据的内存区  用sizeof(指针的类型)测试一下就知道了  二、指针的算术运算 **0.**指针可以加上或者减去一个整数，这种运算的意义并不是平常的数值的加减。
+ example 1  char a[20] = {0}; int *ptr = (int *)a; ptr++; 指针ptr的类型为int*，它指向的类型为int，被初始化为指向整型变量a。
+在第三句中，指针ptr被加上了1，编译器是这样进行处理的：
+ 把指针ptr的值加上sizeof(int)，在32位程序中是被加上了4，因为32位程序中int占4字节。
+由于地址是用字节作为单位，所以ptr指向的地址由原来的a的地址向高的地方增加了4个地址。
+char类型的长度是一个字节，所以原来的ptr是指向数组a从第0个单元开始的4个字节，现在指向了从第4个单元开始的4个字节
+  example 2  1.可以使用一个循环和一个指针遍历一个数组。
+int array[20] = {0}; int *ptr = array; for (i = 0; i &amp;lt; 20; i++) { (*ptr)++; ptr++; } 该例子中将整形数组中各个单元的值都加1。同时每次循环都将指针加1个单元，所以每次循环都能访问数组的下一个单元。</description>
+    </item>
+    
+  </channel>
+</rss>

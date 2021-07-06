@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LaTex on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/tags/latex/</link>
+    <description>Recent content in LaTex on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Wed, 08 Apr 2020 00:15:48 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/tags/latex/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PDF转换为SVG</title>
+      <link>http://eternityqjl.top/posts/convertpdftosvg/</link>
+      <pubDate>Wed, 08 Apr 2020 00:15:48 +0000</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/convertpdftosvg/</guid>
+      <description>前言 最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用Adobe Acrobat和inkscape两个软件将PDF中的矢量图导出为SVG格式的矢量图。以下为具体步骤：
+在Adobe Acrobat中选择编辑PDF选项 选择裁剪页面 框选所需图片的区域 双击框选的区域，按如下所示设置 选择组织页面 选定裁切后的页面 右击后选择打印页面 设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。 用inkscape打开刚才打印的PDF文件，注意，导入时设置为第一项从Poppler/Cairo导入，类似于PS中的栅格化，这样才能保证图中的字体不发生改变 选择文件$\rightarrow$文档属性，设置自定义尺寸为缩放页面到内容$\rightarrow$缩放页面到绘图或选区 文件$\rightarrow$另存为，选择自己所需的格式，我一般选SVG </description>
+    </item>
+    
+  </channel>
+</rss>

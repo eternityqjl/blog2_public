@@ -1,0 +1,1475 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/</link>
+    <description>Recent content on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Sun, 04 Jul 2021 16:09:50 +0000</lastBuildDate>
+    
+        <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>机器学习——线性回归和梯度下降</title>
+        <link>http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
+        <pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ -&lt;h2 id=&#34;线性回归linear-regression&#34;&gt;线性回归Linear Regression&lt;/h2&gt;
+&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
+&lt;p&gt;线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。&lt;/p&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;因为是线性回归，所以学习到的函数为线性函数，即一次直线函数；&lt;/li&gt;
+&lt;li&gt;因为是单变量，所以只有一个x；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以能够给出&lt;strong&gt;单变量线性回归&lt;/strong&gt;的模型：
+$$
+h(x)=b+mx
+$$
+我们称$x$为feature，$h(x)$为hypothesis。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;代价函数cost-function&#34;&gt;代价函数Cost Function&lt;/h3&gt;
+&lt;p&gt;我们需要根据代价函数来确定线性回归拟合的好不好。Cost Function越小，说明线性回归地越好，最小为0，完全拟合。
+$$
+J(b,m)=\frac{1}{2n}(h(x^{(i)})-y^{(i)})^2
+$$
+如上所示为代价函数的构造，其中，$x^{(i)}$表示向量x的第i个元素，$y^{(i)}$表示向量y的第i个元素，即表示所有输入的训练集的点。$h(x)$表示已知的假设函数，n为训练集的个数。&lt;/p&gt;
+&lt;h2 id=&#34;梯度下降&#34;&gt;梯度下降&lt;/h2&gt;
+&lt;p&gt;梯度下降能够找出代价函数Cost Function的最小值，梯度下降的方法步骤如下所示：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先确定向下一步的步伐大小，我们称为Learning Rate；&lt;/li&gt;
+&lt;li&gt;任意给定初始值b, m；&lt;/li&gt;
+&lt;li&gt;确定一个向下的方向，按预定步骤向下走，并且更新b, m；&lt;/li&gt;
+&lt;li&gt;当下降高度(循环次数)小于某个定义的值时，停止下降。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;循环下面的式子直到满足终止条件：
+$$
+b = b - \alpha\frac{\partial}{\partial b}J(b,m) \&lt;br&gt;
+m = m - \alpha\frac{\partial}{\partial m}J(b,m)
+$$
+上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。&lt;/p&gt;
+&lt;h3 id=&#34;对cost-function运用梯度下降&#34;&gt;对Cost Function运用梯度下降&lt;/h3&gt;
+&lt;p&gt;$$
+\mathrm{repeat \ until \ convergence}{ \&lt;br&gt;
+b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \&lt;br&gt;
+m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \&lt;br&gt;
+\ }
+$$&lt;/p&gt;
+&lt;p&gt;设定好初始值、循环次数、Learning Rate后即可开始拟合，最终得到结果b,m；得到拟合的线性函数。&lt;/p&gt;
+&lt;h2 id=&#34;代码实现&#34;&gt;代码实现&lt;/h2&gt;
+&lt;h3 id=&#34;使用sklearn库中的make_regression函数生成训练数据&#34;&gt;使用&lt;code&gt;sklearn&lt;/code&gt;库中的&lt;code&gt;make_regression&lt;/code&gt;函数生成训练数据&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#generate the train data&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;geneData&lt;/span&gt;():
+    points &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; []
+    xSet, ySet &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; make_regression(n_samples&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;100&lt;/span&gt;, n_features&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, n_targets&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, noise&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;20&lt;/span&gt;)
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; x,y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#0086b3&#34;&gt;zip&lt;/span&gt;(xSet,ySet):
+        x&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;x[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;]
+        point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; [x,y]
+        points&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;append(point)
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; points
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;定义代价函数&#34;&gt;定义代价函数&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;costFunction&lt;/span&gt;(b, m, points):
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:
+        ErrorTotal &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+=&lt;/span&gt; ((b &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; m&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;point[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;]) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; point[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;]) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;**&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; ErrorTotal &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt; (&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#0086b3&#34;&gt;float&lt;/span&gt;(&lt;span style=&#34;color:#0086b3&#34;&gt;len&lt;/span&gt;(points)))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;定义梯度下降函数&#34;&gt;定义梯度下降函数&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;stepGradient&lt;/span&gt;(b_current, m_current, b_gradient, m_gradient, points, learningRate):
+    N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#0086b3&#34;&gt;float&lt;/span&gt;(&lt;span style=&#34;color:#0086b3&#34;&gt;len&lt;/span&gt;(points))
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:
+        x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; point[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;]
+        y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; point[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;]
+        b_gradient &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+=&lt;/span&gt; (&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt;N) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; ((b_current &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; m_current &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; x) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; y)
+        m_gradient &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+=&lt;/span&gt; (&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt;N) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; ((b_current &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; m_current &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; x) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; y)
+    new_b &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; b_current &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; (learningRate &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; b_gradient)
+    new_m &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; m_current &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; (learningRate &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; m_gradient)
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; [new_b, new_m, b_gradient, m_gradient]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;设置初始化参数并循环迭代最后画出结果&#34;&gt;设置初始化参数并循环迭代，最后画出结果&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    iterations &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;100&lt;/span&gt;    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#迭代次数&lt;/span&gt;
+    learningRate &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0.0001&lt;/span&gt;   &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#学习率，决定了下降的步伐大小&lt;/span&gt;
+    points &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; geneData() &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#生成训练集&lt;/span&gt;
+    b &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;   &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#线性方程参数b,m的初始值&lt;/span&gt;
+    m &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;   
+    b_gradient &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#代价函数梯度下降结果的初始值&lt;/span&gt;
+    m_gradient &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#0086b3&#34;&gt;list&lt;/span&gt;(&lt;span style=&#34;color:#0086b3&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, iterations&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;)):  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#循环进行梯度下降，求得结果&lt;/span&gt;
+        b,m,b_gradient,m_gradient &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; stepGradient(b,m,b_gradient,m_gradient,points,learningRate)
+
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#画出样本点&lt;/span&gt;
+        plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;scatter(point[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;], point[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;])
+
+    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#画出得到的直线&lt;/span&gt;
+    t &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;0.01&lt;/span&gt;)
+    s &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; b &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; m &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; t
+    plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;scatter(t,s,linewidths&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;0.5&lt;/span&gt;)
+    plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;show()
+
+    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#输出结果&lt;/span&gt;
+    &lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;b=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;%&lt;/span&gt;b)
+    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#print(b)&lt;/span&gt;
+    &lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;m=&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;%&lt;/span&gt;m)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;结果展示&#34;&gt;结果展示&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/Gradient_figure1.png&#34; alt=&#34;Gradient_figure1&#34;&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;b&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;4.824787&lt;/span&gt;
+m&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;46.528725&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;哲学思考&#34;&gt;哲学思考&lt;/h2&gt;
+&lt;p&gt;梯度下降是一个一阶最优化算法，通常也称为最陡下降法，要使用梯度下降法找到一个函数的局部极小值，必须向函数上当前点对应梯度的反方向规定的步长距离点进行迭代搜索。&lt;/p&gt;
+- http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
+        <link>http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</link>
+        <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ -&lt;p&gt;SPI、I2C、UART：串行通信协议&lt;/p&gt;
+&lt;p&gt;COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议&lt;/p&gt;
+&lt;p&gt;TTL、RS-232指的是电平标准&lt;/p&gt;
+&lt;p&gt;TTL电平：低电平为0，高电平为1&lt;/p&gt;
+&lt;p&gt;RS-232电平：正电平(+15V)为0，负电平(-15V)为1&lt;/p&gt;
+&lt;p&gt;最近在画PCB研究几个MCU的时候遇到引脚连接方面的一些问题，对于MCU进行串行通信传输数据的过程不太了解，因此写一篇博客来学习一下这些通信协议。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;一些概念&#34;&gt;一些概念&lt;/h2&gt;
+&lt;h3 id=&#34;同步synchronous和异步asynchronous&#34;&gt;同步(Synchronous)和异步(Asynchronous)&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;同步&lt;/strong&gt;就是整个处理过程顺序执行，当各个过程都执行完毕后，返回结果。这是一种线性执行的方式，执行的流程不能跨越。一般用于流程性比较强的程序。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;异步&lt;/strong&gt;：是只发送了调用的命令，调用者无需等待被调用的方法完全执行完毕，可以继续执行下面的流程，是一种并行处理的方式。比如页面数据架子啊的过程，不需要等待所有数据获取后再显示页面。&lt;/p&gt;
+&lt;p&gt;二者的区别就在于同步需要等待，异步不需要等待。&lt;/p&gt;
+&lt;h3 id=&#34;全双工和半双工&#34;&gt;全双工和半双工&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;全双工&lt;/strong&gt;是指可以&lt;strong&gt;同时&lt;/strong&gt;进行&lt;strong&gt;双向信号&lt;/strong&gt;传输。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;半双工&lt;/strong&gt;是指可以及进行&lt;strong&gt;双向信号传输&lt;/strong&gt;但&lt;strong&gt;同一时刻只能向一个&lt;/strong&gt;方向传输。&lt;/p&gt;
+&lt;h2 id=&#34;spi协议&#34;&gt;SPI协议&lt;/h2&gt;
+&lt;p&gt;串行外设接口总线（Serial Peripheral Interface Bus，SPI）是一种用于芯片通信的&lt;strong&gt;同步&lt;/strong&gt;串行通信接口规范，设备之间使用&lt;strong&gt;全双工&lt;/strong&gt;模式通信，采用一对一或一对多的主从模式。一般用于短距离通信。&lt;/p&gt;
+&lt;h3 id=&#34;spi物理层接口&#34;&gt;SPI物理层接口&lt;/h3&gt;
+&lt;p&gt;SPI总线共规定了4个逻辑信号接口：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SCLK/SCK（Serial Clock）：&lt;strong&gt;时钟&lt;/strong&gt;信号线，由主机产生，决定了SPI的通信速率。&lt;/li&gt;
+&lt;li&gt;MOSI（Master Output, Slave Input）：&lt;strong&gt;主机输出从机输入&lt;/strong&gt;信号，数据由&lt;strong&gt;主机&lt;/strong&gt;发出。&lt;/li&gt;
+&lt;li&gt;MISO（Master Input, Slave Output）：&lt;strong&gt;从机输出主机输入&lt;/strong&gt;信号，数据由&lt;strong&gt;从机&lt;/strong&gt;发出。&lt;/li&gt;
+&lt;li&gt;nSS（Slave Select）：&lt;strong&gt;片选&lt;/strong&gt;信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG&#34; alt=&#34;SPI_一对一&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG&#34; alt=&#34;SPI_一对多&#34;&gt;&lt;/p&gt;
+&lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2&#34;&gt;序列周边接口&lt;/a&gt;）&lt;/p&gt;
+&lt;h3 id=&#34;spi协议层&#34;&gt;SPI协议层&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_photo_1.png&#34; alt=&#34;SPI_photo_1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;（图片来自&lt;a href=&#34;https://blog.csdn.net/qq_29344757/article/details/76855350&#34;&gt;SPI通讯协议介绍&lt;/a&gt;）&lt;/p&gt;
+&lt;p&gt;如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。&lt;/p&gt;
+&lt;h4 id=&#34;通信起始结束信号&#34;&gt;通信起始/结束信号&lt;/h4&gt;
+&lt;p&gt;nSS信号由高电平变为低电平即为通信的起始，由低电平变为高电平即为通信的结束。&lt;/p&gt;
+&lt;h4 id=&#34;有效数据的采集&#34;&gt;有效数据的采集&lt;/h4&gt;
+&lt;p&gt;上图中SCK为偶数边沿时数据得到有效采样，此时MISO和MOSI的数据有效，高电平表示1，低电平表示0，其他时刻的数据无效。&lt;/p&gt;
+&lt;p&gt;数据传输时高位在先还是低位在先SPI协议并未规定，需要双方自行约定，一般采用高位在先（MSB）方式传输。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;两个概念：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。
+&lt;ul&gt;
+&lt;li&gt;CPOL = 0：SCK在空闲时为低电平&lt;/li&gt;
+&lt;li&gt;CPOL = 1：SCK在空闲时为高电平&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。
+&lt;ul&gt;
+&lt;li&gt;CPHA = 0：在SCK的奇数边沿采样&lt;/li&gt;
+&lt;li&gt;CPHA = 1：在SCK的偶数边沿采样&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。&lt;/p&gt;
+&lt;p&gt;所以，SPI有如下4种工作模式：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;工作模式&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;CPOL&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;CPHA&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;空闲时的SCK时钟&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;采样时钟&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;是否常用&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;低&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;奇数次边沿&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Y&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;低&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;偶数次边沿&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;N&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;高&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;奇数次边沿&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;Y&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;高&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;偶数次边沿&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;N&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;mathrmi2mathrmc协议&#34;&gt;$\mathrm{I}^2\mathrm{C}$协议&lt;/h2&gt;
+&lt;p&gt;$\mathrm{I}^2\mathrm{C}$（Inter-Integrated Circuit）集成电路总线，是飞利浦设计的一种简单的双向两线&lt;strong&gt;同步串行&lt;/strong&gt;总线，为全双工，是为了实现有效的IC之间的控制；是一种串行通信总线，为了让嵌入式设备连接低速设备。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/I2C_trans.PNG&#34; alt=&#34;I2C_trans&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/1024px-I2C.svg.png&#34; alt=&#34;1024px-I2C.svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;$\mathrm{I}^2\mathrm{C}$只需要两个接口即可通信：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SDA（Serial Data）&lt;/strong&gt;：串行数据接口&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SCL（Serial Clock）&lt;/strong&gt;：串行时钟&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SDA和SCL都是双向线路，都通过一个电流源或上拉电阻接到正的电源电压，总线&lt;strong&gt;空闲&lt;/strong&gt;时，这两条线路都是&lt;strong&gt;高电平&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;$\mathrm{I}^2\mathrm{C}$总线支持任何IC生产过程。两线在连接到总线的器件间传递信息。每个器件都有一个唯一的地址识别，而且都可以作为一个发送器或接收器。&lt;/p&gt;
+&lt;p&gt;$\mathrm{I}^2\mathrm{C}$总线是一个&lt;strong&gt;多主机&lt;/strong&gt;的总线，即可以连接多于一个能控制总线的器件到总线。如果两个或多个主机同时尝试初始化传输数据，为了避免产生混乱，发展出了一个&lt;strong&gt;仲裁&lt;/strong&gt;的过程。&lt;/p&gt;
+&lt;p&gt;$\mathrm{I}^2\mathrm{C}$的参考设计使用了一个7比特长度的地址空间，但是保留了16个地址，所以一组总线最多可以和112个节点通信。但连接到总线的接口数量其实是由总线电容是400pF的限制决定的（这里不深入了解）。&lt;/p&gt;
+&lt;p&gt;$\mathrm{I}^2\mathrm{C}$有几种常见的传输模式，标准模式（100kbps）、低速模式（10kbps），时钟频率可以被降为0，即可以暂停通信。&lt;/p&gt;
+&lt;h2 id=&#34;uart串口&#34;&gt;UART串口&lt;/h2&gt;
+&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
+&lt;p&gt;通用&lt;strong&gt;异步&lt;/strong&gt;收发传输器（异步串行通信口）（Universal Asynchronous Receiver/Transmitter），是一种&lt;strong&gt;串行、异步、全双工&lt;/strong&gt;的通信协议。他的工作原理是把数据的字节按照比特顺序发送，另一端的UART把比特组装为字节。&lt;/p&gt;
+&lt;p&gt;串行通信是指利用一条传输线将数据一位位地顺序传送，也可以用两个信号线组成全双工通信，如rs232。特点是通信线路简单，利用简单的线缆就可实现通信，降低成本，适用于远距离通信，但传输速度慢的应用场合。&lt;/p&gt;
+&lt;h3 id=&#34;数据帧&#34;&gt;数据帧&lt;/h3&gt;
+&lt;p&gt;每个字符表示为一个帧(10bit)，异步通信以一个字符为传输单位；两个UART设备之间通信不需要时钟线，需要在两个UART设备上指定相同的传输速率(&lt;strong&gt;波特率，bps&lt;/strong&gt;)，以及&lt;strong&gt;空闲位、起始位、校验位、结束位&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;空闲位(1bit)：高电平，指没有数据传输。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;起始位(1bit)：低电平。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;数据位(8bit or 7bit)：一般先传输最低位&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;（可选）奇偶校验位(1bit)：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;无校验&lt;/li&gt;
+&lt;li&gt;奇校验：如果数据位中1的数目是偶数，则校验位为1；如果1的数目是奇数，则校验位为0&lt;/li&gt;
+&lt;li&gt;偶校验：如果数据位中1的数目是偶数，则校验位为0；如果1的数目是奇数，则校验位为1&lt;/li&gt;
+&lt;li&gt;mark parity / parity：校验位时钟为1/0。（不常用）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;结束位(1bit)：高电平。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;jtag边界扫描&#34;&gt;JTAG边界扫描&lt;/h2&gt;
+&lt;p&gt;JTAG主要用于验证设计和测试印刷电路板。&lt;/p&gt;
+&lt;h3 id=&#34;电气特性&#34;&gt;电气特性&lt;/h3&gt;
+&lt;p&gt;JTAG的接口是将4/5个接口连接到芯片上，电路板上的很多芯片可以将其JTAG接口通过Daisy Chain（菊花链）的方式连在一起，这样我们就可以访问一块印刷电路板上的所有芯片。&lt;/p&gt;
+&lt;p&gt;连接引脚为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TDI（Test Data Input）：测试数据输入&lt;/li&gt;
+&lt;li&gt;TDO（Test Data Output）：测试数据输出&lt;/li&gt;
+&lt;li&gt;TCK（Test Clock Input）：测试时钟&lt;/li&gt;
+&lt;li&gt;TMS（Test Model Selection）：测试模式选择&lt;/li&gt;
+&lt;li&gt;TRST（测试复位）可选&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/Jtag_chain.svg.jpg&#34; alt=&#34;Jtag_chain.svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/JTAG&#34;&gt;JTAG&lt;/a&gt;）&lt;/p&gt;
+&lt;p&gt;由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。&lt;/p&gt;
+- http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>《算法（第4版）》学习笔记——（一）排序</title>
+        <link>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
+        <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ -&lt;h2 id=&#34;初级排序算法&#34;&gt;初级排序算法&lt;/h2&gt;
+&lt;h3 id=&#34;选择排序&#34;&gt;选择排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Selection&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将a按照升序排列
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; min &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;min&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]))&lt;/span&gt;
+                    min &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+            exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;min&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析&#34;&gt;性能分析&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。&lt;/li&gt;
+&lt;li&gt;该算法运行时间与输入无关，数据的移动是最少的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;插入排序&#34;&gt;插入排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-1&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-1&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Insertion&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将相邻两个元素向左依次交换最终使得索引左侧的元素全部向右移动一位
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; 0 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]);&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--)&lt;/span&gt;
+                exch &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-1&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;对随机排列长度为$N$且主键不重复的数组，平均插入排序需要$N^2/4$次比较和$N^2/4$次交换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;部分有序数组&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数组中每个元素距离它的最终位置都不远&lt;/li&gt;
+&lt;li&gt;一个有序大数组接一个小数组&lt;/li&gt;
+&lt;li&gt;数组中只有几个元素的位置不正确&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;插入排序对这样的部分有序数组非常有效。&lt;/p&gt;
+&lt;h3 id=&#34;希尔排序&#34;&gt;希尔排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-2&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;交换不相邻的元素对数组的局部进行排序，并最终用插入排序将局部有序数组排序。&lt;/p&gt;
+&lt;p&gt;希尔排序的思想是使数组中任意间隔为h的元素都是有序的，这样的数组被称为&lt;strong&gt;h有序数组&lt;/strong&gt;，即h个相互独立的有序数组编织在一起组成的一个数组&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-2&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Shell&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;srot&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; h &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt; 3&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;   h &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 3 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; h &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; h &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; h&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]);&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-=&lt;/span&gt; h&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+                    exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; h&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+            h &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; h &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt; 3&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该希尔算法使用了序列$1/2(3^k-1)$，即序列${ 1,4,13 }$，称为&lt;strong&gt;增量序列&lt;/strong&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;性能分析-2&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;希尔排序权衡了子数组的规模和有序性，希尔排序比插入排序和选择排序快得多，并且数组越大优势越大。&lt;/p&gt;
+&lt;h2 id=&#34;归并排序&#34;&gt;归并排序&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;归并&lt;/strong&gt;即将两个有序的数组归并成一个更大的有序数组。&lt;/p&gt;
+&lt;h3 id=&#34;原地归并&#34;&gt;原地归并&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;merge&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; mid&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; mid &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt;
+            aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++)&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; mid&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;                      a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++];&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;                  a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++];&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;],&lt;/span&gt; aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]))&lt;/span&gt;    a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++];&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt;                              a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++];&lt;/span&gt;     
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;自顶向下的归并排序&#34;&gt;自顶向下的归并排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-3&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;对子数组a[lo..hi]进行排序，先将其分为$\mathrm{a}[\mathrm{lo..mid}]$和$\mathrm{a[mid+1..hi]}$两部分，分别通过递归调用将其单独排序，最后将有序的子数组归并为最终的排序结果。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Merge&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        aux &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+        sort&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; mid &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; lo &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt; 2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        sort &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; mid&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        sort &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; mid &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        merge&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; mid&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-3&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;对于长度为$N$的任意数组，自顶向下的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多需要访问数组$6N\lg N$次。&lt;/p&gt;
+&lt;p&gt;所以可知道归并排序所需要的时间与$N\lg N$成正比，主要缺点是辅助数组所使用的额外空间和N的大小成正比。&lt;/p&gt;
+&lt;h3 id=&#34;自底向上的归并排序&#34;&gt;自底向上的归并排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-4&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;先归并那些微型数组，然后再成对地归并得到的子数组。首先进行两两归并（把每个元素当作一个大小为1的数组），然后是四四归并（将两个大小为2的数组归并为一个有4个元素的数组），然后是八八归并，以此类推。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-3&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;MergeBU&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        aux &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; sz&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+        	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; lo &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; lo &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; sz&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; lo &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+=&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; sz&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+        		merge&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lo &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; Math&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;min&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;lo &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-4&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;对于长度为$N$的任意数组，自底向上的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多访问数组$6N\lg N$次。&lt;/p&gt;
+&lt;h2 id=&#34;快速排序&#34;&gt;快速排序&lt;/h2&gt;
+&lt;h3 id=&#34;快速排序的切分&#34;&gt;快速排序的切分&lt;/h3&gt;
+&lt;p&gt;根据切分点&lt;code&gt;j&lt;/code&gt;对数组进行切分，切分后的数组满足：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;a[lo]&lt;/code&gt;到&lt;code&gt;a[j-1]&lt;/code&gt;中的所有元素都不大于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a[j+1]&lt;/code&gt;到&lt;code&gt;a[hi]&lt;/code&gt;中的所有元素都不小于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//切分
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;partition&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; hi &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    Comparable v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[++&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;],&lt;/span&gt; v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[--&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]))&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;基本快速排序算法&#34;&gt;基本快速排序算法&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-5&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;通过递归地调用切分来进行排序。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-4&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Quick&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        StdRandom&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;shuffle&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将输入乱序，消除堆输入的依赖
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;        sort&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; partition&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        sort&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        sort&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-5&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;将长度为$N$的无重复数组排序，快速排序平均需要$2N\lg N$次比较，即$1/6N\lg N$次交换。&lt;/p&gt;
+&lt;h3 id=&#34;三向切分快速排序&#34;&gt;三向切分快速排序&lt;/h3&gt;
+&lt;p&gt;在含有大量重复元素时使用该方法。将数组切分为三部分，分别对应小于、等于和大于切分元素的数组元素。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-5&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Quick3way&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; lt &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; lo &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; gt &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        Comparable v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; gt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; cmp &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;].&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;compareTo&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;	exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++,&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++);&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;	exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; gt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--);&lt;/span&gt;
+            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+        sort&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; lt &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        sort&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; gt &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;优先队列&#34;&gt;优先队列&lt;/h2&gt;
+&lt;p&gt;优先队列这种&lt;em&gt;数据结构&lt;/em&gt;应支持两种操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;删除最大元素&lt;/li&gt;
+&lt;li&gt;插入元素&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;初级实现有序数组无序数组链表&#34;&gt;初级实现：有序数组、无序数组、链表&lt;/h3&gt;
+&lt;p&gt;这些初级实现中，插入元素和删除最大元素的操作在最坏的情况下需要&lt;strong&gt;线性时间&lt;/strong&gt;来完成，无法满足我们的性能要求。接下来使用&lt;strong&gt;堆&lt;/strong&gt;来实现使这两种操作能更快地执行。&lt;/p&gt;
+&lt;h3 id=&#34;基于堆的优先队列&#34;&gt;基于堆的优先队列&lt;/h3&gt;
+&lt;h4 id=&#34;堆的定义&#34;&gt;堆的定义&lt;/h4&gt;
+&lt;p&gt;数据结构&lt;strong&gt;二叉堆&lt;/strong&gt;满足：每个元素大于等于两个特定位置的元素，这些位置的元素又要大于等于数组中的另外两个元素，这样的数据结构可以通过有序的完全二叉树来表示。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E6%9C%89%E5%BA%8F%E7%9A%84%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91.PNG&#34; alt=&#34;有序的完全二叉树&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在一个堆中，位置$k$的节点的父节点的位置为$k/2$，而它的两个子节点的位置为$2k$和$2k+1$。&lt;/p&gt;
+&lt;p&gt;我们可以通过计算数组的索引在树中上下移动：从$a[k]$向上一层就令$k=k/2$，向下一层则令$k=2k/2k+1$。&lt;/p&gt;
+&lt;h4 id=&#34;堆的算法&#34;&gt;堆的算法&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;由下至上的堆有序化（上浮swim）&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;swim&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; 1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;由上至下的堆有序化（下沉sink）&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sink&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;=&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;	j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++;&lt;/span&gt;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//选择父节点的两个子节点中较大的作为交换对象
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(!&lt;/span&gt;less&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将交换后子节点的位置作为父节点，循环进行下一次交换,继续下沉
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列的代码实现&#34;&gt;基于堆的优先队列的代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;Key &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extends&lt;/span&gt; Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;key&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; Key&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; pq&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; maxN&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        pq &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Key&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[])&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;maxN &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Key v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在数组的末尾输入，然后进行上浮swim操作
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        pq&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[++&lt;/span&gt;N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        swim&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;};&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; Key &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;delMax&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        Key max &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; pq&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;];&lt;/span&gt;
+        exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--);&lt;/span&gt;
+        pq&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[&lt;/span&gt;N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++]&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+        sink&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; max&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列性能分析&#34;&gt;基于堆的优先队列性能分析&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.PNG&#34; alt=&#34;优先队列性能分析&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;堆排序&#34;&gt;堆排序&lt;/h3&gt;
+&lt;h4 id=&#34;堆的构造&#34;&gt;堆的构造&lt;/h4&gt;
+&lt;p&gt;高效的构造堆的方法是从右向左用&lt;code&gt;sink()&lt;/code&gt;函数构造子堆。数组的每个位置都是一个子堆的根结点，如果一个结点的两个子结点都已经是堆了，那么在该结点上调用&lt;code&gt;sink()&lt;/code&gt;可以将它们变成一个堆。我们只需要扫描一半的元素，因为可以跳过大小为1的子堆。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E5%A0%86%E7%9A%84%E6%9E%84%E9%80%A0.png&#34; alt=&#34;堆的构造&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;下沉排序&#34;&gt;下沉排序&lt;/h4&gt;
+&lt;p&gt;将堆中的最大元素删去，然后将其放入堆缩小后数组中空出的位置。&lt;/p&gt;
+&lt;h4 id=&#34;堆排序代码实现&#34;&gt;堆排序代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--)&lt;/span&gt;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//构造堆
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;        sink&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;N &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+        exch&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--);&lt;/span&gt;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//堆排序，按递减顺序循环取出所有的最大值，最后得到排序结果。
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;        sink&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;堆排序性能分析&#34;&gt;堆排序性能分析&lt;/h4&gt;
+&lt;p&gt;将$N$个元素排序，堆排序只需要少于$(2N\lg N+2N)$次比较以及一半的交换次数。&lt;/p&gt;
+- http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>Dijkstra双栈——算术表达式求值</title>
+        <link>http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
+        <pubDate>Tue, 21 Jul 2020 20:15:08 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/ -&lt;h2 id=&#34;算数表达式&#34;&gt;算数表达式&lt;/h2&gt;
+&lt;p&gt;这里的算术表达式支持常见的二元运算符&lt;code&gt;+-*/&lt;/code&gt;以及接受一个参数的平方根运算符&lt;code&gt;sqrt&lt;/code&gt;。这里我们假定表达式中未省略所有的括号。&lt;/p&gt;
+&lt;h2 id=&#34;计算方法&#34;&gt;计算方法&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;将操作数压入&lt;strong&gt;操作数栈&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;将运算符压入&lt;strong&gt;运算符栈&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;忽略左括号&lt;/li&gt;
+&lt;li&gt;遇到右括号时，弹出一个运算符，弹出需要数量的操作数进行运算，然后将得到的结果再压入操作数栈。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;代码实现&#34;&gt;代码实现&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;edu.princeton.cs.algs4&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Evaluate&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+		Stack&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; ops &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Stack&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;String&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;();&lt;/span&gt;
+		Stack&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;Double&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; vals &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Stack&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;Double&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;();&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(!&lt;/span&gt;StdIn&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;())&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//读取字符，如果是运算符则压入运算符栈ops
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;			String s &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; StdIn&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;readString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;(&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;));&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;+&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    ops&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;-&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    ops&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    ops&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    ops&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;sqrt&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    ops&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+			
+			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//如果字符为)，则弹出运算符和操作数，计算结果并压入操作数栈vals
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;)&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
+				String op &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; ops&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+				&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; vals&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;op&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;+&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; vals&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;op&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;-&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; vals&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;op&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;*&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; vals&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;op&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;/&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; vals&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt; v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+				&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;op&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;equals&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;sqrt&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;))&lt;/span&gt;    v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Math&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;sqrt&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+				
+				vals&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//如果字符既非运算符又非括号，将其作为double值压入操作数栈vals
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; vals&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;push&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;Double&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;parseDouble&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;s&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;));&lt;/span&gt;
+		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+		StdOut&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;vals&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;());&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>计算机网络学习日志（二）——运输层</title>
+        <link>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
+        <pubDate>Wed, 06 May 2020 21:27:10 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ -&lt;h2 id=&#34;概述和运输层服务&#34;&gt;概述和运输层服务&lt;/h2&gt;
+&lt;p&gt;运输层协议在不同主机上的应用进程之间提供了&lt;strong&gt;逻辑通信&lt;/strong&gt;，这并非物理上的实际通信。在发送端，运输层将从应用程序接收到的报文转换成运输层分组，该分组称为&lt;strong&gt;运输层报文段&lt;/strong&gt;，实现方法是将应用报文划分为一个个小的块，为每个块加上运输层首部生成运输层报文段，然后在端系统中传递给网络层，网络层将其封装成网络层分组，向目的地发送。&lt;/p&gt;
+&lt;p&gt;因特网由TCP和UDP两种运输层协议。&lt;/p&gt;
+&lt;h3 id=&#34;运输层和网络层的关系&#34;&gt;运输层和网络层的关系&lt;/h3&gt;
+&lt;p&gt;网络层提供了&lt;strong&gt;主机&lt;/strong&gt;之间的逻辑通信，而运输层为运行在不同主机上的&lt;strong&gt;进程&lt;/strong&gt;之间提供了逻辑通信。&lt;/p&gt;
+&lt;p&gt;运输层协议至工作在端系统中，同时网络中的路由器既不处理也不识别运输层加在应用层报文的任何信息。运输层协议能提供的服务常常受制于底层网络层协议，例如，如果网络层协议无法为主机之间发送的运输层报文段提供时延和带宽保证，运输层协议可就无法为&lt;strong&gt;进程之间&lt;/strong&gt;发送的应用程序报文提供时延和带宽保证。&lt;/p&gt;
+&lt;h3 id=&#34;运输层概述&#34;&gt;运输层概述&lt;/h3&gt;
+&lt;p&gt;首先定义两个名词的意义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;报文段：运输层分组，即TCP和UDP的分组&lt;/li&gt;
+&lt;li&gt;数据报：网络层分组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;网络层的IP被称为不可靠服务。&lt;/p&gt;
+&lt;h2 id=&#34;多路复用与多路分解&#34;&gt;多路复用与多路分解&lt;/h2&gt;
+&lt;p&gt;在目的主机中，运输层从紧邻其下的网络层接受报文段，并将这些报文段中的数据交付给在主机上运行的对应应用程序进程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;多路分解&lt;/strong&gt;是指将运输层报文中的数据正确交付给正确的&lt;strong&gt;套接字&lt;/strong&gt;的工作。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;多路复用&lt;/strong&gt;是指在源主机中从不同套接字中收集数据块，并为每个数据块封装上首部信息从而生成报文段，然后将报文段传递到网络层。&lt;/p&gt;
+&lt;p&gt;运输层多路复用的要求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;套接字有唯一标识&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每个报文段有特殊字段来指示该报文段所要交付到的套接字&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;特殊字段：源端口号字段、目的端口号字段&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;0~1023范围的端口称为&lt;em&gt;周知端口号&lt;/em&gt;，是受限的，它们分配给周知应用层协议来使用&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;无连接运输udp&#34;&gt;无连接运输：UDP&lt;/h2&gt;
+&lt;p&gt;UDP从应用程序得到数据，附加上用于多路复用/分解服务和目的地端口字段号，以及两个其他字段，然后将形成的报文交给网络层，网络层将运输层报文封装到一个一个IP数据报中，然后尽力交付给目的主机。&lt;/p&gt;
+&lt;p&gt;UDP被称为&lt;strong&gt;无连接&lt;/strong&gt;运输是因为在发送报文段之前，发送方和接收方的运输层实体之间没有握手。&lt;/p&gt;
+&lt;p&gt;一些应用相比于TCP更适合于使用UDP的原因：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;关于发送什么数据以及何时发送的&lt;strong&gt;应用层控制&lt;/strong&gt;更为精细&lt;/li&gt;
+&lt;li&gt;无需建立连接，开始传输数据前不需要握手&lt;/li&gt;
+&lt;li&gt;无连接状态。TCP中要实现可靠数据传输服务并提供拥塞控制，状态信息是必须的。&lt;/li&gt;
+&lt;li&gt;分组首部占用空间小。每个TCP报文段有20个字节的首部开销，UDP仅有8个字节。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;udp报文段结构&#34;&gt;UDP报文段结构&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/UDP.svg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;udp检验和&#34;&gt;UDP检验和&lt;/h3&gt;
+&lt;p&gt;检验和用于确定当UDP报文段从源到达目的地移动时，其中的比特是否发生变化。&lt;/p&gt;
+&lt;p&gt;提供差错检验的原因是不能保证源和目的之间的所有链路都提供了差错检测。&lt;/p&gt;
+&lt;p&gt;虽然UDP提供了差错检验，但是它对于差错恢复无能为力，它只是丢弃受损的报文段。&lt;/p&gt;
+&lt;h2 id=&#34;可靠数据传输原理&#34;&gt;可靠数据传输原理&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;可靠数据传输协议&lt;/strong&gt;是用来实现一种服务的抽象：数据可以通过一条可靠的信道进行传输。可靠传输协议的下层也许是不可靠的，如TCP是在不可靠的端到端网络层(IP)之上实现的可靠数据传输协议。我们目前可将较低层直接视为不可靠的点对点信道。&lt;/p&gt;
+&lt;h3 id=&#34;构造可靠数据传输协议&#34;&gt;构造可靠数据传输协议&lt;/h3&gt;
+&lt;h4 id=&#34;rdt10经完全可靠信道的可靠数据传输&#34;&gt;rdt1.0：经完全可靠信道的可靠数据传输&lt;/h4&gt;
+&lt;p&gt;此时的底层信道完全可靠，接收端不需要提供任何反馈信息给发送方。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt1.svg&#34; alt=&#34;rdt1&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;有限状态机(Finite-State Machine, FSM)&lt;/strong&gt;：表示有限个状态以及在这些状态之间的转移和动作等行为的数学模型。
+&lt;ul&gt;
+&lt;li&gt;FSM描述图中箭头指示了协议从一个状态便签到另一个状态&lt;/li&gt;
+&lt;li&gt;横线上方：引起变迁的事件&lt;/li&gt;
+&lt;li&gt;横线下方：事件发生时所采取的动作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;发送方和接收方有各自的FSM&lt;/p&gt;
+&lt;p&gt;rdt1.0的发送端通过&lt;code&gt;rdt_send(data)&lt;/code&gt;事件接受来自叫高层的数据，产生一个包含该数据的分组(由&lt;code&gt;make_pkt(data)&lt;/code&gt;动作产生)，并将分组发送到信道中。&lt;/p&gt;
+&lt;p&gt;接收端通过&lt;code&gt;rdt_rcv(packet)&lt;/code&gt;从底层信道接受一个分组，从分组中取出数据(由&lt;code&gt;extract(packet, data)&lt;/code&gt;动作完成)，并将数据上传给叫高层(通过&lt;code&gt;deliver_data(data)&lt;/code&gt;完成)。&lt;/p&gt;
+&lt;h4 id=&#34;rdt20经具有比特差错信道的可靠数据传输&#34;&gt;rdt2.0：经具有比特差错信道的可靠数据传输&lt;/h4&gt;
+&lt;p&gt;底层信道更为实际的模型是可能受损的模型，这样的比特差错通常出现在网络的物理部件中&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自动重传请求协议(Automatic Repeat reQueat, ARQ)&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;使用&lt;strong&gt;肯定确认&lt;/strong&gt;与&lt;strong&gt;否定确认&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;差错检测：第五章会详细说明具体机制&lt;/li&gt;
+&lt;li&gt;接收方反馈：接收方向发送方回送**ACK(肯定确认)&lt;strong&gt;或是&lt;/strong&gt;NAK(否定确认)**分组，理论上只需要1比特。&lt;/li&gt;
+&lt;li&gt;重传：接收方接收到有差错分组，发送方将重传该分组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt2.svg&#34; alt=&#34;rdt2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;rdt2.0的发送端由两个状态，左边的状态中，发送端协议正在等待来自上层传递的数据，当事件&lt;code&gt;rdt_send(data)&lt;/code&gt;出现时，发送方将产生一个带有检验和的分组(sndpkt)，然后发送该分组。右边的状态中，发送方协议等待来自接收方的ACK或NAK分组。如果收到ACK分组，则知道已经正确发送，协议返回到右侧的等待上层数据的状态；如果收到NAK分组，则协议重新上传一个分组并继续等待会送的ACK或NAK。&lt;/p&gt;
+&lt;p&gt;当发送方处于右侧的等待状态时，不能从上层获得更多的数据，只有收到ACK分组并离开该状态时才能开始获得上层的数据，所以，rdt2.0这样的协议又被称为&lt;strong&gt;停等&lt;/strong&gt;协议。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;rdt2.0有一个致命的缺陷，没有考虑到ACK或NAK分组受损的可能性。&lt;/p&gt;
+&lt;p&gt;一种解决方法是，当发送方收到含糊不清的ACK或NAK分组时，只需&lt;strong&gt;重传&lt;/strong&gt;当前数据分组即可。这种方法在发送方到接收方的信道中引入了&lt;strong&gt;冗余分组&lt;/strong&gt;，但问题在于接收方不知道它上次所发送的ACK或NAK分组是否被正确收到，因此它不知道当前接收到的分组是新的还是一个重传。&lt;/p&gt;
+&lt;p&gt;解决该问题的方法是在数据分组中添加一新字段，让发送方对其数据分组进行&lt;strong&gt;编号&lt;/strong&gt;，即将发送数据分组的&lt;strong&gt;序号&lt;/strong&gt;放在该字段，此时接收方只需要检查序号即可确定收到的分组是否一次重传。这里只需要使用1比特的序号就够了，如果当前是正在重传一个分组，则接收到的分组序号与最近的收到的分组序号相同；如果是一个新的分组，则序号与前一个相比发生了变化。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;rtd2.1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt2_1_send.svg&#34; alt=&#34;rdt2_1_send&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt2_1_rcv.svg&#34; alt=&#34;rdt2_1_rcv&#34;&gt;&lt;/p&gt;
+&lt;p&gt;rdt2.1是解决了上述rdt2.0问题后的新的协议，发送方和接收方的状态数都是之前的两倍，因为协议状态必须反映出此时发送方正在发送的分组或是接收方希望收到的分组的序号是0还是1。&lt;/p&gt;
+&lt;h4 id=&#34;rdt30经具有比特差错的丢包信道的可靠数据传输&#34;&gt;rdt3.0：经具有比特差错的丢包信道的可靠数据传输&lt;/h4&gt;
+&lt;p&gt;现在假定除了比特受损外，底层信道还会丢包，比特受损已经可以通过前面rdt2中的重传解决，而解决丢包需要增加一种新的协议机制。&lt;/p&gt;
+&lt;p&gt;假定发送方传输一个数据分组，该分组或者接受方对于该分组的ACK发生了丢失，这两种情况下发送方都收不到响应，发送方需要等一段时间以便确定分组已经丢失，然后重传该分组。注意，如果一个分组经历了一个很大的时延，发送方也可能重传该分组，这就导致引入了&lt;strong&gt;冗余数据分组&lt;/strong&gt;，而前面的rdt2.1协议已经能通过序号的功能来处理这种情况。&lt;/p&gt;
+&lt;p&gt;这个等待时间值需要通过一个&lt;strong&gt;倒计数定时器&lt;/strong&gt;来确定，在给定时间量过期后，可中断发送方，所以发送方需要做到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每次发送一个分组时便启动一个定时器。&lt;/li&gt;
+&lt;li&gt;响应定时器中断(采取适当动作)。&lt;/li&gt;
+&lt;li&gt;终止定时器。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt3.svg&#34; alt=&#34;rdt3&#34;&gt;&lt;/p&gt;
+&lt;p&gt;分组序号在0和1之间交替，所以rdt3.0又被称为比特交替协议。&lt;/p&gt;
+&lt;h3 id=&#34;流水线可靠数据传输&#34;&gt;流水线可靠数据传输&lt;/h3&gt;
+&lt;p&gt;rdt3.0是一个功能正确的协议，但它的性能并不高，这里的核心问题在于它的停等协议。&lt;/p&gt;
+&lt;p&gt;在停等协议下，信道的利用率非常低，具体过程见书。&lt;/p&gt;
+&lt;p&gt;解决这个问题的方法是：&lt;strong&gt;不以停等方式运行&lt;/strong&gt;，&lt;/p&gt;
+&lt;p&gt;(RTT: Round-Trip Time)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E6%B5%81%E6%B0%B4%E7%BA%BF.svg&#34; alt=&#34;流水线&#34;&gt;&lt;/p&gt;
+&lt;p&gt;允许发送方方多个分组而无需等待确认，这种技术被称为&lt;strong&gt;流水线&lt;/strong&gt;，流水线对可靠数据传输协议回带来以下影响：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;必须增加序号的范围&lt;/li&gt;
+&lt;li&gt;协议的发送方和接收方不得不缓存多个分组&lt;/li&gt;
+&lt;li&gt;解决流水线差错恢复有两种基本方法：回退N步(Go-Back-N, GBN)、选择重传(Selective Repeat, SR)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;回退n步go-back-n-gbn&#34;&gt;回退N步(Go-Back-N, GBN)&lt;/h3&gt;
+&lt;p&gt;GBN协议中，允许发送方发送多个分组不需等待确认的原则受限于在流水线中未确认的分组数不能超过某个最大允许数N。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/GBN.svg&#34; alt=&#34;GBN&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;基序号(base)：最早未确认分组的序号&lt;/li&gt;
+&lt;li&gt;下一个序号(nextseqnum)：最小未使用序号(下一个待发分组序号)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如上图所示，可以将序号范围分割成4段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[0, base - 1]段内的序号对应已发送并确认的分组&lt;/li&gt;
+&lt;li&gt;[base, nextseqnum - 1]：已发送但未被确认的分组&lt;/li&gt;
+&lt;li&gt;[nextseqnum, base + N - 1]：对应立即要被发送的分组(如果有数据来自上层的话)&lt;/li&gt;
+&lt;li&gt;大于等于base + N的序号不能使用，直到当前流水线中未被确认的分组已得到确认&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以，N常被称为&lt;strong&gt;窗口长度&lt;/strong&gt;，GBN也常被称为&lt;strong&gt;滑动窗口协议(sliding-window protocol)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;扩展FSM&lt;/strong&gt;：基于ACK、无NAK的GBN协议的发送方和接收方描述。&lt;/p&gt;
+&lt;p&gt;(FSM: Finite-State Machine, 有限状态机)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/ExtendedFSM.svg&#34; alt=&#34;ExtendedFSM&#34;&gt;&lt;/p&gt;
+&lt;p&gt;GBN发送方必须响应三种类型事件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;上层的调用&lt;/em&gt;。当上层调用rdt_send()时，发送方首先检查发送窗口是否已满。如果未满，则产生一个分组并更新变量；如果已满，则发送方将数据返回给上层，隐式地指示窗口已满，过一会儿再试。实际中发送方更可能缓存这些数据或使用同步机制(仅当窗口不满时才允许上层调用rdt_send())。&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;收到一个ACK&lt;/em&gt;。对序号为n的分组的确认采取&lt;strong&gt;累计确认&lt;/strong&gt;，表明接收方已正确收到序号为n的之前(包括n)的所有分组。&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;超时事件&lt;/em&gt;。发生超时时，发送方重传所有已发送但还未被确认过的分组。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;GBN协议中，接收方丢弃所有的失序分组，即不需要缓存任何失序分组，因为如果分组丢失，发送方会重传丢失的分组和之后的分组。&lt;/p&gt;
+&lt;h3 id=&#34;选择重传sr&#34;&gt;选择重传(SR)&lt;/h3&gt;
+&lt;p&gt;GBN解决了停等协议中的信道利用率的问题但GBN本身也存在着一些性能问题，当窗口长度和带宽时延都很大时，单个分组的差错就能引起GBN重传大量分组，但许多分组没有必要重传。&lt;/p&gt;
+&lt;p&gt;选择重传(SR)协议通过让发送方仅重传那些它怀疑在接收方出错的分组而避免了不必要的重传。这种方式要求接收方逐个地确认正确接收地分组&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SR%E6%93%8D%E4%BD%9C.svg&#34; alt=&#34;SR操作&#34;&gt;&lt;/p&gt;
+&lt;p&gt;?对于SR协议而言，窗口长度必须小于或等于序号空间大小的一半&lt;/p&gt;
+&lt;h2 id=&#34;面向连接的运输tcp&#34;&gt;面向连接的运输：TCP&lt;/h2&gt;
+&lt;h3 id=&#34;tcp连接&#34;&gt;TCP连接&lt;/h3&gt;
+&lt;p&gt;TCP被称为时&lt;strong&gt;面向连接的&lt;/strong&gt;是因为一个进程向另一个进程发送数据之前，这两个进程必须先相互握手，即相互发送一些预备报文来建立确保数据传输的参数。&lt;/p&gt;
+&lt;p&gt;这样的连接不是一条端到端的连接电路，而是&lt;strong&gt;逻辑连接&lt;/strong&gt;，这种链接仅仅存在于两个通信端系统的TCP程序中。TCP协议只在端系统中运行，不在中间的网络元素中运行，中间路由看不到TCP连接，只能看到数据报。&lt;/p&gt;
+&lt;p&gt;TCP连接提供的是&lt;strong&gt;全双工&lt;/strong&gt;服务，进程之间的TCP连接可以双向传输数据；TCP是&lt;strong&gt;点对点&lt;/strong&gt;连接，只能在一个发送方和一个接收方之间传输。&lt;/p&gt;
+&lt;h4 id=&#34;tcp建立连接的过程&#34;&gt;TCP建立连接的过程&lt;/h4&gt;
+&lt;p&gt;客户首先发送一个特殊TCP报文段，服务器用另一个特殊报文段响应，最后客户再用第三个特殊报文段作为响应，这种建立连接的过程通常被称为&lt;strong&gt;三次握手&lt;/strong&gt;。第三个报文段可以承载有效荷载(可以包含应用层数据)，前两个不行。&lt;/p&gt;
+&lt;p&gt;建立连接后，两个应用程序进程之间就可以相互方数据了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/TCP%E7%BC%93%E5%AD%98.svg&#34; alt=&#34;TCP缓存&#34;&gt;&lt;/p&gt;
+&lt;p&gt;客户进程通过套接字传递数据流，数据一旦通过套接字，就由客户中运行的TCP控制，TCP将这些数据引入&lt;strong&gt;发送缓存&lt;/strong&gt;，并不时地从发送缓存中取出一块数据并将数据传递到网络层。TCP从缓存中取出并放入报文段中的数据数量受到**最大报文段长度(Maximum Segment Size, MSS)**的限制，MSS的典型值为1460字节。&lt;/p&gt;
+&lt;h3 id=&#34;tcp报文段结构&#34;&gt;TCP报文段结构&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;C:%5CUsers%5C83621%5COneDrive%5CUser%5CDocument%5C0_blog%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%5C3_transportLayer%5CSVG%5CTCPsegmentStructure.svg&#34; alt=&#34;TCPsegmentStructure&#34;&gt;&lt;/p&gt;
+&lt;p&gt;TCP报文由&lt;strong&gt;首部字段&lt;/strong&gt;和一个&lt;strong&gt;数据字段&lt;/strong&gt;组成。首部一般是20字节，比UDP多12字节。&lt;/p&gt;
+&lt;h4 id=&#34;tcp报文段首部&#34;&gt;TCP报文段首部&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;源端口号&lt;/strong&gt;和&lt;strong&gt;目的端口号&lt;/strong&gt;：被用于多路复用和多路分解。&lt;/li&gt;
+&lt;li&gt;32比特的&lt;strong&gt;序号字段&lt;/strong&gt;和32比特的&lt;strong&gt;确认号字段&lt;/strong&gt;：用来实现可靠传输服务（是以字节来计算，不是按段来计算）&lt;/li&gt;
+&lt;li&gt;4比特的&lt;strong&gt;首部长度字段&lt;/strong&gt;：指示TCP首部长度&lt;/li&gt;
+&lt;li&gt;6比特的&lt;strong&gt;标志字段&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;ACK比特用于确认字段中的值是有效的&lt;/li&gt;
+&lt;li&gt;RST、SYN、FIN比特用于连接的建立和拆除&lt;/li&gt;
+&lt;li&gt;CWR、ECE比特在明确拥塞报告中使用&lt;/li&gt;
+&lt;li&gt;URG比特用来指示报文段中被发送端的上层实体置为紧急的数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;16比特的&lt;strong&gt;接收窗口字段&lt;/strong&gt;：用于指示接收方愿意接收的字节数量&lt;/li&gt;
+&lt;li&gt;16比特的&lt;strong&gt;检验和字段&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;16比特的&lt;strong&gt;紧急数据指针字段&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;选项字段：用于发送方和接收方协商最大报文段长度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;序号和确认号&#34;&gt;序号和确认号&lt;/h4&gt;
+&lt;p&gt;这两个字段是TCP可靠传输服务的关键&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一个报文的序号&lt;/strong&gt;是该报文段首字节的字节流编号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例如，数据流由一个包含500,000字节的文件组成，其MSS为1000字节，则TCP将为该数据流创建500个报文段，第一个报文段分配的序号是0，第二个报文段的序号是1000，以此类推。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;主机A填充进报文段的&lt;strong&gt;确认号&lt;/strong&gt;是主机A期望从主机B收到的&lt;strong&gt;下一个字节的序号&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例如，主机A已经收到来自B的编号为0~255的所有字节，它打算发一个报文段给B期望收到256以及之后的所有字节，于是它就在报文段的确认号字段填上256&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;累计确认&lt;/strong&gt;：假设主机A已经先后收到了主机B发送的两个报文段（分别为字节0~535和字节900~1000的报文段），由于一些原因并未收到中间的536~899的报文段，为了完整地建立主机B地数据流，仍在等待字节536及之后的字节，因此A给B发送地下一个报文地确认号字段中包含536，因此TCP只确认该流中第一个丢失字节为止的字节。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;往返时间的估计与超时&#34;&gt;往返时间的估计与超时&lt;/h3&gt;
+&lt;h4 id=&#34;估计往返时间&#34;&gt;估计往返时间&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;SampleRTT&lt;/code&gt;：从报文段被发出（交给IP）到收到该报文段的确认之间的时间量，多数TCP只在某个时刻做一次&lt;code&gt;SampleRTT&lt;/code&gt;的测量，不是为每个发送的报文都做测量。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;问题：为什么TCP仅为传输一次的报文段测量&lt;code&gt;SampleRTT&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;随着网络状态课端系统负载的变化，报文段的SampleRTT在不断地变化，为了找到一个典型地RTT，要采取一种方法对SampleRTT取平均，TCP会根据以下赋值公式来更新EstimatedRTT：
+$$
+EstimatedRTT = (1 - a) * EstimatedRTT + a * SampleRTT \&lt;br&gt;
+在[RFC6298]标准中推荐的a值为0.125
+$$
+上述的这种计算平均的方法被称为&lt;em&gt;指数加权移动平均&lt;/em&gt;，这个加权平均最最近的样本赋予的权值要大于对旧样本赋予的权值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;还有一种方式：测量RTT的变化。[RFC6298]定义了&lt;em&gt;RTT偏差DevRTT&lt;/em&gt;：
+$$
+DevRTT = (1 - \beta) * DevRTT + \beta * |SampleRTT - EstimatedRTT| \&lt;br&gt;
+\beta 的推荐值为0.25
+$$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;设置和管理重传超时间隔&#34;&gt;设置和管理重传超时间隔&lt;/h4&gt;
+&lt;p&gt;确认超时间隔的值：
+$$
+TimeoutInterval = EstimatedRTT + 4 * DevRTT \&lt;br&gt;
+推荐的TimeoutInterval初始值为1秒
+$$&lt;/p&gt;
+&lt;h3 id=&#34;可靠数据传输&#34;&gt;可靠数据传输&lt;/h3&gt;
+&lt;h3 id=&#34;流量控制接收窗口字段&#34;&gt;流量控制（接收窗口字段）&lt;/h3&gt;
+&lt;p&gt;一条TCP连接的每一侧的主机都为该连接设置了&lt;strong&gt;接收缓存&lt;/strong&gt;，当TCP连接收到正确的、按序的字节后，就会将数据放入缓存，应用程序就会从该缓存中根据实际情况读取数据，接收方可能不会立即读取刚刚放入缓存中的数据，他可能忙于别的服务。因此，可能由于发送方发送得太多太快，接收方读取得太慢导致&lt;strong&gt;缓存溢出&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;所以，TCP为其应用程序提供了&lt;strong&gt;流量控制服务&lt;/strong&gt;，来防止接收方的缓存溢出，该服务是一个速度匹配服务，即将发送方的发送速率与接收方的读取速率相匹配。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意，TCP发送方也可能由于IP网络的拥塞而被遏制，这种形式的对于发送方的控制被称为&lt;strong&gt;拥塞控制&lt;/strong&gt;，它与流量控制是两个完全不相同的概念，它们是针对完全不同的原因而采取的措施。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;TCP通过让发送方维护一个&lt;strong&gt;接收窗口&lt;/strong&gt;的变量来进行流量控制，接收窗口用来给发送方指示接收方剩余的缓存空间数量，TCP是双全工的，因此两端的发送方都各自维护一个接收窗口。&lt;/p&gt;
+&lt;p&gt;假设主机A通过一条TCP连接向主机B发送一个文件，B为该连接分配了一个接收缓存，用&lt;code&gt;RecBuffer&lt;/code&gt;来表示其大小，定义以下的变量：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;LastByteRead&lt;/code&gt;：主机B的应用程序从缓存中读取的数据流的最后一个字节的编号&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LastByteRcved&lt;/code&gt;：从网络中到达并且已经放入B的缓存中的数据流的最后一个字节的编号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以为了不使缓存溢出，下式必须成立：
+$$
+LastByteRcved - LastByteRead \le RcvBuffer
+$$
+接收窗口用&lt;code&gt;rwnd&lt;/code&gt;来表示，根据缓存可用空间大小来设置：
+$$
+rwnd = RcvBuffer - [LastByteRcvd - LastByteRead]
+$$
+主机A要轮流跟踪两个变量：&lt;code&gt;LastByteSent&lt;/code&gt;和&lt;code&gt;LastByteAcked&lt;/code&gt;，分别指发送到连接中的数据流的最后一个字节的编号和已经确认接收的数据流的最后一个字节的编号， 因此，两者的差就代表了主机A发送到连接中但还未被确认的数据量，只要将这个数据量控制在值&lt;code&gt;rwnd&lt;/code&gt;以内，就不会使B的接收缓存溢出。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意一种特殊情况，假设B的缓存已满即rwnd=0，B将这个消息发送给A后，假设B没有任何的数据要发送给A，此时B的应用程序将通过不断读取数据来清空缓存，TCP并不向主机A发送带有rwnd新值的报文段，这样，A不知道B的接收缓存有新的空间，因为A被阻塞不能发送数据。解决这个问题的方法是：TCP规定当B的接收缓存为0时，A继续发送只有一个字数据的报文，这些报文段将会被B确认，最终缓存开始清空，返回一个具有新rwnd值的报文段。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;tcp连接管理&#34;&gt;TCP连接管理&lt;/h3&gt;
+&lt;p&gt;该节中将详细说明建立和拆除一条TCP连接的全过程。&lt;/p&gt;
+&lt;h4 id=&#34;3次握手建立tcp连接&#34;&gt;3次握手建立TCP连接：&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;第一步：客户端的TCP首先向服务端TCP发送一个特殊TCP报文段，该报文段不含任何应用层的数据，仅将首部中的一个标志位（&lt;code&gt;SYN&lt;/code&gt;比特）置为1，因此给报文段被称为&lt;em&gt;SYN报文段&lt;/em&gt;。此外客户会随机选择一个&lt;em&gt;初始序号（client_isn）&lt;/em&gt;，将此编号放入起始SYN报文段的序号字段中。最后该报文段被封装在一个IP数据报中，发送给服务器。&lt;/li&gt;
+&lt;li&gt;第二步：包含TCP SYN报文段的IP数据包到达服务器后，服务器会从中提取TCP SYN报文段，为该TCP连接分配缓存和变量，并向客户TCP发送允许连接的报文段（该报文段被称为&lt;em&gt;SYNACK报文段&lt;/em&gt;）。该报文段不包含应用层数据，但首部中包含了3个重要信息：
+&lt;ul&gt;
+&lt;li&gt;SYN比特被置为1&lt;/li&gt;
+&lt;li&gt;该TCP报文段首部的确认号字段被置为client_isn + 1&lt;/li&gt;
+&lt;li&gt;服务器选择自己的初始序号（server_isn）并将其置放到报文首部的序号字段中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;第三步：收到SYNACK报文段后，客户也要为该连接分配缓存和变量，然后客户主机向服务器发送另一个报文段，该报文段对连接进行确认（通过将TCP报文段首部的确认字段置为server_isn + 1来完成），因为连接已经建立，所以SYN比特被置为0，这个报文可以携带应用层数据。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;4次挥手终止tcp连接的过程&#34;&gt;4次挥手终止TCP连接的过程&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/TCP%E7%BB%88%E6%AD%A2%E8%BF%9E%E6%8E%A5.svg&#34; alt=&#34;TCP终止连接&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如图，客户进程发出一个关闭连接的命令，这会引起客户TCP向服务器TCP发送一个特殊TCP报文段，该报文让其首部中的&lt;code&gt;FIN比特&lt;/code&gt;标志位置为1.&lt;/p&gt;
+&lt;p&gt;服务器接收该报文段后，向发送方返回一个确认报文段。&lt;/p&gt;
+&lt;p&gt;然后，服务器发送自己的终止报文段，其中&lt;code&gt;FIN比特&lt;/code&gt;被置为1.&lt;/p&gt;
+&lt;p&gt;最终客户对这个服务器的终止报文段进行确认，此时两台主机上的资源（缓存和变量）都被释放。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;SYN洪泛攻击&lt;/p&gt;
+&lt;p&gt;客户（攻击者）发送大量TCP SYN报文段，而不完成第三次握手的步骤，这种情况下服务器不断为这些&lt;em&gt;半开连接&lt;/em&gt;分配资源导致服务器的连接资源被消耗殆尽。&lt;/p&gt;
+&lt;p&gt;解决方法是使用&lt;strong&gt;SYN cookie&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当服务器收到一个SYN报文段时，并不知道它是合法用户还是SYN洪泛攻击，所以服务器不会为其生成半开连接。相反，服务器生成一个&lt;em&gt;初始TCP序列号&lt;/em&gt;，该序列号是SYN报文段的源和目的IP地址与端口号以及仅有该服务器知道的一个秘密数组成的一个复杂函数，该序列号被称为&lt;em&gt;cookie&lt;/em&gt;。服务器并不记忆该cookie或对应于SYN的其他状态信息。&lt;/li&gt;
+&lt;li&gt;若客户合法，它将返回一个ACK报文段，服务器借助cookie验证该ACK于前面发送的某些SYN是否对应。对于合法ACK，其确认字段的值等于SYNACK报文段的序号值（此时为cookie值）加1，以此为依据，如果二者相等，服务器认为该ACK对应于较早的SYN报文段，它是合法的，服务器将生成一个具有套接字的全开连接。&lt;/li&gt;
+&lt;li&gt;另一方面，如果客户没有返回ACK报文段，初始SYN并未对服务器产生影响，因为服务器没有为它分配资源。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;几个特殊通信连接的情况&#34;&gt;几个特殊通信连接的情况&lt;/h4&gt;
+&lt;p&gt;namp端口扫描工具对一台主机的目的端口6789发送一个特殊的TCP SYN报文段，有3中可能的输出：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;源主机从目标主机接收到一个TCPACK报文段，意味着目标主机上一个应用程序使用TCP端口67889运行，nmap返回打开。&lt;/li&gt;
+&lt;li&gt;源主机从目标主机接收到一个TCP RST报文段，意味着目标主机没有运行一个使用TCP端口6789的应用程序，但知道发送的报文段没有被中间的任何防火墙阻挡。&lt;/li&gt;
+&lt;li&gt;源主机什么也没收到，意味着很可能被防火墙阻挡。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;拥塞控制原理&#34;&gt;拥塞控制原理&lt;/h2&gt;
+&lt;h3 id=&#34;拥塞控制方法&#34;&gt;拥塞控制方法&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;端到端拥塞控制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;该控制方法中，网络层没有为运输层拥塞控制提供显式帮助。端系统必须通过对网络行为的观察来推断网络拥塞1&lt;/p&gt;- http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>TLS（HTTPS）协议</title>
+        <link>http://eternityqjl.top/posts/tls/</link>
+        <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/tls/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/tls/ -&lt;h2 id=&#34;1-ssltls简介&#34;&gt;1. SSL/TLS简介&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;TLS&lt;/strong&gt;（&lt;strong&gt;T&lt;/strong&gt;ransport &lt;strong&gt;L&lt;/strong&gt;ayer &lt;strong&gt;S&lt;/strong&gt;ecurity，&lt;strong&gt;传输层安全协议&lt;/strong&gt;），以及它的前身&lt;strong&gt;SSL&lt;/strong&gt;（&lt;strong&gt;S&lt;/strong&gt;ecure &lt;strong&gt;S&lt;/strong&gt;ockets &lt;strong&gt;L&lt;/strong&gt;ayer，&lt;strong&gt;安全套接层&lt;/strong&gt;）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。&lt;/p&gt;
+&lt;p&gt;SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;几个知名的使用SSL加密的协议&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;HTTP over SSL (HTTPS)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;简称为HTTPS，它的产生是为了加密网页，HTTP是第一个使用SSL保障安全的应用层协议。HTTPS在RFC2818被标准化，HTTPS工作在443端口，HTTP默认工作在80端口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Email over SSL&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;类似于HTTP over SSL，协议如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SMTP、IMAP能够支持SSL&lt;/li&gt;
+&lt;li&gt;SMTP over TLS在标准文档RFC2487中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;2-ssl原理详解&#34;&gt;2. SSL原理详解&lt;/h2&gt;
+&lt;h3 id=&#34;20-基本运行过程&#34;&gt;2.0 基本运行过程&lt;/h3&gt;
+&lt;p&gt;SSL/TLS协议是采用&lt;strong&gt;公钥加密法&lt;/strong&gt;实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。&lt;/p&gt;
+&lt;h3 id=&#34;21-ssl建立的总过程&#34;&gt;2.1 SSL建立的总过程&lt;/h3&gt;
+&lt;p&gt;客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及&lt;strong&gt;四次握手&lt;/strong&gt;通信，且该阶段的通信都是明文的。以下一一来分析。&lt;/p&gt;
+&lt;h4 id=&#34;1-客户端发出请求clienthello&#34;&gt;1. 客户端发出请求（ClientHello）&lt;/h4&gt;
+&lt;p&gt;该步客户端（通常为浏览器）向服务器提供以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;支持的协议&lt;strong&gt;版本（Version）&lt;/strong&gt;，如TLSv1.0&lt;/li&gt;
+&lt;li&gt;一个客户端生成的&lt;strong&gt;随机数（Random）&lt;/strong&gt;，之后用于生成”对话密钥“&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;会话ID（Session id）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;如果客户端第一次连接到服务器，那么该字段为空。&lt;/li&gt;
+&lt;li&gt;如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为&lt;strong&gt;SSL会话恢复&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;支持的&lt;strong&gt;加密套件（Cipher Suites）&lt;/strong&gt;，这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。&lt;/li&gt;
+&lt;li&gt;支持的&lt;strong&gt;压缩方法&lt;/strong&gt;，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。&lt;/li&gt;
+&lt;li&gt;扩展包。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;2-服务器回应serverhello&#34;&gt;2. 服务器回应（ServerHello）&lt;/h4&gt;
+&lt;p&gt;该步骤包含以下内容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;确认使用的&lt;strong&gt;版本&lt;/strong&gt;，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。&lt;/li&gt;
+&lt;li&gt;一个服务器生成的&lt;strong&gt;随机数&lt;/strong&gt;，之后用于生成”对话密钥“&lt;/li&gt;
+&lt;li&gt;确认使用的&lt;strong&gt;加密套件&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;会话ID&lt;/strong&gt;（Session ID）：
+&lt;ul&gt;
+&lt;li&gt;服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。&lt;/li&gt;
+&lt;li&gt;但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入&lt;strong&gt;Session Tickets&lt;/strong&gt;，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;扩展包&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;服务器证书&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。&lt;/p&gt;
+&lt;h4 id=&#34;3-客户端回应&#34;&gt;3. 客户端回应&lt;/h4&gt;
+&lt;p&gt;客户端收到服务器回应后首先验证服务器的证书，如果证书存在问题，如证书过期、由非可信机构颁布、或证书域名与实际域名不一致，会想客户端访问者发出警告，询问是否继续通信。&lt;/p&gt;
+&lt;p&gt;证书没有问题则客户端会从中取出公钥然后发送以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个&lt;strong&gt;随机数（pre-master-key)&lt;/strong&gt;；该随机数用服务器公钥加密，防止被窃听。&lt;/li&gt;
+&lt;li&gt;编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
+&lt;li&gt;客户端结束握手通知，该项同时也是前面发送所有内容的哈希值，用来供服务器验证。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上面第一项的随机数是握手阶段出现的第三个随机数，称“pre-master-key”，之后客户端和服务器就同时有了3个随机数，接着用双方事先商定的加密方法各自生成本次会话用的同一把“会话密钥”。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;pre-master-key与前面服务器和客户端在Hello阶段产生的两个随机数结合在一起生成了Master Secret。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;4-服务器的最后回应&#34;&gt;4. 服务器的最后回应&lt;/h4&gt;
+&lt;p&gt;服务器收到客户端第三个随机数pre-master-key后，计算生成本次会话使用的“会话密钥”，然后向客户端发送以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
+&lt;li&gt;服务器握手结束通知，该项同时也是前面发送的所有内容的哈希值，用来供客户端验证。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;至此整个握手阶段就结束了，接下来客户端与服务器进入加密通信，就是完全使用普通的HTTP协议，只是使用了“会话密钥”加密内容。&lt;/p&gt;
+&lt;h3 id=&#34;22-ssl协议的结构体系&#34;&gt;2.2 SSL协议的结构体系&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SSL%E5%8D%8F%E8%AE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;SSL体系结构包含两个协议子层，底层为&lt;strong&gt;SSL记录协议层&lt;/strong&gt;；高层为&lt;strong&gt;SSL握手协议层&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SSL记录协议层&lt;/strong&gt;：记录协议为高层协议提供基本的安全服务，如数据封装、压缩、加密等基本功能。所以我们可以知道，所有的传输数据都被封装在记录中。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SSL握手协议层&lt;/strong&gt;包括：
+&lt;ul&gt;
+&lt;li&gt;SSL握手协议：协调客户和服务器的状态，是双方能达到状态的同步&lt;/li&gt;
+&lt;li&gt;SSL密码参数修改协议：更新用于当前连接的密码组。&lt;/li&gt;
+&lt;li&gt;SSL告警协议：发现异常时为对等方传递警告&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-参考&#34;&gt;3. 参考&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cshihong.github.io/2019/05/09/SSL%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/&#34;&gt;SSL/TLS协议详解|曹世宏的博客&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html&#34;&gt;SSL/TLS协议运行机制的概述|阮一峰&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- http://eternityqjl.top/posts/tls/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>PDF转换为SVG</title>
+        <link>http://eternityqjl.top/posts/convertpdftosvg/</link>
+        <pubDate>Wed, 08 Apr 2020 00:15:48 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/convertpdftosvg/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/convertpdftosvg/ -&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用&lt;strong&gt;Adobe Acrobat&lt;/strong&gt;和&lt;strong&gt;inkscape&lt;/strong&gt;两个软件将PDF中的矢量图导出为&lt;strong&gt;SVG&lt;/strong&gt;格式的矢量图。以下为具体步骤：&lt;/p&gt;
+&lt;h2 id=&#34;在adobe-acrobat中选择编辑pdf选项&#34;&gt;在&lt;code&gt;Adobe Acrobat&lt;/code&gt;中选择&lt;code&gt;编辑PDF&lt;/code&gt;选项&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_1.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;选择裁剪页面&#34;&gt;选择&lt;code&gt;裁剪页面&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_2.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;框选所需图片的区域&#34;&gt;框选所需图片的区域&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_3.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;双击框选的区域按如下所示设置&#34;&gt;双击框选的区域，按如下所示设置&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_4.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选择组织页面&#34;&gt;选择&lt;code&gt;组织页面&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_5.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选定裁切后的页面httpblogeternityqjltopconvertingpdftosvg_6jpg&#34;&gt;选定裁切后的页面&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_6.JPG&#34; alt=&#34;&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;右击后选择打印页面httpblogeternityqjltopconvertingpdftosvg_7png&#34;&gt;右击后选择&lt;code&gt;打印页面&lt;/code&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_7.png&#34; alt=&#34;&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印&#34;&gt;设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_8.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变&#34;&gt;用&lt;code&gt;inkscape&lt;/code&gt;打开刚才打印的PDF文件，注意，导入时设置为第一项&lt;code&gt;从Poppler/Cairo导入&lt;/code&gt;，类似于PS中的栅格化，这样才能保证图中的字体不发生改变&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_9.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区&#34;&gt;选择&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;文档属性&lt;/code&gt;，设置自定义尺寸为&lt;code&gt;缩放页面到内容&lt;/code&gt;$\rightarrow$&lt;code&gt;缩放页面到绘图或选区&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_10_0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_10.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_11.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;文件rightarrow另存为选择自己所需的格式我一般选svg&#34;&gt;&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;另存为&lt;/code&gt;，选择自己所需的格式，我一般选&lt;code&gt;SVG&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+- http://eternityqjl.top/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>第一次使用LaTex——问题整理</title>
+        <link>http://eternityqjl.top/posts/latex-problems1/</link>
+        <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/latex-problems1/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/latex-problems1/ -&lt;h2 id=&#34;0前言&#34;&gt;0.前言&lt;/h2&gt;
+&lt;p&gt;第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。&lt;/p&gt;
+&lt;p&gt;这是第一次实验报告导出的&lt;a href=&#34;http://blog.eternityqjl.top/SS_test1.pdf&#34;&gt;pdf文档&lt;/a&gt;封面展示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SS_test1_cover.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这是&lt;a href=&#34;http://blog.eternityqjl.top/SS_test1.tex&#34;&gt;tex源代码&lt;/a&gt;。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;章节标题的特殊符号&#34;&gt;章节标题的特殊符号&lt;/h2&gt;
+&lt;p&gt;当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令&lt;code&gt;\texorpdfstring{}{}&lt;/code&gt;分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号&lt;code&gt;{}&lt;/code&gt;中填写tex文档代码，第二个括号&lt;code&gt;{}&lt;/code&gt;填写文本形式的书签，如下所示：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;%1.1
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;[第3题（1）]&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;第3题（1）求&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;e^{&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t}u&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;}{&lt;/span&gt;x1&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;，
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;cos&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)[&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)-&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)]&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;}{&lt;/span&gt;x2&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;的卷积积分
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;y_&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)*&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;}{&lt;/span&gt;y1&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;。 &lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;代码段的设置&#34;&gt;代码段的设置&lt;/h2&gt;
+&lt;p&gt;在文章中添加代码段需要用到&lt;code&gt;listings&lt;/code&gt;宏包，代码段的基本设置参数如下所示：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf&#34;&gt;listings宏包文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\lstset&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;
+language=Matlab,
+escapeinside=``, 
+numbers=left,
+numberstyle=&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\tiny&lt;/span&gt;,
+breaklines=true, 
+backgroundcolor=&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;lightgray!40!white&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;,
+frame=single,
+framerule=0pt,
+extendedchars=false, 
+keywordstyle=&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;blue!70&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\bfseries&lt;/span&gt;, 
+basicstyle=&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\ttfamily&lt;/span&gt;,
+commentstyle=&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\ttfamily\color&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;green!40!black&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;, 
+showstringspaces=false&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同时，设置代码段颜色高亮时需要用到&lt;code&gt;xcolor&lt;/code&gt;宏包。&lt;/p&gt;
+&lt;p&gt;注意以下几点问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;代码段中最好不要出现中文，如果必须要使用中文，需要用逃逸字符` `将中文包括起来，如上面的基本参数中的escapeinside=` ` 所示。&lt;/li&gt;
+&lt;li&gt;如果代码段中出现tex语言的特殊符号，需要使用转义字符&lt;code&gt;\&lt;/code&gt;，如&lt;code&gt;#&lt;/code&gt;就需要转换为&lt;code&gt;\#&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果想要改变代码段中的字体，需要用到&lt;code&gt;fontspec&lt;/code&gt;宏包，这个宏包需要用&lt;code&gt;XeLaTex&lt;/code&gt;或&lt;code&gt;LuaLaTex&lt;/code&gt;进行编译，由于我的实验报告封面使用的有些元素在使用这两者编译时无法识别，我这次就没使用，下次写实验报告一定仔细研究一下，实现这个功能。&lt;/p&gt;
+&lt;h2 id=&#34;数学公式中的align&#34;&gt;数学公式中的align&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;参考：&lt;a href=&#34;https://tex.stackexchange.com/questions/372384/erroneous-nesting-of-equation-structures-message-i-cant-see-whats-wrong&#34;&gt;“Erroneous nesting of equation structures” message- I can&amp;rsquo;t see what&amp;rsquo;s wrong?&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;数学公式中需要写等号对齐的公式段是不需要写&lt;code&gt;$$...$$&lt;/code&gt;或者&lt;code&gt;begin{equation}...end{equation}&lt;/code&gt;，直接将公式写在&lt;code&gt;begin{align}...end{align}&lt;/code&gt;的中间即可，如下所示：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;
+y&lt;span style=&#34;color:#0086b3&#34;&gt;_&lt;/span&gt;2[n]
+&lt;span style=&#34;color:#0086b3&#34;&gt;&amp;amp;&lt;/span&gt;=x&lt;span style=&#34;color:#0086b3&#34;&gt;_&lt;/span&gt;3[n]*x&lt;span style=&#34;color:#0086b3&#34;&gt;_&lt;/span&gt;4[n] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;span style=&#34;color:#0086b3&#34;&gt;&amp;amp;&lt;/span&gt;=((-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#0086b3&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#0086b3&#34;&gt;^&lt;/span&gt;n u[n-1])*((-1)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n+1&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-1]-(-2)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n-2&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-2]) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;span style=&#34;color:#0086b3&#34;&gt;&amp;amp;&lt;/span&gt;=&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;_{&lt;/span&gt;k=-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#0086b3&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#0086b3&#34;&gt;^&lt;/span&gt;k u[k-1]((-1)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-k-2]) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;span style=&#34;color:#0086b3&#34;&gt;&amp;amp;&lt;/span&gt;=&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#0086b3&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#0086b3&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#0086b3&#34;&gt;^&lt;/span&gt;k ((-1)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-k-2]) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;span style=&#34;color:#0086b3&#34;&gt;&amp;amp;&lt;/span&gt;=
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;
+	0, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\ &lt;/span&gt;n&amp;lt;0 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#0086b3&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#0086b3&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#0086b3&#34;&gt;^&lt;/span&gt;k (-1)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-k+1], &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\ &lt;/span&gt;0 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\leq&lt;/span&gt; n &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\leq&lt;/span&gt; 2 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#0086b3&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#0086b3&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#0086b3&#34;&gt;^&lt;/span&gt;k ((-1)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#0086b3&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;u[n-k-2]),&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\ &lt;/span&gt;n&amp;gt;2
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/equationSample.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+- http://eternityqjl.top/posts/latex-problems1/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>信号与系统学习笔记——Chapter01 信号与系统</title>
+        <link>http://eternityqjl.top/posts/signalsystem-ch01/</link>
+        <pubDate>Sat, 14 Mar 2020 13:59:44 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/signalsystem-ch01/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/signalsystem-ch01/ -&lt;h2 id=&#34;13-指数信号与正弦信号&#34;&gt;1.3 指数信号与正弦信号&lt;/h2&gt;
+&lt;h3 id=&#34;131-连续时间复指数信号与正弦信号&#34;&gt;1.3.1 连续时间复指数信号与正弦信号&lt;/h3&gt;
+&lt;p&gt;连续时间复指数信号有如下形式：
+$$
+x(t)=Ce^{at}
+$$&lt;/p&gt;
+&lt;h4 id=&#34;实指数信号&#34;&gt;实指数信号&lt;/h4&gt;
+&lt;p&gt;上式中的$C$和$a$都为实数的信号。&lt;/p&gt;
+&lt;h4 id=&#34;周期复指数信号和正弦信号&#34;&gt;周期复指数信号和正弦信号&lt;/h4&gt;
+&lt;p&gt;第二种重要的信号为将上式$a$限制为纯虚数的信号（&lt;strong&gt;复指数信号&lt;/strong&gt;）：
+$$
+x(t)=e^{jw_0t}
+$$
+当基波周期$T_0 = \left| \frac {2\pi} {w_0} \right|$时，该信号是周期信号。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;与该信号相关的另一种信号是&lt;strong&gt;正弦信号&lt;/strong&gt;：
+$$
+x(t)=A\cos(w_0t+\phi)
+$$
+利用&lt;strong&gt;欧拉公式&lt;/strong&gt;，可以将复指数信号用与其相同几波周期的正弦信号来表示：
+$$
+e^{jw_0t}=\cos w_0t + j\sin w_0t
+$$
+$w_0$称为基波频率。&lt;/p&gt;
+&lt;p&gt;上述复指数信号和正弦信号都是&lt;strong&gt;具有无限能量&lt;/strong&gt;但&lt;strong&gt;有有限平均功率&lt;/strong&gt;的信号。&lt;/p&gt;
+&lt;p&gt;计算证明：
+$$
+E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0  \&lt;br&gt;
+P_{period}= \frac {1}{T_0} E_{period}=1
+$$&lt;/p&gt;
+&lt;h4 id=&#34;一般复指数信号&#34;&gt;一般复指数信号&lt;/h4&gt;
+&lt;p&gt;一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示：
+$$
+C = \left| C \right| e^{j \theta} \&lt;br&gt;
+a = r + j\omega_0
+$$
+代入得：
+$$
+\begin{align}
+Ce^{at} 
+&amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t}  \&lt;br&gt;
+&amp;amp; = \left| C \right| e^{rt} e^{j(w_0t+\theta)}  \&lt;br&gt;
+&amp;amp; = \left| C \right| e^{rt} \cos(w_0t+\theta) + j\left| C \right| e^{rt} \sin(w_0t+\theta)
+\end{align}
+$$
+若$r=0$，则复指数信号的实部和虚部都是&lt;strong&gt;正弦&lt;/strong&gt;；若$r&amp;gt;0$，则实部和虚部是一个&lt;strong&gt;呈指数增长&lt;/strong&gt;的正弦信号；若$r&amp;lt;0$，则二者都是一个&lt;strong&gt;呈指数衰减&lt;/strong&gt;的正弦信号，该信号被称为阻尼正弦震荡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/increasingSineSignal.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;132-离散时间复指数信号与正弦信号&#34;&gt;1.3.2 离散时间复指数信号与正弦信号&lt;/h3&gt;
+&lt;p&gt;一种重要的离散时间信号是&lt;strong&gt;复指数信号&lt;/strong&gt;或&lt;strong&gt;序列&lt;/strong&gt;，定义为：
+$$
+x[n]=C\alpha ^n
+$$
+其中的$C$和$\alpha$一般为复数，若另$\alpha = e^{\beta}$，则有另外一种表达方式：
+$$
+x[n]=C e^{\beta n}
+$$
+从形式上看第二个式子与前面的连续时间复指数信号更相似，但在离散时间的情况下，第一种更为方便使用。&lt;/p&gt;
+&lt;h4 id=&#34;实指数信号-1&#34;&gt;实指数信号&lt;/h4&gt;
+&lt;p&gt;$C$和$\alpha$都为实数，有以下特性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若$\left| \alpha \right| &amp;gt; 1$，信号随n指数增长，若$\left| \alpha \right| &amp;lt; 1$，信号随n指数衰减。&lt;/li&gt;
+&lt;li&gt;$\left| \alpha \right|$为正值时，信号的所有值都为整数，$\left| \alpha \right|$为负值时，信号的符号在正负之间交替变化。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;正弦信号&#34;&gt;正弦信号&lt;/h4&gt;
+&lt;h4 id=&#34;一般复指数信号-1&#34;&gt;一般复指数信号&lt;/h4&gt;
+&lt;h3 id=&#34;133-离散时间复指数序列的周期性质&#34;&gt;1.3.3 离散时间复指数序列的周期性质&lt;/h3&gt;
+&lt;p&gt;这里讨论的关于离散时间复指数序列的性质都是相对于连续时间信号的不同之处。&lt;/p&gt;
+&lt;h4 id=&#34;频率性质&#34;&gt;频率性质&lt;/h4&gt;
+&lt;p&gt;对于频率为$w_0+2\pi$的离散时间复指数信号：
+$$
+e^{j(w_0+2\pi)n} = e^{j2\pi n}+e^{jw_0 n} = e^{jw_0 n}
+$$
+上式表明，频率为$w_0+2\pi$的离散时间复指数信号与频率为$w_0$的信号完全相同。所以离散时间复指数信号的频率只需要在一个$2\pi$间隔内选择，一般在$0\leqslant w_0 \leqslant 2\pi$或$-\pi \leqslant w_0 \leqslant \pi$中选择。&lt;/p&gt;
+&lt;p&gt;离散时间复指数信号的低频部分（变化慢的地方）位于$w_0$在0，$2\pi$及其他$\pi$的偶数倍值附近；高频部分位于$w_0$在$\pm \pi$及其他$\pi$的奇数倍附近。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/discreteTimeSignal.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;周期性质&#34;&gt;周期性质&lt;/h4&gt;
+&lt;p&gt;为了使得信号$e^{jw_0n}$是周期的，必须有：
+$$
+e^{jw_0(n+N)} = e^{jw_0n}
+$$
+这等效于：
+$$
+e^{jw_0N} = 1 \Leftrightarrow w_0N = 2\pi m \Leftrightarrow \frac{w_0}{2\pi} = \frac{m}{N}
+$$
+$m$为整数。同时，若$\frac{w_0}{2\pi}$是一个有理数，该信号就是周期的，否则就不是周期的。上式如果$N$和$m$没有公因子，那么$N$九尾基波周期。&lt;/p&gt;
+&lt;h4 id=&#34;连续时间和离散时间信号的比较&#34;&gt;连续时间和离散时间信号的比较&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/compare_discrete%26continus.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;14-单位冲激与单位阶跃函数&#34;&gt;1.4 单位冲激与单位阶跃函数&lt;/h2&gt;
+&lt;h3 id=&#34;141-离散时间单位脉冲和单位阶跃序列&#34;&gt;1.4.1 离散时间单位脉冲和单位阶跃序列&lt;/h3&gt;
+&lt;p&gt;最简单的离散时间信号之一就是&lt;strong&gt;单位脉冲&lt;/strong&gt;（或&lt;strong&gt;单位样本&lt;/strong&gt;），定义为：
+$$
+\delta[n] = 
+\begin{cases}
+0, \quad n \ne 0  \&lt;br&gt;
+1, \quad n = 0
+\end{cases}
+$$
+另一个基本离散时间信号为&lt;strong&gt;单位阶跃&lt;/strong&gt;，定义为：
+$$
+u[n] =
+\begin{cases}
+0, \quad n &amp;lt; 0  \&lt;br&gt;
+1, \quad n \geqslant 0
+\end{cases}
+$$
+以上两个离散时间信号存在着密切的关系：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;单位脉冲是单位阶跃的&lt;strong&gt;一次差分&lt;/strong&gt;，即$\delta[n] = u[n] - u[n-1]$&lt;/li&gt;
+&lt;li&gt;离散时间阶跃是单位样本的&lt;strong&gt;求和函数&lt;/strong&gt;：$u[n] = \sum_{m = - \infty}^{n} \delta[m]$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;142-连续时间单位阶跃和单位冲激函数&#34;&gt;1.4.2 连续时间单位阶跃和单位冲激函数&lt;/h3&gt;
+&lt;p&gt;连续时间&lt;strong&gt;单位阶跃函数&lt;/strong&gt;定义为：
+$$
+u(t)=
+\begin{cases}
+0, \quad t&amp;lt;0 \&lt;br&gt;
+1, \quad t&amp;gt;0
+\end{cases}
+$$
+单位阶跃在$t=0$这一单处不连续。&lt;/p&gt;
+&lt;p&gt;连续时间单位阶跃是连续时间单位冲激的&lt;strong&gt;积分函数&lt;/strong&gt;：
+$$
+u(t) = \int_{-\infty}^{t} \delta(\tau) \mathrm{d}\tau
+$$
+同时可以看出，连续时间单位冲激可以看成连续时间单位阶跃的**一次微分**：
+$$
+\delta(t) = \frac{\mathrm{d}u(t)}{\mathrm{d}t}
+$$
+严格来说$u(t)$是不可微的，可以把上式近似为一个在较短时间$\Delta$内完成&lt;/p&gt;
+&lt;h2 id=&#34;15-连续时间和离散时间系统&#34;&gt;1.5 连续时间和离散时间系统&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;连续时间系统：$x(t) \rightarrow y(t)$&lt;/li&gt;
+&lt;li&gt;离散时间系统：$x[n] \rightarrow y[n]$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们的任务是要鉴别一类系统，透彻地了解一类系统的行为，在很多的实践中重要的系统都通过这一类系统来建模。本书重点关注的线性时不变系统这一特殊类别的系统就属于上述分类特性的一类。&lt;/p&gt;
+&lt;h3 id=&#34;151-系统的互联&#34;&gt;1.5.1 系统的互联&lt;/h3&gt;
+&lt;h4 id=&#34;串联级联&#34;&gt;串联（级联）&lt;/h4&gt;
+&lt;p&gt;eg：音频系统：无线电接收机$\rightarrow$唱片播放器$\rightarrow$扬声器&lt;/p&gt;
+&lt;h4 id=&#34;并联&#34;&gt;并联&lt;/h4&gt;
+&lt;h4 id=&#34;反馈互联&#34;&gt;反馈互联&lt;/h4&gt;
+&lt;p&gt;eg：数字控制的一架飞机&lt;/p&gt;
+&lt;h3 id=&#34;152-基本系统性质&#34;&gt;1.5.2 基本系统性质&lt;/h3&gt;
+&lt;h4 id=&#34;记忆系统和无记忆系统&#34;&gt;记忆系统和无记忆系统&lt;/h4&gt;
+&lt;p&gt;如果对自变量的每一个值，一个系统的输出仅仅取决于&lt;strong&gt;该时刻的输入&lt;/strong&gt;，这个系统就称为&lt;strong&gt;无记忆&lt;/strong&gt;系统。例如，如下的表达式：
+$$
+y[n]=(2x[n]-x^2[n])^2
+$$
+是一个无记忆系统，任何特定时刻$n_0$的输出$y[n]$只取决于该时刻的输入$x[n]$。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;恒等系统&lt;/strong&gt;（即输出等于输入）是一种最简单的无记忆系统。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;离散时间记忆系统&lt;/strong&gt;的一个例子就是&lt;strong&gt;累加器&lt;/strong&gt;：
+$$
+y[n]=\sum_{k=-\infty}^{n} x[k]
+$$
+第二个离散时间记忆系统的例子是一个**延迟单元**：
+$$
+y[n] = x[n - 1]
+$$
+一个**连续时间记忆系统**的例子是**一个电容器**，将电流作为输入，电压作为输出，那么有：
+$$
+y(t)= \frac{1}{C} \int_{-\infty}^{t} x(\tau) \mathrm{d} \tau
+$$
+其中的$C$为电容值。&lt;/p&gt;
+&lt;p&gt;一个系统中记忆的概念相应于该系统具有&lt;strong&gt;保留或储存不是当前时刻输入信息的功能&lt;/strong&gt;，在许多实际系统中，记忆是直接与能量储存相关联的。&lt;/p&gt;
+&lt;h4 id=&#34;可逆性与可逆系统&#34;&gt;可逆性与可逆系统&lt;/h4&gt;
+&lt;p&gt;一个系统如果在不同输入下导致不同输出，就称该系统是&lt;strong&gt;可逆的&lt;/strong&gt;。一个系统可逆则一定有一个&lt;strong&gt;逆系统&lt;/strong&gt;存在，逆系统与原系统&lt;strong&gt;级联&lt;/strong&gt;后，会产生一个输出$w[n]$等于一个系统的输入$x[n]$。&lt;/p&gt;
+&lt;p&gt;可逆连续时间系统的一个例子：
+$$
+y(t)=2x(t)
+$$
+该可逆系统的逆系统为：
+$$
+w(t)=\frac{1}{2}y(t)
+$$
+一个&lt;strong&gt;不可逆&lt;/strong&gt;系统的例子如下：
+$$
+y[n]=0
+$$
+该系统对任何输入序列产生的都是零输出序列。&lt;/p&gt;
+&lt;p&gt;另外一个例子：
+$$
+y(t)=x^2(t)
+$$
+这种情况无法根据输出确定输入的正负。&lt;/p&gt;
+&lt;h4 id=&#34;因果性&#34;&gt;因果性&lt;/h4&gt;
+&lt;p&gt;如果一个系统&lt;strong&gt;在任何时刻的输出&lt;/strong&gt;只取决于&lt;strong&gt;现在的输入以及过去的输入&lt;/strong&gt;，该系统就称为&lt;strong&gt;因果系统&lt;/strong&gt;。这样的系统也被称为&lt;strong&gt;不可预测系统&lt;/strong&gt;，系统的输出值无法预测未来的输入值。&lt;/p&gt;
+&lt;p&gt;所有的无记忆系统都是因果的，因为输出仅仅对当前输入值作出响应。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;检验系统的因果性时要仔细看系统的输入——输出关系，举两个特殊例子：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$y[n]=x[-n]$，该系统当输入时间为负值是，输出就与输入的将来值有关，所以该系统不是因果系统。所以检验时要仔细检验在&lt;strong&gt;全部时间&lt;/strong&gt;上的输入——输出关系。&lt;/li&gt;
+&lt;li&gt;$y(t)=x(t)\cos(t+1)$，检验因果性时要&lt;strong&gt;把输入信号的影响仔细地与系统定义中的其他函数的影响分开&lt;/strong&gt;，该系统的输出等于同一时刻的输入乘以一个随时间变化的数，所以可以写作$y(t)=x(t)g(t)$，是因果的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;稳定性&#34;&gt;稳定性&lt;/h4&gt;
+&lt;p&gt;一个&lt;strong&gt;稳定系统&lt;/strong&gt;在小的输入下的响应不会&lt;strong&gt;发散&lt;/strong&gt;，这是稳定性的最直观理解。&lt;/p&gt;
+&lt;h4 id=&#34;时不变性&#34;&gt;时不变性&lt;/h4&gt;
+&lt;p&gt;系统的特性和行为不随时间而变，该系统就是时不变的。即如果在一个输入信号上有一个时移，在输出信号中产生同样的时移，那么这个系统就是时不变的。&lt;/p&gt;
+&lt;p&gt;具体而言，若$y[n]$是离散时间时不变系统在输入为$x[n]$是的输出，当输入为$x[x-x_0]$时，输出为为$y[x-x_0]$，连续时间情况也是相同的道理。&lt;/p&gt;
+&lt;h4 id=&#34;线性&#34;&gt;线性&lt;/h4&gt;
+&lt;p&gt;如果某个输入信号是由几个信号的&lt;strong&gt;加权和&lt;/strong&gt;组成，那么输出也就是系统对这组信号中每一个响应的加权和。&lt;/p&gt;
+&lt;p&gt;令$y_1(t)$是一个连续时间系统对输入$x_1(t)$的响应，$y_2(t)$是对输入$x_2(t)$的一个输出，那么一个线性系统就应该有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$y_1(t)+y_2(t)$是对$x_1(t)+x_2(t)$的响应&lt;/li&gt;
+&lt;li&gt;$ay_1(t)$是对$ax_1(t)$的响应，$a$为任意常数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上两个性质称为&lt;strong&gt;可加性&lt;/strong&gt;和&lt;strong&gt;齐次性&lt;/strong&gt;。&lt;/p&gt;
+- http://eternityqjl.top/posts/signalsystem-ch01/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>数字签名和数字证书</title>
+        <link>http://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</link>
+        <pubDate>Fri, 06 Dec 2019 19:42:38 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/ -&lt;p&gt;理解本文的基础是公钥密码加密，即非对称加密，比如其中一种非对称加密算法RSA。&lt;/p&gt;
+&lt;p&gt;非对称加密使用一对密钥，一个为公钥Pub，另一个为私钥Priv&lt;/p&gt;
+&lt;p&gt;明文P经过公钥Pub使用RSA加密算法混淆后变成了密文M，密文M无法用公钥Pub解开，只能用私钥Priv解开&lt;/p&gt;
+&lt;p&gt;同样的，明文P经过私钥Priv使用RSA加密算法混淆后变成了密文N，密文N只能用公钥Pub解开&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;1信息安全&#34;&gt;1.信息安全&lt;/h2&gt;
+&lt;p&gt;在信息安全中共有3个需要解决的问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;保密性：保证信息在传输时不被泄露&lt;/li&gt;
+&lt;li&gt;完整性：信息在传输时不被篡改&lt;/li&gt;
+&lt;li&gt;有效性：信息的使用者是合法的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;公钥密码&lt;/strong&gt;能解决保密性的问题&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;数字签名&lt;/strong&gt;能解决完整性和有效性的问题&lt;/p&gt;
+&lt;h2 id=&#34;2数字签名digital-signature&#34;&gt;2.数字签名(Digital Signature)&lt;/h2&gt;
+&lt;p&gt;真实世界中，签名是为了表示某些内容是签名者写的或者他所认可的。计算机中，数字签名也有着相似的含义，数字签名用来证实&lt;strong&gt;消息&lt;/strong&gt;是某个特定的人发送的，即有效性；同时还能证明消息没有被篡改，即完整性。这些是怎么实现的呢？这就是接下来要介绍有关于数字签名的内容。&lt;/p&gt;
+&lt;p&gt;数字签名是公钥密码加密的逆向应用：&lt;/p&gt;
+&lt;p&gt;用&lt;strong&gt;私钥&lt;/strong&gt;加密消息，用&lt;strong&gt;公钥&lt;/strong&gt;解密消息。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;签名&lt;/strong&gt;：用私钥加密的消息，只有拥有私钥的用户可以生成签名，这也确保了数字签名的发送者是该用户。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;验证签名&lt;/strong&gt;：即用公钥解密签名，因为公钥是公开的，所以任何人都可以验证签名。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;21-生成签名&#34;&gt;2.1 生成签名&lt;/h3&gt;
+&lt;p&gt;一般不直接对消息进行签名，而是对消息进行哈希计算后的得到的哈希值进行签名。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;HASH算法是密码学的基础，其中最重要的两条性质是&lt;strong&gt;不可逆&lt;/strong&gt;和&lt;strong&gt;无冲突&lt;/strong&gt;，&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不可逆：当你知道x的HASH值时，无法求出x&lt;/li&gt;
+&lt;li&gt;无冲突：你知道x，但无法求出一个y使得x与y的HASH值相同&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这两个性质&lt;strong&gt;在数学上都是不成立的&lt;/strong&gt;，理论上由无穷多不同的原始值，它们的HASH值都相同。但求逆和求冲突在计算上不可能实现，穷尽人类所有的计算资源都做不到。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;生成签名的步骤如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对消息进行哈希计算，得到哈希值&lt;/li&gt;
+&lt;li&gt;利用私钥对哈希值进行加密，生成签名&lt;/li&gt;
+&lt;li&gt;将签名附在消息后，一起发送&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;22-验证签名&#34;&gt;2.2 验证签名&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;收到签名后，提取消息中的签名&lt;/li&gt;
+&lt;li&gt;用公钥对签名进行解密，得到哈希值1&lt;/li&gt;
+&lt;li&gt;对消息中的正文进行哈希计算，得到哈希值2&lt;/li&gt;
+&lt;li&gt;比较哈希值1和2，如果相同，则验证成功&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注：前面提到，哈希值的计算不可逆，因此才能以这种方式验证签名。&lt;/p&gt;
+&lt;h2 id=&#34;3数字证书digital-certificate&#34;&gt;3.数字证书(Digital Certificate)&lt;/h2&gt;
+&lt;p&gt;数字证书是对&lt;strong&gt;公钥&lt;/strong&gt;进行数字签名，是为了对&lt;strong&gt;公钥的合法性&lt;/strong&gt;提供证明，如果公钥的合法性得不到证明，则就存在中间人攻击的风险。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;中间人攻击（&lt;strong&gt;M&lt;/strong&gt;an-&lt;strong&gt;i&lt;/strong&gt;n-&lt;strong&gt;t&lt;/strong&gt;he-&lt;strong&gt;m&lt;/strong&gt;iddle-attack）：&lt;/p&gt;
+&lt;p&gt;攻击者与通讯的两端分别建立滴露的联系，并交换所受到的数据。即中间人通过截获两端通讯使用的公钥，并将双方的两个公钥都更改为自己的公钥来达到截获消息的目的。&lt;/p&gt;
+&lt;p&gt;详情可以参考维基百科：&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB&#34;&gt;中间人攻击&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我们对于签名的验证需要使用公钥，而公钥的真实合法性就是通过数字证书来的。&lt;strong&gt;证书&lt;/strong&gt;中包含：&lt;strong&gt;公钥、公钥的数字签名、公钥拥有者的信息&lt;/strong&gt;。如果证书验证成功，则代表该公钥是合法的。&lt;/p&gt;
+&lt;p&gt;但是，验证证书中的数字签名需要另一个公钥，该公钥的合法性又怎样保证呢？该问题可以无限地循环下去，那岂不是解决不了了？我们相信银行是一个可信的机构，可以放心地把钱存在里面，那么同样存在一个可信机构来颁发证书和提供公钥，我们相信这个机构提供的密钥是合法的。&lt;/p&gt;
+&lt;p&gt;这种机构称为&lt;strong&gt;认证机构(Certification Authority, CA)&lt;/strong&gt;，CA认定“公钥确实属于某个私钥的拥有者”，并能生成公钥的数字签名的组织或机构。&lt;/p&gt;
+&lt;h3 id=&#34;31-如何生成证书&#34;&gt;3.1 如何生成证书？&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;证书即为公钥、公钥的数字签名、一些其他服务器信息的集合&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;服务器将&lt;strong&gt;公钥A&lt;/strong&gt;交给CA&lt;/li&gt;
+&lt;li&gt;CA通过哈希计算生成公钥A的哈希值，然后用自己的&lt;strong&gt;私钥B&lt;/strong&gt;给&lt;strong&gt;公钥A的哈希值&lt;/strong&gt;加密，生成&lt;strong&gt;数字签名A&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;CA把公钥A、数字签名A、一些服务器信息整合，生成证书，发回给服务器&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;32-如何验证证书&#34;&gt;3.2 如何验证证书？&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;客户端得到证书&lt;/li&gt;
+&lt;li&gt;客户端通过CA得到证书的&lt;strong&gt;公钥B&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;客户端用&lt;strong&gt;公钥B&lt;/strong&gt;对证书中的&lt;strong&gt;数字签名A&lt;/strong&gt;解密，得到哈希值&lt;/li&gt;
+&lt;li&gt;客户端对&lt;strong&gt;公钥A&lt;/strong&gt;进行哈希值计算&lt;/li&gt;
+&lt;li&gt;将两个哈希值对比，如果相同，则证书合法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;公钥B和上述私钥B是配对的，分别用于解密和加密证书。&lt;/p&gt;
+&lt;h3 id=&#34;33-证书作废&#34;&gt;3.3 证书作废&lt;/h3&gt;
+&lt;p&gt;用户的私钥丢失或者被盗时，认证机构需要对证书进行作废，制作一张证书作废清单(Certificate Revocation List, CRL)&lt;/p&gt;
+&lt;p&gt;在验证证书是否有效的时候除了看合法的认证机构签名、是否在有效期内，还需要查询认证机构最新的CRL。&lt;/p&gt;
+&lt;h2 id=&#34;4应用&#34;&gt;4.应用&lt;/h2&gt;
+&lt;p&gt;HTTPS协议，详见之后有关SSL/TLS的博客。&lt;/p&gt;
+&lt;h2 id=&#34;5参考&#34;&gt;5.参考&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.jianshu.com/p/9db57e761255&#34;&gt;什么是数字签名和证书?&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/question/20820286&#34;&gt;什么是哈希算法？&lt;/a&gt;&lt;/p&gt;
+- http://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+  </channel>
+</rss> 

@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html><head>
+<title>Altium Designer画图流程记录(简略)</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Altium Designer画图流程记录(简略)" />
+<meta property="og:description" content="之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
+共有以下几部分内容：
+ 原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板  PCB各层简介 参考自：PCB各层介绍
+Mechanical layer(机械层) Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。
+Keep out layer(禁止布线层) 用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。
+Signal layer(信号层) 信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。
+Internal plane layer(内部电源/接地层) Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。
+Silkscreen layer(丝印层) 丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。
+Solder mask layer(阻焊层) 在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中匹配焊盘，是自动产生的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)和Bottom Solder(底层)**两个阻焊层。
+Paste mask layer(助焊层，SMD贴片层) 它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。
+Multi layer(多层) 电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。
+Drill layer(钻孔层) 钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。
+原理图库器件画法 放置矩形
+添加Pin
+设置器件的Designator（例如P?）
+器件的PCB封装画法 确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-04-30T22:47:47+00:00" />
+<meta property="article:modified_time" content="2021-04-30T22:47:47+00:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Altium Designer画图流程记录(简略)"/>
+<meta name="twitter:description" content="之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
+共有以下几部分内容：
+ 原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板  PCB各层简介 参考自：PCB各层介绍
+Mechanical layer(机械层) Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。
+Keep out layer(禁止布线层) 用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。
+Signal layer(信号层) 信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。
+Internal plane layer(内部电源/接地层) Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。
+Silkscreen layer(丝印层) 丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。
+Solder mask layer(阻焊层) 在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中匹配焊盘，是自动产生的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)和Bottom Solder(底层)**两个阻焊层。
+Paste mask layer(助焊层，SMD贴片层) 它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。
+Multi layer(多层) 电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。
+Drill layer(钻孔层) 钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。
+原理图库器件画法 放置矩形
+添加Pin
+设置器件的Designator（例如P?）
+器件的PCB封装画法 确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。"/>
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+  
+
+
+
+
+<link rel="icon" href="http://blog.eternityqjl.top/faviconJ.ico">
+
+
+
+<link rel="stylesheet" href="http://eternityqjl.top/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+
+
+
+<link rel="stylesheet" href="http://eternityqjl.top/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+
+
+<script src="/js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="/js/toc.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: 'df0192f05fd975a4e951',
+  clientSecret: 'f1ff41cecd43fac4792ed8be020aeb337494c340',
+  repo: 'hugo_gitalk',
+  owner: 'user',
+  admin: ['user'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="http://eternityqjl.top">
+    
+        <div class="nav-title">
+            Jialong&#39;s Blog
+        </div>
+        
+        <div class="nav-subtitle">
+            沉潜 自由 追寻幸福
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/posts">
+                网志
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#pcb%e5%90%84%e5%b1%82%e7%ae%80%e4%bb%8b" onclick="onNavClick(`#pcb各层简介-nav`)" id="pcb各层简介-nav">
+									PCB各层简介
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#mechanical-layer%e6%9c%ba%e6%a2%b0%e5%b1%82" onclick="onNavClick(`#mechanical-layer机械层-nav`)" id="mechanical-layer机械层-nav">
+									Mechanical layer(机械层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#keep-out-layer%e7%a6%81%e6%ad%a2%e5%b8%83%e7%ba%bf%e5%b1%82" onclick="onNavClick(`#keep-out-layer禁止布线层-nav`)" id="keep-out-layer禁止布线层-nav">
+									Keep out layer(禁止布线层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#signal-layer%e4%bf%a1%e5%8f%b7%e5%b1%82" onclick="onNavClick(`#signal-layer信号层-nav`)" id="signal-layer信号层-nav">
+									Signal layer(信号层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#internal-plane-layer%e5%86%85%e9%83%a8%e7%94%b5%e6%ba%90%e6%8e%a5%e5%9c%b0%e5%b1%82" onclick="onNavClick(`#internal-plane-layer内部电源接地层-nav`)" id="internal-plane-layer内部电源接地层-nav">
+									Internal plane layer(内部电源/接地层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#silkscreen-layer%e4%b8%9d%e5%8d%b0%e5%b1%82" onclick="onNavClick(`#silkscreen-layer丝印层-nav`)" id="silkscreen-layer丝印层-nav">
+									Silkscreen layer(丝印层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#solder-mask-layer%e9%98%bb%e7%84%8a%e5%b1%82" onclick="onNavClick(`#solder-mask-layer阻焊层-nav`)" id="solder-mask-layer阻焊层-nav">
+									Solder mask layer(阻焊层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#paste-mask-layer%e5%8a%a9%e7%84%8a%e5%b1%82smd%e8%b4%b4%e7%89%87%e5%b1%82" onclick="onNavClick(`#paste-mask-layer助焊层smd贴片层-nav`)" id="paste-mask-layer助焊层smd贴片层-nav">
+									Paste mask layer(助焊层，SMD贴片层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#multi-layer%e5%a4%9a%e5%b1%82" onclick="onNavClick(`#multi-layer多层-nav`)" id="multi-layer多层-nav">
+									Multi layer(多层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#drill-layer%e9%92%bb%e5%ad%94%e5%b1%82" onclick="onNavClick(`#drill-layer钻孔层-nav`)" id="drill-layer钻孔层-nav">
+									Drill layer(钻孔层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%8e%9f%e7%90%86%e5%9b%be%e5%ba%93%e5%99%a8%e4%bb%b6%e7%94%bb%e6%b3%95" onclick="onNavClick(`#原理图库器件画法-nav`)" id="原理图库器件画法-nav">
+									原理图库器件画法
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%99%a8%e4%bb%b6%e7%9a%84pcb%e5%b0%81%e8%a3%85%e7%94%bb%e6%b3%95" onclick="onNavClick(`#器件的pcb封装画法-nav`)" id="器件的pcb封装画法-nav">
+									器件的PCB封装画法
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%89%b9%e9%87%8f%e6%b7%bb%e5%8a%a0%e5%b0%81%e8%a3%85%e5%b9%b6%e7%bb%99%e5%90%84%e7%a7%8d%e5%8e%9f%e4%bb%b6%e5%91%bd%e5%90%8d" onclick="onNavClick(`#批量添加封装并给各种原件命名-nav`)" id="批量添加封装并给各种原件命名-nav">
+									批量添加封装并给各种原件命名
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%b7%bb%e5%8a%a0%e5%b0%81%e8%a3%85" onclick="onNavClick(`#添加封装-nav`)" id="添加封装-nav">
+									添加封装
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%89%b9%e9%87%8f%e5%91%bd%e5%90%8d" onclick="onNavClick(`#批量命名-nav`)" id="批量命名-nav">
+									批量命名
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e7%a1%ae%e5%ae%9apcb%e8%8c%83%e5%9b%b4%e5%b9%b6%e5%b8%83%e5%b1%80" onclick="onNavClick(`#确定pcb范围并布局-nav`)" id="确定pcb范围并布局-nav">
+									确定PCB范围并布局
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%b8%83%e7%ba%bf" onclick="onNavClick(`#布线-nav`)" id="布线-nav">
+									布线
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%93%ba%e9%93%9c" onclick="onNavClick(`#铺铜-nav`)" id="铺铜-nav">
+									铺铜
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b6%e4%bb%96%e4%b8%80%e4%ba%9b%e5%bf%ab%e6%8d%b7%e9%94%ae" onclick="onNavClick(`#其他一些快捷键-nav`)" id="其他一些快捷键-nav">
+									其他：一些快捷键
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
+                    网志
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- CATALOG -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#pcb%e5%90%84%e5%b1%82%e7%ae%80%e4%bb%8b" onclick="onNavClick(`#pcb各层简介-nav`)" id="pcb各层简介-nav">
+									PCB各层简介
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#mechanical-layer%e6%9c%ba%e6%a2%b0%e5%b1%82" onclick="onNavClick(`#mechanical-layer机械层-nav`)" id="mechanical-layer机械层-nav">
+									Mechanical layer(机械层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#keep-out-layer%e7%a6%81%e6%ad%a2%e5%b8%83%e7%ba%bf%e5%b1%82" onclick="onNavClick(`#keep-out-layer禁止布线层-nav`)" id="keep-out-layer禁止布线层-nav">
+									Keep out layer(禁止布线层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#signal-layer%e4%bf%a1%e5%8f%b7%e5%b1%82" onclick="onNavClick(`#signal-layer信号层-nav`)" id="signal-layer信号层-nav">
+									Signal layer(信号层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#internal-plane-layer%e5%86%85%e9%83%a8%e7%94%b5%e6%ba%90%e6%8e%a5%e5%9c%b0%e5%b1%82" onclick="onNavClick(`#internal-plane-layer内部电源接地层-nav`)" id="internal-plane-layer内部电源接地层-nav">
+									Internal plane layer(内部电源/接地层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#silkscreen-layer%e4%b8%9d%e5%8d%b0%e5%b1%82" onclick="onNavClick(`#silkscreen-layer丝印层-nav`)" id="silkscreen-layer丝印层-nav">
+									Silkscreen layer(丝印层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#solder-mask-layer%e9%98%bb%e7%84%8a%e5%b1%82" onclick="onNavClick(`#solder-mask-layer阻焊层-nav`)" id="solder-mask-layer阻焊层-nav">
+									Solder mask layer(阻焊层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#paste-mask-layer%e5%8a%a9%e7%84%8a%e5%b1%82smd%e8%b4%b4%e7%89%87%e5%b1%82" onclick="onNavClick(`#paste-mask-layer助焊层smd贴片层-nav`)" id="paste-mask-layer助焊层smd贴片层-nav">
+									Paste mask layer(助焊层，SMD贴片层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#multi-layer%e5%a4%9a%e5%b1%82" onclick="onNavClick(`#multi-layer多层-nav`)" id="multi-layer多层-nav">
+									Multi layer(多层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#drill-layer%e9%92%bb%e5%ad%94%e5%b1%82" onclick="onNavClick(`#drill-layer钻孔层-nav`)" id="drill-layer钻孔层-nav">
+									Drill layer(钻孔层)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%8e%9f%e7%90%86%e5%9b%be%e5%ba%93%e5%99%a8%e4%bb%b6%e7%94%bb%e6%b3%95" onclick="onNavClick(`#原理图库器件画法-nav`)" id="原理图库器件画法-nav">
+									原理图库器件画法
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%99%a8%e4%bb%b6%e7%9a%84pcb%e5%b0%81%e8%a3%85%e7%94%bb%e6%b3%95" onclick="onNavClick(`#器件的pcb封装画法-nav`)" id="器件的pcb封装画法-nav">
+									器件的PCB封装画法
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%89%b9%e9%87%8f%e6%b7%bb%e5%8a%a0%e5%b0%81%e8%a3%85%e5%b9%b6%e7%bb%99%e5%90%84%e7%a7%8d%e5%8e%9f%e4%bb%b6%e5%91%bd%e5%90%8d" onclick="onNavClick(`#批量添加封装并给各种原件命名-nav`)" id="批量添加封装并给各种原件命名-nav">
+									批量添加封装并给各种原件命名
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%b7%bb%e5%8a%a0%e5%b0%81%e8%a3%85" onclick="onNavClick(`#添加封装-nav`)" id="添加封装-nav">
+									添加封装
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%89%b9%e9%87%8f%e5%91%bd%e5%90%8d" onclick="onNavClick(`#批量命名-nav`)" id="批量命名-nav">
+									批量命名
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e7%a1%ae%e5%ae%9apcb%e8%8c%83%e5%9b%b4%e5%b9%b6%e5%b8%83%e5%b1%80" onclick="onNavClick(`#确定pcb范围并布局-nav`)" id="确定pcb范围并布局-nav">
+									确定PCB范围并布局
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%b8%83%e7%ba%bf" onclick="onNavClick(`#布线-nav`)" id="布线-nav">
+									布线
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%93%ba%e9%93%9c" onclick="onNavClick(`#铺铜-nav`)" id="铺铜-nav">
+									铺铜
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b6%e4%bb%96%e4%b8%80%e4%ba%9b%e5%bf%ab%e6%8d%b7%e9%94%ae" onclick="onNavClick(`#其他一些快捷键-nav`)" id="其他一些快捷键-nav">
+									其他：一些快捷键
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="http://eternityqjl.top">
+            Jialong&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="http://eternityqjl.top">
+        <div class="single-column-header-title">Jialong&#39;s Blog</div>
+        
+        <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SignalLayer.PNG')"
+                    
+                
+            >
+                <div class="post-title">
+                    Altium Designer画图流程记录(简略)
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-04-30 22:47
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E7%A1%AC%E4%BB%B6">硬件</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/pcb">PCB</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p>之前看过博主<a href="https://space.bilibili.com/384891">半夜中暑的羊</a>的原理图以及PCB绘制<a href="https://www.bilibili.com/video/BV1JE41127Ks">教程</a>，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。</p>
+<p>共有以下几部分内容：</p>
+<ol>
+<li>原理图库</li>
+<li>核心模块的原理图</li>
+<li>为原理图添加封装</li>
+<li>PCB布局</li>
+<li>PCB布线</li>
+<li>PCB敷铜</li>
+<li>PCB生成BOM及投板</li>
+</ol>
+<!-- raw HTML omitted -->
+<h2 id="pcb各层简介">PCB各层简介</h2>
+<p>参考自：<a href="https://blog.csdn.net/qq_29373285/article/details/85339076">PCB各层介绍</a></p>
+<h3 id="mechanical-layer机械层">Mechanical layer(机械层)</h3>
+<p>Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MechanicalLayer.PNG" alt="MechanicalLayer"></p>
+<h3 id="keep-out-layer禁止布线层">Keep out layer(禁止布线层)</h3>
+<p>用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/KeepOutLayer.PNG" alt="KeepOutLayer"></p>
+<h3 id="signal-layer信号层">Signal layer(信号层)</h3>
+<p>信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SignalLayer.PNG" alt="SignalLayer"></p>
+<h3 id="internal-plane-layer内部电源接地层">Internal plane layer(内部电源/接地层)</h3>
+<p>Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。</p>
+<h3 id="silkscreen-layer丝印层">Silkscreen layer(丝印层)</h3>
+<p>丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SilkscreenLayer.PNG" alt="SilkscreenLayer"></p>
+<h3 id="solder-mask-layer阻焊层">Solder mask layer(阻焊层)</h3>
+<p>在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中<strong>匹配焊盘</strong>，是<strong>自动产生</strong>的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)<strong>和</strong>Bottom Solder(底层)**两个阻焊层。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SolderMaskLayer.PNG" alt="SolderMaskLayer"></p>
+<h3 id="paste-mask-layer助焊层smd贴片层">Paste mask layer(助焊层，SMD贴片层)</h3>
+<p>它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/PasteMaskLayer.PNG" alt="PasteMaskLayer"></p>
+<h3 id="multi-layer多层">Multi layer(多层)</h3>
+<p>电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MultiLayer.PNG" alt="MultiLayer"></p>
+<h3 id="drill-layer钻孔层">Drill layer(钻孔层)</h3>
+<p>钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。</p>
+<h2 id="原理图库器件画法">原理图库器件画法</h2>
+<p>放置矩形</p>
+<p>添加Pin</p>
+<p>设置器件的Designator（例如P?）</p>
+<h2 id="器件的pcb封装画法">器件的PCB封装画法</h2>
+<p>确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。</p>
+<h2 id="批量添加封装并给各种原件命名">批量添加封装并给各种原件命名</h2>
+<h3 id="添加封装">添加封装</h3>
+<p>右键-Find Similar Objects选择相同类型的原件-右键-Properties-修改封装</p>
+<h3 id="批量命名">批量命名</h3>
+<p>执行<strong>Tools-Annotation-Annotate Schematic</strong>(或快捷键<strong>T A A</strong>)命令打开原理图元件命名管理器</p>
+<p>左上角设置命名顺序</p>
+<p>设置命名范围</p>
+<p>然后单击Update</p>
+<p>可以看到新的命名建议，然后执行有效角的接收更改</p>
+<p>依次单击Validate和Execute（保证两排绿√）</p>
+<p>即可完成命名</p>
+<h2 id="确定pcb范围并布局">确定PCB范围并布局</h2>
+<p>根据需要的形状和经验粗略地确定版图的位置边界，然后布局元件位置。</p>
+<h2 id="布线">布线</h2>
+<p>注意设置焊盘间的距离，jlc为7mil，以及过孔孔径。</p>
+<p>过孔打法：<code>Alt+Shift+鼠标滚轮向上</code></p>
+<h2 id="铺铜">铺铜</h2>
+<p>快捷键<code>P+G</code>，选择铺铜类型，以及铺铜连接的NET。</p>
+<h2 id="其他一些快捷键">其他：一些快捷键</h2>
+<ul>
+<li><code>ctrl+D</code>: View Configuration，用来配置PCB的显示内容</li>
+</ul>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">Last modified on 2021-04-30</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/">
+			Next<br>C&#43;&#43;回顾2——标准库
+                </a>
+                
+                
+                
+                <a class="older-posts" href="http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/">
+			Previous<br>C&#43;&#43;回顾1——基础内容
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            },
+            debounce(func, wait, options) {
+                let lastArgs,
+                    lastThis,
+                    maxWait,
+                    result,
+                    timerId,
+                    lastCallTime
+
+                let lastInvokeTime = 0
+                let leading = false
+                let maxing = false
+                let trailing = true
+
+                
+                const useRAF = (!wait && wait !== 0 && typeof root.requestAnimationFrame === 'function')
+
+                if (typeof func !== 'function') {
+                    throw new TypeError('Expected a function')
+                }
+                function isObject(value) {
+                    const type = typeof value
+                    return value != null && (type === 'object' || type === 'function')
+                }
+
+                wait = +wait || 0
+                if (isObject(options)) {
+                    leading = !!options.leading
+                    maxing = 'maxWait' in options
+                    maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait
+                    trailing = 'trailing' in options ? !!options.trailing : trailing
+                }
+
+                function invokeFunc(time) {
+                    const args = lastArgs
+                    const thisArg = lastThis
+
+                    lastArgs = lastThis = undefined
+                    lastInvokeTime = time
+                    result = func.apply(thisArg, args)
+                    return result
+                }
+
+                function startTimer(pendingFunc, wait) {
+                    if (useRAF) {
+                    root.cancelAnimationFrame(timerId)
+                    return root.requestAnimationFrame(pendingFunc)
+                    }
+                    return setTimeout(pendingFunc, wait)
+                }
+
+                function cancelTimer(id) {
+                    if (useRAF) {
+                    return root.cancelAnimationFrame(id)
+                    }
+                    clearTimeout(id)
+                }
+
+                function leadingEdge(time) {
+                    
+                    lastInvokeTime = time
+                    
+                    timerId = startTimer(timerExpired, wait)
+                    
+                    return leading ? invokeFunc(time) : result
+                }
+
+                function remainingWait(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+                    const timeWaiting = wait - timeSinceLastCall
+
+                    return maxing
+                    ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+                    : timeWaiting
+                }
+
+                function shouldInvoke(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+
+                    
+                    
+                    
+                    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+                    (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait))
+                }
+
+                function timerExpired() {
+                    const time = Date.now()
+                    if (shouldInvoke(time)) {
+                    return trailingEdge(time)
+                    }
+                    
+                    timerId = startTimer(timerExpired, remainingWait(time))
+                }
+
+                function trailingEdge(time) {
+                    timerId = undefined
+
+                    
+                    
+                    if (trailing && lastArgs) {
+                    return invokeFunc(time)
+                    }
+                    lastArgs = lastThis = undefined
+                    return result
+                }
+
+                function cancel() {
+                    if (timerId !== undefined) {
+                    cancelTimer(timerId)
+                    }
+                    lastInvokeTime = 0
+                    lastArgs = lastCallTime = lastThis = timerId = undefined
+                }
+
+                function flush() {
+                    return timerId === undefined ? result : trailingEdge(Date.now())
+                }
+
+                function pending() {
+                    return timerId !== undefined
+                }
+
+                function debounced(...args) {
+                    const time = Date.now()
+                    const isInvoking = shouldInvoke(time)
+
+                    lastArgs = args
+                    lastThis = this
+                    lastCallTime = time
+
+                    if (isInvoking) {
+                    if (timerId === undefined) {
+                        return leadingEdge(lastCallTime)
+                    }
+                    if (maxing) {
+                        
+                        timerId = startTimer(timerExpired, wait)
+                        return invokeFunc(lastCallTime)
+                    }
+                    }
+                    if (timerId === undefined) {
+                    timerId = startTimer(timerExpired, wait)
+                    }
+                    return result
+                }
+                debounced.cancel = cancel
+                debounced.flush = flush
+                debounced.pending = pending
+                return debounced
+                }
+
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+        
+        
+
+        document.querySelectorAll("table").forEach(function(elem){
+            elem.classList.add("table-striped");
+            elem.classList.add("table");
+            elem.classList.add("table-responsive");
+            elem.classList.add("table-hover");
+        })
+
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
+        
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+
+
+
+</script>
+    </body>
+</html>
