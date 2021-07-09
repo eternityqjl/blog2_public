@@ -1763,11 +1763,35 @@ c.insert(p,t)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在�
 &lt;p&gt;注意设置焊盘间的距离，jlc为7mil，以及过孔孔径。&lt;/p&gt;
 &lt;p&gt;过孔打法：&lt;code&gt;Alt+Shift+鼠标滚轮向上&lt;/code&gt;&lt;/p&gt;
 &lt;h2 id=&#34;铺铜&#34;&gt;铺铜&lt;/h2&gt;
-&lt;p&gt;快捷键&lt;code&gt;P+G&lt;/code&gt;，选择铺铜类型，以及铺铜连接的NET。&lt;/p&gt;
+&lt;p&gt;使用铺铜管理器进行铺铜：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;工具→铺铜→铺铜管理器（快捷键:TGM）&lt;/li&gt;
+&lt;li&gt;选择来自&amp;hellip;..的新多边形（New Polygon from &amp;hellip;）→板外形（Board Outline）&lt;/li&gt;
+&lt;li&gt;设置网络，哪一层？除去死铜&lt;/li&gt;
+&lt;li&gt;最后点击应用，确定，这样顶层的铺地铜就铺好了！&lt;/li&gt;
+&lt;li&gt;其他层同样按照上面的步骤进行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;设置板子边界&#34;&gt;设置板子边界&lt;/h2&gt;
+&lt;p&gt;首先选中Keep-Out-Layer所定义的边界&lt;/p&gt;
+&lt;p&gt;然后：&lt;/p&gt;
+&lt;p&gt;【Design】|【Board shape】|【Define from selected objects】&lt;/p&gt;
+&lt;p&gt;快捷键为D+S+D+enter&lt;/p&gt;
 &lt;h2 id=&#34;其他一些快捷键&#34;&gt;其他：一些快捷键&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;ctrl+D&lt;/code&gt;: View Configuration，用来配置PCB的显示内容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl+M&lt;/code&gt;：测量长度，使用&lt;code&gt;shift+C&lt;/code&gt;删除测量得到的线&lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id=&#34;批量修改元件&#34;&gt;批量修改元件&lt;/h2&gt;
+&lt;p&gt;以命名所有电阻为例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;首先使用过滤器选中所有电阻&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;执行&lt;strong&gt;工具——Annotation——注解&lt;/strong&gt;（英文为&lt;strong&gt;Tools——Annotation——Annotate Schematic&lt;/strong&gt;，或者快捷键&lt;strong&gt;T A A&lt;/strong&gt;）命令打开原理图元件命名管理器&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3d渲染图实现&#34;&gt;3D渲染图实现&lt;/h2&gt;
 - http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
         </item>
     
