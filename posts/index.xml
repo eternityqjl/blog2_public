@@ -7,7 +7,48 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sun, 04 Jul 2021 16:09:50 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="http://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CAN总线</title>
+      <link>http://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/</link>
+      <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/</guid>
+      <description>概要 Controller Area Network
+CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于消息广播模式的串行通信总线。
+CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。
+CAN总线标准规定了物理层和数据链路层，应用层标准由具体应用决定。
+CAN物理层 连接在CAN总线上的设备叫做节点设备（CAN Node），CAN网络的拓扑一般为线型。线束最常用的是双绞线，线上传输为对称的差分电平信号。
+节点主要包括Host、控制器和收发器。
+Host常集成有CAN控制器，CAN控制器负责处理协议相关功能，以减轻Host的负担。
+CAN收发器将控制器连接到传输媒介。通常控制器和总线收发器通过光耦或磁耦隔离，这样即使总线上过压损坏收发器，控制器和Host设备也可以得到保护。
+在发送数据时，CAN控制器把要发送的二进制编码通过CAN_Tx线发送到CAN收发器，然后由收发器把这个普通的逻辑电平信号转化成差分信号，通过差分线CAN_High和CAN_Low输出到CAN总线网络。接收数据过程，相反。采用差分信号，可以取得更好的电磁兼容效果。因此，CAN总线物理传输媒介只需要两根线。
+下图为一CAN收发器应用的例子：
+高速CAN总线最高信号传输速率为1Mbps，支持最长距离40m。ISO11898-2要求在高速CAN总线两段安装端接电阻RL（端接电阻一般为120Ω，因为电缆的特性阻抗为120 Ω，为了模拟无限远的传输线。）以消除反射。低速CAN最高速度只有125Kbps，所以ISO11898-3没有端接要求。
+差分信号 CAN总线采用差分信号传输，通常情况下只需要两根信号线就可以进行正常的通信。在差分信号中，逻辑0和逻辑1是用两根差分信号线的电压差来表示。
+当处于逻辑1，CAN_High和CAN_Low的电压差小于0.5V时，称为隐性电平（Recessive）；
+当处于逻辑0，CAN_High和CAN_Low的电压差大于0.9V，称为显性电平（Dominant）。
+CAN总线遵从“线与”机制：“显性”位可以覆 盖“隐性”位；只有所有节点都发 送“隐性”位， 总线才处于“隐性” 状态。这种“线与”机制使CAN总线呈现显性优先的特性。
+CAN数据链路层 在SPI通信中，片选、时钟信号、数据输入及数据输出这四个信号都有单独的信号线。而CAN使用的是两条差分信号线，只能表达一个信号。简洁的物理层决定了CAN必然要配上一套更为复杂的协议。如何用一个信号通道实现同样甚至更强大的功能，答案就是对数据或操作命令进行打包。
+通信机制 多主机(Multi-Master)：
+安全敏感的应用（如汽车动力）对通信系统的可靠性要求很高。将总线能否正常工作归结到单一节点是非常危险的，比较合理的方案是对总线接入的去中心化，即每个节点都有接入总线的能力。这也是CAN总线采用多主控（Multi-Master）线性拓扑结构的原因。
+在CAN总线上，每个节点都有往总线上发送消息的能力，而消息的发送不必遵从任何预先设定的时序，通信是事件驱动的。只有当有新的信息传递时，CAN总线才处于忙碌的状态，这使得节点接入总线速度非常快。CAN总线理论最高数据传输速率为1Mbps，对于异步事件反应迅速，基本对于ms级别的实时应用没有任何问题。
+寻址机制：
+CAN总线不设定节点的地址，而是通过消息的标识符（Identifier）来区别消息。这种机制虽然会增加消息的复杂度（增加标识符），但是节点在此情况下可以无需了解其他节点的状况，而相互间独立工作。在总线上增加节点时仅需关注消息类型，而非系统上其他节点的状况。这种以消息标识符寻址的方式，让总线上增加节点变得更加灵活。
+总线访问 CSMA/CD+AMP
+多路载波侦听+基于消息优先级的冲突检测和非破坏性的仲裁机制（CSMA/CD+AMP）
+  CSMA（Carrie Sense Multiple Access）指的是所有节点必须都等到总线处于空闲状态时才能往总线上发送消息；
+  CD+AMP（Collision Detection + Arbitration on Message Priority）指的是如果多个节点往总线上发送消息时，具备最高优先级的消息获得总线。
+  多路载波侦听：网络上所有节点以多点接入的方式连接在同一根总线上，且发送数据是广播式的。网络上各个节点在发送数据前都要检测总线上是否有数据传输：若网络上有数据，暂时不发送数据，等待网络空闲时再发；若网络上无数据，立即发送已经准备好的数据。
+  冲突检测：节点在发送数据时，要不停的检测发送的数据，确定是否与其他节点数据发送冲突，如果有冲突，则保证优先级高的报文先发送。
+  非破坏性仲裁机制：通过ID仲裁，ID数值越小，报文优先级越高。
+  发送低优先级报文的节点退出仲裁后，在下次总线空闲时自动重发报文。
+高优先级的报文不能中断低优先级报文的发送。
+报文接受过滤
+CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的报文。节点对接收到的报文进行过滤：比较消息ID与选择器（Accepter）中和接受过滤相关位是否相同。如果相同，接收；如果不相同，则过滤。
+报文种类及结构 在原始数据段的前面加上传输起始标签、片选（识别）标签、控制标签，在数据的尾段加上CRC校验标签、应答标签和传输结束标签。把这些内容按特定的格式打包好，就可以用一个通道表达各种信号了。</description>
+    </item>
+    
     <item>
       <title>存储器详解</title>
       <link>http://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
@@ -27,15 +68,24 @@
       <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
       
       <guid>http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
-      <description>&lt;p&gt;在本书中我们将会学习到一些使用技巧，比如如何避免由于&lt;strong&gt;计算机表示数字的方式&lt;/strong&gt;引起的错误；通过一些技巧&lt;strong&gt;优化C代码&lt;/strong&gt;，以充分利用现代处理器和存储器系统的设计；了解&lt;strong&gt;编译器&lt;/strong&gt;如何实现过程调用，利用这些知识避免&lt;strong&gt;缓冲区溢出&lt;/strong&gt;错误带来的安全漏洞；学习如何识别和避免&lt;strong&gt;链接&lt;/strong&gt;时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；&lt;strong&gt;并发&lt;/strong&gt;带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。&lt;/p&gt;
-&lt;p&gt;我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;()
-{
-	printf(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Hello, world&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;);
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>在本书中我们将会学习到一些使用技巧，比如如何避免由于计算机表示数字的方式引起的错误；通过一些技巧优化C代码，以充分利用现代处理器和存储器系统的设计；了解编译器如何实现过程调用，利用这些知识避免缓冲区溢出错误带来的安全漏洞；学习如何识别和避免链接时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；并发带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。
+我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：
+#include &amp;lt;stdio.h&amp;gt;int main() { printf(&amp;#34;Hello, world\n&amp;#34;); return 0; } 信息就是位+上下文 8位为一个字节。
+现代计算机系统使用ASCII标准来表示文本字符。即用一个单字节大小的整数值表示一个符号。
+数字的机器表示是对真值的有限近似。
+程序被翻译为不同的格式 hello.c中的每条C语句都会转换为一系列低级机器语言指令。这些指令按照可执行目标程序格式打包，以二进制磁盘文件的形式存放。
+编译系统：
+hello.c(源程序，文本) -&amp;gt; 预处理器(cpp) -&amp;gt; hello.i(修改了的源程序，文本) -&amp;gt; 编译器(ccl) -&amp;gt; hello.s(汇编程序，文本) -&amp;gt; 汇编器 -&amp;gt; hello.o(可重定位目标程序，二进制) -&amp;gt; 链接器 -&amp;gt; hello(可执行目标程序，二进制)
+ 预处理阶段：预处理器(cpp)根据以字符#开头的命令，修改原始C程序。例如#include &amp;lt;stdio.h&amp;gt;告诉预处理器读取系统头文件的内容，将其插入程序文本中，得到另一个C程序，以.i为扩展名。 编译阶段：编译器(ccl将hello.i翻译为hello.s，其包含了汇编语言程序。 汇编阶段：汇编器(as)将hello.s翻译为机器语言指令，将这些指令打包为可重定位目标程序，将结果保存在hello.o中，该文件为二进制文件。 链接阶段：hello程序调用了printf函数，它是C编译器提供的标准C库中的一个函数，printf函数存在于一个名为printf.o的单独预编译好的目标文件中，这个文件要以某种形式合并到我们的hello.o程序中，链接器(ld)负责这种合并，合并后就得到了可执行目标文件hello，其可以被加载到内存中，由系统执行。  编译器的工作方式 有一些重要原因使得我们必须知道编译器的工作方式：
+ 优化程序性能。我们需要了解一些机器代码及编译器将不同C语句转化为机器代码的方式，例如一个switch语句是否总比一系列if-else语句高效。 理解链接时出现的错误。 避免安全漏洞。缓冲区溢出错误是大多网络和服务器安全漏洞的主要原因。  处理器读取并解释储存在内存中的指令 要在Unix系统运行可执行目标文件hello，需要将文件名输入shell应用程序中：
+linux&amp;gt; ./hello hello,world linux&amp;gt; 系统的硬件组成 总线 贯穿整个系统，负责信息字节在各个部件之间传递。
+通常被设计为传送定长的字节块，即字，字中的字节数（即字长）是基本的系统参数，如今大多数机器中字长为8字节(即64位)，4字节(32位)在逐渐被64位取代。
+I/O设备 每个I/O设备通过控制器或适配器与I/O总线相连，控制器为I/O设备本身或系统主板上的芯片组，适配器为插在主板插槽上的卡。
+主存RAM 临时存储设备，在处理器执行程序时用来存放程序和程序处理的数据。由一组动态随机存取存储器(DRAM)芯片组成。逻辑上，存储器是一个线性的字节数组，每个字节都有其唯一的地址(数组索引)，这些地址从零开始。
+处理器 CPU是解释或执行存储在主存中指令的引擎，处理器的核心是一个大小为一个字的存储设备(寄存器)，称为程序计数器(PC)，PC指向主存中的某条机器语言指令（即包含该指令的地址）。
+处理器在一直不停地执行程序计数器指向的指令，再更新程序计数器，使其指向下一条指令。处理器看上去是按照一个简单的指令执行模型来操作的，这个模型是指令集架构决定的。该模型中指令按照严格的顺序执行。执行一条指令包含一系列步骤，处理器从程序计数器指向的内存中读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新PC，使其指向下一条指令，循环操作。
+这样的简单操作并不多，主要围绕**主存、寄存器文件和ALU(算术逻辑单元)**进行。寄存器文件是一个小型存储设备，由一些单个字长的寄存器组成，ALU计算新的数据和地址值。CPU可能进行以下操作：
+ 加载：从主存读取一个字到寄存器 存储：从寄存器赋值一个字到主存 操作：将两个寄存器的内容复制到ALU，ALU对两个字进行算术运算，将结果存放到一个寄存器中 跳转：从指令本身抽取一个字，将这个字复制到PC中  指令集架构：每条机器代码指令的效果</description>
     </item>
     
     <item>

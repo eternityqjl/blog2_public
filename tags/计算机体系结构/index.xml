@@ -14,15 +14,24 @@
       <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
       
       <guid>http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
-      <description>&lt;p&gt;在本书中我们将会学习到一些使用技巧，比如如何避免由于&lt;strong&gt;计算机表示数字的方式&lt;/strong&gt;引起的错误；通过一些技巧&lt;strong&gt;优化C代码&lt;/strong&gt;，以充分利用现代处理器和存储器系统的设计；了解&lt;strong&gt;编译器&lt;/strong&gt;如何实现过程调用，利用这些知识避免&lt;strong&gt;缓冲区溢出&lt;/strong&gt;错误带来的安全漏洞；学习如何识别和避免&lt;strong&gt;链接&lt;/strong&gt;时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；&lt;strong&gt;并发&lt;/strong&gt;带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。&lt;/p&gt;
-&lt;p&gt;我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;()
-{
-	printf(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Hello, world&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;);
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <description>在本书中我们将会学习到一些使用技巧，比如如何避免由于计算机表示数字的方式引起的错误；通过一些技巧优化C代码，以充分利用现代处理器和存储器系统的设计；了解编译器如何实现过程调用，利用这些知识避免缓冲区溢出错误带来的安全漏洞；学习如何识别和避免链接时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；并发带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。
+我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：
+#include &amp;lt;stdio.h&amp;gt;int main() { printf(&amp;#34;Hello, world\n&amp;#34;); return 0; } 信息就是位+上下文 8位为一个字节。
+现代计算机系统使用ASCII标准来表示文本字符。即用一个单字节大小的整数值表示一个符号。
+数字的机器表示是对真值的有限近似。
+程序被翻译为不同的格式 hello.c中的每条C语句都会转换为一系列低级机器语言指令。这些指令按照可执行目标程序格式打包，以二进制磁盘文件的形式存放。
+编译系统：
+hello.c(源程序，文本) -&amp;gt; 预处理器(cpp) -&amp;gt; hello.i(修改了的源程序，文本) -&amp;gt; 编译器(ccl) -&amp;gt; hello.s(汇编程序，文本) -&amp;gt; 汇编器 -&amp;gt; hello.o(可重定位目标程序，二进制) -&amp;gt; 链接器 -&amp;gt; hello(可执行目标程序，二进制)
+ 预处理阶段：预处理器(cpp)根据以字符#开头的命令，修改原始C程序。例如#include &amp;lt;stdio.h&amp;gt;告诉预处理器读取系统头文件的内容，将其插入程序文本中，得到另一个C程序，以.i为扩展名。 编译阶段：编译器(ccl将hello.i翻译为hello.s，其包含了汇编语言程序。 汇编阶段：汇编器(as)将hello.s翻译为机器语言指令，将这些指令打包为可重定位目标程序，将结果保存在hello.o中，该文件为二进制文件。 链接阶段：hello程序调用了printf函数，它是C编译器提供的标准C库中的一个函数，printf函数存在于一个名为printf.o的单独预编译好的目标文件中，这个文件要以某种形式合并到我们的hello.o程序中，链接器(ld)负责这种合并，合并后就得到了可执行目标文件hello，其可以被加载到内存中，由系统执行。  编译器的工作方式 有一些重要原因使得我们必须知道编译器的工作方式：
+ 优化程序性能。我们需要了解一些机器代码及编译器将不同C语句转化为机器代码的方式，例如一个switch语句是否总比一系列if-else语句高效。 理解链接时出现的错误。 避免安全漏洞。缓冲区溢出错误是大多网络和服务器安全漏洞的主要原因。  处理器读取并解释储存在内存中的指令 要在Unix系统运行可执行目标文件hello，需要将文件名输入shell应用程序中：
+linux&amp;gt; ./hello hello,world linux&amp;gt; 系统的硬件组成 总线 贯穿整个系统，负责信息字节在各个部件之间传递。
+通常被设计为传送定长的字节块，即字，字中的字节数（即字长）是基本的系统参数，如今大多数机器中字长为8字节(即64位)，4字节(32位)在逐渐被64位取代。
+I/O设备 每个I/O设备通过控制器或适配器与I/O总线相连，控制器为I/O设备本身或系统主板上的芯片组，适配器为插在主板插槽上的卡。
+主存RAM 临时存储设备，在处理器执行程序时用来存放程序和程序处理的数据。由一组动态随机存取存储器(DRAM)芯片组成。逻辑上，存储器是一个线性的字节数组，每个字节都有其唯一的地址(数组索引)，这些地址从零开始。
+处理器 CPU是解释或执行存储在主存中指令的引擎，处理器的核心是一个大小为一个字的存储设备(寄存器)，称为程序计数器(PC)，PC指向主存中的某条机器语言指令（即包含该指令的地址）。
+处理器在一直不停地执行程序计数器指向的指令，再更新程序计数器，使其指向下一条指令。处理器看上去是按照一个简单的指令执行模型来操作的，这个模型是指令集架构决定的。该模型中指令按照严格的顺序执行。执行一条指令包含一系列步骤，处理器从程序计数器指向的内存中读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新PC，使其指向下一条指令，循环操作。
+这样的简单操作并不多，主要围绕**主存、寄存器文件和ALU(算术逻辑单元)**进行。寄存器文件是一个小型存储设备，由一些单个字长的寄存器组成，ALU计算新的数据和地址值。CPU可能进行以下操作：
+ 加载：从主存读取一个字到寄存器 存储：从寄存器赋值一个字到主存 操作：将两个寄存器的内容复制到ALU，ALU对两个字进行算术运算，将结果存放到一个寄存器中 跳转：从指令本身抽取一个字，将这个字复制到PC中  指令集架构：每条机器代码指令的效果</description>
     </item>
     
   </channel>

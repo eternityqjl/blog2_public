@@ -6,9 +6,127 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sun, 04 Jul 2021 16:09:50 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate>
     
         <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>CAN总线</title>
+        <link>http://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/</link>
+        <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/ -&lt;h2 id=&#34;概要&#34;&gt;概要&lt;/h2&gt;
+&lt;p&gt;Controller Area Network&lt;/p&gt;
+&lt;p&gt;CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于&lt;strong&gt;消息广播&lt;/strong&gt;模式的串行通信总线。&lt;/p&gt;
+&lt;p&gt;CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;CAN总线标准&lt;/strong&gt;规定了&lt;strong&gt;物理层&lt;/strong&gt;和&lt;strong&gt;数据链路层&lt;/strong&gt;，应用层标准由具体应用决定。&lt;/p&gt;
+&lt;h2 id=&#34;can物理层&#34;&gt;CAN物理层&lt;/h2&gt;
+&lt;p&gt;连接在CAN总线上的设备叫做节点设备（CAN Node），CAN网络的拓扑一般为线型。线束最常用的是双绞线，线上传输为对称的&lt;strong&gt;差分电平信号&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;节点主要包括Host、控制器和收发器。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Host&lt;/strong&gt;常集成有CAN控制器，&lt;strong&gt;CAN控制器&lt;/strong&gt;负责处理协议相关功能，以减轻Host的负担。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;CAN收发器&lt;/strong&gt;将控制器连接到传输媒介。通常控制器和总线收发器通过光耦或磁耦隔离，这样即使总线上过压损坏收发器，控制器和Host设备也可以得到保护。&lt;/p&gt;
+&lt;p&gt;在发送数据时，CAN控制器把要发送的二进制编码通过&lt;strong&gt;CAN_Tx线&lt;/strong&gt;发送到CAN收发器，然后由收发器把这个普通的逻辑电平信号转化成&lt;strong&gt;差分信号&lt;/strong&gt;，通过&lt;strong&gt;差分线CAN_High和CAN_Low&lt;/strong&gt;输出到CAN总线网络。接收数据过程，相反。采用差分信号，可以取得更好的电磁兼容效果。因此，CAN总线物理传输媒介只需要两根线。&lt;/p&gt;
+&lt;p&gt;下图为一CAN收发器应用的例子：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_example.PNG&#34; alt=&#34;CAN总线示例&#34;&gt;&lt;/p&gt;
+&lt;p&gt;高速CAN总线最高信号传输速率为1Mbps，支持最长距离40m。ISO11898-2要求在高速CAN总线两段安装&lt;strong&gt;端接电阻&lt;/strong&gt;RL（端接电阻一般为120Ω，因为电缆的特性阻抗为120 Ω，为了模拟无限远的传输线。）以消除反射。低速CAN最高速度只有125Kbps，所以ISO11898-3没有端接要求。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_bus_Res.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;差分信号&#34;&gt;差分信号&lt;/h3&gt;
+&lt;p&gt;CAN总线采用差分信号传输，通常情况下只需要两根信号线就可以进行正常的通信。在差分信号中，逻辑0和逻辑1是用两根差分信号线的电压差来表示。&lt;/p&gt;
+&lt;p&gt;当处于&lt;strong&gt;逻辑1&lt;/strong&gt;，CAN_High和CAN_Low的电压差小于0.5V时，称为&lt;strong&gt;隐性电平（Recessive）&lt;/strong&gt;；&lt;/p&gt;
+&lt;p&gt;当处于&lt;strong&gt;逻辑0&lt;/strong&gt;，CAN_High和CAN_Low的电压差大于0.9V，称为&lt;strong&gt;显性电平（Dominant）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;CAN总线遵从“线与”机制：“显性”位可以覆 盖“隐性”位；只有所有节点都发 送“隐性”位， 总线才处于“隐性” 状态。这种“线与”机制使CAN总线呈现显性优先的特性。&lt;/p&gt;
+&lt;h2 id=&#34;can数据链路层&#34;&gt;CAN数据链路层&lt;/h2&gt;
+&lt;p&gt;在SPI通信中，片选、时钟信号、数据输入及数据输出这四个信号都有单独的信号线。而CAN使用的是两条差分信号线，&lt;strong&gt;只能表达一个信号&lt;/strong&gt;。简洁的物理层决定了CAN必然要配上一套更为复杂的协议。如何用一个信号通道实现同样甚至更强大的功能，答案就是对数据或操作命令进行打包。&lt;/p&gt;
+&lt;h3 id=&#34;通信机制&#34;&gt;通信机制&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;多主机(Multi-Master)&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;安全敏感的应用（如汽车动力）对通信系统的&lt;strong&gt;可靠性&lt;/strong&gt;要求很高。将总线能否正常工作归结到单一节点是非常危险的，比较合理的方案是对总线接入的&lt;strong&gt;去中心化&lt;/strong&gt;，即每个节点都有接入总线的能力。这也是CAN总线采用多主控（Multi-Master）线性拓扑结构的原因。&lt;/p&gt;
+&lt;p&gt;在CAN总线上，每个节点都有往总线上发送消息的能力，而消息的发送不必遵从任何预先设定的时序，通信是&lt;strong&gt;事件驱动&lt;/strong&gt;的。只有当有新的信息传递时，CAN总线才处于忙碌的状态，这使得节点接入总线速度非常快。CAN总线理论最高数据传输速率为1Mbps，对于异步事件反应迅速，基本对于ms级别的实时应用没有任何问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;寻址机制&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;CAN总线不设定节点的地址，而是通过消息的&lt;strong&gt;标识符（Identifier）&lt;strong&gt;来区别消息。这种机制虽然会增加消息的复杂度（增加标识符），但是节点在此情况下可以无需了解其他节点的状况，而&lt;/strong&gt;相互间独立工作&lt;/strong&gt;。在总线上增加节点时仅需关注消息类型，而非系统上其他节点的状况。这种以消息标识符寻址的方式，让总线上增加节点变得更加灵活。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;总线访问 CSMA/CD+AMP&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;多路载波侦听+基于消息优先级的冲突检测和非破坏性的仲裁机制（CSMA/CD+AMP）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;CSMA（Carrie Sense Multiple Access）指的是所有节点必须都等到总线处于&lt;strong&gt;空闲状态&lt;/strong&gt;时才能往总线上发送消息；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CD+AMP（Collision Detection + Arbitration on Message Priority）指的是如果多个节点往总线上发送消息时，具备&lt;strong&gt;最高优先级&lt;/strong&gt;的消息获得总线。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;多路载波侦听：网络上所有节点以多点接入的方式连接在同一根总线上，且发送数据是广播式的。网络上各个节点在发送数据前都要检测总线上是否有数据传输：若网络上有数据，暂时不发送数据，等待网络空闲时再发；若网络上无数据，立即发送已经准备好的数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;冲突检测：节点在发送数据时，要不停的检测发送的数据，确定是否与其他节点数据发送冲突，如果有冲突，则保证优先级高的报文先发送。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;非破坏性仲裁机制：通过ID仲裁，ID&lt;strong&gt;数值越小&lt;/strong&gt;，报文&lt;strong&gt;优先级越高&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_1.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_2.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;发送低优先级报文的节点退出仲裁后，在下次总线空闲时自动重发报文。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_3.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;高优先级的报文&lt;strong&gt;不能中断&lt;/strong&gt;低优先级报文的发送。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;报文接受过滤&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的报文。节点对接收到的报文进行过滤：比较消息ID与选择器（Accepter）中和接受过滤相关位是否相同。如果相同，接收；如果不相同，则过滤。&lt;/p&gt;
+&lt;h3 id=&#34;报文种类及结构&#34;&gt;报文种类及结构&lt;/h3&gt;
+&lt;p&gt;在原始数据段的前面加上&lt;strong&gt;传输起始标签、片选（识别）标签、控制标签&lt;/strong&gt;，在数据的尾段加上&lt;strong&gt;CRC校验标签、应答标签和传输结束标签&lt;/strong&gt;。把这些内容按特定的格式打包好，就可以用一个通道表达各种信号了。&lt;/p&gt;
+&lt;p&gt;各种各样的标签，起到了协同传输的作用。当整个数据包被传输到其他设备时，只要这些设备按格式去解读，就能还原出原始数据。类似这样的数据包就被称为CAN的数据帧。&lt;/p&gt;
+&lt;p&gt;为了更有效的控制通信，CAN一共规定了5中类型的帧，帧也称为报文。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;帧&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;帧用途&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;数据帧&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于发送单元向接收单元传输数据的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;远程帧&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于接收单元向具有相同ID的发送单元请求数据的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;错误帧&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于当检测出错误时，向其他单元通知错误的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;超载帧&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于接收单元通知其尚未做好接受准备的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;帧间隔&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于将数据帧及遥控帧与前面其他帧分离开的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;数据帧&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_dataFrame.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;共分为7个段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;帧起始（SOF）：标识一个数据帧的开始，固定一个显性位。用于同步，总线空闲期间的任何隐性到线性的跳变都将引起节点进行硬同步&lt;/li&gt;
+&lt;li&gt;仲裁段：内容为本数据帧的ID信息&lt;/li&gt;
+&lt;li&gt;控制段：r1和r0为保留位，默认设置为显性位。DLC（Data Length Code）段用二进制编码表示本报文的数据段包含多少字节，由4位组成，DLC3-DLC0，表示的数字为0-8.&lt;/li&gt;
+&lt;li&gt;数据段：数据帧的核心内容，有0-8个字节长度。&lt;/li&gt;
+&lt;li&gt;CRC段：报文包含了一段15位的CRC校验码，来检验是否出错。&lt;/li&gt;
+&lt;li&gt;ACK段：包含确认位和界定符。在发送节点发送时为隐形位，当接收节点收到正确报文时，将其覆盖为显性。&lt;/li&gt;
+&lt;li&gt;帧结束段（EOF）：由发送端发送7个隐形位表示结束。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;同步&#34;&gt;同步&lt;/h2&gt;
+&lt;p&gt;CAN总线使用&lt;strong&gt;位同步&lt;/strong&gt;的方式来确保通信时序，以及对总线的电平进行正确采样。&lt;/p&gt;
+&lt;h3 id=&#34;位时序&#34;&gt;位时序&lt;/h3&gt;
+&lt;h3 id=&#34;同步-1&#34;&gt;同步&lt;/h3&gt;
+&lt;p&gt;分为硬同步和重新同步。&lt;/p&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;p&gt;部分内容转载自：&lt;a href=&#34;https://zhuanlan.zhihu.com/p/32262127&#34;&gt;知乎-Choris-一口气从零读懂CAN总线&lt;/a&gt;&lt;/p&gt;
+- http://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -102,7 +220,7 @@ linux&amp;gt;
 &lt;p&gt;处理器在一直不停地执行程序计数器指向的指令，再更新程序计数器，使其指向下一条指令。处理器看上去是按照一个简单的指令执行模型来操作的，这个模型是&lt;strong&gt;指令集架构&lt;/strong&gt;决定的。该模型中指令按照严格的顺序执行。执行一条指令包含一系列步骤，处理器从程序计数器指向的内存中读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新PC，使其指向下一条指令，循环操作。&lt;/p&gt;
 &lt;p&gt;这样的简单操作并不多，主要围绕**主存、寄存器文件和ALU(算术逻辑单元)**进行。寄存器文件是一个小型存储设备，由一些单个字长的寄存器组成，ALU计算新的数据和地址值。CPU可能进行以下操作：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;加载：从贮存读取一个字到寄存器&lt;/li&gt;
+&lt;li&gt;加载：从主存读取一个字到寄存器&lt;/li&gt;
 &lt;li&gt;存储：从寄存器赋值一个字到主存&lt;/li&gt;
 &lt;li&gt;操作：将两个寄存器的内容复制到ALU，ALU对两个字进行算术运算，将结果存放到一个寄存器中&lt;/li&gt;
 &lt;li&gt;跳转：从指令本身抽取一个字，将这个字复制到PC中&lt;/li&gt;
@@ -110,7 +228,7 @@ linux&amp;gt;
 &lt;p&gt;指令集架构：每条机器代码指令的效果&lt;/p&gt;
 &lt;p&gt;微体系结构：处理器实际上是如何实现的&lt;/p&gt;
 &lt;h3 id=&#34;运行hello程序&#34;&gt;运行hello程序&lt;/h3&gt;
-&lt;p&gt;在键盘上输入&lt;code&gt;.\hello&lt;/code&gt;后，shell会将这些字符逐一读入寄存器，再将其存放到内存中。按下回车后，shell知道命令输入已经阶数，将执行一系列指令加载hello文件，这些指令会将hello目标文件中的代码和数据从磁盘复制到主存，利用DMA(直接存储器存取)技术，可将数据不经过CPU直接从磁盘放入主存。&lt;/p&gt;
+&lt;p&gt;在键盘上输入&lt;code&gt;.\hello&lt;/code&gt;后，shell会将这些字符逐一读入寄存器，再将其存放到内存中。按下回车后，shell知道命令输入已经结束，将执行一系列指令加载hello文件，这些指令会将hello目标文件中的代码和数据从磁盘复制到主存，利用DMA(直接存储器存取)技术，可将数据不经过CPU直接从磁盘放入主存。&lt;/p&gt;
 &lt;p&gt;目标文件hello被放入主存后，处理器就开始执行机器语言指令。&lt;/p&gt;
 &lt;h2 id=&#34;高速缓存&#34;&gt;高速缓存&lt;/h2&gt;
 &lt;p&gt;为了减少信息加载的时间，采用更小更快的存储设备作为数据或指令暂时的集结区域。处理器芯片上的L1高速缓存缓存的访问速度集合和访问寄存器文件一样快，容量更大的L2高速缓存通过特殊总线连接到寄处理器。高速缓存采用静态随机访问存储器（SRAM）技术实现。&lt;/p&gt;
@@ -128,7 +246,7 @@ linux&amp;gt;
 &lt;p&gt;前面的shell程序和hello程序都依靠&lt;strong&gt;操作系统&lt;/strong&gt;提供的服务访问存储器。操作系统是应用程序和硬件之间的软件。&lt;/p&gt;
 &lt;p&gt;操作系统的主要功能有：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;放置硬件被失控的应用程序滥用&lt;/li&gt;
+&lt;li&gt;防止硬件被失控的应用程序滥用&lt;/li&gt;
 &lt;li&gt;向应用程序提供简单的机制控制复杂又不同的低级硬件设备。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;操作系统通过几个基本抽象概念：进程、虚拟内存和文件实现这些功能。&lt;/p&gt;
@@ -137,7 +255,7 @@ linux&amp;gt;
 &lt;p&gt;进程是对处理器、主存和磁盘I/O设备的抽象。&lt;/p&gt;
 &lt;h3 id=&#34;进程&#34;&gt;进程&lt;/h3&gt;
 &lt;p&gt;进程是操作系统对正在运行程序的一种抽象，一个系统可以同时运行多个进行，每个进程好像都在独占使用硬件。并发运行指的是多个不同程序进程指令交错运行。处理器通过在进程间切换来实现多个程序的并发运行，这种机制称为&lt;strong&gt;上下文切换&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;操作系统报纸跟踪进程运行所需要的所有状态信息，这种状态即为上下文。这些信息有很多，比如PC和寄存器文件的当前值。&lt;/p&gt;
+&lt;p&gt;操作系统保存跟踪进程运行所需要的所有状态信息，这种状态即为上下文。这些信息有很多，比如PC和寄存器文件的当前值。&lt;/p&gt;
 &lt;p&gt;任何一个时刻，单处理器只能执行一个进程的代码。当操作系统决定要把控制权从当前进程转移到新进程时，就会进行上下文切换。&lt;/p&gt;
 &lt;p&gt;从一个进程到另一个进程的切换是操作系统内核（kernal）管理的。&lt;strong&gt;内核&lt;/strong&gt;是操作系统代码&lt;strong&gt;常驻主存&lt;/strong&gt;的部分。内核不是一个独立的进程，是系统管理全部进程所用的代码和数据结构的集合。&lt;/p&gt;
 &lt;h3 id=&#34;线程&#34;&gt;线程&lt;/h3&gt;
@@ -153,7 +271,7 @@ linux&amp;gt;
 &lt;li&gt;内核虚拟内存：地址空间顶部区域是为内核保留的，不允许应用程序读写这个区域的内容或直接调用内核代码定义的函数。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;文件&#34;&gt;文件&lt;/h3&gt;
-&lt;p&gt;文件就是字节序列，徐通所有输入输出都是通过使用一小组成为Unix I/O的系统函数调用读写文件实现的。&lt;/p&gt;
+&lt;p&gt;文件就是字节序列，系统所有输入输出都是通过使用一小组成为Unix I/O的系统函数调用读写文件实现的。&lt;/p&gt;
 &lt;h2 id=&#34;系统之间利用网络通信&#34;&gt;系统之间利用网络通信&lt;/h2&gt;
 &lt;p&gt;网络是一个I/O设备，通过网络适配器连接到系统总线。&lt;/p&gt;
 &lt;h2 id=&#34;一些重要主题&#34;&gt;一些重要主题&lt;/h2&gt;
@@ -165,7 +283,8 @@ linux&amp;gt;
 &lt;h4 id=&#34;指令级并发&#34;&gt;指令级并发&lt;/h4&gt;
 &lt;h4 id=&#34;单指令多数据并行&#34;&gt;单指令、多数据并行&lt;/h4&gt;
 &lt;h3 id=&#34;计算机系统中抽象的重要性&#34;&gt;计算机系统中抽象的重要性&lt;/h3&gt;
-&lt;p&gt;文件是对I/O设备的抽象，虚拟内存是对程序存储器的抽象，进程是对正在运行程序的抽象，虚拟机提供对整个计算机的抽象。&lt;/p&gt;- http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ - 2019-2021 By Jialong</description>
+&lt;p&gt;文件是对I/O设备的抽象，虚拟内存是对程序存储器的抽象，进程是对正在运行程序的抽象，虚拟机提供对整个计算机的抽象。&lt;/p&gt;
+- http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ - 2019-2021 By Jialong</description>
         </item>
     
     
@@ -1793,465 +1912,6 @@ c.insert(p,t)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在�
 &lt;/ul&gt;
 &lt;h2 id=&#34;3d渲染图实现&#34;&gt;3D渲染图实现&lt;/h2&gt;
 - http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>C&#43;&#43;回顾1——基础内容</title>
-        <link>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
-        <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
-        
-        <guid>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ -&lt;p&gt;这个分类的博客主要为了记录一下我在学习C++过程中记录的知识笔记，主要参考自《C++  Primer 第5版》。&lt;/p&gt;
-&lt;p&gt;第一部分基础部分主要包含以下内容：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;变量和基本类型&lt;/li&gt;
-&lt;li&gt;表达式&lt;/li&gt;
-&lt;li&gt;语句&lt;/li&gt;
-&lt;li&gt;函数&lt;/li&gt;
-&lt;li&gt;类&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;变量和基本类型&#34;&gt;变量和基本类型&lt;/h2&gt;
-&lt;h3 id=&#34;变量&#34;&gt;变量&lt;/h3&gt;
-&lt;p&gt;变量的声明和定义：&lt;/p&gt;
-&lt;p&gt;显示声明时在变量前加上extern。&lt;/p&gt;
-&lt;p&gt;声明只规定了变量类型和名字，定义还申请了存储空间，为变量赋一个初始值。&lt;/p&gt;
-&lt;p&gt;可以在多个文件重复声明，但只能定义一次。&lt;/p&gt;
-&lt;h3 id=&#34;复合类型&#34;&gt;复合类型&lt;/h3&gt;
-&lt;h4 id=&#34;引用&#34;&gt;引用&lt;/h4&gt;
-&lt;p&gt;左值引用，为对象起了另一个名字；将声明符写成&lt;code&gt;&amp;amp;d&lt;/code&gt;的形式来定义引用类型。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int ival = 1024;
-int &amp;amp;refVal = ival;
-int &amp;amp;refVal2;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;引用即为对象的别名，引用本身不是一个对象，只是为一个已存在的对象起的另一个名字。&lt;/p&gt;
-&lt;h4 id=&#34;指针&#34;&gt;指针&lt;/h4&gt;
-&lt;p&gt;指针本身就是一个对象，允许对指针赋值和拷贝，无需再定义时赋值，定义指针时将声明符写作&lt;code&gt;*d&lt;/code&gt;形式，d为变量名。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; dp, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;dp2; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//dp2为指向double类型对象的指针
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;取地址符&lt;code&gt;&amp;amp;&lt;/code&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; ival &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;42&lt;/span&gt;;
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;p &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;ival;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//p存放ival的地址
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;解引用符&lt;code&gt;*&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int ival = 42;
-int *p = &amp;amp;ival;//p存放ival的地址
-cout &amp;lt;&amp;lt; *p;	//输出指针p所指的对象，42
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;空指针：不指向任何对象，使用字面值&lt;code&gt;nullptr&lt;/code&gt;来初始化指针。&lt;/p&gt;
-&lt;p&gt;给指针赋值：令他存放一个新的地址，从而指向一个新的对象。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;void*&lt;/code&gt;指针：一种特殊类型的指针，可用于存放任意对象的地址。&lt;/p&gt;
-&lt;p&gt;复合类型的声明：&lt;/p&gt;
-&lt;p&gt;变量的定义包含一个基本数据类型和一组声明符；同一条定义中，基本数据类型只有一个，但声明符的形式可以不同，即一条语句可以定义不同类型的变量：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int i = 1024, *p = &amp;amp;i, &amp;amp;r = i;
-//i是一个int数，p是一个int类型指针，r是一个int类型引用
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一般把修饰符(&lt;code&gt;&amp;amp;,*&lt;/code&gt;)和变量标识符写在一起。&lt;/p&gt;
-&lt;p&gt;指向指针的指针：&lt;/p&gt;
-&lt;p&gt;指向指针的引用：&lt;/p&gt;
-&lt;h3 id=&#34;const限定符&#34;&gt;const限定符&lt;/h3&gt;
-&lt;p&gt;让一种变量的值不变。congst对象必须要初始化，任何试图为const对象赋值的行为都将发生错误。&lt;/p&gt;
-&lt;p&gt;const对象仅在文件内有效；要想让const对象像其他非常量对象一样在不同文件中工作，即在一个文件中定义const，在其他多个文件中声明并使用它，需要添加&lt;code&gt;extern&lt;/code&gt;关键字&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//file.cpp定义并初始化了一个常量
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; bufSize &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; fcn();
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//file.h头文件，与file.cpp定义的bufSize是同一个
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; bufSize;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;const的引用&#34;&gt;const的引用&lt;/h4&gt;
-&lt;p&gt;可以把引用绑定到const对象上，但对常量的引用不能用于修改它所绑定的对象。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; ci &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;1024&lt;/span&gt;;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;r1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; ci;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//正确：引用及其对应的对象都是常量
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;r1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;42&lt;/span&gt;; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//错误
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;r2 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; ci; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//错误，试图让一个非常量引用指向一个常量对象
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;引用的类型必须与所引用的对象类型一致，但有例外：&lt;/p&gt;
-&lt;p&gt;初始化常量引用时允许用任意表达式作为初始值，只要该表达式的结果能被转换为引用的类型即可。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;r1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;42&lt;/span&gt;;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//正确
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;指针和const&#34;&gt;指针和const&lt;/h4&gt;
-&lt;p&gt;可以令指针指向常量或非常量，&lt;strong&gt;指向常量的指针&lt;/strong&gt;不能用于改变其所指对象的值，要想存放常量对象，只能使用&lt;strong&gt;指向常量的指针&lt;/strong&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;const double pi = 3.14;
-double *ptr = &amp;amp;pi; //错误：ptr是普通指针
-const double *cptr = &amp;amp;pi;	//正确
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;顶层const&#34;&gt;顶层const&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;顶层const&lt;/strong&gt;：表示指针本身是个常量；&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;底层const&lt;/strong&gt;：表示指针所指的对象是一个常量。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int i = 0;
-int *const p1 = &amp;amp;i;		//顶层const，表示指针p1本身是一个常量，不能改变p1的值
-const int *p2 = &amp;amp;ci;	//底层const，表示指针p2指的对象ci的地址是一个常量，p2的值可以改变，对象的值不能改变
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;constexpr和常量表达式&#34;&gt;constexpr和常量表达式&lt;/h4&gt;
-&lt;p&gt;常量表达式指值不会改变并且在编译过程就能得到计算结果的表达式。字面值属于常量表达式，用常量表达式初始化的const对象也是常量表达式。&lt;/p&gt;
-&lt;h4 id=&#34;constexpr变量&#34;&gt;constexpr变量&lt;/h4&gt;
-&lt;p&gt;C++11允许将变量声明为constexpr类型以便由编译器验证变量的值是否是一个常量表达式。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; mf &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;20&lt;/span&gt;;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//20是常量表达式
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; sz &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; size();	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//只有当size是一个constexpr函数是才是一条正确的声明语句
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;字面值类型：声明constexpr时用到的类型。算术类型、引用和指针都属于字面值类型；IO库、string类型不属于字面值类型，不能被定义为constexpr。&lt;/p&gt;
-&lt;h3 id=&#34;处理类型&#34;&gt;处理类型&lt;/h3&gt;
-&lt;h4 id=&#34;类型别名&#34;&gt;类型别名&lt;/h4&gt;
-&lt;p&gt;使用关键词&lt;code&gt;typedef&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; wages; &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//wages是double的同义词
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另一种别名声明：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;using SI = Sales_item;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;字符串向量和数组&#34;&gt;字符串、向量和数组&lt;/h2&gt;
-&lt;h3 id=&#34;命名空间和using声明&#34;&gt;命名空间和using声明&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;name;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//命名空间::名字
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;每个名字都需要独立的using声明；头文件不应该包含using声明&lt;/p&gt;
-&lt;h3 id=&#34;标准库类型string&#34;&gt;标准库类型string&lt;/h3&gt;
-&lt;p&gt;string表示可变长的字符序列&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;using&lt;/span&gt; std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;string;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;定义和初始化：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;string s1;
-string &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;s2&lt;/span&gt;(s1);
-string &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;s3&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;);
-string s3 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;;
-string &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;s4&lt;/span&gt;(n, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;c&amp;#39;&lt;/span&gt;); &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//s4初始化为由连续的n个字符组成的串
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;string对象上的操作：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;os &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; s &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将s写道输出流os中，返回os
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;is &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; s &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//从is中读取字符串赋给s，字符串以空白分隔，返回is
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;getline(is, s)	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//从is中读取一行赋给s，返回is
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;s.empty()
-s.size()
-s[n]	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//返回s中第n个字符的引用
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;string::size_type&lt;/code&gt;类型&lt;/p&gt;
-&lt;p&gt;size函数返回的为上述值，是一个无符号类型的值，能存放下任何string类型对象大小。&lt;/p&gt;
-&lt;p&gt;处理string对象中的字符：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//cctype头文件中的函数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;isalnum(c)	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//c是数字或字母时为真
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;isalpha(c)
-...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用&lt;code&gt;for&lt;/code&gt;处理每个字符：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;string &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;str&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;some string&amp;#34;&lt;/span&gt;);
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;auto&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;c&lt;/span&gt; : str)
-	cout &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; c &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用下标运算符&lt;code&gt;[]&lt;/code&gt;处理一部分字符.&lt;/p&gt;
-&lt;h3 id=&#34;标准库类型vector&#34;&gt;标准库类型vector&lt;/h3&gt;
-&lt;p&gt;表示对象的集合，其中所有对象的类型都相同，集合中每个对象都有一个与之对应的索引，用于访问对象，因为vector容纳着其他对象，所以也被称之为&lt;strong&gt;容器&lt;/strong&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;using&lt;/span&gt; std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;vector;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vector是一个&lt;strong&gt;类模板&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;模板&lt;/strong&gt;本身不是类或函数，可以看作编译器生成类或函数编写的一份说明，编译器根据模板创建类或函数的过程称为&lt;strong&gt;实例化&lt;/strong&gt;，使用模板时要指出编译器应该把类或函数实例化成何种类型。需要提供那些信息由模板决定，提供信息的方式是在模板名字后面跟一对尖括号，在括号内放入信息：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; ivec;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//ivec保存int类型对象
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; file; 	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//该向量的元素是vector对象
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;初始化vector对象&#34;&gt;初始化vector对象&lt;/h4&gt;
-&lt;p&gt;定义和初始化vector对象&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; v1;
-vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; v2(v1);
-vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; v3(n, val);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以默认初始化vector对象，从而创建一个指定类型的空vector。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; svec;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;列表初始化对象：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; v1{&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;a&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;an&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;the&amp;#34;&lt;/span&gt;};
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;创建指定数量元素：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;值初始化：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//10个元素，每个初始值都为0
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;向vector对象中添加元素&#34;&gt;向vector对象中添加元素&lt;/h4&gt;
-&lt;p&gt;使用vector的成员函数&lt;code&gt;push_back()&lt;/code&gt;添加。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; str;
-string i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;111&amp;#34;&lt;/span&gt;;
-str.push_back(i);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;其他vector操作&#34;&gt;其他vector操作&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;v.empty()	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//判断v中是否含有元素，返回布尔值
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;v.size()	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//返回v中元素个数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;v.push_back(t)	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//向v尾端添加一个值为t的元素
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;v[n]	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//返回v中的n个位置上元素的引用
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;v1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; v2	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//用v2中的元素拷贝替换v1中的元素
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用下标运算符[]计算vector对象的索引，下标类型是size_type。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; str;
-string s &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; str[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;];	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//[]中的0为size_type类型
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;要使用size_type必须知名它是由哪种类型定义的。vector对象的类型总是包含着元素的类型&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;::&lt;/span&gt;size_type	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//正确
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;size_type	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//错误
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不能用下标形式添加元素，以下为错误示范：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;;
-vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; ivec;
-ivec[ix] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; ix;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;迭代器iterator&#34;&gt;迭代器iterator&lt;/h3&gt;
-&lt;p&gt;迭代器可以用来访问容器的对象。&lt;/p&gt;
-&lt;p&gt;有迭代器的类型都拥有名为&lt;code&gt;beign&lt;/code&gt;和&lt;code&gt;end&lt;/code&gt;的成员函数，end成员返回指向容器尾元素下一位置的迭代器，即一个不存在的尾后元素。&lt;/p&gt;
-&lt;p&gt;迭代器运算符：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;iter	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//返回迭代器iter所指元素的引用
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;iter&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&amp;gt;&lt;/span&gt;name	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//解引用iter并获取该元素的名为mem的成员
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++&lt;/span&gt;iter	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//令iter指示容器中的下一个元素
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;--&lt;/span&gt;iter	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//令iter指示容器中的上一个元素
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;iter1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; iter2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将迭代器从一个元素移动到另一个元素：&lt;/p&gt;
-&lt;p&gt;使用&lt;code&gt;++&lt;/code&gt;递增运算符。&lt;/p&gt;
-&lt;p&gt;迭代器类型：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;::&lt;/span&gt;iterator it;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//it能读写vector&amp;lt;int&amp;gt;的元素
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;::&lt;/span&gt;const_iterator it3;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//it3只能读元素，不能写元素
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;某些对vector对象的操作会使迭代器失效&lt;/p&gt;
-&lt;p&gt;迭代器运算：移动位置&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;iter &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; n	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//加上一个整数仍然得到一个迭代器，迭代器指示的新位置与原来的位置相比向前移动了若干个元素
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;iter &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; n
-iter &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+=&lt;/span&gt; n
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;表达式&#34;&gt;表达式&lt;/h2&gt;
-&lt;h3 id=&#34;成员访问运算符&#34;&gt;成员访问运算符&lt;/h3&gt;
-&lt;p&gt;箭头运算符与点运算符有关，表达式&lt;code&gt;ptr-&amp;gt;mem&lt;/code&gt;等价于&lt;code&gt;(*ptr).mem&lt;/code&gt;；&lt;/p&gt;
-&lt;h3 id=&#34;条件运算符&#34;&gt;条件运算符&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cond &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;expr1&lt;/span&gt; : expr2;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;位运算符&#34;&gt;位运算符&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;运算符&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;功能&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;用法&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;~&lt;/code&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;位求反&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;~expr&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;&amp;lt;&amp;lt;,&amp;gt;&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;左移，右移&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;expr1 &amp;lt;&amp;lt; expr2&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;&amp;amp;&lt;/code&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;位或&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;expr1 &amp;amp; expr2&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;^&lt;/code&gt;&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;位异或&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;&lt;code&gt;expr1 ^ expr2&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;`&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;`&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;位或&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;sizeof运算符&#34;&gt;sizeof运算符&lt;/h3&gt;
-&lt;p&gt;返回一条表达式或一个类型名字所占的字节数。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sizeof data;
-sizeof *p;	//指针所占的空间大小
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;逗号运算符&#34;&gt;逗号运算符&lt;/h3&gt;
-&lt;p&gt;含有两个运算对象，按从左向右的顺序依次求值。&lt;/p&gt;
-&lt;h2 id=&#34;语句&#34;&gt;语句&lt;/h2&gt;
-&lt;h3 id=&#34;跳转语句&#34;&gt;跳转语句&lt;/h3&gt;
-&lt;p&gt;break：终止离它最近的while，do while，for或switch语句，并从这些语句之后的第一条语句开始执行。&lt;/p&gt;
-&lt;p&gt;continue：终止最近的循环中的当前迭代并立即开始下一次迭代。&lt;/p&gt;
-&lt;h3 id=&#34;try语句块和异常处理&#34;&gt;try语句块和异常处理&lt;/h3&gt;
-&lt;p&gt;异常指的是一些超出了函数正常功能范围的反常行为。&lt;/p&gt;
-&lt;p&gt;C++中异常处理机制包括：&lt;/p&gt;
-&lt;h4 id=&#34;throw表达式&#34;&gt;throw表达式&lt;/h4&gt;
-&lt;p&gt;程序的异常检测部分使用throw表达式引发一个异常。表达式半酣关键词throw和紧随其后的一个表达式，其中表达式类型就是抛出的异常类型。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; (item1.isbn() &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; item2.isbn())
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;throw&lt;/span&gt; runtime_error(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Data must refer to same ISBN&amp;#34;&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该异常是runtime_error的对象，抛出异常将终止当前函数，把控制权转移给能处理该异常的代码。&lt;/p&gt;
-&lt;p&gt;runtime_error是标准库异常类型的一种，定义在stdexcept头文件中。&lt;/p&gt;
-&lt;h4 id=&#34;try语句块&#34;&gt;try语句块&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;try&lt;/span&gt; {
-	program&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;statements
-} &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;catch&lt;/span&gt; (exception&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;declaration)	{
-	handler&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;statements
-} &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;catch&lt;/span&gt; (exception&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;declaration)	{
-	handler&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;statements
-}	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//...
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;跟在try块后的是一个或多个catch子句；catch子句包括三部分：关键词catch、括号内的一个对象的声明(称为异常声明)以及一个块。当选中类某个catch子句处理异常后，执行与之对应的块。&lt;/p&gt;
-&lt;h2 id=&#34;函数&#34;&gt;函数&lt;/h2&gt;
-&lt;h3 id=&#34;函数基础&#34;&gt;函数基础&lt;/h3&gt;
-&lt;h4 id=&#34;形参列表&#34;&gt;形参列表&lt;/h4&gt;
-&lt;p&gt;函数的形参列表可以为空，但不能省略；形参通常用都好隔开，每个形参都是含有一个声明符的声明，即使两个形参的类型相同，也必须把两个类型都写出来。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;f1&lt;/span&gt;()	{}
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;f2&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt;)	{}
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; f3(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; v1, v2)	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//这样写是错的
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; f4(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; v3, &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; v4)	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//这样写正确
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;函数声明&#34;&gt;函数声明&lt;/h4&gt;
-&lt;p&gt;函数的声明无需函数体，用一个分号代替。&lt;/p&gt;
-&lt;p&gt;一般在头文件中进行声明，在源文件中进行定义。&lt;/p&gt;
-&lt;h4 id=&#34;const形参和实参&#34;&gt;const形参和实参&lt;/h4&gt;
-&lt;p&gt;当用实参初始化形参时会忽略顶层const&lt;/p&gt;
-&lt;h4 id=&#34;数组形参&#34;&gt;数组形参&lt;/h4&gt;
-&lt;p&gt;数组的&lt;strong&gt;不允许拷贝&lt;/strong&gt;和使用时数组通常会将其转换成&lt;strong&gt;指针&lt;/strong&gt;的特殊性质对定义和使用在数组上的函数有很大影响。我们为函数传递一个数组时，实际上传递的是指向数组首元素的指针。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;);
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;[]);
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;[&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;]);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//这里的维度表示我们期望数组含有的元素数量，实际上不一定。
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面的三个函数是等价的，每个函数的形参都是const int*类型。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;数组引用形参&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;C++允许将变量定义为数组的引用，形参也可以是数组的引用。此时，引用形参绑定到对应实参上，也就是绑定到数组上：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;arr)[&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;])
-{
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;auto&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;elem&lt;/span&gt; : arr)
-		cout &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; elem &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如上为数组的引用而不是引用的数组。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;f(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;arr[&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;])	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将arr声明为了引用的数组
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;f(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;arr)[&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;])	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//arr是具有10个整数的整形数组的引用
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;传递多维数组&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;多维数组实际上是数组的数组，将多维数组传递给函数实际上传递的是指向数组首元素的指针。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;matrix)[&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;], &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; rowSize)	{}
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//matrix指向数组的首元素，该数组的元素是由10个整数构成的数组。
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;main处理命令行选项&#34;&gt;main：处理命令行选项&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; argc, &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;argv[])	{...}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;假定main函数位于可执行文件prog之内，我们可以想程序传递下面的选项：&lt;/p&gt;
-&lt;p&gt;prog -d -o ofile data0&lt;/p&gt;
-&lt;p&gt;第二个形参argv是一个数组，其元素为指向c风格字符串的指针；第一个形参argc表示数组中字符串的数量。&lt;/p&gt;
-&lt;p&gt;当实参传递给main函数后，argc的第一个元素指向程序的名字或一个空字符串，接下来的元素依次传递命令行提供的实参。最后一个指针之后的元素值保证为0。&lt;/p&gt;
-&lt;h3 id=&#34;函数重载&#34;&gt;函数重载&lt;/h3&gt;
-&lt;p&gt;同一作用域内的几个函数名字相同但形参列表不同，称之为&lt;strong&gt;重载函数&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;这些函数接收的形参类型不一样，但执行的操作非常类似，调用时；编译器会根据传递的实参类型推断想要的是哪个函数。&lt;/p&gt;
-&lt;p&gt;不允许两个函数除了返回类型外其他所有的要素都相同。&lt;/p&gt;
-&lt;h4 id=&#34;重载和const形参&#34;&gt;重载和const形参&lt;/h4&gt;
-&lt;p&gt;一个拥有顶层const的形参无法和另一个没有顶层const的形参区分开来：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Record &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(Phone);
-Record &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; Phone);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//重复声明了Record lookup(Phone);
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果形参是某种类型的指针或引用，则通过区分指向的是&lt;strong&gt;常量对象&lt;/strong&gt;还是&lt;strong&gt;非常量对象&lt;/strong&gt;可以实现函数的重载，此时的const是底层const。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Record &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(Account&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//函数作用于Account的引用
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;Record &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; Account&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//新韩淑，作用于常量的引用
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;特殊用途语言特性&#34;&gt;特殊用途语言特性&lt;/h3&gt;
-&lt;h4 id=&#34;默认实参&#34;&gt;默认实参&lt;/h4&gt;
-&lt;p&gt;某些函数的一种形参在函数的多次调用中都被赋予了同一个值，此时我们把这个反复出现的值称为函数的默认实参，为了实现函数既能接纳默认值，又能接受我们具体指定的值，我们定义为如下形式：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;typedef&lt;/span&gt; string&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;size_type sz;
-string &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;screen&lt;/span&gt;(sz ht &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;24&lt;/span&gt;, sz wid &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;80&lt;/span&gt;, &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; background &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意，一旦某个形参被赋予了默认值，它后面的所有形参都必须有默认值。&lt;/p&gt;
-&lt;p&gt;在给定作用域中一个形参只能被赋予一次默认实参。&lt;/p&gt;
-&lt;h4 id=&#34;内联函数&#34;&gt;内联函数&lt;/h4&gt;
-&lt;p&gt;把一些规模较小的表达式定义为函数有很多好处：容易读懂、容易修改、能重复利用；但也有缺点：调用函数一般比求等价表达式的值要慢；一次函数调用包含一系列工作：先保存寄存器，在返回时恢复；可能需要拷贝实参。&lt;/p&gt;
-&lt;p&gt;使用内联函数可以避免函数调用的开销，例如：&lt;/p&gt;
-&lt;p&gt;把shorterString函数定义为内联函数，则如下调用：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; shorterString(s1, s2) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在编译过程中会被展开为如下形式：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; (s1.size() &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; s2.size() &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;s1&lt;/span&gt; : s2) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从而消除了函数运行时的开销。只需在函数的返回类型前加上&lt;code&gt;inline&lt;/code&gt;即可。&lt;/p&gt;
-&lt;p&gt;内联是向编译器发出的一个请求，编译器可以忽略这个请求。&lt;/p&gt;
-&lt;h4 id=&#34;调试帮助&#34;&gt;调试帮助&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;assert预处理宏&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;assert(expr);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;assert是一种预处理宏，使用一个表达式作为它的条件；对expr求值，如果为0，assert输出信息并终止程序运行；如果为1，assert什么也不做。&lt;/p&gt;
-&lt;p&gt;assert宏定义在&lt;code&gt;cassert&lt;/code&gt;头文件中，由预处理器管理，无需提供using声明。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NDEBUG预处理变量&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;assert的行为依赖于名为NDEBUG的预处理变量的状态，如果定义了NDEBUG，则assert什么也不做。默认状态下没有定义NDEBUG，此时assert将执行。&lt;/p&gt;
-&lt;p&gt;可以使用一个&lt;code&gt;#define&lt;/code&gt;语句定义NDEBUG，从而关闭调试状态。&lt;/p&gt;
-&lt;p&gt;除了使用assert之外，可以使用NDEBUG编写自己的条件调试代码，使用&lt;code&gt;#ifndef&lt;/code&gt;和&lt;code&gt;#endif&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; ia[], size_t size)
-{
-&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#ifndef NDEBUG
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;	cerr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; __fun__ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;:array size is: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; size &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#endif
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;...
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;__fun__&lt;/code&gt;为编译器定义的局部静态变量，用于存放函数名字；预处理器还定义了一些有用的名字：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;__FILE__&lt;/code&gt;：存放文件名的字符串字面值&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;__LINE__&lt;/code&gt;：存放当前行号的整形字面值&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;__TIME__&lt;/code&gt;：存放文件编译时间的字符串字面值&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;__DATA__&lt;/code&gt;：存放文件编译日期的字符串字面值&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;可以使用这些值在错误消息中提供更多信息。&lt;/p&gt;
-&lt;h2 id=&#34;类&#34;&gt;类&lt;/h2&gt;
-&lt;p&gt;以一个例子来说明类&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;strut Sales_data {
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	Sales_data() &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;default&lt;/span&gt;;
-	Sales_data(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;string &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;s) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; bookNo(s) {}
-	Sales_data(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;string &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;s, &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; n, &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; p)&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
-		bookNo(s), units_sold(n), revenue(p&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;n) {}
-	Sales_data(std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;istream &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;);
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//成员函数：
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;string isbn()	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; {&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; bookNo; }
-	Sales_data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt; combine(&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; Sales_data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;);
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; avg_price() &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt;;
-	std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;string bookNo;
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//类内初始值(数据成员)
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; units_sold &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;;
-	&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; revenue &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0.0&lt;/span&gt;;
-};
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在类的外部定义成员函数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; Sales_data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;avg_price() &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; {
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; (units_sold)
-		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; revenue &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt; units_sold;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt;
-		&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;;
-}
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在类的外部定义构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;Sales_data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;Sales_data(std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;istream &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;is)
-{
-    read(is, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//从is中读取一条信息然后存入this对象中
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;成员函数&#34;&gt;成员函数&lt;/h3&gt;
-&lt;p&gt;成员函数的&lt;strong&gt;声明&lt;/strong&gt;必须在&lt;strong&gt;类的内部&lt;/strong&gt;，它的&lt;strong&gt;定义&lt;/strong&gt;既可以在类的内部也可以在类的外部。作为接口的非成员函数，它的定义和声明都在类的外部。&lt;/p&gt;
-&lt;h3 id=&#34;构造函数&#34;&gt;构造函数&lt;/h3&gt;
-&lt;p&gt;构造函数的任务时初始化类对象的数据成员，无论何时只要类被创建就会执行构造函数。&lt;/p&gt;
-&lt;p&gt;构造函数的名字和&lt;strong&gt;类名&lt;/strong&gt;相同，和其他函数不同，构造函数&lt;strong&gt;没有返回类型&lt;/strong&gt;；除此之外的特性类似于其他函数。&lt;/p&gt;
-&lt;p&gt;类可以包含多个构造函数，和其他的&lt;strong&gt;重载函数&lt;/strong&gt;差不多，不同构造函数之间必须在参数数量或参数类型上有所区别。&lt;/p&gt;
-&lt;p&gt;构造函数不能被声明成&lt;strong&gt;const&lt;/strong&gt;的。当我们创建类的一个const对象，直到构造函数完成初始化的过程，对象才能真正获得其常量属性。&lt;/p&gt;
-&lt;p&gt;在类的外部定义构造函数：如上代码所示。&lt;/p&gt;
-&lt;h4 id=&#34;构造函数初始值列表&#34;&gt;构造函数初始值列表&lt;/h4&gt;
-&lt;p&gt;就对象的数据成员而言，初始化和赋值也有区别。如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化。&lt;/p&gt;
-&lt;p&gt;如果成员是&lt;strong&gt;const&lt;/strong&gt;或&lt;strong&gt;引用&lt;/strong&gt;的话，必须将其初始化。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;ConstRef&lt;/span&gt; {
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
-	ConstRef(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; ii);
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; ci;
-	&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;ri;
-};
-ConstRef&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; ii)&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; i(ii), ci(ii), ri(i) {}	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//显示地初始化引用和const成员
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最好避免使用某些成员初始化其他成员。&lt;/p&gt;
-&lt;h4 id=&#34;委托构造函数&#34;&gt;委托构造函数&lt;/h4&gt;
-&lt;p&gt;一个委托构造函数可以使用它属类的其他构造函数执行它自己的初始化过程。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Sales_data&lt;/span&gt; {
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//非委托构造函数使用对应的实参初始化成员
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;string s, &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; cnt, &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; price)&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt;
-		bookNo(s), units_sold(cnt), revenue(cnt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;price);
-	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//其余构造函数委托给另一个构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	Sales_data()&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; Sales_data(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;) {}	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//默认构造函数，委托给了上面输入3个变量的构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;string s)&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; Sales_data(s, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;) {}
-	Sales_Data(std&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;istrean &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;is)&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; Sales_data() {read(is, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;this&lt;/span&gt;); }	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//委托给了默认构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;聚合类&#34;&gt;聚合类&lt;/h4&gt;
-&lt;p&gt;聚合类使得用户可以直接访问其成员并且具有特殊的初始化语法形式。&lt;/p&gt;
-&lt;p&gt;定义：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;所有成员都是public的。&lt;/li&gt;
-&lt;li&gt;没有定义任何构造函数。&lt;/li&gt;
-&lt;li&gt;没有类内初始值。&lt;/li&gt;
-&lt;li&gt;没有基类，没有virtual函数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Data&lt;/span&gt; {
-	&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; ival;
-	string s;
-};
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;访问控制与封装&#34;&gt;访问控制与封装&lt;/h3&gt;
-&lt;p&gt;使用**访问说明符(access specifiers)**加强类的封装：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;public&lt;/strong&gt;说明符：定义在其之后的成员在整个程序内可被访问，public成员定义类的接口。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;private&lt;/strong&gt;说明符：定义在其后的成员可以被类的成员函数访问，但不能被使用该类的代码访问，该种封装隐藏了类的实现细节。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;struct&lt;/strong&gt;和&lt;strong&gt;class&lt;/strong&gt;关键词的区别：&lt;/p&gt;
-&lt;p&gt;我们可以用两个关键词中的任意一个定义类，唯一的区别是两者的&lt;strong&gt;默认访问权限&lt;/strong&gt;不太一样。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;使用&lt;code&gt;struct&lt;/code&gt;：定义在第一个访问说明符之前的成员是public的。&lt;/li&gt;
-&lt;li&gt;使用&lt;code&gt;class&lt;/code&gt;：定义在第一个访问说明符之前的成员是private的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;友元&#34;&gt;友元&lt;/h3&gt;
-&lt;p&gt;类可以允许其他类或函数访问它的非公有成员，方法是令其他类或函数称为它的友元；如果类想把&lt;strong&gt;一个函数&lt;/strong&gt;作为它的友元，只要增加一条以&lt;code&gt;friend&lt;/code&gt;关键词开头的&lt;strong&gt;函数声明语句&lt;/strong&gt;即可。&lt;/p&gt;
-&lt;p&gt;友元声明只能出现在类定义的内部，但在类内出现的具体位置不限。&lt;/p&gt;
-&lt;p&gt;友元的声明仅仅指定了&lt;strong&gt;访问权限&lt;/strong&gt;，并非一个通常意义上的函数声明。如果希望类的用户能够调用某个友元函数，就必须在友元声明之外再专门对函数进行一次声明。&lt;/p&gt;
-&lt;h3 id=&#34;类的作用域&#34;&gt;类的作用域&lt;/h3&gt;
-&lt;p&gt;在类的作用于之外，普通的数据和函数成员只能由&lt;strong&gt;对象、引用或指针&lt;/strong&gt;使用**成员访问运算符(&lt;code&gt;. -&amp;gt;&lt;/code&gt;)&lt;strong&gt;来访问；对于类类型成员，则使用&lt;/strong&gt;作用域运算符(&lt;code&gt;::&lt;/code&gt;)**访问。&lt;/p&gt;
-&lt;p&gt;一个类就是一个作用域，所以在类的外部定义成员函数时必须同时提供类名和函数名。在类的外部，成员的名字被隐藏起来了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; Window_mgr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;clear(ScreenIndex i)
-{
-	Screen &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;s &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; screens[i];
-	s.contents &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; string(s.height &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; s.width, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;类的静态成员&#34;&gt;类的静态成员&lt;/h3&gt;
-&lt;p&gt;有时候类需要它的一些成员&lt;strong&gt;与类本身直接相关&lt;/strong&gt;，而不是与类的各个对象保持关联。这是我们可以通过声明静态成员，即在成员的声明前加上关键字&lt;strong&gt;static&lt;/strong&gt;，使得其与类关联在一起。&lt;/p&gt;
-&lt;p&gt;静态成员可以是public或private的。&lt;/p&gt;
-&lt;p&gt;类的静态成员存在于任何对象之外，对象中不包含任何与静态数据成员有关的数据。同样，&lt;strong&gt;类静态成员函数&lt;/strong&gt;也不与任何对象绑定在一起，它们不包含this指针。静态成员函数不能声明成const的，也不能在static函数体内使用this指针。&lt;/p&gt;
-&lt;p&gt;使用类的静态成员：&lt;/p&gt;
-&lt;p&gt;使用&lt;strong&gt;作用域运算符&lt;/strong&gt;直接访问静态成员：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;double&lt;/span&gt; r;
-r &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;::&lt;/span&gt;rate();	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//Account为类名
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成员函数不用通过作用域运算符就能直接使用静态成员。&lt;/p&gt;
-&lt;p&gt;定义静态成员：&lt;/p&gt;
-&lt;p&gt;我们既可以在类内部也可以在类外部定义静态成员函数，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。&lt;/p&gt;- http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ - 2019-2021 By Jialong</description>
         </item>
     
     
