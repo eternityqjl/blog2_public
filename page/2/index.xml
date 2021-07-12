@@ -6,9 +6,111 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jul 2021 21:26:27 +0800</lastBuildDate>
     
         <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Altium Designer画图流程记录(简略)</title>
+        <link>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+        <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ -&lt;p&gt;之前看过博主&lt;a href=&#34;https://space.bilibili.com/384891&#34;&gt;半夜中暑的羊&lt;/a&gt;的原理图以及PCB绘制&lt;a href=&#34;https://www.bilibili.com/video/BV1JE41127Ks&#34;&gt;教程&lt;/a&gt;，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。&lt;/p&gt;
+&lt;p&gt;共有以下几部分内容：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;原理图库&lt;/li&gt;
+&lt;li&gt;核心模块的原理图&lt;/li&gt;
+&lt;li&gt;为原理图添加封装&lt;/li&gt;
+&lt;li&gt;PCB布局&lt;/li&gt;
+&lt;li&gt;PCB布线&lt;/li&gt;
+&lt;li&gt;PCB敷铜&lt;/li&gt;
+&lt;li&gt;PCB生成BOM及投板&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;pcb各层简介&#34;&gt;PCB各层简介&lt;/h2&gt;
+&lt;p&gt;参考自：&lt;a href=&#34;https://blog.csdn.net/qq_29373285/article/details/85339076&#34;&gt;PCB各层介绍&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mechanical-layer机械层&#34;&gt;Mechanical layer(机械层)&lt;/h3&gt;
+&lt;p&gt;Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MechanicalLayer.PNG&#34; alt=&#34;MechanicalLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;keep-out-layer禁止布线层&#34;&gt;Keep out layer(禁止布线层)&lt;/h3&gt;
+&lt;p&gt;用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/KeepOutLayer.PNG&#34; alt=&#34;KeepOutLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;signal-layer信号层&#34;&gt;Signal layer(信号层)&lt;/h3&gt;
+&lt;p&gt;信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SignalLayer.PNG&#34; alt=&#34;SignalLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;internal-plane-layer内部电源接地层&#34;&gt;Internal plane layer(内部电源/接地层)&lt;/h3&gt;
+&lt;p&gt;Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。&lt;/p&gt;
+&lt;h3 id=&#34;silkscreen-layer丝印层&#34;&gt;Silkscreen layer(丝印层)&lt;/h3&gt;
+&lt;p&gt;丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SilkscreenLayer.PNG&#34; alt=&#34;SilkscreenLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;solder-mask-layer阻焊层&#34;&gt;Solder mask layer(阻焊层)&lt;/h3&gt;
+&lt;p&gt;在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中&lt;strong&gt;匹配焊盘&lt;/strong&gt;，是&lt;strong&gt;自动产生&lt;/strong&gt;的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)&lt;strong&gt;和&lt;/strong&gt;Bottom Solder(底层)**两个阻焊层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SolderMaskLayer.PNG&#34; alt=&#34;SolderMaskLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;paste-mask-layer助焊层smd贴片层&#34;&gt;Paste mask layer(助焊层，SMD贴片层)&lt;/h3&gt;
+&lt;p&gt;它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/PasteMaskLayer.PNG&#34; alt=&#34;PasteMaskLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;multi-layer多层&#34;&gt;Multi layer(多层)&lt;/h3&gt;
+&lt;p&gt;电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MultiLayer.PNG&#34; alt=&#34;MultiLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;drill-layer钻孔层&#34;&gt;Drill layer(钻孔层)&lt;/h3&gt;
+&lt;p&gt;钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。&lt;/p&gt;
+&lt;h2 id=&#34;原理图库器件画法&#34;&gt;原理图库器件画法&lt;/h2&gt;
+&lt;p&gt;放置矩形&lt;/p&gt;
+&lt;p&gt;添加Pin&lt;/p&gt;
+&lt;p&gt;设置器件的Designator（例如P?）&lt;/p&gt;
+&lt;h2 id=&#34;器件的pcb封装画法&#34;&gt;器件的PCB封装画法&lt;/h2&gt;
+&lt;p&gt;确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。&lt;/p&gt;
+&lt;h2 id=&#34;批量添加封装并给各种原件命名&#34;&gt;批量添加封装并给各种原件命名&lt;/h2&gt;
+&lt;h3 id=&#34;添加封装&#34;&gt;添加封装&lt;/h3&gt;
+&lt;p&gt;右键-Find Similar Objects选择相同类型的原件-右键-Properties-修改封装&lt;/p&gt;
+&lt;h3 id=&#34;批量命名&#34;&gt;批量命名&lt;/h3&gt;
+&lt;p&gt;执行&lt;strong&gt;Tools-Annotation-Annotate Schematic&lt;/strong&gt;(或快捷键&lt;strong&gt;T A A&lt;/strong&gt;)命令打开原理图元件命名管理器&lt;/p&gt;
+&lt;p&gt;左上角设置命名顺序&lt;/p&gt;
+&lt;p&gt;设置命名范围&lt;/p&gt;
+&lt;p&gt;然后单击Update&lt;/p&gt;
+&lt;p&gt;可以看到新的命名建议，然后执行有效角的接收更改&lt;/p&gt;
+&lt;p&gt;依次单击Validate和Execute（保证两排绿√）&lt;/p&gt;
+&lt;p&gt;即可完成命名&lt;/p&gt;
+&lt;h2 id=&#34;确定pcb范围并布局&#34;&gt;确定PCB范围并布局&lt;/h2&gt;
+&lt;p&gt;根据需要的形状和经验粗略地确定版图的位置边界，然后布局元件位置。&lt;/p&gt;
+&lt;h2 id=&#34;布线&#34;&gt;布线&lt;/h2&gt;
+&lt;p&gt;注意设置焊盘间的距离，jlc为7mil，以及过孔孔径。&lt;/p&gt;
+&lt;p&gt;过孔打法：&lt;code&gt;Alt+Shift+鼠标滚轮向上&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;铺铜&#34;&gt;铺铜&lt;/h2&gt;
+&lt;p&gt;使用铺铜管理器进行铺铜：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;工具→铺铜→铺铜管理器（快捷键:TGM）&lt;/li&gt;
+&lt;li&gt;选择来自&amp;hellip;..的新多边形（New Polygon from &amp;hellip;）→板外形（Board Outline）&lt;/li&gt;
+&lt;li&gt;设置网络，哪一层？除去死铜&lt;/li&gt;
+&lt;li&gt;最后点击应用，确定，这样顶层的铺地铜就铺好了！&lt;/li&gt;
+&lt;li&gt;其他层同样按照上面的步骤进行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;设置板子边界&#34;&gt;设置板子边界&lt;/h2&gt;
+&lt;p&gt;首先选中Keep-Out-Layer所定义的边界&lt;/p&gt;
+&lt;p&gt;然后：&lt;/p&gt;
+&lt;p&gt;【Design】|【Board shape】|【Define from selected objects】&lt;/p&gt;
+&lt;p&gt;快捷键为D+S+D+enter&lt;/p&gt;
+&lt;h2 id=&#34;其他一些快捷键&#34;&gt;其他：一些快捷键&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctrl+D&lt;/code&gt;: View Configuration，用来配置PCB的显示内容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl+M&lt;/code&gt;：测量长度，使用&lt;code&gt;shift+C&lt;/code&gt;删除测量得到的线&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;批量修改元件&#34;&gt;批量修改元件&lt;/h2&gt;
+&lt;p&gt;以命名所有电阻为例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;首先使用过滤器选中所有电阻&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;执行&lt;strong&gt;工具——Annotation——注解&lt;/strong&gt;（英文为&lt;strong&gt;Tools——Annotation——Annotate Schematic&lt;/strong&gt;，或者快捷键&lt;strong&gt;T A A&lt;/strong&gt;）命令打开原理图元件命名管理器&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3d渲染图实现&#34;&gt;3D渲染图实现&lt;/h2&gt;
+- http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1617,223 +1719,6 @@ y&lt;span style=&#34;color:#0086b3&#34;&gt;_&lt;/span&gt;2[n]
 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#0086b3&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/equationSample.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 - http://eternityqjl.top/posts/latex-problems1/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>信号与系统学习笔记——Chapter01 信号与系统</title>
-        <link>http://eternityqjl.top/posts/signalsystem-ch01/</link>
-        <pubDate>Sat, 14 Mar 2020 13:59:44 +0000</pubDate>
-        
-        <guid>http://eternityqjl.top/posts/signalsystem-ch01/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/signalsystem-ch01/ -&lt;h2 id=&#34;13-指数信号与正弦信号&#34;&gt;1.3 指数信号与正弦信号&lt;/h2&gt;
-&lt;h3 id=&#34;131-连续时间复指数信号与正弦信号&#34;&gt;1.3.1 连续时间复指数信号与正弦信号&lt;/h3&gt;
-&lt;p&gt;连续时间复指数信号有如下形式：
-$$
-x(t)=Ce^{at}
-$$&lt;/p&gt;
-&lt;h4 id=&#34;实指数信号&#34;&gt;实指数信号&lt;/h4&gt;
-&lt;p&gt;上式中的$C$和$a$都为实数的信号。&lt;/p&gt;
-&lt;h4 id=&#34;周期复指数信号和正弦信号&#34;&gt;周期复指数信号和正弦信号&lt;/h4&gt;
-&lt;p&gt;第二种重要的信号为将上式$a$限制为纯虚数的信号（&lt;strong&gt;复指数信号&lt;/strong&gt;）：
-$$
-x(t)=e^{jw_0t}
-$$
-当基波周期$T_0 = \left| \frac {2\pi} {w_0} \right|$时，该信号是周期信号。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;与该信号相关的另一种信号是&lt;strong&gt;正弦信号&lt;/strong&gt;：
-$$
-x(t)=A\cos(w_0t+\phi)
-$$
-利用&lt;strong&gt;欧拉公式&lt;/strong&gt;，可以将复指数信号用与其相同几波周期的正弦信号来表示：
-$$
-e^{jw_0t}=\cos w_0t + j\sin w_0t
-$$
-$w_0$称为基波频率。&lt;/p&gt;
-&lt;p&gt;上述复指数信号和正弦信号都是&lt;strong&gt;具有无限能量&lt;/strong&gt;但&lt;strong&gt;有有限平均功率&lt;/strong&gt;的信号。&lt;/p&gt;
-&lt;p&gt;计算证明：
-$$
-E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0  \&lt;br&gt;
-P_{period}= \frac {1}{T_0} E_{period}=1
-$$&lt;/p&gt;
-&lt;h4 id=&#34;一般复指数信号&#34;&gt;一般复指数信号&lt;/h4&gt;
-&lt;p&gt;一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示：
-$$
-C = \left| C \right| e^{j \theta} \&lt;br&gt;
-a = r + j\omega_0
-$$
-代入得：
-$$
-\begin{align}
-Ce^{at} 
-&amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t}  \&lt;br&gt;
-&amp;amp; = \left| C \right| e^{rt} e^{j(w_0t+\theta)}  \&lt;br&gt;
-&amp;amp; = \left| C \right| e^{rt} \cos(w_0t+\theta) + j\left| C \right| e^{rt} \sin(w_0t+\theta)
-\end{align}
-$$
-若$r=0$，则复指数信号的实部和虚部都是&lt;strong&gt;正弦&lt;/strong&gt;；若$r&amp;gt;0$，则实部和虚部是一个&lt;strong&gt;呈指数增长&lt;/strong&gt;的正弦信号；若$r&amp;lt;0$，则二者都是一个&lt;strong&gt;呈指数衰减&lt;/strong&gt;的正弦信号，该信号被称为阻尼正弦震荡。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/increasingSineSignal.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;132-离散时间复指数信号与正弦信号&#34;&gt;1.3.2 离散时间复指数信号与正弦信号&lt;/h3&gt;
-&lt;p&gt;一种重要的离散时间信号是&lt;strong&gt;复指数信号&lt;/strong&gt;或&lt;strong&gt;序列&lt;/strong&gt;，定义为：
-$$
-x[n]=C\alpha ^n
-$$
-其中的$C$和$\alpha$一般为复数，若另$\alpha = e^{\beta}$，则有另外一种表达方式：
-$$
-x[n]=C e^{\beta n}
-$$
-从形式上看第二个式子与前面的连续时间复指数信号更相似，但在离散时间的情况下，第一种更为方便使用。&lt;/p&gt;
-&lt;h4 id=&#34;实指数信号-1&#34;&gt;实指数信号&lt;/h4&gt;
-&lt;p&gt;$C$和$\alpha$都为实数，有以下特性：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;若$\left| \alpha \right| &amp;gt; 1$，信号随n指数增长，若$\left| \alpha \right| &amp;lt; 1$，信号随n指数衰减。&lt;/li&gt;
-&lt;li&gt;$\left| \alpha \right|$为正值时，信号的所有值都为整数，$\left| \alpha \right|$为负值时，信号的符号在正负之间交替变化。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;正弦信号&#34;&gt;正弦信号&lt;/h4&gt;
-&lt;h4 id=&#34;一般复指数信号-1&#34;&gt;一般复指数信号&lt;/h4&gt;
-&lt;h3 id=&#34;133-离散时间复指数序列的周期性质&#34;&gt;1.3.3 离散时间复指数序列的周期性质&lt;/h3&gt;
-&lt;p&gt;这里讨论的关于离散时间复指数序列的性质都是相对于连续时间信号的不同之处。&lt;/p&gt;
-&lt;h4 id=&#34;频率性质&#34;&gt;频率性质&lt;/h4&gt;
-&lt;p&gt;对于频率为$w_0+2\pi$的离散时间复指数信号：
-$$
-e^{j(w_0+2\pi)n} = e^{j2\pi n}+e^{jw_0 n} = e^{jw_0 n}
-$$
-上式表明，频率为$w_0+2\pi$的离散时间复指数信号与频率为$w_0$的信号完全相同。所以离散时间复指数信号的频率只需要在一个$2\pi$间隔内选择，一般在$0\leqslant w_0 \leqslant 2\pi$或$-\pi \leqslant w_0 \leqslant \pi$中选择。&lt;/p&gt;
-&lt;p&gt;离散时间复指数信号的低频部分（变化慢的地方）位于$w_0$在0，$2\pi$及其他$\pi$的偶数倍值附近；高频部分位于$w_0$在$\pm \pi$及其他$\pi$的奇数倍附近。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/discreteTimeSignal.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;周期性质&#34;&gt;周期性质&lt;/h4&gt;
-&lt;p&gt;为了使得信号$e^{jw_0n}$是周期的，必须有：
-$$
-e^{jw_0(n+N)} = e^{jw_0n}
-$$
-这等效于：
-$$
-e^{jw_0N} = 1 \Leftrightarrow w_0N = 2\pi m \Leftrightarrow \frac{w_0}{2\pi} = \frac{m}{N}
-$$
-$m$为整数。同时，若$\frac{w_0}{2\pi}$是一个有理数，该信号就是周期的，否则就不是周期的。上式如果$N$和$m$没有公因子，那么$N$九尾基波周期。&lt;/p&gt;
-&lt;h4 id=&#34;连续时间和离散时间信号的比较&#34;&gt;连续时间和离散时间信号的比较&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/compare_discrete%26continus.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;14-单位冲激与单位阶跃函数&#34;&gt;1.4 单位冲激与单位阶跃函数&lt;/h2&gt;
-&lt;h3 id=&#34;141-离散时间单位脉冲和单位阶跃序列&#34;&gt;1.4.1 离散时间单位脉冲和单位阶跃序列&lt;/h3&gt;
-&lt;p&gt;最简单的离散时间信号之一就是&lt;strong&gt;单位脉冲&lt;/strong&gt;（或&lt;strong&gt;单位样本&lt;/strong&gt;），定义为：
-$$
-\delta[n] = 
-\begin{cases}
-0, \quad n \ne 0  \&lt;br&gt;
-1, \quad n = 0
-\end{cases}
-$$
-另一个基本离散时间信号为&lt;strong&gt;单位阶跃&lt;/strong&gt;，定义为：
-$$
-u[n] =
-\begin{cases}
-0, \quad n &amp;lt; 0  \&lt;br&gt;
-1, \quad n \geqslant 0
-\end{cases}
-$$
-以上两个离散时间信号存在着密切的关系：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;单位脉冲是单位阶跃的&lt;strong&gt;一次差分&lt;/strong&gt;，即$\delta[n] = u[n] - u[n-1]$&lt;/li&gt;
-&lt;li&gt;离散时间阶跃是单位样本的&lt;strong&gt;求和函数&lt;/strong&gt;：$u[n] = \sum_{m = - \infty}^{n} \delta[m]$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;142-连续时间单位阶跃和单位冲激函数&#34;&gt;1.4.2 连续时间单位阶跃和单位冲激函数&lt;/h3&gt;
-&lt;p&gt;连续时间&lt;strong&gt;单位阶跃函数&lt;/strong&gt;定义为：
-$$
-u(t)=
-\begin{cases}
-0, \quad t&amp;lt;0 \&lt;br&gt;
-1, \quad t&amp;gt;0
-\end{cases}
-$$
-单位阶跃在$t=0$这一单处不连续。&lt;/p&gt;
-&lt;p&gt;连续时间单位阶跃是连续时间单位冲激的&lt;strong&gt;积分函数&lt;/strong&gt;：
-$$
-u(t) = \int_{-\infty}^{t} \delta(\tau) \mathrm{d}\tau
-$$
-同时可以看出，连续时间单位冲激可以看成连续时间单位阶跃的**一次微分**：
-$$
-\delta(t) = \frac{\mathrm{d}u(t)}{\mathrm{d}t}
-$$
-严格来说$u(t)$是不可微的，可以把上式近似为一个在较短时间$\Delta$内完成&lt;/p&gt;
-&lt;h2 id=&#34;15-连续时间和离散时间系统&#34;&gt;1.5 连续时间和离散时间系统&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;连续时间系统：$x(t) \rightarrow y(t)$&lt;/li&gt;
-&lt;li&gt;离散时间系统：$x[n] \rightarrow y[n]$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;我们的任务是要鉴别一类系统，透彻地了解一类系统的行为，在很多的实践中重要的系统都通过这一类系统来建模。本书重点关注的线性时不变系统这一特殊类别的系统就属于上述分类特性的一类。&lt;/p&gt;
-&lt;h3 id=&#34;151-系统的互联&#34;&gt;1.5.1 系统的互联&lt;/h3&gt;
-&lt;h4 id=&#34;串联级联&#34;&gt;串联（级联）&lt;/h4&gt;
-&lt;p&gt;eg：音频系统：无线电接收机$\rightarrow$唱片播放器$\rightarrow$扬声器&lt;/p&gt;
-&lt;h4 id=&#34;并联&#34;&gt;并联&lt;/h4&gt;
-&lt;h4 id=&#34;反馈互联&#34;&gt;反馈互联&lt;/h4&gt;
-&lt;p&gt;eg：数字控制的一架飞机&lt;/p&gt;
-&lt;h3 id=&#34;152-基本系统性质&#34;&gt;1.5.2 基本系统性质&lt;/h3&gt;
-&lt;h4 id=&#34;记忆系统和无记忆系统&#34;&gt;记忆系统和无记忆系统&lt;/h4&gt;
-&lt;p&gt;如果对自变量的每一个值，一个系统的输出仅仅取决于&lt;strong&gt;该时刻的输入&lt;/strong&gt;，这个系统就称为&lt;strong&gt;无记忆&lt;/strong&gt;系统。例如，如下的表达式：
-$$
-y[n]=(2x[n]-x^2[n])^2
-$$
-是一个无记忆系统，任何特定时刻$n_0$的输出$y[n]$只取决于该时刻的输入$x[n]$。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;恒等系统&lt;/strong&gt;（即输出等于输入）是一种最简单的无记忆系统。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;离散时间记忆系统&lt;/strong&gt;的一个例子就是&lt;strong&gt;累加器&lt;/strong&gt;：
-$$
-y[n]=\sum_{k=-\infty}^{n} x[k]
-$$
-第二个离散时间记忆系统的例子是一个**延迟单元**：
-$$
-y[n] = x[n - 1]
-$$
-一个**连续时间记忆系统**的例子是**一个电容器**，将电流作为输入，电压作为输出，那么有：
-$$
-y(t)= \frac{1}{C} \int_{-\infty}^{t} x(\tau) \mathrm{d} \tau
-$$
-其中的$C$为电容值。&lt;/p&gt;
-&lt;p&gt;一个系统中记忆的概念相应于该系统具有&lt;strong&gt;保留或储存不是当前时刻输入信息的功能&lt;/strong&gt;，在许多实际系统中，记忆是直接与能量储存相关联的。&lt;/p&gt;
-&lt;h4 id=&#34;可逆性与可逆系统&#34;&gt;可逆性与可逆系统&lt;/h4&gt;
-&lt;p&gt;一个系统如果在不同输入下导致不同输出，就称该系统是&lt;strong&gt;可逆的&lt;/strong&gt;。一个系统可逆则一定有一个&lt;strong&gt;逆系统&lt;/strong&gt;存在，逆系统与原系统&lt;strong&gt;级联&lt;/strong&gt;后，会产生一个输出$w[n]$等于一个系统的输入$x[n]$。&lt;/p&gt;
-&lt;p&gt;可逆连续时间系统的一个例子：
-$$
-y(t)=2x(t)
-$$
-该可逆系统的逆系统为：
-$$
-w(t)=\frac{1}{2}y(t)
-$$
-一个&lt;strong&gt;不可逆&lt;/strong&gt;系统的例子如下：
-$$
-y[n]=0
-$$
-该系统对任何输入序列产生的都是零输出序列。&lt;/p&gt;
-&lt;p&gt;另外一个例子：
-$$
-y(t)=x^2(t)
-$$
-这种情况无法根据输出确定输入的正负。&lt;/p&gt;
-&lt;h4 id=&#34;因果性&#34;&gt;因果性&lt;/h4&gt;
-&lt;p&gt;如果一个系统&lt;strong&gt;在任何时刻的输出&lt;/strong&gt;只取决于&lt;strong&gt;现在的输入以及过去的输入&lt;/strong&gt;，该系统就称为&lt;strong&gt;因果系统&lt;/strong&gt;。这样的系统也被称为&lt;strong&gt;不可预测系统&lt;/strong&gt;，系统的输出值无法预测未来的输入值。&lt;/p&gt;
-&lt;p&gt;所有的无记忆系统都是因果的，因为输出仅仅对当前输入值作出响应。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;检验系统的因果性时要仔细看系统的输入——输出关系，举两个特殊例子：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;$y[n]=x[-n]$，该系统当输入时间为负值是，输出就与输入的将来值有关，所以该系统不是因果系统。所以检验时要仔细检验在&lt;strong&gt;全部时间&lt;/strong&gt;上的输入——输出关系。&lt;/li&gt;
-&lt;li&gt;$y(t)=x(t)\cos(t+1)$，检验因果性时要&lt;strong&gt;把输入信号的影响仔细地与系统定义中的其他函数的影响分开&lt;/strong&gt;，该系统的输出等于同一时刻的输入乘以一个随时间变化的数，所以可以写作$y(t)=x(t)g(t)$，是因果的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h4 id=&#34;稳定性&#34;&gt;稳定性&lt;/h4&gt;
-&lt;p&gt;一个&lt;strong&gt;稳定系统&lt;/strong&gt;在小的输入下的响应不会&lt;strong&gt;发散&lt;/strong&gt;，这是稳定性的最直观理解。&lt;/p&gt;
-&lt;h4 id=&#34;时不变性&#34;&gt;时不变性&lt;/h4&gt;
-&lt;p&gt;系统的特性和行为不随时间而变，该系统就是时不变的。即如果在一个输入信号上有一个时移，在输出信号中产生同样的时移，那么这个系统就是时不变的。&lt;/p&gt;
-&lt;p&gt;具体而言，若$y[n]$是离散时间时不变系统在输入为$x[n]$是的输出，当输入为$x[x-x_0]$时，输出为为$y[x-x_0]$，连续时间情况也是相同的道理。&lt;/p&gt;
-&lt;h4 id=&#34;线性&#34;&gt;线性&lt;/h4&gt;
-&lt;p&gt;如果某个输入信号是由几个信号的&lt;strong&gt;加权和&lt;/strong&gt;组成，那么输出也就是系统对这组信号中每一个响应的加权和。&lt;/p&gt;
-&lt;p&gt;令$y_1(t)$是一个连续时间系统对输入$x_1(t)$的响应，$y_2(t)$是对输入$x_2(t)$的一个输出，那么一个线性系统就应该有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;$y_1(t)+y_2(t)$是对$x_1(t)+x_2(t)$的响应&lt;/li&gt;
-&lt;li&gt;$ay_1(t)$是对$ax_1(t)$的响应，$a$为任意常数&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;以上两个性质称为&lt;strong&gt;可加性&lt;/strong&gt;和&lt;strong&gt;齐次性&lt;/strong&gt;。&lt;/p&gt;
-- http://eternityqjl.top/posts/signalsystem-ch01/ - 2019-2021 By Jialong</description>
         </item>
     
     

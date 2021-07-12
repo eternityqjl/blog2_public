@@ -6,9 +6,117 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Jul 2021 21:26:27 +0800</lastBuildDate>
     
         <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>csapp: 2.信息的表示和处理（部分完成）</title>
+        <link>http://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>
+        <pubDate>Mon, 12 Jul 2021 21:26:27 +0800</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/ -&lt;p&gt;第一部分内容：程序结构和执行&lt;/p&gt;
+&lt;p&gt;我们需要用方法表示&lt;strong&gt;基本数据类型&lt;/strong&gt;，然后考虑机器级指令如何操作这样的数据，以及编译器如何将C程序翻译成这样的指令。接下来研究集中处理器的方法，使得我们能够更好地了解硬件资源如何被用来执行指令。&lt;/p&gt;
+&lt;h2 id=&#34;信息存储&#34;&gt;信息存储&lt;/h2&gt;
+&lt;h3 id=&#34;十六进制表示法及转换&#34;&gt;十六进制表示法及转换&lt;/h3&gt;
+&lt;h3 id=&#34;字数据大小&#34;&gt;字数据大小&lt;/h3&gt;
+&lt;p&gt;字长指明指针数据的标称大小。虚拟地址是以这样一个字来编码的，所以字长决定的最重要的系统参数就是&lt;strong&gt;虚拟地址空间的最大大小&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;对一个字长为w的机器而言，虚拟地址的范围是$0$ ~$2^w-1$，程序最多访问$2^w-1$个字节。&lt;/p&gt;
+&lt;p&gt;近年，很多机器都从32位字长迁移到了64位字长。大多64位字长机器可以运行32位字长机器编译的程序。32位程序和64位程序的区别在于程序是如何编译成的，而不是运行的机器类型。&lt;/p&gt;
+&lt;h3 id=&#34;寻址和字节顺序&#34;&gt;寻址和字节顺序&lt;/h3&gt;
+&lt;p&gt;小端法、大端法&lt;/p&gt;
+&lt;p&gt;对于跨越多个字节的程序对象，我们必须明确：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;这个对象的地址是什么&lt;/li&gt;
+&lt;li&gt;如何在内存中排列这些字节&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;一般来说，多字节对象被存储为&lt;strong&gt;连续的字节序列&lt;/strong&gt;，对象的地址为所使用字节中&lt;strong&gt;最小的地址&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;小端法：将&lt;strong&gt;最低有效字节&lt;/strong&gt;放在最前面存储。（例如一个二进制数最右边的8位是最低有效字节）&lt;/p&gt;
+&lt;p&gt;大端法：将&lt;strong&gt;最高有效字节&lt;/strong&gt;放在最前面存储。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;byte_pointer;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将byte_pointer定义为一个指向类型为unsigned char对象的指针
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;show_bytes&lt;/span&gt;(byte_pointer start, size_t len)
+{&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	size_t i;
+	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; len; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++&lt;/span&gt;)
+		printf(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;%.2x&amp;#34;&lt;/span&gt;, start[i]);
+	printf(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;);
+}
+&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;show_int&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; x)
+{&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//显示int对象的字节内容
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;));
+}
+&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;show_float&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;float&lt;/span&gt; x)
+{&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//显示float对象的字节内容
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;float&lt;/span&gt;));
+}
+&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;show_pointer&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;x)
+{&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//显示void *对象的字节内容
+&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;));
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;表示字符串&#34;&gt;表示字符串&lt;/h3&gt;
+&lt;p&gt;ASCII编码、Unicode编码&lt;/p&gt;
+&lt;p&gt;之前写过一篇相关博客：&lt;a href=&#34;http://eternityqjl.top/2021/06/02/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%EF%BC%9AUnicode-UTF-8/&#34;&gt;字符编码：Unicode, UTF-8&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;布尔代数&#34;&gt;布尔代数&lt;/h3&gt;
+&lt;p&gt;四种布尔运算：&lt;/p&gt;
+&lt;p&gt;与、或、非、异或&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;异或：当P或Q为真但不同时为真时，异或成立；即当p=1且q=0或p=1且q=1时，p^q=1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;位向量的运算&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;c语言中的位级运算&#34;&gt;C语言中的位级运算&lt;/h3&gt;
+&lt;p&gt;按照对应位进行布尔运算。&lt;/p&gt;
+&lt;h3 id=&#34;c语言中的逻辑运算&#34;&gt;C语言中的逻辑运算&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;||&lt;/code&gt;、&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;、&lt;code&gt;!&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;c语言中的移位运算&#34;&gt;C语言中的移位运算&lt;/h3&gt;
+&lt;p&gt;左移、&lt;/p&gt;
+&lt;p&gt;逻辑右移：在左端补k个0&lt;/p&gt;
+&lt;p&gt;算数右移：在右端补&lt;/p&gt;
+&lt;p&gt;运算符号优先级问题&lt;/p&gt;
+&lt;h2 id=&#34;整数表示&#34;&gt;整数表示&lt;/h2&gt;
+&lt;p&gt;用&lt;strong&gt;位&lt;/strong&gt;来编码整数的两种不同方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一种只能表示&lt;strong&gt;非负数&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;另一种能表示&lt;strong&gt;负数、零和整数&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;整形数据类型&#34;&gt;整形数据类型&lt;/h3&gt;
+&lt;h3 id=&#34;无符号数的编码&#34;&gt;无符号数的编码&lt;/h3&gt;
+&lt;p&gt;直接按照二进制进行编码即可。&lt;/p&gt;
+&lt;p&gt;无符号数的编码具有唯一性&lt;/p&gt;
+&lt;h3 id=&#34;补码编码&#34;&gt;补码编码&lt;/h3&gt;
+&lt;p&gt;(two&amp;rsquo;s-complement)。将字的最高有效位解释为&lt;strong&gt;负权&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;用补码来编码负数（有符号数）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;反码：最高有效位的权是$-(2^{w-1}-1)$，其他和补码一样。&lt;/p&gt;
+&lt;p&gt;原码：最高有效位是符号位，用来确定剩下的位应该取复权还是正权。&lt;/p&gt;
+&lt;p&gt;这两种表示方式对于数字0都有两种不同的编码方式。几乎所有现代机器目前都采用补码编码。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;有符号数和无符号数之间的转换&#34;&gt;有符号数和无符号数之间的转换&lt;/h3&gt;
+&lt;p&gt;对于多数C语言的实现来说，这个问题都是从&lt;strong&gt;位级&lt;/strong&gt;角度来看的，而不是&lt;strong&gt;数&lt;/strong&gt;的角度。&lt;/p&gt;
+&lt;p&gt;处理同样字长的有符号和无符号数之间相互转换的规则为：数值可能会改变，但位模式不变。&lt;/p&gt;
+&lt;h3 id=&#34;c语言中的有符号数和无符号数&#34;&gt;C语言中的有符号数和无符号数&lt;/h3&gt;
+&lt;p&gt;C语言支持所有整型数据类型的有符号和无符号计算，几乎所有机器都采用&lt;strong&gt;补码&lt;/strong&gt;表示有符号数。通常大多数数字都默认是有符号的。&lt;/p&gt;
+&lt;h3 id=&#34;扩展一个数字的位表示截断数字&#34;&gt;扩展一个数字的位表示、截断数字&lt;/h3&gt;
+&lt;h2 id=&#34;整数运算&#34;&gt;整数运算&lt;/h2&gt;
+&lt;h3 id=&#34;无符号加法&#34;&gt;无符号加法&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;加法&lt;/li&gt;
+&lt;li&gt;加法的溢出&lt;/li&gt;
+&lt;li&gt;求反&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;补码加法&#34;&gt;补码加法&lt;/h3&gt;
+&lt;h3 id=&#34;补码的非&#34;&gt;补码的非&lt;/h3&gt;
+&lt;h3 id=&#34;无符号乘法&#34;&gt;无符号乘法&lt;/h3&gt;
+&lt;h3 id=&#34;补码乘法&#34;&gt;补码乘法&lt;/h3&gt;
+&lt;h2 id=&#34;浮点数&#34;&gt;浮点数&lt;/h2&gt;
+- http://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1810,108 +1918,6 @@ c.insert(p,t)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在�
 &lt;h2 id=&#34;关联容器&#34;&gt;关联容器&lt;/h2&gt;
 &lt;p&gt;键值对。&lt;/p&gt;
 &lt;h2 id=&#34;动态内存&#34;&gt;动态内存&lt;/h2&gt;- http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Altium Designer画图流程记录(简略)</title>
-        <link>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
-        <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
-        
-        <guid>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ -&lt;p&gt;之前看过博主&lt;a href=&#34;https://space.bilibili.com/384891&#34;&gt;半夜中暑的羊&lt;/a&gt;的原理图以及PCB绘制&lt;a href=&#34;https://www.bilibili.com/video/BV1JE41127Ks&#34;&gt;教程&lt;/a&gt;，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。&lt;/p&gt;
-&lt;p&gt;共有以下几部分内容：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;原理图库&lt;/li&gt;
-&lt;li&gt;核心模块的原理图&lt;/li&gt;
-&lt;li&gt;为原理图添加封装&lt;/li&gt;
-&lt;li&gt;PCB布局&lt;/li&gt;
-&lt;li&gt;PCB布线&lt;/li&gt;
-&lt;li&gt;PCB敷铜&lt;/li&gt;
-&lt;li&gt;PCB生成BOM及投板&lt;/li&gt;
-&lt;/ol&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;pcb各层简介&#34;&gt;PCB各层简介&lt;/h2&gt;
-&lt;p&gt;参考自：&lt;a href=&#34;https://blog.csdn.net/qq_29373285/article/details/85339076&#34;&gt;PCB各层介绍&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;mechanical-layer机械层&#34;&gt;Mechanical layer(机械层)&lt;/h3&gt;
-&lt;p&gt;Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MechanicalLayer.PNG&#34; alt=&#34;MechanicalLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;keep-out-layer禁止布线层&#34;&gt;Keep out layer(禁止布线层)&lt;/h3&gt;
-&lt;p&gt;用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/KeepOutLayer.PNG&#34; alt=&#34;KeepOutLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;signal-layer信号层&#34;&gt;Signal layer(信号层)&lt;/h3&gt;
-&lt;p&gt;信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SignalLayer.PNG&#34; alt=&#34;SignalLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;internal-plane-layer内部电源接地层&#34;&gt;Internal plane layer(内部电源/接地层)&lt;/h3&gt;
-&lt;p&gt;Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。&lt;/p&gt;
-&lt;h3 id=&#34;silkscreen-layer丝印层&#34;&gt;Silkscreen layer(丝印层)&lt;/h3&gt;
-&lt;p&gt;丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SilkscreenLayer.PNG&#34; alt=&#34;SilkscreenLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;solder-mask-layer阻焊层&#34;&gt;Solder mask layer(阻焊层)&lt;/h3&gt;
-&lt;p&gt;在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中&lt;strong&gt;匹配焊盘&lt;/strong&gt;，是&lt;strong&gt;自动产生&lt;/strong&gt;的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)&lt;strong&gt;和&lt;/strong&gt;Bottom Solder(底层)**两个阻焊层。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SolderMaskLayer.PNG&#34; alt=&#34;SolderMaskLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;paste-mask-layer助焊层smd贴片层&#34;&gt;Paste mask layer(助焊层，SMD贴片层)&lt;/h3&gt;
-&lt;p&gt;它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/PasteMaskLayer.PNG&#34; alt=&#34;PasteMaskLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;multi-layer多层&#34;&gt;Multi layer(多层)&lt;/h3&gt;
-&lt;p&gt;电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MultiLayer.PNG&#34; alt=&#34;MultiLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;drill-layer钻孔层&#34;&gt;Drill layer(钻孔层)&lt;/h3&gt;
-&lt;p&gt;钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。&lt;/p&gt;
-&lt;h2 id=&#34;原理图库器件画法&#34;&gt;原理图库器件画法&lt;/h2&gt;
-&lt;p&gt;放置矩形&lt;/p&gt;
-&lt;p&gt;添加Pin&lt;/p&gt;
-&lt;p&gt;设置器件的Designator（例如P?）&lt;/p&gt;
-&lt;h2 id=&#34;器件的pcb封装画法&#34;&gt;器件的PCB封装画法&lt;/h2&gt;
-&lt;p&gt;确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。&lt;/p&gt;
-&lt;h2 id=&#34;批量添加封装并给各种原件命名&#34;&gt;批量添加封装并给各种原件命名&lt;/h2&gt;
-&lt;h3 id=&#34;添加封装&#34;&gt;添加封装&lt;/h3&gt;
-&lt;p&gt;右键-Find Similar Objects选择相同类型的原件-右键-Properties-修改封装&lt;/p&gt;
-&lt;h3 id=&#34;批量命名&#34;&gt;批量命名&lt;/h3&gt;
-&lt;p&gt;执行&lt;strong&gt;Tools-Annotation-Annotate Schematic&lt;/strong&gt;(或快捷键&lt;strong&gt;T A A&lt;/strong&gt;)命令打开原理图元件命名管理器&lt;/p&gt;
-&lt;p&gt;左上角设置命名顺序&lt;/p&gt;
-&lt;p&gt;设置命名范围&lt;/p&gt;
-&lt;p&gt;然后单击Update&lt;/p&gt;
-&lt;p&gt;可以看到新的命名建议，然后执行有效角的接收更改&lt;/p&gt;
-&lt;p&gt;依次单击Validate和Execute（保证两排绿√）&lt;/p&gt;
-&lt;p&gt;即可完成命名&lt;/p&gt;
-&lt;h2 id=&#34;确定pcb范围并布局&#34;&gt;确定PCB范围并布局&lt;/h2&gt;
-&lt;p&gt;根据需要的形状和经验粗略地确定版图的位置边界，然后布局元件位置。&lt;/p&gt;
-&lt;h2 id=&#34;布线&#34;&gt;布线&lt;/h2&gt;
-&lt;p&gt;注意设置焊盘间的距离，jlc为7mil，以及过孔孔径。&lt;/p&gt;
-&lt;p&gt;过孔打法：&lt;code&gt;Alt+Shift+鼠标滚轮向上&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;铺铜&#34;&gt;铺铜&lt;/h2&gt;
-&lt;p&gt;使用铺铜管理器进行铺铜：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;工具→铺铜→铺铜管理器（快捷键:TGM）&lt;/li&gt;
-&lt;li&gt;选择来自&amp;hellip;..的新多边形（New Polygon from &amp;hellip;）→板外形（Board Outline）&lt;/li&gt;
-&lt;li&gt;设置网络，哪一层？除去死铜&lt;/li&gt;
-&lt;li&gt;最后点击应用，确定，这样顶层的铺地铜就铺好了！&lt;/li&gt;
-&lt;li&gt;其他层同样按照上面的步骤进行&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;设置板子边界&#34;&gt;设置板子边界&lt;/h2&gt;
-&lt;p&gt;首先选中Keep-Out-Layer所定义的边界&lt;/p&gt;
-&lt;p&gt;然后：&lt;/p&gt;
-&lt;p&gt;【Design】|【Board shape】|【Define from selected objects】&lt;/p&gt;
-&lt;p&gt;快捷键为D+S+D+enter&lt;/p&gt;
-&lt;h2 id=&#34;其他一些快捷键&#34;&gt;其他：一些快捷键&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ctrl+D&lt;/code&gt;: View Configuration，用来配置PCB的显示内容&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ctrl+M&lt;/code&gt;：测量长度，使用&lt;code&gt;shift+C&lt;/code&gt;删除测量得到的线&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;批量修改元件&#34;&gt;批量修改元件&lt;/h2&gt;
-&lt;p&gt;以命名所有电阻为例：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;首先使用过滤器选中所有电阻&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;执行&lt;strong&gt;工具——Annotation——注解&lt;/strong&gt;（英文为&lt;strong&gt;Tools——Annotation——Annotate Schematic&lt;/strong&gt;，或者快捷键&lt;strong&gt;T A A&lt;/strong&gt;）命令打开原理图元件命名管理器&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;3d渲染图实现&#34;&gt;3D渲染图实现&lt;/h2&gt;
-- http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
         </item>
     
     
