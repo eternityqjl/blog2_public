@@ -196,7 +196,7 @@ int array[20] = {0}; int *ptr = array; for (i = 0; i &lt; 20; i&#43;&#43;) { (*p
         
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;
@@ -217,7 +217,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 		
 		
 		
-		<center>- CATALOG -</center>
+		<center>- 目录 -</center>
 		
 		
 		<ul>
@@ -564,7 +564,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 		
 		
 		
-		<center>- CATALOG -</center>
+		<center>- 目录 -</center>
 		
 		
 		<ul>
@@ -932,9 +932,9 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <ul>
 <li>example 1</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">char</span> a[<span style="color:#099">20</span>] <span style="color:#000;font-weight:bold">=</span> {<span style="color:#099">0</span>};
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>ptr <span style="color:#000;font-weight:bold">=</span> (<span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>)a;
-ptr<span style="color:#000;font-weight:bold">++</span>;
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">char</span> a[<span style="color:#00d;font-weight:bold">20</span>] <span style="color:#333">=</span> {<span style="color:#00d;font-weight:bold">0</span>};
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>ptr <span style="color:#333">=</span> (<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>)a;
+ptr<span style="color:#333">++</span>;
 </code></pre></div><p>指针ptr的类型为int*，它指向的类型为int，被初始化为指向整型变量a。</p>
 <p>在第三句中，指针ptr被加上了1，编译器是这样进行处理的：</p>
 <blockquote>
@@ -946,20 +946,20 @@ ptr<span style="color:#000;font-weight:bold">++</span>;
 <li>example 2</li>
 </ul>
 <p><strong>1.<strong>可以使用</strong>一个循环</strong>和<strong>一个指针</strong>遍历一个数组。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> array[<span style="color:#099">20</span>] <span style="color:#000;font-weight:bold">=</span> {<span style="color:#099">0</span>};
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>ptr <span style="color:#000;font-weight:bold">=</span> array;
-<span style="color:#000;font-weight:bold">for</span> (i <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>; i <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#099">20</span>; i<span style="color:#000;font-weight:bold">++</span>)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> array[<span style="color:#00d;font-weight:bold">20</span>] <span style="color:#333">=</span> {<span style="color:#00d;font-weight:bold">0</span>};
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>ptr <span style="color:#333">=</span> array;
+<span style="color:#080;font-weight:bold">for</span> (i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>; i <span style="color:#333">&lt;</span> <span style="color:#00d;font-weight:bold">20</span>; i<span style="color:#333">++</span>)
 {
-    (<span style="color:#000;font-weight:bold">*</span>ptr)<span style="color:#000;font-weight:bold">++</span>;
-    ptr<span style="color:#000;font-weight:bold">++</span>;
+    (<span style="color:#333">*</span>ptr)<span style="color:#333">++</span>;
+    ptr<span style="color:#333">++</span>;
 }
 </code></pre></div><p>该例子中将整形数组中各个单元的值都加1。同时每次循环都将指针加1个单元，所以每次循环都能访问数组的下一个单元。</p>
 <ul>
 <li>example 4</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">char</span> a[<span style="color:#099">20</span>] <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#34;You_are_a_girl&#34;</span>;
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>ptr <span style="color:#000;font-weight:bold">=</span> (<span style="color:#458;font-weight:bold">int</span>  <span style="color:#000;font-weight:bold">*</span>) a;
-ptr <span style="color:#000;font-weight:bold">+=</span> <span style="color:#099">5</span>;
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">char</span> a[<span style="color:#00d;font-weight:bold">20</span>] <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;You_are_a_girl&#34;</span>;
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>ptr <span style="color:#333">=</span> (<span style="color:#339;font-weight:bold">int</span>  <span style="color:#333">*</span>) a;
+ptr <span style="color:#333">+=</span> <span style="color:#00d;font-weight:bold">5</span>;
 </code></pre></div><p>该例子中，指针ptr被加上了5个单元，编译器这样处理：</p>
 <blockquote>
 <p>将char的值加上<code>sizeof(int) * 5</code>,在32位程序中即乘了4*5=20。</p>
@@ -982,14 +982,14 @@ ptr <span style="color:#000;font-weight:bold">+=</span> <span style="color:#099"
 <ul>
 <li>example</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> a, b;
-<span style="color:#458;font-weight:bold">int</span> array[<span style="color:#099">10</span>];
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>pa;
-pa <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">&amp;</span>a;<span style="color:#998;font-style:italic">// &amp;a是指针表达式
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">**</span>ptr <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">&amp;</span>pa;
-<span style="color:#000;font-weight:bold">*</span>ptr <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">&amp;</span>b;
-pa <span style="color:#000;font-weight:bold">=</span> array;
-pa<span style="color:#000;font-weight:bold">++</span>;
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> a, b;
+<span style="color:#339;font-weight:bold">int</span> array[<span style="color:#00d;font-weight:bold">10</span>];
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pa;
+pa <span style="color:#333">=</span> <span style="color:#333">&amp;</span>a;<span style="color:#888">// &amp;a是指针表达式
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">**</span>ptr <span style="color:#333">=</span> <span style="color:#333">&amp;</span>pa;
+<span style="color:#333">*</span>ptr <span style="color:#333">=</span> <span style="color:#333">&amp;</span>b;
+pa <span style="color:#333">=</span> array;
+pa<span style="color:#333">++</span>;
 </code></pre></div><p><strong>1.</strong> 指针表达式的结果是一个指针，所以也具有指针的4个要素：</p>
 <blockquote>
 <p>指针的类型</p>
@@ -1001,9 +1001,9 @@ pa<span style="color:#000;font-weight:bold">++</span>;
 <h2 id="五指针和数组的关系">五、指针和数组的关系</h2>
 <p><strong>0.</strong> 数组的数组名可以看作是一个指针</p>
 <p>example</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> array[<span style="color:#099">10</span>] <span style="color:#000;font-weight:bold">=</span> {<span style="color:#099">0</span>, <span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">3</span>, <span style="color:#099">4</span>, <span style="color:#099">5</span>, <span style="color:#099">6</span>, <span style="color:#099">7</span>, <span style="color:#099">8</span>, <span style="color:#099">9</span>}, value;
-value <span style="color:#000;font-weight:bold">=</span> array[<span style="color:#099">0</span>]; <span style="color:#998;font-style:italic">//or: value = *array;
-</span><span style="color:#998;font-style:italic"></span>value <span style="color:#000;font-weight:bold">=</span> array[<span style="color:#099">3</span>]; <span style="color:#998;font-style:italic">//or: value = *(array + 3);
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> array[<span style="color:#00d;font-weight:bold">10</span>] <span style="color:#333">=</span> {<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">2</span>, <span style="color:#00d;font-weight:bold">3</span>, <span style="color:#00d;font-weight:bold">4</span>, <span style="color:#00d;font-weight:bold">5</span>, <span style="color:#00d;font-weight:bold">6</span>, <span style="color:#00d;font-weight:bold">7</span>, <span style="color:#00d;font-weight:bold">8</span>, <span style="color:#00d;font-weight:bold">9</span>}, value;
+value <span style="color:#333">=</span> array[<span style="color:#00d;font-weight:bold">0</span>]; <span style="color:#888">//or: value = *array;
+</span><span style="color:#888"></span>value <span style="color:#333">=</span> array[<span style="color:#00d;font-weight:bold">3</span>]; <span style="color:#888">//or: value = *(array + 3);
 </span></code></pre></div><hr>
 <p>总结：</p>
 <p>声明一个数组TYPE array[n]，则这个数组名有两重含义：</p>
@@ -1018,16 +1018,16 @@ value <span style="color:#000;font-weight:bold">=</span> array[<span style="colo
 <ul>
 <li>example</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">fun1</span> (<span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">*</span>, <span style="color:#458;font-weight:bold">int</span>);
-<span style="color:#458;font-weight:bold">int</span> (<span style="color:#000;font-weight:bold">*</span>pfun1)(<span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">*</span>, <span style="color:#458;font-weight:bold">int</span>);
-pfun1 <span style="color:#000;font-weight:bold">=</span> fun1;
-<span style="color:#458;font-weight:bold">int</span> a <span style="color:#000;font-weight:bold">=</span> (<span style="color:#000;font-weight:bold">*</span>pfun1)(<span style="color:#d14">&#34;abcdefg&#34;</span>, <span style="color:#099">7</span>);<span style="color:#998;font-style:italic">//通过函数指针调用函数
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">fun1</span> (<span style="color:#339;font-weight:bold">char</span><span style="color:#333">*</span>, <span style="color:#339;font-weight:bold">int</span>);
+<span style="color:#339;font-weight:bold">int</span> (<span style="color:#333">*</span>pfun1)(<span style="color:#339;font-weight:bold">char</span><span style="color:#333">*</span>, <span style="color:#339;font-weight:bold">int</span>);
+pfun1 <span style="color:#333">=</span> fun1;
+<span style="color:#339;font-weight:bold">int</span> a <span style="color:#333">=</span> (<span style="color:#333">*</span>pfun1)(<span style="background-color:#fff0f0">&#34;abcdefg&#34;</span>, <span style="color:#00d;font-weight:bold">7</span>);<span style="color:#888">//通过函数指针调用函数
 </span></code></pre></div><p>可以把指针作为函数的形参。在函数表达式中，可以用指针表达式来作为实参。</p>
 <h2 id="八指针类型转换">八、指针类型转换</h2>
 <p>初始化一个指针或者给一个指针赋值时，赋值号左边时一个指针，右边是一个指针表达式。绝大多数情况下，指针的类型和指针表达式的类型是一样的，指针所指向的类型和表达式所指向的类型是一样的。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">float</span> f <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">12.3</span>;
-<span style="color:#458;font-weight:bold">float</span> <span style="color:#000;font-weight:bold">*</span>fptr <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">&amp;</span>f;
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>p;
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">float</span> f <span style="color:#333">=</span> <span style="color:#60e;font-weight:bold">12.3</span>;
+<span style="color:#339;font-weight:bold">float</span> <span style="color:#333">*</span>fptr <span style="color:#333">=</span> <span style="color:#333">&amp;</span>f;
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>p;
 </code></pre></div><p>如果我们想让指针p指向实数f，我们应该怎样操作？</p>
 <p>是“ p = &amp;f; ”吗？</p>
 <p>不对，因为左右两侧的指针和指针所指向的类型不同。所以直接赋值不行。</p>
@@ -1041,7 +1041,7 @@ pfun1 <span style="color:#000;font-weight:bold">=</span> fun1;
 
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">Last modified on 2019-09-19</p>
+		    <p style="color:#777;">最后修改于 2019-09-19</p>
                     
                 </div>
             </div>
@@ -1051,13 +1051,13 @@ pfun1 <span style="color:#000;font-weight:bold">=</span> fun1;
 
                 
                 <a class="newer-posts" href="http://eternityqjl.top/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/">
-			Next<br>什么是数据结构？什么又是算法？
+			下回<br>什么是数据结构？什么又是算法？
                 </a>
                 
                 
                 
                 <a class="older-posts">
-			Previous<br>No older posts.
+			上回<br>这是最旧的文章了。
                 </a>
                 
             </nav>
@@ -1083,7 +1083,7 @@ pfun1 <span style="color:#000;font-weight:bold">=</span> fun1;
             </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;

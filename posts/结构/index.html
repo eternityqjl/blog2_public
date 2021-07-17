@@ -210,7 +210,7 @@ struct guy * him;
         
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;
@@ -390,10 +390,10 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
                 <div class="post-body" v-pre>
                 
                     <p>1.建立结构变量</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">struct</span> book {
-    <span style="color:#458;font-weight:bold">char</span> title[MAXTITL];
-    <span style="color:#458;font-weight:bold">char</span> author[MAXAUTL];
-    <span style="color:#458;font-weight:bold">float</span> value;
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">struct</span> book {
+    <span style="color:#339;font-weight:bold">char</span> title[MAXTITL];
+    <span style="color:#339;font-weight:bold">char</span> author[MAXAUTL];
+    <span style="color:#339;font-weight:bold">float</span> value;
 }
 </code></pre></div><ul>
 <li>该结构描述了由两个字符数组和一个float类型变量组成的结构。</li>
@@ -406,16 +406,16 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </li>
 <li>
 <p>所以struct book 相当于过去的int、double等类型。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">struct</span> book {
-    <span style="color:#458;font-weight:bold">char</span> title[MAXTITL];
-    <span style="color:#458;font-weight:bold">char</span> author[MAXAUTL];
-    <span style="color:#458;font-weight:bold">float</span> value;
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">struct</span> book {
+    <span style="color:#339;font-weight:bold">char</span> title[MAXTITL];
+    <span style="color:#339;font-weight:bold">char</span> author[MAXAUTL];
+    <span style="color:#339;font-weight:bold">float</span> value;
 } library;
 </code></pre></div><p>该程序为上面声明的完整版。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">struct</span> { <span style="color:#998;font-style:italic">//无结构标记
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#458;font-weight:bold">char</span> title[MAXTITL];
-    <span style="color:#458;font-weight:bold">char</span> author[MAXAUTL];
-    <span style="color:#458;font-weight:bold">float</span> value;
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">struct</span> { <span style="color:#888">//无结构标记
+</span><span style="color:#888"></span>    <span style="color:#339;font-weight:bold">char</span> title[MAXTITL];
+    <span style="color:#339;font-weight:bold">char</span> author[MAXAUTL];
+    <span style="color:#339;font-weight:bold">float</span> value;
 } library;
 </code></pre></div><p>声明结构和定义结构可以一步完成，如上所示。</p>
 </li>
@@ -444,7 +444,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">Last modified on 2019-10-15</p>
+		    <p style="color:#777;">最后修改于 2019-10-15</p>
                     
                 </div>
             </div>
@@ -454,13 +454,13 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 
                 
                 <a class="newer-posts" href="http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-			Next<br>储存类别、链接和内存管理
+			下回<br>储存类别、链接和内存管理
                 </a>
                 
                 
                 
                 <a class="older-posts" href="http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/">
-			Previous<br>字符串输入、输出和字符串函数
+			上回<br>字符串输入、输出和字符串函数
                 </a>
                 
             </nav>
@@ -486,7 +486,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;

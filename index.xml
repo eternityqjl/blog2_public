@@ -4,7 +4,7 @@
     <link>http://eternityqjl.top/</link>
     <description>Recent content on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
+    <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
     <lastBuildDate>Mon, 12 Jul 2021 21:26:27 +0800</lastBuildDate>
     
@@ -22,10 +22,18 @@
 &lt;p&gt;我们需要用方法表示&lt;strong&gt;基本数据类型&lt;/strong&gt;，然后考虑机器级指令如何操作这样的数据，以及编译器如何将C程序翻译成这样的指令。接下来研究集中处理器的方法，使得我们能够更好地了解硬件资源如何被用来执行指令。&lt;/p&gt;
 &lt;h2 id=&#34;信息存储&#34;&gt;信息存储&lt;/h2&gt;
 &lt;h3 id=&#34;十六进制表示法及转换&#34;&gt;十六进制表示法及转换&lt;/h3&gt;
+&lt;p&gt;二进制和十进制对描述&lt;strong&gt;位模式&lt;/strong&gt;来说都不方便，因此采用16进制数(hex)来表示位模式。&lt;/p&gt;
+&lt;p&gt;C语言中16进制数以0X或0x开头，字符‘A’~‘F’既可以是大写也可以是小写。&lt;/p&gt;
+&lt;p&gt;二进制和十六进制之间的转换较为简单，不再赘述。&lt;/p&gt;
+&lt;p&gt;十进制和十六进制数之间的转换要反复利用乘法和除法进行处理：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从十进制到十六进制：反复用16除十进制数&lt;/li&gt;
+&lt;li&gt;从十六进制到十进制：用相应的16的幂乘以每个十六进制数。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;字数据大小&#34;&gt;字数据大小&lt;/h3&gt;
 &lt;p&gt;字长指明指针数据的标称大小。虚拟地址是以这样一个字来编码的，所以字长决定的最重要的系统参数就是&lt;strong&gt;虚拟地址空间的最大大小&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;对一个字长为w的机器而言，虚拟地址的范围是$0$ ~$2^w-1$，程序最多访问$2^w-1$个字节。&lt;/p&gt;
-&lt;p&gt;近年，很多机器都从32位字长迁移到了64位字长。大多64位字长机器可以运行32位字长机器编译的程序。32位程序和64位程序的区别在于程序是如何编译成的，而不是运行的机器类型。&lt;/p&gt;
+&lt;p&gt;近年，很多机器都从32位字长迁移到了64位字长。大多64位字长机器可以运行32位字长机器编译的程序。32位程序和64位程序的区别在于程序是&lt;strong&gt;如何编译&lt;/strong&gt;成的，而不是运行的机器类型。&lt;/p&gt;
 &lt;h3 id=&#34;寻址和字节顺序&#34;&gt;寻址和字节顺序&lt;/h3&gt;
 &lt;p&gt;小端法、大端法&lt;/p&gt;
 &lt;p&gt;对于跨越多个字节的程序对象，我们必须明确：&lt;/p&gt;
@@ -34,87 +42,154 @@
 &lt;li&gt;如何在内存中排列这些字节&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;一般来说，多字节对象被存储为&lt;strong&gt;连续的字节序列&lt;/strong&gt;，对象的地址为所使用字节中&lt;strong&gt;最小的地址&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;小端法：将&lt;strong&gt;最低有效字节&lt;/strong&gt;放在最前面存储。（例如一个二进制数最右边的8位是最低有效字节）&lt;/p&gt;
-&lt;p&gt;大端法：将&lt;strong&gt;最高有效字节&lt;/strong&gt;放在最前面存储。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;byte_pointer;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将byte_pointer定义为一个指向类型为unsigned char对象的指针
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;show_bytes&lt;/span&gt;(byte_pointer start, size_t len)
-{&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	size_t i;
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt; len; i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++&lt;/span&gt;)
-		printf(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;%.2x&amp;#34;&lt;/span&gt;, start[i]);
-	printf(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;);
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;小端法：将&lt;strong&gt;最低有效字节&lt;/strong&gt;放在最前面(最小地址)存储。（例如一个二进制数最右边的8位是最低有效字节）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;大端法：将&lt;strong&gt;最高有效字节&lt;/strong&gt;放在最前面(最小地址)存储。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;大多Intel兼容机使用小端模式。&lt;/p&gt;
+&lt;p&gt;以下代码使用强制类型转换来访问和打印不同程序对象的字节表示。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;byte_pointer;	&lt;span style=&#34;color:#888&#34;&gt;//将byte_pointer定义为一个指向类型为unsigned char对象的指针
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_bytes&lt;/span&gt;(byte_pointer start, size_t len)
+{&lt;span style=&#34;color:#888&#34;&gt;//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	size_t i;
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; len; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
+		printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%.2x&amp;#34;&lt;/span&gt;, start[i]);
+	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
 }
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;show_int&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; x)
-{&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//显示int对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;));
+
+&lt;span style=&#34;color:#888&#34;&gt;//使用sizeof确定对象使用的字节数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_int&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; x)
+{&lt;span style=&#34;color:#888&#34;&gt;//显示int对象的字节内容
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;));
 }
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;show_float&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;float&lt;/span&gt; x)
-{&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//显示float对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;float&lt;/span&gt;));
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_float&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; x)
+{&lt;span style=&#34;color:#888&#34;&gt;//显示float对象的字节内容
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt;));
 }
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;show_pointer&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;x)
-{&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//显示void *对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;));
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_pointer&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;x)
+{&lt;span style=&#34;color:#888&#34;&gt;//显示void *对象的字节内容
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;));
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;表示字符串&#34;&gt;表示字符串&lt;/h3&gt;
+&lt;p&gt;对文本进行编码。&lt;/p&gt;
 &lt;p&gt;ASCII编码、Unicode编码&lt;/p&gt;
-&lt;p&gt;之前写过一篇相关博客：&lt;a href=&#34;http://eternityqjl.top/2021/06/02/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%EF%BC%9AUnicode-UTF-8/&#34;&gt;字符编码：Unicode, UTF-8&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;之前写过一篇相关博客：&lt;a href=&#34;http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/&#34;&gt;字符编码：Unicode, UTF-8&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;布尔代数&#34;&gt;布尔代数&lt;/h3&gt;
 &lt;p&gt;四种布尔运算：&lt;/p&gt;
 &lt;p&gt;与、或、非、异或&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;异或：当P或Q为真但不同时为真时，异或成立；即当p=1且q=0或p=1且q=1时，p^q=1&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;位向量的运算&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;位向量的布尔运算&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;按位进行布尔运算。&lt;/p&gt;
 &lt;h3 id=&#34;c语言中的位级运算&#34;&gt;C语言中的位级运算&lt;/h3&gt;
 &lt;p&gt;按照对应位进行布尔运算。&lt;/p&gt;
 &lt;h3 id=&#34;c语言中的逻辑运算&#34;&gt;C语言中的逻辑运算&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;||&lt;/code&gt;、&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;、&lt;code&gt;!&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;逻辑运算和位级运算完全不同，逻辑运算认为所有非零的参数都表示TRUE，参数0表示FALSE。以下是一些表达式求值举例：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;表达式&lt;/th&gt;
+&lt;th&gt;结果&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;!0x41&lt;/td&gt;
+&lt;td&gt;0x00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;!0x00&lt;/td&gt;
+&lt;td&gt;0x01&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;!!0x41&lt;/td&gt;
+&lt;td&gt;0x01&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;h3 id=&#34;c语言中的移位运算&#34;&gt;C语言中的移位运算&lt;/h3&gt;
-&lt;p&gt;左移、&lt;/p&gt;
+&lt;p&gt;左移k位：将操作数向左移动k位，丢弃掉最高的k位并在右端补k个0&lt;/p&gt;
 &lt;p&gt;逻辑右移：在左端补k个0&lt;/p&gt;
-&lt;p&gt;算数右移：在右端补&lt;/p&gt;
-&lt;p&gt;运算符号优先级问题&lt;/p&gt;
+&lt;p&gt;算数右移：在左端补k个最高有效位的值&lt;/p&gt;
+&lt;p&gt;几乎所有编译器都对&lt;strong&gt;有符号数&lt;/strong&gt;使用&lt;strong&gt;算术右移&lt;/strong&gt;，对&lt;strong&gt;无符号数&lt;/strong&gt;使用逻辑右移。&lt;/p&gt;
 &lt;h2 id=&#34;整数表示&#34;&gt;整数表示&lt;/h2&gt;
 &lt;p&gt;用&lt;strong&gt;位&lt;/strong&gt;来编码整数的两种不同方式：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;一种只能表示&lt;strong&gt;非负数&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;另一种能表示&lt;strong&gt;负数、零和整数&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;另一种能表示&lt;strong&gt;负数、零和正数&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;整形数据类型&#34;&gt;整形数据类型&lt;/h3&gt;
+&lt;h3 id=&#34;整型数据类型&#34;&gt;整型数据类型&lt;/h3&gt;
+&lt;p&gt;C语言通过&lt;strong&gt;关键字&lt;/strong&gt;来表示多种整型数据类型，这些关键字包括char、short、long，同时还能指示被表示的数字是非负数（声明为unsigned）。&lt;/p&gt;
+&lt;p&gt;为不同大小分配的字节数根据程序编译为32位还是64位有所不同；根据字节分配，不同大小所能表示的值的范围是不同的。&lt;/p&gt;
+&lt;p&gt;取值范围是不对称的，负数的范围比正数大1.&lt;/p&gt;
 &lt;h3 id=&#34;无符号数的编码&#34;&gt;无符号数的编码&lt;/h3&gt;
-&lt;p&gt;直接按照二进制进行编码即可。&lt;/p&gt;
+&lt;p&gt;直接按照二进制进行编码即可。B2U：将二进制编码映射到一个非负整数&lt;/p&gt;
 &lt;p&gt;无符号数的编码具有唯一性&lt;/p&gt;
 &lt;h3 id=&#34;补码编码&#34;&gt;补码编码&lt;/h3&gt;
-&lt;p&gt;(two&amp;rsquo;s-complement)。将字的最高有效位解释为&lt;strong&gt;负权&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;用补码来编码负数（有符号数）&lt;/p&gt;
+&lt;p&gt;(two&amp;rsquo;s-complement)。用来表示有符号数，将字的最高有效位解释为&lt;strong&gt;负权&lt;/strong&gt;，用$B2T_w$表示：
+$$
+B2T_w(\vec x)=-x_{w-1}2^{w-1}+\sum_{i=0}^{w-2}x_i2_i
+$$
+最高有效位$x_{w-1}$称为符号位，它的权重为$-2^{w-1}$，是无符号表示中权重的负数。&lt;/p&gt;
+&lt;p&gt;从维向量到整数映射的举例：
+$$
+B2T_4([0001])=1 \&lt;br&gt;
+B2T_4([0101])=5 \&lt;br&gt;
+B2T_4([1011])=5 \&lt;br&gt;
+B2T_4([1111])=-1
+$$
+w位补码所能表示的值的范围是：$[-2^{w-1},2^{w-1}-1]$，例如长度为4的补码可以表示的范围是$[-8,7]$。与无符号数一样，在可表示的取值范围内，每个数字都唯一的w位补码。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;用补码来编码负数（有符号数）&lt;/strong&gt;。几乎所有现代机器目前都采用补码编码。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;反码：最高有效位的权是$-(2^{w-1}-1)$，其他和补码一样。&lt;/p&gt;
-&lt;p&gt;原码：最高有效位是符号位，用来确定剩下的位应该取复权还是正权。&lt;/p&gt;
-&lt;p&gt;这两种表示方式对于数字0都有两种不同的编码方式。几乎所有现代机器目前都采用补码编码。&lt;/p&gt;
+&lt;p&gt;原码：最高有效位是符号位，用来确定剩下的位应该取负权还是正权。&lt;/p&gt;
+&lt;p&gt;这两种表示方式对于数字0都有两种不同的编码方式。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h3 id=&#34;有符号数和无符号数之间的转换&#34;&gt;有符号数和无符号数之间的转换&lt;/h3&gt;
 &lt;p&gt;对于多数C语言的实现来说，这个问题都是从&lt;strong&gt;位级&lt;/strong&gt;角度来看的，而不是&lt;strong&gt;数&lt;/strong&gt;的角度。&lt;/p&gt;
-&lt;p&gt;处理同样字长的有符号和无符号数之间相互转换的规则为：数值可能会改变，但位模式不变。&lt;/p&gt;
+&lt;p&gt;处理同样字长的有符号和无符号数之间相互转换的规则为：数值可能会改变，但&lt;strong&gt;位模式&lt;/strong&gt;不变。&lt;/p&gt;
+&lt;p&gt;补码转换为无符号数$T2U_w(x)$，当x&amp;lt;0时值改变，计算结果为$x+2^w$，当x&amp;gt;0时值不变。&lt;/p&gt;
 &lt;h3 id=&#34;c语言中的有符号数和无符号数&#34;&gt;C语言中的有符号数和无符号数&lt;/h3&gt;
 &lt;p&gt;C语言支持所有整型数据类型的有符号和无符号计算，几乎所有机器都采用&lt;strong&gt;补码&lt;/strong&gt;表示有符号数。通常大多数数字都默认是有符号的。&lt;/p&gt;
-&lt;h3 id=&#34;扩展一个数字的位表示截断数字&#34;&gt;扩展一个数字的位表示、截断数字&lt;/h3&gt;
+&lt;h3 id=&#34;扩展一个数字的位表示&#34;&gt;扩展一个数字的位表示&lt;/h3&gt;
+&lt;p&gt;将无符号数扩展为一个更大的数据类型：只需在表示的开头添加0即可。&lt;/p&gt;
+&lt;p&gt;将一个补码扩展为一个更大的数据类型：执行一个&lt;strong&gt;符号扩展&lt;/strong&gt;，即在开头添加最高有效位数字。&lt;/p&gt;
+&lt;p&gt;符号扩展不改变补码表示的数字。&lt;/p&gt;
+&lt;h3 id=&#34;截断数字&#34;&gt;截断数字&lt;/h3&gt;
+&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
+&lt;p&gt;为了避免出现错误或漏洞，我们&lt;strong&gt;绝不使用无符号数&lt;/strong&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;整数运算&#34;&gt;整数运算&lt;/h2&gt;
 &lt;h3 id=&#34;无符号加法&#34;&gt;无符号加法&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;加法&lt;/li&gt;
-&lt;li&gt;加法的溢出&lt;/li&gt;
-&lt;li&gt;求反&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;两个无符号数相加，如果完整的整数结果不能放到数据类型的字长限制中去，那么就会发生溢出，当无符号数加法发生溢出时，结果为丢弃溢出的最高位后的结果，即减去$2^w$。&lt;/p&gt;
 &lt;h3 id=&#34;补码加法&#34;&gt;补码加法&lt;/h3&gt;
+&lt;p&gt;分为正溢出、正常、负溢出三种情况。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;正溢出：和减去$2^w$&lt;/li&gt;
+&lt;li&gt;负溢出：和加上$2^w$&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;补码的非&#34;&gt;补码的非&lt;/h3&gt;
+&lt;p&gt;当$x=\text{TMin}_w$时，补码的非的结果为：$\text{TMin}_w$，否则结果为$-x$&lt;/p&gt;
 &lt;h3 id=&#34;无符号乘法&#34;&gt;无符号乘法&lt;/h3&gt;
+&lt;p&gt;乘积可能需要$2w$位来表示，C语言中无符号被定义为产生w位值，即2w乘积结果的低2w位。将一个无符号数截断为w位等价于计算该值模$2^w$&lt;/p&gt;
 &lt;h3 id=&#34;补码乘法&#34;&gt;补码乘法&lt;/h3&gt;
+&lt;h3 id=&#34;总结-1&#34;&gt;总结&lt;/h3&gt;
+&lt;p&gt;计算机的整数运算实际上是一种模运算，表示数字时的有限字长限制了可能的值的取值范围，结果运算溢出。&lt;/p&gt;
+&lt;p&gt;补码提供了一种既能表示整数也能表示负数的灵活方法，同时使用了与执行无符号算术相同的位级实现。&lt;/p&gt;
 &lt;h2 id=&#34;浮点数&#34;&gt;浮点数&lt;/h2&gt;
+&lt;h3 id=&#34;二进制小数&#34;&gt;二进制小数&lt;/h3&gt;
+&lt;h3 id=&#34;ieee浮点数表示&#34;&gt;IEEE浮点数表示&lt;/h3&gt;
+&lt;h3 id=&#34;舍入&#34;&gt;舍入&lt;/h3&gt;
+&lt;h3 id=&#34;浮点运算&#34;&gt;浮点运算&lt;/h3&gt;
 - http://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/ - 2019-2021 By Jialong</description>
         </item>
     
@@ -283,11 +358,11 @@
         <guid>http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
         <description>Jialong&#39;s Blog http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ -&lt;p&gt;在本书中我们将会学习到一些使用技巧，比如如何避免由于&lt;strong&gt;计算机表示数字的方式&lt;/strong&gt;引起的错误；通过一些技巧&lt;strong&gt;优化C代码&lt;/strong&gt;，以充分利用现代处理器和存储器系统的设计；了解&lt;strong&gt;编译器&lt;/strong&gt;如何实现过程调用，利用这些知识避免&lt;strong&gt;缓冲区溢出&lt;/strong&gt;错误带来的安全漏洞；学习如何识别和避免&lt;strong&gt;链接&lt;/strong&gt;时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；&lt;strong&gt;并发&lt;/strong&gt;带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。&lt;/p&gt;
 &lt;p&gt;我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;()
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;()
 {
-	printf(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Hello, world&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;);
-	&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;;
+	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Hello, world&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;信息就是位上下文&#34;&gt;信息就是位+上下文&lt;/h2&gt;
 &lt;p&gt;8位为一个字节。&lt;/p&gt;
@@ -422,52 +497,52 @@ d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right|
 $$&lt;/p&gt;
 &lt;p&gt;将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。&lt;/p&gt;
 &lt;p&gt;通常使用准确率来评估分类器&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;Xtr, Ytr, Xte, Yte &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; load_CIFAR10(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;data/cifar10/&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# a magic function we provide&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# flatten out all images to be one-dimensional&lt;/span&gt;
-Xtr_rows &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Xtr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;reshape(Xtr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#099&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Xtr_rows becomes 50000 x 3072&lt;/span&gt;
-Xte_rows &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Xte&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;reshape(Xte&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#099&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Xte_rows becomes 10000 x 3072&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;Xtr, Ytr, Xte, Yte &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; load_CIFAR10(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;data/cifar10/&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# a magic function we provide&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# flatten out all images to be one-dimensional&lt;/span&gt;
+Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xtr_rows becomes 50000 x 3072&lt;/span&gt;
+Xte_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xte_rows becomes 10000 x 3072&lt;/span&gt;
 
-nn &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; NearestNeighbor() &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# create a Nearest Neighbor classifier class&lt;/span&gt;
-nn&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr) &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# train the classifier on the training images and labels&lt;/span&gt;
-Yte_predict &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;predict(Xte_rows) &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# predict labels on the test images&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# and now print the classification accuracy, which is the average number&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# of examples that are correctly predicted (i.e. label matches)&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;%&lt;/span&gt; ( np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;mean(Yte_predict &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; Yte) )
+nn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; NearestNeighbor() &lt;span style=&#34;color:#888&#34;&gt;# create a Nearest Neighbor classifier class&lt;/span&gt;
+nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr) &lt;span style=&#34;color:#888&#34;&gt;# train the classifier on the training images and labels&lt;/span&gt;
+Yte_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(Xte_rows) &lt;span style=&#34;color:#888&#34;&gt;# predict labels on the test images&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# and now print the classification accuracy, which is the average number&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# of examples that are correctly predicted (i.e. label matches)&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; ( np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yte_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yte) )
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;NearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#0086b3&#34;&gt;object&lt;/span&gt;):
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;):
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;pass&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;NearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;pass&lt;/span&gt;
 
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;train&lt;/span&gt;(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;, X, y):
-    &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example. Y is 1-dimension of size N &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# the nearest neighbor classifier simply remembers all the training data&lt;/span&gt;
-    &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X
-    &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;ytr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;train&lt;/span&gt;(self, X, y):
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example. Y is 1-dimension of size N &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# the nearest neighbor classifier simply remembers all the training data&lt;/span&gt;
+    self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X
+    self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y
 
-  &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;predict&lt;/span&gt;(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;, X):
-    &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example we wish to predict label for &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    num_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;]	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#训练样本数量&lt;/span&gt;
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# lets make sure that the output type matches the input type&lt;/span&gt;
-    Ypred &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;zeros(num_test, dtype &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;ytr&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;dtype)
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;predict&lt;/span&gt;(self, X):
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example we wish to predict label for &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    num_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]	&lt;span style=&#34;color:#888&#34;&gt;#训练样本数量&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# lets make sure that the output type matches the input type&lt;/span&gt;
+    Ypred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros(num_test, dtype &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype)
 
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# loop over all test rows&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#0086b3&#34;&gt;range&lt;/span&gt;(num_test):
-      &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# find the nearest training image to the i&amp;#39;th test image&lt;/span&gt;
-      &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# using the L1 distance (sum of absolute value differences)&lt;/span&gt;
-      distances &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;abs(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;)
-      min_index &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;argmin(distances) &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# get the index with smallest distance&lt;/span&gt;
-      Ypred[i] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;ytr[min_index] &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# predict the label of the nearest example&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# loop over all test rows&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(num_test):
+      &lt;span style=&#34;color:#888&#34;&gt;# find the nearest training image to the i&amp;#39;th test image&lt;/span&gt;
+      &lt;span style=&#34;color:#888&#34;&gt;# using the L1 distance (sum of absolute value differences)&lt;/span&gt;
+      distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;abs(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
+      min_index &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argmin(distances) &lt;span style=&#34;color:#888&#34;&gt;# get the index with smallest distance&lt;/span&gt;
+      Ypred[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr[min_index] &lt;span style=&#34;color:#888&#34;&gt;# predict the label of the nearest example&lt;/span&gt;
 
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; Ypred
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; Ypred
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用L1距离测试的准确率只有38.6%.&lt;/p&gt;
 &lt;h3 id=&#34;l2-distance&#34;&gt;L2 distance&lt;/h3&gt;
 &lt;p&gt;$$
 d_{2}\left(I_{1}, I_{2}\right)=\sqrt{\sum_{p}\left(I_{1}^{p}-I_{2}^{p}\right)^{2}}
 $$&lt;/p&gt;
 &lt;p&gt;only replace a single line of code above:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;distances &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;sqrt(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;square(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;))
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;k---nearest-neighbor-classifier&#34;&gt;k - Nearest Neighbor Classifier&lt;/h2&gt;
 &lt;p&gt;找到距离最近的k个图片，k个图片中数量最多的一个标签即为测试图片所分的类别。&lt;/p&gt;
 &lt;h2 id=&#34;validation-sets-for-hyperparameter-tuning&#34;&gt;Validation sets for Hyperparameter tuning&lt;/h2&gt;
@@ -475,27 +550,27 @@ $$&lt;/p&gt;
 &lt;p&gt;Hyperparameter 。通常不能使用test set来调整Hyperparameter。Evaluate on the test set only a single time, at the very end.&lt;/p&gt;
 &lt;p&gt;将训练集划分为一个小一些的训练集和一个验证集(validation set)。例如使用CIFAR-10数据集时将训练集分为49,000个训练集和1,000个验证集。&lt;/p&gt;
 &lt;p&gt;验证集本质上是一个假的测试集，是用来调整Hyperparameter的。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# assume we have Xtr_rows, Ytr, Xte_rows, Yte as before&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# recall Xtr_rows is 50,000 x 3072 matrix&lt;/span&gt;
-Xval_rows &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Xtr_rows[:&lt;span style=&#34;color:#099&#34;&gt;1000&lt;/span&gt;, :] &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# take first 1000 for validation&lt;/span&gt;
-Yval &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Ytr[:&lt;span style=&#34;color:#099&#34;&gt;1000&lt;/span&gt;]
-Xtr_rows &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Xtr_rows[&lt;span style=&#34;color:#099&#34;&gt;1000&lt;/span&gt;:, :] &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# keep last 49,000 for train&lt;/span&gt;
-Ytr &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Ytr[&lt;span style=&#34;color:#099&#34;&gt;1000&lt;/span&gt;:]
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# assume we have Xtr_rows, Ytr, Xte_rows, Yte as before&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# recall Xtr_rows is 50,000 x 3072 matrix&lt;/span&gt;
+Xval_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;, :] &lt;span style=&#34;color:#888&#34;&gt;# take first 1000 for validation&lt;/span&gt;
+Yval &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;]
+Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;:, :] &lt;span style=&#34;color:#888&#34;&gt;# keep last 49,000 for train&lt;/span&gt;
+Ytr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;:]
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# find hyperparameters that work best on the validation set&lt;/span&gt;
-validation_accuracies &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; []
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; [&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;20&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;100&lt;/span&gt;]:
+&lt;span style=&#34;color:#888&#34;&gt;# find hyperparameters that work best on the validation set&lt;/span&gt;
+validation_accuracies &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;]:
 
-  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# use a particular value of k and evaluation on validation data&lt;/span&gt;
-  nn &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; NearestNeighbor()
-  nn&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr)
-  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# here we assume a modified NearestNeighbor class that can take a k as input&lt;/span&gt;
-  Yval_predict &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;predict(Xval_rows, k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; k)
-  acc &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;mean(Yval_predict &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; Yval)
-  &lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;%&lt;/span&gt; (acc,)
+  &lt;span style=&#34;color:#888&#34;&gt;# use a particular value of k and evaluation on validation data&lt;/span&gt;
+  nn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; NearestNeighbor()
+  nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr)
+  &lt;span style=&#34;color:#888&#34;&gt;# here we assume a modified NearestNeighbor class that can take a k as input&lt;/span&gt;
+  Yval_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(Xval_rows, k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k)
+  acc &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yval_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yval)
+  &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; (acc,)
 
-  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# keep track of what works on the validation set&lt;/span&gt;
-  validation_accuracies&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;append((k, acc))
+  &lt;span style=&#34;color:#888&#34;&gt;# keep track of what works on the validation set&lt;/span&gt;
+  validation_accuracies&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;append((k, acc))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;cross-validation&#34;&gt;Cross-validation&lt;/h3&gt;
 &lt;p&gt;当训练集数量较少时，使用更为复杂的交叉验证来调整hyperparameter。我们通过迭代不同的验证集并平均计算这些验证集的结果来确定k。例如在5次迭代的交叉验证中，将训练集分为5份，使用4份训练，1份验证，然后改变验证集，迭代5次，最终使用5次的平均结果确定k。&lt;/p&gt;
 &lt;h2 id=&#34;nearest-neighbor-classifier的优缺点&#34;&gt;Nearest Neighbor classifier的优缺点&lt;/h2&gt;
@@ -534,22 +609,22 @@ validation_accuracies &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&
 &lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;def&lt;/code&gt; keyword&lt;/p&gt;
 &lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Greeter&lt;/span&gt;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Greeter&lt;/span&gt;:
 
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Constructor&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;, name):
-        &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;name &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; name  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Create an instance variable&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# Constructor&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self, name):
+        self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; name  &lt;span style=&#34;color:#888&#34;&gt;# Create an instance variable&lt;/span&gt;
 
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Instance method&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;greet&lt;/span&gt;(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;, loud&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;False&lt;/span&gt;):
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; loud:
-          &lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;HELLO, &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;format(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;upper()))
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt;:
-          &lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;Hello, &lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;!&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;format(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;name))
+    &lt;span style=&#34;color:#888&#34;&gt;# Instance method&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;greet&lt;/span&gt;(self, loud&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;False&lt;/span&gt;):
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; loud:
+          &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;HELLO, &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;format(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;upper()))
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+          &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Hello, &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;!&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;format(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name))
 
-g &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; Greeter(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;Fred&amp;#39;&lt;/span&gt;)  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Construct an instance of the Greeter class&lt;/span&gt;
-g&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;greet()            &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Call an instance method; prints &amp;#34;Hello, Fred&amp;#34;&lt;/span&gt;
-g&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;greet(loud&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;True&lt;/span&gt;)   &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Call an instance method; prints &amp;#34;HELLO, FRED!&amp;#34;&lt;/span&gt;
+g &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Greeter(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Fred&amp;#39;&lt;/span&gt;)  &lt;span style=&#34;color:#888&#34;&gt;# Construct an instance of the Greeter class&lt;/span&gt;
+g&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;greet()            &lt;span style=&#34;color:#888&#34;&gt;# Call an instance method; prints &amp;#34;Hello, Fred&amp;#34;&lt;/span&gt;
+g&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;greet(loud&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;True&lt;/span&gt;)   &lt;span style=&#34;color:#888&#34;&gt;# Call an instance method; prints &amp;#34;HELLO, FRED!&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;numpy&#34;&gt;Numpy&lt;/h2&gt;
 &lt;p&gt;Numpy is the core library for scientific computing in Python. It provides a high-performance multidimensional array object, and tools for working with these arrays.&lt;/p&gt;
 &lt;h3 id=&#34;arrays&#34;&gt;Arrays&lt;/h3&gt;
@@ -557,175 +632,175 @@ g&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;greet(lou
 &lt;h3 id=&#34;array-indexing&#34;&gt;Array indexing&lt;/h3&gt;
 &lt;h4 id=&#34;slicing-1&#34;&gt;Slicing&lt;/h4&gt;
 &lt;p&gt;example&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Create the following rank 2 array with shape (3, 4)&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# [[ 1  2  3  4]&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#  [ 5  6  7  8]&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#  [ 9 10 11 12]]&lt;/span&gt;
-a &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;8&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;11&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;12&lt;/span&gt;]])
+&lt;span style=&#34;color:#888&#34;&gt;# Create the following rank 2 array with shape (3, 4)&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# [[ 1  2  3  4]&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#  [ 5  6  7  8]&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#  [ 9 10 11 12]]&lt;/span&gt;
+a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Use slicing to pull out the subarray consisting of the first 2 rows&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# and columns 1 and 2; b is the following array of shape (2, 2):&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# [[2 3]&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#  [6 7]]&lt;/span&gt;
-b &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a[:&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;]
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(b)
+&lt;span style=&#34;color:#888&#34;&gt;# Use slicing to pull out the subarray consisting of the first 2 rows&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# and columns 1 and 2; b is the following array of shape (2, 2):&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# [[2 3]&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#  [6 7]]&lt;/span&gt;
+b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;]
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(b)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Two ways of accessing the data in the middle row of the array. Mixing integer indexing with slices yields an array of lower rank, while using only slices yields an array of the same rank as the original array:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;row_r1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, :]    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Rank 1 view of the second row of a  &lt;/span&gt;
-row_r2 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;, :]  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
-row_r3 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; a[[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;], :]  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(row_r1, row_r1&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;shape)
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(row_r2, row_r2&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;shape)
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(row_r3, row_r3&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;shape)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;row_r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, :]    &lt;span style=&#34;color:#888&#34;&gt;# Rank 1 view of the second row of a  &lt;/span&gt;
+row_r2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, :]  &lt;span style=&#34;color:#888&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
+row_r3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], :]  &lt;span style=&#34;color:#888&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r1, row_r1&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r2, row_r2&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r3, row_r3&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;integer-array-indexing&#34;&gt;Integer array indexing&lt;/h4&gt;
 &lt;p&gt;Integer array indexing allows you to construct arbitrary arrays using the data from another array.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;a &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;]])
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# An example of integer array indexing.&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# The returned array will have shape (3,) and &lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;]])
+&lt;span style=&#34;color:#888&#34;&gt;# An example of integer array indexing.&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# The returned array will have shape (3,) and &lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]])
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# The above example of integer array indexing is equivalent to this:&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;], a[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;]]))
+&lt;span style=&#34;color:#888&#34;&gt;# The above example of integer array indexing is equivalent to this:&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result:&lt;/p&gt;
 &lt;p&gt;[1 4 5]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# When using integer array indexing, you can reuse the same&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# element from the source array:&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;]])
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# When using integer array indexing, you can reuse the same&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# element from the source array:&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]])
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Equivalent to the previous integer array indexing example&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;]]))
+&lt;span style=&#34;color:#888&#34;&gt;# Equivalent to the previous integer array indexing example&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;One useful trick with integer array indexing is selecting or mutating one element from each row of a matrix:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Create a new array from which we will select elements&lt;/span&gt;
-a &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;12&lt;/span&gt;]])
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(a)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Create an array of indices&lt;/span&gt;
-b &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;])
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create a new array from which we will select elements&lt;/span&gt;
+a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create an array of indices&lt;/span&gt;
+b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Select one element from each row of a using the indices in b&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(a[np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;), b])  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Prints &amp;#34;[ 1  6  7 11]&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# Select one element from each row of a using the indices in b&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;), b])  &lt;span style=&#34;color:#888&#34;&gt;# Prints &amp;#34;[ 1  6  7 11]&amp;#34;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[1 6 7 11]&lt;/p&gt;
 &lt;h4 id=&#34;boolean-array-indexing&#34;&gt;Boolean array indexing&lt;/h4&gt;
 &lt;p&gt;Frequently this type of indexing is used to select the elements of an array that &lt;strong&gt;satisfy some condition&lt;/strong&gt;.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 
-a &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;]])
+a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
 
-bool_idx &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; (a &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;)  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Find the elements of a that are bigger than 2;&lt;/span&gt;
-                    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# this returns a numpy array of Booleans of the same&lt;/span&gt;
-                    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# shape as a, where each slot of bool_idx tells&lt;/span&gt;
-                    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# whether that element of a is &amp;gt; 2.&lt;/span&gt;
+bool_idx &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (a &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;)  &lt;span style=&#34;color:#888&#34;&gt;# Find the elements of a that are bigger than 2;&lt;/span&gt;
+                    &lt;span style=&#34;color:#888&#34;&gt;# this returns a numpy array of Booleans of the same&lt;/span&gt;
+                    &lt;span style=&#34;color:#888&#34;&gt;# shape as a, where each slot of bool_idx tells&lt;/span&gt;
+                    &lt;span style=&#34;color:#888&#34;&gt;# whether that element of a is &amp;gt; 2.&lt;/span&gt;
 
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(bool_idx)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(bool_idx)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[False False]
 [ True  True]
 [ True  True]]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# We use boolean array indexing to construct a rank 1 array&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# consisting of the elements of a corresponding to the True values&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# of bool_idx&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(a[bool_idx])
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We use boolean array indexing to construct a rank 1 array&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# consisting of the elements of a corresponding to the True values&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# of bool_idx&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[bool_idx])
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# We can do all of the above in a single concise statement:&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(a[a &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;])
+&lt;span style=&#34;color:#888&#34;&gt;# We can do all of the above in a single concise statement:&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[a &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;])
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[3 4 5 6]
 [3 4 5 6]&lt;/p&gt;
 &lt;h3 id=&#34;datatypes&#34;&gt;Datatypes&lt;/h3&gt;
 &lt;p&gt;Every numpy array is a grid of elements of the same type. Numpy provides a large set of numeric datatypes that you can use to construct arrays. Numpy tries to guess a datatype when you create an array, but functions that construct arrays usually also include an optional argument to explicitly specify the datatype. Here is an example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;])  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
-y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#099&#34;&gt;1.0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;2.0&lt;/span&gt;])  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
-z &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;], dtype&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;int64)  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Force a particular datatype&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.0&lt;/span&gt;, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2.0&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
+z &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;int64)  &lt;span style=&#34;color:#888&#34;&gt;# Force a particular datatype&lt;/span&gt;
 
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(x&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;dtype, y&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;dtype, z&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;dtype)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype, y&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype, z&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;array-math&#34;&gt;Array math&lt;/h3&gt;
 &lt;p&gt;Note that unlike MATLAB, &lt;code&gt;*&lt;/code&gt; is elementwise multiplication, not matrix multiplication. We instead use the dot function to compute inner products of vectors, to multiply a vector by a matrix, and to multiply matrices. dot is available both as a function in the numpy module and as an instance method of array objects:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;]], dtype&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;float64)
-y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#099&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;8&lt;/span&gt;]], dtype&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;float64)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Elementwise product; both produce the array&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; y)
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;multiply(x, y))
+&lt;span style=&#34;color:#888&#34;&gt;# Elementwise product; both produce the array&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(x &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; y)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;multiply(x, y))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[ 5. 12.]
 [21. 32.]]
 [[ 5. 12.]
 [21. 32.]]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;]])
-y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#099&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;8&lt;/span&gt;]])
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]])
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;]])
 
-v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#099&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;])
-w &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#099&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;12&lt;/span&gt;])
+v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;])
+w &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;])
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Inner product of vectors; both produce 219&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(v&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;dot(w))
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;dot(v, w))
+&lt;span style=&#34;color:#888&#34;&gt;# Inner product of vectors; both produce 219&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(v&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(w))
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(v, w))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;219
 219&lt;/p&gt;
 &lt;p&gt;You can also use the &lt;code&gt;@&lt;/code&gt; operator which is equivalent to numpy&amp;rsquo;s &lt;code&gt;dot&lt;/code&gt; operator.&lt;/p&gt;
 &lt;p&gt;to transpose a matrix, simply use the T attribute of an array object:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;transpose&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;, x&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;T)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;transpose&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;transpose
 [[1 3]
 [2 4]]&lt;/p&gt;
 &lt;h3 id=&#34;broadcasting&#34;&gt;Broadcasting&lt;/h3&gt;
 &lt;p&gt;Broadcasting is a powerful mechanism that allows numpy to work with arrays of different shapes when performing arithmetic operations.&lt;/p&gt;
 &lt;p&gt;For example, suppose that we want to add a constant vector to each row of a matrix. We could do it like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
-x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;12&lt;/span&gt;]])
-v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;])
-y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;empty_like(x)   &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Create an empty matrix with the same shape as x&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
+x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
+v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;empty_like(x)   &lt;span style=&#34;color:#888&#34;&gt;# Create an empty matrix with the same shape as x&lt;/span&gt;
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Add the vector v to each row of the matrix x with an explicit loop&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#0086b3&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;):
-    y[i, :] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; x[i, :] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; v
+&lt;span style=&#34;color:#888&#34;&gt;# Add the vector v to each row of the matrix x with an explicit loop&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;):
+    y[i, :] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x[i, :] &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; v
 
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(y)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(y)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[ 2  2  4]
 [ 5  5  7]
 [ 8  8 10]
 [11 11 13]]&lt;/p&gt;
 &lt;p&gt;Numpy broadcasting allows us to perform this computation without actually creating multiple copies of v. Consider this version, using broadcasting:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
-x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#099&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;12&lt;/span&gt;]])
-v &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;])
-y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; v  &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Add v to each row of x using broadcasting&lt;/span&gt;
-&lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(y)
+&lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
+x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
+v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; v  &lt;span style=&#34;color:#888&#34;&gt;# Add v to each row of x using broadcasting&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(y)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The line &lt;code&gt;y = x + v&lt;/code&gt; works even though &lt;code&gt;x&lt;/code&gt; has shape &lt;code&gt;(4, 3)&lt;/code&gt; and &lt;code&gt;v&lt;/code&gt; has shape &lt;code&gt;(3,)&lt;/code&gt; due to broadcasting; this line works as if v actually had shape &lt;code&gt;(4, 3)&lt;/code&gt;, where each row was a copy of &lt;code&gt;v&lt;/code&gt;, and the sum was performed elementwise.&lt;/p&gt;
 &lt;h2 id=&#34;matplotlib&#34;&gt;Matplotlib&lt;/h2&gt;
 &lt;p&gt;Matplotlib is a plotting library. In this section give a brief introduction to the &lt;code&gt;matplotlib.pyplot&lt;/code&gt; module, which provides a plotting system similar to that of MATLAB.&lt;/p&gt;
 &lt;h3 id=&#34;plotting&#34;&gt;Plotting&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;plt&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;%&lt;/span&gt;matplotlib inline
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Compute the x and y coordinates for points on a sine curve&lt;/span&gt;
-x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#099&#34;&gt;0.1&lt;/span&gt;)
-y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;sin(x)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;plt&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;matplotlib inline
+&lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on a sine curve&lt;/span&gt;
+x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.1&lt;/span&gt;)
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sin(x)
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Plot the points using matplotlib&lt;/span&gt;
-plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;plot(x, y)
+&lt;span style=&#34;color:#888&#34;&gt;# Plot the points using matplotlib&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;subplots&#34;&gt;Subplots&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Compute the x and y coordinates for points on sine and cosine curves&lt;/span&gt;
-x &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#099&#34;&gt;0.1&lt;/span&gt;)
-y_sin &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;sin(x)
-y_cos &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;cos(x)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on sine and cosine curves&lt;/span&gt;
+x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.1&lt;/span&gt;)
+y_sin &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sin(x)
+y_cos &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;cos(x)
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Set up a subplot grid that has height 2 and width 1,&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# and set the first such subplot as active.&lt;/span&gt;
-plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;subplot(&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;)
+&lt;span style=&#34;color:#888&#34;&gt;# Set up a subplot grid that has height 2 and width 1,&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# and set the first such subplot as active.&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;subplot(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Make the first plot&lt;/span&gt;
-plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;plot(x, y_sin)
-plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;Sine&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#888&#34;&gt;# Make the first plot&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y_sin)
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Sine&amp;#39;&lt;/span&gt;)
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Set the second subplot as active, and make the second plot.&lt;/span&gt;
-plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;subplot(&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;)
-plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;plot(x, y_cos)
-plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;Cosine&amp;#39;&lt;/span&gt;)
+&lt;span style=&#34;color:#888&#34;&gt;# Set the second subplot as active, and make the second plot.&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;subplot(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;)
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y_cos)
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Cosine&amp;#39;&lt;/span&gt;)
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Show the figure.&lt;/span&gt;
-plt&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;show()
+&lt;span style=&#34;color:#888&#34;&gt;# Show the figure.&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- http://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ - 2019-2021 By Jialong</description>
         </item>
     
@@ -1561,89 +1636,89 @@ $$&lt;/p&gt;
 &lt;li&gt;计算每个聚类中所有点的坐标平均值，并将这个平均值作为新的聚类中心，反复执行上一步和该步，直到聚类中心不再进行大范围移动或聚类迭代次数达到要求位置。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;代码实现&#34;&gt;代码实现&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;np&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;pandas&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;pd&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pandas&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pd&lt;/span&gt;
 
-data &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;read_csv(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&amp;#39;&lt;/span&gt;, header&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;None&lt;/span&gt;)    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 下载iris数据集&lt;/span&gt;
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;#data = pd.read_csv(&amp;#39;./data/iris.data.csv&amp;#39;, header=None)&lt;/span&gt;
-data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;columns &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;sepal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;sepal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;petal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;petal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;species&amp;#39;&lt;/span&gt;]    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 特征及类别名称&lt;/span&gt;
+data &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;read_csv(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&amp;#39;&lt;/span&gt;, header&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;None&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# 下载iris数据集&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#data = pd.read_csv(&amp;#39;./data/iris.data.csv&amp;#39;, header=None)&lt;/span&gt;
+data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;columns &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;sepal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;sepal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;petal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;petal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;species&amp;#39;&lt;/span&gt;]    &lt;span style=&#34;color:#888&#34;&gt;# 特征及类别名称&lt;/span&gt;
 
-X &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;values
-y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;values
-y[y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;Iris-setosa&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;                                 &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Iris-setosa 输出label用0表示&lt;/span&gt;
-y[y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;Iris-versicolor&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;                             &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Iris-versicolor 输出label用1表示&lt;/span&gt;
-y[y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;Iris-virginica&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt;                              &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Iris-virginica 输出label用2表示&lt;/span&gt;
-X_setosa, y_setosa &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;], y[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;]                     &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Iris-setosa 4个特征&lt;/span&gt;
-X_versicolor, y_versicolor &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;100&lt;/span&gt;], y[&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;100&lt;/span&gt;]         &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Iris-versicolor 4个特征&lt;/span&gt;
-X_virginica, y_virginica &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#099&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;150&lt;/span&gt;], y[&lt;span style=&#34;color:#099&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;150&lt;/span&gt;]         &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# Iris-virginica 4个特征&lt;/span&gt;
-
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# training set&lt;/span&gt;
-X_setosa_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_setosa[:&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;, :]
-y_setosa_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_setosa[:&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;]
-X_versicolor_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_versicolor[:&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;, :]
-y_versicolor_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_versicolor[:&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;]
-X_virginica_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_virginica[:&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;, :]
-y_virginica_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_virginica[:&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;]
-X_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;vstack([X_setosa_train, X_versicolor_train, X_virginica_train])
-y_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;hstack([y_setosa_train, y_versicolor_train, y_virginica_train])
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# validation set&lt;/span&gt;
-X_setosa_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;, :]
-y_setosa_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;]
-X_versicolor_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;, :]
-y_versicolor_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;]
-X_virginica_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;, :]
-y_virginica_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#099&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;]
-X_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;vstack([X_setosa_val, X_versicolor_val, X_virginica_val])
-y_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;hstack([y_setosa_val, y_versicolor_val, y_virginica_val])
-
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# test set&lt;/span&gt;
-X_setosa_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;, :]
-y_setosa_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;]
-X_versicolor_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;, :]
-y_versicolor_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;]
-X_virginica_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;, :]
-y_virginica_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#099&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#099&#34;&gt;50&lt;/span&gt;]
-X_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;vstack([X_setosa_test, X_versicolor_test, X_virginica_test])
-y_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;hstack([y_setosa_test, y_versicolor_test, y_virginica_test])
+X &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;values
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;values
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-setosa&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;                                 &lt;span style=&#34;color:#888&#34;&gt;# Iris-setosa 输出label用0表示&lt;/span&gt;
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-versicolor&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;                             &lt;span style=&#34;color:#888&#34;&gt;# Iris-versicolor 输出label用1表示&lt;/span&gt;
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-virginica&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;                              &lt;span style=&#34;color:#888&#34;&gt;# Iris-virginica 输出label用2表示&lt;/span&gt;
+X_setosa, y_setosa &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]                     &lt;span style=&#34;color:#888&#34;&gt;# Iris-setosa 4个特征&lt;/span&gt;
+X_versicolor, y_versicolor &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;]         &lt;span style=&#34;color:#888&#34;&gt;# Iris-versicolor 4个特征&lt;/span&gt;
+X_virginica, y_virginica &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;]         &lt;span style=&#34;color:#888&#34;&gt;# Iris-virginica 4个特征&lt;/span&gt;
 
 
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;KNearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#0086b3&#34;&gt;object&lt;/span&gt;):
-   &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;):
-       &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;pass&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# training set&lt;/span&gt;
+X_setosa_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_setosa_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_versicolor_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_versicolor_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_virginica_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_virginica_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_train, X_versicolor_train, X_virginica_train])
+y_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_train, y_versicolor_train, y_virginica_train])
 
-   &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 训练函数&lt;/span&gt;
-   &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;train&lt;/span&gt;(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;, X, y):
-       &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;X_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X
-       &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;y_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; y
+&lt;span style=&#34;color:#888&#34;&gt;# validation set&lt;/span&gt;
+X_setosa_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_setosa_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_versicolor_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_versicolor_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_virginica_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_virginica_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_val, X_versicolor_val, X_virginica_val])
+y_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_val, y_versicolor_val, y_virginica_val])
 
-   &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 预测函数&lt;/span&gt;
-   &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;predict&lt;/span&gt;(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;, X, k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;):
-       &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 计算L2距离&lt;/span&gt;
-       num_test &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;]
-       num_train &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;]
-       dists &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;zeros((num_test, num_train))    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 初始化距离函数&lt;/span&gt;
-       &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# because(X - X_train)*(X - X_train) = -2X*X_train + X*X + X_train*X_train, so&lt;/span&gt;
-       d1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;dot(X, &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;T)    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# shape (num_test, num_train)&lt;/span&gt;
-       d2 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;square(X), axis&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;, keepdims&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;True&lt;/span&gt;)    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# shape (num_test, 1)&lt;/span&gt;
-       d3 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;square(&lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;X_train), axis&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;)    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# shape (1, num_train)&lt;/span&gt;
-       dist &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;sqrt(d1 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; d2 &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; d3)
-       &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 根据K值，选择最可能属于的类别&lt;/span&gt;
-       y_pred &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;zeros(num_test)
-       &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#0086b3&#34;&gt;range&lt;/span&gt;(num_test):
-           dist_k_min &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;argsort(dist[i])[:k]    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 最近邻k个实例位置&lt;/span&gt;
-           y_kclose &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#999&#34;&gt;self&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;y_train[dist_k_min]     &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 最近邻k个实例对应的标签&lt;/span&gt;
-           y_pred[i] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;argmax(np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;bincount(y_kclose&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;tolist()))    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 找出k个标签中从属类别最多的作为预测类别&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# test set&lt;/span&gt;
+X_setosa_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_setosa_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_versicolor_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_versicolor_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_virginica_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_virginica_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_test, X_versicolor_test, X_virginica_test])
+y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_test, y_versicolor_test, y_virginica_test])
 
-       &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; y_pred
 
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
-    KNN &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; KNearestNeighbor()
-    KNN&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;train(X_train, y_train)
-    y_pred &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; KNN&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;predict(X_test, k&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;6&lt;/span&gt;)
-    accuracy &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;mean(y_pred &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; y_test)
-    &lt;span style=&#34;color:#0086b3&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;测试集预测准确率：&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;%&lt;/span&gt; accuracy)
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;KNearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;pass&lt;/span&gt;
+
+   &lt;span style=&#34;color:#888&#34;&gt;# 训练函数&lt;/span&gt;
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;train&lt;/span&gt;(self, X, y):
+       self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X
+       self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;y_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y
+
+   &lt;span style=&#34;color:#888&#34;&gt;# 预测函数&lt;/span&gt;
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;predict&lt;/span&gt;(self, X, k&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;):
+       &lt;span style=&#34;color:#888&#34;&gt;# 计算L2距离&lt;/span&gt;
+       num_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
+       num_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
+       dists &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros((num_test, num_train))    &lt;span style=&#34;color:#888&#34;&gt;# 初始化距离函数&lt;/span&gt;
+       &lt;span style=&#34;color:#888&#34;&gt;# because(X - X_train)*(X - X_train) = -2X*X_train + X*X + X_train*X_train, so&lt;/span&gt;
+       d1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(X, self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)    &lt;span style=&#34;color:#888&#34;&gt;# shape (num_test, num_train)&lt;/span&gt;
+       d2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(X), axis&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, keepdims&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;True&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# shape (num_test, 1)&lt;/span&gt;
+       d3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train), axis&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# shape (1, num_train)&lt;/span&gt;
+       dist &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(d1 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; d2 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; d3)
+       &lt;span style=&#34;color:#888&#34;&gt;# 根据K值，选择最可能属于的类别&lt;/span&gt;
+       y_pred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros(num_test)
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(num_test):
+           dist_k_min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argsort(dist[i])[:k]    &lt;span style=&#34;color:#888&#34;&gt;# 最近邻k个实例位置&lt;/span&gt;
+           y_kclose &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;y_train[dist_k_min]     &lt;span style=&#34;color:#888&#34;&gt;# 最近邻k个实例对应的标签&lt;/span&gt;
+           y_pred[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argmax(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;bincount(y_kclose&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;tolist()))    &lt;span style=&#34;color:#888&#34;&gt;# 找出k个标签中从属类别最多的作为预测类别&lt;/span&gt;
+
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; y_pred
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+    KNN &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; KNearestNeighbor()
+    KNN&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(X_train, y_train)
+    y_pred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; KNN&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(X_test, k&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;)
+    accuracy &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(y_pred &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; y_test)
+    &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;测试集预测准确率：&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; accuracy)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;测试集预测准确率：1.000000
 &lt;/code&gt;&lt;/pre&gt;- http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
@@ -1708,18 +1783,18 @@ strm::goodbit	//用来指出流位处于错误状态。
 &lt;li&gt;一个输出流可能被关联到另一个输出流。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;刷新输出缓冲区：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//输出hi和一个空格，然后刷新缓冲区
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; flush;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//输出hi，然后刷新缓冲区，不附加额外字符
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; ends;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//输出hi和一个空字符，然后刷新缓冲区
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空格，然后刷新缓冲区
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; flush;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi，然后刷新缓冲区，不附加额外字符
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; ends;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空字符，然后刷新缓冲区
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;文件输入输出&#34;&gt;文件输入输出&lt;/h3&gt;
 &lt;p&gt;头文件定义了如上所示的三个类型来住处文件IO。&lt;/p&gt;
 &lt;p&gt;除了继承自iostream类型的行为外，fstream中的定义还增加了新的成员来管理与流关联的文件：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;fstream fstrm;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//创建一个fstream并打开名为s的文件
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s,mode);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//与上一个相同，但按指定mode打开
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;fstrm.open(s)	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//打开名为s的文件并将文件与fstrm绑定
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;fstrm.close()	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//关闭与fstrm绑定的文件，返回void
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;fstrm.is_open()	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//返回一个bool, 指出关联的文件是否成功打开尚未关闭
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;fstream fstrm;	&lt;span style=&#34;color:#888&#34;&gt;//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s);	&lt;span style=&#34;color:#888&#34;&gt;//创建一个fstream并打开名为s的文件
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s,mode);	&lt;span style=&#34;color:#888&#34;&gt;//与上一个相同，但按指定mode打开
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.open(s)	&lt;span style=&#34;color:#888&#34;&gt;//打开名为s的文件并将文件与fstrm绑定
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.close()	&lt;span style=&#34;color:#888&#34;&gt;//关闭与fstrm绑定的文件，返回void
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.is_open()	&lt;span style=&#34;color:#888&#34;&gt;//返回一个bool, 指出关联的文件是否成功打开尚未关闭
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;使用文件流对象&#34;&gt;使用文件流对象&lt;/h4&gt;
 &lt;h4 id=&#34;文件模式&#34;&gt;文件模式&lt;/h4&gt;
 &lt;table&gt;
@@ -1845,13 +1920,13 @@ C c1(c2)	//c1初始化为c2的拷贝。两者必须是相同类型的容器
 C c{a,b,c...}	//c初始化为初始化列表中元素的拷贝
 C c(b,e)	//c初始化为迭代器b和e指定范围中元素的拷贝
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;与顺序容器大小相关的构造函数：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//10个int元素，每个都初始化为1
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;list&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt; scev(&lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;);	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//10个元素，每个都是空string
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//10个int元素，每个都初始化为1
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;list&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; scev(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//10个元素，每个都是空string
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;标准库array具有固定大小&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#099&#34;&gt;42&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//类型为保存42个int的数组
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;array&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;string, &lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//类型为保存10个string的数组
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//类型为保存42个int的数组
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//类型为保存10个string的数组
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用array时必须同时指定&lt;strong&gt;元素类型&lt;/strong&gt;和&lt;strong&gt;大小&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;gt;::&lt;/span&gt;size_type j;	&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//错误，未指定大小
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;::&lt;/span&gt;size_type j;	&lt;span style=&#34;color:#888&#34;&gt;//错误，未指定大小
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;赋值和swap&#34;&gt;赋值和swap&lt;/h4&gt;
 &lt;p&gt;赋值将左边容器中的所有元素替换为右边容器中元素的拷贝。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;c1 = c2;
@@ -1874,23 +1949,23 @@ seq.assign(il)	//将seq中的元素替换为初始化列表il中的元素
 &lt;p&gt;除了上一节介绍的所有容器都支持的操作外，本章剩余部分将介绍顺序容器的所有操作。&lt;/p&gt;
 &lt;h4 id=&#34;向顺序容器添加元素&#34;&gt;向顺序容器添加元素&lt;/h4&gt;
 &lt;p&gt;向顺序容器中除了array外添加元素的操作：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.push_back(t)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在c的尾部创建值为t或由args创建的元素
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;c.emplace_back(args)
-c.push_front(t)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在c的头部创建值为t或由args创建的元素
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;c.emplace_front(args)
-c.insert(p,t)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在迭代器p指向的元素之前创建一个值为t的元素
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;c.insert(p,n,t)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//在迭代器p指向的元素之前插入n个值为t的元素。返回指向新添加的第一个元素的迭代器
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;c.insert(p,b,e)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//将迭代器b和e指向范围内的元素插入到迭代器p指向的元素之前，b和e不能指向c中的元素。返回指向新添加的第一个元素的迭代器
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;c.insert(p,il)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//il为一个花括号包围的元素值列表，将这些值插入到迭代器p指向的元素之前。返回指向新添加的第一个元素的迭代器
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.push_back(t)			&lt;span style=&#34;color:#888&#34;&gt;//在c的尾部创建值为t或由args创建的元素
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.emplace_back(args)
+c.push_front(t)			&lt;span style=&#34;color:#888&#34;&gt;//在c的头部创建值为t或由args创建的元素
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.emplace_front(args)
+c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的元素之前创建一个值为t的元素
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.insert(p,n,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的元素之前插入n个值为t的元素。返回指向新添加的第一个元素的迭代器
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.insert(p,b,e)			&lt;span style=&#34;color:#888&#34;&gt;//将迭代器b和e指向范围内的元素插入到迭代器p指向的元素之前，b和e不能指向c中的元素。返回指向新添加的第一个元素的迭代器
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.insert(p,il)			&lt;span style=&#34;color:#888&#34;&gt;//il为一个花括号包围的元素值列表，将这些值插入到迭代器p指向的元素之前。返回指向新添加的第一个元素的迭代器
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;forword_list&lt;/code&gt;不支持&lt;code&gt;push_back&lt;/code&gt;和&lt;code&gt;emplace_back&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;vector&lt;/code&gt;和&lt;code&gt;string&lt;/code&gt;不支持&lt;code&gt;push_front&lt;/code&gt;和&lt;code&gt;emplace_front&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;使用这些操作时要注意策略，根据不同容器的不同数据结构的特性来使用。&lt;/p&gt;
 &lt;p&gt;emplace操作构造而不是拷贝元素，将参数传递给元素类型的构造函数，直接构造元素。&lt;/p&gt;
 &lt;h4 id=&#34;访问元素&#34;&gt;访问元素&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.back()		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//返回c中尾元素的引用，若c为空，则函数行为未定义。
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;c.front()		&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//范围c中首元素的引用
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;c[n]			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//返回c中下标为n的元素的引用，n是一个无符号整数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;c.at(n)			&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//返回下标为n的元素的引用，若下标越界，则返回out_of_range异常
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.back()		&lt;span style=&#34;color:#888&#34;&gt;//返回c中尾元素的引用，若c为空，则函数行为未定义。
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.front()		&lt;span style=&#34;color:#888&#34;&gt;//范围c中首元素的引用
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c[n]			&lt;span style=&#34;color:#888&#34;&gt;//返回c中下标为n的元素的引用，n是一个无符号整数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.at(n)			&lt;span style=&#34;color:#888&#34;&gt;//返回下标为n的元素的引用，若下标越界，则返回out_of_range异常
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;at和下标操作只适用于string、vector、array和deque&lt;/p&gt;
 &lt;p&gt;back不适用于forward_list&lt;/p&gt;
 &lt;h3 id=&#34;vector对象的增长&#34;&gt;vector对象的增长&lt;/h3&gt;

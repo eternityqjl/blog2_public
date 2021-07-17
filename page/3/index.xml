@@ -4,7 +4,7 @@
     <link>http://eternityqjl.top/</link>
     <description>Recent content on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
+    <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
     <lastBuildDate>Mon, 12 Jul 2021 21:26:27 +0800</lastBuildDate>
     
@@ -436,11 +436,11 @@ $$
 &lt;/ul&gt;
 &lt;h3 id=&#34;http报文格式&#34;&gt;HTTP报文格式&lt;/h3&gt;
 &lt;h4 id=&#34;请求报文&#34;&gt;请求报文&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;GET&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;/somedir/page.html&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1.1&lt;/span&gt;
-Host&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; www.someschool.edu	#指明了对象所在主机
-Connection&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; close	#让服务器在发送完被请求对象后就关闭这条连接
-User-agent&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; Mozilla/5.0		#浏览器类型
-Accept-language&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; fr		#语言
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;GET&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;/somedir/page.html&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.1&lt;/span&gt;
+Host&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; www.someschool.edu	#指明了对象所在主机
+Connection&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; close	#让服务器在发送完被请求对象后就关闭这条连接
+User-agent&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Mozilla/5.0		#浏览器类型
+Accept-language&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; fr		#语言
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;第一行为&lt;em&gt;请求行&lt;/em&gt;，共有三个字段：&lt;/p&gt;
@@ -474,13 +474,13 @@ Accept-language&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/spa
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;响应报文&#34;&gt;响应报文&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;1.1&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;200&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;OK&lt;/span&gt;
-Connection&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; close	#发送完报文后关闭该TCP连接
-Date&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; Tue, 18 Aug 2015 15:44:04 GMT		#指示服务器产生并发送该响应报文的日期和时间
-Server&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; Apache/2.2.3 (CentOS)	#服务器类型及系统，对应于请求报文中的User-agent字段
-Last-Modified&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; Tue, 18 Aug 2015 15:11:03 GMT	#对象创建或最后修改的日期和时间
-Content-Length&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; 6821	#被发送对象的字节数
-Content-Type&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&gt; text/html		#对象类型
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.1&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;200&lt;/span&gt; &lt;span style=&#34;color:#f00;font-weight:bold&#34;&gt;OK&lt;/span&gt;
+Connection&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; close	#发送完报文后关闭该TCP连接
+Date&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Tue, 18 Aug 2015 15:44:04 GMT		#指示服务器产生并发送该响应报文的日期和时间
+Server&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Apache/2.2.3 (CentOS)	#服务器类型及系统，对应于请求报文中的User-agent字段
+Last-Modified&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Tue, 18 Aug 2015 15:11:03 GMT	#对象创建或最后修改的日期和时间
+Content-Length&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; 6821	#被发送对象的字节数
+Content-Type&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; text/html		#对象类型
 
 (data data data ...)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
@@ -707,26 +707,26 @@ Content-Type&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;:&lt;/span&g
 &lt;p&gt;刚开始在每次更新内容的时候都需要一系列的git命令将原始内容仓库和构建的网页仓库同步到Github上，大概需要10条命令，如果你的更新频率很高的话，发布内容将会是有个痛苦的过程，但这里我们可以通过一个shell脚本只使用&lt;code&gt;$ sh deploy.sh&lt;/code&gt;一条命令完成同步内容和构建网页的所有过程。&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;首先，在你的GitBook内容根目录下建一个&lt;code&gt;deploy.sh&lt;/code&gt;文件，使用文本编辑器打开，然后输入以下内容：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;#!bin/sh
-&lt;/span&gt;&lt;span style=&#34;color:#999;font-weight:bold;font-style:italic&#34;&gt;&lt;/span&gt;git checkout master
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 切换到master分支，及内容所在的仓库&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#!bin/sh
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;git checkout master
+&lt;span style=&#34;color:#888&#34;&gt;# 切换到master分支，及内容所在的仓库&lt;/span&gt;
 git add .
-git commit -m &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Update&amp;#34;&lt;/span&gt;
+git commit -m &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Update&amp;#34;&lt;/span&gt;
 git push -u origin master
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 添加、提交到Git仓库，然后push到Github上&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# 添加、提交到Git仓库，然后push到Github上&lt;/span&gt;
 gitbook build
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 构建Gitbook&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# 构建Gitbook&lt;/span&gt;
 
 git checkout gh-pages
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 切换到gh-pages分支，即生成的HTML网页的仓库&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# 切换到gh-pages分支，即生成的HTML网页的仓库&lt;/span&gt;
 cp -r _book/* . 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 复制前面构建的内容&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# 复制前面构建的内容&lt;/span&gt;
 git add .
-git commit -m &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;Update&amp;#34;&lt;/span&gt;
+git commit -m &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Update&amp;#34;&lt;/span&gt;
 git push -u origin gh-pages
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 添加、提交到Git仓库，然后push到Github上&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# 添加、提交到Git仓库，然后push到Github上&lt;/span&gt;
 git checkout master
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;# 返回master主分支&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# 返回master主分支&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后打开命令行，为这个脚本授权：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ chmod +x deploy.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;至此就完成了，以后在更新的时候只需要输入一条命令&lt;code&gt;$ sh deploy.sh&lt;/code&gt;就可以完成所有操作了。&lt;/p&gt;
@@ -850,10 +850,10 @@ git checkout master
         
         <guid>http://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/</guid>
         <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/ -&lt;p&gt;1.建立结构变量&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;该结构描述了由两个字符数组和一个float类型变量组成的结构。&lt;/li&gt;
@@ -866,16 +866,16 @@ git checkout master
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;所以struct book 相当于过去的int、double等类型。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
 } library;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该程序为上面声明的完整版。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;struct&lt;/span&gt; { &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//无结构标记
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; { &lt;span style=&#34;color:#888&#34;&gt;//无结构标记
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
 } library;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;声明结构和定义结构可以一步完成，如上所示。&lt;/p&gt;
 &lt;/li&gt;
@@ -958,23 +958,23 @@ git checkout master
 &lt;li&gt;读取整行输入并&lt;strong&gt;用空字符替代换行符&lt;/strong&gt;，或者(在字符串未结束就遇到了空字符)读取一部分输入，并丢弃其余的部分。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;该函数的代码：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;s_gets&lt;/span&gt;(&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; st, &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; n)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;s_gets&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; st, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n)
 {
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt;ret_val;
-    &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;0&lt;/span&gt;;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ret_val;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
 
-    ret_val &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; fgets(st, n, stdin);
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; (ret_val)
+    ret_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fgets(st, n, stdin);
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (ret_val)
     {
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; (st[i] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; st[i] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;\0&amp;#39;&lt;/span&gt;)
-            i&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++&lt;/span&gt;;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;if&lt;/span&gt; (st[i] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;)
-            st[i] &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;\0&amp;#39;&lt;/span&gt;;
-        &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;else&lt;/span&gt; 
-            &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;while&lt;/span&gt; (getchar() &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;)
-                &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;continue&lt;/span&gt;;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (st[i] &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; st[i] &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\0&amp;#39;&lt;/span&gt;)
+            i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (st[i] &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;)
+            st[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\0&amp;#39;&lt;/span&gt;;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; 
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (getchar() &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;)
+                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;continue&lt;/span&gt;;
     }
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; ret_val;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; ret_val;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;5.&lt;code&gt;scanf()&lt;/code&gt;函数&lt;/p&gt;
 &lt;ul&gt;
@@ -1137,11 +1137,11 @@ git checkout master
 &lt;ul&gt;
 &lt;li&gt;示例：&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; first[MAX];
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; last[MAX];
-&lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;char&lt;/span&gt; formal[&lt;span style=&#34;color:#099&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;*&lt;/span&gt; MAX &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#099&#34;&gt;10&lt;/span&gt;];
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//给以上前面两个数组赋值后就可以进行如下的操作
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;sprintf(formal, &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;%s, %-19s&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;&lt;/span&gt;, last, first);
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; first[MAX];
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; last[MAX];
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; formal[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; MAX &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;];
+&lt;span style=&#34;color:#888&#34;&gt;//给以上前面两个数组赋值后就可以进行如下的操作
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;sprintf(formal, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%s, %-19s&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, last, first);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/ - 2019-2021 By Jialong</description>
@@ -1156,42 +1156,42 @@ git checkout master
         
         <guid>http://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
         <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/ -&lt;h2 id=&#34;一抽象数据类型的实现&#34;&gt;一、抽象数据类型的实现&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//数据类型的实现
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;Counter&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//实例变量
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;final&lt;/span&gt; String name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; count&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//数据类型的实现
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Counter&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;//实例变量
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;final&lt;/span&gt; String name&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
     
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;Counter&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String id&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt; name &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; id&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;//构造函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;Counter&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;String id&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; name &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; id&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
     
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//实例方法
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt; count&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;++;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;tally&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; count&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;return&lt;/span&gt; count &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; name&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;//实例方法
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;tally&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; count &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; name&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 
 
-&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//测试该数据类型的用例
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#458;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#900;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//创建并初始化对象
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    Counter heads &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Counter&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;heads&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-    Counter tails &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;new&lt;/span&gt; Counter&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#d14&#34;&gt;&amp;#34;tails&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;//测试该数据类型的用例
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;//创建并初始化对象
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    Counter heads &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Counter&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;heads&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    Counter tails &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Counter&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;tails&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
     
-    &lt;span style=&#34;color:#998;font-style:italic&#34;&gt;//调用实例方法
-&lt;/span&gt;&lt;span style=&#34;color:#998;font-style:italic&#34;&gt;&lt;/span&gt;    heads&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;incerment&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-    heads&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
-    tails&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;();&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;//调用实例方法
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;incerment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
+    heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
+    tails&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
     
-    StdOut&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;heads &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#d14&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; tails&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;
-    StdOut&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;heads&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;tally&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;+&lt;/span&gt; tails&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#008080&#34;&gt;tally&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;)&lt;/span&gt;
-&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;}&lt;/span&gt;
+    StdOut&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;heads &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; tails&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    StdOut&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;tally&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; tails&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;tally&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;相关概念&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;实例变量：

@@ -5,7 +5,7 @@
     <link>http://eternityqjl.top/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/</link>
     <description>Recent content in 深入理解计算机系统学习日志 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
+    <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
     <lastBuildDate>Mon, 12 Jul 2021 21:26:27 +0800</lastBuildDate><atom:link href="http://eternityqjl.top/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -16,15 +16,21 @@
       <guid>http://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
       <description>第一部分内容：程序结构和执行
 我们需要用方法表示基本数据类型，然后考虑机器级指令如何操作这样的数据，以及编译器如何将C程序翻译成这样的指令。接下来研究集中处理器的方法，使得我们能够更好地了解硬件资源如何被用来执行指令。
-信息存储 十六进制表示法及转换 字数据大小 字长指明指针数据的标称大小。虚拟地址是以这样一个字来编码的，所以字长决定的最重要的系统参数就是虚拟地址空间的最大大小。
+信息存储 十六进制表示法及转换 二进制和十进制对描述位模式来说都不方便，因此采用16进制数(hex)来表示位模式。
+C语言中16进制数以0X或0x开头，字符‘A’~‘F’既可以是大写也可以是小写。
+二进制和十六进制之间的转换较为简单，不再赘述。
+十进制和十六进制数之间的转换要反复利用乘法和除法进行处理：
+ 从十进制到十六进制：反复用16除十进制数 从十六进制到十进制：用相应的16的幂乘以每个十六进制数。  字数据大小 字长指明指针数据的标称大小。虚拟地址是以这样一个字来编码的，所以字长决定的最重要的系统参数就是虚拟地址空间的最大大小。
 对一个字长为w的机器而言，虚拟地址的范围是$0$ ~$2^w-1$，程序最多访问$2^w-1$个字节。
 近年，很多机器都从32位字长迁移到了64位字长。大多64位字长机器可以运行32位字长机器编译的程序。32位程序和64位程序的区别在于程序是如何编译成的，而不是运行的机器类型。
 寻址和字节顺序 小端法、大端法
 对于跨越多个字节的程序对象，我们必须明确：
  这个对象的地址是什么 如何在内存中排列这些字节  一般来说，多字节对象被存储为连续的字节序列，对象的地址为所使用字节中最小的地址。
-小端法：将最低有效字节放在最前面存储。（例如一个二进制数最右边的8位是最低有效字节）
-大端法：将最高有效字节放在最前面存储。
-#include &amp;lt;stdio.h&amp;gt; typedef unsigned char *byte_pointer;	//将byte_pointer定义为一个指向类型为unsigned char对象的指针 //指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。  void show_bytes(byte_pointer start, size_t len) {//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法 	size_t i; for (i = 0; i &amp;lt; len; i++) printf(&amp;#34;%.2x&amp;#34;, start[i]); printf(&amp;#34;\n&amp;#34;); } void show_int(int x) {//显示int对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(int)); } void show_float(float x) {//显示float对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(float)); } void show_pointer(void *x) {//显示void *对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(void *)); } 表示字符串 ASCII编码、Unicode编码</description>
+  小端法：将最低有效字节放在最前面(最小地址)存储。（例如一个二进制数最右边的8位是最低有效字节）
+  大端法：将最高有效字节放在最前面(最小地址)存储。
+  大多Intel兼容机使用小端模式。
+以下代码使用强制类型转换来访问和打印不同程序对象的字节表示。
+#include &amp;lt;stdio.h&amp;gt; typedef unsigned char *byte_pointer;	//将byte_pointer定义为一个指向类型为unsigned char对象的指针 //指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。  void show_bytes(byte_pointer start, size_t len) {//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法 	size_t i; for (i = 0; i &amp;lt; len; i++) printf(&amp;#34;%.2x&amp;#34;, start[i]); printf(&amp;#34;\n&amp;#34;); } //使用sizeof确定对象使用的字节数 void show_int(int x) {//显示int对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(int)); } void show_float(float x) {//显示float对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(float)); } void show_pointer(void *x) {//显示void *对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(void *)); } 表示字符串 对文本进行编码。</description>
     </item>
     
     <item>

@@ -216,7 +216,7 @@ TCP服务  面向连接服务：报文数据流动前，TCP让客户和服务器
         
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;
@@ -237,7 +237,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 		
 		
 		
-		<center>- CATALOG -</center>
+		<center>- 目录 -</center>
 		
 		
 		<ul>
@@ -1408,7 +1408,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 		
 		
 		
-		<center>- CATALOG -</center>
+		<center>- 目录 -</center>
 		
 		
 		<ul>
@@ -2661,11 +2661,11 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 </ul>
 <h3 id="http报文格式">HTTP报文格式</h3>
 <h4 id="请求报文">请求报文</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#900;font-weight:bold">GET</span> <span style="color:#555">/somedir/page.html</span> <span style="color:#000;font-weight:bold">HTTP</span><span style="color:#000;font-weight:bold">/</span><span style="color:#099">1.1</span>
-Host<span style="color:#000;font-weight:bold">:</span> www.someschool.edu	#指明了对象所在主机
-Connection<span style="color:#000;font-weight:bold">:</span> close	#让服务器在发送完被请求对象后就关闭这条连接
-User-agent<span style="color:#000;font-weight:bold">:</span> Mozilla/5.0		#浏览器类型
-Accept-language<span style="color:#000;font-weight:bold">:</span> fr		#语言
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#06b;font-weight:bold">GET</span> <span style="color:#0e84b5;font-weight:bold">/somedir/page.html</span> <span style="color:#080;font-weight:bold">HTTP</span><span style="color:#333">/</span><span style="color:#60e;font-weight:bold">1.1</span>
+Host<span style="color:#333">:</span> www.someschool.edu	#指明了对象所在主机
+Connection<span style="color:#333">:</span> close	#让服务器在发送完被请求对象后就关闭这条连接
+User-agent<span style="color:#333">:</span> Mozilla/5.0		#浏览器类型
+Accept-language<span style="color:#333">:</span> fr		#语言
 </code></pre></div><ul>
 <li>
 <p>第一行为<em>请求行</em>，共有三个字段：</p>
@@ -2699,13 +2699,13 @@ Accept-language<span style="color:#000;font-weight:bold">:</span> fr		#语言
 </li>
 </ul>
 <h4 id="响应报文">响应报文</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#000;font-weight:bold">HTTP</span><span style="color:#000;font-weight:bold">/</span><span style="color:#099">1.1</span> <span style="color:#099">200</span> <span style="color:#900;font-weight:bold">OK</span>
-Connection<span style="color:#000;font-weight:bold">:</span> close	#发送完报文后关闭该TCP连接
-Date<span style="color:#000;font-weight:bold">:</span> Tue, 18 Aug 2015 15:44:04 GMT		#指示服务器产生并发送该响应报文的日期和时间
-Server<span style="color:#000;font-weight:bold">:</span> Apache/2.2.3 (CentOS)	#服务器类型及系统，对应于请求报文中的User-agent字段
-Last-Modified<span style="color:#000;font-weight:bold">:</span> Tue, 18 Aug 2015 15:11:03 GMT	#对象创建或最后修改的日期和时间
-Content-Length<span style="color:#000;font-weight:bold">:</span> 6821	#被发送对象的字节数
-Content-Type<span style="color:#000;font-weight:bold">:</span> text/html		#对象类型
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-http" data-lang="http"><span style="color:#080;font-weight:bold">HTTP</span><span style="color:#333">/</span><span style="color:#60e;font-weight:bold">1.1</span> <span style="color:#60e;font-weight:bold">200</span> <span style="color:#f00;font-weight:bold">OK</span>
+Connection<span style="color:#333">:</span> close	#发送完报文后关闭该TCP连接
+Date<span style="color:#333">:</span> Tue, 18 Aug 2015 15:44:04 GMT		#指示服务器产生并发送该响应报文的日期和时间
+Server<span style="color:#333">:</span> Apache/2.2.3 (CentOS)	#服务器类型及系统，对应于请求报文中的User-agent字段
+Last-Modified<span style="color:#333">:</span> Tue, 18 Aug 2015 15:11:03 GMT	#对象创建或最后修改的日期和时间
+Content-Length<span style="color:#333">:</span> 6821	#被发送对象的字节数
+Content-Type<span style="color:#333">:</span> text/html		#对象类型
 
 (data data data ...)
 </code></pre></div><ul>
@@ -2900,7 +2900,7 @@ Content-Type<span style="color:#000;font-weight:bold">:</span> text/html		#对�
 
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">Last modified on 2019-11-28</p>
+		    <p style="color:#777;">最后修改于 2019-11-28</p>
                     
                 </div>
             </div>
@@ -2910,13 +2910,13 @@ Content-Type<span style="color:#000;font-weight:bold">:</span> text/html		#对�
 
                 
                 <a class="newer-posts" href="http://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/">
-			Next<br>写在2019年的最后一个月的开始
+			下回<br>写在2019年的最后一个月的开始
                 </a>
                 
                 
                 
                 <a class="older-posts" href="http://eternityqjl.top/about/">
-			Previous<br>关于
+			上回<br>关于
                 </a>
                 
             </nav>
@@ -2942,7 +2942,7 @@ Content-Type<span style="color:#000;font-weight:bold">:</span> text/html		#对�
             </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;

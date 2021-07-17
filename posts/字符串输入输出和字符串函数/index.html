@@ -208,7 +208,7 @@ char * s_gets(char * st, int n) { char *ret_val; int i = 0; ret_val = fgets(st, 
         
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;
@@ -229,7 +229,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 		
 		
 		
-		<center>- CATALOG -</center>
+		<center>- 目录 -</center>
 		
 		
 		<ul>
@@ -386,7 +386,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 		
 		
 		
-		<center>- CATALOG -</center>
+		<center>- 目录 -</center>
 		
 		
 		<ul>
@@ -579,23 +579,23 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <li>读取整行输入并<strong>用空字符替代换行符</strong>，或者(在字符串未结束就遇到了空字符)读取一部分输入，并丢弃其余的部分。</li>
 </ul>
 <p>该函数的代码：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">char</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#900;font-weight:bold">s_gets</span>(<span style="color:#458;font-weight:bold">char</span> <span style="color:#000;font-weight:bold">*</span> st, <span style="color:#458;font-weight:bold">int</span> n)
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">char</span> <span style="color:#333">*</span> <span style="color:#06b;font-weight:bold">s_gets</span>(<span style="color:#339;font-weight:bold">char</span> <span style="color:#333">*</span> st, <span style="color:#339;font-weight:bold">int</span> n)
 {
-    <span style="color:#458;font-weight:bold">char</span> <span style="color:#000;font-weight:bold">*</span>ret_val;
-    <span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>;
+    <span style="color:#339;font-weight:bold">char</span> <span style="color:#333">*</span>ret_val;
+    <span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>;
 
-    ret_val <span style="color:#000;font-weight:bold">=</span> fgets(st, n, stdin);
-    <span style="color:#000;font-weight:bold">if</span> (ret_val)
+    ret_val <span style="color:#333">=</span> fgets(st, n, stdin);
+    <span style="color:#080;font-weight:bold">if</span> (ret_val)
     {
-        <span style="color:#000;font-weight:bold">while</span> (st[i] <span style="color:#000;font-weight:bold">!=</span> <span style="color:#d14">&#39;\n&#39;</span> <span style="color:#000;font-weight:bold">&amp;&amp;</span> st[i] <span style="color:#000;font-weight:bold">!=</span> <span style="color:#d14">&#39;\0&#39;</span>)
-            i<span style="color:#000;font-weight:bold">++</span>;
-        <span style="color:#000;font-weight:bold">if</span> (st[i] <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#39;\n&#39;</span>)
-            st[i] <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#39;\0&#39;</span>;
-        <span style="color:#000;font-weight:bold">else</span> 
-            <span style="color:#000;font-weight:bold">while</span> (getchar() <span style="color:#000;font-weight:bold">!=</span> <span style="color:#d14">&#39;\n&#39;</span>)
-                <span style="color:#000;font-weight:bold">continue</span>;
+        <span style="color:#080;font-weight:bold">while</span> (st[i] <span style="color:#333">!=</span> <span style="color:#04d;background-color:#fff0f0">&#39;\n&#39;</span> <span style="color:#333">&amp;&amp;</span> st[i] <span style="color:#333">!=</span> <span style="color:#04d;background-color:#fff0f0">&#39;\0&#39;</span>)
+            i<span style="color:#333">++</span>;
+        <span style="color:#080;font-weight:bold">if</span> (st[i] <span style="color:#333">==</span> <span style="color:#04d;background-color:#fff0f0">&#39;\n&#39;</span>)
+            st[i] <span style="color:#333">=</span> <span style="color:#04d;background-color:#fff0f0">&#39;\0&#39;</span>;
+        <span style="color:#080;font-weight:bold">else</span> 
+            <span style="color:#080;font-weight:bold">while</span> (getchar() <span style="color:#333">!=</span> <span style="color:#04d;background-color:#fff0f0">&#39;\n&#39;</span>)
+                <span style="color:#080;font-weight:bold">continue</span>;
     }
-    <span style="color:#000;font-weight:bold">return</span> ret_val;
+    <span style="color:#080;font-weight:bold">return</span> ret_val;
 }
 </code></pre></div><p>5.<code>scanf()</code>函数</p>
 <ul>
@@ -758,17 +758,17 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 <ul>
 <li>示例：</li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">char</span> first[MAX];
-<span style="color:#458;font-weight:bold">char</span> last[MAX];
-<span style="color:#458;font-weight:bold">char</span> formal[<span style="color:#099">2</span> <span style="color:#000;font-weight:bold">*</span> MAX <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">10</span>];
-<span style="color:#998;font-style:italic">//给以上前面两个数组赋值后就可以进行如下的操作
-</span><span style="color:#998;font-style:italic"></span>sprintf(formal, <span style="color:#d14">&#34;%s, %-19s</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>, last, first);
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">char</span> first[MAX];
+<span style="color:#339;font-weight:bold">char</span> last[MAX];
+<span style="color:#339;font-weight:bold">char</span> formal[<span style="color:#00d;font-weight:bold">2</span> <span style="color:#333">*</span> MAX <span style="color:#333">+</span> <span style="color:#00d;font-weight:bold">10</span>];
+<span style="color:#888">//给以上前面两个数组赋值后就可以进行如下的操作
+</span><span style="color:#888"></span>sprintf(formal, <span style="background-color:#fff0f0">&#34;%s, %-19s</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>, last, first);
 </code></pre></div></li>
 </ul>
 
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">Last modified on 2019-09-28</p>
+		    <p style="color:#777;">最后修改于 2019-09-28</p>
                     
                 </div>
             </div>
@@ -778,13 +778,13 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 
                 
                 <a class="newer-posts" href="http://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/">
-			Next<br>C语言结构
+			下回<br>C语言结构
                 </a>
                 
                 
                 
                 <a class="older-posts" href="http://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-			Previous<br>抽象数据类型
+			上回<br>抽象数据类型
                 </a>
                 
             </nav>
@@ -810,7 +810,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
             </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;

@@ -182,7 +182,7 @@
         
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;
@@ -203,7 +203,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 		
 		
 		
-		<center>- CATALOG -</center>
+		<center>- 目录 -</center>
 		
 		
 		<ul>
@@ -1234,7 +1234,7 @@ Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopene
 		
 		
 		
-		<center>- CATALOG -</center>
+		<center>- 目录 -</center>
 		
 		
 		<ul>
@@ -2323,18 +2323,18 @@ strm::goodbit	//用来指出流位处于错误状态。
 <li>一个输出流可能被关联到另一个输出流。</li>
 </ul>
 <p>刷新输出缓冲区：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;hi&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> endl;	<span style="color:#998;font-style:italic">//输出hi和一个空格，然后刷新缓冲区
-</span><span style="color:#998;font-style:italic"></span>cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;hi&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> flush;	<span style="color:#998;font-style:italic">//输出hi，然后刷新缓冲区，不附加额外字符
-</span><span style="color:#998;font-style:italic"></span>cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;hi&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> ends;	<span style="color:#998;font-style:italic">//输出hi和一个空字符，然后刷新缓冲区
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;hi&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;	<span style="color:#888">//输出hi和一个空格，然后刷新缓冲区
+</span><span style="color:#888"></span>cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;hi&#34;</span> <span style="color:#333">&lt;&lt;</span> flush;	<span style="color:#888">//输出hi，然后刷新缓冲区，不附加额外字符
+</span><span style="color:#888"></span>cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;hi&#34;</span> <span style="color:#333">&lt;&lt;</span> ends;	<span style="color:#888">//输出hi和一个空字符，然后刷新缓冲区
 </span></code></pre></div><h3 id="文件输入输出">文件输入输出</h3>
 <p>头文件定义了如上所示的三个类型来住处文件IO。</p>
 <p>除了继承自iostream类型的行为外，fstream中的定义还增加了新的成员来管理与流关联的文件：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">fstream fstrm;	<span style="color:#998;font-style:italic">//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
-</span><span style="color:#998;font-style:italic"></span>fstream <span style="color:#900;font-weight:bold">fstrm</span>(s);	<span style="color:#998;font-style:italic">//创建一个fstream并打开名为s的文件
-</span><span style="color:#998;font-style:italic"></span>fstream <span style="color:#900;font-weight:bold">fstrm</span>(s,mode);	<span style="color:#998;font-style:italic">//与上一个相同，但按指定mode打开
-</span><span style="color:#998;font-style:italic"></span>fstrm.open(s)	<span style="color:#998;font-style:italic">//打开名为s的文件并将文件与fstrm绑定
-</span><span style="color:#998;font-style:italic"></span>fstrm.close()	<span style="color:#998;font-style:italic">//关闭与fstrm绑定的文件，返回void
-</span><span style="color:#998;font-style:italic"></span>fstrm.is_open()	<span style="color:#998;font-style:italic">//返回一个bool, 指出关联的文件是否成功打开尚未关闭
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">fstream fstrm;	<span style="color:#888">//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
+</span><span style="color:#888"></span>fstream <span style="color:#06b;font-weight:bold">fstrm</span>(s);	<span style="color:#888">//创建一个fstream并打开名为s的文件
+</span><span style="color:#888"></span>fstream <span style="color:#06b;font-weight:bold">fstrm</span>(s,mode);	<span style="color:#888">//与上一个相同，但按指定mode打开
+</span><span style="color:#888"></span>fstrm.open(s)	<span style="color:#888">//打开名为s的文件并将文件与fstrm绑定
+</span><span style="color:#888"></span>fstrm.close()	<span style="color:#888">//关闭与fstrm绑定的文件，返回void
+</span><span style="color:#888"></span>fstrm.is_open()	<span style="color:#888">//返回一个bool, 指出关联的文件是否成功打开尚未关闭
 </span></code></pre></div><h4 id="使用文件流对象">使用文件流对象</h4>
 <h4 id="文件模式">文件模式</h4>
 <table>
@@ -2460,13 +2460,13 @@ C c1(c2)	//c1初始化为c2的拷贝。两者必须是相同类型的容器
 C c{a,b,c...}	//c初始化为初始化列表中元素的拷贝
 C c(b,e)	//c初始化为迭代器b和e指定范围中元素的拷贝
 </code></pre><p>与顺序容器大小相关的构造函数：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">vector<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span> ivec(<span style="color:#099">10</span>, <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>);	<span style="color:#998;font-style:italic">//10个int元素，每个都初始化为1
-</span><span style="color:#998;font-style:italic"></span>list<span style="color:#000;font-weight:bold">&lt;</span>string<span style="color:#000;font-weight:bold">&gt;</span> scev(<span style="color:#099">10</span>);	<span style="color:#998;font-style:italic">//10个元素，每个都是空string
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">vector<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> ivec(<span style="color:#00d;font-weight:bold">10</span>, <span style="color:#333">-</span><span style="color:#00d;font-weight:bold">1</span>);	<span style="color:#888">//10个int元素，每个都初始化为1
+</span><span style="color:#888"></span>list<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> scev(<span style="color:#00d;font-weight:bold">10</span>);	<span style="color:#888">//10个元素，每个都是空string
 </span></code></pre></div><p>标准库array具有固定大小</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">array<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span>, <span style="color:#099">42</span><span style="color:#000;font-weight:bold">&gt;</span>	<span style="color:#998;font-style:italic">//类型为保存42个int的数组
-</span><span style="color:#998;font-style:italic"></span>array<span style="color:#000;font-weight:bold">&lt;</span>string, <span style="color:#099">10</span><span style="color:#000;font-weight:bold">&gt;</span>	<span style="color:#998;font-style:italic">//类型为保存10个string的数组
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">array<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span>, <span style="color:#00d;font-weight:bold">42</span><span style="color:#333">&gt;</span>	<span style="color:#888">//类型为保存42个int的数组
+</span><span style="color:#888"></span>array<span style="color:#333">&lt;</span>string, <span style="color:#00d;font-weight:bold">10</span><span style="color:#333">&gt;</span>	<span style="color:#888">//类型为保存10个string的数组
 </span></code></pre></div><p>使用array时必须同时指定<strong>元素类型</strong>和<strong>大小</strong></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">array<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;::</span>size_type j;	<span style="color:#998;font-style:italic">//错误，未指定大小
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">array<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;::</span>size_type j;	<span style="color:#888">//错误，未指定大小
 </span></code></pre></div><h4 id="赋值和swap">赋值和swap</h4>
 <p>赋值将左边容器中的所有元素替换为右边容器中元素的拷贝。</p>
 <pre><code>c1 = c2;
@@ -2489,23 +2489,23 @@ seq.assign(il)	//将seq中的元素替换为初始化列表il中的元素
 <p>除了上一节介绍的所有容器都支持的操作外，本章剩余部分将介绍顺序容器的所有操作。</p>
 <h4 id="向顺序容器添加元素">向顺序容器添加元素</h4>
 <p>向顺序容器中除了array外添加元素的操作：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">c.push_back(t)			<span style="color:#998;font-style:italic">//在c的尾部创建值为t或由args创建的元素
-</span><span style="color:#998;font-style:italic"></span>c.emplace_back(args)
-c.push_front(t)			<span style="color:#998;font-style:italic">//在c的头部创建值为t或由args创建的元素
-</span><span style="color:#998;font-style:italic"></span>c.emplace_front(args)
-c.insert(p,t)			<span style="color:#998;font-style:italic">//在迭代器p指向的元素之前创建一个值为t的元素
-</span><span style="color:#998;font-style:italic"></span>c.insert(p,n,t)			<span style="color:#998;font-style:italic">//在迭代器p指向的元素之前插入n个值为t的元素。返回指向新添加的第一个元素的迭代器
-</span><span style="color:#998;font-style:italic"></span>c.insert(p,b,e)			<span style="color:#998;font-style:italic">//将迭代器b和e指向范围内的元素插入到迭代器p指向的元素之前，b和e不能指向c中的元素。返回指向新添加的第一个元素的迭代器
-</span><span style="color:#998;font-style:italic"></span>c.insert(p,il)			<span style="color:#998;font-style:italic">//il为一个花括号包围的元素值列表，将这些值插入到迭代器p指向的元素之前。返回指向新添加的第一个元素的迭代器
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">c.push_back(t)			<span style="color:#888">//在c的尾部创建值为t或由args创建的元素
+</span><span style="color:#888"></span>c.emplace_back(args)
+c.push_front(t)			<span style="color:#888">//在c的头部创建值为t或由args创建的元素
+</span><span style="color:#888"></span>c.emplace_front(args)
+c.insert(p,t)			<span style="color:#888">//在迭代器p指向的元素之前创建一个值为t的元素
+</span><span style="color:#888"></span>c.insert(p,n,t)			<span style="color:#888">//在迭代器p指向的元素之前插入n个值为t的元素。返回指向新添加的第一个元素的迭代器
+</span><span style="color:#888"></span>c.insert(p,b,e)			<span style="color:#888">//将迭代器b和e指向范围内的元素插入到迭代器p指向的元素之前，b和e不能指向c中的元素。返回指向新添加的第一个元素的迭代器
+</span><span style="color:#888"></span>c.insert(p,il)			<span style="color:#888">//il为一个花括号包围的元素值列表，将这些值插入到迭代器p指向的元素之前。返回指向新添加的第一个元素的迭代器
 </span></code></pre></div><p><code>forword_list</code>不支持<code>push_back</code>和<code>emplace_back</code>。</p>
 <p><code>vector</code>和<code>string</code>不支持<code>push_front</code>和<code>emplace_front</code>.</p>
 <p>使用这些操作时要注意策略，根据不同容器的不同数据结构的特性来使用。</p>
 <p>emplace操作构造而不是拷贝元素，将参数传递给元素类型的构造函数，直接构造元素。</p>
 <h4 id="访问元素">访问元素</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">c.back()		<span style="color:#998;font-style:italic">//返回c中尾元素的引用，若c为空，则函数行为未定义。
-</span><span style="color:#998;font-style:italic"></span>c.front()		<span style="color:#998;font-style:italic">//范围c中首元素的引用
-</span><span style="color:#998;font-style:italic"></span>c[n]			<span style="color:#998;font-style:italic">//返回c中下标为n的元素的引用，n是一个无符号整数
-</span><span style="color:#998;font-style:italic"></span>c.at(n)			<span style="color:#998;font-style:italic">//返回下标为n的元素的引用，若下标越界，则返回out_of_range异常
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">c.back()		<span style="color:#888">//返回c中尾元素的引用，若c为空，则函数行为未定义。
+</span><span style="color:#888"></span>c.front()		<span style="color:#888">//范围c中首元素的引用
+</span><span style="color:#888"></span>c[n]			<span style="color:#888">//返回c中下标为n的元素的引用，n是一个无符号整数
+</span><span style="color:#888"></span>c.at(n)			<span style="color:#888">//返回下标为n的元素的引用，若下标越界，则返回out_of_range异常
 </span></code></pre></div><p>at和下标操作只适用于string、vector、array和deque</p>
 <p>back不适用于forward_list</p>
 <h3 id="vector对象的增长">vector对象的增长</h3>
@@ -2535,7 +2535,7 @@ c.insert(p,t)			<span style="color:#998;font-style:italic">//在迭代器p指向
 <h2 id="动态内存">动态内存</h2>
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">Last modified on 2021-05-10</p>
+		    <p style="color:#777;">最后修改于 2021-05-10</p>
                     
                 </div>
             </div>
@@ -2545,13 +2545,13 @@ c.insert(p,t)			<span style="color:#998;font-style:italic">//在迭代器p指向
 
                 
                 <a class="newer-posts" href="http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/">
-			Next<br>机器学习——k近邻(k-NN)算法
+			下回<br>机器学习——k近邻(k-NN)算法
                 </a>
                 
                 
                 
                 <a class="older-posts" href="http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/">
-			Previous<br>Altium Designer画图流程记录(简略)
+			上回<br>Altium Designer画图流程记录(简略)
                 </a>
                 
             </nav>
@@ -2577,7 +2577,7 @@ c.insert(p,t)			<span style="color:#998;font-style:italic">//在迭代器p指向
             </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
-Ported from <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
 <br>
 
 &copy;
