@@ -6,9 +6,224 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 12 Jul 2021 21:26:27 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 18 Jul 2021 20:06:26 +0800</lastBuildDate>
     
         <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>LaTex环境配置和基本功能模块</title>
+        <link>http://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link>
+        <pubDate>Sun, 18 Jul 2021 20:06:26 +0800</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/ -&lt;h2 id=&#34;环境配置&#34;&gt;环境配置&lt;/h2&gt;
+&lt;p&gt;我选择使用VS code + Tex Live作为我的LaTex写作环境，具体配置过程参考自：&lt;a href=&#34;https://zhuanlan.zhihu.com/p/166523064&#34;&gt;Visual Studio Code (vscode)配置LaTeX&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;以下是关于使用过程中一些具体模块的讨论：&lt;/p&gt;
+&lt;p&gt;部分内容参考自：&lt;a href=&#34;https://liam.page/2014/09/08/latex-introduction/&#34;&gt;一份其实很短的 LaTeX 入门文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这里使用&lt;code&gt;xeLatTex&lt;/code&gt;进行编译。&lt;/p&gt;
+&lt;h2 id=&#34;基本文档和中英文&#34;&gt;基本文档和中英文&lt;/h2&gt;
+&lt;h3 id=&#34;基本文档&#34;&gt;基本文档&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;% 这里是导言区
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+Hello, world!
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Tex以&lt;code&gt;%&lt;/code&gt;作为注释标记。若要输出百分号&lt;code&gt;%&lt;/code&gt;字符本身，则要在前面加上反斜杠&lt;code&gt;\&lt;/code&gt;进行转义（escape）。&lt;/p&gt;
+&lt;h3 id=&#34;中英文混排&#34;&gt;中英文混排&lt;/h3&gt;
+&lt;p&gt;目前XeTeX 原生支持 Unicode，并且可以方便地调用系统字体。可以说解决了困扰中国 TeX 使用者多年的大问题。至此，我们只需要使用几个简单的宏包，就能完成中文支持了。&lt;/p&gt;
+&lt;p&gt;我们使用&lt;code&gt;\usepackage{}&lt;/code&gt;来调用宏包。&lt;/p&gt;
+&lt;p&gt;另外，我们使用&lt;code&gt;CTex&lt;/code&gt;宏集来处理中文的版式和标点。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+你好，world!
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;与开始相比，文档类别变为&lt;code&gt;ctexart&lt;/code&gt;，并且增加了文档类选项&lt;code&gt;UTF8&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;组织文章基本内容&#34;&gt;组织文章基本内容&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;标题、作者、日期&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\title&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;你好，world!&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Eternity&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\today&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\maketitle&lt;/span&gt;
+你好，world!
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上代码中的控制序列&lt;code&gt;\maketitle&lt;/code&gt;能将在导言区中定义的标题、作者、日期按照预定的格式展现出来。&lt;/p&gt;
+&lt;p&gt;可以通过宏包&lt;code&gt;titling&lt;/code&gt;修改上述默认格式。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/tex_basic_1.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;章节和段落&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\title&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;你好，world!&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Liam&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\today&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\maketitle&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\section&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;你好中国&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+中国在East Asia.
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Hello Beijing&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+北京是capital of China.
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsubsection&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Hello Dongcheng District&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\paragraph&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Tian&amp;#39;anmen Square&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+is in the center of Beijing
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subparagraph&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Chairman Mao&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+is in the center of 天安门广场。
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Hello 山东&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\paragraph&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;山东大学&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt; is one of the best university in 山东。
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;文档类&lt;code&gt;article&lt;/code&gt;/&lt;code&gt;ctexart&lt;/code&gt;中定义了5个控制序列来调整文章组织结构：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;\section{·}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\subsection{·}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\subsubsection{·}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\paragraph{·}&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;\subparagraph{·}&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/tex_basic_2.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;插入目录&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在控制序列&lt;code&gt;\maketitle&lt;/code&gt;加入&lt;code&gt;tableofcontents&lt;/code&gt;，编译两次观察效果：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/tex_basic_3.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;LaTeX 将一个换行当做是一个简单的空格来处理，如果需要换行另起一段，则需要用两个换行（一个空行）来实现。&lt;/p&gt;
+&lt;h2 id=&#34;版面设置&#34;&gt;版面设置&lt;/h2&gt;
+&lt;h3 id=&#34;页边距&#34;&gt;页边距&lt;/h3&gt;
+&lt;p&gt;使用&lt;code&gt;geometry&lt;/code&gt; 宏包。&lt;a href=&#34;https://texdoc.org/serve/geometry.pdf/0&#34;&gt;geometry文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;比如我希望，将纸张的长度设置为 20cm、宽度设置为 15cm、左边距 1cm、右边距 2cm、上边距 3cm、下边距 4cm，可以在导言区加上这样几行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;geometry&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\geometry&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;papersize=&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;20cm,15cm&lt;span style=&#34;color:#007020&#34;&gt;}}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\geometry&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;left=1cm,right=2cm,top=3cm,bottom=4cm&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;页眉页脚&#34;&gt;页眉页脚&lt;/h3&gt;
+&lt;p&gt;设置页眉页脚，推荐使用 &lt;code&gt;fancyhdr&lt;/code&gt; 宏包。&lt;a href=&#34;https://texdoc.org/serve/fancyhdr.pdf/0&#34;&gt;fancyhdr文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;比如我希望，在页眉左边写上我的名字，中间写上今天的日期，右边写上我的电话；页脚的正中写上页码；页眉和正文之间有一道宽为 0.4pt 的横线分割，可以在导言区加上如下几行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;fancyhdr&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\pagestyle&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;fancy&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lhead&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\chead&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\rhead&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;152xxxxxxxx&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lfoot&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\cfoot&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\thepage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\rfoot&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\headrulewidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;0.4pt&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\headwidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\textwidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\footrulewidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;0pt&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;行间距&#34;&gt;行间距&lt;/h3&gt;
+&lt;p&gt;我们可以通过 &lt;code&gt;setspace&lt;/code&gt; 宏包提供的命令来调整行间距。比如在导言区添加如下内容，可以将行距设置为字号的 1.5 倍：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;setspace&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\onehalfspacing&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;段间距&#34;&gt;段间距&lt;/h3&gt;
+&lt;p&gt;我们可以通过修改长度 &lt;code&gt;\parskip&lt;/code&gt; 的值来调整段间距。例如在导言区添加以下内容&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\addtolength&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\parskip&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;.4em&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;代码&#34;&gt;代码&lt;/h2&gt;
+&lt;p&gt;希望代码中的特殊字符不被LaTex处理，并且希望有代码高亮。&lt;/p&gt;
+&lt;p&gt;使用&lt;code&gt;listings&lt;/code&gt;宏包来在tex中添加代码段。基本设置参数如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lstset&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;
+language=Matlab,
+escapeinside=``, 
+numbers=left,
+numberstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\tiny&lt;/span&gt;,
+breaklines=true, 
+backgroundcolor=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;lightgray!40!white&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;,
+frame=single,
+framerule=0pt,
+extendedchars=false, 
+keywordstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;blue!70&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\bfseries&lt;/span&gt;, 
+basicstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily&lt;/span&gt;,
+commentstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;green!40!black&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;, 
+showstringspaces=false&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;图片&#34;&gt;图片&lt;/h2&gt;
+&lt;p&gt;在 LaTeX 中插入图片，有很多种方式。最好用的应当属利用 &lt;code&gt;graphicx&lt;/code&gt; 宏包提供的 &lt;code&gt;\includegraphics&lt;/code&gt; 命令。比如你在你的 TeX 源文件同目录下，有名为 &lt;code&gt;a.jpg&lt;/code&gt; 的图片，你可以用这样的方式将它插入到输出文档中：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;graphicx&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\includegraphics&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;a.jpg&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;图片可能很大，超过了输出文件的纸张大小，或者干脆就是你自己觉得输出的效果不爽。这时候你可以用 &lt;code&gt;\includegraphics&lt;/code&gt; 控制序列的可选参数来控制。比如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\includegraphics&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[width = .8\textwidth]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;a.jpg&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样图片的宽度会被缩放至&lt;strong&gt;页面宽度的百分之八十&lt;/strong&gt;，图片的总高度会按比例缩放。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;\includegraphics&lt;/code&gt;还有很多其他控制序列可以选择使用，可以查看宏包选择。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;表格&#34;&gt;表格&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;tabular&lt;/code&gt; 环境提供了最简单的表格功能。它用 &lt;code&gt;\hline&lt;/code&gt; 命令表示横线，在列格式中用 &lt;code&gt;|&lt;/code&gt; 表示竖线；用 &lt;code&gt;&amp;amp;&lt;/code&gt; 来分列，用 &lt;code&gt;\\&lt;/code&gt; 来换行；每列可以采用居左、居中、居右等横向对齐方式，分别用 &lt;code&gt;l&lt;/code&gt;、&lt;code&gt;c&lt;/code&gt;、&lt;code&gt;r&lt;/code&gt; 来表示。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;tabular&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;|l|c|r|&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+ &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
+操作系统&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; 发行版&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; 编辑器&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+ &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
+Windows &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; MikTeX &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; TexMakerX &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+ &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
+Unix/Linux &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; teTeX &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; Kile &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+ &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
+Mac OS &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; MacTeX &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; TeXShop &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+ &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
+通用&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; TeX Live &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; TeXworks &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+ &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;tabular&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;h2 id=&#34;数学公式&#34;&gt;数学公式&lt;/h2&gt;
+&lt;p&gt;在导言区添加&lt;code&gt;amsmath&lt;/code&gt;宏包来使用数学功能：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;amsmath&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;数学模式&#34;&gt;数学模式&lt;/h3&gt;
+&lt;p&gt;与Markdown中相同，LaTex共有&lt;strong&gt;行内公式&lt;/strong&gt;和&lt;strong&gt;行间公式&lt;/strong&gt;两种模式。&lt;/p&gt;
+&lt;p&gt;在行文中，使用 &lt;code&gt;$ ... $&lt;/code&gt; 可以插入行内公式，使用 &lt;code&gt;\[ ... \]&lt;/code&gt; 可以插入行间公式，如果需要对行间公式进行编号，则可以使用 &lt;code&gt;equation&lt;/code&gt; 环境：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;equation&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+...
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;equation&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;无编号的行间公式也可以使用 &lt;code&gt;\begin{displaymath} ... \end{displaymath}&lt;/code&gt; 或者 &lt;code&gt;\begin{equation*} ... \end{equation*}&lt;/code&gt; 来插入，但略显麻烦。（&lt;code&gt;equation*&lt;/code&gt; 中的 &lt;code&gt;*&lt;/code&gt; 表示环境不编号）&lt;/p&gt;
+&lt;p&gt;也有 plainTeX 风格的 &lt;code&gt;$$ ... $$&lt;/code&gt; 来插入不编号的行间公式。但是在 LaTeX 中这样做会改变行文的默认行间距，不推荐。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;标点符号&#34;&gt;标点符号&lt;/h3&gt;
+&lt;p&gt;行内公式和行间公式对标点的要求是不同的：行内公式的标点，应该放在数学模式的限定符之外，而行间公式则应该放在数学模式限定符之内。&lt;/p&gt;
+&lt;h3 id=&#34;多行公式&#34;&gt;多行公式&lt;/h3&gt;
+&lt;p&gt;有的公式特别长，我们需要手动为他们换行；&lt;/p&gt;
+&lt;p&gt;有几个公式是一组，我们需要将他们放在一起；&lt;/p&gt;
+&lt;p&gt;还有些类似分段函数，我们需要给它加上一个左边的花括号。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;长公式&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;不对齐：无须对齐的长公式可以使用 &lt;code&gt;multline&lt;/code&gt; 环境。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;multline&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+x = a+b+c+&lt;span style=&#34;color:#007020&#34;&gt;{}&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+d+e+f+g
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;multline&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;p&gt;如果不需要编号，可以使用 &lt;code&gt;multline*&lt;/code&gt; 环境代替。&lt;/p&gt;
+&lt;p&gt;对齐：需要对齐的公式，可以使用 &lt;code&gt;aligned&lt;/code&gt; &lt;em&gt;次环境&lt;/em&gt;来实现，它必须包含在数学环境之内。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\[&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{aligned}
+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x &lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{}&amp;amp; a&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{} &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;d&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;g
+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{aligned}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;公式组&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;无需对齐的公式组可以使用 &lt;code&gt;gather&lt;/code&gt; 环境，需要对齐的公式组可以使用 &lt;code&gt;align&lt;/code&gt; 环境。他们都带有编号，如果不需要编号可以使用带&lt;code&gt;*&lt;/code&gt;的版本。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;gather&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+a = b+c+d &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+x = y+z
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;gather&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+a &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;= b+c+d &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+x &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;= y+z
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;分段函数&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;分段函数可以用&lt;code&gt;cases&lt;/code&gt;次环境来实现，它必须包含在数学环境之内。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\[&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; y&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{cases}
+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x,&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\quad&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; x&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\leq&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x,&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\quad&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; x&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{cases} &lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- http://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1722,277 +1937,6 @@ y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;测试集预测准确率：1.000000
 &lt;/code&gt;&lt;/pre&gt;- http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>C&#43;&#43;回顾2——标准库</title>
-        <link>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
-        <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
-        
-        <guid>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ -&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
-&lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
-&lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;头文件iostream：
-&lt;ul&gt;
-&lt;li&gt;istream, wistream类型，从流读取数据&lt;/li&gt;
-&lt;li&gt;ostream, wostream类型，向流写入数据&lt;/li&gt;
-&lt;li&gt;iostream, wiostream类型，读写流&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;头文件fstream：
-&lt;ul&gt;
-&lt;li&gt;ifstream类型，从文件读取数据&lt;/li&gt;
-&lt;li&gt;ofstream类型，向文件写入数据&lt;/li&gt;
-&lt;li&gt;fstream类型，读写文件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;头文件sstream
-&lt;ul&gt;
-&lt;li&gt;istringstream类型：从string读取数据&lt;/li&gt;
-&lt;li&gt;ostringstream类型：向string写入数据&lt;/li&gt;
-&lt;li&gt;stringstream类型：读写string&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;类型前加一个w的类型是为了支持宽字符，用来操纵wchart_t类型。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;IO类型之间的关系&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;类型ifstream和istringstream都继承自istream，我们可以向使用istream对象一样来使用ifstream和istringstream。&lt;/p&gt;
-&lt;h4 id=&#34;io对象无拷贝或赋值&#34;&gt;IO对象无拷贝或赋值&lt;/h4&gt;
-&lt;p&gt;由于不能拷贝IO对象，因此我们也不能将形参或范围类型设置为流类型，进行IO操作额函数通常以&lt;strong&gt;引用&lt;/strong&gt;的方式传递和范围流。读写一个IO对象会改变其状态，因此传递和范围的引用不能是const的。&lt;/p&gt;
-&lt;h4 id=&#34;条件状态&#34;&gt;条件状态&lt;/h4&gt;
-&lt;p&gt;IO类定义了一些函数和标志，帮助我们访问和操纵流的条件状态：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;//strm为一种IO类型，即上一节给出的各个类型
-strm::iostate	//提供了表达条件状态的完整功能
-strm::badbit	//用来指出流已崩溃
-strm::failbit	//用来指出一个IO操作失败
-strm::eofbit	//用来指出流到达了文件结束
-strm::goodbit	//用来指出流位处于错误状态。
-//其余见书
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;管理输出缓冲&#34;&gt;管理输出缓冲&lt;/h4&gt;
-&lt;p&gt;每个输出流都管理一个缓冲区。&lt;/p&gt;
-&lt;p&gt;导致缓冲刷新的原因：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;程序正常结束，作为return的一部分操作。&lt;/li&gt;
-&lt;li&gt;缓冲区满时，需要刷新。&lt;/li&gt;
-&lt;li&gt;使用操纵符如endl显示刷新缓冲区。&lt;/li&gt;
-&lt;li&gt;每个输出操作后可以用操纵夫unitbuf设置流的内部状态来清空缓冲区。&lt;/li&gt;
-&lt;li&gt;一个输出流可能被关联到另一个输出流。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;刷新输出缓冲区：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空格，然后刷新缓冲区
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; flush;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi，然后刷新缓冲区，不附加额外字符
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; ends;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空字符，然后刷新缓冲区
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;文件输入输出&#34;&gt;文件输入输出&lt;/h3&gt;
-&lt;p&gt;头文件定义了如上所示的三个类型来住处文件IO。&lt;/p&gt;
-&lt;p&gt;除了继承自iostream类型的行为外，fstream中的定义还增加了新的成员来管理与流关联的文件：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;fstream fstrm;	&lt;span style=&#34;color:#888&#34;&gt;//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s);	&lt;span style=&#34;color:#888&#34;&gt;//创建一个fstream并打开名为s的文件
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s,mode);	&lt;span style=&#34;color:#888&#34;&gt;//与上一个相同，但按指定mode打开
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.open(s)	&lt;span style=&#34;color:#888&#34;&gt;//打开名为s的文件并将文件与fstrm绑定
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.close()	&lt;span style=&#34;color:#888&#34;&gt;//关闭与fstrm绑定的文件，返回void
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.is_open()	&lt;span style=&#34;color:#888&#34;&gt;//返回一个bool, 指出关联的文件是否成功打开尚未关闭
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;使用文件流对象&#34;&gt;使用文件流对象&lt;/h4&gt;
-&lt;h4 id=&#34;文件模式&#34;&gt;文件模式&lt;/h4&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;mode&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;功能&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;in&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;以读方式打开&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;out&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;以写方式打开&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;app&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;每次写操作前均定位到文件末尾&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;ate&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;打开文件后立即定位到末尾&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;trunc&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;截断文件&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h4 id=&#34;以out模式打开文件会丢弃已有数据&#34;&gt;以out模式打开文件会丢弃已有数据&lt;/h4&gt;
-&lt;h3 id=&#34;string流&#34;&gt;string流&lt;/h3&gt;
-&lt;h2 id=&#34;顺序容器&#34;&gt;顺序容器&lt;/h2&gt;
-&lt;p&gt;一个容器就是一些特定类型对象的集合。&lt;/p&gt;
-&lt;p&gt;顺序容器提供了&lt;strong&gt;控制元素存储&lt;/strong&gt;和&lt;strong&gt;访问顺序&lt;/strong&gt;的能力。这种顺序与元素加入容器时的位置相对应。&lt;/p&gt;
-&lt;h3 id=&#34;概述&#34;&gt;概述&lt;/h3&gt;
-&lt;p&gt;顺序容器都提供了&lt;strong&gt;快速顺序访问元素&lt;/strong&gt;的能力。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;符号&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;顺序容器类型(名称)&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;性能&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;vector&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;可变大小数组&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;支持快速随机访问。在尾部之外的位置插入删除元素很慢&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;deque&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;双端队列&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;支持快速随机访问。在头尾插入删除速度很快&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;list&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;双向链表&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;只支持双向顺序访问。在list中任何位置插入删除元素都很快&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;forward_list&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;单项链表&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;只支持单项顺序访问。在forward_list中任何位置插入删除元素都很快&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;array&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;固定大小数组&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;支持快速随机访问。不能添加删除元素&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;string&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;与vector相似的容器，专门用于保存字符&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;随机访问快，在尾部插入删除速度快&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;除了固定大小的array外，其他容器都提供高效的内存管理。容器保存元素的策略对容器操作的效率有着很大影响。&lt;/p&gt;
-&lt;p&gt;string和vector将元素保存在&lt;strong&gt;连续的内存空间&lt;/strong&gt;中，因此由元素的下标来计算其地址非常快速。但在这两种容器的中间位置插入和删除元素的速度非常慢，因为一次插入或删除后，需要移动插入、删除位置后的&lt;strong&gt;所有元素&lt;/strong&gt;以保证存储的连续。&lt;/p&gt;
-&lt;p&gt;list和forward_list两个容器能令任何位置的添加和删除操作都很快，但这两种容器&lt;strong&gt;不支持随机访问&lt;/strong&gt;，因为元素保存的内存空间不连续，只能通过遍历整个容器来访问一个元素。与vector和string相比，额外内存开销也很大。&lt;/p&gt;
-&lt;p&gt;forward_list与最好的手写单向链表数据结构性能相当，因此没有size操作，因为保存或计算大小会多出额外开销。&lt;/p&gt;
-&lt;p&gt;deque支持快读随机访问，在该容器中间位置添加或删除元素速度很慢，但在两端很快。&lt;/p&gt;
-&lt;h3 id=&#34;容器库概览&#34;&gt;容器库概览&lt;/h3&gt;
-&lt;p&gt;容器类型上的操作分成了层次：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;某些操作式所有容器都提供的；&lt;/li&gt;
-&lt;li&gt;另外一些操作仅针对顺序容器、关联容器或无序容器；&lt;/li&gt;
-&lt;li&gt;还有一些操作只适合一小部分容器。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;容器通过&lt;strong&gt;尖括号&lt;/strong&gt;指定类型。&lt;/p&gt;
-&lt;h4 id=&#34;容器操作&#34;&gt;容器操作&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;iterator	
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;迭代器&#34;&gt;迭代器&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;*iter	//返回迭代器iter所指元素的引用
-iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员
-++iter	//令iter指示容器中的下一个元素
---iter	//令iter指示容器中的上一个元素
-iter1 == iter2
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一个&lt;strong&gt;迭代器范围&lt;/strong&gt;由一对迭代器表示，这两个迭代器被称为begin和end，begin指向容器第一个元素，end指向容器的&lt;strong&gt;尾后元素&lt;/strong&gt;，这种元素范围被称为&lt;strong&gt;左闭合区间&lt;/strong&gt;，即&lt;code&gt;[begin, end)&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;对构成范围的迭代器的要求：&lt;strong&gt;end不在begin之前&lt;/strong&gt;。可以通过对begin进行若干次递增，使得begin==end。&lt;/p&gt;
-&lt;h4 id=&#34;容器类型成员&#34;&gt;容器类型成员&lt;/h4&gt;
-&lt;p&gt;每个容器都定义了多个类型。如之前使用过的&lt;code&gt;interator&lt;/code&gt;、&lt;code&gt;size_type&lt;/code&gt;等。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;interator
-const_iterator
-size_type
-difference_type
-value_type
-reference
-const_reference
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;begin和end成员&#34;&gt;begin和end成员&lt;/h4&gt;
-&lt;p&gt;begin和end操作生成指向容器中第一个元素和尾元素之后位置的迭代器。还有不同类型的反向迭代器、const迭代器。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;list&amp;lt;int&amp;gt; a = {1, 2, 3};
-auto it1 = a.begin();	//list&amp;lt;int&amp;gt;::iterator
-auto it2 = a.rbegin();	//反向迭代器 list&amp;lt;int&amp;gt;::reverse_iterator
-auto it3 = a.cbegin();	//const迭代器 list&amp;lt;int&amp;gt;::const_iterator
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;容器定义和初始化&#34;&gt;容器定义和初始化&lt;/h4&gt;
-&lt;p&gt;每个容器类型都定义了一个默认构造函数。除了array外，其他容器的默认构造函数都会创建一个指定类型的空容器。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;C c;	//默认构造函数
-C c1(c2)	//c1初始化为c2的拷贝。两者必须是相同类型的容器
-C c{a,b,c...}	//c初始化为初始化列表中元素的拷贝
-C c(b,e)	//c初始化为迭代器b和e指定范围中元素的拷贝
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;与顺序容器大小相关的构造函数：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//10个int元素，每个都初始化为1
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;list&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; scev(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//10个元素，每个都是空string
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;标准库array具有固定大小&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//类型为保存42个int的数组
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//类型为保存10个string的数组
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用array时必须同时指定&lt;strong&gt;元素类型&lt;/strong&gt;和&lt;strong&gt;大小&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;::&lt;/span&gt;size_type j;	&lt;span style=&#34;color:#888&#34;&gt;//错误，未指定大小
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;赋值和swap&#34;&gt;赋值和swap&lt;/h4&gt;
-&lt;p&gt;赋值将左边容器中的所有元素替换为右边容器中元素的拷贝。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;c1 = c2;
-c = {a, b, c}
-swap(c1, c2)
-c1.swap(c2)	//与上一个等价
-//assign操作不适用于关联容器和array
-seq.assign(b,e)	//将seq中的元素替换为迭代器b和e所表示范围的元素
-seq.assign(il)	//将seq中的元素替换为初始化列表il中的元素
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;assign用参数所指定的元素拷贝替换左边容器中所有元素。&lt;/p&gt;
-&lt;p&gt;swap只是交换了两个容器内部的&lt;strong&gt;数据结构&lt;/strong&gt;，但例外是swap两个array会真正交换它们的元素。&lt;/p&gt;
-&lt;h4 id=&#34;容器大小操作&#34;&gt;容器大小操作&lt;/h4&gt;
-&lt;p&gt;成员函数&lt;code&gt;size&lt;/code&gt;返回容器中元素的数目；empty当size为0时返回布尔值true，否则返回false；max_size返回一个大于或等于该类型容器所能容纳的最大元素数的值。&lt;/p&gt;
-&lt;p&gt;forward_list支持max_size和empty但不支持size。&lt;/p&gt;
-&lt;h4 id=&#34;关系运算符&#34;&gt;关系运算符&lt;/h4&gt;
-&lt;p&gt;每个容器类型都支持相等运算符(即&lt;code&gt;==&lt;/code&gt;和&lt;code&gt;!=&lt;/code&gt;)；除&lt;strong&gt;无序关联容器&lt;/strong&gt;外的所有容器都支持关系运算符(&amp;gt;、&amp;gt;=、&amp;lt;、&amp;lt;=)。&lt;/p&gt;
-&lt;p&gt;关系运算符左右两边的运算对象必须是相同类型的容器，且保存元素的类型也必须相等。&lt;/p&gt;
-&lt;h3 id=&#34;顺序容器操作&#34;&gt;顺序容器操作&lt;/h3&gt;
-&lt;p&gt;顺序容器和关联容器的不同在于两者&lt;strong&gt;组织元素的方式&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;除了上一节介绍的所有容器都支持的操作外，本章剩余部分将介绍顺序容器的所有操作。&lt;/p&gt;
-&lt;h4 id=&#34;向顺序容器添加元素&#34;&gt;向顺序容器添加元素&lt;/h4&gt;
-&lt;p&gt;向顺序容器中除了array外添加元素的操作：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.push_back(t)			&lt;span style=&#34;color:#888&#34;&gt;//在c的尾部创建值为t或由args创建的元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.emplace_back(args)
-c.push_front(t)			&lt;span style=&#34;color:#888&#34;&gt;//在c的头部创建值为t或由args创建的元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.emplace_front(args)
-c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的元素之前创建一个值为t的元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.insert(p,n,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的元素之前插入n个值为t的元素。返回指向新添加的第一个元素的迭代器
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.insert(p,b,e)			&lt;span style=&#34;color:#888&#34;&gt;//将迭代器b和e指向范围内的元素插入到迭代器p指向的元素之前，b和e不能指向c中的元素。返回指向新添加的第一个元素的迭代器
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.insert(p,il)			&lt;span style=&#34;color:#888&#34;&gt;//il为一个花括号包围的元素值列表，将这些值插入到迭代器p指向的元素之前。返回指向新添加的第一个元素的迭代器
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;forword_list&lt;/code&gt;不支持&lt;code&gt;push_back&lt;/code&gt;和&lt;code&gt;emplace_back&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;vector&lt;/code&gt;和&lt;code&gt;string&lt;/code&gt;不支持&lt;code&gt;push_front&lt;/code&gt;和&lt;code&gt;emplace_front&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;使用这些操作时要注意策略，根据不同容器的不同数据结构的特性来使用。&lt;/p&gt;
-&lt;p&gt;emplace操作构造而不是拷贝元素，将参数传递给元素类型的构造函数，直接构造元素。&lt;/p&gt;
-&lt;h4 id=&#34;访问元素&#34;&gt;访问元素&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.back()		&lt;span style=&#34;color:#888&#34;&gt;//返回c中尾元素的引用，若c为空，则函数行为未定义。
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.front()		&lt;span style=&#34;color:#888&#34;&gt;//范围c中首元素的引用
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c[n]			&lt;span style=&#34;color:#888&#34;&gt;//返回c中下标为n的元素的引用，n是一个无符号整数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.at(n)			&lt;span style=&#34;color:#888&#34;&gt;//返回下标为n的元素的引用，若下标越界，则返回out_of_range异常
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;at和下标操作只适用于string、vector、array和deque&lt;/p&gt;
-&lt;p&gt;back不适用于forward_list&lt;/p&gt;
-&lt;h3 id=&#34;vector对象的增长&#34;&gt;vector对象的增长&lt;/h3&gt;
-&lt;h3 id=&#34;额外的string操作&#34;&gt;额外的string操作&lt;/h3&gt;
-&lt;h3 id=&#34;容器适配器&#34;&gt;容器适配器&lt;/h3&gt;
-&lt;h2 id=&#34;泛型算法&#34;&gt;泛型算法&lt;/h2&gt;
-&lt;p&gt;用来操纵容器。&lt;/p&gt;
-&lt;h3 id=&#34;概述-1&#34;&gt;概述&lt;/h3&gt;
-&lt;h3 id=&#34;基本算法&#34;&gt;基本算法&lt;/h3&gt;
-&lt;h4 id=&#34;只读算法&#34;&gt;只读算法&lt;/h4&gt;
-&lt;h4 id=&#34;写容器元素算法&#34;&gt;写容器元素算法&lt;/h4&gt;
-&lt;h4 id=&#34;重排容器元素算法&#34;&gt;重排容器元素算法&lt;/h4&gt;
-&lt;h3 id=&#34;定制操作&#34;&gt;定制操作&lt;/h3&gt;
-&lt;h4 id=&#34;向算法传递函数&#34;&gt;向算法传递函数&lt;/h4&gt;
-&lt;h4 id=&#34;lambda表达式&#34;&gt;lambda表达式&lt;/h4&gt;
-&lt;h4 id=&#34;lambda捕获和返回&#34;&gt;lambda捕获和返回&lt;/h4&gt;
-&lt;h4 id=&#34;参数绑定&#34;&gt;参数绑定&lt;/h4&gt;
-&lt;h3 id=&#34;再探迭代器&#34;&gt;再探迭代器&lt;/h3&gt;
-&lt;h4 id=&#34;插入迭代器&#34;&gt;插入迭代器&lt;/h4&gt;
-&lt;h4 id=&#34;iostream迭代器&#34;&gt;iostream迭代器&lt;/h4&gt;
-&lt;h4 id=&#34;反向迭代器&#34;&gt;反向迭代器&lt;/h4&gt;
-&lt;h3 id=&#34;泛型算法结构&#34;&gt;泛型算法结构&lt;/h3&gt;
-&lt;p&gt;输入、输出、前向、双向、随机访问迭代器&lt;/p&gt;
-&lt;h3 id=&#34;特定容器算法&#34;&gt;特定容器算法&lt;/h3&gt;
-&lt;h2 id=&#34;关联容器&#34;&gt;关联容器&lt;/h2&gt;
-&lt;p&gt;键值对。&lt;/p&gt;
-&lt;h2 id=&#34;动态内存&#34;&gt;动态内存&lt;/h2&gt;- http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ - 2019-2021 By Jialong</description>
         </item>
     
     

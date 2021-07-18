@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LaTex基本功能 on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/tags/latex%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD/</link>
+    <description>Recent content in LaTex基本功能 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Sun, 18 Jul 2021 20:06:26 +0800</lastBuildDate><atom:link href="http://eternityqjl.top/tags/latex%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LaTex环境配置和基本功能模块</title>
+      <link>http://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Sun, 18 Jul 2021 20:06:26 +0800</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid>
+      <description>环境配置 我选择使用VS code + Tex Live作为我的LaTex写作环境，具体配置过程参考自：Visual Studio Code (vscode)配置LaTeX
+以下是关于使用过程中一些具体模块的讨论：
+部分内容参考自：一份其实很短的 LaTeX 入门文档
+这里使用xeLatTex进行编译。
+基本文档和中英文 基本文档 \documentclass{article} % 这里是导言区 \begin{document} Hello, world! \end{document} Tex以%作为注释标记。若要输出百分号%字符本身，则要在前面加上反斜杠\进行转义（escape）。
+中英文混排 目前XeTeX 原生支持 Unicode，并且可以方便地调用系统字体。可以说解决了困扰中国 TeX 使用者多年的大问题。至此，我们只需要使用几个简单的宏包，就能完成中文支持了。
+我们使用\usepackage{}来调用宏包。
+另外，我们使用CTex宏集来处理中文的版式和标点。
+\documentclass[UTF8]{ctexart} \begin{document} 你好，world! \end{document} 与开始相比，文档类别变为ctexart，并且增加了文档类选项UTF8.
+组织文章基本内容  标题、作者、日期  \documentclass[UTF8]{ctexart} \title{你好，world!} \author{Eternity} \date{\today} \begin{document} \maketitle 你好，world! \end{document} 以上代码中的控制序列\maketitle能将在导言区中定义的标题、作者、日期按照预定的格式展现出来。
+可以通过宏包titling修改上述默认格式。
+章节和段落  \documentclass[UTF8]{ctexart} \title{你好，world!} \author{Liam} \date{\today} \begin{document} \maketitle \section{你好中国} 中国在East Asia. \subsection{Hello Beijing} 北京是capital of China. \subsubsection{Hello Dongcheng District} \paragraph{Tian&amp;#39;anmen Square} is in the center of Beijing \subparagraph{Chairman Mao} is in the center of 天安门广场。 \subsection{Hello 山东} \paragraph{山东大学} is one of the best university in 山东。 \end{document} 文档类article/ctexart中定义了5个控制序列来调整文章组织结构：</description>
+    </item>
+    
+  </channel>
+</rss>
