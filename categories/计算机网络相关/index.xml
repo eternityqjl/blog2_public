@@ -7,7 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 03 Jun 2021 18:09:38 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Jul 2021 12:59:05 +0800</lastBuildDate><atom:link href="http://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>计算机网络各层级理解</title>
+      <link>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</link>
+      <pubDate>Fri, 23 Jul 2021 12:59:05 +0800</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</guid>
+      <description>一年多前按照层级详细学习了计算机网络的有关内容，包括从应用层、传输层、网络层、数据链路层到物理层的详细信息，并且也学习了一些其他硬件通信协议，比如CAN控制器局域网、SPI等等。在之后的应用和实践中经常对不同层级的网络和网络设备产生疑惑，例如路由器和交换机到底是什么关系？为什么要通过IP地址和MAC地址划分网络层和数据链路层？这里将会详细说明各层网络的具体作用来加深理解和体会。
+应用层 应用层是计算机网络体系结构中最高层，意味着这是和人进行交互的层次。
+应用层是计算机网络与用户进行交互的接口或界面，直接向用户提供服务；包括Web、E-mail、DNS、DHCP、FTP等等。
+应用层要解决的主要问题就是如何为用户提供高效、可靠、满意的服务，工程师要根据不同业务场景使用不同技术方法解决这些问题，比如使用多线程、高并发的Web框架，分布式处理等等。
+传输层 负责端到端（进程之间）的通信。位于两台网络主机间的真正数据通信主体不是这两台主机，而是两台主机中的各种网络应用进程。
+端到端的传输分为两个步骤：
+ 虚拟传输连接的建立 源端用户数据沿着传输连接传送到目的端  整个数据传输过程中传输层需要完成以下基本功能：传输层寻址、传输连接建立、数据传输、传输连接释放、流量控制、拥塞控制、多路复用和多路分解、崩溃恢复。
+网络层 也被称为中转层。他很重要也很复杂，既要解决不同网络的节点通信的路由和协议识别问题，又要通过路由选择策略解决网络拥塞问题。
+网络层主要是为了解决不同网络之间数据传输和转发问题。
+数据链路层 在原始的、有差错的物理传输线路的基础上，采用差错检测、差错控制和流量控制等方法，将有差错的物理线路改成逻辑上无差错的数据链路，为上一层（网络层）提供高质量服务。
+数据链路层主要是为了控制数据传输。
+物理层 位于体系结构最底层，负责在物理介质上位数据链路层提供原始比特流传输的物理链接。
+物理层解决的问题就是数据传输，所有数据到达物理层都会变成二进制的载波信号。
+交换机和路由器 见WLAN基本内容和802.11ax中的内容。</description>
+    </item>
+    
     <item>
       <title>WLAN基本内容和802.11ax</title>
       <link>http://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</link>

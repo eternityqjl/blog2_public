@@ -6,9 +6,147 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sun, 18 Jul 2021 20:06:26 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 23 Jul 2021 12:59:05 +0800</lastBuildDate>
     
         <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>机器学习——k近邻(k-NN)算法</title>
+        <link>http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
+        <pubDate>Wed, 12 May 2021 14:57:17 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ -&lt;h2 id=&#34;基本概念及原理&#34;&gt;基本概念及原理&lt;/h2&gt;
+&lt;p&gt;k近邻(k-nearest neighbors)算法是一种基本分类和回归方法。&lt;/p&gt;
+&lt;p&gt;该算法是给定一个&lt;strong&gt;训练数据集&lt;/strong&gt;，对新的&lt;strong&gt;输入测试集&lt;/strong&gt;，在训练集中找到与该测试实例&lt;strong&gt;最邻近&lt;/strong&gt;的k个实例，这k个实例的多数属于某个类，就把该输入实例分类到这个类中。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/220px-KnnClassification.svg.png&#34; alt=&#34;220px-KnnClassification.svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有两类不同样本分别用红色三角形和蓝色正方形表示，途中绿色圆形为待分类的数据。这时我们根据k-近邻的思想进行分类。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当k=3时，判定样本属于红色三角形这一类；&lt;/li&gt;
+&lt;li&gt;当k=5时，判定样本属于蓝色正方形这一类。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;k的选取及特征归一化&#34;&gt;k的选取及特征归一化&lt;/h2&gt;
+&lt;h3 id=&#34;选取k值及其影响&#34;&gt;选取k值及其影响&lt;/h3&gt;
+&lt;p&gt;选取较小的k值，整体模型会变得更加复杂，容易发生&lt;strong&gt;过拟合&lt;/strong&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;过拟合就是在训练集上准确率非常高，而在测试集上准确率低。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;k太小会导致过拟合，容易将一些噪声学习到模型中。&lt;/p&gt;
+&lt;p&gt;选取较大的k值，整体模型变得简单，因为当k等于训练样本个数时，无论输入什么测试实例，都将简单地预测它属于&lt;strong&gt;在训练实例中最多的类&lt;/strong&gt;，相当于没有训练模型。&lt;/p&gt;
+&lt;p&gt;所以，模型即不能过大也不能过小，一般选取一个较小的数值，通过采取&lt;strong&gt;交叉验证法&lt;/strong&gt;来选取最优的k值，即通过实验调参选取。&lt;/p&gt;
+&lt;h3 id=&#34;距离的度量&#34;&gt;距离的度量&lt;/h3&gt;
+&lt;p&gt;我们通常使用常见的&lt;strong&gt;欧氏距离&lt;/strong&gt;来衡量高维空间中两个点的距离，即：
+$$
+L_2(x_i,x_j)=(\sum_{l=1}^{n}| x_i^{(l)}-x_j^{(l)} |)^{\frac{1}{2}}
+$$
+其中，$x_i=(x_i^{(1)}, x_i^{(2)},&amp;hellip;,x_i^{(n)})$，同理$x_j$。&lt;/p&gt;
+&lt;h3 id=&#34;特征归一化的必要性&#34;&gt;特征归一化的必要性&lt;/h3&gt;
+&lt;p&gt;如果不进行归一化，让每个特征都同等重要，就会偏向于第一维度的特征，导致多个特征并不是等价重要的，会导致距离计算错误，最终导致预测结果错误。&lt;/p&gt;
+&lt;p&gt;进行KNN分类使用的样本特征是${ (x_{i1}, x_{i2},&amp;hellip;,x_{in}) }_{i=1}^m$，取每个轴上的最大值减去最小值得：
+$$
+M_j=\max_{i=1,&amp;hellip;,m}x_{ij}-\min_{i=1,&amp;hellip;,m}x_{ij}
+$$
+并在计算距离时将每一个坐标轴除以相应的$M_j$进行归一化，即：
+$$
+d((y_1,&amp;hellip;,y_n),(z_1,&amp;hellip;,z_n))=\sqrt{\sum_{j=1}^{n}(\frac{y_j}{M_j}-\frac{z_j}{M_j})^2}
+$$&lt;/p&gt;
+&lt;h2 id=&#34;k-nn实现iris鸢尾花数据集聚类&#34;&gt;k-NN实现Iris鸢尾花数据集聚类&lt;/h2&gt;
+&lt;h3 id=&#34;k-means聚类算法的实现步骤&#34;&gt;K-Means聚类算法的实现步骤：&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;为待聚类的点随机寻找几个聚类中心(类别个数)；&lt;/li&gt;
+&lt;li&gt;计算每个点到聚类中心的距离，将各个点归类到离该点最近的聚类中去；&lt;/li&gt;
+&lt;li&gt;计算每个聚类中所有点的坐标平均值，并将这个平均值作为新的聚类中心，反复执行上一步和该步，直到聚类中心不再进行大范围移动或聚类迭代次数达到要求位置。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;代码实现&#34;&gt;代码实现&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pandas&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pd&lt;/span&gt;
+
+data &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;read_csv(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&amp;#39;&lt;/span&gt;, header&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;None&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# 下载iris数据集&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#data = pd.read_csv(&amp;#39;./data/iris.data.csv&amp;#39;, header=None)&lt;/span&gt;
+data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;columns &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;sepal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;sepal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;petal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;petal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;species&amp;#39;&lt;/span&gt;]    &lt;span style=&#34;color:#888&#34;&gt;# 特征及类别名称&lt;/span&gt;
+
+X &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;values
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;values
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-setosa&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;                                 &lt;span style=&#34;color:#888&#34;&gt;# Iris-setosa 输出label用0表示&lt;/span&gt;
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-versicolor&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;                             &lt;span style=&#34;color:#888&#34;&gt;# Iris-versicolor 输出label用1表示&lt;/span&gt;
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-virginica&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;                              &lt;span style=&#34;color:#888&#34;&gt;# Iris-virginica 输出label用2表示&lt;/span&gt;
+X_setosa, y_setosa &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]                     &lt;span style=&#34;color:#888&#34;&gt;# Iris-setosa 4个特征&lt;/span&gt;
+X_versicolor, y_versicolor &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;]         &lt;span style=&#34;color:#888&#34;&gt;# Iris-versicolor 4个特征&lt;/span&gt;
+X_virginica, y_virginica &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;]         &lt;span style=&#34;color:#888&#34;&gt;# Iris-virginica 4个特征&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#888&#34;&gt;# training set&lt;/span&gt;
+X_setosa_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_setosa_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_versicolor_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_versicolor_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_virginica_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_virginica_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_train, X_versicolor_train, X_virginica_train])
+y_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_train, y_versicolor_train, y_virginica_train])
+
+&lt;span style=&#34;color:#888&#34;&gt;# validation set&lt;/span&gt;
+X_setosa_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_setosa_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_versicolor_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_versicolor_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_virginica_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_virginica_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_val, X_versicolor_val, X_virginica_val])
+y_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_val, y_versicolor_val, y_virginica_val])
+
+&lt;span style=&#34;color:#888&#34;&gt;# test set&lt;/span&gt;
+X_setosa_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_setosa_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_versicolor_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_versicolor_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_virginica_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_virginica_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_test, X_versicolor_test, X_virginica_test])
+y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_test, y_versicolor_test, y_virginica_test])
+
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;KNearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;pass&lt;/span&gt;
+
+   &lt;span style=&#34;color:#888&#34;&gt;# 训练函数&lt;/span&gt;
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;train&lt;/span&gt;(self, X, y):
+       self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X
+       self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;y_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y
+
+   &lt;span style=&#34;color:#888&#34;&gt;# 预测函数&lt;/span&gt;
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;predict&lt;/span&gt;(self, X, k&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;):
+       &lt;span style=&#34;color:#888&#34;&gt;# 计算L2距离&lt;/span&gt;
+       num_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
+       num_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
+       dists &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros((num_test, num_train))    &lt;span style=&#34;color:#888&#34;&gt;# 初始化距离函数&lt;/span&gt;
+       &lt;span style=&#34;color:#888&#34;&gt;# because(X - X_train)*(X - X_train) = -2X*X_train + X*X + X_train*X_train, so&lt;/span&gt;
+       d1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(X, self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)    &lt;span style=&#34;color:#888&#34;&gt;# shape (num_test, num_train)&lt;/span&gt;
+       d2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(X), axis&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, keepdims&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;True&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# shape (num_test, 1)&lt;/span&gt;
+       d3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train), axis&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# shape (1, num_train)&lt;/span&gt;
+       dist &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(d1 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; d2 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; d3)
+       &lt;span style=&#34;color:#888&#34;&gt;# 根据K值，选择最可能属于的类别&lt;/span&gt;
+       y_pred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros(num_test)
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(num_test):
+           dist_k_min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argsort(dist[i])[:k]    &lt;span style=&#34;color:#888&#34;&gt;# 最近邻k个实例位置&lt;/span&gt;
+           y_kclose &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;y_train[dist_k_min]     &lt;span style=&#34;color:#888&#34;&gt;# 最近邻k个实例对应的标签&lt;/span&gt;
+           y_pred[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argmax(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;bincount(y_kclose&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;tolist()))    &lt;span style=&#34;color:#888&#34;&gt;# 找出k个标签中从属类别最多的作为预测类别&lt;/span&gt;
+
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; y_pred
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+    KNN &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; KNearestNeighbor()
+    KNN&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(X_train, y_train)
+    y_pred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; KNN&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(X_test, k&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;)
+    accuracy &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(y_pred &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; y_test)
+    &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;测试集预测准确率：&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; accuracy)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;测试集预测准确率：1.000000
+&lt;/code&gt;&lt;/pre&gt;- http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1884,43 +2022,6 @@ $$
 &lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html&#34;&gt;SSL/TLS协议运行机制的概述|阮一峰&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - http://eternityqjl.top/posts/tls/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>PDF转换为SVG</title>
-        <link>http://eternityqjl.top/posts/convertpdftosvg/</link>
-        <pubDate>Wed, 08 Apr 2020 00:15:48 +0000</pubDate>
-        
-        <guid>http://eternityqjl.top/posts/convertpdftosvg/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/convertpdftosvg/ -&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用&lt;strong&gt;Adobe Acrobat&lt;/strong&gt;和&lt;strong&gt;inkscape&lt;/strong&gt;两个软件将PDF中的矢量图导出为&lt;strong&gt;SVG&lt;/strong&gt;格式的矢量图。以下为具体步骤：&lt;/p&gt;
-&lt;h2 id=&#34;在adobe-acrobat中选择编辑pdf选项&#34;&gt;在&lt;code&gt;Adobe Acrobat&lt;/code&gt;中选择&lt;code&gt;编辑PDF&lt;/code&gt;选项&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_1.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;选择裁剪页面&#34;&gt;选择&lt;code&gt;裁剪页面&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_2.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;框选所需图片的区域&#34;&gt;框选所需图片的区域&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_3.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;双击框选的区域按如下所示设置&#34;&gt;双击框选的区域，按如下所示设置&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_4.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;选择组织页面&#34;&gt;选择&lt;code&gt;组织页面&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_5.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;选定裁切后的页面httpblogeternityqjltopconvertingpdftosvg_6jpg&#34;&gt;选定裁切后的页面&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_6.JPG&#34; alt=&#34;&#34;&gt;&lt;/h2&gt;
-&lt;h2 id=&#34;右击后选择打印页面httpblogeternityqjltopconvertingpdftosvg_7png&#34;&gt;右击后选择&lt;code&gt;打印页面&lt;/code&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_7.png&#34; alt=&#34;&#34;&gt;&lt;/h2&gt;
-&lt;h2 id=&#34;设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印&#34;&gt;设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_8.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变&#34;&gt;用&lt;code&gt;inkscape&lt;/code&gt;打开刚才打印的PDF文件，注意，导入时设置为第一项&lt;code&gt;从Poppler/Cairo导入&lt;/code&gt;，类似于PS中的栅格化，这样才能保证图中的字体不发生改变&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_9.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区&#34;&gt;选择&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;文档属性&lt;/code&gt;，设置自定义尺寸为&lt;code&gt;缩放页面到内容&lt;/code&gt;$\rightarrow$&lt;code&gt;缩放页面到绘图或选区&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_10_0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_10.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_11.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;文件rightarrow另存为选择自己所需的格式我一般选svg&#34;&gt;&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;另存为&lt;/code&gt;，选择自己所需的格式，我一般选&lt;code&gt;SVG&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-- http://eternityqjl.top/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
         </item>
     
     
