@@ -6,9 +6,303 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 29 Jul 2021 08:44:21 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 01 Aug 2021 20:20:52 +0800</lastBuildDate>
     
         <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>计算机网络学习日志（二）——运输层</title>
+        <link>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
+        <pubDate>Wed, 06 May 2020 21:27:10 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ -&lt;h2 id=&#34;概述和运输层服务&#34;&gt;概述和运输层服务&lt;/h2&gt;
+&lt;p&gt;运输层协议在不同主机上的应用进程之间提供了&lt;strong&gt;逻辑通信&lt;/strong&gt;，这并非物理上的实际通信。在发送端，运输层将从应用程序接收到的报文转换成运输层分组，该分组称为&lt;strong&gt;运输层报文段&lt;/strong&gt;，实现方法是将应用报文划分为一个个小的块，为每个块加上运输层首部生成运输层报文段，然后在端系统中传递给网络层，网络层将其封装成网络层分组，向目的地发送。&lt;/p&gt;
+&lt;p&gt;因特网由TCP和UDP两种运输层协议。&lt;/p&gt;
+&lt;h3 id=&#34;运输层和网络层的关系&#34;&gt;运输层和网络层的关系&lt;/h3&gt;
+&lt;p&gt;网络层提供了&lt;strong&gt;主机&lt;/strong&gt;之间的逻辑通信，而运输层为运行在不同主机上的&lt;strong&gt;进程&lt;/strong&gt;之间提供了逻辑通信。&lt;/p&gt;
+&lt;p&gt;运输层协议至工作在端系统中，同时网络中的路由器既不处理也不识别运输层加在应用层报文的任何信息。运输层协议能提供的服务常常受制于底层网络层协议，例如，如果网络层协议无法为主机之间发送的运输层报文段提供时延和带宽保证，运输层协议可就无法为&lt;strong&gt;进程之间&lt;/strong&gt;发送的应用程序报文提供时延和带宽保证。&lt;/p&gt;
+&lt;h3 id=&#34;运输层概述&#34;&gt;运输层概述&lt;/h3&gt;
+&lt;p&gt;首先定义两个名词的意义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;报文段：运输层分组，即TCP和UDP的分组&lt;/li&gt;
+&lt;li&gt;数据报：网络层分组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;网络层的IP被称为不可靠服务。&lt;/p&gt;
+&lt;h2 id=&#34;多路复用与多路分解&#34;&gt;多路复用与多路分解&lt;/h2&gt;
+&lt;p&gt;在目的主机中，运输层从紧邻其下的网络层接受报文段，并将这些报文段中的数据交付给在主机上运行的对应应用程序进程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;多路分解&lt;/strong&gt;是指将运输层报文中的数据正确交付给正确的&lt;strong&gt;套接字&lt;/strong&gt;的工作。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;多路复用&lt;/strong&gt;是指在源主机中从不同套接字中收集数据块，并为每个数据块封装上首部信息从而生成报文段，然后将报文段传递到网络层。&lt;/p&gt;
+&lt;p&gt;运输层多路复用的要求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;套接字有唯一标识&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;每个报文段有特殊字段来指示该报文段所要交付到的套接字&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;特殊字段：源端口号字段、目的端口号字段&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;0~1023范围的端口称为&lt;em&gt;周知端口号&lt;/em&gt;，是受限的，它们分配给周知应用层协议来使用&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;无连接运输udp&#34;&gt;无连接运输：UDP&lt;/h2&gt;
+&lt;p&gt;UDP从应用程序得到数据，附加上用于多路复用/分解服务和目的地端口字段号，以及两个其他字段，然后将形成的报文交给网络层，网络层将运输层报文封装到一个一个IP数据报中，然后尽力交付给目的主机。&lt;/p&gt;
+&lt;p&gt;UDP被称为&lt;strong&gt;无连接&lt;/strong&gt;运输是因为在发送报文段之前，发送方和接收方的运输层实体之间没有握手。&lt;/p&gt;
+&lt;p&gt;一些应用相比于TCP更适合于使用UDP的原因：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;关于发送什么数据以及何时发送的&lt;strong&gt;应用层控制&lt;/strong&gt;更为精细&lt;/li&gt;
+&lt;li&gt;无需建立连接，开始传输数据前不需要握手&lt;/li&gt;
+&lt;li&gt;无连接状态。TCP中要实现可靠数据传输服务并提供拥塞控制，状态信息是必须的。&lt;/li&gt;
+&lt;li&gt;分组首部占用空间小。每个TCP报文段有20个字节的首部开销，UDP仅有8个字节。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;udp报文段结构&#34;&gt;UDP报文段结构&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/UDP.svg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;udp检验和&#34;&gt;UDP检验和&lt;/h3&gt;
+&lt;p&gt;检验和用于确定当UDP报文段从源到达目的地移动时，其中的比特是否发生变化。&lt;/p&gt;
+&lt;p&gt;提供差错检验的原因是不能保证源和目的之间的所有链路都提供了差错检测。&lt;/p&gt;
+&lt;p&gt;虽然UDP提供了差错检验，但是它对于差错恢复无能为力，它只是丢弃受损的报文段。&lt;/p&gt;
+&lt;h2 id=&#34;可靠数据传输原理&#34;&gt;可靠数据传输原理&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;可靠数据传输协议&lt;/strong&gt;是用来实现一种服务的抽象：数据可以通过一条可靠的信道进行传输。可靠传输协议的下层也许是不可靠的，如TCP是在不可靠的端到端网络层(IP)之上实现的可靠数据传输协议。我们目前可将较低层直接视为不可靠的点对点信道。&lt;/p&gt;
+&lt;h3 id=&#34;构造可靠数据传输协议&#34;&gt;构造可靠数据传输协议&lt;/h3&gt;
+&lt;h4 id=&#34;rdt10经完全可靠信道的可靠数据传输&#34;&gt;rdt1.0：经完全可靠信道的可靠数据传输&lt;/h4&gt;
+&lt;p&gt;此时的底层信道完全可靠，接收端不需要提供任何反馈信息给发送方。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt1.svg&#34; alt=&#34;rdt1&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;有限状态机(Finite-State Machine, FSM)&lt;/strong&gt;：表示有限个状态以及在这些状态之间的转移和动作等行为的数学模型。
+&lt;ul&gt;
+&lt;li&gt;FSM描述图中箭头指示了协议从一个状态便签到另一个状态&lt;/li&gt;
+&lt;li&gt;横线上方：引起变迁的事件&lt;/li&gt;
+&lt;li&gt;横线下方：事件发生时所采取的动作&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;发送方和接收方有各自的FSM&lt;/p&gt;
+&lt;p&gt;rdt1.0的发送端通过&lt;code&gt;rdt_send(data)&lt;/code&gt;事件接受来自叫高层的数据，产生一个包含该数据的分组(由&lt;code&gt;make_pkt(data)&lt;/code&gt;动作产生)，并将分组发送到信道中。&lt;/p&gt;
+&lt;p&gt;接收端通过&lt;code&gt;rdt_rcv(packet)&lt;/code&gt;从底层信道接受一个分组，从分组中取出数据(由&lt;code&gt;extract(packet, data)&lt;/code&gt;动作完成)，并将数据上传给叫高层(通过&lt;code&gt;deliver_data(data)&lt;/code&gt;完成)。&lt;/p&gt;
+&lt;h4 id=&#34;rdt20经具有比特差错信道的可靠数据传输&#34;&gt;rdt2.0：经具有比特差错信道的可靠数据传输&lt;/h4&gt;
+&lt;p&gt;底层信道更为实际的模型是可能受损的模型，这样的比特差错通常出现在网络的物理部件中&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自动重传请求协议(Automatic Repeat reQueat, ARQ)&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;使用&lt;strong&gt;肯定确认&lt;/strong&gt;与&lt;strong&gt;否定确认&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;差错检测：第五章会详细说明具体机制&lt;/li&gt;
+&lt;li&gt;接收方反馈：接收方向发送方回送**ACK(肯定确认)&lt;strong&gt;或是&lt;/strong&gt;NAK(否定确认)**分组，理论上只需要1比特。&lt;/li&gt;
+&lt;li&gt;重传：接收方接收到有差错分组，发送方将重传该分组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt2.svg&#34; alt=&#34;rdt2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;rdt2.0的发送端由两个状态，左边的状态中，发送端协议正在等待来自上层传递的数据，当事件&lt;code&gt;rdt_send(data)&lt;/code&gt;出现时，发送方将产生一个带有检验和的分组(sndpkt)，然后发送该分组。右边的状态中，发送方协议等待来自接收方的ACK或NAK分组。如果收到ACK分组，则知道已经正确发送，协议返回到右侧的等待上层数据的状态；如果收到NAK分组，则协议重新上传一个分组并继续等待会送的ACK或NAK。&lt;/p&gt;
+&lt;p&gt;当发送方处于右侧的等待状态时，不能从上层获得更多的数据，只有收到ACK分组并离开该状态时才能开始获得上层的数据，所以，rdt2.0这样的协议又被称为&lt;strong&gt;停等&lt;/strong&gt;协议。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;rdt2.0有一个致命的缺陷，没有考虑到ACK或NAK分组受损的可能性。&lt;/p&gt;
+&lt;p&gt;一种解决方法是，当发送方收到含糊不清的ACK或NAK分组时，只需&lt;strong&gt;重传&lt;/strong&gt;当前数据分组即可。这种方法在发送方到接收方的信道中引入了&lt;strong&gt;冗余分组&lt;/strong&gt;，但问题在于接收方不知道它上次所发送的ACK或NAK分组是否被正确收到，因此它不知道当前接收到的分组是新的还是一个重传。&lt;/p&gt;
+&lt;p&gt;解决该问题的方法是在数据分组中添加一新字段，让发送方对其数据分组进行&lt;strong&gt;编号&lt;/strong&gt;，即将发送数据分组的&lt;strong&gt;序号&lt;/strong&gt;放在该字段，此时接收方只需要检查序号即可确定收到的分组是否一次重传。这里只需要使用1比特的序号就够了，如果当前是正在重传一个分组，则接收到的分组序号与最近的收到的分组序号相同；如果是一个新的分组，则序号与前一个相比发生了变化。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;rtd2.1&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt2_1_send.svg&#34; alt=&#34;rdt2_1_send&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt2_1_rcv.svg&#34; alt=&#34;rdt2_1_rcv&#34;&gt;&lt;/p&gt;
+&lt;p&gt;rdt2.1是解决了上述rdt2.0问题后的新的协议，发送方和接收方的状态数都是之前的两倍，因为协议状态必须反映出此时发送方正在发送的分组或是接收方希望收到的分组的序号是0还是1。&lt;/p&gt;
+&lt;h4 id=&#34;rdt30经具有比特差错的丢包信道的可靠数据传输&#34;&gt;rdt3.0：经具有比特差错的丢包信道的可靠数据传输&lt;/h4&gt;
+&lt;p&gt;现在假定除了比特受损外，底层信道还会丢包，比特受损已经可以通过前面rdt2中的重传解决，而解决丢包需要增加一种新的协议机制。&lt;/p&gt;
+&lt;p&gt;假定发送方传输一个数据分组，该分组或者接受方对于该分组的ACK发生了丢失，这两种情况下发送方都收不到响应，发送方需要等一段时间以便确定分组已经丢失，然后重传该分组。注意，如果一个分组经历了一个很大的时延，发送方也可能重传该分组，这就导致引入了&lt;strong&gt;冗余数据分组&lt;/strong&gt;，而前面的rdt2.1协议已经能通过序号的功能来处理这种情况。&lt;/p&gt;
+&lt;p&gt;这个等待时间值需要通过一个&lt;strong&gt;倒计数定时器&lt;/strong&gt;来确定，在给定时间量过期后，可中断发送方，所以发送方需要做到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每次发送一个分组时便启动一个定时器。&lt;/li&gt;
+&lt;li&gt;响应定时器中断(采取适当动作)。&lt;/li&gt;
+&lt;li&gt;终止定时器。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/rdt3.svg&#34; alt=&#34;rdt3&#34;&gt;&lt;/p&gt;
+&lt;p&gt;分组序号在0和1之间交替，所以rdt3.0又被称为比特交替协议。&lt;/p&gt;
+&lt;h3 id=&#34;流水线可靠数据传输&#34;&gt;流水线可靠数据传输&lt;/h3&gt;
+&lt;p&gt;rdt3.0是一个功能正确的协议，但它的性能并不高，这里的核心问题在于它的停等协议。&lt;/p&gt;
+&lt;p&gt;在停等协议下，信道的利用率非常低，具体过程见书。&lt;/p&gt;
+&lt;p&gt;解决这个问题的方法是：&lt;strong&gt;不以停等方式运行&lt;/strong&gt;，&lt;/p&gt;
+&lt;p&gt;(RTT: Round-Trip Time)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E6%B5%81%E6%B0%B4%E7%BA%BF.svg&#34; alt=&#34;流水线&#34;&gt;&lt;/p&gt;
+&lt;p&gt;允许发送方方多个分组而无需等待确认，这种技术被称为&lt;strong&gt;流水线&lt;/strong&gt;，流水线对可靠数据传输协议回带来以下影响：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;必须增加序号的范围&lt;/li&gt;
+&lt;li&gt;协议的发送方和接收方不得不缓存多个分组&lt;/li&gt;
+&lt;li&gt;解决流水线差错恢复有两种基本方法：回退N步(Go-Back-N, GBN)、选择重传(Selective Repeat, SR)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;回退n步go-back-n-gbn&#34;&gt;回退N步(Go-Back-N, GBN)&lt;/h3&gt;
+&lt;p&gt;GBN协议中，允许发送方发送多个分组不需等待确认的原则受限于在流水线中未确认的分组数不能超过某个最大允许数N。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/GBN.svg&#34; alt=&#34;GBN&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;基序号(base)：最早未确认分组的序号&lt;/li&gt;
+&lt;li&gt;下一个序号(nextseqnum)：最小未使用序号(下一个待发分组序号)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如上图所示，可以将序号范围分割成4段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[0, base - 1]段内的序号对应已发送并确认的分组&lt;/li&gt;
+&lt;li&gt;[base, nextseqnum - 1]：已发送但未被确认的分组&lt;/li&gt;
+&lt;li&gt;[nextseqnum, base + N - 1]：对应立即要被发送的分组(如果有数据来自上层的话)&lt;/li&gt;
+&lt;li&gt;大于等于base + N的序号不能使用，直到当前流水线中未被确认的分组已得到确认&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以，N常被称为&lt;strong&gt;窗口长度&lt;/strong&gt;，GBN也常被称为&lt;strong&gt;滑动窗口协议(sliding-window protocol)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;扩展FSM&lt;/strong&gt;：基于ACK、无NAK的GBN协议的发送方和接收方描述。&lt;/p&gt;
+&lt;p&gt;(FSM: Finite-State Machine, 有限状态机)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/ExtendedFSM.svg&#34; alt=&#34;ExtendedFSM&#34;&gt;&lt;/p&gt;
+&lt;p&gt;GBN发送方必须响应三种类型事件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;上层的调用&lt;/em&gt;。当上层调用rdt_send()时，发送方首先检查发送窗口是否已满。如果未满，则产生一个分组并更新变量；如果已满，则发送方将数据返回给上层，隐式地指示窗口已满，过一会儿再试。实际中发送方更可能缓存这些数据或使用同步机制(仅当窗口不满时才允许上层调用rdt_send())。&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;收到一个ACK&lt;/em&gt;。对序号为n的分组的确认采取&lt;strong&gt;累计确认&lt;/strong&gt;，表明接收方已正确收到序号为n的之前(包括n)的所有分组。&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;超时事件&lt;/em&gt;。发生超时时，发送方重传所有已发送但还未被确认过的分组。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;GBN协议中，接收方丢弃所有的失序分组，即不需要缓存任何失序分组，因为如果分组丢失，发送方会重传丢失的分组和之后的分组。&lt;/p&gt;
+&lt;h3 id=&#34;选择重传sr&#34;&gt;选择重传(SR)&lt;/h3&gt;
+&lt;p&gt;GBN解决了停等协议中的信道利用率的问题但GBN本身也存在着一些性能问题，当窗口长度和带宽时延都很大时，单个分组的差错就能引起GBN重传大量分组，但许多分组没有必要重传。&lt;/p&gt;
+&lt;p&gt;选择重传(SR)协议通过让发送方仅重传那些它怀疑在接收方出错的分组而避免了不必要的重传。这种方式要求接收方逐个地确认正确接收地分组&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SR%E6%93%8D%E4%BD%9C.svg&#34; alt=&#34;SR操作&#34;&gt;&lt;/p&gt;
+&lt;p&gt;?对于SR协议而言，窗口长度必须小于或等于序号空间大小的一半&lt;/p&gt;
+&lt;h2 id=&#34;面向连接的运输tcp&#34;&gt;面向连接的运输：TCP&lt;/h2&gt;
+&lt;h3 id=&#34;tcp连接&#34;&gt;TCP连接&lt;/h3&gt;
+&lt;p&gt;TCP被称为时&lt;strong&gt;面向连接的&lt;/strong&gt;是因为一个进程向另一个进程发送数据之前，这两个进程必须先相互握手，即相互发送一些预备报文来建立确保数据传输的参数。&lt;/p&gt;
+&lt;p&gt;这样的连接不是一条端到端的连接电路，而是&lt;strong&gt;逻辑连接&lt;/strong&gt;，这种链接仅仅存在于两个通信端系统的TCP程序中。TCP协议只在端系统中运行，不在中间的网络元素中运行，中间路由看不到TCP连接，只能看到数据报。&lt;/p&gt;
+&lt;p&gt;TCP连接提供的是&lt;strong&gt;全双工&lt;/strong&gt;服务，进程之间的TCP连接可以双向传输数据；TCP是&lt;strong&gt;点对点&lt;/strong&gt;连接，只能在一个发送方和一个接收方之间传输。&lt;/p&gt;
+&lt;h4 id=&#34;tcp建立连接的过程&#34;&gt;TCP建立连接的过程&lt;/h4&gt;
+&lt;p&gt;客户首先发送一个特殊TCP报文段，服务器用另一个特殊报文段响应，最后客户再用第三个特殊报文段作为响应，这种建立连接的过程通常被称为&lt;strong&gt;三次握手&lt;/strong&gt;。第三个报文段可以承载有效荷载(可以包含应用层数据)，前两个不行。&lt;/p&gt;
+&lt;p&gt;建立连接后，两个应用程序进程之间就可以相互方数据了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/TCP%E7%BC%93%E5%AD%98.svg&#34; alt=&#34;TCP缓存&#34;&gt;&lt;/p&gt;
+&lt;p&gt;客户进程通过套接字传递数据流，数据一旦通过套接字，就由客户中运行的TCP控制，TCP将这些数据引入&lt;strong&gt;发送缓存&lt;/strong&gt;，并不时地从发送缓存中取出一块数据并将数据传递到网络层。TCP从缓存中取出并放入报文段中的数据数量受到**最大报文段长度(Maximum Segment Size, MSS)**的限制，MSS的典型值为1460字节。&lt;/p&gt;
+&lt;h3 id=&#34;tcp报文段结构&#34;&gt;TCP报文段结构&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;C:%5CUsers%5C83621%5COneDrive%5CUser%5CDocument%5C0_blog%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%5C3_transportLayer%5CSVG%5CTCPsegmentStructure.svg&#34; alt=&#34;TCPsegmentStructure&#34;&gt;&lt;/p&gt;
+&lt;p&gt;TCP报文由&lt;strong&gt;首部字段&lt;/strong&gt;和一个&lt;strong&gt;数据字段&lt;/strong&gt;组成。首部一般是20字节，比UDP多12字节。&lt;/p&gt;
+&lt;h4 id=&#34;tcp报文段首部&#34;&gt;TCP报文段首部&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;源端口号&lt;/strong&gt;和&lt;strong&gt;目的端口号&lt;/strong&gt;：被用于多路复用和多路分解。&lt;/li&gt;
+&lt;li&gt;32比特的&lt;strong&gt;序号字段&lt;/strong&gt;和32比特的&lt;strong&gt;确认号字段&lt;/strong&gt;：用来实现可靠传输服务（是以字节来计算，不是按段来计算）&lt;/li&gt;
+&lt;li&gt;4比特的&lt;strong&gt;首部长度字段&lt;/strong&gt;：指示TCP首部长度&lt;/li&gt;
+&lt;li&gt;6比特的&lt;strong&gt;标志字段&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;ACK比特用于确认字段中的值是有效的&lt;/li&gt;
+&lt;li&gt;RST、SYN、FIN比特用于连接的建立和拆除&lt;/li&gt;
+&lt;li&gt;CWR、ECE比特在明确拥塞报告中使用&lt;/li&gt;
+&lt;li&gt;URG比特用来指示报文段中被发送端的上层实体置为紧急的数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;16比特的&lt;strong&gt;接收窗口字段&lt;/strong&gt;：用于指示接收方愿意接收的字节数量&lt;/li&gt;
+&lt;li&gt;16比特的&lt;strong&gt;检验和字段&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;16比特的&lt;strong&gt;紧急数据指针字段&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;选项字段：用于发送方和接收方协商最大报文段长度&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;序号和确认号&#34;&gt;序号和确认号&lt;/h4&gt;
+&lt;p&gt;这两个字段是TCP可靠传输服务的关键&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一个报文的序号&lt;/strong&gt;是该报文段首字节的字节流编号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例如，数据流由一个包含500,000字节的文件组成，其MSS为1000字节，则TCP将为该数据流创建500个报文段，第一个报文段分配的序号是0，第二个报文段的序号是1000，以此类推。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;主机A填充进报文段的&lt;strong&gt;确认号&lt;/strong&gt;是主机A期望从主机B收到的&lt;strong&gt;下一个字节的序号&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;例如，主机A已经收到来自B的编号为0~255的所有字节，它打算发一个报文段给B期望收到256以及之后的所有字节，于是它就在报文段的确认号字段填上256&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;累计确认&lt;/strong&gt;：假设主机A已经先后收到了主机B发送的两个报文段（分别为字节0~535和字节900~1000的报文段），由于一些原因并未收到中间的536~899的报文段，为了完整地建立主机B地数据流，仍在等待字节536及之后的字节，因此A给B发送地下一个报文地确认号字段中包含536，因此TCP只确认该流中第一个丢失字节为止的字节。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;往返时间的估计与超时&#34;&gt;往返时间的估计与超时&lt;/h3&gt;
+&lt;h4 id=&#34;估计往返时间&#34;&gt;估计往返时间&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;SampleRTT&lt;/code&gt;：从报文段被发出（交给IP）到收到该报文段的确认之间的时间量，多数TCP只在某个时刻做一次&lt;code&gt;SampleRTT&lt;/code&gt;的测量，不是为每个发送的报文都做测量。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;问题：为什么TCP仅为传输一次的报文段测量&lt;code&gt;SampleRTT&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;随着网络状态课端系统负载的变化，报文段的SampleRTT在不断地变化，为了找到一个典型地RTT，要采取一种方法对SampleRTT取平均，TCP会根据以下赋值公式来更新EstimatedRTT：
+$$
+EstimatedRTT = (1 - a) * EstimatedRTT + a * SampleRTT \&lt;br&gt;
+在[RFC6298]标准中推荐的a值为0.125
+$$
+上述的这种计算平均的方法被称为&lt;em&gt;指数加权移动平均&lt;/em&gt;，这个加权平均最最近的样本赋予的权值要大于对旧样本赋予的权值。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;还有一种方式：测量RTT的变化。[RFC6298]定义了&lt;em&gt;RTT偏差DevRTT&lt;/em&gt;：
+$$
+DevRTT = (1 - \beta) * DevRTT + \beta * |SampleRTT - EstimatedRTT| \&lt;br&gt;
+\beta 的推荐值为0.25
+$$&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;设置和管理重传超时间隔&#34;&gt;设置和管理重传超时间隔&lt;/h4&gt;
+&lt;p&gt;确认超时间隔的值：
+$$
+TimeoutInterval = EstimatedRTT + 4 * DevRTT \&lt;br&gt;
+推荐的TimeoutInterval初始值为1秒
+$$&lt;/p&gt;
+&lt;h3 id=&#34;可靠数据传输&#34;&gt;可靠数据传输&lt;/h3&gt;
+&lt;h3 id=&#34;流量控制接收窗口字段&#34;&gt;流量控制（接收窗口字段）&lt;/h3&gt;
+&lt;p&gt;一条TCP连接的每一侧的主机都为该连接设置了&lt;strong&gt;接收缓存&lt;/strong&gt;，当TCP连接收到正确的、按序的字节后，就会将数据放入缓存，应用程序就会从该缓存中根据实际情况读取数据，接收方可能不会立即读取刚刚放入缓存中的数据，他可能忙于别的服务。因此，可能由于发送方发送得太多太快，接收方读取得太慢导致&lt;strong&gt;缓存溢出&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;所以，TCP为其应用程序提供了&lt;strong&gt;流量控制服务&lt;/strong&gt;，来防止接收方的缓存溢出，该服务是一个速度匹配服务，即将发送方的发送速率与接收方的读取速率相匹配。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意，TCP发送方也可能由于IP网络的拥塞而被遏制，这种形式的对于发送方的控制被称为&lt;strong&gt;拥塞控制&lt;/strong&gt;，它与流量控制是两个完全不相同的概念，它们是针对完全不同的原因而采取的措施。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;TCP通过让发送方维护一个&lt;strong&gt;接收窗口&lt;/strong&gt;的变量来进行流量控制，接收窗口用来给发送方指示接收方剩余的缓存空间数量，TCP是双全工的，因此两端的发送方都各自维护一个接收窗口。&lt;/p&gt;
+&lt;p&gt;假设主机A通过一条TCP连接向主机B发送一个文件，B为该连接分配了一个接收缓存，用&lt;code&gt;RecBuffer&lt;/code&gt;来表示其大小，定义以下的变量：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;LastByteRead&lt;/code&gt;：主机B的应用程序从缓存中读取的数据流的最后一个字节的编号&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LastByteRcved&lt;/code&gt;：从网络中到达并且已经放入B的缓存中的数据流的最后一个字节的编号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以为了不使缓存溢出，下式必须成立：
+$$
+LastByteRcved - LastByteRead \le RcvBuffer
+$$
+接收窗口用&lt;code&gt;rwnd&lt;/code&gt;来表示，根据缓存可用空间大小来设置：
+$$
+rwnd = RcvBuffer - [LastByteRcvd - LastByteRead]
+$$
+主机A要轮流跟踪两个变量：&lt;code&gt;LastByteSent&lt;/code&gt;和&lt;code&gt;LastByteAcked&lt;/code&gt;，分别指发送到连接中的数据流的最后一个字节的编号和已经确认接收的数据流的最后一个字节的编号， 因此，两者的差就代表了主机A发送到连接中但还未被确认的数据量，只要将这个数据量控制在值&lt;code&gt;rwnd&lt;/code&gt;以内，就不会使B的接收缓存溢出。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意一种特殊情况，假设B的缓存已满即rwnd=0，B将这个消息发送给A后，假设B没有任何的数据要发送给A，此时B的应用程序将通过不断读取数据来清空缓存，TCP并不向主机A发送带有rwnd新值的报文段，这样，A不知道B的接收缓存有新的空间，因为A被阻塞不能发送数据。解决这个问题的方法是：TCP规定当B的接收缓存为0时，A继续发送只有一个字数据的报文，这些报文段将会被B确认，最终缓存开始清空，返回一个具有新rwnd值的报文段。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;tcp连接管理&#34;&gt;TCP连接管理&lt;/h3&gt;
+&lt;p&gt;该节中将详细说明建立和拆除一条TCP连接的全过程。&lt;/p&gt;
+&lt;h4 id=&#34;3次握手建立tcp连接&#34;&gt;3次握手建立TCP连接：&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;第一步：客户端的TCP首先向服务端TCP发送一个特殊TCP报文段，该报文段不含任何应用层的数据，仅将首部中的一个标志位（&lt;code&gt;SYN&lt;/code&gt;比特）置为1，因此给报文段被称为&lt;em&gt;SYN报文段&lt;/em&gt;。此外客户会随机选择一个&lt;em&gt;初始序号（client_isn）&lt;/em&gt;，将此编号放入起始SYN报文段的序号字段中。最后该报文段被封装在一个IP数据报中，发送给服务器。&lt;/li&gt;
+&lt;li&gt;第二步：包含TCP SYN报文段的IP数据包到达服务器后，服务器会从中提取TCP SYN报文段，为该TCP连接分配缓存和变量，并向客户TCP发送允许连接的报文段（该报文段被称为&lt;em&gt;SYNACK报文段&lt;/em&gt;）。该报文段不包含应用层数据，但首部中包含了3个重要信息：
+&lt;ul&gt;
+&lt;li&gt;SYN比特被置为1&lt;/li&gt;
+&lt;li&gt;该TCP报文段首部的确认号字段被置为client_isn + 1&lt;/li&gt;
+&lt;li&gt;服务器选择自己的初始序号（server_isn）并将其置放到报文首部的序号字段中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;第三步：收到SYNACK报文段后，客户也要为该连接分配缓存和变量，然后客户主机向服务器发送另一个报文段，该报文段对连接进行确认（通过将TCP报文段首部的确认字段置为server_isn + 1来完成），因为连接已经建立，所以SYN比特被置为0，这个报文可以携带应用层数据。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;4次挥手终止tcp连接的过程&#34;&gt;4次挥手终止TCP连接的过程&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/TCP%E7%BB%88%E6%AD%A2%E8%BF%9E%E6%8E%A5.svg&#34; alt=&#34;TCP终止连接&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如图，客户进程发出一个关闭连接的命令，这会引起客户TCP向服务器TCP发送一个特殊TCP报文段，该报文让其首部中的&lt;code&gt;FIN比特&lt;/code&gt;标志位置为1.&lt;/p&gt;
+&lt;p&gt;服务器接收该报文段后，向发送方返回一个确认报文段。&lt;/p&gt;
+&lt;p&gt;然后，服务器发送自己的终止报文段，其中&lt;code&gt;FIN比特&lt;/code&gt;被置为1.&lt;/p&gt;
+&lt;p&gt;最终客户对这个服务器的终止报文段进行确认，此时两台主机上的资源（缓存和变量）都被释放。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;SYN洪泛攻击&lt;/p&gt;
+&lt;p&gt;客户（攻击者）发送大量TCP SYN报文段，而不完成第三次握手的步骤，这种情况下服务器不断为这些&lt;em&gt;半开连接&lt;/em&gt;分配资源导致服务器的连接资源被消耗殆尽。&lt;/p&gt;
+&lt;p&gt;解决方法是使用&lt;strong&gt;SYN cookie&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当服务器收到一个SYN报文段时，并不知道它是合法用户还是SYN洪泛攻击，所以服务器不会为其生成半开连接。相反，服务器生成一个&lt;em&gt;初始TCP序列号&lt;/em&gt;，该序列号是SYN报文段的源和目的IP地址与端口号以及仅有该服务器知道的一个秘密数组成的一个复杂函数，该序列号被称为&lt;em&gt;cookie&lt;/em&gt;。服务器并不记忆该cookie或对应于SYN的其他状态信息。&lt;/li&gt;
+&lt;li&gt;若客户合法，它将返回一个ACK报文段，服务器借助cookie验证该ACK于前面发送的某些SYN是否对应。对于合法ACK，其确认字段的值等于SYNACK报文段的序号值（此时为cookie值）加1，以此为依据，如果二者相等，服务器认为该ACK对应于较早的SYN报文段，它是合法的，服务器将生成一个具有套接字的全开连接。&lt;/li&gt;
+&lt;li&gt;另一方面，如果客户没有返回ACK报文段，初始SYN并未对服务器产生影响，因为服务器没有为它分配资源。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;几个特殊通信连接的情况&#34;&gt;几个特殊通信连接的情况&lt;/h4&gt;
+&lt;p&gt;namp端口扫描工具对一台主机的目的端口6789发送一个特殊的TCP SYN报文段，有3中可能的输出：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;源主机从目标主机接收到一个TCPACK报文段，意味着目标主机上一个应用程序使用TCP端口67889运行，nmap返回打开。&lt;/li&gt;
+&lt;li&gt;源主机从目标主机接收到一个TCP RST报文段，意味着目标主机没有运行一个使用TCP端口6789的应用程序，但知道发送的报文段没有被中间的任何防火墙阻挡。&lt;/li&gt;
+&lt;li&gt;源主机什么也没收到，意味着很可能被防火墙阻挡。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;拥塞控制原理&#34;&gt;拥塞控制原理&lt;/h2&gt;
+&lt;h3 id=&#34;拥塞控制方法&#34;&gt;拥塞控制方法&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;端到端拥塞控制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;该控制方法中，网络层没有为运输层拥塞控制提供显式帮助。端系统必须通过对网络行为的观察来推断网络拥塞1&lt;/p&gt;- http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -934,114 +1228,6 @@ git checkout master
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ chmod +x deploy.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;至此就完成了，以后在更新的时候只需要输入一条命令&lt;code&gt;$ sh deploy.sh&lt;/code&gt;就可以完成所有操作了。&lt;/p&gt;
 - http://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>储存类别、链接和内存管理</title>
-        <link>http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
-        <pubDate>Fri, 18 Oct 2019 10:59:58 +0000</pubDate>
-        
-        <guid>http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/ -&lt;p&gt;一、储存类别&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;对象：具有一定大小空间的一块内存。&lt;/li&gt;
-&lt;li&gt;标识符：用来指定特定对象的内容。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol&gt;
-&lt;li&gt;作用域
-&lt;ul&gt;
-&lt;li&gt;描述了程序中可访问标识符的区域。&lt;/li&gt;
-&lt;li&gt;分类：
-&lt;ul&gt;
-&lt;li&gt;块作用域&lt;/li&gt;
-&lt;li&gt;函数作用域&lt;/li&gt;
-&lt;li&gt;文件作用域&lt;/li&gt;
-&lt;li&gt;函数原型作用域：从形参定义处到原型声明结束。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;全局变量：也称为文件作用域变量。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;链接
-&lt;ul&gt;
-&lt;li&gt;C变量的三种链接属性：
-&lt;ul&gt;
-&lt;li&gt;外部链接：该类型变量可以在多文件程序中使用&lt;/li&gt;
-&lt;li&gt;内部链接：该类型变量只能在一个翻译单元中使用&lt;/li&gt;
-&lt;li&gt;无链接：具有块作用域、函数作用域或函数原型作用域的变量&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;储存类别说明符&lt;code&gt;static&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;存储期：
-&lt;ul&gt;
-&lt;li&gt;C对象有4种
-&lt;ul&gt;
-&lt;li&gt;静态存储期：在程序的执行期间一直存在，文件作用域变量都具有静态存储期。&lt;/li&gt;
-&lt;li&gt;线性存储期：用于并发程序设计。&lt;/li&gt;
-&lt;li&gt;自动存储期：所有局部变量都有该性质，在函数调用时被创建，离开函数时被销毁。&lt;/li&gt;
-&lt;li&gt;动态分配存储期：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;自动变量
-&lt;ul&gt;
-&lt;li&gt;属于自动存储类别，有自动存储期、块作用域、无链接。&lt;/li&gt;
-&lt;li&gt;可显式使用关键词&lt;code&gt;auto&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;块作用域和无链接意味着只有在&lt;strong&gt;变量定义的块中&lt;/strong&gt;才能通过变量名访问该变量。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;寄存器变量
-&lt;ul&gt;
-&lt;li&gt;特殊的自动变量。也是自动存储期、块作用域、无链接。&lt;/li&gt;
-&lt;li&gt;可以显式使用关键词&lt;code&gt;register&lt;/code&gt;，是一种请求，编译器可能会拒绝你的请求，此时就变成了普通变量，但仍然无法访问该变量的内存。&lt;/li&gt;
-&lt;li&gt;作用是储存在最快的可用内存中，能够以更快的速度访问。&lt;/li&gt;
-&lt;li&gt;存储在寄存器中而非内存中，所以无法获取寄存器变量的地址。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;块作用域的静态变量
-&lt;ul&gt;
-&lt;li&gt;静态指的是在内存中原地不动，但它的值可以改变。&lt;/li&gt;
-&lt;li&gt;具有块作用域、无链接、有静态存储期。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;在块中&lt;/strong&gt;以&lt;code&gt;static&lt;/code&gt;(提供静态存储期)声明这种变量。&lt;/li&gt;
-&lt;li&gt;如果未显式地初始化&lt;strong&gt;静态变量&lt;/strong&gt;，它们会被&lt;strong&gt;初始化为0&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;外部链接的静态变量
-&lt;ul&gt;
-&lt;li&gt;具有文件作用域、外部链接、静态存储期。&lt;/li&gt;
-&lt;li&gt;有时又称为外部存储类型、该类别地变量被称为&lt;strong&gt;外部变量&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;创建过程：在&lt;strong&gt;所有函数外&lt;/strong&gt;面(定义性声明)创建这个外部变量。&lt;/li&gt;
-&lt;li&gt;函数使用该变量时，为了&lt;strong&gt;指出使用的是外部变量&lt;/strong&gt;，可以用关键字&lt;code&gt;extern&lt;/code&gt;再次声明。&lt;/li&gt;
-&lt;li&gt;如果一个源文件使用的外部变量定义在&lt;strong&gt;其他文件&lt;/strong&gt;中，则必须用&lt;code&gt;extern&lt;/code&gt;在该文件中声明该变量。&lt;/li&gt;
-&lt;li&gt;定义式声明、引用式声明。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;内部链接的静态变量
-&lt;ul&gt;
-&lt;li&gt;具有静态存储期、文件作用域、内部链接。&lt;/li&gt;
-&lt;li&gt;在&lt;strong&gt;所有函数外部&lt;/strong&gt;，用存储类别说明符&lt;code&gt;static&lt;/code&gt;定义该类变量。&lt;/li&gt;
-&lt;li&gt;该类型变量只能用于&lt;strong&gt;同一个文件中的函数&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;可以在函数中使用类别说明符&lt;code&gt;extern&lt;/code&gt;重复声明该类型变量，这并不会改变其链接属性。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;多文件(多翻译单元)
-&lt;ul&gt;
-&lt;li&gt;程序在多个翻译单元中才能体现区别内部和外部变量的重要性。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;存储类别的选择
-&lt;ul&gt;
-&lt;li&gt;正常情况下多使用自动存储类别，使用外部变量可能在不经意中修改变量的值，count类型变量除外。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;二、&lt;/p&gt;
-- http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/ - 2019-2021 By Jialong</description>
         </item>
     
     

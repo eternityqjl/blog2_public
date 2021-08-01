@@ -6,9 +6,117 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 29 Jul 2021 08:44:21 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 01 Aug 2021 20:20:52 +0800</lastBuildDate>
     
         <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>储存类别、链接和内存管理</title>
+        <link>http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
+        <pubDate>Fri, 18 Oct 2019 10:59:58 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/ -&lt;p&gt;一、储存类别&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对象：具有一定大小空间的一块内存。&lt;/li&gt;
+&lt;li&gt;标识符：用来指定特定对象的内容。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;作用域
+&lt;ul&gt;
+&lt;li&gt;描述了程序中可访问标识符的区域。&lt;/li&gt;
+&lt;li&gt;分类：
+&lt;ul&gt;
+&lt;li&gt;块作用域&lt;/li&gt;
+&lt;li&gt;函数作用域&lt;/li&gt;
+&lt;li&gt;文件作用域&lt;/li&gt;
+&lt;li&gt;函数原型作用域：从形参定义处到原型声明结束。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;全局变量：也称为文件作用域变量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;链接
+&lt;ul&gt;
+&lt;li&gt;C变量的三种链接属性：
+&lt;ul&gt;
+&lt;li&gt;外部链接：该类型变量可以在多文件程序中使用&lt;/li&gt;
+&lt;li&gt;内部链接：该类型变量只能在一个翻译单元中使用&lt;/li&gt;
+&lt;li&gt;无链接：具有块作用域、函数作用域或函数原型作用域的变量&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;储存类别说明符&lt;code&gt;static&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;存储期：
+&lt;ul&gt;
+&lt;li&gt;C对象有4种
+&lt;ul&gt;
+&lt;li&gt;静态存储期：在程序的执行期间一直存在，文件作用域变量都具有静态存储期。&lt;/li&gt;
+&lt;li&gt;线性存储期：用于并发程序设计。&lt;/li&gt;
+&lt;li&gt;自动存储期：所有局部变量都有该性质，在函数调用时被创建，离开函数时被销毁。&lt;/li&gt;
+&lt;li&gt;动态分配存储期：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;自动变量
+&lt;ul&gt;
+&lt;li&gt;属于自动存储类别，有自动存储期、块作用域、无链接。&lt;/li&gt;
+&lt;li&gt;可显式使用关键词&lt;code&gt;auto&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;块作用域和无链接意味着只有在&lt;strong&gt;变量定义的块中&lt;/strong&gt;才能通过变量名访问该变量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;寄存器变量
+&lt;ul&gt;
+&lt;li&gt;特殊的自动变量。也是自动存储期、块作用域、无链接。&lt;/li&gt;
+&lt;li&gt;可以显式使用关键词&lt;code&gt;register&lt;/code&gt;，是一种请求，编译器可能会拒绝你的请求，此时就变成了普通变量，但仍然无法访问该变量的内存。&lt;/li&gt;
+&lt;li&gt;作用是储存在最快的可用内存中，能够以更快的速度访问。&lt;/li&gt;
+&lt;li&gt;存储在寄存器中而非内存中，所以无法获取寄存器变量的地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;块作用域的静态变量
+&lt;ul&gt;
+&lt;li&gt;静态指的是在内存中原地不动，但它的值可以改变。&lt;/li&gt;
+&lt;li&gt;具有块作用域、无链接、有静态存储期。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;在块中&lt;/strong&gt;以&lt;code&gt;static&lt;/code&gt;(提供静态存储期)声明这种变量。&lt;/li&gt;
+&lt;li&gt;如果未显式地初始化&lt;strong&gt;静态变量&lt;/strong&gt;，它们会被&lt;strong&gt;初始化为0&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;外部链接的静态变量
+&lt;ul&gt;
+&lt;li&gt;具有文件作用域、外部链接、静态存储期。&lt;/li&gt;
+&lt;li&gt;有时又称为外部存储类型、该类别地变量被称为&lt;strong&gt;外部变量&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;创建过程：在&lt;strong&gt;所有函数外&lt;/strong&gt;面(定义性声明)创建这个外部变量。&lt;/li&gt;
+&lt;li&gt;函数使用该变量时，为了&lt;strong&gt;指出使用的是外部变量&lt;/strong&gt;，可以用关键字&lt;code&gt;extern&lt;/code&gt;再次声明。&lt;/li&gt;
+&lt;li&gt;如果一个源文件使用的外部变量定义在&lt;strong&gt;其他文件&lt;/strong&gt;中，则必须用&lt;code&gt;extern&lt;/code&gt;在该文件中声明该变量。&lt;/li&gt;
+&lt;li&gt;定义式声明、引用式声明。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;内部链接的静态变量
+&lt;ul&gt;
+&lt;li&gt;具有静态存储期、文件作用域、内部链接。&lt;/li&gt;
+&lt;li&gt;在&lt;strong&gt;所有函数外部&lt;/strong&gt;，用存储类别说明符&lt;code&gt;static&lt;/code&gt;定义该类变量。&lt;/li&gt;
+&lt;li&gt;该类型变量只能用于&lt;strong&gt;同一个文件中的函数&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;可以在函数中使用类别说明符&lt;code&gt;extern&lt;/code&gt;重复声明该类型变量，这并不会改变其链接属性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;多文件(多翻译单元)
+&lt;ul&gt;
+&lt;li&gt;程序在多个翻译单元中才能体现区别内部和外部变量的重要性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;存储类别的选择
+&lt;ul&gt;
+&lt;li&gt;正常情况下多使用自动存储类别，使用外部变量可能在不经意中修改变量的值，count类型变量除外。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;二、&lt;/p&gt;
+- http://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
