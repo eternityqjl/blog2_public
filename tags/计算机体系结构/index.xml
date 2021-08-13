@@ -7,7 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 12 Jul 2021 21:26:27 +0800</lastBuildDate><atom:link href="http://eternityqjl.top/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Aug 2021 16:08:05 +0800</lastBuildDate><atom:link href="http://eternityqjl.top/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>csapp: 3.程序的机器级表示</title>
+      <link>http://eternityqjl.top/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</link>
+      <pubDate>Mon, 09 Aug 2021 16:08:05 +0800</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</guid>
+      <description>第三章 程序的机器级表示 历史观点 典型的编译器在将C程序结构变换成机器代码时所做的转换。
+英特尔X86-64处理器的发展历史。
+从8086到Core i7
+程序编码 机器级代码 对于机器级编程来说，两种抽象非常重要：
+ 由指令集体系结构或**指令集架构(ISA, Instruction Set Architecture)**来定义机器级程序的格式和行为，它定义了处理器状态、指令格式，以及每条指令对状态的影响。 机器级程序使用的内存地址是虚拟地址。  x86-64机器码中，一些通常对C语言隐藏的处理器状态都是可见的：
+ 程序计数器(PC，在x86-64中用%rip表示)：给出将要执行的下一条指令在内存中的地址 整数寄存器文件：包含16个命名的位置，分别存储64位的值，这些寄存器可以存储地址(对应C语言指针)或整数数据。 条件码寄存器：保存最近执行的算数或逻辑指令的状态信息，用来实现控制或数据流中的条件变化。  x86-64的虚拟地址由64位的字表示，但目前这些地址的高16位必须设为零，相当于可以表示$2^{48}$或256TB内存范围内的一个字节。及目前的64位计算机只使用48位来表示地址范围。
+代码示例 机器对产生这些汇编语言指令的源代码几乎一无所知，全都是字节序列。
+生成可执行的代码需要对一组目标代码文件运行链接器，这组目标代码文件中必须含有一个main函数。
+链接器的任务之一就是为函数调用找到匹配的函数的可执行代码的位置。
+反汇编器
+关于格式的注解 ATT与Intel汇编代码格式的区别
+ Intel代码省略了指示大小的后缀。例如看到的指令为push和mov而不是pushq和movq。 Intel代码胜率了寄存器名字前的%符号。 Intel代码  数据格式 Intel用字(word)表示16位数据类型，因此称32位数为双字，称64位数位四字。
+下表给出了C语言基本数据类型对应的x86-64表示：
+   C声明 Intel数据类型 汇编代码后缀 大小(字节)     char 字节 b 1   short 字 w 2   int 双字 l 4   long 四字 q 8   char* 四字 q 8   float 单精度 s 4   double 双精度 l 8    大多数GCC生成的汇编代码指令都有一个字符的后缀，表明操作数的大小。例如数据传送指令有四个变种：movb(传送字节)、movw(传送字)、movl(传送双字)、movq(传送四字)。</description>
+    </item>
+    
     <item>
       <title>csapp: 2.信息的表示和处理（部分完成）</title>
       <link>http://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>

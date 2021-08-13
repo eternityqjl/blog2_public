@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>算法 on Jialong&#39;s Blog</title>
+    <link>http://eternityqjl.top/tags/%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 算法 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Fri, 13 Aug 2021 16:15:00 +0800</lastBuildDate><atom:link href="http://eternityqjl.top/tags/%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>算法的时间复杂度和空间复杂度</title>
+      <link>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
+      <pubDate>Fri, 13 Aug 2021 16:15:00 +0800</pubDate>
+      
+      <guid>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
+      <description>用来衡量不同算法之间的优劣。
+ 时间维度：执行当前算法所消耗的时间，用时间复杂度来描述。   空间维度：执行当前算法需要占用的内存空间，我们通常用空间复杂度来描述。  时间复杂度 大O符号表示法 ，即 T(n) = O(f(n))，这是时间复杂度的公式，f(n)表示每行代码执行次数之和，O表示正比例关系。
+我们通过以下一个程序举例：
+for(i=1; i&amp;lt;=n; ++i) { j = i; j++; } 假设每行代码的执行时间都一样，我们用1颗粒时间来表示，那么这个例子的第一行耗时是1个颗粒时间，第三行的执行时间是 n个颗粒时间，第四行的执行时间也是 n个颗粒时间，那么总时间就是 1颗粒时间 + n颗粒时间 + n颗粒时间 ，即 (1+2n)个颗粒时间，即： T(n) = (1+2n)*颗粒时间，从这个结果可以看出，这个算法的耗时是随着n的变化而变化，因此，我们可以简化的将这个算法的时间复杂度表示为：T(n) = O(n)
+大O符号表示法并不是用于来真实代表算法的执行时间的，它是用来表示代码执行时间的增长变化趋势的。
+如果n无限大的时候，T(n) = time(1+2n)中的常量1就没有意义了，倍数2也意义不大。因此直接简化为T(n) = O(n) 就可以了。
+时间复杂度级 常见的时间复杂度级有：
+ 常数阶O(1) 对数阶O(logN) 线性阶O(n) 线性对数阶O(nlogN) 平方阶O(n²) 立方阶O(n³) K次方阶O(n^k) 指数阶(2^n)  从上向下时间复杂度越来越大，执行效率越来越低。
+下面来选取一些来举例：
+常数阶O(1) 无论代码执行了多少行，只要是没有循环等复杂结构，那这个代码的时间复杂度就都是O(1)，如：
+int i = 1; int j = 2; ++i; j++; int m = i + j; 线性阶O(n) for(i=1; i&amp;lt;=n; ++i) { j = i; j++; } for循环中的代码会执行n遍。</description>
+    </item>
+    
+  </channel>
+</rss>

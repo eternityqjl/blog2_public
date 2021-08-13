@@ -6,9 +6,244 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 05 Aug 2021 22:23:31 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 13 Aug 2021 16:15:00 +0800</lastBuildDate>
     
         <atom:link href="http://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>csapp: 1.计算机系统漫游</title>
+        <link>http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
+        <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ -&lt;p&gt;在本书中我们将会学习到一些使用技巧，比如如何避免由于&lt;strong&gt;计算机表示数字的方式&lt;/strong&gt;引起的错误；通过一些技巧&lt;strong&gt;优化C代码&lt;/strong&gt;，以充分利用现代处理器和存储器系统的设计；了解&lt;strong&gt;编译器&lt;/strong&gt;如何实现过程调用，利用这些知识避免&lt;strong&gt;缓冲区溢出&lt;/strong&gt;错误带来的安全漏洞；学习如何识别和避免&lt;strong&gt;链接&lt;/strong&gt;时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；&lt;strong&gt;并发&lt;/strong&gt;带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。&lt;/p&gt;
+&lt;p&gt;我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;()
+{
+	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Hello, world&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;信息就是位上下文&#34;&gt;信息就是位+上下文&lt;/h2&gt;
+&lt;p&gt;8位为一个字节。&lt;/p&gt;
+&lt;p&gt;现代计算机系统使用ASCII标准来表示文本字符。即用一个&lt;strong&gt;单字节&lt;/strong&gt;大小的整数值表示一个符号。&lt;/p&gt;
+&lt;p&gt;数字的机器表示是对真值的有限近似。&lt;/p&gt;
+&lt;h2 id=&#34;程序被翻译为不同的格式&#34;&gt;程序被翻译为不同的格式&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;hello.c&lt;/code&gt;中的每条C语句都会转换为一系列低级&lt;strong&gt;机器语言&lt;/strong&gt;指令。这些指令按照&lt;strong&gt;可执行目标程序&lt;/strong&gt;格式打包，以二进制磁盘文件的形式存放。&lt;/p&gt;
+&lt;p&gt;编译系统：&lt;/p&gt;
+&lt;p&gt;hello.c(源程序，文本) -&amp;gt; &lt;code&gt;预处理器(cpp)&lt;/code&gt; -&amp;gt; hello.i(修改了的源程序，文本) -&amp;gt; &lt;code&gt;编译器(ccl)&lt;/code&gt; -&amp;gt; hello.s(汇编程序，文本) -&amp;gt; &lt;code&gt;汇编器&lt;/code&gt; -&amp;gt; hello.o(可重定位目标程序，二进制) -&amp;gt; &lt;code&gt;链接器&lt;/code&gt; -&amp;gt; hello(可执行目标程序，二进制)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;预处理阶段：预处理器(cpp)根据以字符&lt;code&gt;#&lt;/code&gt;开头的命令，修改原始C程序。例如&lt;code&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/code&gt;告诉预处理器读取系统头文件的内容，将其插入程序文本中，得到另一个C程序，以&lt;code&gt;.i&lt;/code&gt;为扩展名。&lt;/li&gt;
+&lt;li&gt;编译阶段：编译器(ccl将&lt;code&gt;hello.i&lt;/code&gt;翻译为&lt;code&gt;hello.s&lt;/code&gt;，其包含了&lt;strong&gt;汇编语言程序&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;汇编阶段：汇编器(as)将&lt;code&gt;hello.s&lt;/code&gt;翻译为&lt;strong&gt;机器语言指令&lt;/strong&gt;，将这些指令打包为&lt;strong&gt;可重定位目标程序&lt;/strong&gt;，将结果保存在&lt;code&gt;hello.o&lt;/code&gt;中，该文件为二进制文件。&lt;/li&gt;
+&lt;li&gt;链接阶段：hello程序调用了printf函数，它是C编译器提供的标准C库中的一个函数，printf函数存在于一个名为&lt;code&gt;printf.o&lt;/code&gt;的单独预编译好的目标文件中，这个文件要以某种形式合并到我们的&lt;code&gt;hello.o&lt;/code&gt;程序中，链接器(ld)负责这种合并，合并后就得到了&lt;strong&gt;可执行目标文件&lt;/strong&gt;&lt;code&gt;hello&lt;/code&gt;，其可以被加载到内存中，由系统执行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;编译器的工作方式&#34;&gt;编译器的工作方式&lt;/h2&gt;
+&lt;p&gt;有一些重要原因使得我们必须知道编译器的工作方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;优化程序性能。我们需要了解一些机器代码及编译器将不同C语句转化为机器代码的方式，例如一个switch语句是否总比一系列if-else语句高效。&lt;/li&gt;
+&lt;li&gt;理解链接时出现的错误。&lt;/li&gt;
+&lt;li&gt;避免安全漏洞。缓冲区溢出错误是大多网络和服务器安全漏洞的主要原因。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;处理器读取并解释储存在内存中的指令&#34;&gt;处理器读取并解释储存在内存中的指令&lt;/h2&gt;
+&lt;p&gt;要在Unix系统运行可执行目标文件hello，需要将文件名输入shell应用程序中：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ./hello
+hello,world
+linux&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;系统的硬件组成&#34;&gt;系统的硬件组成&lt;/h3&gt;
+&lt;h4 id=&#34;总线&#34;&gt;总线&lt;/h4&gt;
+&lt;p&gt;贯穿整个系统，负责信息字节在各个部件之间传递。&lt;/p&gt;
+&lt;p&gt;通常被设计为传送定长的字节块，即&lt;strong&gt;字&lt;/strong&gt;，字中的字节数（即字长）是基本的系统参数，如今大多数机器中字长为8字节(即64位)，4字节(32位)在逐渐被64位取代。&lt;/p&gt;
+&lt;h4 id=&#34;io设备&#34;&gt;I/O设备&lt;/h4&gt;
+&lt;p&gt;每个I/O设备通过&lt;strong&gt;控制器或适配器&lt;/strong&gt;与I/O总线相连，控制器为I/O设备本身或系统主板上的芯片组，适配器为插在主板插槽上的卡。&lt;/p&gt;
+&lt;h4 id=&#34;主存ram&#34;&gt;主存RAM&lt;/h4&gt;
+&lt;p&gt;临时存储设备，在处理器执行程序时用来存放程序和程序处理的数据。由一组&lt;strong&gt;动态随机存取存储器(DRAM)&lt;strong&gt;芯片组成。逻辑上，存储器是一个线性的字节数组，每个字节都有其唯一的&lt;/strong&gt;地址&lt;/strong&gt;(数组索引)，这些地址从零开始。&lt;/p&gt;
+&lt;h4 id=&#34;处理器&#34;&gt;处理器&lt;/h4&gt;
+&lt;p&gt;CPU是解释或执行存储在主存中指令的引擎，处理器的核心是一个大小为一个字的存储设备(&lt;strong&gt;寄存器&lt;/strong&gt;)，称为程序计数器(PC)，PC指向主存中的某条机器语言指令（即包含该指令的地址）。&lt;/p&gt;
+&lt;p&gt;处理器在一直不停地执行程序计数器指向的指令，再更新程序计数器，使其指向下一条指令。处理器看上去是按照一个简单的指令执行模型来操作的，这个模型是&lt;strong&gt;指令集架构&lt;/strong&gt;决定的。该模型中指令按照严格的顺序执行。执行一条指令包含一系列步骤，处理器从程序计数器指向的内存中读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新PC，使其指向下一条指令，循环操作。&lt;/p&gt;
+&lt;p&gt;这样的简单操作并不多，主要围绕**主存、寄存器文件和ALU(算术逻辑单元)**进行。寄存器文件是一个小型存储设备，由一些单个字长的寄存器组成，ALU计算新的数据和地址值。CPU可能进行以下操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加载：从主存读取一个字到寄存器&lt;/li&gt;
+&lt;li&gt;存储：从寄存器赋值一个字到主存&lt;/li&gt;
+&lt;li&gt;操作：将两个寄存器的内容复制到ALU，ALU对两个字进行算术运算，将结果存放到一个寄存器中&lt;/li&gt;
+&lt;li&gt;跳转：从指令本身抽取一个字，将这个字复制到PC中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;指令集架构：每条机器代码指令的效果&lt;/p&gt;
+&lt;p&gt;微体系结构：处理器实际上是如何实现的&lt;/p&gt;
+&lt;h3 id=&#34;运行hello程序&#34;&gt;运行hello程序&lt;/h3&gt;
+&lt;p&gt;在键盘上输入&lt;code&gt;.\hello&lt;/code&gt;后，shell会将这些字符逐一读入寄存器，再将其存放到内存中。按下回车后，shell知道命令输入已经结束，将执行一系列指令加载hello文件，这些指令会将hello目标文件中的代码和数据从磁盘复制到主存，利用DMA(直接存储器存取)技术，可将数据不经过CPU直接从磁盘放入主存。&lt;/p&gt;
+&lt;p&gt;目标文件hello被放入主存后，处理器就开始执行机器语言指令。&lt;/p&gt;
+&lt;h2 id=&#34;高速缓存&#34;&gt;高速缓存&lt;/h2&gt;
+&lt;p&gt;为了减少信息加载的时间，采用更小更快的存储设备作为数据或指令暂时的集结区域。处理器芯片上的L1高速缓存缓存的访问速度集合和访问寄存器文件一样快，容量更大的L2高速缓存通过特殊总线连接到寄处理器。高速缓存采用静态随机访问存储器（SRAM）技术实现。&lt;/p&gt;
+&lt;h2 id=&#34;存储器层次&#34;&gt;存储器层次：&lt;/h2&gt;
+&lt;p&gt;L0：寄存器&lt;/p&gt;
+&lt;p&gt;L1：L1高速缓存（SRAM）&lt;/p&gt;
+&lt;p&gt;L2：L2高速缓存（SRAM）&lt;/p&gt;
+&lt;p&gt;L3：L3高速缓存（SRAM）&lt;/p&gt;
+&lt;p&gt;L4：主存（DRAM）&lt;/p&gt;
+&lt;p&gt;L5：本地磁盘&lt;/p&gt;
+&lt;p&gt;L6：远程存储&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E4%B8%BE%E4%BE%8B.PNG&#34; alt=&#34;高速缓存举例&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如上图为我的电脑的三级缓存示意。&lt;/p&gt;
+&lt;h2 id=&#34;操作系统管理硬件&#34;&gt;操作系统管理硬件&lt;/h2&gt;
+&lt;p&gt;前面的shell程序和hello程序都依靠&lt;strong&gt;操作系统&lt;/strong&gt;提供的服务访问存储器。操作系统是应用程序和硬件之间的软件。&lt;/p&gt;
+&lt;p&gt;操作系统的主要功能有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;防止硬件被失控的应用程序滥用&lt;/li&gt;
+&lt;li&gt;向应用程序提供简单的机制控制复杂又不同的低级硬件设备。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;操作系统通过几个基本抽象概念：进程、虚拟内存和文件实现这些功能。&lt;/p&gt;
+&lt;p&gt;文件是对I/O设备的抽象。&lt;/p&gt;
+&lt;p&gt;虚拟内存是对主存和磁盘I/O设备的抽象。&lt;/p&gt;
+&lt;p&gt;进程是对处理器、主存和磁盘I/O设备的抽象。&lt;/p&gt;
+&lt;h3 id=&#34;进程&#34;&gt;进程&lt;/h3&gt;
+&lt;p&gt;进程是操作系统对正在运行程序的一种抽象，一个系统可以同时运行多个进行，每个进程好像都在独占使用硬件。并发运行指的是多个不同程序进程指令交错运行。处理器通过在进程间切换来实现多个程序的并发运行，这种机制称为&lt;strong&gt;上下文切换&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;操作系统保存跟踪进程运行所需要的所有状态信息，这种状态即为上下文。这些信息有很多，比如PC和寄存器文件的当前值。&lt;/p&gt;
+&lt;p&gt;任何一个时刻，单处理器只能执行一个进程的代码。当操作系统决定要把控制权从当前进程转移到新进程时，就会进行上下文切换。&lt;/p&gt;
+&lt;p&gt;从一个进程到另一个进程的切换是操作系统内核（kernal）管理的。&lt;strong&gt;内核&lt;/strong&gt;是操作系统代码&lt;strong&gt;常驻主存&lt;/strong&gt;的部分。内核不是一个独立的进程，是系统管理全部进程所用的代码和数据结构的集合。&lt;/p&gt;
+&lt;h3 id=&#34;线程&#34;&gt;线程&lt;/h3&gt;
+&lt;p&gt;一个进程可以有多个成为线程的执行单元组成，每个线程都运行在进程的上下文中，共享同样的代码和全部数据。多线程相比多进程更容易共享数据。&lt;/p&gt;
+&lt;h3 id=&#34;虚拟内存&#34;&gt;虚拟内存&lt;/h3&gt;
+&lt;p&gt;虚拟内存为每个进程提供一个假象，即每个进程都在&lt;strong&gt;独占地使用主存&lt;/strong&gt;。每个进程看到内存都是一致的，成为虚拟地址空间。&lt;/p&gt;
+&lt;p&gt;每个进程看到的虚拟地址由大量准确定义的&lt;strong&gt;区&lt;/strong&gt;构成，每个区都有专门的功能。以下从最低的地址逐步向上介绍：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;程序代码和数据：所有进程的代码是从同一固定地址开始，紧接着是和C全局变量对应的数据位置。代码和数据区是直接按照可执行目标文件的内容初始化的。&lt;/li&gt;
+&lt;li&gt;堆：当调用malloc和free这样的函数时，堆可以动态地扩展和收缩。&lt;/li&gt;
+&lt;li&gt;共享库：是一块用来存放像C标准库和数学库这样的共享库的代码和数据的区域。&lt;/li&gt;
+&lt;li&gt;栈：编译器用它来实现函数调用，栈在程序执行期间可以动态扩展和收缩。&lt;/li&gt;
+&lt;li&gt;内核虚拟内存：地址空间顶部区域是为内核保留的，不允许应用程序读写这个区域的内容或直接调用内核代码定义的函数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;文件&#34;&gt;文件&lt;/h3&gt;
+&lt;p&gt;文件就是字节序列，系统所有输入输出都是通过使用一小组成为Unix I/O的系统函数调用读写文件实现的。&lt;/p&gt;
+&lt;h2 id=&#34;系统之间利用网络通信&#34;&gt;系统之间利用网络通信&lt;/h2&gt;
+&lt;p&gt;网络是一个I/O设备，通过网络适配器连接到系统总线。&lt;/p&gt;
+&lt;h2 id=&#34;一些重要主题&#34;&gt;一些重要主题&lt;/h2&gt;
+&lt;h3 id=&#34;并发和并行&#34;&gt;并发和并行&lt;/h3&gt;
+&lt;p&gt;并发：一个同时具有多个活动的系统&lt;/p&gt;
+&lt;p&gt;并行：用并发使得一个系统运行得更快&lt;/p&gt;
+&lt;p&gt;并行可以在计算机系统的多个抽象层次上运行。&lt;/p&gt;
+&lt;h4 id=&#34;线程级并发&#34;&gt;线程级并发&lt;/h4&gt;
+&lt;h4 id=&#34;指令级并发&#34;&gt;指令级并发&lt;/h4&gt;
+&lt;h4 id=&#34;单指令多数据并行&#34;&gt;单指令、多数据并行&lt;/h4&gt;
+&lt;h3 id=&#34;计算机系统中抽象的重要性&#34;&gt;计算机系统中抽象的重要性&lt;/h3&gt;
+&lt;p&gt;文件是对I/O设备的抽象，虚拟内存是对程序存储器的抽象，进程是对正在运行程序的抽象，虚拟机提供对整个计算机的抽象。&lt;/p&gt;
+- http://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>cs231n——1.Nearest Neighbor Classifier</title>
+        <link>http://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</link>
+        <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
+        
+        <guid>http://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ -&lt;p&gt;图像分类规范化步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;输入：输入带有不同标签的图像作为训练集&lt;/li&gt;
+&lt;li&gt;学习：使用训练集学习每种类别的抽象特征&lt;/li&gt;
+&lt;li&gt;评估：通过测试集评估分类器的质量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;nearest-neighbor-classifier&#34;&gt;Nearest Neighbor Classifier&lt;/h2&gt;
+&lt;p&gt;CIFAR-10 dataset:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;10 classes (airplane, automobile, bird, etc)&lt;/li&gt;
+&lt;li&gt;60,000 tiny images that are 32 pixels high and wide&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。&lt;/p&gt;
+&lt;h3 id=&#34;l1-distance&#34;&gt;L1 distance:&lt;/h3&gt;
+&lt;p&gt;$$
+d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right|
+$$&lt;/p&gt;
+&lt;p&gt;将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。&lt;/p&gt;
+&lt;p&gt;通常使用准确率来评估分类器&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;Xtr, Ytr, Xte, Yte &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; load_CIFAR10(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;data/cifar10/&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# a magic function we provide&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# flatten out all images to be one-dimensional&lt;/span&gt;
+Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xtr_rows becomes 50000 x 3072&lt;/span&gt;
+Xte_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xte_rows becomes 10000 x 3072&lt;/span&gt;
+
+nn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; NearestNeighbor() &lt;span style=&#34;color:#888&#34;&gt;# create a Nearest Neighbor classifier class&lt;/span&gt;
+nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr) &lt;span style=&#34;color:#888&#34;&gt;# train the classifier on the training images and labels&lt;/span&gt;
+Yte_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(Xte_rows) &lt;span style=&#34;color:#888&#34;&gt;# predict labels on the test images&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# and now print the classification accuracy, which is the average number&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# of examples that are correctly predicted (i.e. label matches)&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; ( np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yte_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yte) )
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;NearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;pass&lt;/span&gt;
+
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;train&lt;/span&gt;(self, X, y):
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example. Y is 1-dimension of size N &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# the nearest neighbor classifier simply remembers all the training data&lt;/span&gt;
+    self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X
+    self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y
+
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;predict&lt;/span&gt;(self, X):
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example we wish to predict label for &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    num_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]	&lt;span style=&#34;color:#888&#34;&gt;#训练样本数量&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# lets make sure that the output type matches the input type&lt;/span&gt;
+    Ypred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros(num_test, dtype &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype)
+
+    &lt;span style=&#34;color:#888&#34;&gt;# loop over all test rows&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(num_test):
+      &lt;span style=&#34;color:#888&#34;&gt;# find the nearest training image to the i&amp;#39;th test image&lt;/span&gt;
+      &lt;span style=&#34;color:#888&#34;&gt;# using the L1 distance (sum of absolute value differences)&lt;/span&gt;
+      distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;abs(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
+      min_index &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argmin(distances) &lt;span style=&#34;color:#888&#34;&gt;# get the index with smallest distance&lt;/span&gt;
+      Ypred[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr[min_index] &lt;span style=&#34;color:#888&#34;&gt;# predict the label of the nearest example&lt;/span&gt;
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; Ypred
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用L1距离测试的准确率只有38.6%.&lt;/p&gt;
+&lt;h3 id=&#34;l2-distance&#34;&gt;L2 distance&lt;/h3&gt;
+&lt;p&gt;$$
+d_{2}\left(I_{1}, I_{2}\right)=\sqrt{\sum_{p}\left(I_{1}^{p}-I_{2}^{p}\right)^{2}}
+$$&lt;/p&gt;
+&lt;p&gt;only replace a single line of code above:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;k---nearest-neighbor-classifier&#34;&gt;k - Nearest Neighbor Classifier&lt;/h2&gt;
+&lt;p&gt;找到距离最近的k个图片，k个图片中数量最多的一个标签即为测试图片所分的类别。&lt;/p&gt;
+&lt;h2 id=&#34;validation-sets-for-hyperparameter-tuning&#34;&gt;Validation sets for Hyperparameter tuning&lt;/h2&gt;
+&lt;p&gt;有很多我们可以选择的距离函数，例如L1 norm, L2 norm等，这些选择称为&lt;/p&gt;
+&lt;p&gt;Hyperparameter 。通常不能使用test set来调整Hyperparameter。Evaluate on the test set only a single time, at the very end.&lt;/p&gt;
+&lt;p&gt;将训练集划分为一个小一些的训练集和一个验证集(validation set)。例如使用CIFAR-10数据集时将训练集分为49,000个训练集和1,000个验证集。&lt;/p&gt;
+&lt;p&gt;验证集本质上是一个假的测试集，是用来调整Hyperparameter的。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# assume we have Xtr_rows, Ytr, Xte_rows, Yte as before&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# recall Xtr_rows is 50,000 x 3072 matrix&lt;/span&gt;
+Xval_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;, :] &lt;span style=&#34;color:#888&#34;&gt;# take first 1000 for validation&lt;/span&gt;
+Yval &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;]
+Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;:, :] &lt;span style=&#34;color:#888&#34;&gt;# keep last 49,000 for train&lt;/span&gt;
+Ytr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;:]
+
+&lt;span style=&#34;color:#888&#34;&gt;# find hyperparameters that work best on the validation set&lt;/span&gt;
+validation_accuracies &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;]:
+
+  &lt;span style=&#34;color:#888&#34;&gt;# use a particular value of k and evaluation on validation data&lt;/span&gt;
+  nn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; NearestNeighbor()
+  nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr)
+  &lt;span style=&#34;color:#888&#34;&gt;# here we assume a modified NearestNeighbor class that can take a k as input&lt;/span&gt;
+  Yval_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(Xval_rows, k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k)
+  acc &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yval_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yval)
+  &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; (acc,)
+
+  &lt;span style=&#34;color:#888&#34;&gt;# keep track of what works on the validation set&lt;/span&gt;
+  validation_accuracies&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;append((k, acc))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;cross-validation&#34;&gt;Cross-validation&lt;/h3&gt;
+&lt;p&gt;当训练集数量较少时，使用更为复杂的交叉验证来调整hyperparameter。我们通过迭代不同的验证集并平均计算这些验证集的结果来确定k。例如在5次迭代的交叉验证中，将训练集分为5份，使用4份训练，1份验证，然后改变验证集，迭代5次，最终使用5次的平均结果确定k。&lt;/p&gt;
+&lt;h2 id=&#34;nearest-neighbor-classifier的优缺点&#34;&gt;Nearest Neighbor classifier的优缺点&lt;/h2&gt;
+&lt;p&gt;验证时的时间成本较高，每个验证样本都要与每一个测试集样本进行比较，效率较低。&lt;/p&gt;
+&lt;p&gt;Nearest Neighbor classifier在低维度训练中较为常用，但在图像分类中很少用，因为图像是高维对象，高维对象之间的距离计算式违反直觉的。&lt;/p&gt;
+&lt;h2 id=&#34;summery&#34;&gt;Summery&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;如果数据的维数很高，可以使用降维技术，例如PCA(主成分分析), NCA(邻域成分分析) or Random Projections(随机投影).&lt;/li&gt;
+&lt;/ol&gt;
+- http://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1154,12 +1389,12 @@ y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#
     
     
         <item>
-        <title>C&#43;&#43;回顾2——标准库</title>
-        <link>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
+        <title>C&#43;&#43; Primer——CH08 IO库</title>
+        <link>http://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
         <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
         
-        <guid>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ -&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
+        <guid>http://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ -&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
 &lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
 &lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
 &lt;ul&gt;
@@ -1419,7 +1654,7 @@ c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的�
 &lt;h3 id=&#34;特定容器算法&#34;&gt;特定容器算法&lt;/h3&gt;
 &lt;h2 id=&#34;关联容器&#34;&gt;关联容器&lt;/h2&gt;
 &lt;p&gt;键值对。&lt;/p&gt;
-&lt;h2 id=&#34;动态内存&#34;&gt;动态内存&lt;/h2&gt;- http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ - 2019-2021 By Jialong</description>
+&lt;h2 id=&#34;动态内存&#34;&gt;动态内存&lt;/h2&gt;- http://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ - 2019-2021 By Jialong</description>
         </item>
     
     
@@ -1527,12 +1762,13 @@ c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的�
     
     
         <item>
-        <title>C&#43;&#43;回顾1——基础内容</title>
-        <link>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
+        <title>C&#43;&#43;回顾1——基础语法</title>
+        <link>http://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
         <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
         
-        <guid>http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ -&lt;p&gt;这个分类的博客主要为了记录一下我在学习C++过程中记录的知识笔记，主要参考自《C++  Primer 第5版》。&lt;/p&gt;
+        <guid>http://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
+        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ -&lt;p&gt;第1部分：C++基础&lt;/p&gt;
+&lt;p&gt;这个分类的博客主要为了记录一下我在学习C++过程中记录的知识笔记，主要参考自《C++  Primer 第5版》。&lt;/p&gt;
 &lt;p&gt;第一部分基础部分主要包含以下内容：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;变量和基本类型&lt;/li&gt;
@@ -1548,13 +1784,13 @@ c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的�
 &lt;p&gt;声明只规定了变量类型和名字，定义还申请了存储空间，为变量赋一个初始值。&lt;/p&gt;
 &lt;p&gt;可以在多个文件重复声明，但只能定义一次。&lt;/p&gt;
 &lt;h3 id=&#34;复合类型&#34;&gt;复合类型&lt;/h3&gt;
-&lt;h4 id=&#34;引用&#34;&gt;引用&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;引用&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;左值引用，为对象起了另一个名字；将声明符写成&lt;code&gt;&amp;amp;d&lt;/code&gt;的形式来定义引用类型。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;int ival = 1024;
 int &amp;amp;refVal = ival;
 int &amp;amp;refVal2;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;引用即为对象的别名，引用本身不是一个对象，只是为一个已存在的对象起的另一个名字。&lt;/p&gt;
-&lt;h4 id=&#34;指针&#34;&gt;指针&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;指针&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;指针本身就是一个对象，允许对指针赋值和拷贝，无需再定义时赋值，定义指针时将声明符写作&lt;code&gt;*d&lt;/code&gt;形式，d为变量名。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; dp, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;dp2; &lt;span style=&#34;color:#888&#34;&gt;//dp2为指向double类型对象的指针
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;取地址符&lt;code&gt;&amp;amp;&lt;/code&gt;：&lt;/p&gt;
@@ -1581,7 +1817,7 @@ cout &amp;lt;&amp;lt; *p;	//输出指针p所指的对象，42
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; bufSize &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fcn();
 &lt;span style=&#34;color:#888&#34;&gt;//file.h头文件，与file.cpp定义的bufSize是同一个
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; bufSize;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;const的引用&#34;&gt;const的引用&lt;/h4&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;const的引用&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;可以把引用绑定到const对象上，但对常量的引用不能用于修改它所绑定的对象。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ci &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1024&lt;/span&gt;;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; ci;	&lt;span style=&#34;color:#888&#34;&gt;//正确：引用及其对应的对象都是常量
@@ -1590,26 +1826,32 @@ cout &amp;lt;&amp;lt; *p;	//输出指针p所指的对象，42
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;引用的类型必须与所引用的对象类型一致，但有例外：&lt;/p&gt;
 &lt;p&gt;初始化常量引用时允许用任意表达式作为初始值，只要该表达式的结果能被转换为引用的类型即可。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//正确
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;指针和const&#34;&gt;指针和const&lt;/h4&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;指针和const&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;可以令指针指向常量或非常量，&lt;strong&gt;指向常量的指针&lt;/strong&gt;不能用于改变其所指对象的值，要想存放常量对象，只能使用&lt;strong&gt;指向常量的指针&lt;/strong&gt;：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;const double pi = 3.14;
 double *ptr = &amp;amp;pi; //错误：ptr是普通指针
 const double *cptr = &amp;amp;pi;	//正确
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;顶层const&#34;&gt;顶层const&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;顶层const&lt;/strong&gt;：表示指针本身是个常量；&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;底层const&lt;/strong&gt;：表示指针所指的对象是一个常量。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;顶层const&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;顶层const：表示指针本身是个常量；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;底层const：表示指针所指的对象是一个常量。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;pre&gt;&lt;code&gt;int i = 0;
 int *const p1 = &amp;amp;i;		//顶层const，表示指针p1本身是一个常量，不能改变p1的值
 const int *p2 = &amp;amp;ci;	//底层const，表示指针p2指的对象ci的地址是一个常量，p2的值可以改变，对象的值不能改变
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;constexpr和常量表达式&#34;&gt;constexpr和常量表达式&lt;/h4&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;constexpr和常量表达式&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;常量表达式指值不会改变并且在编译过程就能得到计算结果的表达式。字面值属于常量表达式，用常量表达式初始化的const对象也是常量表达式。&lt;/p&gt;
-&lt;h4 id=&#34;constexpr变量&#34;&gt;constexpr变量&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;constexpr变量&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;C++11允许将变量声明为constexpr类型以便由编译器验证变量的值是否是一个常量表达式。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mf &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//20是常量表达式
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; size();	&lt;span style=&#34;color:#888&#34;&gt;//只有当size是一个constexpr函数是才是一条正确的声明语句
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;字面值类型：声明constexpr时用到的类型。算术类型、引用和指针都属于字面值类型；IO库、string类型不属于字面值类型，不能被定义为constexpr。&lt;/p&gt;
 &lt;h3 id=&#34;处理类型&#34;&gt;处理类型&lt;/h3&gt;
-&lt;h4 id=&#34;类型别名&#34;&gt;类型别名&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;类型别名&lt;/strong&gt;：&lt;/p&gt;
 &lt;p&gt;使用关键词&lt;code&gt;typedef&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; wages; &lt;span style=&#34;color:#888&#34;&gt;//wages是double的同义词
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另一种别名声明：&lt;/p&gt;
@@ -1620,72 +1862,72 @@ const int *p2 = &amp;amp;ci;	//底层const，表示指针p2指的对象ci的地�
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;每个名字都需要独立的using声明；头文件不应该包含using声明&lt;/p&gt;
 &lt;h3 id=&#34;标准库类型string&#34;&gt;标准库类型string&lt;/h3&gt;
 &lt;p&gt;string表示可变长的字符序列&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;string&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;定义和初始化：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;string s1;
-string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;s2&lt;/span&gt;(s1);
-string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;s3&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;);
-string s3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;value&amp;#34;&lt;/span&gt;;
-string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;s4&lt;/span&gt;(n, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;c&amp;#39;&lt;/span&gt;); &lt;span style=&#34;color:#888&#34;&gt;//s4初始化为由连续的n个字符组成的串
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;string对象上的操作：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;os &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; s &lt;span style=&#34;color:#888&#34;&gt;//将s写道输出流os中，返回os
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;is &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; s &lt;span style=&#34;color:#888&#34;&gt;//从is中读取字符串赋给s，字符串以空白分隔，返回is
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;getline(is, s)	&lt;span style=&#34;color:#888&#34;&gt;//从is中读取一行赋给s，返回is
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;s.empty()
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;string&amp;gt;
+using std::string;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;定义和初始化：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;string s1;
+string s2(s1);
+string s3(&amp;quot;value&amp;quot;);
+string s3 = &amp;quot;value&amp;quot;;
+string s4(n, &#39;c&#39;); //s4初始化为由连续的n个字符组成的串
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;string对象上的操作：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;os &amp;lt;&amp;lt; s //将s写道输出流os中，返回os
+is &amp;gt;&amp;gt; s //从is中读取字符串赋给s，字符串以空白分隔，返回is
+getline(is, s)	//从is中读取一行赋给s，返回is
+s.empty()
 s.size()
-s[n]	&lt;span style=&#34;color:#888&#34;&gt;//返回s中第n个字符的引用
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;string::size_type&lt;/code&gt;类型&lt;/p&gt;
+s[n]	//返回s中第n个字符的引用
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;string::size_type&lt;/code&gt;类型&lt;/p&gt;
 &lt;p&gt;size函数返回的为上述值，是一个无符号类型的值，能存放下任何string类型对象大小。&lt;/p&gt;
 &lt;p&gt;处理string对象中的字符：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//cctype头文件中的函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;isalnum(c)	&lt;span style=&#34;color:#888&#34;&gt;//c是数字或字母时为真
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;isalpha(c)
+&lt;pre&gt;&lt;code&gt;//cctype头文件中的函数
+isalnum(c)	//c是数字或字母时为真
+isalpha(c)
 ...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用&lt;code&gt;for&lt;/code&gt;处理每个字符：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;str&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;some string&amp;#34;&lt;/span&gt;);
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;c&lt;/span&gt; : str)
-	cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; c &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用下标运算符&lt;code&gt;[]&lt;/code&gt;处理一部分字符.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用&lt;code&gt;for&lt;/code&gt;处理每个字符：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;string str(&amp;quot;some string&amp;quot;);
+for (auto c : str)
+	cout &amp;lt;&amp;lt; c &amp;lt;&amp;lt; endl;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用下标运算符&lt;code&gt;[]&lt;/code&gt;处理一部分字符.&lt;/p&gt;
 &lt;h3 id=&#34;标准库类型vector&#34;&gt;标准库类型vector&lt;/h3&gt;
 &lt;p&gt;表示对象的集合，其中所有对象的类型都相同，集合中每个对象都有一个与之对应的索引，用于访问对象，因为vector容纳着其他对象，所以也被称之为&lt;strong&gt;容器&lt;/strong&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;vector&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;vector;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;vector是一个&lt;strong&gt;类模板&lt;/strong&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;vector&amp;gt;
+using std::vector;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;vector是一个&lt;strong&gt;类模板&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;模板&lt;/strong&gt;本身不是类或函数，可以看作编译器生成类或函数编写的一份说明，编译器根据模板创建类或函数的过程称为&lt;strong&gt;实例化&lt;/strong&gt;，使用模板时要指出编译器应该把类或函数实例化成何种类型。需要提供那些信息由模板决定，提供信息的方式是在模板名字后面跟一对尖括号，在括号内放入信息：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec;	&lt;span style=&#34;color:#888&#34;&gt;//ivec保存int类型对象
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; file; 	&lt;span style=&#34;color:#888&#34;&gt;//该向量的元素是vector对象
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;初始化vector对象&#34;&gt;初始化vector对象&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec;	//ivec保存int类型对象
+vector&amp;lt;vector&amp;lt;string&amp;gt;&amp;gt; file; 	//该向量的元素是vector对象
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;初始化vector对象&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;定义和初始化vector对象&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; v1;
-vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; v2(v1);
-vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; v3(n, val);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以默认初始化vector对象，从而创建一个指定类型的空vector。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; svec;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;列表初始化对象：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; v1{&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;a&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;an&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;the&amp;#34;&lt;/span&gt;};
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;创建指定数量元素：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;值初始化：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//10个元素，每个初始值都为0
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;向vector对象中添加元素&#34;&gt;向vector对象中添加元素&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;T&amp;gt; v1;
+vector&amp;lt;T&amp;gt; v2(v1);
+vector&amp;lt;T&amp;gt; v3(n, val);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以默认初始化vector对象，从而创建一个指定类型的空vector。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; svec;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;列表初始化对象：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; v1{&amp;quot;a&amp;quot;, &amp;quot;an&amp;quot;, &amp;quot;the&amp;quot;};
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;创建指定数量元素：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec(10, -1);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;值初始化：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec(10);	//10个元素，每个初始值都为0
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;向vector对象中添加元素&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用vector的成员函数&lt;code&gt;push_back()&lt;/code&gt;添加。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; str;
-string i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;111&amp;#34;&lt;/span&gt;;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; str;
+string i = &amp;quot;111&amp;quot;;
 str.push_back(i);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;其他vector操作&#34;&gt;其他vector操作&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;v.empty()	&lt;span style=&#34;color:#888&#34;&gt;//判断v中是否含有元素，返回布尔值
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;v.size()	&lt;span style=&#34;color:#888&#34;&gt;//返回v中元素个数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;v.push_back(t)	&lt;span style=&#34;color:#888&#34;&gt;//向v尾端添加一个值为t的元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;v[n]	&lt;span style=&#34;color:#888&#34;&gt;//返回v中的n个位置上元素的引用
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;v1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; v2	&lt;span style=&#34;color:#888&#34;&gt;//用v2中的元素拷贝替换v1中的元素
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用下标运算符[]计算vector对象的索引，下标类型是size_type。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; str;
-string s &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; str[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;];	&lt;span style=&#34;color:#888&#34;&gt;//[]中的0为size_type类型
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;要使用size_type必须知名它是由哪种类型定义的。vector对象的类型总是包含着元素的类型&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;::&lt;/span&gt;size_type	&lt;span style=&#34;color:#888&#34;&gt;//正确
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;vector&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;size_type	&lt;span style=&#34;color:#888&#34;&gt;//错误
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不能用下标形式添加元素，以下为错误示范：&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;其他vector操作&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;v.empty()	//判断v中是否含有元素，返回布尔值
+v.size()	//返回v中元素个数
+v.push_back(t)	//向v尾端添加一个值为t的元素
+v[n]	//返回v中的n个位置上元素的引用
+v1 = v2	//用v2中的元素拷贝替换v1中的元素
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用下标运算符[]计算vector对象的索引，下标类型是size_type。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; str;
+string s = str[0];	//[]中的0为size_type类型
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;要使用size_type必须知名它是由哪种类型定义的。vector对象的类型总是包含着元素的类型&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt;::size_type	//正确
+vector::size_type	//错误
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;不能用下标形式添加元素，以下为错误示范：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;;
 vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec;
 ivec[ix] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; ix;
@@ -1693,27 +1935,27 @@ ivec[ix] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; ix;
 &lt;p&gt;迭代器可以用来访问容器的对象。&lt;/p&gt;
 &lt;p&gt;有迭代器的类型都拥有名为&lt;code&gt;beign&lt;/code&gt;和&lt;code&gt;end&lt;/code&gt;的成员函数，end成员返回指向容器尾元素下一位置的迭代器，即一个不存在的尾后元素。&lt;/p&gt;
 &lt;p&gt;迭代器运算符：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;iter	&lt;span style=&#34;color:#888&#34;&gt;//返回迭代器iter所指元素的引用
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;iter&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;name	&lt;span style=&#34;color:#888&#34;&gt;//解引用iter并获取该元素的名为mem的成员
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;iter	&lt;span style=&#34;color:#888&#34;&gt;//令iter指示容器中的下一个元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;--&lt;/span&gt;iter	&lt;span style=&#34;color:#888&#34;&gt;//令iter指示容器中的上一个元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;iter1 &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; iter2
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将迭代器从一个元素移动到另一个元素：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;*iter	//返回迭代器iter所指元素的引用
+iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员
+++iter	//令iter指示容器中的下一个元素
+--iter	//令iter指示容器中的上一个元素
+iter1 == iter2
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;将迭代器从一个元素移动到另一个元素：&lt;/p&gt;
 &lt;p&gt;使用&lt;code&gt;++&lt;/code&gt;递增运算符。&lt;/p&gt;
 &lt;p&gt;迭代器类型：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;::&lt;/span&gt;iterator it;	&lt;span style=&#34;color:#888&#34;&gt;//it能读写vector&amp;lt;int&amp;gt;的元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;::&lt;/span&gt;const_iterator it3;	&lt;span style=&#34;color:#888&#34;&gt;//it3只能读元素，不能写元素
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;某些对vector对象的操作会使迭代器失效&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt;::iterator it;	//it能读写vector&amp;lt;int&amp;gt;的元素
+vector&amp;lt;int&amp;gt;::const_iterator it3;	//it3只能读元素，不能写元素
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;某些对vector对象的操作会使迭代器失效&lt;/p&gt;
 &lt;p&gt;迭代器运算：移动位置&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;iter &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; n	&lt;span style=&#34;color:#888&#34;&gt;//加上一个整数仍然得到一个迭代器，迭代器指示的新位置与原来的位置相比向前移动了若干个元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;iter &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; n
-iter &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; n
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;表达式&#34;&gt;表达式&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;iter + n	//加上一个整数仍然得到一个迭代器，迭代器指示的新位置与原来的位置相比向前移动了若干个元素
+iter - n
+iter += n
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;表达式&#34;&gt;表达式&lt;/h2&gt;
 &lt;h3 id=&#34;成员访问运算符&#34;&gt;成员访问运算符&lt;/h3&gt;
 &lt;p&gt;箭头运算符与点运算符有关，表达式&lt;code&gt;ptr-&amp;gt;mem&lt;/code&gt;等价于&lt;code&gt;(*ptr).mem&lt;/code&gt;；&lt;/p&gt;
 &lt;h3 id=&#34;条件运算符&#34;&gt;条件运算符&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cond &lt;span style=&#34;color:#333&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;expr1&lt;/span&gt; : expr2;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;位运算符&#34;&gt;位运算符&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;cond ? expr1 : expr2;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;位运算符&#34;&gt;位运算符&lt;/h3&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -1763,13 +2005,13 @@ sizeof *p;	//指针所占的空间大小
 &lt;h3 id=&#34;try语句块和异常处理&#34;&gt;try语句块和异常处理&lt;/h3&gt;
 &lt;p&gt;异常指的是一些超出了函数正常功能范围的反常行为。&lt;/p&gt;
 &lt;p&gt;C++中异常处理机制包括：&lt;/p&gt;
-&lt;h4 id=&#34;throw表达式&#34;&gt;throw表达式&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;throw表达式&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;程序的异常检测部分使用throw表达式引发一个异常。表达式半酣关键词throw和紧随其后的一个表达式，其中表达式类型就是抛出的异常类型。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (item1.isbn() &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; item2.isbn())
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;throw&lt;/span&gt; runtime_error(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Data must refer to same ISBN&amp;#34;&lt;/span&gt;);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该异常是runtime_error的对象，抛出异常将终止当前函数，把控制权转移给能处理该异常的代码。&lt;/p&gt;
 &lt;p&gt;runtime_error是标准库异常类型的一种，定义在stdexcept头文件中。&lt;/p&gt;
-&lt;h4 id=&#34;try语句块&#34;&gt;try语句块&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;try语句块&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;try&lt;/span&gt; {
 	program&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statements
 } &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;catch&lt;/span&gt; (exception&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;declaration)	{
@@ -1780,18 +2022,18 @@ sizeof *p;	//指针所占的空间大小
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;跟在try块后的是一个或多个catch子句；catch子句包括三部分：关键词catch、括号内的一个对象的声明(称为异常声明)以及一个块。当选中类某个catch子句处理异常后，执行与之对应的块。&lt;/p&gt;
 &lt;h2 id=&#34;函数&#34;&gt;函数&lt;/h2&gt;
 &lt;h3 id=&#34;函数基础&#34;&gt;函数基础&lt;/h3&gt;
-&lt;h4 id=&#34;形参列表&#34;&gt;形参列表&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;形参列表&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;函数的形参列表可以为空，但不能省略；形参通常用都好隔开，每个形参都是含有一个声明符的声明，即使两个形参的类型相同，也必须把两个类型都写出来。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;f1&lt;/span&gt;()	{}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;f2&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt;)	{}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; f3(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; v1, v2)	&lt;span style=&#34;color:#888&#34;&gt;//这样写是错的
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; f4(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; v3, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; v4)	&lt;span style=&#34;color:#888&#34;&gt;//这样写正确
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;函数声明&#34;&gt;函数声明&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;void f1()	{}
+void f2(void)	{}
+int f3(int v1, v2)	//这样写是错的
+int f4(int v3, int v4)	//这样写正确
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;函数声明&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;函数的声明无需函数体，用一个分号代替。&lt;/p&gt;
 &lt;p&gt;一般在头文件中进行声明，在源文件中进行定义。&lt;/p&gt;
-&lt;h4 id=&#34;const形参和实参&#34;&gt;const形参和实参&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;const形参和实参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;当用实参初始化形参时会忽略顶层const&lt;/p&gt;
-&lt;h4 id=&#34;数组形参&#34;&gt;数组形参&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;数组形参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;数组的&lt;strong&gt;不允许拷贝&lt;/strong&gt;和使用时数组通常会将其转换成&lt;strong&gt;指针&lt;/strong&gt;的特殊性质对定义和使用在数组上的函数有很大影响。我们为函数传递一个数组时，实际上传递的是指向数组首元素的指针。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;);
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[]);
@@ -1805,9 +2047,9 @@ sizeof *p;	//指针所占的空间大小
 		cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; elem &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如上为数组的引用而不是引用的数组。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;f(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;arr[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;])	&lt;span style=&#34;color:#888&#34;&gt;//将arr声明为了引用的数组
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;f(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;arr)[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;])	&lt;span style=&#34;color:#888&#34;&gt;//arr是具有10个整数的整形数组的引用
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;传递多维数组&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;f(int &amp;amp;arr[10])	//将arr声明为了引用的数组
+f(int (&amp;amp;arr)[10])	//arr是具有10个整数的整形数组的引用
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;传递多维数组&lt;/strong&gt;：&lt;/p&gt;
 &lt;p&gt;多维数组实际上是数组的数组，将多维数组传递给函数实际上传递的是指向数组首元素的指针。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;matrix)[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;], &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; rowSize)	{}
 &lt;span style=&#34;color:#888&#34;&gt;//matrix指向数组的首元素，该数组的元素是由10个整数构成的数组。
@@ -1821,7 +2063,7 @@ sizeof *p;	//指针所占的空间大小
 &lt;p&gt;同一作用域内的几个函数名字相同但形参列表不同，称之为&lt;strong&gt;重载函数&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;这些函数接收的形参类型不一样，但执行的操作非常类似，调用时；编译器会根据传递的实参类型推断想要的是哪个函数。&lt;/p&gt;
 &lt;p&gt;不允许两个函数除了返回类型外其他所有的要素都相同。&lt;/p&gt;
-&lt;h4 id=&#34;重载和const形参&#34;&gt;重载和const形参&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;重载和const形参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一个拥有顶层const的形参无法和另一个没有顶层const的形参区分开来：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(Phone);
 Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; Phone);	&lt;span style=&#34;color:#888&#34;&gt;//重复声明了Record lookup(Phone);
@@ -1829,13 +2071,13 @@ Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&g
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(Account&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//函数作用于Account的引用
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; Account&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//新韩淑，作用于常量的引用
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;特殊用途语言特性&#34;&gt;特殊用途语言特性&lt;/h3&gt;
-&lt;h4 id=&#34;默认实参&#34;&gt;默认实参&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;默认实参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;某些函数的一种形参在函数的多次调用中都被赋予了同一个值，此时我们把这个反复出现的值称为函数的默认实参，为了实现函数既能接纳默认值，又能接受我们具体指定的值，我们定义为如下形式：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; string&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;size_type sz;
 string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&gt;(sz ht &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;24&lt;/span&gt;, sz wid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;80&lt;/span&gt;, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; background &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意，一旦某个形参被赋予了默认值，它后面的所有形参都必须有默认值。&lt;/p&gt;
 &lt;p&gt;在给定作用域中一个形参只能被赋予一次默认实参。&lt;/p&gt;
-&lt;h4 id=&#34;内联函数&#34;&gt;内联函数&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;内联函数&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;把一些规模较小的表达式定义为函数有很多好处：容易读懂、容易修改、能重复利用；但也有缺点：调用函数一般比求等价表达式的值要慢；一次函数调用包含一系列工作：先保存寄存器，在返回时恢复；可能需要拷贝实参。&lt;/p&gt;
 &lt;p&gt;使用内联函数可以避免函数调用的开销，例如：&lt;/p&gt;
 &lt;p&gt;把shorterString函数定义为内联函数，则如下调用：&lt;/p&gt;
@@ -1844,12 +2086,16 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; (s1.size() &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; s2.size() &lt;span style=&#34;color:#333&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;s1&lt;/span&gt; : s2) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从而消除了函数运行时的开销。只需在函数的返回类型前加上&lt;code&gt;inline&lt;/code&gt;即可。&lt;/p&gt;
 &lt;p&gt;内联是向编译器发出的一个请求，编译器可以忽略这个请求。&lt;/p&gt;
-&lt;h4 id=&#34;调试帮助&#34;&gt;调试帮助&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;assert预处理宏&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;assert(expr);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;assert是一种预处理宏，使用一个表达式作为它的条件；对expr求值，如果为0，assert输出信息并终止程序运行；如果为1，assert什么也不做。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;调试帮助&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;assert预处理宏&lt;/strong&gt;：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;assert(expr);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;assert是一种预处理宏，使用一个表达式作为它的条件；对expr求值，如果为0，assert输出信息并终止程序运行；如果为1，assert什么也不做。&lt;/p&gt;
 &lt;p&gt;assert宏定义在&lt;code&gt;cassert&lt;/code&gt;头文件中，由预处理器管理，无需提供using声明。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;NDEBUG预处理变量&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;NDEBUG预处理变量&lt;/strong&gt;：&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;assert的行为依赖于名为NDEBUG的预处理变量的状态，如果定义了NDEBUG，则assert什么也不做。默认状态下没有定义NDEBUG，此时assert将执行。&lt;/p&gt;
 &lt;p&gt;可以使用一个&lt;code&gt;#define&lt;/code&gt;语句定义NDEBUG，从而关闭调试状态。&lt;/p&gt;
 &lt;p&gt;除了使用assert之外，可以使用NDEBUG编写自己的条件调试代码，使用&lt;code&gt;#ifndef&lt;/code&gt;和&lt;code&gt;#endif&lt;/code&gt;。&lt;/p&gt;
@@ -1908,7 +2154,7 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 &lt;p&gt;类可以包含多个构造函数，和其他的&lt;strong&gt;重载函数&lt;/strong&gt;差不多，不同构造函数之间必须在参数数量或参数类型上有所区别。&lt;/p&gt;
 &lt;p&gt;构造函数不能被声明成&lt;strong&gt;const&lt;/strong&gt;的。当我们创建类的一个const对象，直到构造函数完成初始化的过程，对象才能真正获得其常量属性。&lt;/p&gt;
 &lt;p&gt;在类的外部定义构造函数：如上代码所示。&lt;/p&gt;
-&lt;h4 id=&#34;构造函数初始值列表&#34;&gt;构造函数初始值列表&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;构造函数初始值列表&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;就对象的数据成员而言，初始化和赋值也有区别。如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化。&lt;/p&gt;
 &lt;p&gt;如果成员是&lt;strong&gt;const&lt;/strong&gt;或&lt;strong&gt;引用&lt;/strong&gt;的话，必须将其初始化。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;ConstRef&lt;/span&gt; {
@@ -1921,7 +2167,7 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 };
 ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ii)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; i(ii), ci(ii), ri(i) {}	&lt;span style=&#34;color:#888&#34;&gt;//显示地初始化引用和const成员
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最好避免使用某些成员初始化其他成员。&lt;/p&gt;
-&lt;h4 id=&#34;委托构造函数&#34;&gt;委托构造函数&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;委托构造函数&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一个委托构造函数可以使用它属类的其他构造函数执行它自己的初始化过程。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Sales_data&lt;/span&gt; {
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
@@ -1933,7 +2179,7 @@ ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span 
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string s)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data(s, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {}
 	Sales_Data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istrean &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;is)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data() {read(is, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;); }	&lt;span style=&#34;color:#888&#34;&gt;//委托给了默认构造函数
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;聚合类&#34;&gt;聚合类&lt;/h4&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;聚合类&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;聚合类使得用户可以直接访问其成员并且具有特殊的初始化语法形式。&lt;/p&gt;
 &lt;p&gt;定义：&lt;/p&gt;
 &lt;ul&gt;
@@ -1942,11 +2188,11 @@ ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span 
 &lt;li&gt;没有类内初始值。&lt;/li&gt;
 &lt;li&gt;没有基类，没有virtual函数。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Data&lt;/span&gt; {
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ival;
+&lt;pre&gt;&lt;code&gt;struct Data {
+	int ival;
 	string s;
 };
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;访问控制与封装&#34;&gt;访问控制与封装&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;访问控制与封装&#34;&gt;访问控制与封装&lt;/h3&gt;
 &lt;p&gt;使用**访问说明符(access specifiers)**加强类的封装：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;public&lt;/strong&gt;说明符：定义在其之后的成员在整个程序内可被访问，public成员定义类的接口。&lt;/li&gt;
@@ -1980,7 +2226,8 @@ ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span 
 r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;rate();	&lt;span style=&#34;color:#888&#34;&gt;//Account为类名
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成员函数不用通过作用域运算符就能直接使用静态成员。&lt;/p&gt;
 &lt;p&gt;定义静态成员：&lt;/p&gt;
-&lt;p&gt;我们既可以在类内部也可以在类外部定义静态成员函数，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。&lt;/p&gt;- http://eternityqjl.top/posts/c-%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ - 2019-2021 By Jialong</description>
+&lt;p&gt;我们既可以在类内部也可以在类外部定义静态成员函数，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。&lt;/p&gt;
+- http://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ - 2019-2021 By Jialong</description>
         </item>
     
     
@@ -2092,489 +2339,6 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;哲学思考&#34;&gt;哲学思考&lt;/h2&gt;
 &lt;p&gt;梯度下降是一个一阶最优化算法，通常也称为最陡下降法，要使用梯度下降法找到一个函数的局部极小值，必须向函数上当前点对应梯度的反方向规定的步长距离点进行迭代搜索。&lt;/p&gt;
 - http://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
-        <link>http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</link>
-        <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
-        
-        <guid>http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ -&lt;p&gt;SPI、I2C、UART：串行通信协议&lt;/p&gt;
-&lt;p&gt;COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议&lt;/p&gt;
-&lt;p&gt;TTL、RS-232指的是电平标准&lt;/p&gt;
-&lt;p&gt;TTL电平：低电平为0，高电平为1&lt;/p&gt;
-&lt;p&gt;RS-232电平：正电平(+15V)为0，负电平(-15V)为1&lt;/p&gt;
-&lt;p&gt;最近在画PCB研究几个MCU的时候遇到引脚连接方面的一些问题，对于MCU进行串行通信传输数据的过程不太了解，因此写一篇博客来学习一下这些通信协议。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;一些概念&#34;&gt;一些概念&lt;/h2&gt;
-&lt;h3 id=&#34;同步synchronous和异步asynchronous&#34;&gt;同步(Synchronous)和异步(Asynchronous)&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;同步&lt;/strong&gt;就是整个处理过程顺序执行，当各个过程都执行完毕后，返回结果。这是一种线性执行的方式，执行的流程不能跨越。一般用于流程性比较强的程序。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;异步&lt;/strong&gt;：是只发送了调用的命令，调用者无需等待被调用的方法完全执行完毕，可以继续执行下面的流程，是一种并行处理的方式。比如页面数据架子啊的过程，不需要等待所有数据获取后再显示页面。&lt;/p&gt;
-&lt;p&gt;二者的区别就在于同步需要等待，异步不需要等待。&lt;/p&gt;
-&lt;h3 id=&#34;全双工和半双工&#34;&gt;全双工和半双工&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;全双工&lt;/strong&gt;是指可以&lt;strong&gt;同时&lt;/strong&gt;进行&lt;strong&gt;双向信号&lt;/strong&gt;传输。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;半双工&lt;/strong&gt;是指可以及进行&lt;strong&gt;双向信号传输&lt;/strong&gt;但&lt;strong&gt;同一时刻只能向一个&lt;/strong&gt;方向传输。&lt;/p&gt;
-&lt;h2 id=&#34;spi协议&#34;&gt;SPI协议&lt;/h2&gt;
-&lt;p&gt;串行外设接口总线（Serial Peripheral Interface Bus，SPI）是一种用于芯片通信的&lt;strong&gt;同步&lt;/strong&gt;串行通信接口规范，设备之间使用&lt;strong&gt;全双工&lt;/strong&gt;模式通信，采用一对一或一对多的主从模式。一般用于短距离通信。&lt;/p&gt;
-&lt;h3 id=&#34;spi物理层接口&#34;&gt;SPI物理层接口&lt;/h3&gt;
-&lt;p&gt;SPI总线共规定了4个逻辑信号接口：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SCLK/SCK（Serial Clock）：&lt;strong&gt;时钟&lt;/strong&gt;信号线，由主机产生，决定了SPI的通信速率。&lt;/li&gt;
-&lt;li&gt;MOSI（Master Output, Slave Input）：&lt;strong&gt;主机输出从机输入&lt;/strong&gt;信号，数据由&lt;strong&gt;主机&lt;/strong&gt;发出。&lt;/li&gt;
-&lt;li&gt;MISO（Master Input, Slave Output）：&lt;strong&gt;从机输出主机输入&lt;/strong&gt;信号，数据由&lt;strong&gt;从机&lt;/strong&gt;发出。&lt;/li&gt;
-&lt;li&gt;nSS（Slave Select）：&lt;strong&gt;片选&lt;/strong&gt;信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG&#34; alt=&#34;SPI_一对一&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG&#34; alt=&#34;SPI_一对多&#34;&gt;&lt;/p&gt;
-&lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2&#34;&gt;序列周边接口&lt;/a&gt;）&lt;/p&gt;
-&lt;h3 id=&#34;spi协议层&#34;&gt;SPI协议层&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_photo_1.png&#34; alt=&#34;SPI_photo_1&#34;&gt;&lt;/p&gt;
-&lt;p&gt;（图片来自&lt;a href=&#34;https://blog.csdn.net/qq_29344757/article/details/76855350&#34;&gt;SPI通讯协议介绍&lt;/a&gt;）&lt;/p&gt;
-&lt;p&gt;如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。&lt;/p&gt;
-&lt;h4 id=&#34;通信起始结束信号&#34;&gt;通信起始/结束信号&lt;/h4&gt;
-&lt;p&gt;nSS信号由高电平变为低电平即为通信的起始，由低电平变为高电平即为通信的结束。&lt;/p&gt;
-&lt;h4 id=&#34;有效数据的采集&#34;&gt;有效数据的采集&lt;/h4&gt;
-&lt;p&gt;上图中SCK为偶数边沿时数据得到有效采样，此时MISO和MOSI的数据有效，高电平表示1，低电平表示0，其他时刻的数据无效。&lt;/p&gt;
-&lt;p&gt;数据传输时高位在先还是低位在先SPI协议并未规定，需要双方自行约定，一般采用高位在先（MSB）方式传输。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;两个概念：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。
-&lt;ul&gt;
-&lt;li&gt;CPOL = 0：SCK在空闲时为低电平&lt;/li&gt;
-&lt;li&gt;CPOL = 1：SCK在空闲时为高电平&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。
-&lt;ul&gt;
-&lt;li&gt;CPHA = 0：在SCK的奇数边沿采样&lt;/li&gt;
-&lt;li&gt;CPHA = 1：在SCK的偶数边沿采样&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。&lt;/p&gt;
-&lt;p&gt;所以，SPI有如下4种工作模式：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;工作模式&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;CPOL&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;CPHA&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;空闲时的SCK时钟&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;采样时钟&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;是否常用&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;低&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;奇数次边沿&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;Y&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;低&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;偶数次边沿&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;N&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;高&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;奇数次边沿&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;Y&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;高&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;偶数次边沿&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;N&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;mathrmi2mathrmc协议&#34;&gt;$\mathrm{I}^2\mathrm{C}$协议&lt;/h2&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$（Inter-Integrated Circuit）集成电路总线，是飞利浦设计的一种简单的双向两线&lt;strong&gt;同步串行&lt;/strong&gt;总线，为全双工，是为了实现有效的IC之间的控制；是一种串行通信总线，为了让嵌入式设备连接低速设备。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/I2C_trans.PNG&#34; alt=&#34;I2C_trans&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/1024px-I2C.svg.png&#34; alt=&#34;1024px-I2C.svg&#34;&gt;&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$只需要两个接口即可通信：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;SDA（Serial Data）&lt;/strong&gt;：串行数据接口&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;SCL（Serial Clock）&lt;/strong&gt;：串行时钟&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;SDA和SCL都是双向线路，都通过一个电流源或上拉电阻接到正的电源电压，总线&lt;strong&gt;空闲&lt;/strong&gt;时，这两条线路都是&lt;strong&gt;高电平&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$总线支持任何IC生产过程。两线在连接到总线的器件间传递信息。每个器件都有一个唯一的地址识别，而且都可以作为一个发送器或接收器。&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$总线是一个&lt;strong&gt;多主机&lt;/strong&gt;的总线，即可以连接多于一个能控制总线的器件到总线。如果两个或多个主机同时尝试初始化传输数据，为了避免产生混乱，发展出了一个&lt;strong&gt;仲裁&lt;/strong&gt;的过程。&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$的参考设计使用了一个7比特长度的地址空间，但是保留了16个地址，所以一组总线最多可以和112个节点通信。但连接到总线的接口数量其实是由总线电容是400pF的限制决定的（这里不深入了解）。&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$有几种常见的传输模式，标准模式（100kbps）、低速模式（10kbps），时钟频率可以被降为0，即可以暂停通信。&lt;/p&gt;
-&lt;h2 id=&#34;uart串口&#34;&gt;UART串口&lt;/h2&gt;
-&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
-&lt;p&gt;通用&lt;strong&gt;异步&lt;/strong&gt;收发传输器（异步串行通信口）（Universal Asynchronous Receiver/Transmitter），是一种&lt;strong&gt;串行、异步、全双工&lt;/strong&gt;的通信协议。他的工作原理是把数据的字节按照比特顺序发送，另一端的UART把比特组装为字节。&lt;/p&gt;
-&lt;p&gt;串行通信是指利用一条传输线将数据一位位地顺序传送，也可以用两个信号线组成全双工通信，如rs232。特点是通信线路简单，利用简单的线缆就可实现通信，降低成本，适用于远距离通信，但传输速度慢的应用场合。&lt;/p&gt;
-&lt;h3 id=&#34;数据帧&#34;&gt;数据帧&lt;/h3&gt;
-&lt;p&gt;每个字符表示为一个帧(10bit)，异步通信以一个字符为传输单位；两个UART设备之间通信不需要时钟线，需要在两个UART设备上指定相同的传输速率(&lt;strong&gt;波特率，bps&lt;/strong&gt;)，以及&lt;strong&gt;空闲位、起始位、校验位、结束位&lt;/strong&gt;。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;空闲位(1bit)：高电平，指没有数据传输。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;起始位(1bit)：低电平。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;数据位(8bit or 7bit)：一般先传输最低位&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;（可选）奇偶校验位(1bit)：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;无校验&lt;/li&gt;
-&lt;li&gt;奇校验：如果数据位中1的数目是偶数，则校验位为1；如果1的数目是奇数，则校验位为0&lt;/li&gt;
-&lt;li&gt;偶校验：如果数据位中1的数目是偶数，则校验位为0；如果1的数目是奇数，则校验位为1&lt;/li&gt;
-&lt;li&gt;mark parity / parity：校验位时钟为1/0。（不常用）&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;结束位(1bit)：高电平。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;jtag边界扫描&#34;&gt;JTAG边界扫描&lt;/h2&gt;
-&lt;p&gt;JTAG主要用于验证设计和测试印刷电路板。&lt;/p&gt;
-&lt;h3 id=&#34;电气特性&#34;&gt;电气特性&lt;/h3&gt;
-&lt;p&gt;JTAG的接口是将4/5个接口连接到芯片上，电路板上的很多芯片可以将其JTAG接口通过Daisy Chain（菊花链）的方式连在一起，这样我们就可以访问一块印刷电路板上的所有芯片。&lt;/p&gt;
-&lt;p&gt;连接引脚为：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;TDI（Test Data Input）：测试数据输入&lt;/li&gt;
-&lt;li&gt;TDO（Test Data Output）：测试数据输出&lt;/li&gt;
-&lt;li&gt;TCK（Test Clock Input）：测试时钟&lt;/li&gt;
-&lt;li&gt;TMS（Test Model Selection）：测试模式选择&lt;/li&gt;
-&lt;li&gt;TRST（测试复位）可选&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/Jtag_chain.svg.jpg&#34; alt=&#34;Jtag_chain.svg&#34;&gt;&lt;/p&gt;
-&lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/JTAG&#34;&gt;JTAG&lt;/a&gt;）&lt;/p&gt;
-&lt;p&gt;由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。&lt;/p&gt;
-- http://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>《算法（第4版）》学习笔记——（一）排序</title>
-        <link>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
-        <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
-        
-        <guid>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
-        <description>Jialong&#39;s Blog http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ -&lt;h2 id=&#34;初级排序算法&#34;&gt;初级排序算法&lt;/h2&gt;
-&lt;h3 id=&#34;选择排序&#34;&gt;选择排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Selection&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#888&#34;&gt;//将a按照升序排列
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-            &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;min&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;
-                    min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-            &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-            exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt;min&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析&#34;&gt;性能分析&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。&lt;/li&gt;
-&lt;li&gt;该算法运行时间与输入无关，数据的移动是最少的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h3 id=&#34;插入排序&#34;&gt;插入排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-1&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-1&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Insertion&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#888&#34;&gt;//将相邻两个元素向左依次交换最终使得索引左侧的元素全部向右移动一位
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 0 &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;]);&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;--)&lt;/span&gt;
-                exch &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-1&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;对随机排列长度为$N$且主键不重复的数组，平均插入排序需要$N^2/4$次比较和$N^2/4$次交换。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;部分有序数组&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;数组中每个元素距离它的最终位置都不远&lt;/li&gt;
-&lt;li&gt;一个有序大数组接一个小数组&lt;/li&gt;
-&lt;li&gt;数组中只有几个元素的位置不正确&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;插入排序对这样的部分有序数组非常有效。&lt;/p&gt;
-&lt;h3 id=&#34;希尔排序&#34;&gt;希尔排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-2&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;交换不相邻的元素对数组的局部进行排序，并最终用插入排序将局部有序数组排序。&lt;/p&gt;
-&lt;p&gt;希尔排序的思想是使数组中任意间隔为h的元素都是有序的，这样的数组被称为&lt;strong&gt;h有序数组&lt;/strong&gt;，即h个相互独立的有序数组编织在一起组成的一个数组&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-2&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Shell&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;srot&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 3&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 3 &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-            &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;]);&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-                    exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-            &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-            h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 3&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该希尔算法使用了序列$1/2(3^k-1)$，即序列${ 1,4,13 }$，称为&lt;strong&gt;增量序列&lt;/strong&gt;。&lt;/p&gt;
-&lt;h4 id=&#34;性能分析-2&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;希尔排序权衡了子数组的规模和有序性，希尔排序比插入排序和选择排序快得多，并且数组越大优势越大。&lt;/p&gt;
-&lt;h2 id=&#34;归并排序&#34;&gt;归并排序&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;归并&lt;/strong&gt;即将两个有序的数组归并成一个更大的有序数组。&lt;/p&gt;
-&lt;h3 id=&#34;原地归并&#34;&gt;原地归并&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;merge&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-            aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;                      a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;                  a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;    a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;                              a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;     
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;自顶向下的归并排序&#34;&gt;自顶向下的归并排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-3&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;对子数组a[lo..hi]进行排序，先将其分为$\mathrm{a}[\mathrm{lo..mid}]$和$\mathrm{a[mid+1..hi]}$两部分，分别通过递归调用将其单独排序，最后将有序的子数组归并为最终的排序结果。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Merge&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        aux &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        sort &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        sort &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        merge&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-3&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;对于长度为$N$的任意数组，自顶向下的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多需要访问数组$6N\lg N$次。&lt;/p&gt;
-&lt;p&gt;所以可知道归并排序所需要的时间与$N\lg N$成正比，主要缺点是辅助数组所使用的额外空间和N的大小成正比。&lt;/p&gt;
-&lt;h3 id=&#34;自底向上的归并排序&#34;&gt;自底向上的归并排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-4&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;先归并那些微型数组，然后再成对地归并得到的子数组。首先进行两两归并（把每个元素当作一个大小为1的数组），然后是四四归并（将两个大小为2的数组归并为一个有4个元素的数组），然后是八八归并，以此类推。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-3&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MergeBU&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        aux &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-        	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-        		merge&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; Math&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;min&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;));&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-4&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;对于长度为$N$的任意数组，自底向上的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多访问数组$6N\lg N$次。&lt;/p&gt;
-&lt;h2 id=&#34;快速排序&#34;&gt;快速排序&lt;/h2&gt;
-&lt;h3 id=&#34;快速排序的切分&#34;&gt;快速排序的切分&lt;/h3&gt;
-&lt;p&gt;根据切分点&lt;code&gt;j&lt;/code&gt;对数组进行切分，切分后的数组满足：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;a[lo]&lt;/code&gt;到&lt;code&gt;a[j-1]&lt;/code&gt;中的所有元素都不大于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;a[j+1]&lt;/code&gt;到&lt;code&gt;a[hi]&lt;/code&gt;中的所有元素都不小于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//切分
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;partition&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; hi &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    Comparable v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;lo&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[++&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; v&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[--&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;基本快速排序算法&#34;&gt;基本快速排序算法&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-5&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;通过递归地调用切分来进行排序。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-4&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        StdRandom&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;shuffle&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//将输入乱序，消除堆输入的依赖
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; partition&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-5&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;将长度为$N$的无重复数组排序，快速排序平均需要$2N\lg N$次比较，即$1/6N\lg N$次交换。&lt;/p&gt;
-&lt;h3 id=&#34;三向切分快速排序&#34;&gt;三向切分快速排序&lt;/h3&gt;
-&lt;p&gt;在含有大量重复元素时使用该方法。将数组切分为三部分，分别对应小于、等于和大于切分元素的数组元素。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-5&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick3way&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lt &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; gt &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        Comparable v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;lo&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; gt&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; cmp &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;].&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;compareTo&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lt&lt;span style=&#34;color:#333&#34;&gt;++,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++);&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; gt&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lt &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; gt &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;优先队列&#34;&gt;优先队列&lt;/h2&gt;
-&lt;p&gt;优先队列这种&lt;em&gt;数据结构&lt;/em&gt;应支持两种操作：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;删除最大元素&lt;/li&gt;
-&lt;li&gt;插入元素&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;初级实现有序数组无序数组链表&#34;&gt;初级实现：有序数组、无序数组、链表&lt;/h3&gt;
-&lt;p&gt;这些初级实现中，插入元素和删除最大元素的操作在最坏的情况下需要&lt;strong&gt;线性时间&lt;/strong&gt;来完成，无法满足我们的性能要求。接下来使用&lt;strong&gt;堆&lt;/strong&gt;来实现使这两种操作能更快地执行。&lt;/p&gt;
-&lt;h3 id=&#34;基于堆的优先队列&#34;&gt;基于堆的优先队列&lt;/h3&gt;
-&lt;h4 id=&#34;堆的定义&#34;&gt;堆的定义&lt;/h4&gt;
-&lt;p&gt;数据结构&lt;strong&gt;二叉堆&lt;/strong&gt;满足：每个元素大于等于两个特定位置的元素，这些位置的元素又要大于等于数组中的另外两个元素，这样的数据结构可以通过有序的完全二叉树来表示。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E6%9C%89%E5%BA%8F%E7%9A%84%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91.PNG&#34; alt=&#34;有序的完全二叉树&#34;&gt;&lt;/p&gt;
-&lt;p&gt;在一个堆中，位置$k$的节点的父节点的位置为$k/2$，而它的两个子节点的位置为$2k$和$2k+1$。&lt;/p&gt;
-&lt;p&gt;我们可以通过计算数组的索引在树中上下移动：从$a[k]$向上一层就令$k=k/2$，向下一层则令$k=2k/2k+1$。&lt;/p&gt;
-&lt;h4 id=&#34;堆的算法&#34;&gt;堆的算法&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;由下至上的堆有序化（上浮swim）&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;swim&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1 &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;由上至下的堆有序化（下沉sink）&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sink&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 2&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;	j&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//选择父节点的两个子节点中较大的作为交换对象
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(!&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//将交换后子节点的位置作为父节点，循环进行下一次交换,继续下沉
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列的代码实现&#34;&gt;基于堆的优先队列的代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Key &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extends&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;key&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; Key&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; pq&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; maxN&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        pq &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Key&lt;span style=&#34;color:#333&#34;&gt;[])&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;maxN &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Key v&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//在数组的末尾输入，然后进行上浮swim操作
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        pq&lt;span style=&#34;color:#333&#34;&gt;[++&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; v&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        swim&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;};&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; Key &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;delMax&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        Key max &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pq&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;
-        pq&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;++]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; max&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列性能分析&#34;&gt;基于堆的优先队列性能分析&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.PNG&#34; alt=&#34;优先队列性能分析&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;堆排序&#34;&gt;堆排序&lt;/h3&gt;
-&lt;h4 id=&#34;堆的构造&#34;&gt;堆的构造&lt;/h4&gt;
-&lt;p&gt;高效的构造堆的方法是从右向左用&lt;code&gt;sink()&lt;/code&gt;函数构造子堆。数组的每个位置都是一个子堆的根结点，如果一个结点的两个子结点都已经是堆了，那么在该结点上调用&lt;code&gt;sink()&lt;/code&gt;可以将它们变成一个堆。我们只需要扫描一半的元素，因为可以跳过大小为1的子堆。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E5%A0%86%E7%9A%84%E6%9E%84%E9%80%A0.png&#34; alt=&#34;堆的构造&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;下沉排序&#34;&gt;下沉排序&lt;/h4&gt;
-&lt;p&gt;将堆中的最大元素删去，然后将其放入堆缩小后数组中空出的位置。&lt;/p&gt;
-&lt;h4 id=&#34;堆排序代码实现&#34;&gt;堆排序代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;--)&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//构造堆
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;N &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//堆排序，按递减顺序循环取出所有的最大值，最后得到排序结果。
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;堆排序性能分析&#34;&gt;堆排序性能分析&lt;/h4&gt;
-&lt;p&gt;将$N$个元素排序，堆排序只需要少于$(2N\lg N+2N)$次比较以及一半的交换次数。&lt;/p&gt;
-- http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ - 2019-2021 By Jialong</description>
         </item>
     
     
