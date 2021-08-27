@@ -984,7 +984,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;h3 id=&#34;转发和路由选择数据平面和控制平面&#34;&gt;转发和路由选择：数据平面和控制平面&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;转发：将一个分组从路由器的一条输入链路移动到适当的输出链路&lt;/li&gt;
-&lt;li&gt;路由选择：网络层决定分组从发送方刘翔接收方所采用的路由或路径&lt;/li&gt;
+&lt;li&gt;路由选择：网络层决定分组从发送方到接收方所采用的路由或路径&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;转发（forwarding）是路由器本地动作，路由选择（routing）是网络范围处理过程。&lt;/p&gt;
 &lt;p&gt;路由器通过&lt;strong&gt;转发表&lt;/strong&gt;来实现转发功能。&lt;/p&gt;
@@ -992,7 +992,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;p&gt;网络服务模型定义了分组在发送与接收端系统之间的端到端运输特性：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;确保交付&lt;/li&gt;
-&lt;li&gt;具有时延上届的确保交付&lt;/li&gt;
+&lt;li&gt;具有时延上界的确保交付&lt;/li&gt;
 &lt;li&gt;有序分组交付&lt;/li&gt;
 &lt;li&gt;确保最小带宽&lt;/li&gt;
 &lt;li&gt;安全性&lt;/li&gt;
@@ -1033,8 +1033,8 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;p&gt;不同类型的网络分组有不同的优先权类，每个优先权类通常都有自己的队列。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;循环和加权公平排队&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;在&lt;strong&gt;循环排队规则&lt;/strong&gt;中，分组像使用优先权排队那样被分类，但在类之间不存在严格的服务优先权，&lt;strong&gt;循环调度器&lt;/strong&gt;在这些类之间轮流提供服务。一个所谓的&lt;strong&gt;保持工作排队&lt;/strong&gt;规则在有分组排队等待传输时，不允许链路保持空闲。当寻找给定的分组但没有找到时，保持工作的循环规则将立即检查循环序列中的下一个类。&lt;/p&gt;
-&lt;p&gt;一种称为**加权平均排队（Weighted Fair Queuing, WFQ）**规则的通用形式的循环排队已经广泛地实现在路由器中了。WFQ与循环排队的不同在于，每个类在任何时间间隔内可能收到不同数量的服务。每个类i被分配一个权$w_i$，使用WFQ方式，在类i有分组要发送的任何时间间隔中，第i类将确保接收到的服务部分等于$w_i/(\sum w_j)$，即保证拥有相应权重的带宽。&lt;/p&gt;
-&lt;h2 id=&#34;网际协议ipv4寻址ipv6&#34;&gt;网际协议IPv4、寻址、IPv6&lt;/h2&gt;
+&lt;p&gt;一种称为&lt;strong&gt;加权平均排队&lt;/strong&gt;（Weighted Fair Queuing, WFQ）规则的通用形式的循环排队已经广泛地实现在路由器中了。WFQ与循环排队的不同在于，每个类在任何时间间隔内可能收到不同数量的服务。每个类i被分配一个权$w_i$，使用WFQ方式，在类i有分组要发送的任何时间间隔中，第i类将确保接收到的服务部分等于$w_i/(\sum w_j)$，即保证拥有相应权重的带宽。&lt;/p&gt;
+&lt;h2 id=&#34;网际协议ip&#34;&gt;网际协议IP&lt;/h2&gt;
 &lt;p&gt;因特网网络层的网际协议（IP）。&lt;/p&gt;
 &lt;h3 id=&#34;ipv4数据报格式&#34;&gt;IPv4数据报格式&lt;/h3&gt;
 &lt;p&gt;网络层分组被称为&lt;strong&gt;数据报&lt;/strong&gt;。&lt;/p&gt;
@@ -1068,7 +1068,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;&lt;strong&gt;源和目的IP地址&lt;/strong&gt;：源生成一个数据报时降入它的IP地址和目的地IP地址，通常目的地址通过DNS查找来实现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;源和目的IP地址&lt;/strong&gt;：源生成一个数据报时写入它的IP地址和目的地IP地址，通常目的地址通过DNS查找来实现。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;&lt;strong&gt;选项&lt;/strong&gt;：允许IP首部被扩展。很少使用，在IPv6中已将其去除。&lt;/p&gt;
@@ -1098,7 +1098,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;p&gt;&lt;strong&gt;获取一块地址&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一个组织从ISP获取一个地址块。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;获取主机地址：DHCP&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;通过**动态主机配置协议（Dynamic Host Configuration, DHCP）**为本组织内的主机和路由器接口配置IP地址。&lt;/p&gt;
+&lt;p&gt;通过动态主机配置协议（Dynamic Host Configuration, DHCP）为本组织内的主机和路由器接口配置IP地址。&lt;/p&gt;
 &lt;p&gt;DHCP具有即插即用能力，同时避免了网络管理员手动配置网络。&lt;/p&gt;
 &lt;p&gt;通过DHCP给新客户分配地址的步骤：&lt;/p&gt;
 &lt;ul&gt;
