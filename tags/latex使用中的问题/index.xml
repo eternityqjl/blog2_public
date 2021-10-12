@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LaTex使用中的问题 on Jialong&#39;s Blog</title>
-    <link>http://eternityqjl.top/tags/latex%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</link>
+    <link>https://eternityqjl.github.io/blog2_public/tags/latex%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/</link>
     <description>Recent content in LaTex使用中的问题 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sun, 29 Mar 2020 00:14:06 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/tags/latex%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Mar 2020 00:14:06 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/latex%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>第一次使用LaTex——问题整理</title>
-      <link>http://eternityqjl.top/posts/latex-problems1/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</link>
       <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
       
-      <guid>http://eternityqjl.top/posts/latex-problems1/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</guid>
       <description>0.前言 第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。
 这是第一次实验报告导出的pdf文档封面展示：
 这是tex源代码。

@@ -30,7 +30,7 @@ Email over SSL
  支持的协议版本（Version），如TLSv1.0 一个客户端生成的随机数（Random），之后用于生成”对话密钥“ 会话ID（Session id）：  如果客户端第一次连接到服务器，那么该字段为空。 如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为SSL会话恢复。   支持的加密套件（Cipher Suites），这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。 支持的压缩方法，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。 扩展包。  2. 服务器回应（ServerHello） 该步骤包含以下内容：
  确认使用的版本，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。 一个服务器生成的随机数，之后用于生成”对话密钥“ 确认使用的加密套件 会话ID（Session ID）：  服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。 但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入Session Tickets，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。   扩展包 服务器证书  当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://eternityqjl.top/posts/tls/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://eternityqjl.github.io/blog2_public/posts/tls/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-04-19T16:15:26+00:00" />
 <meta property="article:modified_time" content="2020-04-19T16:15:26+00:00" /><meta property="og:site_name" content="My Blog" />
 
@@ -60,8 +60,8 @@ Email over SSL
 
 
 
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/blog2_public/vendor/css/bootstrap.min.css">
+<script src="/blog2_public/vendor/js/vue.min.js" ></script>
 
 
   
@@ -73,14 +73,14 @@ Email over SSL
 
 
 
-<link rel="stylesheet" href="http://eternityqjl.top/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+<link rel="stylesheet" href="https://eternityqjl.github.io/blog2_public/scss/journal.scss" integrity="" media="screen">
 
 
 
-<link rel="stylesheet" href="http://eternityqjl.top/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+<link rel="stylesheet" href="https://eternityqjl.github.io/blog2_public/scss/dark-mode.scss" integrity="" media="screen">
 
 
-<script src="/js/loadCSS.js"></script>
+<script src="/blog2_public/js/loadCSS.js"></script>
 <script>
   loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
 </script>
@@ -89,14 +89,14 @@ Email over SSL
 
 
   
-    <script src="/js/toc.js"></script>
+    <script src="/blog2_public/js/toc.js"></script>
   
 
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script src="/vendor/js/md5.min.js"></script>
+<script src="/blog2_public/vendor/js/md5.min.js"></script>
 <script>
   var gitalk = new Gitalk({
   clientID: 'df0192f05fd975a4e951',
@@ -129,7 +129,7 @@ Email over SSL
 <body>
     	<div id="app"><div ref="sideContainer" class="side-container">
     
-    <a class="a-block nav-head false" href="http://eternityqjl.top">
+    <a class="a-block nav-head false" href="https://eternityqjl.github.io/blog2_public/">
     
         <div class="nav-title">
             Jialong&#39;s Blog
@@ -151,7 +151,7 @@ Email over SSL
             
             
             
-            <a class="a-block nav-link-item active" href="/posts">
+            <a class="a-block nav-link-item active" href="/blog2_public/posts">
                 网志
             </a>
             
@@ -161,7 +161,7 @@ Email over SSL
             
             
             
-            <a class="a-block nav-link-item false" href="/categories">
+            <a class="a-block nav-link-item false" href="/blog2_public/categories">
                 分类
             </a>
             
@@ -171,7 +171,7 @@ Email over SSL
             
             
             
-            <a class="a-block nav-link-item false" href="/tags">
+            <a class="a-block nav-link-item false" href="/blog2_public/tags">
                 标签
             </a>
             
@@ -181,7 +181,7 @@ Email over SSL
             
             
             
-            <a class="a-block nav-link-item false" href="/about">
+            <a class="a-block nav-link-item false" href="/blog2_public/about">
                 关于
             </a>
             
@@ -191,7 +191,7 @@ Email over SSL
             
             
             
-            <a class="a-block nav-link-item false" href="/index.xml">
+            <a class="a-block nav-link-item false" href="/blog2_public/index.xml">
                 RSS
             </a>
             
@@ -474,7 +474,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item active" href="/posts">
+                <a class="a-block drawer-menu-item active" href="/blog2_public/posts">
                     网志
                 </a>
                 
@@ -484,7 +484,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/categories">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/categories">
                     分类
                 </a>
                 
@@ -494,7 +494,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/tags">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/tags">
                     标签
                 </a>
                 
@@ -504,7 +504,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/about">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/about">
                     关于
                 </a>
                 
@@ -514,7 +514,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/index.xml">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/index.xml">
                     RSS
                 </a>
                 
@@ -758,7 +758,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 menu
             </i>
         </button>
-        <a ref="navTitle" class="navbar-brand" href="http://eternityqjl.top">
+        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.github.io/blog2_public/">
             Jialong&#39;s Blog
         </a>
         
@@ -775,7 +775,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </nav>
 <div class="single-column-header-container" ref="pageHead"
      v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-    <a href="http://eternityqjl.top">
+    <a href="https://eternityqjl.github.io/blog2_public/">
         <div class="single-column-header-title">Jialong&#39;s Blog</div>
         
         <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
@@ -807,7 +807,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 
                         
                             <i class="material-icons" style="">folder</i>
-                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97">计算机网络学习日志</a>
+                                <a href="/blog2_public/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97">计算机网络学习日志</a>
                                 &nbsp;
                         
 
@@ -919,13 +919,13 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="http://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/">
+                <a class="newer-posts" href="https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/">
 			下回<br>计算机网络学习日志（二）——运输层
                 </a>
                 
                 
                 
-                <a class="older-posts" href="http://eternityqjl.top/posts/convertpdftosvg/">
+                <a class="older-posts" href="https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/">
 			上回<br>PDF转换为SVG
                 </a>
                 

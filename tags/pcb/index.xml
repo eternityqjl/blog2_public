@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>PCB on Jialong&#39;s Blog</title>
-    <link>http://eternityqjl.top/tags/pcb/</link>
+    <link>https://eternityqjl.github.io/blog2_public/tags/pcb/</link>
     <description>Recent content in PCB on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 30 Apr 2021 22:47:47 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/tags/pcb/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 30 Apr 2021 22:47:47 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/pcb/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Altium Designer画图流程记录(简略)</title>
-      <link>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
       <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
       
-      <guid>http://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
       <description>之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
 共有以下几部分内容：
  原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板  PCB各层简介 参考自：PCB各层介绍

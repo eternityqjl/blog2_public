@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>指针 on Jialong&#39;s Blog</title>
-    <link>http://eternityqjl.top/tags/%E6%8C%87%E9%92%88/</link>
+    <link>https://eternityqjl.github.io/blog2_public/tags/%E6%8C%87%E9%92%88/</link>
     <description>Recent content in 指针 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 19 Sep 2019 13:10:25 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/tags/%E6%8C%87%E9%92%88/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Sep 2019 13:10:25 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E6%8C%87%E9%92%88/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C语言指针</title>
-      <link>http://eternityqjl.top/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</link>
       <pubDate>Thu, 19 Sep 2019 13:10:25 +0000</pubDate>
       
-      <guid>http://eternityqjl.top/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</guid>
       <description>一、指针的一些概念 1. 指针的类型  把指针声明语句中的指针名字去掉，剩下的就是指针本身的类型  2. 指针所指向的类型  把指针声明语句中的指针名字和名字前的指针声明符号*去掉，剩下的就是指针指向的类型  3. 指针的值——指针所指向的内存区或地址  指针的值是指针本身存储的数值，该值被编译器当作一个地址（在32位程序中，所有类型的指针的值都是一个32位的整数，因为32位程序的内存地址都是32位长。） 指针所指的内存区就是从指针的值所代表的内存地址开始，长度为sizeof(指针指向的类型)的一篇内存区。 我们说一个指针的值是XX，就相当于说该指针指向了以XX为首地址的一片内存区。 同理，我们说一个指针指向了某个内存区，相当于说该指针的值是该内存区域的首地址。  4. 指针本身所占据的内存区  用sizeof(指针的类型)测试一下就知道了  二、指针的算术运算 **0.**指针可以加上或者减去一个整数，这种运算的意义并不是平常的数值的加减。
  example 1  char a[20] = {0}; int *ptr = (int *)a; ptr++; 指针ptr的类型为int*，它指向的类型为int，被初始化为指向整型变量a。
 在第三句中，指针ptr被加上了1，编译器是这样进行处理的：

@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>数据结构与算法 on Jialong&#39;s Blog</title>
-    <link>http://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</link>
+    <link>https://eternityqjl.github.io/blog2_public/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</link>
     <description>Recent content in 数据结构与算法 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 23 Jul 2020 14:59:12 +0000</lastBuildDate><atom:link href="http://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Jul 2020 14:59:12 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>《算法（第4版）》学习笔记——（一）排序</title>
-      <link>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
       <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
       
-      <guid>http://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
       <description>初级排序算法 选择排序 算法描述 首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。
 代码实现 public class Selection { public static void sort(Comparable[] a) { //将a按照升序排列  int N = a.length; for (int i = 0; i &amp;lt; N; i++) { int min = i; for (int j = i + 1; j &amp;lt; N; j++) { if (less(a[j], a[min])) min = j; } exch(a, i ,min); } } } 性能分析  对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。 该算法运行时间与输入无关，数据的移动是最少的。  插入排序 算法描述 插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。
 代码实现 public class Insertion { public static void sort(Comparable[] a) { int N = a.</description>
@@ -21,29 +21,29 @@
     
     <item>
       <title>Dijkstra双栈——算术表达式求值</title>
-      <link>http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
       <pubDate>Tue, 21 Jul 2020 20:15:08 +0000</pubDate>
       
-      <guid>http://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
       <description>算数表达式 这里的算术表达式支持常见的二元运算符+-*/以及接受一个参数的平方根运算符sqrt。这里我们假定表达式中未省略所有的括号。
 计算方法  将操作数压入操作数栈 将运算符压入运算符栈 忽略左括号 遇到右括号时，弹出一个运算符，弹出需要数量的操作数进行运算，然后将得到的结果再压入操作数栈。  代码实现 package edu.princeton.cs.algs4; public class Evaluate { public static void main(String[] args) { Stack&amp;lt;String&amp;gt; ops = new Stack&amp;lt;String&amp;gt;(); Stack&amp;lt;Double&amp;gt; vals = new Stack&amp;lt;Double&amp;gt;(); while (!StdIn.isEmpty()) { //读取字符，如果是运算符则压入运算符栈ops 	String s = StdIn.readString(); if (s.equals(&amp;#34;(&amp;#34;)); else if (s.equals(&amp;#34;+&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;-&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;*&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;/&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;sqrt&amp;#34;)) ops.push(s); //如果字符为)，则弹出运算符和操作数，计算结果并压入操作数栈vals 	else if (s.equals(&amp;#34;)&amp;#34;)) { String op = ops.</description>
     </item>
     
     <item>
       <title>抽象数据类型</title>
-      <link>http://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Tue, 24 Sep 2019 21:33:07 +0000</pubDate>
       
-      <guid>http://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
       <description>一、抽象数据类型的实现 //数据类型的实现 public class Counter { //实例变量  private final String name; private int count; //构造函数  public void Counter(String id) { name = id; } //实例方法  public void increment() { count++; } public int tally() { return count; } public String toString() { return count + &amp;#34; &amp;#34; + name; } } //测试该数据类型的用例 public static void main(String[] args) { //创建并初始化对象  Counter heads = new Counter(&amp;#34;heads&amp;#34;); Counter tails = new Counter(&amp;#34;tails&amp;#34;); //调用实例方法  heads.</description>
     </item>
     
     <item>
       <title>什么是数据结构？什么又是算法？</title>
-      <link>http://eternityqjl.top/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</link>
       <pubDate>Thu, 19 Sep 2019 13:55:19 +0000</pubDate>
       
-      <guid>http://eternityqjl.top/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</guid>
       <description>数据结构及相关概念 0. 要想知道什么是数据结构，首先要了解与“数据”相关的概念，这样才能一步步理解什么是数据结构。
 我们首先用放书这件事情来举例。
  如果正常情况下只有你自己一个人的书，那么你把他们一本一本立起来放在书架上就可以了。 那么如果有一个图书馆那么多的书应该怎样办么？总不能把他们乱起八糟的立起来放吧？那么是不是应该先按照社会科学、理科类、工科类、外语类等等的分类方式先分类，然后按照具体所属的类别把他们一个个放进去？其实数据结构的相关的概念就是一个这样简单的道理。  下面我们来进行具体的描述。
