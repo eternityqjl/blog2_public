@@ -1488,7 +1488,7 @@ Accept-language<span style="color:#333">:</span> fr		#语言
 <p>第一行后的后继行都叫<em>首部行</em>，具体意义见程序。</p>
 </li>
 </ul>
-<p><img src="http://blog.eternityqjl.top/%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.jpg" alt="请求报文"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.jpg" alt=""></p>
 <ul>
 <li>
 <p>首部行后有一个实体体(entity body)，使用<strong>GET</strong>请求时实体体为空，而当使用<strong>POST</strong>方法时才使用该实实体。</p>
@@ -1522,7 +1522,7 @@ Content-Type<span style="color:#333">:</span> text/html		#对象类型
 <li>6个<strong>首部行</strong>(2至7行)</li>
 <li><strong>实体体</strong>：报文的部分，即包含了所请求的对象本身。</li>
 </ul>
-<p><img src="http://blog.eternityqjl.top/%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.jpg" alt="响应报文"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.jpg" alt=""></p>
 <p>状态码和它们对应的短语：</p>
 <ul>
 <li>200 OK：请求成功</li>
@@ -1587,7 +1587,7 @@ Content-Type<span style="color:#333">:</span> text/html		#对象类型
 <h3 id="dns工作机理">DNS工作机理</h3>
 <p>DNS由分布于全球的大量DNS服务器以及定义了DNS服务器于查询主机之间通信方式的应用层协议组成。集中式DNS设计(全球公用一台DNS服务器)的问题：单点故障、通信容量、远距离延时、维护。</p>
 <p><strong>分布式、层次数据库</strong>：</p>
-<p><img src="http://blog.eternityqjl.top/DNS%E6%9C%8D%E5%8A%A1%E5%99%A8.jpg" alt="DNS服务器"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/DNS%E6%9C%8D%E5%8A%A1%E5%99%A8.jpg" alt=""></p>
 <p>如图，有三个类型的服务器：根DNS服务器、顶级域DNS服务器、权威DNS服务器</p>
 <ul>
 <li>根DNS服务器：由400多个根名字服务器，由不同组织管理，提供顶级域服务器的IP地址。</li>
@@ -1606,7 +1606,7 @@ Content-Type<span style="color:#333">:</span> text/html		#对象类型
 <li>递归查询：DNS服务器收到客户机请求时，必须使用一个准确的查询结构回复客户机，如果DNS服务器本地没有储存DNS信息，该服务器会<strong>向其他服务器询问</strong>，并将返回的查询结果提交给客户机。</li>
 <li>迭代查询：DNS服务器会向客户机提供其他能够解析查询请求的DNS服务器地址，当客户机发送请求时，DNS服务器<strong>不直接返回结果</strong>，而是<strong>告诉客户机另一台DNS服务器地址</strong>，客户机再想这台服务器体提交请求，一次循环到返回查询结果为止。</li>
 </ul>
-<p><img src="http://blog.eternityqjl.top/DNS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BA%A4%E4%BA%92.JPG" alt="DNS服务器交互"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/DNS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BA%A4%E4%BA%92.JPG" alt=""></p>
 <p>所以图中<em>请求主机和本地DNS服务器</em>之间为递归查询，<em>本地DNS服务器和其他DNS服务器</em>之间为迭代查询。</p>
 <p><strong>DNS缓存</strong>：</p>
 <p>DNS缓存用来改善延时性能并减少在因特网上传输的DNS报文数，例如上图所示，当本地服务器从某个DNS服务器接收到一个回答，他能缓存包含在该回答内的任何信息，当一个主机向本地DNS服务器查询已经缓存的地址时就能够直接将IP地址返回给主机。而主机和主机名于IP地址间的映射不是永久的，DNS服务器一般在一段时间(通常设置为两天)后丢弃缓存信息。</p>
@@ -1626,7 +1626,7 @@ Content-Type<span style="color:#333">:</span> text/html		#对象类型
 </li>
 </ul>
 <p><strong>DNS报文</strong>：</p>
-<p><img src="http://blog.eternityqjl.top/DNS%E6%8A%A5%E6%96%87.JPG" alt="DNS报文"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/DNS%E6%8A%A5%E6%96%87.JPG" alt=""></p>
 <p>DNS报文有查询和回答两种，且两种报文的格式相同。</p>
 <ul>
 <li>首部区域：前12字节为首部区域，有6个字段

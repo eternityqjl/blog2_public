@@ -1094,7 +1094,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 <div class="post-body" v-pre>
                 
-                    <p><img src="http://blog.eternityqjl.top/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91.png" alt="链路层和局域网"></p>
+                    <p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91.png" alt=""></p>
 <h2 id="概述">概述</h2>
 <p>将运行链路层协议的设备称为<strong>节点</strong>，把沿通信链路连接相邻节点的通信信道称为<strong>链路</strong>。经过特定链路时，节点将数据包封装在<strong>链路层帧</strong>中，将该帧传送到链路中。</p>
 <p>链路层提供的服务：</p>
@@ -1110,7 +1110,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>这里研究在传输数据中检测差错的3种技术：奇偶校验、检验和方法、循环冗余检测。</p>
 <h3 id="奇偶校验">奇偶校验</h3>
 <p><strong>单个奇偶校验位</strong>：</p>
-<p><img src="http://blog.eternityqjl.top/oneByteEvenParity.PNG" alt="oneByteEvenParity"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/oneByteEvenParity.PNG" alt=""></p>
 <ul>
 <li>
 <p>假设共要发送d比特数据，发送方只要附加一个比特，设置其值，使得这d+1个比特中1的总是是偶数，这即为偶数校验。</p>
@@ -1123,7 +1123,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </li>
 </ul>
 <p><strong>二维奇偶校验</strong>：</p>
-<p><img src="http://blog.eternityqjl.top/twoDEvenParity.PNG" alt="twoDEvenParity"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/twoDEvenParity.PNG" alt=""></p>
 <ul>
 <li>
 <p>将d个比特划分为i行j列，计算每行每列的奇偶值，共产生i+j+1个奇偶差错比特，用来进行差错检验。</p>
@@ -1153,7 +1153,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h3 id="信道划分协议">信道划分协议</h3>
 <p><strong>时分多路复用（TDM）</strong></p>
 <p>假设一个支持N个节点的信道传输速率为R bps。</p>
-<p><img src="http://blog.eternityqjl.top/TDM.PNG" alt="TDM"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/TDM.PNG" alt=""></p>
 <ul>
 <li>TDM将时间划分为<strong>时间帧（Frame）</strong>，并进一步把每个时间帧划分为N个<strong>时隙（slot）</strong>，把每个时隙分配给N个节点中的一个。</li>
 <li>无论何时某个节点有分组要发送时，它在循环的TDM帧中指派给它的时隙内传输分组比特。</li>
@@ -1165,7 +1165,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </li>
 </ul>
 <p><strong>频分多路复用（FDM）</strong></p>
-<p><img src="http://blog.eternityqjl.top/FDM.PNG" alt="FDM"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/FDM.PNG" alt=""></p>
 <ul>
 <li>FDM将R bps信道划分为不同频段，每个频段有R/N带宽，并把每个频率分配给N个节点中的一个。</li>
 <li>与TDM有相同的优点和缺点：
@@ -1225,7 +1225,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>假设发送主机要向目的主机发送IP数据报，源要向其适配器提供数据报和目的主机的MAC地址，此后源适配器才构造一个包含目的MAC地址的帧发送到局域网中。</p>
 <p>发送主机使用ARP确定目的主机IP地址对应的MAC地址。发送主机向其ARP模块发送目的主机的IP，ARP将IP解析为一个MAC地址。</p>
 <p>每台主机或路由器的内存中有一个<strong>ARP表</strong>，该表包含了IP地址到MAC地址的映射关系。
-<img src="http://blog.eternityqjl.top/ARP%E8%A1%A8.PNG" alt="ARP表"></p>
+<img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/ARP%E8%A1%A8.PNG" alt=""></p>
 <p>如果发送方ARP表中<strong>没有目的主机的表项</strong>，则发送方构造一个<strong>ARP分组</strong>（分组包括发送和接收IP地址以及MAC地址），并指示适配器用<strong>MAC广播地址</strong>来发送这个分组，适配器在链路层帧中封装这个ARP分组，用广播地址作为帧的目的地址，并将帧传送进入子网，包含该ARP查询的帧能够被子网中的<strong>所有其他适配器</strong>接收到，每个适配器都把该分组向上传递给ARP模块，ARP模块检查其IP地址是否与ARP分组中的目的IP匹配，若匹配则给查询主机发送回一个带有所希望映射的响应ARP分组，然后查询主机更新它的ARP表，然后发送它的IP数据报。</p>
 <p>查询ARP报文是在<strong>广播帧</strong>中发送的，响应ARP报文是在一个<strong>标准帧</strong>中发送的。</p>
 <p>最好把ARP看成跨越链路层和网络层边界两边的协议，因为其既包含IP地址又包含MAC地址。</p>

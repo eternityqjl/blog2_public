@@ -556,8 +556,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                     <h2 id="0前言">0.前言</h2>
 <p>第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。</p>
 <p>这是第一次实验报告导出的<a href="http://blog.eternityqjl.top/SS_test1.pdf">pdf文档</a>封面展示：</p>
-<p><img src="http://blog.eternityqjl.top/SS_test1_cover.jpg" alt=""></p>
-<p>这是<a href="http://blog.eternityqjl.top/SS_test1.tex">tex源代码</a>。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1_cover.jpg" alt=""></p>
+<p>这是<a href="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1.tex">tex源代码</a>。</p>
 <!-- raw HTML omitted -->
 <h2 id="章节标题的特殊符号">章节标题的特殊符号</h2>
 <p>当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令<code>\texorpdfstring{}{}</code>分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号<code>{}</code>中填写tex文档代码，第二个括号<code>{}</code>填写文本形式的书签，如下所示：</p>

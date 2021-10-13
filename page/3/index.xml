@@ -43,11 +43,11 @@
 &lt;li&gt;MISO（Master Input, Slave Output）：&lt;strong&gt;从机输出主机输入&lt;/strong&gt;信号，数据由&lt;strong&gt;从机&lt;/strong&gt;发出。&lt;/li&gt;
 &lt;li&gt;nSS（Slave Select）：&lt;strong&gt;片选&lt;/strong&gt;信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG&#34; alt=&#34;SPI_一对一&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG&#34; alt=&#34;SPI_一对多&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2&#34;&gt;序列周边接口&lt;/a&gt;）&lt;/p&gt;
 &lt;h3 id=&#34;spi协议层&#34;&gt;SPI协议层&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SPI_photo_1.png&#34; alt=&#34;SPI_photo_1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_photo_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;（图片来自&lt;a href=&#34;https://blog.csdn.net/qq_29344757/article/details/76855350&#34;&gt;SPI通讯协议介绍&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。&lt;/p&gt;
 &lt;h4 id=&#34;通信起始结束信号&#34;&gt;通信起始/结束信号&lt;/h4&gt;
@@ -122,8 +122,8 @@
 &lt;/table&gt;
 &lt;h2 id=&#34;mathrmi2mathrmc协议&#34;&gt;$\mathrm{I}^2\mathrm{C}$协议&lt;/h2&gt;
 &lt;p&gt;$\mathrm{I}^2\mathrm{C}$（Inter-Integrated Circuit）集成电路总线，是飞利浦设计的一种简单的双向两线&lt;strong&gt;同步串行&lt;/strong&gt;总线，为全双工，是为了实现有效的IC之间的控制；是一种串行通信总线，为了让嵌入式设备连接低速设备。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/I2C_trans.PNG&#34; alt=&#34;I2C_trans&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/1024px-I2C.svg.png&#34; alt=&#34;1024px-I2C.svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/I2C_trans.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/1024px-I2C.svg.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;$\mathrm{I}^2\mathrm{C}$只需要两个接口即可通信：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;SDA（Serial Data）&lt;/strong&gt;：串行数据接口&lt;/li&gt;
@@ -177,7 +177,7 @@
 &lt;li&gt;TMS（Test Model Selection）：测试模式选择&lt;/li&gt;
 &lt;li&gt;TRST（测试复位）可选&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/Jtag_chain.svg.jpg&#34; alt=&#34;Jtag_chain.svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Jtag_chain.svg.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/JTAG&#34;&gt;JTAG&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。&lt;/p&gt;
 - https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/ - 2019-2021 By Jialong</description>
@@ -409,7 +409,7 @@
 &lt;h3 id=&#34;基于堆的优先队列&#34;&gt;基于堆的优先队列&lt;/h3&gt;
 &lt;h4 id=&#34;堆的定义&#34;&gt;堆的定义&lt;/h4&gt;
 &lt;p&gt;数据结构&lt;strong&gt;二叉堆&lt;/strong&gt;满足：每个元素大于等于两个特定位置的元素，这些位置的元素又要大于等于数组中的另外两个元素，这样的数据结构可以通过有序的完全二叉树来表示。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E6%9C%89%E5%BA%8F%E7%9A%84%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91.PNG&#34; alt=&#34;有序的完全二叉树&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E6%9C%89%E5%BA%8F%E7%9A%84%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;在一个堆中，位置$k$的节点的父节点的位置为$k/2$，而它的两个子节点的位置为$2k$和$2k+1$。&lt;/p&gt;
 &lt;p&gt;我们可以通过计算数组的索引在树中上下移动：从$a[k]$向上一层就令$k=k/2$，向下一层则令$k=2k/2k+1$。&lt;/p&gt;
 &lt;h4 id=&#34;堆的算法&#34;&gt;堆的算法&lt;/h4&gt;
@@ -469,11 +469,11 @@
     &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列性能分析&#34;&gt;基于堆的优先队列性能分析&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.PNG&#34; alt=&#34;优先队列性能分析&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;堆排序&#34;&gt;堆排序&lt;/h3&gt;
 &lt;h4 id=&#34;堆的构造&#34;&gt;堆的构造&lt;/h4&gt;
 &lt;p&gt;高效的构造堆的方法是从右向左用&lt;code&gt;sink()&lt;/code&gt;函数构造子堆。数组的每个位置都是一个子堆的根结点，如果一个结点的两个子结点都已经是堆了，那么在该结点上调用&lt;code&gt;sink()&lt;/code&gt;可以将它们变成一个堆。我们只需要扫描一半的元素，因为可以跳过大小为1的子堆。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E5%A0%86%E7%9A%84%E6%9E%84%E9%80%A0.png&#34; alt=&#34;堆的构造&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E5%A0%86%E7%9A%84%E6%9E%84%E9%80%A0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;下沉排序&#34;&gt;下沉排序&lt;/h4&gt;
 &lt;p&gt;将堆中的最大元素删去，然后将其放入堆缩小后数组中空出的位置。&lt;/p&gt;
 &lt;h4 id=&#34;堆排序代码实现&#34;&gt;堆排序代码实现&lt;/h4&gt;
@@ -923,7 +923,7 @@ $$
 &lt;/ul&gt;
 &lt;p&gt;至此整个握手阶段就结束了，接下来客户端与服务器进入加密通信，就是完全使用普通的HTTP协议，只是使用了“会话密钥”加密内容。&lt;/p&gt;
 &lt;h3 id=&#34;22-ssl协议的结构体系&#34;&gt;2.2 SSL协议的结构体系&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SSL%E5%8D%8F%E8%AE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SSL%E5%8D%8F%E8%AE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;SSL体系结构包含两个协议子层，底层为&lt;strong&gt;SSL记录协议层&lt;/strong&gt;；高层为&lt;strong&gt;SSL握手协议层&lt;/strong&gt;。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;SSL记录协议层&lt;/strong&gt;：记录协议为高层协议提供基本的安全服务，如数据封装、压缩、加密等基本功能。所以我们可以知道，所有的传输数据都被封装在记录中。&lt;/li&gt;
@@ -954,29 +954,31 @@ $$
         <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/ -&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用&lt;strong&gt;Adobe Acrobat&lt;/strong&gt;和&lt;strong&gt;inkscape&lt;/strong&gt;两个软件将PDF中的矢量图导出为&lt;strong&gt;SVG&lt;/strong&gt;格式的矢量图。以下为具体步骤：&lt;/p&gt;
 &lt;h2 id=&#34;在adobe-acrobat中选择编辑pdf选项&#34;&gt;在&lt;code&gt;Adobe Acrobat&lt;/code&gt;中选择&lt;code&gt;编辑PDF&lt;/code&gt;选项&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_1.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_1.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;h2 id=&#34;选择裁剪页面&#34;&gt;选择&lt;code&gt;裁剪页面&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_2.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_2.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;框选所需图片的区域&#34;&gt;框选所需图片的区域&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_3.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_3.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;双击框选的区域按如下所示设置&#34;&gt;双击框选的区域，按如下所示设置&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_4.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_4.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;选择组织页面&#34;&gt;选择&lt;code&gt;组织页面&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_5.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;选定裁切后的页面httpblogeternityqjltopconvertingpdftosvg_6jpg&#34;&gt;选定裁切后的页面&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_6.JPG&#34; alt=&#34;&#34;&gt;&lt;/h2&gt;
-&lt;h2 id=&#34;右击后选择打印页面httpblogeternityqjltopconvertingpdftosvg_7png&#34;&gt;右击后选择&lt;code&gt;打印页面&lt;/code&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_7.png&#34; alt=&#34;&#34;&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_5.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选定裁切后的页面&#34;&gt;选定裁切后的页面&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_6.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;右击后选择打印页面&#34;&gt;右击后选择&lt;code&gt;打印页面&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_7.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印&#34;&gt;设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_8.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_8.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变&#34;&gt;用&lt;code&gt;inkscape&lt;/code&gt;打开刚才打印的PDF文件，注意，导入时设置为第一项&lt;code&gt;从Poppler/Cairo导入&lt;/code&gt;，类似于PS中的栅格化，这样才能保证图中的字体不发生改变&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_9.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_9.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区&#34;&gt;选择&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;文档属性&lt;/code&gt;，设置自定义尺寸为&lt;code&gt;缩放页面到内容&lt;/code&gt;$\rightarrow$&lt;code&gt;缩放页面到绘图或选区&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_10_0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_10.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_11.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_10_0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_10.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_11.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;文件rightarrow另存为选择自己所需的格式我一般选svg&#34;&gt;&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;另存为&lt;/code&gt;，选择自己所需的格式，我一般选&lt;code&gt;SVG&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 - https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
         </item>
     
@@ -991,8 +993,8 @@ $$
         <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/latex-problems1/ -&lt;h2 id=&#34;0前言&#34;&gt;0.前言&lt;/h2&gt;
 &lt;p&gt;第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。&lt;/p&gt;
 &lt;p&gt;这是第一次实验报告导出的&lt;a href=&#34;http://blog.eternityqjl.top/SS_test1.pdf&#34;&gt;pdf文档&lt;/a&gt;封面展示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SS_test1_cover.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这是&lt;a href=&#34;http://blog.eternityqjl.top/SS_test1.tex&#34;&gt;tex源代码&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1_cover.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这是&lt;a href=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1.tex&#34;&gt;tex源代码&lt;/a&gt;。&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;h2 id=&#34;章节标题的特殊符号&#34;&gt;章节标题的特殊符号&lt;/h2&gt;
 &lt;p&gt;当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令&lt;code&gt;\texorpdfstring{}{}&lt;/code&gt;分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号&lt;code&gt;{}&lt;/code&gt;中填写tex文档代码，第二个括号&lt;code&gt;{}&lt;/code&gt;填写文本形式的书签，如下所示：&lt;/p&gt;
@@ -1103,7 +1105,7 @@ Ce^{at}
 \end{align}
 $$
 若$r=0$，则复指数信号的实部和虚部都是&lt;strong&gt;正弦&lt;/strong&gt;；若$r&amp;gt;0$，则实部和虚部是一个&lt;strong&gt;呈指数增长&lt;/strong&gt;的正弦信号；若$r&amp;lt;0$，则二者都是一个&lt;strong&gt;呈指数衰减&lt;/strong&gt;的正弦信号，该信号被称为阻尼正弦震荡。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/increasingSineSignal.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/increasingSineSignal.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;132-离散时间复指数信号与正弦信号&#34;&gt;1.3.2 离散时间复指数信号与正弦信号&lt;/h3&gt;
 &lt;p&gt;一种重要的离散时间信号是&lt;strong&gt;复指数信号&lt;/strong&gt;或&lt;strong&gt;序列&lt;/strong&gt;，定义为：
 $$
@@ -1131,7 +1133,7 @@ e^{j(w_0+2\pi)n} = e^{j2\pi n}+e^{jw_0 n} = e^{jw_0 n}
 $$
 上式表明，频率为$w_0+2\pi$的离散时间复指数信号与频率为$w_0$的信号完全相同。所以离散时间复指数信号的频率只需要在一个$2\pi$间隔内选择，一般在$0\leqslant w_0 \leqslant 2\pi$或$-\pi \leqslant w_0 \leqslant \pi$中选择。&lt;/p&gt;
 &lt;p&gt;离散时间复指数信号的低频部分（变化慢的地方）位于$w_0$在0，$2\pi$及其他$\pi$的偶数倍值附近；高频部分位于$w_0$在$\pm \pi$及其他$\pi$的奇数倍附近。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/discreteTimeSignal.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/discreteTimeSignal.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h4 id=&#34;周期性质&#34;&gt;周期性质&lt;/h4&gt;
 &lt;p&gt;为了使得信号$e^{jw_0n}$是周期的，必须有：
 $$
@@ -1143,7 +1145,7 @@ e^{jw_0N} = 1 \Leftrightarrow w_0N = 2\pi m \Leftrightarrow \frac{w_0}{2\pi} = \
 $$
 $m$为整数。同时，若$\frac{w_0}{2\pi}$是一个有理数，该信号就是周期的，否则就不是周期的。上式如果$N$和$m$没有公因子，那么$N$九尾基波周期。&lt;/p&gt;
 &lt;h4 id=&#34;连续时间和离散时间信号的比较&#34;&gt;连续时间和离散时间信号的比较&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/compare_discrete%26continus.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/compare_discrete%2526continus.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;14-单位冲激与单位阶跃函数&#34;&gt;1.4 单位冲激与单位阶跃函数&lt;/h2&gt;
 &lt;h3 id=&#34;141-离散时间单位脉冲和单位阶跃序列&#34;&gt;1.4.1 离散时间单位脉冲和单位阶跃序列&lt;/h3&gt;
 &lt;p&gt;最简单的离散时间信号之一就是&lt;strong&gt;单位脉冲&lt;/strong&gt;（或&lt;strong&gt;单位样本&lt;/strong&gt;），定义为：

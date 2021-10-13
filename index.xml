@@ -976,7 +976,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
         <pubDate>Thu, 05 Aug 2021 22:23:31 +0800</pubDate>
         
         <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/ -&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E7%BD%91%E7%BB%9C%E5%B1%82%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2.png&#34; alt=&#34;网络层：数据平面&#34;&gt;&lt;/p&gt;
+        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/ -&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E7%BD%91%E7%BB%9C%E5%B1%82%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;数据平面指的是网络层中&lt;strong&gt;每台路由器&lt;/strong&gt;的功能，该数据平面功能决定了到达路由器输入链路的数据报如何转发到该路由器的输出链路之一。&lt;/p&gt;
 &lt;p&gt;而控制平面的功能指的是&lt;strong&gt;网络范围&lt;/strong&gt;的逻辑，控制平面控制数据报沿着从源主机到目的主机的端到端路径中&lt;strong&gt;路由器之间&lt;/strong&gt;的路由方式。其中包括路由选择算法，以及如今广泛应用的诸如OSPF和BGP等路由选择协议。控制平面和数据平面的功能已经被实现为一个整体，位于一台路由器中。&lt;/p&gt;
 &lt;p&gt;**软件定义网络（SDN）**通过将这些控制平面的功能作为一种单独的服务，明确分离数据平面和控制平面，控制平面功能通常位于一台远程的控制器中。&lt;/p&gt;
@@ -1195,7 +1195,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
         <pubDate>Sun, 01 Aug 2021 20:20:52 +0800</pubDate>
         
         <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/ -&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91.png&#34; alt=&#34;链路层和局域网&#34;&gt;&lt;/p&gt;
+        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/ -&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
 &lt;p&gt;将运行链路层协议的设备称为&lt;strong&gt;节点&lt;/strong&gt;，把沿通信链路连接相邻节点的通信信道称为&lt;strong&gt;链路&lt;/strong&gt;。经过特定链路时，节点将数据包封装在&lt;strong&gt;链路层帧&lt;/strong&gt;中，将该帧传送到链路中。&lt;/p&gt;
 &lt;p&gt;链路层提供的服务：&lt;/p&gt;
@@ -1211,7 +1211,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;p&gt;这里研究在传输数据中检测差错的3种技术：奇偶校验、检验和方法、循环冗余检测。&lt;/p&gt;
 &lt;h3 id=&#34;奇偶校验&#34;&gt;奇偶校验&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;单个奇偶校验位&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/oneByteEvenParity.PNG&#34; alt=&#34;oneByteEvenParity&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/oneByteEvenParity.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;假设共要发送d比特数据，发送方只要附加一个比特，设置其值，使得这d+1个比特中1的总是是偶数，这即为偶数校验。&lt;/p&gt;
@@ -1224,7 +1224,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;二维奇偶校验&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/twoDEvenParity.PNG&#34; alt=&#34;twoDEvenParity&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/twoDEvenParity.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;将d个比特划分为i行j列，计算每行每列的奇偶值，共产生i+j+1个奇偶差错比特，用来进行差错检验。&lt;/p&gt;
@@ -1254,7 +1254,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;h3 id=&#34;信道划分协议&#34;&gt;信道划分协议&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;时分多路复用（TDM）&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;假设一个支持N个节点的信道传输速率为R bps。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/TDM.PNG&#34; alt=&#34;TDM&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/TDM.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;TDM将时间划分为&lt;strong&gt;时间帧（Frame）&lt;/strong&gt;，并进一步把每个时间帧划分为N个&lt;strong&gt;时隙（slot）&lt;/strong&gt;，把每个时隙分配给N个节点中的一个。&lt;/li&gt;
 &lt;li&gt;无论何时某个节点有分组要发送时，它在循环的TDM帧中指派给它的时隙内传输分组比特。&lt;/li&gt;
@@ -1266,7 +1266,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;频分多路复用（FDM）&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/FDM.PNG&#34; alt=&#34;FDM&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/FDM.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;FDM将R bps信道划分为不同频段，每个频段有R/N带宽，并把每个频率分配给N个节点中的一个。&lt;/li&gt;
 &lt;li&gt;与TDM有相同的优点和缺点：
@@ -1326,7 +1326,7 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;p&gt;假设发送主机要向目的主机发送IP数据报，源要向其适配器提供数据报和目的主机的MAC地址，此后源适配器才构造一个包含目的MAC地址的帧发送到局域网中。&lt;/p&gt;
 &lt;p&gt;发送主机使用ARP确定目的主机IP地址对应的MAC地址。发送主机向其ARP模块发送目的主机的IP，ARP将IP解析为一个MAC地址。&lt;/p&gt;
 &lt;p&gt;每台主机或路由器的内存中有一个&lt;strong&gt;ARP表&lt;/strong&gt;，该表包含了IP地址到MAC地址的映射关系。
-&lt;img src=&#34;http://blog.eternityqjl.top/ARP%E8%A1%A8.PNG&#34; alt=&#34;ARP表&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/ARP%E8%A1%A8.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;如果发送方ARP表中&lt;strong&gt;没有目的主机的表项&lt;/strong&gt;，则发送方构造一个&lt;strong&gt;ARP分组&lt;/strong&gt;（分组包括发送和接收IP地址以及MAC地址），并指示适配器用&lt;strong&gt;MAC广播地址&lt;/strong&gt;来发送这个分组，适配器在链路层帧中封装这个ARP分组，用广播地址作为帧的目的地址，并将帧传送进入子网，包含该ARP查询的帧能够被子网中的&lt;strong&gt;所有其他适配器&lt;/strong&gt;接收到，每个适配器都把该分组向上传递给ARP模块，ARP模块检查其IP地址是否与ARP分组中的目的IP匹配，若匹配则给查询主机发送回一个带有所希望映射的响应ARP分组，然后查询主机更新它的ARP表，然后发送它的IP数据报。&lt;/p&gt;
 &lt;p&gt;查询ARP报文是在&lt;strong&gt;广播帧&lt;/strong&gt;中发送的，响应ARP报文是在一个&lt;strong&gt;标准帧&lt;/strong&gt;中发送的。&lt;/p&gt;
 &lt;p&gt;最好把ARP看成跨越链路层和网络层边界两边的协议，因为其既包含IP地址又包含MAC地址。&lt;/p&gt;
@@ -2133,7 +2133,7 @@ w位补码所能表示的值的范围是：$[-2^{w-1},2^{w-1}-1]$，例如长度
 &lt;h3 id=&#34;静态随机存取存储器sram&#34;&gt;静态随机存取存储器（SRAM）&lt;/h3&gt;
 &lt;p&gt;Static Random Access Memory，所谓的“静态”，是指这种存储器只要保持通电，里面储存的数据就可以恒常保持。相对之下，动态随机存取存储器（DRAM）里面所储存的数据就需要周期性地更新。然而，当电力供应停止时，SRAM储存的数据还是会消失。&lt;/p&gt;
 &lt;p&gt;SRAM由存储矩阵、地址译码器和读/写控制电路组成，容量的扩展有两个方面：位数的扩展用芯片的并联，字数的扩展可用外加译码器控制芯片的片选输入端[2]。SRAM中的每一bit储存在由4个场效应管（M1, M2, M3, M4）构成两个交叉耦合的反相器中。另外两个场效应管（M5, M6）是储存基本单元到用于读写的位线（Bit Line）的控制开关。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/SRAM_Cell_%286_Transistors%29.svg&#34; alt=&#34;SRAM&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SRAM_Cell_(6_Transistors).svg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;h2 id=&#34;非易失性存储器主要为只读存储器rom&#34;&gt;非易失性存储器（主要为只读存储器，ROM）&lt;/h2&gt;
 &lt;p&gt;Read-Only Memory，一旦存储资料就无法再将之改变或删除，且内容不会因为电源关闭而消失。&lt;/p&gt;
 &lt;h3 id=&#34;可编程式只读存储器prom&#34;&gt;可编程式只读存储器（PROM）&lt;/h3&gt;

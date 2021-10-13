@@ -1094,11 +1094,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>MISO（Master Input, Slave Output）：<strong>从机输出主机输入</strong>信号，数据由<strong>从机</strong>发出。</li>
 <li>nSS（Slave Select）：<strong>片选</strong>信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。</li>
 </ul>
-<p><img src="http://blog.eternityqjl.top/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG" alt="SPI_一对一"></p>
-<p><img src="http://blog.eternityqjl.top/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG" alt="SPI_一对多"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG" alt=""></p>
 <p>（图片来自维基百科<a href="https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2">序列周边接口</a>）</p>
 <h3 id="spi协议层">SPI协议层</h3>
-<p><img src="http://blog.eternityqjl.top/SPI_photo_1.png" alt="SPI_photo_1"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_photo_1.png" alt=""></p>
 <p>（图片来自<a href="https://blog.csdn.net/qq_29344757/article/details/76855350">SPI通讯协议介绍</a>）</p>
 <p>如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。</p>
 <h4 id="通信起始结束信号">通信起始/结束信号</h4>
@@ -1173,8 +1173,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </table>
 <h2 id="mathrmi2mathrmc协议">$\mathrm{I}^2\mathrm{C}$协议</h2>
 <p>$\mathrm{I}^2\mathrm{C}$（Inter-Integrated Circuit）集成电路总线，是飞利浦设计的一种简单的双向两线<strong>同步串行</strong>总线，为全双工，是为了实现有效的IC之间的控制；是一种串行通信总线，为了让嵌入式设备连接低速设备。</p>
-<p><img src="http://blog.eternityqjl.top/I2C_trans.PNG" alt="I2C_trans"></p>
-<p><img src="http://blog.eternityqjl.top/1024px-I2C.svg.png" alt="1024px-I2C.svg"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/I2C_trans.PNG" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/1024px-I2C.svg.png" alt=""></p>
 <p>$\mathrm{I}^2\mathrm{C}$只需要两个接口即可通信：</p>
 <ul>
 <li><strong>SDA（Serial Data）</strong>：串行数据接口</li>
@@ -1228,7 +1228,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>TMS（Test Model Selection）：测试模式选择</li>
 <li>TRST（测试复位）可选</li>
 </ul>
-<p><img src="http://blog.eternityqjl.top/Jtag_chain.svg.jpg" alt="Jtag_chain.svg"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Jtag_chain.svg.jpg" alt=""></p>
 <p>（图片来自维基百科<a href="https://zh.wikipedia.org/wiki/JTAG">JTAG</a>）</p>
 <p>由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。</p>
 
