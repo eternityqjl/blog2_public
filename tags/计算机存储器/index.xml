@@ -1,25 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>计算机存储器 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%98%E5%82%A8%E5%99%A8/</link>
-    <description>Recent content in 计算机存储器 on Jialong&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sun, 04 Jul 2021 16:09:50 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%98%E5%82%A8%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>存储器详解</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
-      <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
-      
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
-      <description>&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
-&lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
-&lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
-&lt;h3 id=&#34;动态随机存取存储器dram&#34;&gt;动态随机存取存储器（DRAM）&lt;/h3&gt;
-&lt;p&gt;Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong&gt;存储电荷的多寡&lt;/strong&gt;来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong&gt;定时刷新&lt;/strong&gt;的特性，因此被称为“动态”存储器。&lt;/p&gt;</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>计算机存储器 on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%98%E5%82%A8%E5%99%A8/</link><description>Recent content in 计算机存储器 on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Sun, 04 Jul 2021 16:09:50 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%98%E5%82%A8%E5%99%A8/index.xml" rel="self" type="application/rss+xml"/><item><title>存储器详解</title><link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link><pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid><description>&lt;p>计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p>
+&lt;h2 id="易失性存储器随机存取存储器ram">易失性存储器（随机存取存储器，RAM）&lt;/h2>
+&lt;p>Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p>
+&lt;h3 id="动态随机存取存储器dram">动态随机存取存储器（DRAM）&lt;/h3>
+&lt;p>Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong>存储电荷的多寡&lt;/strong>来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong>定时刷新&lt;/strong>的特性，因此被称为“动态”存储器。&lt;/p></description></item></channel></rss>

@@ -1,58 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>C&#43;&#43;_Primer on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/c&#43;&#43;_primer/</link>
-    <description>Recent content in C&#43;&#43;_Primer on Jialong&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 10 May 2021 21:04:06 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/c++_primer/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>C&#43;&#43; Primer——CH08 IO库</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
-      <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
-      
-      <guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
-      <description>&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
-&lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
-&lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;头文件iostream：
-&lt;ul&gt;
-&lt;li&gt;istream, wistream类型，从流读取数据&lt;/li&gt;
-&lt;li&gt;ostream, wostream类型，向流写入数据&lt;/li&gt;
-&lt;li&gt;iostream, wiostream类型，读写流&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;头文件fstream：
-&lt;ul&gt;
-&lt;li&gt;ifstream类型，从文件读取数据&lt;/li&gt;
-&lt;li&gt;ofstream类型，向文件写入数据&lt;/li&gt;
-&lt;li&gt;fstream类型，读写文件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;头文件sstream
-&lt;ul&gt;
-&lt;li&gt;istringstream类型：从string读取数据&lt;/li&gt;
-&lt;li&gt;ostringstream类型：向string写入数据&lt;/li&gt;
-&lt;li&gt;stringstream类型：读写string&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;类型前加一个w的类型是为了支持宽字符，用来操纵wchart_t类型。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>C&#43;&#43;回顾1——基础语法</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
-      <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
-      
-      <guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
-      <description>第1部分：C++基础
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C++_Primer on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/tags/c++_primer/</link><description>Recent content in C++_Primer on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Mon, 10 May 2021 21:04:06 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/c++_primer/index.xml" rel="self" type="application/rss+xml"/><item><title>C++ Primer——CH08 IO库</title><link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link><pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid><description>&lt;h2 id="io库">IO库&lt;/h2>
+&lt;h3 id="io类">IO类&lt;/h3>
+&lt;p>为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p>
+&lt;ul>
+&lt;li>头文件iostream：
+&lt;ul>
+&lt;li>istream, wistream类型，从流读取数据&lt;/li>
+&lt;li>ostream, wostream类型，向流写入数据&lt;/li>
+&lt;li>iostream, wiostream类型，读写流&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>头文件fstream：
+&lt;ul>
+&lt;li>ifstream类型，从文件读取数据&lt;/li>
+&lt;li>ofstream类型，向文件写入数据&lt;/li>
+&lt;li>fstream类型，读写文件&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>头文件sstream
+&lt;ul>
+&lt;li>istringstream类型：从string读取数据&lt;/li>
+&lt;li>ostringstream类型：向string写入数据&lt;/li>
+&lt;li>stringstream类型：读写string&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;p>类型前加一个w的类型是为了支持宽字符，用来操纵wchart_t类型。&lt;/p></description></item><item><title>C++回顾1——基础语法</title><link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link><pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid><description>第1部分：C++基础
 这个分类的博客主要为了记录一下我在学习C++过程中记录的知识笔记，主要参考自《C++ Primer 第5版》。
 第一部分基础部分主要包含以下内容：
- 变量和基本类型 表达式 语句 函数 类  变量和基本类型 变量 变量的声明和定义：
+变量和基本类型 表达式 语句 函数 类 变量和基本类型 变量 变量的声明和定义：
 显示声明时在变量前加上extern。
 声明只规定了变量类型和名字，定义还申请了存储空间，为变量赋一个初始值。
 可以在多个文件重复声明，但只能定义一次。
@@ -63,13 +38,9 @@ int ival = 1024; int &amp;amp;refVal = ival; int &amp;amp;refVal2; 引用即为�
 指针本身就是一个对象，允许对指针赋值和拷贝，无需再定义时赋值，定义指针时将声明符写作*d形式，d为变量名。
 double dp, *dp2; //dp2为指向double类型对象的指针 取地址符&amp;amp;：
 int ival = 42; int *p = &amp;amp;ival;//p存放ival的地址 解引用符*：
-int ival = 42; int *p = &amp;amp;ival;//p存放ival的地址 cout &amp;lt;&amp;lt; *p;	//输出指针p所指的对象，42 空指针：不指向任何对象，使用字面值nullptr来初始化指针。
+int ival = 42; int *p = &amp;amp;ival;//p存放ival的地址 cout &amp;lt;&amp;lt; *p; //输出指针p所指的对象，42 空指针：不指向任何对象，使用字面值nullptr来初始化指针。
 给指针赋值：令他存放一个新的地址，从而指向一个新的对象。
 void*指针：一种特殊类型的指针，可用于存放任意对象的地址。
 复合类型的声明：
 变量的定义包含一个基本数据类型和一组声明符；同一条定义中，基本数据类型只有一个，但声明符的形式可以不同，即一条语句可以定义不同类型的变量：
-int i = 1024, *p = &amp;amp;i, &amp;amp;r = i; //i是一个int数，p是一个int类型指针，r是一个int类型引用 一般把修饰符(&amp;amp;,*)和变量标识符写在一起。</description>
-    </item>
-    
-  </channel>
-</rss>
+int i = 1024, *p = &amp;amp;i, &amp;amp;r = i; //i是一个int数，p是一个int类型指针，r是一个int类型引用 一般把修饰符(&amp;amp;,*)和变量标识符写在一起。</description></item></channel></rss>

@@ -1,20 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>CAN总线 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/can%E6%80%BB%E7%BA%BF/</link>
-    <description>Recent content in CAN总线 on Jialong&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/can%E6%80%BB%E7%BA%BF/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>CAN总线</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</link>
-      <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
-      
-      <guid>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</guid>
-      <description>概要 Controller Area Network
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CAN总线 on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/tags/can%E6%80%BB%E7%BA%BF/</link><description>Recent content in CAN总线 on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/can%E6%80%BB%E7%BA%BF/index.xml" rel="self" type="application/rss+xml"/><item><title>CAN总线</title><link>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</link><pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</guid><description>概要 Controller Area Network
 CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于消息广播模式的串行通信总线。
 CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。
 CAN总线标准规定了物理层和数据链路层，应用层标准由具体应用决定。
@@ -37,17 +21,13 @@ CAN数据链路层 在SPI通信中，片选、时钟信号、数据输入及数�
 CAN总线不设定节点的地址，而是通过消息的标识符（Identifier）来区别消息。这种机制虽然会增加消息的复杂度（增加标识符），但是节点在此情况下可以无需了解其他节点的状况，而相互间独立工作。在总线上增加节点时仅需关注消息类型，而非系统上其他节点的状况。这种以消息标识符寻址的方式，让总线上增加节点变得更加灵活。
 总线访问 CSMA/CD+AMP
 多路载波侦听+基于消息优先级的冲突检测和非破坏性的仲裁机制（CSMA/CD+AMP）
-  CSMA（Carrie Sense Multiple Access）指的是所有节点必须都等到总线处于空闲状态时才能往总线上发送消息；
-  CD+AMP（Collision Detection + Arbitration on Message Priority）指的是如果多个节点往总线上发送消息时，具备最高优先级的消息获得总线。
-  多路载波侦听：网络上所有节点以多点接入的方式连接在同一根总线上，且发送数据是广播式的。网络上各个节点在发送数据前都要检测总线上是否有数据传输：若网络上有数据，暂时不发送数据，等待网络空闲时再发；若网络上无数据，立即发送已经准备好的数据。
-  冲突检测：节点在发送数据时，要不停的检测发送的数据，确定是否与其他节点数据发送冲突，如果有冲突，则保证优先级高的报文先发送。
-  非破坏性仲裁机制：通过ID仲裁，ID数值越小，报文优先级越高。
-  发送低优先级报文的节点退出仲裁后，在下次总线空闲时自动重发报文。
+CSMA（Carrie Sense Multiple Access）指的是所有节点必须都等到总线处于空闲状态时才能往总线上发送消息；
+CD+AMP（Collision Detection + Arbitration on Message Priority）指的是如果多个节点往总线上发送消息时，具备最高优先级的消息获得总线。
+多路载波侦听：网络上所有节点以多点接入的方式连接在同一根总线上，且发送数据是广播式的。网络上各个节点在发送数据前都要检测总线上是否有数据传输：若网络上有数据，暂时不发送数据，等待网络空闲时再发；若网络上无数据，立即发送已经准备好的数据。
+冲突检测：节点在发送数据时，要不停的检测发送的数据，确定是否与其他节点数据发送冲突，如果有冲突，则保证优先级高的报文先发送。
+非破坏性仲裁机制：通过ID仲裁，ID数值越小，报文优先级越高。
+发送低优先级报文的节点退出仲裁后，在下次总线空闲时自动重发报文。
 高优先级的报文不能中断低优先级报文的发送。
 报文接受过滤
 CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的报文。节点对接收到的报文进行过滤：比较消息ID与选择器（Accepter）中和接受过滤相关位是否相同。如果相同，接收；如果不相同，则过滤。
-报文种类及结构 在原始数据段的前面加上传输起始标签、片选（识别）标签、控制标签，在数据的尾段加上CRC校验标签、应答标签和传输结束标签。把这些内容按特定的格式打包好，就可以用一个通道表达各种信号了。</description>
-    </item>
-    
-  </channel>
-</rss>
+报文种类及结构 在原始数据段的前面加上传输起始标签、片选（识别）标签、控制标签，在数据的尾段加上CRC校验标签、应答标签和传输结束标签。把这些内容按特定的格式打包好，就可以用一个通道表达各种信号了。</description></item></channel></rss>

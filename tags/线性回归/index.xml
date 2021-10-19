@@ -1,31 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>线性回归 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link>
-    <description>Recent content in 线性回归 on Jialong&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 23 Apr 2021 18:10:29 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>机器学习——线性回归和梯度下降</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
-      <pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate>
-      
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
-      <description>线性回归Linear Regression 简介 线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>线性回归 on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/</link><description>Recent content in 线性回归 on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Fri, 23 Apr 2021 18:10:29 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/index.xml" rel="self" type="application/rss+xml"/><item><title>机器学习——线性回归和梯度下降</title><link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link><pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid><description>线性回归Linear Regression 简介 线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。
 注意：
- 因为是线性回归，所以学习到的函数为线性函数，即一次直线函数； 因为是单变量，所以只有一个x；  所以能够给出单变量线性回归的模型： $$ h(x)=b+mx $$ 我们称$x$为feature，$h(x)$为hypothesis。
+因为是线性回归，所以学习到的函数为线性函数，即一次直线函数； 因为是单变量，所以只有一个x； 所以能够给出单变量线性回归的模型： $$ h(x)=b+mx $$ 我们称$x$为feature，$h(x)$为hypothesis。
 代价函数Cost Function 我们需要根据代价函数来确定线性回归拟合的好不好。Cost Function越小，说明线性回归地越好，最小为0，完全拟合。 $$ J(b,m)=\frac{1}{2n}(h(x^{(i)})-y^{(i)})^2 $$ 如上所示为代价函数的构造，其中，$x^{(i)}$表示向量x的第i个元素，$y^{(i)}$表示向量y的第i个元素，即表示所有输入的训练集的点。$h(x)$表示已知的假设函数，n为训练集的个数。
 梯度下降 梯度下降能够找出代价函数Cost Function的最小值，梯度下降的方法步骤如下所示：
- 先确定向下一步的步伐大小，我们称为Learning Rate； 任意给定初始值b, m； 确定一个向下的方向，按预定步骤向下走，并且更新b, m； 当下降高度(循环次数)小于某个定义的值时，停止下降。  循环下面的式子直到满足终止条件： $$ b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
+先确定向下一步的步伐大小，我们称为Learning Rate； 任意给定初始值b, m； 确定一个向下的方向，按预定步骤向下走，并且更新b, m； 当下降高度(循环次数)小于某个定义的值时，停止下降。 循环下面的式子直到满足终止条件： $$ b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
 m = m - \alpha\frac{\partial}{\partial m}J(b,m) $$ 上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。
 对Cost Function运用梯度下降 $$ \mathrm{repeat \ until \ convergence}{ \
 b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \
 m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \
-\ } $$</description>
-    </item>
-    
-  </channel>
-</rss>
+\ } $$</description></item></channel></rss>

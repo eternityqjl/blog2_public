@@ -1,35 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>C语言数据形式_结构 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/c%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E5%BD%A2%E5%BC%8F_%E7%BB%93%E6%9E%84/</link>
-    <description>Recent content in C语言数据形式_结构 on Jialong&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 15 Oct 2019 20:03:54 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/c%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E5%BD%A2%E5%BC%8F_%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>C语言结构</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E7%BB%93%E6%9E%84/</link>
-      <pubDate>Tue, 15 Oct 2019 20:03:54 +0000</pubDate>
-      
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E7%BB%93%E6%9E%84/</guid>
-      <description>1.建立结构变量
-struct book { char title[MAXTITL]; char author[MAXAUTL]; float value; }  该结构描述了由两个字符数组和一个float类型变量组成的结构。  2.定义结构变量
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>C语言数据形式_结构 on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/tags/c%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E5%BD%A2%E5%BC%8F_%E7%BB%93%E6%9E%84/</link><description>Recent content in C语言数据形式_结构 on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Tue, 15 Oct 2019 20:03:54 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/c%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E5%BD%A2%E5%BC%8F_%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml"/><item><title>C语言结构</title><link>https://eternityqjl.github.io/blog2_public/posts/%E7%BB%93%E6%9E%84/</link><pubDate>Tue, 15 Oct 2019 20:03:54 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/%E7%BB%93%E6%9E%84/</guid><description>1.建立结构变量
+struct book { char title[MAXTITL]; char author[MAXAUTL]; float value; } 该结构描述了由两个字符数组和一个float类型变量组成的结构。 2.定义结构变量
 struct book library;
-  把library声明为一个使用book结构类型的结构变量。
-  所以struct book 相当于过去的int、double等类型。
+把library声明为一个使用book结构类型的结构变量。
+所以struct book 相当于过去的int、double等类型。
 struct book { char title[MAXTITL]; char author[MAXAUTL]; float value; } library; 该程序为上面声明的完整版。
-struct { //无结构标记  char title[MAXTITL]; char author[MAXAUTL]; float value; } library; 声明结构和定义结构可以一步完成，如上所示。
-  3.初始化结构
+struct { //无结构标记 char title[MAXTITL]; char author[MAXAUTL]; float value; } library; 声明结构和定义结构可以一步完成，如上所示。
+3.初始化结构
 4.访问结构成员(点运算符)
 5.结构初始化器
 6.结构数组
 struct book library[MAXBKS];
 7.指向结构的指针
 struct guy * him;
- 指针可以指向任何现有的guy类型如barney、fellow[0]（一个结构数组的一项即为一个结构变量）。  him = &amp;amp;barney or him = &amp;amp;fellow[0];</description>
-    </item>
-    
-  </channel>
-</rss>
+指针可以指向任何现有的guy类型如barney、fellow[0]（一个结构数组的一项即为一个结构变量）。 him = &amp;amp;barney or him = &amp;amp;fellow[0];</description></item></channel></rss>

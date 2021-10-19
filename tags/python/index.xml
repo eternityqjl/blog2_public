@@ -1,29 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Python on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/python/</link>
-    <description>Recent content in Python on Jialong&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sun, 06 Jun 2021 13:04:49 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/python/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Python基础和numpy</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link>
-      <pubDate>Sun, 06 Jun 2021 13:04:49 +0000</pubDate>
-      
-      <guid>https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid>
-      <description>&lt;h2 id=&#34;basic-of-python&#34;&gt;Basic of Python&lt;/h2&gt;
-&lt;h3 id=&#34;basic-data-types&#34;&gt;Basic data types&lt;/h3&gt;
-&lt;h4 id=&#34;numbers&#34;&gt;Numbers&lt;/h4&gt;
-&lt;h4 id=&#34;bolleans&#34;&gt;Bolleans&lt;/h4&gt;
-&lt;h4 id=&#34;strings&#34;&gt;Strings&lt;/h4&gt;
-&lt;h3 id=&#34;containers&#34;&gt;Containers&lt;/h3&gt;
-&lt;h4 id=&#34;lists&#34;&gt;Lists&lt;/h4&gt;
-&lt;h4 id=&#34;slicing&#34;&gt;Slicing&lt;/h4&gt;
-&lt;h4 id=&#34;loops&#34;&gt;Loops&lt;/h4&gt;</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/tags/python/</link><description>Recent content in Python on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Sun, 06 Jun 2021 13:04:49 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Python基础和numpy</title><link>https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link><pubDate>Sun, 06 Jun 2021 13:04:49 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid><description>&lt;h2 id="basic-of-python">Basic of Python&lt;/h2>
+&lt;h3 id="basic-data-types">Basic data types&lt;/h3>
+&lt;h4 id="numbers">Numbers&lt;/h4>
+&lt;h4 id="bolleans">Bolleans&lt;/h4>
+&lt;h4 id="strings">Strings&lt;/h4>
+&lt;h3 id="containers">Containers&lt;/h3>
+&lt;h4 id="lists">Lists&lt;/h4>
+&lt;h4 id="slicing">Slicing&lt;/h4>
+&lt;h4 id="loops">Loops&lt;/h4></description></item></channel></rss>
