@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>k-NN on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/k-nn/</link>
+    <link>https://eternityqjl.github.io/tags/k-nn/</link>
     <description>Recent content in k-NN on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 09 Jun 2021 17:41:44 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/k-nn/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 09 Jun 2021 17:41:44 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/tags/k-nn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cs231n——1.Nearest Neighbor Classifier</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</link>
+      <link>https://eternityqjl.github.io/posts/cs231n1-nearest-neighbor-classifier/</link>
       <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</guid>
+      <guid>https://eternityqjl.github.io/posts/cs231n1-nearest-neighbor-classifier/</guid>
       <description>图像分类规范化步骤：
  输入：输入带有不同标签的图像作为训练集 学习：使用训练集学习每种类别的抽象特征 评估：通过测试集评估分类器的质量。  Nearest Neighbor Classifier CIFAR-10 dataset:
  10 classes (airplane, automobile, bird, etc) 60,000 tiny images that are 32 pixels high and wide  k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。

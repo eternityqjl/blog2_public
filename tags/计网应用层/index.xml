@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>计网——应用层 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%BD%91%E5%BA%94%E7%94%A8%E5%B1%82/</link>
+    <link>https://eternityqjl.github.io/tags/%E8%AE%A1%E7%BD%91%E5%BA%94%E7%94%A8%E5%B1%82/</link>
     <description>Recent content in 计网——应用层 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 28 Nov 2019 19:23:38 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%BD%91%E5%BA%94%E7%94%A8%E5%B1%82/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 Nov 2019 19:23:38 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/tags/%E8%AE%A1%E7%BD%91%E5%BA%94%E7%94%A8%E5%B1%82/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>计算机网络学习日志（一）——应用层</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</link>
       <pubDate>Thu, 28 Nov 2019 19:23:38 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</guid>
       <description>应用层是计算机网络从上往下的第一层，这一层的主要内容是网络应用的原理和实现，通过学习几种常见的网络应用程序，并且开发运行在TCP和UTP(运输层)上的网络应用程序，这些应用程序包含Web、电子邮件、DNS、P2P等等。
 应用层协议 开发网络应用程序是要开发运行在不同端系统上并且通过网络(下层协议)彼此通信的程序，这过程中不需要为下层的网络核心设备写程序，因为它们不在应用层上起作用。
 网络应用程序体系结构 客户——服务器体系结构：

@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/posts/</link>
+    <link>https://eternityqjl.github.io/posts/</link>
     <description>Recent content in Posts on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 13 Aug 2021 16:15:00 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 13 Aug 2021 16:15:00 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>算法的时间复杂度和空间复杂度</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
+      <link>https://eternityqjl.github.io/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
       <pubDate>Fri, 13 Aug 2021 16:15:00 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
       <description>用来衡量不同算法之间的优劣。
  时间维度：执行当前算法所消耗的时间，用时间复杂度来描述。   空间维度：执行当前算法需要占用的内存空间，我们通常用空间复杂度来描述。  时间复杂度 大O符号表示法 ，即 T(n) = O(f(n))，这是时间复杂度的公式，f(n)表示每行代码执行次数之和，O表示正比例关系。
 我们通过以下一个程序举例：
@@ -29,10 +29,10 @@ int i = 1; int j = 2; ++i; j++; int m = i + j; 线性阶O(n) for(i=1; i&amp;lt;=
     
     <item>
       <title>csapp: 3.程序的机器级表示</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</link>
+      <link>https://eternityqjl.github.io/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</link>
       <pubDate>Mon, 09 Aug 2021 16:08:05 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</guid>
+      <guid>https://eternityqjl.github.io/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</guid>
       <description>第三章 程序的机器级表示 历史观点 典型的编译器在将C程序结构变换成机器代码时所做的转换。
 英特尔X86-64处理器的发展历史。
 从8086到Core i7
@@ -51,10 +51,10 @@ int i = 1; int j = 2; ++i; j++; int m = i + j; 线性阶O(n) for(i=1; i&amp;lt;=
     
     <item>
       <title>计算机网络学习日志（三）——网络层：数据平面</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</link>
       <pubDate>Thu, 05 Aug 2021 22:23:31 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</guid>
       <description>数据平面指的是网络层中每台路由器的功能，该数据平面功能决定了到达路由器输入链路的数据报如何转发到该路由器的输出链路之一。
 而控制平面的功能指的是网络范围的逻辑，控制平面控制数据报沿着从源主机到目的主机的端到端路径中路由器之间的路由方式。其中包括路由选择算法，以及如今广泛应用的诸如OSPF和BGP等路由选择协议。控制平面和数据平面的功能已经被实现为一个整体，位于一台路由器中。
 **软件定义网络（SDN）**通过将这些控制平面的功能作为一种单独的服务，明确分离数据平面和控制平面，控制平面功能通常位于一台远程的控制器中。
@@ -92,10 +92,10 @@ IPv4数据报格式 网络层分组被称为数据报。
     
     <item>
       <title>计算机网络学习日志（五）——链路层</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</link>
       <pubDate>Sun, 01 Aug 2021 20:20:52 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</guid>
       <description>概述 将运行链路层协议的设备称为节点，把沿通信链路连接相邻节点的通信信道称为链路。经过特定链路时，节点将数据包封装在链路层帧中，将该帧传送到链路中。
 链路层提供的服务：
  成帧：将网络层数据报用链路层帧封装起来，帧结构由链路层协议决定。 链路接入：**媒体访问控制协议(MAC)**规定了帧在链路上的传输规则。MAC协议还用于协调多个节点的帧传输。 可靠交付：链路层通过确认和重传提供可靠交付服务。无线链路容易产生较高的差错率，一般在本地（差错发生的链路上）纠正一个错误，而非通过应用层或传输层来纠错。如光纤、双绞铜线等有线链路的差错率较低，可靠交付被认为是不必要的开销，所以许多有线链路层协议不提供可靠交付。 差错检验和纠正：比特差错由信号衰减和电磁干扰产生，链路层差错纠正一般使用硬件实现。通过让发送节点在帧中包括差错检测比特，让接收节点进行差错检查来实现。  链路层协议的实现位置：网络适配器（也成为网卡）来实现。
@@ -126,10 +126,10 @@ IPv4数据报格式 网络层分组被称为数据报。
     
     <item>
       <title>Linux基础知识</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+      <link>https://eternityqjl.github.io/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
       <pubDate>Thu, 29 Jul 2021 08:44:21 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+      <guid>https://eternityqjl.github.io/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
       <description>系统启动过程  内核的引导：BIOS开机自检，然后读入/boot目录的内核文件 运行init：init进程是所有进程的起点，运行级别确定 系统初始化：rc.sysinit 建立终端 用户登录系统  系统目录结构  /bin：bin是二进制文件的缩写，存放着最常用的命令 /boot：存放启动时的核心文件 /dev：dev是Device的缩写，存放Linux的外部设备 /etc：Etcetera的缩写，用来存放所有系统管理所需的配置文件和子目录 /home：主目录，Linux中，每个用户都有一个自己的目录 /lib：Library的缩写，存放着系统最基本的动态连接共享库 /media：自动识别一些设备，将其挂载到这个目录 /mnt：该目录为了让用户临时挂载别的文件系统 /opt：optional的缩写，给主机额外安装软件所设置的目录 /proc：Processes进程的缩写，是一种虚拟文件系统，存放着当前内核运行状态的一系列特殊文件。该目录不再硬盘上，而是在内存中。 /root：系统管理员主目录 /tmp：temporary的缩写，用来存放临时目录 /usr：unix shared resources共享资源的缩写，用户的很多应用程序和文件存放于此，类似于windows下的program files /usr/bin：系统用户使用的应用程序 /usr/src：内核源代码默认的存放目录 /var：variable的缩写，存放着不断扩充着的东西，将经常被修改的目录放在这个目录下，包括各种日志文件  文件基本属性 Linux系统是一种多用户系统，不同用户有不同权限。
 通常使用以下命令来修文件和目录的权限：
  chown(change ownerp)：修改所属用户与组 chmod(change mode)：修改用户的权限  在Linux中使用ll或ls -l来显示一个文件的属性以及文件所属的用户和组。
@@ -148,10 +148,10 @@ chown：更改文件属主，也可以同时更改文件属组 用法：</descri
     
     <item>
       <title>计算机网络各层级理解</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</link>
       <pubDate>Fri, 23 Jul 2021 12:59:05 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</guid>
       <description>一年多前按照层级详细学习了计算机网络的有关内容，包括从应用层、传输层、网络层、数据链路层到物理层的详细信息，并且也学习了一些其他硬件通信协议，比如CAN控制器局域网、SPI等等。在之后的应用和实践中经常对不同层级的网络和网络设备产生疑惑，例如路由器和交换机到底是什么关系？为什么要通过IP地址和MAC地址划分网络层和数据链路层？这里将会详细说明各层网络的具体作用来加深理解和体会。
 应用层 应用层是计算机网络体系结构中最高层，意味着这是和人进行交互的层次。
 应用层是计算机网络与用户进行交互的接口或界面，直接向用户提供服务；包括Web、E-mail、DNS、DHCP、FTP等等。
@@ -170,10 +170,10 @@ chown：更改文件属主，也可以同时更改文件属组 用法：</descri
     
     <item>
       <title>LaTex环境配置和基本功能模块</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link>
+      <link>https://eternityqjl.github.io/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link>
       <pubDate>Sun, 18 Jul 2021 20:06:26 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid>
+      <guid>https://eternityqjl.github.io/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid>
       <description>环境配置 我选择使用VS code + Tex Live作为我的LaTex写作环境，具体配置过程参考自：Visual Studio Code (vscode)配置LaTeX
 以下是关于使用过程中一些具体模块的讨论：
 部分内容参考自：一份其实很短的 LaTeX 入门文档
@@ -190,10 +190,10 @@ chown：更改文件属主，也可以同时更改文件属组 用法：</descri
     
     <item>
       <title>csapp: 2.信息的表示和处理（部分完成）</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>
+      <link>https://eternityqjl.github.io/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>
       <pubDate>Mon, 12 Jul 2021 21:26:27 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
+      <guid>https://eternityqjl.github.io/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
       <description>第一部分内容：程序结构和执行
 我们需要用方法表示基本数据类型，然后考虑机器级指令如何操作这样的数据，以及编译器如何将C程序翻译成这样的指令。接下来研究集中处理器的方法，使得我们能够更好地了解硬件资源如何被用来执行指令。
 信息存储 十六进制表示法及转换 二进制和十进制对描述位模式来说都不方便，因此采用16进制数(hex)来表示位模式。
@@ -215,10 +215,10 @@ C语言中16进制数以0X或0x开头，字符‘A’~‘F’既可以是大写�
     
     <item>
       <title>CAN总线</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</link>
+      <link>https://eternityqjl.github.io/posts/can%E6%80%BB%E7%BA%BF/</link>
       <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</guid>
+      <guid>https://eternityqjl.github.io/posts/can%E6%80%BB%E7%BA%BF/</guid>
       <description>概要 Controller Area Network
 CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于消息广播模式的串行通信总线。
 CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。
@@ -256,10 +256,10 @@ CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的�
     
     <item>
       <title>存储器详解</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
+      <link>https://eternityqjl.github.io/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
       <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
       <description>&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
 &lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
 &lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
@@ -269,10 +269,10 @@ CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的�
     
     <item>
       <title>csapp: 1.计算机系统漫游</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
+      <link>https://eternityqjl.github.io/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
       <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
+      <guid>https://eternityqjl.github.io/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
       <description>在本书中我们将会学习到一些使用技巧，比如如何避免由于计算机表示数字的方式引起的错误；通过一些技巧优化C代码，以充分利用现代处理器和存储器系统的设计；了解编译器如何实现过程调用，利用这些知识避免缓冲区溢出错误带来的安全漏洞；学习如何识别和避免链接时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；并发带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。
 我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：
 #include &amp;lt;stdio.h&amp;gt;int main() { printf(&amp;#34;Hello, world\n&amp;#34;); return 0; } 信息就是位+上下文 8位为一个字节。
@@ -295,10 +295,10 @@ I/O设备 每个I/O设备通过控制器或适配器与I/O总线相连，控制�
     
     <item>
       <title>cs231n——1.Nearest Neighbor Classifier</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</link>
+      <link>https://eternityqjl.github.io/posts/cs231n1-nearest-neighbor-classifier/</link>
       <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</guid>
+      <guid>https://eternityqjl.github.io/posts/cs231n1-nearest-neighbor-classifier/</guid>
       <description>图像分类规范化步骤：
  输入：输入带有不同标签的图像作为训练集 学习：使用训练集学习每种类别的抽象特征 评估：通过测试集评估分类器的质量。  Nearest Neighbor Classifier CIFAR-10 dataset:
  10 classes (airplane, automobile, bird, etc) 60,000 tiny images that are 32 pixels high and wide  k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。
@@ -310,10 +310,10 @@ Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic fun
     
     <item>
       <title>Python基础和numpy</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link>
+      <link>https://eternityqjl.github.io/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link>
       <pubDate>Sun, 06 Jun 2021 13:04:49 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid>
+      <guid>https://eternityqjl.github.io/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid>
       <description>&lt;h2 id=&#34;basic-of-python&#34;&gt;Basic of Python&lt;/h2&gt;
 &lt;h3 id=&#34;basic-data-types&#34;&gt;Basic data types&lt;/h3&gt;
 &lt;h4 id=&#34;numbers&#34;&gt;Numbers&lt;/h4&gt;
@@ -327,10 +327,10 @@ Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic fun
     
     <item>
       <title>WLAN基本内容和802.11ax</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</link>
+      <link>https://eternityqjl.github.io/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</link>
       <pubDate>Thu, 03 Jun 2021 18:09:38 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</guid>
+      <guid>https://eternityqjl.github.io/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</guid>
       <description>&lt;h2 id=&#34;wlan基础内容&#34;&gt;WLAN基础内容&lt;/h2&gt;
 &lt;h3 id=&#34;计算机网络概念&#34;&gt;计算机网络概念&lt;/h3&gt;
 &lt;p&gt;在学习基本无线网络通信的过程中顺便可以来复习以下计算机网络的相关内容。&lt;/p&gt;
@@ -342,10 +342,10 @@ Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic fun
     
     <item>
       <title>字符编码：Unicode, UTF-8</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</link>
+      <link>https://eternityqjl.github.io/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</link>
       <pubDate>Wed, 02 Jun 2021 15:29:29 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</guid>
       <description>&lt;h2 id=&#34;基本&#34;&gt;基本&lt;/h2&gt;
 &lt;p&gt;计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如&amp;rsquo;a&amp;rsquo;用什么表示，称为&amp;quot;&lt;strong&gt;编码&lt;/strong&gt;&amp;quot;；反之，将存储在计算机中的二进制数解析显示出来，称为&amp;quot;&lt;strong&gt;解码&lt;/strong&gt;&amp;quot;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;字符集(charset)&lt;/strong&gt;：是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国文字、标点符号、图形符号、数字等。&lt;/p&gt;
@@ -354,10 +354,10 @@ Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic fun
     
     <item>
       <title>机器学习——k近邻(k-NN)算法</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
+      <link>https://eternityqjl.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
       <pubDate>Wed, 12 May 2021 14:57:17 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
       <description>&lt;h2 id=&#34;基本概念及原理&#34;&gt;基本概念及原理&lt;/h2&gt;
 &lt;p&gt;k近邻(k-nearest neighbors)算法是一种基本分类和回归方法。&lt;/p&gt;
 &lt;p&gt;该算法是给定一个&lt;strong&gt;训练数据集&lt;/strong&gt;，对新的&lt;strong&gt;输入测试集&lt;/strong&gt;，在训练集中找到与该测试实例&lt;strong&gt;最邻近&lt;/strong&gt;的k个实例，这k个实例的多数属于某个类，就把该输入实例分类到这个类中。&lt;/p&gt;
@@ -371,10 +371,10 @@ Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic fun
     
     <item>
       <title>C&#43;&#43; Primer——CH08 IO库</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
+      <link>https://eternityqjl.github.io/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
       <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
+      <guid>https://eternityqjl.github.io/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
       <description>&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
 &lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
 &lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
@@ -406,10 +406,10 @@ Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic fun
     
     <item>
       <title>Altium Designer画图流程记录(简略)</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+      <link>https://eternityqjl.github.io/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
       <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+      <guid>https://eternityqjl.github.io/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
       <description>之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
 共有以下几部分内容：
  原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板  PCB各层简介 参考自：PCB各层介绍
@@ -430,10 +430,10 @@ Drill layer(钻孔层) 钻孔层提供电路板制造过程中的钻孔信息(�
     
     <item>
       <title>C&#43;&#43;回顾1——基础语法</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
+      <link>https://eternityqjl.github.io/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
       <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
+      <guid>https://eternityqjl.github.io/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
       <description>第1部分：C++基础
 这个分类的博客主要为了记录一下我在学习C++过程中记录的知识笔记，主要参考自《C++ Primer 第5版》。
 第一部分基础部分主要包含以下内容：
@@ -458,10 +458,10 @@ int i = 1024, *p = &amp;amp;i, &amp;amp;r = i; //i是一个int数，p是一个in
     
     <item>
       <title>机器学习——线性回归和梯度下降</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
+      <link>https://eternityqjl.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
       <pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
       <description>线性回归Linear Regression 简介 线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。
 注意：
  因为是线性回归，所以学习到的函数为线性函数，即一次直线函数； 因为是单变量，所以只有一个x；  所以能够给出单变量线性回归的模型： $$ h(x)=b+mx $$ 我们称$x$为feature，$h(x)$为hypothesis。
@@ -477,10 +477,10 @@ m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \
     
     <item>
       <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</link>
+      <link>https://eternityqjl.github.io/posts/%E4%B8%B2%E5%8F%A3/</link>
       <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E4%B8%B2%E5%8F%A3/</guid>
       <description>SPI、I2C、UART：串行通信协议
 COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
 TTL、RS-232指的是电平标准
@@ -506,10 +506,10 @@ SPI协议层 （图片来自SPI通讯协议介绍）
     
     <item>
       <title>《算法（第4版）》学习笔记——（一）排序</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
+      <link>https://eternityqjl.github.io/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
       <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
       <description>初级排序算法 选择排序 算法描述 首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。
 代码实现 public class Selection { public static void sort(Comparable[] a) { //将a按照升序排列  int N = a.length; for (int i = 0; i &amp;lt; N; i++) { int min = i; for (int j = i + 1; j &amp;lt; N; j++) { if (less(a[j], a[min])) min = j; } exch(a, i ,min); } } } 性能分析  对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。 该算法运行时间与输入无关，数据的移动是最少的。  插入排序 算法描述 插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。
 代码实现 public class Insertion { public static void sort(Comparable[] a) { int N = a.</description>
@@ -517,20 +517,20 @@ SPI协议层 （图片来自SPI通讯协议介绍）
     
     <item>
       <title>Dijkstra双栈——算术表达式求值</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
+      <link>https://eternityqjl.github.io/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
       <pubDate>Tue, 21 Jul 2020 20:15:08 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
+      <guid>https://eternityqjl.github.io/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
       <description>算数表达式 这里的算术表达式支持常见的二元运算符+-*/以及接受一个参数的平方根运算符sqrt。这里我们假定表达式中未省略所有的括号。
 计算方法  将操作数压入操作数栈 将运算符压入运算符栈 忽略左括号 遇到右括号时，弹出一个运算符，弹出需要数量的操作数进行运算，然后将得到的结果再压入操作数栈。  代码实现 package edu.princeton.cs.algs4; public class Evaluate { public static void main(String[] args) { Stack&amp;lt;String&amp;gt; ops = new Stack&amp;lt;String&amp;gt;(); Stack&amp;lt;Double&amp;gt; vals = new Stack&amp;lt;Double&amp;gt;(); while (!StdIn.isEmpty()) { //读取字符，如果是运算符则压入运算符栈ops 	String s = StdIn.readString(); if (s.equals(&amp;#34;(&amp;#34;)); else if (s.equals(&amp;#34;+&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;-&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;*&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;/&amp;#34;)) ops.push(s); else if (s.equals(&amp;#34;sqrt&amp;#34;)) ops.push(s); //如果字符为)，则弹出运算符和操作数，计算结果并压入操作数栈vals 	else if (s.equals(&amp;#34;)&amp;#34;)) { String op = ops.</description>
     </item>
     
     <item>
       <title>计算机网络学习日志（二）——运输层</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
       <pubDate>Wed, 06 May 2020 21:27:10 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
       <description>概述和运输层服务 运输层协议在不同主机上的应用进程之间提供了逻辑通信，这并非物理上的实际通信。在发送端，运输层将从应用程序接收到的报文转换成运输层分组，该分组称为运输层报文段，实现方法是将应用报文划分为一个个小的块，为每个块加上运输层首部生成运输层报文段，然后在端系统中传递给网络层，网络层将其封装成网络层分组，向目的地发送。
 因特网由TCP和UDP两种运输层协议。
 运输层和网络层的关系 网络层提供了主机之间的逻辑通信，而运输层为运行在不同主机上的进程之间提供了逻辑通信。
@@ -562,10 +562,10 @@ rdt2.0：经具有比特差错信道的可靠数据传输
     
     <item>
       <title>TLS（HTTPS）协议</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/tls/</link>
+      <link>https://eternityqjl.github.io/posts/tls/</link>
       <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/tls/</guid>
+      <guid>https://eternityqjl.github.io/posts/tls/</guid>
       <description>1. SSL/TLS简介 TLS（Transport Layer Security，传输层安全协议），以及它的前身SSL（Secure Sockets Layer，安全套接层）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。
 SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。
 几个知名的使用SSL加密的协议：
@@ -582,20 +582,20 @@ Email over SSL
     
     <item>
       <title>PDF转换为SVG</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/</link>
+      <link>https://eternityqjl.github.io/posts/convertpdftosvg/</link>
       <pubDate>Wed, 08 Apr 2020 00:15:48 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/</guid>
+      <guid>https://eternityqjl.github.io/posts/convertpdftosvg/</guid>
       <description>前言 最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用Adobe Acrobat和inkscape两个软件将PDF中的矢量图导出为SVG格式的矢量图。以下为具体步骤：
 在Adobe Acrobat中选择编辑PDF选项 选择裁剪页面 框选所需图片的区域 双击框选的区域，按如下所示设置 选择组织页面 选定裁切后的页面 右击后选择打印页面 设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。 用inkscape打开刚才打印的PDF文件，注意，导入时设置为第一项从Poppler/Cairo导入，类似于PS中的栅格化，这样才能保证图中的字体不发生改变 选择文件$\rightarrow$文档属性，设置自定义尺寸为缩放页面到内容$\rightarrow$缩放页面到绘图或选区 文件$\rightarrow$另存为，选择自己所需的格式，我一般选SVG </description>
     </item>
     
     <item>
       <title>第一次使用LaTex——问题整理</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</link>
+      <link>https://eternityqjl.github.io/posts/latex-problems1/</link>
       <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</guid>
+      <guid>https://eternityqjl.github.io/posts/latex-problems1/</guid>
       <description>0.前言 第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。
 这是第一次实验报告导出的pdf文档封面展示：
 这是tex源代码。
@@ -612,10 +612,10 @@ Email over SSL
     
     <item>
       <title>信号与系统学习笔记——Chapter01 信号与系统</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/signalsystem-ch01/</link>
+      <link>https://eternityqjl.github.io/posts/signalsystem-ch01/</link>
       <pubDate>Sat, 14 Mar 2020 13:59:44 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/signalsystem-ch01/</guid>
+      <guid>https://eternityqjl.github.io/posts/signalsystem-ch01/</guid>
       <description>1.3 指数信号与正弦信号 1.3.1 连续时间复指数信号与正弦信号 连续时间复指数信号有如下形式： $$ x(t)=Ce^{at} $$
 实指数信号 上式中的$C$和$a$都为实数的信号。
 周期复指数信号和正弦信号 第二种重要的信号为将上式$a$限制为纯虚数的信号（复指数信号）： $$ x(t)=e^{jw_0t} $$ 当基波周期$T_0 = \left| \frac {2\pi} {w_0} \right|$时，该信号是周期信号。
@@ -629,10 +629,10 @@ a = r + j\omega_0 $$ 代入得： $$ \begin{align} Ce^{at} &amp;amp; = \left| C 
     
     <item>
       <title>数字签名和数字证书</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</link>
+      <link>https://eternityqjl.github.io/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</link>
       <pubDate>Fri, 06 Dec 2019 19:42:38 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</guid>
       <description>理解本文的基础是公钥密码加密，即非对称加密，比如其中一种非对称加密算法RSA。
 非对称加密使用一对密钥，一个为公钥Pub，另一个为私钥Priv
 明文P经过公钥Pub使用RSA加密算法混淆后变成了密文M，密文M无法用公钥Pub解开，只能用私钥Priv解开
@@ -661,10 +661,10 @@ a = r + j\omega_0 $$ 代入得： $$ \begin{align} Ce^{at} &amp;amp; = \left| C 
     
     <item>
       <title>写在2019年的最后一个月的开始</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
+      <link>https://eternityqjl.github.io/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
       <pubDate>Sun, 01 Dec 2019 22:06:08 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
       <description>转眼间2019年就要结束了，依稀记得2019年的刚开始我还在发空间动态说自己又买了一本日历，然而&amp;hellip;明年就不买了吧，我并没有记得经常去看日历，更别说去每天一张一张地撕它。这一年里经历了非常多的事情，从学习、生活、关于未来的各方各面，我都发生了极大的改变，这源于我不断变化的想法，目标总是飘忽不定，我思考过，也经常迷茫，现在也是。
 在写下这些话的时间里，我其实是非常难过和害怕的，这一个周末似乎没干什么事情就又要浑浑噩噩地结束了，直到现在还有一个DDL等着我，明早截止，我还没做完，间歇性拖延症晚期这件事情，一直发生在我身上，毫不夸张地说，我可以不间歇地拖延整整24小时，这过程中总想着做些什么、改变些什么，但除了睡觉，大部分时间眼睛都盯在手机屏幕上，尽管我知道这样做一点儿也不好，但结果还是发生了。我知道学习的重要性，也会去为了一个想要实现的东西不断地思考并找到解决方法，就比如搭建网站这件事情，前前后后花了很多的时间也学习了很多相关知识，基本掌握了中间的原理，结果在我预想的时间之前很久就做出来了，结果还是超乎预期的好。说实话，完成一件能看的到结果的事情能给人的心理带来很大的快感的愉悦，但愉悦过后，又只剩下了迷茫和拖延，并且在为了找到下一个实践目标而苦苦挣扎着。有时候大脑盯着手机屏幕看一些信息的时候，知道这是自己不想接收和浪费时间的，但就是控制不住自己去点开看，这样的人性的弱点也造就了很多的商机，造就了很多企业和公司的成功。
 说点儿别的。在关于情感和人际交往方面，我可能是一个与绝大多数人都不一样的人，在情感上，我很少与他人或者是在公开场合表露（包括我的社交媒体，我发现，自己现在很少在社交媒体上表露自己的情感，更多的是分享一些自己的兴趣爱好，比如我热爱的摄影，因而，我也就把自己的空间对所有人开放了，微信这个东西另当别论，说实话，我挺讨厌这个软件的），但我还是知道自己想要的是什么，纵然我在过去的一年里总是带着一些自卑的情感，很久没有与他人进行深入内心的交谈，KY的与陌生人打电话活动也错过了很多次，每次都是在想和别人深入交流的时候才想起来，结果肯定是已经结束了，今后还是要多多关注，想想能与一同关注KY的人打电话是一件挺幸福的事情，也希望自己能早日找到灵魂伴侣。在人际交往方面，我尝试过学校的很多社团和活动，最终无一例外全都放弃了，我觉得也挺好，这也证明了我确实不喜欢过多的浮于表面和拉帮结派建造复杂人际关系的事情，做好自己就最好了，能认识几个朋友还是随缘了，人也并不需要那么多看上去像是朋友的朋友。
@@ -674,10 +674,10 @@ a = r + j\omega_0 $$ 代入得： $$ \begin{align} Ce^{at} &amp;amp; = \left| C 
     
     <item>
       <title>计算机网络学习日志（一）——应用层</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</link>
       <pubDate>Thu, 28 Nov 2019 19:23:38 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</guid>
       <description>应用层是计算机网络从上往下的第一层，这一层的主要内容是网络应用的原理和实现，通过学习几种常见的网络应用程序，并且开发运行在TCP和UTP(运输层)上的网络应用程序，这些应用程序包含Web、电子邮件、DNS、P2P等等。
 应用层协议 开发网络应用程序是要开发运行在不同端系统上并且通过网络(下层协议)彼此通信的程序，这过程中不需要为下层的网络核心设备写程序，因为它们不在应用层上起作用。
 网络应用程序体系结构 客户——服务器体系结构：
@@ -708,10 +708,10 @@ TCP服务：
     
     <item>
       <title>GitBook自动发布脚本</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</link>
+      <link>https://eternityqjl.github.io/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Fri, 18 Oct 2019 13:50:49 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://eternityqjl.github.io/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</guid>
       <description>GitBook作为一个非常好用的基于Node.js的命令行工具，可以输出HTML、PDF、eBook等多种格式的电子书，这里就不再详细讲述GitBook的构建以及发布到Github托管的过程，网络上有非常多的教程，可以自行Google查看。
 刚开始在每次更新内容的时候都需要一系列的git命令将原始内容仓库和构建的网页仓库同步到Github上，大概需要10条命令，如果你的更新频率很高的话，发布内容将会是有个痛苦的过程，但这里我们可以通过一个shell脚本只使用$ sh deploy.sh一条命令完成同步内容和构建网页的所有过程。
 首先，在你的GitBook内容根目录下建一个deploy.sh文件，使用文本编辑器打开，然后输入以下内容：
@@ -721,20 +721,20 @@ $ chmod +x deploy.sh 至此就完成了，以后在更新的时候只需要输�
     
     <item>
       <title>储存类别、链接和内存管理</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
+      <link>https://eternityqjl.github.io/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
       <pubDate>Fri, 18 Oct 2019 10:59:58 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</guid>
       <description>一、储存类别
  对象：具有一定大小空间的一块内存。 标识符：用来指定特定对象的内容。   作用域  描述了程序中可访问标识符的区域。 分类：  块作用域 函数作用域 文件作用域 函数原型作用域：从形参定义处到原型声明结束。   全局变量：也称为文件作用域变量。   链接  C变量的三种链接属性：  外部链接：该类型变量可以在多文件程序中使用 内部链接：该类型变量只能在一个翻译单元中使用 无链接：具有块作用域、函数作用域或函数原型作用域的变量   储存类别说明符static   存储期：  C对象有4种  静态存储期：在程序的执行期间一直存在，文件作用域变量都具有静态存储期。 线性存储期：用于并发程序设计。 自动存储期：所有局部变量都有该性质，在函数调用时被创建，离开函数时被销毁。 动态分配存储期：     自动变量  属于自动存储类别，有自动存储期、块作用域、无链接。 可显式使用关键词auto 块作用域和无链接意味着只有在变量定义的块中才能通过变量名访问该变量。   寄存器变量  特殊的自动变量。也是自动存储期、块作用域、无链接。 可以显式使用关键词register，是一种请求，编译器可能会拒绝你的请求，此时就变成了普通变量，但仍然无法访问该变量的内存。 作用是储存在最快的可用内存中，能够以更快的速度访问。 存储在寄存器中而非内存中，所以无法获取寄存器变量的地址。   块作用域的静态变量  静态指的是在内存中原地不动，但它的值可以改变。 具有块作用域、无链接、有静态存储期。 在块中以static(提供静态存储期)声明这种变量。 如果未显式地初始化静态变量，它们会被初始化为0。   外部链接的静态变量  具有文件作用域、外部链接、静态存储期。 有时又称为外部存储类型、该类别地变量被称为外部变量。 创建过程：在所有函数外面(定义性声明)创建这个外部变量。 函数使用该变量时，为了指出使用的是外部变量，可以用关键字extern再次声明。 如果一个源文件使用的外部变量定义在其他文件中，则必须用extern在该文件中声明该变量。 定义式声明、引用式声明。   内部链接的静态变量  具有静态存储期、文件作用域、内部链接。 在所有函数外部，用存储类别说明符static定义该类变量。 该类型变量只能用于同一个文件中的函数。 可以在函数中使用类别说明符extern重复声明该类型变量，这并不会改变其链接属性。   多文件(多翻译单元)  程序在多个翻译单元中才能体现区别内部和外部变量的重要性。   存储类别的选择  正常情况下多使用自动存储类别，使用外部变量可能在不经意中修改变量的值，count类型变量除外。    二、</description>
     </item>
     
     <item>
       <title>C语言结构</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E7%BB%93%E6%9E%84/</link>
+      <link>https://eternityqjl.github.io/posts/%E7%BB%93%E6%9E%84/</link>
       <pubDate>Tue, 15 Oct 2019 20:03:54 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E7%BB%93%E6%9E%84/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E7%BB%93%E6%9E%84/</guid>
       <description>1.建立结构变量
 struct book { char title[MAXTITL]; char author[MAXAUTL]; float value; }  该结构描述了由两个字符数组和一个float类型变量组成的结构。  2.定义结构变量
 struct book library;
@@ -754,10 +754,10 @@ struct guy * him;
     
     <item>
       <title>字符串输入、输出和字符串函数</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</link>
+      <link>https://eternityqjl.github.io/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</link>
       <pubDate>Sat, 28 Sep 2019 12:15:42 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</guid>
       <description>字符串输入 1.gets()函数
  使用方法：读取整行输入，直到遇到换行符，然后丢弃换行符，储存其余的字符，并在字符末尾添加一个空字符使之成为一个C字符串。 使用中存在的问题：gets(words)（char words[STLEN]）的唯一参数为words，该函数无法检查数组是否装得下输入行。数组名会被转化成该数组首元素的地址，该函数只知道数组的开始处，并不知道数组在何处结束。 如果输入过长，会导致缓存区溢出，详情见书上内容。  2.gets()的替代品：fgets()函数
  fgets()函数通过第二个参数来限制读入的字符数来解决溢出问题。 相较于gets()的区别：  第二个参数指明了读入字符的最大数量，若该值为n，那么将读入n-1个字符，或遇到第一个换行符为止。 第三个参数指明了要读入的文件，如果要从键盘输入，则参数设置为stdin标识符。 如果读到一个换行符，fgets()会将其储存在数组中，而不是将其丢弃。    3.gets_s()函数
@@ -776,28 +776,28 @@ char * s_gets(char * st, int n) { char *ret_val; int i = 0; ret_val = fgets(st, 
     
     <item>
       <title>抽象数据类型</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <link>https://eternityqjl.github.io/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
       <pubDate>Tue, 24 Sep 2019 21:33:07 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
       <description>一、抽象数据类型的实现 //数据类型的实现 public class Counter { //实例变量  private final String name; private int count; //构造函数  public void Counter(String id) { name = id; } //实例方法  public void increment() { count++; } public int tally() { return count; } public String toString() { return count + &amp;#34; &amp;#34; + name; } } //测试该数据类型的用例 public static void main(String[] args) { //创建并初始化对象  Counter heads = new Counter(&amp;#34;heads&amp;#34;); Counter tails = new Counter(&amp;#34;tails&amp;#34;); //调用实例方法  heads.</description>
     </item>
     
     <item>
       <title>测试GitBook格式</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</link>
+      <link>https://eternityqjl.github.io/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</link>
       <pubDate>Fri, 20 Sep 2019 21:43:41 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</guid>
       <description>FlightMuseum-GitBook 目录层级  Preface Airbus  A320  A319 A320-200 A320-200neo A321 &amp;hellip;&amp;hellip;..   A330  A330-200 A330-300   A350  A350-900 A350-1000     Boeing  B737 B747 B767 B777 B787  B787-8 Dreamliner B787-9 Dreamliner B787-10 Dreamliner     &amp;hellip;&amp;hellip;. Trains  CR TRA JR     一个具体层级的Markdown编辑形式 1.Cathay Pacific | 国泰航空 B-LRA  Serial Number / 生产序列号：29 **First Flight Date / 首飞日期：**24th.</description>
     </item>
     
     <item>
       <title>什么是数据结构？什么又是算法？</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</link>
+      <link>https://eternityqjl.github.io/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</link>
       <pubDate>Thu, 19 Sep 2019 13:55:19 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AF%E7%AE%97%E6%B3%95/</guid>
       <description>数据结构及相关概念 0. 要想知道什么是数据结构，首先要了解与“数据”相关的概念，这样才能一步步理解什么是数据结构。
 我们首先用放书这件事情来举例。
  如果正常情况下只有你自己一个人的书，那么你把他们一本一本立起来放在书架上就可以了。 那么如果有一个图书馆那么多的书应该怎样办么？总不能把他们乱起八糟的立起来放吧？那么是不是应该先按照社会科学、理科类、工科类、外语类等等的分类方式先分类，然后按照具体所属的类别把他们一个个放进去？其实数据结构的相关的概念就是一个这样简单的道理。  下面我们来进行具体的描述。
@@ -830,10 +830,10 @@ char * s_gets(char * st, int n) { char *ret_val; int i = 0; ret_val = fgets(st, 
     
     <item>
       <title>C语言指针</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</link>
+      <link>https://eternityqjl.github.io/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</link>
       <pubDate>Thu, 19 Sep 2019 13:10:25 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</guid>
+      <guid>https://eternityqjl.github.io/posts/c%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88/</guid>
       <description>一、指针的一些概念 1. 指针的类型  把指针声明语句中的指针名字去掉，剩下的就是指针本身的类型  2. 指针所指向的类型  把指针声明语句中的指针名字和名字前的指针声明符号*去掉，剩下的就是指针指向的类型  3. 指针的值——指针所指向的内存区或地址  指针的值是指针本身存储的数值，该值被编译器当作一个地址（在32位程序中，所有类型的指针的值都是一个32位的整数，因为32位程序的内存地址都是32位长。） 指针所指的内存区就是从指针的值所代表的内存地址开始，长度为sizeof(指针指向的类型)的一篇内存区。 我们说一个指针的值是XX，就相当于说该指针指向了以XX为首地址的一片内存区。 同理，我们说一个指针指向了某个内存区，相当于说该指针的值是该内存区域的首地址。  4. 指针本身所占据的内存区  用sizeof(指针的类型)测试一下就知道了  二、指针的算术运算 **0.**指针可以加上或者减去一个整数，这种运算的意义并不是平常的数值的加减。
  example 1  char a[20] = {0}; int *ptr = (int *)a; ptr++; 指针ptr的类型为int*，它指向的类型为int，被初始化为指向整型变量a。
 在第三句中，指针ptr被加上了1，编译器是这样进行处理的：

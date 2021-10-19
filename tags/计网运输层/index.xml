@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>计网——运输层 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%BD%91%E8%BF%90%E8%BE%93%E5%B1%82/</link>
+    <link>https://eternityqjl.github.io/tags/%E8%AE%A1%E7%BD%91%E8%BF%90%E8%BE%93%E5%B1%82/</link>
     <description>Recent content in 计网——运输层 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 05 Aug 2021 22:23:31 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%BD%91%E8%BF%90%E8%BE%93%E5%B1%82/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 05 Aug 2021 22:23:31 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/tags/%E8%AE%A1%E7%BD%91%E8%BF%90%E8%BE%93%E5%B1%82/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>计算机网络学习日志（三）——网络层：数据平面</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</link>
       <pubDate>Thu, 05 Aug 2021 22:23:31 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/</guid>
       <description>数据平面指的是网络层中每台路由器的功能，该数据平面功能决定了到达路由器输入链路的数据报如何转发到该路由器的输出链路之一。
 而控制平面的功能指的是网络范围的逻辑，控制平面控制数据报沿着从源主机到目的主机的端到端路径中路由器之间的路由方式。其中包括路由选择算法，以及如今广泛应用的诸如OSPF和BGP等路由选择协议。控制平面和数据平面的功能已经被实现为一个整体，位于一台路由器中。
 **软件定义网络（SDN）**通过将这些控制平面的功能作为一种单独的服务，明确分离数据平面和控制平面，控制平面功能通常位于一台远程的控制器中。
@@ -51,10 +51,10 @@ IPv4数据报格式 网络层分组被称为数据报。
     
     <item>
       <title>计算机网络学习日志（五）——链路层</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</link>
       <pubDate>Sun, 01 Aug 2021 20:20:52 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</guid>
       <description>概述 将运行链路层协议的设备称为节点，把沿通信链路连接相邻节点的通信信道称为链路。经过特定链路时，节点将数据包封装在链路层帧中，将该帧传送到链路中。
 链路层提供的服务：
  成帧：将网络层数据报用链路层帧封装起来，帧结构由链路层协议决定。 链路接入：**媒体访问控制协议(MAC)**规定了帧在链路上的传输规则。MAC协议还用于协调多个节点的帧传输。 可靠交付：链路层通过确认和重传提供可靠交付服务。无线链路容易产生较高的差错率，一般在本地（差错发生的链路上）纠正一个错误，而非通过应用层或传输层来纠错。如光纤、双绞铜线等有线链路的差错率较低，可靠交付被认为是不必要的开销，所以许多有线链路层协议不提供可靠交付。 差错检验和纠正：比特差错由信号衰减和电磁干扰产生，链路层差错纠正一般使用硬件实现。通过让发送节点在帧中包括差错检测比特，让接收节点进行差错检查来实现。  链路层协议的实现位置：网络适配器（也成为网卡）来实现。
@@ -85,10 +85,10 @@ IPv4数据报格式 网络层分组被称为数据报。
     
     <item>
       <title>计算机网络学习日志（二）——运输层</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
+      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
       <pubDate>Wed, 06 May 2020 21:27:10 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
       <description>概述和运输层服务 运输层协议在不同主机上的应用进程之间提供了逻辑通信，这并非物理上的实际通信。在发送端，运输层将从应用程序接收到的报文转换成运输层分组，该分组称为运输层报文段，实现方法是将应用报文划分为一个个小的块，为每个块加上运输层首部生成运输层报文段，然后在端系统中传递给网络层，网络层将其封装成网络层分组，向目的地发送。
 因特网由TCP和UDP两种运输层协议。
 运输层和网络层的关系 网络层提供了主机之间的逻辑通信，而运输层为运行在不同主机上的进程之间提供了逻辑通信。

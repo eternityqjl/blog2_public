@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>硬件 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/categories/%E7%A1%AC%E4%BB%B6/</link>
+    <link>https://eternityqjl.github.io/categories/%E7%A1%AC%E4%BB%B6/</link>
     <description>Recent content in 硬件 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/categories/%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CAN总线</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</link>
+      <link>https://eternityqjl.github.io/posts/can%E6%80%BB%E7%BA%BF/</link>
       <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</guid>
+      <guid>https://eternityqjl.github.io/posts/can%E6%80%BB%E7%BA%BF/</guid>
       <description>概要 Controller Area Network
 CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于消息广播模式的串行通信总线。
 CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。
@@ -51,10 +51,10 @@ CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的�
     
     <item>
       <title>存储器详解</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
+      <link>https://eternityqjl.github.io/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
       <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
       <description>&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
 &lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
 &lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
@@ -64,10 +64,10 @@ CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的�
     
     <item>
       <title>Altium Designer画图流程记录(简略)</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+      <link>https://eternityqjl.github.io/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
       <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+      <guid>https://eternityqjl.github.io/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
       <description>之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
 共有以下几部分内容：
  原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板  PCB各层简介 参考自：PCB各层介绍
@@ -88,10 +88,10 @@ Drill layer(钻孔层) 钻孔层提供电路板制造过程中的钻孔信息(�
     
     <item>
       <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</link>
+      <link>https://eternityqjl.github.io/posts/%E4%B8%B2%E5%8F%A3/</link>
       <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</guid>
+      <guid>https://eternityqjl.github.io/posts/%E4%B8%B2%E5%8F%A3/</guid>
       <description>SPI、I2C、UART：串行通信协议
 COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
 TTL、RS-232指的是电平标准

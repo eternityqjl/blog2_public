@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>深入理解计算机系统学习日志 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/</link>
+    <link>https://eternityqjl.github.io/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/</link>
     <description>Recent content in 深入理解计算机系统学习日志 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 09 Aug 2021 16:08:05 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Aug 2021 16:08:05 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>csapp: 3.程序的机器级表示</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</link>
+      <link>https://eternityqjl.github.io/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</link>
       <pubDate>Mon, 09 Aug 2021 16:08:05 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</guid>
+      <guid>https://eternityqjl.github.io/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</guid>
       <description>第三章 程序的机器级表示 历史观点 典型的编译器在将C程序结构变换成机器代码时所做的转换。
 英特尔X86-64处理器的发展历史。
 从8086到Core i7
@@ -32,10 +32,10 @@
     
     <item>
       <title>csapp: 2.信息的表示和处理（部分完成）</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>
+      <link>https://eternityqjl.github.io/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>
       <pubDate>Mon, 12 Jul 2021 21:26:27 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
+      <guid>https://eternityqjl.github.io/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
       <description>第一部分内容：程序结构和执行
 我们需要用方法表示基本数据类型，然后考虑机器级指令如何操作这样的数据，以及编译器如何将C程序翻译成这样的指令。接下来研究集中处理器的方法，使得我们能够更好地了解硬件资源如何被用来执行指令。
 信息存储 十六进制表示法及转换 二进制和十进制对描述位模式来说都不方便，因此采用16进制数(hex)来表示位模式。
@@ -57,10 +57,10 @@ C语言中16进制数以0X或0x开头，字符‘A’~‘F’既可以是大写�
     
     <item>
       <title>csapp: 1.计算机系统漫游</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
+      <link>https://eternityqjl.github.io/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
       <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
+      <guid>https://eternityqjl.github.io/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
       <description>在本书中我们将会学习到一些使用技巧，比如如何避免由于计算机表示数字的方式引起的错误；通过一些技巧优化C代码，以充分利用现代处理器和存储器系统的设计；了解编译器如何实现过程调用，利用这些知识避免缓冲区溢出错误带来的安全漏洞；学习如何识别和避免链接时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；并发带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。
 我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：
 #include &amp;lt;stdio.h&amp;gt;int main() { printf(&amp;#34;Hello, world\n&amp;#34;); return 0; } 信息就是位+上下文 8位为一个字节。
