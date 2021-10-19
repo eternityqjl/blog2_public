@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>串口 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/tags/%E4%B8%B2%E5%8F%A3/</link>
+    <link>https://eternityqjl.github.io/blog2_public/tags/%E4%B8%B2%E5%8F%A3/</link>
     <description>Recent content in 串口 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 05 Feb 2021 18:20:54 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/tags/%E4%B8%B2%E5%8F%A3/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Feb 2021 18:20:54 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E4%B8%B2%E5%8F%A3/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
-      <link>https://eternityqjl.github.io/posts/%E4%B8%B2%E5%8F%A3/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</link>
       <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/posts/%E4%B8%B2%E5%8F%A3/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</guid>
       <description>SPI、I2C、UART：串行通信协议
 COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
 TTL、RS-232指的是电平标准

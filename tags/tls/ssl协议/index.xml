@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>TLS/SSL协议 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/tags/tls/ssl%E5%8D%8F%E8%AE%AE/</link>
+    <link>https://eternityqjl.github.io/blog2_public/tags/tls/ssl%E5%8D%8F%E8%AE%AE/</link>
     <description>Recent content in TLS/SSL协议 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>2019-2021 By Jialong</copyright><atom:link href="https://eternityqjl.github.io/tags/tls/ssl%E5%8D%8F%E8%AE%AE/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>2019-2021 By Jialong</copyright><atom:link href="https://eternityqjl.github.io/blog2_public/tags/tls/ssl%E5%8D%8F%E8%AE%AE/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>TLS（HTTPS）协议</title>
-      <link>https://eternityqjl.github.io/posts/tls/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/tls/</link>
       <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/posts/tls/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/tls/</guid>
       <description>1. SSL/TLS简介 TLS（Transport Layer Security，传输层安全协议），以及它的前身SSL（Secure Sockets Layer，安全套接层）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。
 SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。
 几个知名的使用SSL加密的协议：

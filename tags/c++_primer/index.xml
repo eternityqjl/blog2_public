@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C&#43;&#43;_Primer on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/tags/c&#43;&#43;_primer/</link>
+    <link>https://eternityqjl.github.io/blog2_public/tags/c&#43;&#43;_primer/</link>
     <description>Recent content in C&#43;&#43;_Primer on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 10 May 2021 21:04:06 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/tags/c++_primer/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 May 2021 21:04:06 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/c++_primer/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C&#43;&#43; Primer——CH08 IO库</title>
-      <link>https://eternityqjl.github.io/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
       <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
       <description>&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
 &lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
 &lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
@@ -45,10 +45,10 @@
     
     <item>
       <title>C&#43;&#43;回顾1——基础语法</title>
-      <link>https://eternityqjl.github.io/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
       <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
       <description>第1部分：C++基础
 这个分类的博客主要为了记录一下我在学习C++过程中记录的知识笔记，主要参考自《C++ Primer 第5版》。
 第一部分基础部分主要包含以下内容：

@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CAN总线 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/tags/can%E6%80%BB%E7%BA%BF/</link>
+    <link>https://eternityqjl.github.io/blog2_public/tags/can%E6%80%BB%E7%BA%BF/</link>
     <description>Recent content in CAN总线 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/tags/can%E6%80%BB%E7%BA%BF/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/can%E6%80%BB%E7%BA%BF/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CAN总线</title>
-      <link>https://eternityqjl.github.io/posts/can%E6%80%BB%E7%BA%BF/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</link>
       <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/posts/can%E6%80%BB%E7%BA%BF/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</guid>
       <description>概要 Controller Area Network
 CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于消息广播模式的串行通信总线。
 CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。

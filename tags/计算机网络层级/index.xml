@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>计算机网络层级 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%B1%82%E7%BA%A7/</link>
+    <link>https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%B1%82%E7%BA%A7/</link>
     <description>Recent content in 计算机网络层级 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 23 Jul 2021 12:59:05 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%B1%82%E7%BA%A7/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 23 Jul 2021 12:59:05 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%B1%82%E7%BA%A7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>计算机网络各层级理解</title>
-      <link>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</link>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</link>
       <pubDate>Fri, 23 Jul 2021 12:59:05 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</guid>
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</guid>
       <description>一年多前按照层级详细学习了计算机网络的有关内容，包括从应用层、传输层、网络层、数据链路层到物理层的详细信息，并且也学习了一些其他硬件通信协议，比如CAN控制器局域网、SPI等等。在之后的应用和实践中经常对不同层级的网络和网络设备产生疑惑，例如路由器和交换机到底是什么关系？为什么要通过IP地址和MAC地址划分网络层和数据链路层？这里将会详细说明各层网络的具体作用来加深理解和体会。
 应用层 应用层是计算机网络体系结构中最高层，意味着这是和人进行交互的层次。
 应用层是计算机网络与用户进行交互的接口或界面，直接向用户提供服务；包括Web、E-mail、DNS、DHCP、FTP等等。

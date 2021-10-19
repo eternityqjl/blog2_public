@@ -39,7 +39,7 @@ SPI协议层 （图片来自SPI通讯协议介绍）
  两个概念：
  时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。  CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平   时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。  CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样     所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://eternityqjl.github.io/posts/%E4%B8%B2%E5%8F%A3/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-02-05T18:20:54+00:00" />
 <meta property="article:modified_time" content="2021-02-05T18:20:54+00:00" /><meta property="og:site_name" content="My Blog" />
 
@@ -78,8 +78,8 @@ SPI协议层 （图片来自SPI通讯协议介绍）
 
 
 
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/blog2_public/vendor/css/bootstrap.min.css">
+<script src="/blog2_public/vendor/js/vue.min.js" ></script>
 
 
   
@@ -91,14 +91,14 @@ SPI协议层 （图片来自SPI通讯协议介绍）
 
 
 
-<link rel="stylesheet" href="https://eternityqjl.github.io/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+<link rel="stylesheet" href="https://eternityqjl.github.io/blog2_public/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
 
 
 
-<link rel="stylesheet" href="https://eternityqjl.github.io/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+<link rel="stylesheet" href="https://eternityqjl.github.io/blog2_public/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
 
 
-<script src="/js/loadCSS.js"></script>
+<script src="/blog2_public/js/loadCSS.js"></script>
 <script>
   loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
 </script>
@@ -145,14 +145,14 @@ color: #515151;
 
 
   
-    <script src="/js/toc.js"></script>
+    <script src="/blog2_public/js/toc.js"></script>
   
 
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script src="/vendor/js/md5.min.js"></script>
+<script src="/blog2_public/vendor/js/md5.min.js"></script>
 <script>
   var gitalk = new Gitalk({
   clientID: 'df0192f05fd975a4e951',
@@ -185,7 +185,7 @@ color: #515151;
 <body>
     	<div id="app"><div ref="sideContainer" class="side-container">
     
-    <a class="a-block nav-head false" href="https://eternityqjl.github.io">
+    <a class="a-block nav-head false" href="https://eternityqjl.github.io/blog2_public">
     
         <div class="nav-title">
             Jialong&#39;s Blog
@@ -207,7 +207,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item active" href="/posts">
+            <a class="a-block nav-link-item active" href="/blog2_public/posts">
                 网志
             </a>
             
@@ -217,7 +217,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item false" href="/categories">
+            <a class="a-block nav-link-item false" href="/blog2_public/categories">
                 分类
             </a>
             
@@ -227,7 +227,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item false" href="/tags">
+            <a class="a-block nav-link-item false" href="/blog2_public/tags">
                 标签
             </a>
             
@@ -237,7 +237,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item false" href="/about">
+            <a class="a-block nav-link-item false" href="/blog2_public/about">
                 关于
             </a>
             
@@ -247,7 +247,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item false" href="/index.xml">
+            <a class="a-block nav-link-item false" href="/blog2_public/index.xml">
                 RSS
             </a>
             
@@ -626,7 +626,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item active" href="/posts">
+                <a class="a-block drawer-menu-item active" href="/blog2_public/posts">
                     网志
                 </a>
                 
@@ -636,7 +636,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/categories">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/categories">
                     分类
                 </a>
                 
@@ -646,7 +646,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/tags">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/tags">
                     标签
                 </a>
                 
@@ -656,7 +656,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/about">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/about">
                     关于
                 </a>
                 
@@ -666,7 +666,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/index.xml">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/index.xml">
                     RSS
                 </a>
                 
@@ -1006,7 +1006,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 menu
             </i>
         </button>
-        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.github.io">
+        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.github.io/blog2_public">
             Jialong&#39;s Blog
         </a>
         
@@ -1023,7 +1023,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </nav>
 <div class="single-column-header-container" ref="pageHead"
      v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-    <a href="https://eternityqjl.github.io">
+    <a href="https://eternityqjl.github.io/blog2_public">
         <div class="single-column-header-title">Jialong&#39;s Blog</div>
         
         <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
@@ -1055,7 +1055,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 
                         
                             <i class="material-icons" style="">folder</i>
-                                <a href="/categories/%E7%A1%AC%E4%BB%B6">硬件</a>
+                                <a href="/blog2_public/categories/%E7%A1%AC%E4%BB%B6">硬件</a>
                                 &nbsp;
                         
 
@@ -1243,13 +1243,13 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://eternityqjl.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">
+                <a class="newer-posts" href="https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">
 			下回<br>机器学习——线性回归和梯度下降
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://eternityqjl.github.io/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/">
+                <a class="older-posts" href="https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/">
 			上回<br>《算法（第4版）》学习笔记——（一）排序
                 </a>
                 

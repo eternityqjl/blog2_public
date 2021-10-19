@@ -21,7 +21,7 @@
 代码实现 public class Selection { public static void sort(Comparable[] a) { //将a按照升序排列  int N = a.length; for (int i = 0; i &lt; N; i&#43;&#43;) { int min = i; for (int j = i &#43; 1; j &lt; N; j&#43;&#43;) { if (less(a[j], a[min])) min = j; } exch(a, i ,min); } } } 性能分析  对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。 该算法运行时间与输入无关，数据的移动是最少的。  插入排序 算法描述 插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。
 代码实现 public class Insertion { public static void sort(Comparable[] a) { int N = a." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://eternityqjl.github.io/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-07-23T14:59:12+00:00" />
 <meta property="article:modified_time" content="2020-07-23T14:59:12+00:00" /><meta property="og:site_name" content="My Blog" />
 
@@ -42,8 +42,8 @@
 
 
 
-<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
-<script src="/vendor/js/vue.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="/blog2_public/vendor/css/bootstrap.min.css">
+<script src="/blog2_public/vendor/js/vue.min.js" ></script>
 
 
   
@@ -55,14 +55,14 @@
 
 
 
-<link rel="stylesheet" href="https://eternityqjl.github.io/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+<link rel="stylesheet" href="https://eternityqjl.github.io/blog2_public/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
 
 
 
-<link rel="stylesheet" href="https://eternityqjl.github.io/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+<link rel="stylesheet" href="https://eternityqjl.github.io/blog2_public/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
 
 
-<script src="/js/loadCSS.js"></script>
+<script src="/blog2_public/js/loadCSS.js"></script>
 <script>
   loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
 </script>
@@ -109,14 +109,14 @@ color: #515151;
 
 
   
-    <script src="/js/toc.js"></script>
+    <script src="/blog2_public/js/toc.js"></script>
   
 
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
 <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script src="/vendor/js/md5.min.js"></script>
+<script src="/blog2_public/vendor/js/md5.min.js"></script>
 <script>
   var gitalk = new Gitalk({
   clientID: 'df0192f05fd975a4e951',
@@ -149,7 +149,7 @@ color: #515151;
 <body>
     	<div id="app"><div ref="sideContainer" class="side-container">
     
-    <a class="a-block nav-head false" href="https://eternityqjl.github.io">
+    <a class="a-block nav-head false" href="https://eternityqjl.github.io/blog2_public">
     
         <div class="nav-title">
             Jialong&#39;s Blog
@@ -171,7 +171,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item active" href="/posts">
+            <a class="a-block nav-link-item active" href="/blog2_public/posts">
                 网志
             </a>
             
@@ -181,7 +181,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item false" href="/categories">
+            <a class="a-block nav-link-item false" href="/blog2_public/categories">
                 分类
             </a>
             
@@ -191,7 +191,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item false" href="/tags">
+            <a class="a-block nav-link-item false" href="/blog2_public/tags">
                 标签
             </a>
             
@@ -201,7 +201,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item false" href="/about">
+            <a class="a-block nav-link-item false" href="/blog2_public/about">
                 关于
             </a>
             
@@ -211,7 +211,7 @@ color: #515151;
             
             
             
-            <a class="a-block nav-link-item false" href="/index.xml">
+            <a class="a-block nav-link-item false" href="/blog2_public/index.xml">
                 RSS
             </a>
             
@@ -1166,7 +1166,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item active" href="/posts">
+                <a class="a-block drawer-menu-item active" href="/blog2_public/posts">
                     网志
                 </a>
                 
@@ -1176,7 +1176,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/categories">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/categories">
                     分类
                 </a>
                 
@@ -1186,7 +1186,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/tags">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/tags">
                     标签
                 </a>
                 
@@ -1196,7 +1196,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/about">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/about">
                     关于
                 </a>
                 
@@ -1206,7 +1206,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="/index.xml">
+                <a class="a-block drawer-menu-item false" href="/blog2_public/index.xml">
                     RSS
                 </a>
                 
@@ -2122,7 +2122,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 menu
             </i>
         </button>
-        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.github.io">
+        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.github.io/blog2_public">
             Jialong&#39;s Blog
         </a>
         
@@ -2139,7 +2139,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </nav>
 <div class="single-column-header-container" ref="pageHead"
      v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
-    <a href="https://eternityqjl.github.io">
+    <a href="https://eternityqjl.github.io/blog2_public">
         <div class="single-column-header-title">Jialong&#39;s Blog</div>
         
         <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
@@ -2171,14 +2171,14 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 
                         
                             <i class="material-icons" style="">folder</i>
-                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95">数据结构与算法</a>
+                                <a href="/blog2_public/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95">数据结构与算法</a>
                                 &nbsp;
                         
 
                         
                             <i class="material-icons" style="">label</i>
                             
-                                <a href="/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95">排序算法</a>
+                                <a href="/blog2_public/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95">排序算法</a>
                                 &nbsp;
                             
                         
@@ -2502,13 +2502,13 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://eternityqjl.github.io/posts/%E4%B8%B2%E5%8F%A3/">
+                <a class="newer-posts" href="https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/">
 			下回<br>串行通信协议详解：SPI、I2C、UART、JTAG
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://eternityqjl.github.io/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/">
+                <a class="older-posts" href="https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/">
 			上回<br>Dijkstra双栈——算术表达式求值
                 </a>
                 
