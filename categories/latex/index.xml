@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>LaTex on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/categories/latex/</link>
+    <link>https://eternityqjl.top/categories/latex/</link>
     <description>Recent content in LaTex on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sun, 18 Jul 2021 20:06:26 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/latex/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Jul 2021 20:06:26 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/latex/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>LaTex环境配置和基本功能模块</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link>
+      <link>https://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link>
       <pubDate>Sun, 18 Jul 2021 20:06:26 +0800</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid>
+      <guid>https://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid>
       <description>环境配置 我选择使用VS code + Tex Live作为我的LaTex写作环境，具体配置过程参考自：Visual Studio Code (vscode)配置LaTeX
 以下是关于使用过程中一些具体模块的讨论：
 部分内容参考自：一份其实很短的 LaTeX 入门文档
@@ -30,10 +30,10 @@
     
     <item>
       <title>第一次使用LaTex——问题整理</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</link>
+      <link>https://eternityqjl.top/posts/latex-problems1/</link>
       <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</guid>
+      <guid>https://eternityqjl.top/posts/latex-problems1/</guid>
       <description>0.前言 第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。
 这是第一次实验报告导出的pdf文档封面展示：
 这是tex源代码。

@@ -1,24 +1,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/</link>
+    <link>https://eternityqjl.top/</link>
     <description>Recent content on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
     <lastBuildDate>Fri, 13 Aug 2021 16:15:00 +0800</lastBuildDate>
     
-        <atom:link href="https://eternityqjl.github.io/blog2_public/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
     
     
     
         <item>
         <title>csapp: 1.计算机系统漫游</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
+        <link>https://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
         <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ -&lt;p&gt;在本书中我们将会学习到一些使用技巧，比如如何避免由于&lt;strong&gt;计算机表示数字的方式&lt;/strong&gt;引起的错误；通过一些技巧&lt;strong&gt;优化C代码&lt;/strong&gt;，以充分利用现代处理器和存储器系统的设计；了解&lt;strong&gt;编译器&lt;/strong&gt;如何实现过程调用，利用这些知识避免&lt;strong&gt;缓冲区溢出&lt;/strong&gt;错误带来的安全漏洞；学习如何识别和避免&lt;strong&gt;链接&lt;/strong&gt;时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；&lt;strong&gt;并发&lt;/strong&gt;带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。&lt;/p&gt;
+        <guid>https://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ -&lt;p&gt;在本书中我们将会学习到一些使用技巧，比如如何避免由于&lt;strong&gt;计算机表示数字的方式&lt;/strong&gt;引起的错误；通过一些技巧&lt;strong&gt;优化C代码&lt;/strong&gt;，以充分利用现代处理器和存储器系统的设计；了解&lt;strong&gt;编译器&lt;/strong&gt;如何实现过程调用，利用这些知识避免&lt;strong&gt;缓冲区溢出&lt;/strong&gt;错误带来的安全漏洞；学习如何识别和避免&lt;strong&gt;链接&lt;/strong&gt;时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；&lt;strong&gt;并发&lt;/strong&gt;带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。&lt;/p&gt;
 &lt;p&gt;我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;()
@@ -129,18 +129,18 @@ linux&amp;gt;
 &lt;h4 id=&#34;单指令多数据并行&#34;&gt;单指令、多数据并行&lt;/h4&gt;
 &lt;h3 id=&#34;计算机系统中抽象的重要性&#34;&gt;计算机系统中抽象的重要性&lt;/h3&gt;
 &lt;p&gt;文件是对I/O设备的抽象，虚拟内存是对程序存储器的抽象，进程是对正在运行程序的抽象，虚拟机提供对整个计算机的抽象。&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>cs231n——1.Nearest Neighbor Classifier</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</link>
+        <link>https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</link>
         <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/ -&lt;p&gt;图像分类规范化步骤：&lt;/p&gt;
+        <guid>https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ -&lt;p&gt;图像分类规范化步骤：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;输入：输入带有不同标签的图像作为训练集&lt;/li&gt;
 &lt;li&gt;学习：使用训练集学习每种类别的抽象特征&lt;/li&gt;
@@ -242,18 +242,18 @@ validation_accuracies &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
 &lt;ol&gt;
 &lt;li&gt;如果数据的维数很高，可以使用降维技术，例如PCA(主成分分析), NCA(邻域成分分析) or Random Projections(随机投影).&lt;/li&gt;
 &lt;/ol&gt;
-- https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>Python基础和numpy</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link>
+        <link>https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link>
         <pubDate>Sun, 06 Jun 2021 13:04:49 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ -&lt;h2 id=&#34;basic-of-python&#34;&gt;Basic of Python&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ -&lt;h2 id=&#34;basic-of-python&#34;&gt;Basic of Python&lt;/h2&gt;
 &lt;h3 id=&#34;basic-data-types&#34;&gt;Basic data types&lt;/h3&gt;
 &lt;h4 id=&#34;numbers&#34;&gt;Numbers&lt;/h4&gt;
 &lt;h4 id=&#34;bolleans&#34;&gt;Bolleans&lt;/h4&gt;
@@ -463,18 +463,18 @@ plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#3
 
 &lt;span style=&#34;color:#888&#34;&gt;# Show the figure.&lt;/span&gt;
 plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.github.io/blog2_public/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ - 2019-2021 By Jialong</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>WLAN基本内容和802.11ax</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</link>
+        <link>https://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</link>
         <pubDate>Thu, 03 Jun 2021 18:09:38 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/ -&lt;h2 id=&#34;wlan基础内容&#34;&gt;WLAN基础内容&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/ -&lt;h2 id=&#34;wlan基础内容&#34;&gt;WLAN基础内容&lt;/h2&gt;
 &lt;h3 id=&#34;计算机网络概念&#34;&gt;计算机网络概念&lt;/h3&gt;
 &lt;p&gt;在学习基本无线网络通信的过程中顺便可以来复习以下计算机网络的相关内容。&lt;/p&gt;
 &lt;p&gt;在家庭中我们通常使用路由器联通家中的局域网和外部的广域网，路由器为网络层设备，通过IP和路由表来寻找目的地和转发数据，即为路由功能。&lt;/p&gt;
@@ -859,18 +859,18 @@ plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
 &lt;li&gt;
 &lt;p&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/WLAN%E4%BF%A1%E9%81%93%E5%88%97%E8%A1%A8#5_GHz_(802.11a/h/j/n/ac/ax)%5B11%5D&#34;&gt;wikipedia WLAN信道列表&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ol&gt;- https://eternityqjl.github.io/blog2_public/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/ - 2019-2021 By Jialong</description>
+&lt;/ol&gt;- https://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>字符编码：Unicode, UTF-8</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</link>
+        <link>https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</link>
         <pubDate>Wed, 02 Jun 2021 15:29:29 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/ -&lt;h2 id=&#34;基本&#34;&gt;基本&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/ -&lt;h2 id=&#34;基本&#34;&gt;基本&lt;/h2&gt;
 &lt;p&gt;计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如&amp;rsquo;a&amp;rsquo;用什么表示，称为&amp;quot;&lt;strong&gt;编码&lt;/strong&gt;&amp;quot;；反之，将存储在计算机中的二进制数解析显示出来，称为&amp;quot;&lt;strong&gt;解码&lt;/strong&gt;&amp;quot;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;字符集(charset)&lt;/strong&gt;：是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国文字、标点符号、图形符号、数字等。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;字符编码(character Encoding)&lt;/strong&gt;：即在符号集合与数字系统之间建立对应关系，它是信息处理的一项基本技术。通常人们用符号集合（一般情况下就是文字）来表达信息。而以计算机为基础的信息处理系统则是利用元件（硬件）不同状态的组合来存储和处理信息的。元件不同状态的组合能代表数字系统的数字，因此字符编码就是将符号转换为计算机可以接受的数字系统的数，称为数字代码。&lt;/p&gt;
@@ -1245,18 +1245,18 @@ plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
 &lt;li&gt;其他基本多文种平面（BMP）中的字符（这包含了大部分常用中文字）使用三个字节编码。&lt;/li&gt;
 &lt;li&gt;其他极少使用的Unicode辅助平面的字符使用四字节编码。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;UTF-8是ASCII的一个超集。因为一个纯ASCII字符串也是一个合法的UTF-8字符串，所以现存的ASCII文本不需要转换。为传统的扩展ASCII字符集设计的软件通常可以不经修改或很少修改就能与UTF-8一起使用。&lt;/p&gt;- https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/ - 2019-2021 By Jialong</description>
+&lt;p&gt;UTF-8是ASCII的一个超集。因为一个纯ASCII字符串也是一个合法的UTF-8字符串，所以现存的ASCII文本不需要转换。为传统的扩展ASCII字符集设计的软件通常可以不经修改或很少修改就能与UTF-8一起使用。&lt;/p&gt;- https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>机器学习——k近邻(k-NN)算法</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
+        <link>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
         <pubDate>Wed, 12 May 2021 14:57:17 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ -&lt;h2 id=&#34;基本概念及原理&#34;&gt;基本概念及原理&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ -&lt;h2 id=&#34;基本概念及原理&#34;&gt;基本概念及原理&lt;/h2&gt;
 &lt;p&gt;k近邻(k-nearest neighbors)算法是一种基本分类和回归方法。&lt;/p&gt;
 &lt;p&gt;该算法是给定一个&lt;strong&gt;训练数据集&lt;/strong&gt;，对新的&lt;strong&gt;输入测试集&lt;/strong&gt;，在训练集中找到与该测试实例&lt;strong&gt;最邻近&lt;/strong&gt;的k个实例，这k个实例的多数属于某个类，就把该输入实例分类到这个类中。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/220px-KnnClassification.svg.png&#34; alt=&#34;220px-KnnClassification.svg&#34;&gt;&lt;/p&gt;
@@ -1383,18 +1383,18 @@ y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#
     &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;测试集预测准确率：&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; accuracy)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;测试集预测准确率：1.000000
-&lt;/code&gt;&lt;/pre&gt;- https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
+&lt;/code&gt;&lt;/pre&gt;- https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>C&#43;&#43; Primer——CH08 IO库</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
+        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
         <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ -&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ -&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
 &lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
 &lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
 &lt;ul&gt;
@@ -1654,18 +1654,18 @@ c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的�
 &lt;h3 id=&#34;特定容器算法&#34;&gt;特定容器算法&lt;/h3&gt;
 &lt;h2 id=&#34;关联容器&#34;&gt;关联容器&lt;/h2&gt;
 &lt;p&gt;键值对。&lt;/p&gt;
-&lt;h2 id=&#34;动态内存&#34;&gt;动态内存&lt;/h2&gt;- https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ - 2019-2021 By Jialong</description>
+&lt;h2 id=&#34;动态内存&#34;&gt;动态内存&lt;/h2&gt;- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>Altium Designer画图流程记录(简略)</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+        <link>https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
         <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ -&lt;p&gt;之前看过博主&lt;a href=&#34;https://space.bilibili.com/384891&#34;&gt;半夜中暑的羊&lt;/a&gt;的原理图以及PCB绘制&lt;a href=&#34;https://www.bilibili.com/video/BV1JE41127Ks&#34;&gt;教程&lt;/a&gt;，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。&lt;/p&gt;
+        <guid>https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ -&lt;p&gt;之前看过博主&lt;a href=&#34;https://space.bilibili.com/384891&#34;&gt;半夜中暑的羊&lt;/a&gt;的原理图以及PCB绘制&lt;a href=&#34;https://www.bilibili.com/video/BV1JE41127Ks&#34;&gt;教程&lt;/a&gt;，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。&lt;/p&gt;
 &lt;p&gt;共有以下几部分内容：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;原理图库&lt;/li&gt;
@@ -1756,18 +1756,18 @@ c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的�
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;3d渲染图实现&#34;&gt;3D渲染图实现&lt;/h2&gt;
-- https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>C&#43;&#43;回顾1——基础语法</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
+        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
         <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ -&lt;p&gt;第1部分：C++基础&lt;/p&gt;
+        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ -&lt;p&gt;第1部分：C++基础&lt;/p&gt;
 &lt;p&gt;这个分类的博客主要为了记录一下我在学习C++过程中记录的知识笔记，主要参考自《C++  Primer 第5版》。&lt;/p&gt;
 &lt;p&gt;第一部分基础部分主要包含以下内容：&lt;/p&gt;
 &lt;ul&gt;
@@ -2227,18 +2227,18 @@ r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成员函数不用通过作用域运算符就能直接使用静态成员。&lt;/p&gt;
 &lt;p&gt;定义静态成员：&lt;/p&gt;
 &lt;p&gt;我们既可以在类内部也可以在类外部定义静态成员函数，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>机器学习——线性回归和梯度下降</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
+        <link>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
         <pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ -&lt;h2 id=&#34;线性回归linear-regression&#34;&gt;线性回归Linear Regression&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ -&lt;h2 id=&#34;线性回归linear-regression&#34;&gt;线性回归Linear Regression&lt;/h2&gt;
 &lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
 &lt;p&gt;线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。&lt;/p&gt;
 &lt;p&gt;注意：&lt;/p&gt;
@@ -2338,7 +2338,7 @@ $$&lt;/p&gt;
 m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;46.528725&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;哲学思考&#34;&gt;哲学思考&lt;/h2&gt;
 &lt;p&gt;梯度下降是一个一阶最优化算法，通常也称为最陡下降法，要使用梯度下降法找到一个函数的局部极小值，必须向函数上当前点对应梯度的反方向规定的步长距离点进行迭代搜索。&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ - 2019-2021 By Jialong</description>
         </item>
     
     

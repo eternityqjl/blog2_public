@@ -1,24 +1,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/</link>
+    <link>https://eternityqjl.top/</link>
     <description>Recent content on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
     <lastBuildDate>Fri, 13 Aug 2021 16:15:00 +0800</lastBuildDate>
     
-        <atom:link href="https://eternityqjl.github.io/blog2_public/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
     
     
     
         <item>
         <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</link>
+        <link>https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</link>
         <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/ -&lt;p&gt;SPI、I2C、UART：串行通信协议&lt;/p&gt;
+        <guid>https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ -&lt;p&gt;SPI、I2C、UART：串行通信协议&lt;/p&gt;
 &lt;p&gt;COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议&lt;/p&gt;
 &lt;p&gt;TTL、RS-232指的是电平标准&lt;/p&gt;
 &lt;p&gt;TTL电平：低电平为0，高电平为1&lt;/p&gt;
@@ -180,18 +180,18 @@
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Jtag_chain.svg.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/JTAG&#34;&gt;JTAG&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>《算法（第4版）》学习笔记——（一）排序</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
+        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
         <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ -&lt;h2 id=&#34;初级排序算法&#34;&gt;初级排序算法&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ -&lt;h2 id=&#34;初级排序算法&#34;&gt;初级排序算法&lt;/h2&gt;
 &lt;h3 id=&#34;选择排序&#34;&gt;选择排序&lt;/h3&gt;
 &lt;h4 id=&#34;算法描述&#34;&gt;算法描述&lt;/h4&gt;
 &lt;p&gt;首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。&lt;/p&gt;
@@ -490,18 +490,18 @@
 &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;堆排序性能分析&#34;&gt;堆排序性能分析&lt;/h4&gt;
 &lt;p&gt;将$N$个元素排序，堆排序只需要少于$(2N\lg N+2N)$次比较以及一半的交换次数。&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>Dijkstra双栈——算术表达式求值</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
+        <link>https://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</link>
         <pubDate>Tue, 21 Jul 2020 20:15:08 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/ -&lt;h2 id=&#34;算数表达式&#34;&gt;算数表达式&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/ -&lt;h2 id=&#34;算数表达式&#34;&gt;算数表达式&lt;/h2&gt;
 &lt;p&gt;这里的算术表达式支持常见的二元运算符&lt;code&gt;+-*/&lt;/code&gt;以及接受一个参数的平方根运算符&lt;code&gt;sqrt&lt;/code&gt;。这里我们假定表达式中未省略所有的括号。&lt;/p&gt;
 &lt;h2 id=&#34;计算方法&#34;&gt;计算方法&lt;/h2&gt;
 &lt;ul&gt;
@@ -549,18 +549,18 @@
 		StdOut&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;vals&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;pop&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;());&lt;/span&gt;
 	&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.github.io/blog2_public/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/ - 2019-2021 By Jialong</description>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/dijkstra%E5%8F%8C%E6%A0%88%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>计算机网络学习日志（二）——运输层</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
+        <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</link>
         <pubDate>Wed, 06 May 2020 21:27:10 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ -&lt;h2 id=&#34;概述和运输层服务&#34;&gt;概述和运输层服务&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ -&lt;h2 id=&#34;概述和运输层服务&#34;&gt;概述和运输层服务&lt;/h2&gt;
 &lt;p&gt;运输层协议在不同主机上的应用进程之间提供了&lt;strong&gt;逻辑通信&lt;/strong&gt;，这并非物理上的实际通信。在发送端，运输层将从应用程序接收到的报文转换成运输层分组，该分组称为&lt;strong&gt;运输层报文段&lt;/strong&gt;，实现方法是将应用报文划分为一个个小的块，为每个块加上运输层首部生成运输层报文段，然后在端系统中传递给网络层，网络层将其封装成网络层分组，向目的地发送。&lt;/p&gt;
 &lt;p&gt;因特网由TCP和UDP两种运输层协议。&lt;/p&gt;
 &lt;h3 id=&#34;运输层和网络层的关系&#34;&gt;运输层和网络层的关系&lt;/h3&gt;
@@ -843,18 +843,18 @@ $$
 &lt;h3 id=&#34;拥塞控制方法&#34;&gt;拥塞控制方法&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;端到端拥塞控制&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;该控制方法中，网络层没有为运输层拥塞控制提供显式帮助。端系统必须通过对网络行为的观察来推断网络拥塞1&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>TLS（HTTPS）协议</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/tls/</link>
+        <link>https://eternityqjl.top/posts/tls/</link>
         <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/tls/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/tls/ -&lt;h2 id=&#34;1-ssltls简介&#34;&gt;1. SSL/TLS简介&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/tls/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/tls/ -&lt;h2 id=&#34;1-ssltls简介&#34;&gt;1. SSL/TLS简介&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;TLS&lt;/strong&gt;（&lt;strong&gt;T&lt;/strong&gt;ransport &lt;strong&gt;L&lt;/strong&gt;ayer &lt;strong&gt;S&lt;/strong&gt;ecurity，&lt;strong&gt;传输层安全协议&lt;/strong&gt;），以及它的前身&lt;strong&gt;SSL&lt;/strong&gt;（&lt;strong&gt;S&lt;/strong&gt;ecure &lt;strong&gt;S&lt;/strong&gt;ockets &lt;strong&gt;L&lt;/strong&gt;ayer，&lt;strong&gt;安全套接层&lt;/strong&gt;）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。&lt;/p&gt;
 &lt;p&gt;SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;几个知名的使用SSL加密的协议&lt;/strong&gt;：&lt;/p&gt;
@@ -940,18 +940,18 @@ $$
 &lt;li&gt;&lt;a href=&#34;https://cshihong.github.io/2019/05/09/SSL%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/&#34;&gt;SSL/TLS协议详解|曹世宏的博客&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html&#34;&gt;SSL/TLS协议运行机制的概述|阮一峰&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-- https://eternityqjl.github.io/blog2_public/posts/tls/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/tls/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>PDF转换为SVG</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/</link>
+        <link>https://eternityqjl.top/posts/convertpdftosvg/</link>
         <pubDate>Wed, 08 Apr 2020 00:15:48 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/ -&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/convertpdftosvg/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/convertpdftosvg/ -&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用&lt;strong&gt;Adobe Acrobat&lt;/strong&gt;和&lt;strong&gt;inkscape&lt;/strong&gt;两个软件将PDF中的矢量图导出为&lt;strong&gt;SVG&lt;/strong&gt;格式的矢量图。以下为具体步骤：&lt;/p&gt;
 &lt;h2 id=&#34;在adobe-acrobat中选择编辑pdf选项&#34;&gt;在&lt;code&gt;Adobe Acrobat&lt;/code&gt;中选择&lt;code&gt;编辑PDF&lt;/code&gt;选项&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_1.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
@@ -979,18 +979,18 @@ $$
 &lt;h2 id=&#34;文件rightarrow另存为选择自己所需的格式我一般选svg&#34;&gt;&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;另存为&lt;/code&gt;，选择自己所需的格式，我一般选&lt;code&gt;SVG&lt;/code&gt;&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>第一次使用LaTex——问题整理</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</link>
+        <link>https://eternityqjl.top/posts/latex-problems1/</link>
         <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/latex-problems1/ -&lt;h2 id=&#34;0前言&#34;&gt;0.前言&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/latex-problems1/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/latex-problems1/ -&lt;h2 id=&#34;0前言&#34;&gt;0.前言&lt;/h2&gt;
 &lt;p&gt;第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。&lt;/p&gt;
 &lt;p&gt;这是第一次实验报告导出的&lt;a href=&#34;http://blog.eternityqjl.top/SS_test1.pdf&#34;&gt;pdf文档&lt;/a&gt;封面展示：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1_cover.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
@@ -1048,18 +1048,18 @@ y&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;2[n]
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/equationSample.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/latex-problems1/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/latex-problems1/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>信号与系统学习笔记——Chapter01 信号与系统</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/signalsystem-ch01/</link>
+        <link>https://eternityqjl.top/posts/signalsystem-ch01/</link>
         <pubDate>Sat, 14 Mar 2020 13:59:44 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/signalsystem-ch01/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/signalsystem-ch01/ -&lt;h2 id=&#34;13-指数信号与正弦信号&#34;&gt;1.3 指数信号与正弦信号&lt;/h2&gt;
+        <guid>https://eternityqjl.top/posts/signalsystem-ch01/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/signalsystem-ch01/ -&lt;h2 id=&#34;13-指数信号与正弦信号&#34;&gt;1.3 指数信号与正弦信号&lt;/h2&gt;
 &lt;h3 id=&#34;131-连续时间复指数信号与正弦信号&#34;&gt;1.3.1 连续时间复指数信号与正弦信号&lt;/h3&gt;
 &lt;p&gt;连续时间复指数信号有如下形式：
 $$
@@ -1265,18 +1265,18 @@ $$
 &lt;li&gt;$ay_1(t)$是对$ax_1(t)$的响应，$a$为任意常数&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;以上两个性质称为&lt;strong&gt;可加性&lt;/strong&gt;和&lt;strong&gt;齐次性&lt;/strong&gt;。&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/signalsystem-ch01/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/signalsystem-ch01/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>数字签名和数字证书</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</link>
+        <link>https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</link>
         <pubDate>Fri, 06 Dec 2019 19:42:38 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/ -&lt;p&gt;理解本文的基础是公钥密码加密，即非对称加密，比如其中一种非对称加密算法RSA。&lt;/p&gt;
+        <guid>https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/ -&lt;p&gt;理解本文的基础是公钥密码加密，即非对称加密，比如其中一种非对称加密算法RSA。&lt;/p&gt;
 &lt;p&gt;非对称加密使用一对密钥，一个为公钥Pub，另一个为私钥Priv&lt;/p&gt;
 &lt;p&gt;明文P经过公钥Pub使用RSA加密算法混淆后变成了密文M，密文M无法用公钥Pub解开，只能用私钥Priv解开&lt;/p&gt;
 &lt;p&gt;同样的，明文P经过私钥Priv使用RSA加密算法混淆后变成了密文N，密文N只能用公钥Pub解开&lt;/p&gt;
@@ -1358,23 +1358,23 @@ $$
 &lt;h2 id=&#34;5参考&#34;&gt;5.参考&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.jianshu.com/p/9db57e761255&#34;&gt;什么是数字签名和证书?&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/question/20820286&#34;&gt;什么是哈希算法？&lt;/a&gt;&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/ - 2019-2021 By Jialong</description>
         </item>
     
     
     
         <item>
         <title>写在2019年的最后一个月的开始</title>
-        <link>https://eternityqjl.github.io/blog2_public/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
+        <link>https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
         <pubDate>Sun, 01 Dec 2019 22:06:08 +0000</pubDate>
         
-        <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.github.io/blog2_public/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/ -&lt;p&gt;转眼间2019年就要结束了，依稀记得2019年的刚开始我还在发空间动态说自己又买了一本日历，然而&amp;hellip;明年就不买了吧，我并没有记得经常去看日历，更别说去每天一张一张地撕它。这一年里经历了非常多的事情，从学习、生活、关于未来的各方各面，我都发生了极大的改变，这源于我不断变化的想法，目标总是飘忽不定，我思考过，也经常迷茫，现在也是。&lt;/p&gt;
+        <guid>https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/ -&lt;p&gt;转眼间2019年就要结束了，依稀记得2019年的刚开始我还在发空间动态说自己又买了一本日历，然而&amp;hellip;明年就不买了吧，我并没有记得经常去看日历，更别说去每天一张一张地撕它。这一年里经历了非常多的事情，从学习、生活、关于未来的各方各面，我都发生了极大的改变，这源于我不断变化的想法，目标总是飘忽不定，我思考过，也经常迷茫，现在也是。&lt;/p&gt;
 &lt;p&gt;在写下这些话的时间里，我其实是非常难过和害怕的，这一个周末似乎没干什么事情就又要浑浑噩噩地结束了，直到现在还有一个DDL等着我，明早截止，我还没做完，间歇性拖延症晚期这件事情，一直发生在我身上，毫不夸张地说，我可以不间歇地拖延整整24小时，这过程中总想着做些什么、改变些什么，但除了睡觉，大部分时间眼睛都盯在手机屏幕上，尽管我知道这样做一点儿也不好，但结果还是发生了。我知道学习的重要性，也会去为了一个想要实现的东西不断地思考并找到解决方法，就比如搭建网站这件事情，前前后后花了很多的时间也学习了很多相关知识，基本掌握了中间的原理，结果在我预想的时间之前很久就做出来了，结果还是超乎预期的好。说实话，完成一件能看的到结果的事情能给人的心理带来很大的快感的愉悦，但愉悦过后，又只剩下了迷茫和拖延，并且在为了找到下一个实践目标而苦苦挣扎着。有时候大脑盯着手机屏幕看一些信息的时候，知道这是自己不想接收和浪费时间的，但就是控制不住自己去点开看，这样的人性的弱点也造就了很多的商机，造就了很多企业和公司的成功。&lt;/p&gt;
 &lt;p&gt;说点儿别的。在关于情感和人际交往方面，我可能是一个与绝大多数人都不一样的人，在情感上，我很少与他人或者是在公开场合表露（包括我的社交媒体，我发现，自己现在很少在社交媒体上表露自己的情感，更多的是分享一些自己的兴趣爱好，比如我热爱的摄影，因而，我也就把自己的空间对所有人开放了，微信这个东西另当别论，说实话，我挺讨厌这个软件的），但我还是知道自己想要的是什么，纵然我在过去的一年里总是带着一些自卑的情感，很久没有与他人进行深入内心的交谈，KY的与陌生人打电话活动也错过了很多次，每次都是在想和别人深入交流的时候才想起来，结果肯定是已经结束了，今后还是要多多关注，想想能与一同关注KY的人打电话是一件挺幸福的事情，也希望自己能早日找到灵魂伴侣。在人际交往方面，我尝试过学校的很多社团和活动，最终无一例外全都放弃了，我觉得也挺好，这也证明了我确实不喜欢过多的浮于表面和拉帮结派建造复杂人际关系的事情，做好自己就最好了，能认识几个朋友还是随缘了，人也并不需要那么多看上去像是朋友的朋友。&lt;/p&gt;
 &lt;p&gt;扯了这么多，还是回到最重要的学习和事业上吧。12月希望自己能好好学习学校的课程知识，好好地应对一下考试。明年下半年就要大三了，这学期结束以后要为成为一个前端工程师立一些目标，毕竟就快要毕业了，还是希望自己能去做自己喜欢的工作，上研究生这件事就暂时不考虑了，我在经历了一些事情以后对于读研这件事一点儿也不感兴趣了，做好自己就好了。&lt;/p&gt;
 &lt;p&gt;以上。&lt;/p&gt;
-- https://eternityqjl.github.io/blog2_public/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/ - 2019-2021 By Jialong</description>
+- https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/ - 2019-2021 By Jialong</description>
         </item>
     
     

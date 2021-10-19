@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>UTF-8 on Jialong&#39;s Blog</title>
-    <link>https://eternityqjl.github.io/blog2_public/tags/utf-8/</link>
+    <link>https://eternityqjl.top/tags/utf-8/</link>
     <description>Recent content in UTF-8 on Jialong&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 02 Jun 2021 15:29:29 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/utf-8/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Jun 2021 15:29:29 +0000</lastBuildDate><atom:link href="https://eternityqjl.top/tags/utf-8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>字符编码：Unicode, UTF-8</title>
-      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</link>
+      <link>https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</link>
       <pubDate>Wed, 02 Jun 2021 15:29:29 +0000</pubDate>
       
-      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</guid>
+      <guid>https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/</guid>
       <description>&lt;h2 id=&#34;基本&#34;&gt;基本&lt;/h2&gt;
 &lt;p&gt;计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如&amp;rsquo;a&amp;rsquo;用什么表示，称为&amp;quot;&lt;strong&gt;编码&lt;/strong&gt;&amp;quot;；反之，将存储在计算机中的二进制数解析显示出来，称为&amp;quot;&lt;strong&gt;解码&lt;/strong&gt;&amp;quot;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;字符集(charset)&lt;/strong&gt;：是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国文字、标点符号、图形符号、数字等。&lt;/p&gt;
