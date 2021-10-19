@@ -1,34 +1,1811 @@
-<!doctype html><html><head><title>csapp: 1.计算机系统漫游</title><meta charset=utf-8><meta name=X-UA-Compatible content="IE=edge"><meta name=google-site-verification content><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" name=viewport><meta content="telephone=no" name=format-detection><meta name=description content="书籍《深入理解计算机系统》阅读学习笔记"><meta name=renderer content="webkit"><meta name=theme-color content="#ffffff"><meta property="og:title" content="csapp: 1.计算机系统漫游"><meta property="og:description" content="书籍《深入理解计算机系统》阅读学习笔记"><meta property="og:type" content="article"><meta property="og:url" content="https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-06-11T12:18:22+00:00"><meta property="article:modified_time" content="2021-06-11T12:18:22+00:00"><meta property="og:site_name" content="My Blog"><meta name=twitter:card content="summary"><meta name=twitter:title content="csapp: 1.计算机系统漫游"><meta name=twitter:description content="书籍《深入理解计算机系统》阅读学习笔记"><link type=text/css rel=stylesheet href=/blog2_public/vendor/css/bootstrap.min.css><script src=/blog2_public/vendor/js/vue.min.js></script><link rel=icon href=https://raw.githubusercontent.com/eternityqjl/blogGallery/master/faviconJ.ico><link rel=stylesheet href=https://eternityqjl.github.io/blog2_public/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media=screen><link rel=stylesheet href=https://eternityqjl.github.io/blog2_public/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media=screen><script src=/blog2_public/js/loadCSS.js></script><script>loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons")</script><script src=/blog2_public/js/toc.js></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css><script src=https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js></script><script src=/blog2_public/vendor/js/md5.min.js></script><script>var gitalk=new Gitalk({clientID:'df0192f05fd975a4e951',clientSecret:'f1ff41cecd43fac4792ed8be020aeb337494c340',repo:'eternityqjl.github.io',owner:'eternityqjl',admin:['eternityqjl'],id:md5(location.pathname),distractionFreeMode:'false'});window.onload=function(){gitalk.render('gitalk-container')}</script></head><body><div id=app><div ref=sideContainer class=side-container><a class="a-block nav-head false" href=https://eternityqjl.github.io/blog2_public><div class=nav-title>Jialong's Blog</div><div class=nav-subtitle>沉潜 自由 追寻幸福</div></a><div class=nav-link-list><a class="a-block nav-link-item active" href=/blog2_public/posts>网志</a>
-<a class="a-block nav-link-item false" href=/blog2_public/categories>分类</a>
-<a class="a-block nav-link-item false" href=/blog2_public/tags>标签</a>
-<a class="a-block nav-link-item false" href=/blog2_public/about>关于</a>
-<a class="a-block nav-link-item false" href=/blog2_public/index.xml>RSS</a></div><div class=nav-footer>Hugo Theme <a href=https://github.com/amazingrise/hugo-theme-diary>Diary</a> by <a href=https://amazingrise.net>Rise</a><br>移植自 <a href=https://mak1t0.cc/ target=_blank rel="noreferrer noopener">Makito</a>'s <a href=https://github.com/SumiMakito/hexo-theme-journal/ target=_blank rel="noreferrer noopener">Journal.</a><br><br>&copy;
-2019-2021 By Jialong</div></div><div ref=extraContainer class=extra-container><div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }"><div class=toc-content><center>- 目录 -</center><ul><ul><li><a href=#%e4%bf%a1%e6%81%af%e5%b0%b1%e6%98%af%e4%bd%8d%e4%b8%8a%e4%b8%8b%e6%96%87 onclick="onNavClick(`#信息就是位上下文-nav`)" id=信息就是位上下文-nav>信息就是位+上下文</a></li><li><a href=#%e7%a8%8b%e5%ba%8f%e8%a2%ab%e7%bf%bb%e8%af%91%e4%b8%ba%e4%b8%8d%e5%90%8c%e7%9a%84%e6%a0%bc%e5%bc%8f onclick="onNavClick(`#程序被翻译为不同的格式-nav`)" id=程序被翻译为不同的格式-nav>程序被翻译为不同的格式</a></li><li><a href=#%e7%bc%96%e8%af%91%e5%99%a8%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f onclick="onNavClick(`#编译器的工作方式-nav`)" id=编译器的工作方式-nav>编译器的工作方式</a></li><li><a href=#%e5%a4%84%e7%90%86%e5%99%a8%e8%af%bb%e5%8f%96%e5%b9%b6%e8%a7%a3%e9%87%8a%e5%82%a8%e5%ad%98%e5%9c%a8%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e6%8c%87%e4%bb%a4 onclick="onNavClick(`#处理器读取并解释储存在内存中的指令-nav`)" id=处理器读取并解释储存在内存中的指令-nav>处理器读取并解释储存在内存中的指令</a></li><ul><li><a href=#%e7%b3%bb%e7%bb%9f%e7%9a%84%e7%a1%ac%e4%bb%b6%e7%bb%84%e6%88%90 onclick="onNavClick(`#系统的硬件组成-nav`)" id=系统的硬件组成-nav>系统的硬件组成</a></li><ul><li><a href=#%e6%80%bb%e7%ba%bf onclick="onNavClick(`#总线-nav`)" id=总线-nav>总线</a></li><li><a href=#io%e8%ae%be%e5%a4%87 onclick="onNavClick(`#io设备-nav`)" id=io设备-nav>I/O设备</a></li><li><a href=#%e4%b8%bb%e5%ad%98ram onclick="onNavClick(`#主存ram-nav`)" id=主存ram-nav>主存RAM</a></li><li><a href=#%e5%a4%84%e7%90%86%e5%99%a8 onclick="onNavClick(`#处理器-nav`)" id=处理器-nav>处理器</a></li></ul><li><a href=#%e8%bf%90%e8%a1%8chello%e7%a8%8b%e5%ba%8f onclick="onNavClick(`#运行hello程序-nav`)" id=运行hello程序-nav>运行hello程序</a></li></ul><li><a href=#%e9%ab%98%e9%80%9f%e7%bc%93%e5%ad%98 onclick="onNavClick(`#高速缓存-nav`)" id=高速缓存-nav>高速缓存</a></li><li><a href=#%e5%ad%98%e5%82%a8%e5%99%a8%e5%b1%82%e6%ac%a1 onclick="onNavClick(`#存储器层次-nav`)" id=存储器层次-nav>存储器层次：</a></li><li><a href=#%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e7%ae%a1%e7%90%86%e7%a1%ac%e4%bb%b6 onclick="onNavClick(`#操作系统管理硬件-nav`)" id=操作系统管理硬件-nav>操作系统管理硬件</a></li><ul><li><a href=#%e8%bf%9b%e7%a8%8b onclick="onNavClick(`#进程-nav`)" id=进程-nav>进程</a></li><li><a href=#%e7%ba%bf%e7%a8%8b onclick="onNavClick(`#线程-nav`)" id=线程-nav>线程</a></li><li><a href=#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98 onclick="onNavClick(`#虚拟内存-nav`)" id=虚拟内存-nav>虚拟内存</a></li><li><a href=#%e6%96%87%e4%bb%b6 onclick="onNavClick(`#文件-nav`)" id=文件-nav>文件</a></li></ul><li><a href=#%e7%b3%bb%e7%bb%9f%e4%b9%8b%e9%97%b4%e5%88%a9%e7%94%a8%e7%bd%91%e7%bb%9c%e9%80%9a%e4%bf%a1 onclick="onNavClick(`#系统之间利用网络通信-nav`)" id=系统之间利用网络通信-nav>系统之间利用网络通信</a></li><li><a href=#%e4%b8%80%e4%ba%9b%e9%87%8d%e8%a6%81%e4%b8%bb%e9%a2%98 onclick="onNavClick(`#一些重要主题-nav`)" id=一些重要主题-nav>一些重要主题</a></li><ul><li><a href=#%e5%b9%b6%e5%8f%91%e5%92%8c%e5%b9%b6%e8%a1%8c onclick="onNavClick(`#并发和并行-nav`)" id=并发和并行-nav>并发和并行</a></li><ul><li><a href=#%e7%ba%bf%e7%a8%8b%e7%ba%a7%e5%b9%b6%e5%8f%91 onclick="onNavClick(`#线程级并发-nav`)" id=线程级并发-nav>线程级并发</a></li><li><a href=#%e6%8c%87%e4%bb%a4%e7%ba%a7%e5%b9%b6%e5%8f%91 onclick="onNavClick(`#指令级并发-nav`)" id=指令级并发-nav>指令级并发</a></li><li><a href=#%e5%8d%95%e6%8c%87%e4%bb%a4%e5%a4%9a%e6%95%b0%e6%8d%ae%e5%b9%b6%e8%a1%8c onclick="onNavClick(`#单指令多数据并行-nav`)" id=单指令多数据并行-nav>单指令、多数据并行</a></li></ul><li><a href=#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%b3%bb%e7%bb%9f%e4%b8%ad%e6%8a%bd%e8%b1%a1%e7%9a%84%e9%87%8d%e8%a6%81%e6%80%a7 onclick="onNavClick(`#计算机系统中抽象的重要性-nav`)" id=计算机系统中抽象的重要性-nav>计算机系统中抽象的重要性</a></li></ul></div></div><div class=pagination><a id=globalBackToTop class="pagination-action animated-visibility" href=#top :class="{ invisible: scrollY == 0 }"><i class="material-icons pagination-action-icon">keyboard_arrow_up</i></a>
-<a class=pagination-action v-on:click=toggleDarkMode><i class="material-icons pagination-action-icon" v-if=isDarkMode>brightness_4</i>
-<i class="material-icons pagination-action-icon" v-else=isDarkMode>brightness_7</i></a></div></div><div class=single-column-drawer-container ref=drawer v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }"><div class=drawer-content><div class=drawer-menu><a class="a-block drawer-menu-item active" href=/blog2_public/posts>网志</a>
-<a class="a-block drawer-menu-item false" href=/blog2_public/categories>分类</a>
-<a class="a-block drawer-menu-item false" href=/blog2_public/tags>标签</a>
-<a class="a-block drawer-menu-item false" href=/blog2_public/about>关于</a>
-<a class="a-block drawer-menu-item false" href=/blog2_public/index.xml>RSS</a><div class=toc><div class=toc-content><center>- 目录 -</center><ul><ul><li><a href=#%e4%bf%a1%e6%81%af%e5%b0%b1%e6%98%af%e4%bd%8d%e4%b8%8a%e4%b8%8b%e6%96%87 onclick="onNavClick(`#信息就是位上下文-nav`)" id=信息就是位上下文-nav>信息就是位+上下文</a></li><li><a href=#%e7%a8%8b%e5%ba%8f%e8%a2%ab%e7%bf%bb%e8%af%91%e4%b8%ba%e4%b8%8d%e5%90%8c%e7%9a%84%e6%a0%bc%e5%bc%8f onclick="onNavClick(`#程序被翻译为不同的格式-nav`)" id=程序被翻译为不同的格式-nav>程序被翻译为不同的格式</a></li><li><a href=#%e7%bc%96%e8%af%91%e5%99%a8%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f onclick="onNavClick(`#编译器的工作方式-nav`)" id=编译器的工作方式-nav>编译器的工作方式</a></li><li><a href=#%e5%a4%84%e7%90%86%e5%99%a8%e8%af%bb%e5%8f%96%e5%b9%b6%e8%a7%a3%e9%87%8a%e5%82%a8%e5%ad%98%e5%9c%a8%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e6%8c%87%e4%bb%a4 onclick="onNavClick(`#处理器读取并解释储存在内存中的指令-nav`)" id=处理器读取并解释储存在内存中的指令-nav>处理器读取并解释储存在内存中的指令</a></li><ul><li><a href=#%e7%b3%bb%e7%bb%9f%e7%9a%84%e7%a1%ac%e4%bb%b6%e7%bb%84%e6%88%90 onclick="onNavClick(`#系统的硬件组成-nav`)" id=系统的硬件组成-nav>系统的硬件组成</a></li><ul><li><a href=#%e6%80%bb%e7%ba%bf onclick="onNavClick(`#总线-nav`)" id=总线-nav>总线</a></li><li><a href=#io%e8%ae%be%e5%a4%87 onclick="onNavClick(`#io设备-nav`)" id=io设备-nav>I/O设备</a></li><li><a href=#%e4%b8%bb%e5%ad%98ram onclick="onNavClick(`#主存ram-nav`)" id=主存ram-nav>主存RAM</a></li><li><a href=#%e5%a4%84%e7%90%86%e5%99%a8 onclick="onNavClick(`#处理器-nav`)" id=处理器-nav>处理器</a></li></ul><li><a href=#%e8%bf%90%e8%a1%8chello%e7%a8%8b%e5%ba%8f onclick="onNavClick(`#运行hello程序-nav`)" id=运行hello程序-nav>运行hello程序</a></li></ul><li><a href=#%e9%ab%98%e9%80%9f%e7%bc%93%e5%ad%98 onclick="onNavClick(`#高速缓存-nav`)" id=高速缓存-nav>高速缓存</a></li><li><a href=#%e5%ad%98%e5%82%a8%e5%99%a8%e5%b1%82%e6%ac%a1 onclick="onNavClick(`#存储器层次-nav`)" id=存储器层次-nav>存储器层次：</a></li><li><a href=#%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e7%ae%a1%e7%90%86%e7%a1%ac%e4%bb%b6 onclick="onNavClick(`#操作系统管理硬件-nav`)" id=操作系统管理硬件-nav>操作系统管理硬件</a></li><ul><li><a href=#%e8%bf%9b%e7%a8%8b onclick="onNavClick(`#进程-nav`)" id=进程-nav>进程</a></li><li><a href=#%e7%ba%bf%e7%a8%8b onclick="onNavClick(`#线程-nav`)" id=线程-nav>线程</a></li><li><a href=#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98 onclick="onNavClick(`#虚拟内存-nav`)" id=虚拟内存-nav>虚拟内存</a></li><li><a href=#%e6%96%87%e4%bb%b6 onclick="onNavClick(`#文件-nav`)" id=文件-nav>文件</a></li></ul><li><a href=#%e7%b3%bb%e7%bb%9f%e4%b9%8b%e9%97%b4%e5%88%a9%e7%94%a8%e7%bd%91%e7%bb%9c%e9%80%9a%e4%bf%a1 onclick="onNavClick(`#系统之间利用网络通信-nav`)" id=系统之间利用网络通信-nav>系统之间利用网络通信</a></li><li><a href=#%e4%b8%80%e4%ba%9b%e9%87%8d%e8%a6%81%e4%b8%bb%e9%a2%98 onclick="onNavClick(`#一些重要主题-nav`)" id=一些重要主题-nav>一些重要主题</a></li><ul><li><a href=#%e5%b9%b6%e5%8f%91%e5%92%8c%e5%b9%b6%e8%a1%8c onclick="onNavClick(`#并发和并行-nav`)" id=并发和并行-nav>并发和并行</a></li><ul><li><a href=#%e7%ba%bf%e7%a8%8b%e7%ba%a7%e5%b9%b6%e5%8f%91 onclick="onNavClick(`#线程级并发-nav`)" id=线程级并发-nav>线程级并发</a></li><li><a href=#%e6%8c%87%e4%bb%a4%e7%ba%a7%e5%b9%b6%e5%8f%91 onclick="onNavClick(`#指令级并发-nav`)" id=指令级并发-nav>指令级并发</a></li><li><a href=#%e5%8d%95%e6%8c%87%e4%bb%a4%e5%a4%9a%e6%95%b0%e6%8d%ae%e5%b9%b6%e8%a1%8c onclick="onNavClick(`#单指令多数据并行-nav`)" id=单指令多数据并行-nav>单指令、多数据并行</a></li></ul><li><a href=#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%b3%bb%e7%bb%9f%e4%b8%ad%e6%8a%bd%e8%b1%a1%e7%9a%84%e9%87%8d%e8%a6%81%e6%80%a7 onclick="onNavClick(`#计算机系统中抽象的重要性-nav`)" id=计算机系统中抽象的重要性-nav>计算机系统中抽象的重要性</a></li></ul></div></div></div></div></div><transition name=fade><div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if=isDrawerOpen v-on:click=toggleDrawer></div></transition><nav ref=navBar class="navbar sticky-top navbar-light single-column-nav-container"><div ref=navBackground class=nav-background></div><div class="container container-narrow nav-content"><button id=nav_dropdown_btn class=nav-dropdown-toggle type=button v-on:click=toggleDrawer>
-<i class=material-icons>menu</i></button>
-<a ref=navTitle class=navbar-brand href=https://eternityqjl.github.io/blog2_public>Jialong's Blog</a>
-<button type=button class=nav-darkmode-toggle v-on:click=toggleDarkMode>
-<i class=material-icons v-if=isDarkMode>brightness_4</i>
-<i class=material-icons v-else=isDarkMode>brightness_7</i></button></div></nav><div class=single-column-header-container ref=pageHead v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }"><a href=https://eternityqjl.github.io/blog2_public><div class=single-column-header-title>Jialong's Blog</div><div class=single-column-header-subtitle>沉潜 自由 追寻幸福</div></a></div><div id=content><div ref=streamContainer class=stream-container><div class="post-list-container post-list-container-shadow"><div class=post><div class=post-head-wrapper style="background-image:url(https://github.com/eternityqjl/blogGallery/blob/master/blog/csapp.jpg?raw=true)"><div class=post-title>csapp: 1.计算机系统漫游<div class=post-subtitle>书籍《深入理解计算机系统》阅读学习笔记</div><div class=post-meta><time itemprop=datePublished>2021-06-11 12:18</time>
-<i class=material-icons>folder</i>
-<a href=/blog2_public/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97>深入理解计算机系统学习日志</a>
-&nbsp;
-<i class=material-icons>label</i>
-<a href=/blog2_public/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84>计算机体系结构</a>
-&nbsp;</div></div></div><div class=post-body-wrapper><div class=post-body v-pre><p>在本书中我们将会学习到一些使用技巧，比如如何避免由于<strong>计算机表示数字的方式</strong>引起的错误；通过一些技巧<strong>优化C代码</strong>，以充分利用现代处理器和存储器系统的设计；了解<strong>编译器</strong>如何实现过程调用，利用这些知识避免<strong>缓冲区溢出</strong>错误带来的安全漏洞；学习如何识别和避免<strong>链接</strong>时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；<strong>并发</strong>带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。</p><p>我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#579>#include</span> <span style=color:#579>&lt;stdio.h&gt;</span><span style=color:#579>
-</span><span style=color:#579></span><span style=color:#339;font-weight:700>int</span> <span style=color:#06b;font-weight:700>main</span>()
+<!DOCTYPE html>
+<html><head>
+<title>csapp: 1.计算机系统漫游</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="书籍《深入理解计算机系统》阅读学习笔记">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="csapp: 1.计算机系统漫游" />
+<meta property="og:description" content="书籍《深入理解计算机系统》阅读学习笔记" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-11T12:18:22+00:00" />
+<meta property="article:modified_time" content="2021-06-11T12:18:22+00:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="csapp: 1.计算机系统漫游"/>
+<meta name="twitter:description" content="书籍《深入理解计算机系统》阅读学习笔记"/>
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/blog2_public/vendor/css/bootstrap.min.css">
+<script src="/blog2_public/vendor/js/vue.min.js" ></script>
+
+
+  
+
+
+
+
+<link rel="icon" href="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/faviconJ.ico">
+
+
+
+<link rel="stylesheet" href="https://eternityqjl.github.io/blog2_public/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://eternityqjl.github.io/blog2_public/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+
+
+<script src="/blog2_public/js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="/blog2_public/js/toc.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/blog2_public/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: 'df0192f05fd975a4e951',
+  clientSecret: 'f1ff41cecd43fac4792ed8be020aeb337494c340',
+  repo: 'eternityqjl.github.io',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://eternityqjl.github.io/blog2_public">
+    
+        <div class="nav-title">
+            Jialong&#39;s Blog
+        </div>
+        
+        <div class="nav-subtitle">
+            沉潜 自由 追寻幸福
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/blog2_public/posts">
+                网志
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/blog2_public/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/blog2_public/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/blog2_public/about">
+                关于
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/blog2_public/index.xml">
+                RSS
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%bf%a1%e6%81%af%e5%b0%b1%e6%98%af%e4%bd%8d%e4%b8%8a%e4%b8%8b%e6%96%87" onclick="onNavClick(`#信息就是位上下文-nav`)" id="信息就是位上下文-nav">
+									信息就是位&#43;上下文
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%a8%8b%e5%ba%8f%e8%a2%ab%e7%bf%bb%e8%af%91%e4%b8%ba%e4%b8%8d%e5%90%8c%e7%9a%84%e6%a0%bc%e5%bc%8f" onclick="onNavClick(`#程序被翻译为不同的格式-nav`)" id="程序被翻译为不同的格式-nav">
+									程序被翻译为不同的格式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%bc%96%e8%af%91%e5%99%a8%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f" onclick="onNavClick(`#编译器的工作方式-nav`)" id="编译器的工作方式-nav">
+									编译器的工作方式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a4%84%e7%90%86%e5%99%a8%e8%af%bb%e5%8f%96%e5%b9%b6%e8%a7%a3%e9%87%8a%e5%82%a8%e5%ad%98%e5%9c%a8%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e6%8c%87%e4%bb%a4" onclick="onNavClick(`#处理器读取并解释储存在内存中的指令-nav`)" id="处理器读取并解释储存在内存中的指令-nav">
+									处理器读取并解释储存在内存中的指令
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%b3%bb%e7%bb%9f%e7%9a%84%e7%a1%ac%e4%bb%b6%e7%bb%84%e6%88%90" onclick="onNavClick(`#系统的硬件组成-nav`)" id="系统的硬件组成-nav">
+									系统的硬件组成
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%80%bb%e7%ba%bf" onclick="onNavClick(`#总线-nav`)" id="总线-nav">
+									总线
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#io%e8%ae%be%e5%a4%87" onclick="onNavClick(`#io设备-nav`)" id="io设备-nav">
+									I/O设备
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%bb%e5%ad%98ram" onclick="onNavClick(`#主存ram-nav`)" id="主存ram-nav">
+									主存RAM
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a4%84%e7%90%86%e5%99%a8" onclick="onNavClick(`#处理器-nav`)" id="处理器-nav">
+									处理器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%bf%90%e8%a1%8chello%e7%a8%8b%e5%ba%8f" onclick="onNavClick(`#运行hello程序-nav`)" id="运行hello程序-nav">
+									运行hello程序
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e9%ab%98%e9%80%9f%e7%bc%93%e5%ad%98" onclick="onNavClick(`#高速缓存-nav`)" id="高速缓存-nav">
+									高速缓存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%ad%98%e5%82%a8%e5%99%a8%e5%b1%82%e6%ac%a1" onclick="onNavClick(`#存储器层次-nav`)" id="存储器层次-nav">
+									存储器层次：
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e7%ae%a1%e7%90%86%e7%a1%ac%e4%bb%b6" onclick="onNavClick(`#操作系统管理硬件-nav`)" id="操作系统管理硬件-nav">
+									操作系统管理硬件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e8%bf%9b%e7%a8%8b" onclick="onNavClick(`#进程-nav`)" id="进程-nav">
+									进程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ba%bf%e7%a8%8b" onclick="onNavClick(`#线程-nav`)" id="线程-nav">
+									线程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98" onclick="onNavClick(`#虚拟内存-nav`)" id="虚拟内存-nav">
+									虚拟内存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6" onclick="onNavClick(`#文件-nav`)" id="文件-nav">
+									文件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e7%b3%bb%e7%bb%9f%e4%b9%8b%e9%97%b4%e5%88%a9%e7%94%a8%e7%bd%91%e7%bb%9c%e9%80%9a%e4%bf%a1" onclick="onNavClick(`#系统之间利用网络通信-nav`)" id="系统之间利用网络通信-nav">
+									系统之间利用网络通信
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%80%e4%ba%9b%e9%87%8d%e8%a6%81%e4%b8%bb%e9%a2%98" onclick="onNavClick(`#一些重要主题-nav`)" id="一些重要主题-nav">
+									一些重要主题
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%b9%b6%e5%8f%91%e5%92%8c%e5%b9%b6%e8%a1%8c" onclick="onNavClick(`#并发和并行-nav`)" id="并发和并行-nav">
+									并发和并行
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%ba%bf%e7%a8%8b%e7%ba%a7%e5%b9%b6%e5%8f%91" onclick="onNavClick(`#线程级并发-nav`)" id="线程级并发-nav">
+									线程级并发
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%8c%87%e4%bb%a4%e7%ba%a7%e5%b9%b6%e5%8f%91" onclick="onNavClick(`#指令级并发-nav`)" id="指令级并发-nav">
+									指令级并发
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8d%95%e6%8c%87%e4%bb%a4%e5%a4%9a%e6%95%b0%e6%8d%ae%e5%b9%b6%e8%a1%8c" onclick="onNavClick(`#单指令多数据并行-nav`)" id="单指令多数据并行-nav">
+									单指令、多数据并行
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%b3%bb%e7%bb%9f%e4%b8%ad%e6%8a%bd%e8%b1%a1%e7%9a%84%e9%87%8d%e8%a6%81%e6%80%a7" onclick="onNavClick(`#计算机系统中抽象的重要性-nav`)" id="计算机系统中抽象的重要性-nav">
+									计算机系统中抽象的重要性
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/blog2_public/posts">
+                    网志
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/blog2_public/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/blog2_public/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/blog2_public/about">
+                    关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/blog2_public/index.xml">
+                    RSS
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%bf%a1%e6%81%af%e5%b0%b1%e6%98%af%e4%bd%8d%e4%b8%8a%e4%b8%8b%e6%96%87" onclick="onNavClick(`#信息就是位上下文-nav`)" id="信息就是位上下文-nav">
+									信息就是位&#43;上下文
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%a8%8b%e5%ba%8f%e8%a2%ab%e7%bf%bb%e8%af%91%e4%b8%ba%e4%b8%8d%e5%90%8c%e7%9a%84%e6%a0%bc%e5%bc%8f" onclick="onNavClick(`#程序被翻译为不同的格式-nav`)" id="程序被翻译为不同的格式-nav">
+									程序被翻译为不同的格式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%bc%96%e8%af%91%e5%99%a8%e7%9a%84%e5%b7%a5%e4%bd%9c%e6%96%b9%e5%bc%8f" onclick="onNavClick(`#编译器的工作方式-nav`)" id="编译器的工作方式-nav">
+									编译器的工作方式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a4%84%e7%90%86%e5%99%a8%e8%af%bb%e5%8f%96%e5%b9%b6%e8%a7%a3%e9%87%8a%e5%82%a8%e5%ad%98%e5%9c%a8%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e6%8c%87%e4%bb%a4" onclick="onNavClick(`#处理器读取并解释储存在内存中的指令-nav`)" id="处理器读取并解释储存在内存中的指令-nav">
+									处理器读取并解释储存在内存中的指令
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%b3%bb%e7%bb%9f%e7%9a%84%e7%a1%ac%e4%bb%b6%e7%bb%84%e6%88%90" onclick="onNavClick(`#系统的硬件组成-nav`)" id="系统的硬件组成-nav">
+									系统的硬件组成
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%80%bb%e7%ba%bf" onclick="onNavClick(`#总线-nav`)" id="总线-nav">
+									总线
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#io%e8%ae%be%e5%a4%87" onclick="onNavClick(`#io设备-nav`)" id="io设备-nav">
+									I/O设备
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%bb%e5%ad%98ram" onclick="onNavClick(`#主存ram-nav`)" id="主存ram-nav">
+									主存RAM
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a4%84%e7%90%86%e5%99%a8" onclick="onNavClick(`#处理器-nav`)" id="处理器-nav">
+									处理器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%bf%90%e8%a1%8chello%e7%a8%8b%e5%ba%8f" onclick="onNavClick(`#运行hello程序-nav`)" id="运行hello程序-nav">
+									运行hello程序
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e9%ab%98%e9%80%9f%e7%bc%93%e5%ad%98" onclick="onNavClick(`#高速缓存-nav`)" id="高速缓存-nav">
+									高速缓存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%ad%98%e5%82%a8%e5%99%a8%e5%b1%82%e6%ac%a1" onclick="onNavClick(`#存储器层次-nav`)" id="存储器层次-nav">
+									存储器层次：
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e7%ae%a1%e7%90%86%e7%a1%ac%e4%bb%b6" onclick="onNavClick(`#操作系统管理硬件-nav`)" id="操作系统管理硬件-nav">
+									操作系统管理硬件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e8%bf%9b%e7%a8%8b" onclick="onNavClick(`#进程-nav`)" id="进程-nav">
+									进程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ba%bf%e7%a8%8b" onclick="onNavClick(`#线程-nav`)" id="线程-nav">
+									线程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98" onclick="onNavClick(`#虚拟内存-nav`)" id="虚拟内存-nav">
+									虚拟内存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6" onclick="onNavClick(`#文件-nav`)" id="文件-nav">
+									文件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e7%b3%bb%e7%bb%9f%e4%b9%8b%e9%97%b4%e5%88%a9%e7%94%a8%e7%bd%91%e7%bb%9c%e9%80%9a%e4%bf%a1" onclick="onNavClick(`#系统之间利用网络通信-nav`)" id="系统之间利用网络通信-nav">
+									系统之间利用网络通信
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%80%e4%ba%9b%e9%87%8d%e8%a6%81%e4%b8%bb%e9%a2%98" onclick="onNavClick(`#一些重要主题-nav`)" id="一些重要主题-nav">
+									一些重要主题
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%b9%b6%e5%8f%91%e5%92%8c%e5%b9%b6%e8%a1%8c" onclick="onNavClick(`#并发和并行-nav`)" id="并发和并行-nav">
+									并发和并行
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%ba%bf%e7%a8%8b%e7%ba%a7%e5%b9%b6%e5%8f%91" onclick="onNavClick(`#线程级并发-nav`)" id="线程级并发-nav">
+									线程级并发
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%8c%87%e4%bb%a4%e7%ba%a7%e5%b9%b6%e5%8f%91" onclick="onNavClick(`#指令级并发-nav`)" id="指令级并发-nav">
+									指令级并发
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8d%95%e6%8c%87%e4%bb%a4%e5%a4%9a%e6%95%b0%e6%8d%ae%e5%b9%b6%e8%a1%8c" onclick="onNavClick(`#单指令多数据并行-nav`)" id="单指令多数据并行-nav">
+									单指令、多数据并行
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%b3%bb%e7%bb%9f%e4%b8%ad%e6%8a%bd%e8%b1%a1%e7%9a%84%e9%87%8d%e8%a6%81%e6%80%a7" onclick="onNavClick(`#计算机系统中抽象的重要性-nav`)" id="计算机系统中抽象的重要性-nav">
+									计算机系统中抽象的重要性
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.github.io/blog2_public">
+            Jialong&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://eternityqjl.github.io/blog2_public">
+        <div class="single-column-header-title">Jialong&#39;s Blog</div>
+        
+        <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://github.com/eternityqjl/blogGallery/blob/master/blog/csapp.jpg?raw=true')"
+                    
+                
+            >
+                <div class="post-title">
+                    csapp: 1.计算机系统漫游
+                    
+                    <div class="post-subtitle">
+                        书籍《深入理解计算机系统》阅读学习笔记
+                    </div>
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-06-11 12:18
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/blog2_public/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97">深入理解计算机系统学习日志</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/blog2_public/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84">计算机体系结构</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p>在本书中我们将会学习到一些使用技巧，比如如何避免由于<strong>计算机表示数字的方式</strong>引起的错误；通过一些技巧<strong>优化C代码</strong>，以充分利用现代处理器和存储器系统的设计；了解<strong>编译器</strong>如何实现过程调用，利用这些知识避免<strong>缓冲区溢出</strong>错误带来的安全漏洞；学习如何识别和避免<strong>链接</strong>时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；<strong>并发</strong>带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。</p>
+<p>我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;stdio.h&gt;</span><span style="color:#579">
+</span><span style="color:#579"></span><span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">main</span>()
 {
-	printf(<span style=background-color:#fff0f0>&#34;Hello, world</span><span style=color:#666;background-color:#fff0f0;font-weight:700>\n</span><span style=background-color:#fff0f0>&#34;</span>);
-	<span style=color:#080;font-weight:700>return</span> <span style=color:#00d;font-weight:700>0</span>;
+	printf(<span style="background-color:#fff0f0">&#34;Hello, world</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>);
+	<span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">0</span>;
 }
-</code></pre></div><h2 id=信息就是位上下文>信息就是位+上下文</h2><p>8位为一个字节。</p><p>现代计算机系统使用ASCII标准来表示文本字符。即用一个<strong>单字节</strong>大小的整数值表示一个符号。</p><p>数字的机器表示是对真值的有限近似。</p><h2 id=程序被翻译为不同的格式>程序被翻译为不同的格式</h2><p><code>hello.c</code>中的每条C语句都会转换为一系列低级<strong>机器语言</strong>指令。这些指令按照<strong>可执行目标程序</strong>格式打包，以二进制磁盘文件的形式存放。</p><p>编译系统：</p><p>hello.c(源程序，文本) -> <code>预处理器(cpp)</code> -> hello.i(修改了的源程序，文本) -> <code>编译器(ccl)</code> -> hello.s(汇编程序，文本) -> <code>汇编器</code> -> hello.o(可重定位目标程序，二进制) -> <code>链接器</code> -> hello(可执行目标程序，二进制)</p><ul><li>预处理阶段：预处理器(cpp)根据以字符<code>#</code>开头的命令，修改原始C程序。例如<code>#include &lt;stdio.h></code>告诉预处理器读取系统头文件的内容，将其插入程序文本中，得到另一个C程序，以<code>.i</code>为扩展名。</li><li>编译阶段：编译器(ccl将<code>hello.i</code>翻译为<code>hello.s</code>，其包含了<strong>汇编语言程序</strong>。</li><li>汇编阶段：汇编器(as)将<code>hello.s</code>翻译为<strong>机器语言指令</strong>，将这些指令打包为<strong>可重定位目标程序</strong>，将结果保存在<code>hello.o</code>中，该文件为二进制文件。</li><li>链接阶段：hello程序调用了printf函数，它是C编译器提供的标准C库中的一个函数，printf函数存在于一个名为<code>printf.o</code>的单独预编译好的目标文件中，这个文件要以某种形式合并到我们的<code>hello.o</code>程序中，链接器(ld)负责这种合并，合并后就得到了<strong>可执行目标文件</strong><code>hello</code>，其可以被加载到内存中，由系统执行。</li></ul><h2 id=编译器的工作方式>编译器的工作方式</h2><p>有一些重要原因使得我们必须知道编译器的工作方式：</p><ul><li>优化程序性能。我们需要了解一些机器代码及编译器将不同C语句转化为机器代码的方式，例如一个switch语句是否总比一系列if-else语句高效。</li><li>理解链接时出现的错误。</li><li>避免安全漏洞。缓冲区溢出错误是大多网络和服务器安全漏洞的主要原因。</li></ul><h2 id=处理器读取并解释储存在内存中的指令>处理器读取并解释储存在内存中的指令</h2><p>要在Unix系统运行可执行目标文件hello，需要将文件名输入shell应用程序中：</p><div class=highlight><pre style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>linux&gt; ./hello
+</code></pre></div><h2 id="信息就是位上下文">信息就是位+上下文</h2>
+<p>8位为一个字节。</p>
+<p>现代计算机系统使用ASCII标准来表示文本字符。即用一个<strong>单字节</strong>大小的整数值表示一个符号。</p>
+<p>数字的机器表示是对真值的有限近似。</p>
+<h2 id="程序被翻译为不同的格式">程序被翻译为不同的格式</h2>
+<p><code>hello.c</code>中的每条C语句都会转换为一系列低级<strong>机器语言</strong>指令。这些指令按照<strong>可执行目标程序</strong>格式打包，以二进制磁盘文件的形式存放。</p>
+<p>编译系统：</p>
+<p>hello.c(源程序，文本) -&gt; <code>预处理器(cpp)</code> -&gt; hello.i(修改了的源程序，文本) -&gt; <code>编译器(ccl)</code> -&gt; hello.s(汇编程序，文本) -&gt; <code>汇编器</code> -&gt; hello.o(可重定位目标程序，二进制) -&gt; <code>链接器</code> -&gt; hello(可执行目标程序，二进制)</p>
+<ul>
+<li>预处理阶段：预处理器(cpp)根据以字符<code>#</code>开头的命令，修改原始C程序。例如<code>#include &lt;stdio.h&gt;</code>告诉预处理器读取系统头文件的内容，将其插入程序文本中，得到另一个C程序，以<code>.i</code>为扩展名。</li>
+<li>编译阶段：编译器(ccl将<code>hello.i</code>翻译为<code>hello.s</code>，其包含了<strong>汇编语言程序</strong>。</li>
+<li>汇编阶段：汇编器(as)将<code>hello.s</code>翻译为<strong>机器语言指令</strong>，将这些指令打包为<strong>可重定位目标程序</strong>，将结果保存在<code>hello.o</code>中，该文件为二进制文件。</li>
+<li>链接阶段：hello程序调用了printf函数，它是C编译器提供的标准C库中的一个函数，printf函数存在于一个名为<code>printf.o</code>的单独预编译好的目标文件中，这个文件要以某种形式合并到我们的<code>hello.o</code>程序中，链接器(ld)负责这种合并，合并后就得到了<strong>可执行目标文件</strong><code>hello</code>，其可以被加载到内存中，由系统执行。</li>
+</ul>
+<h2 id="编译器的工作方式">编译器的工作方式</h2>
+<p>有一些重要原因使得我们必须知道编译器的工作方式：</p>
+<ul>
+<li>优化程序性能。我们需要了解一些机器代码及编译器将不同C语句转化为机器代码的方式，例如一个switch语句是否总比一系列if-else语句高效。</li>
+<li>理解链接时出现的错误。</li>
+<li>避免安全漏洞。缓冲区溢出错误是大多网络和服务器安全漏洞的主要原因。</li>
+</ul>
+<h2 id="处理器读取并解释储存在内存中的指令">处理器读取并解释储存在内存中的指令</h2>
+<p>要在Unix系统运行可执行目标文件hello，需要将文件名输入shell应用程序中：</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">linux&gt; ./hello
 hello,world
 linux&gt;
-</code></pre></div><h3 id=系统的硬件组成>系统的硬件组成</h3><h4 id=总线>总线</h4><p>贯穿整个系统，负责信息字节在各个部件之间传递。</p><p>通常被设计为传送定长的字节块，即<strong>字</strong>，字中的字节数（即字长）是基本的系统参数，如今大多数机器中字长为8字节(即64位)，4字节(32位)在逐渐被64位取代。</p><h4 id=io设备>I/O设备</h4><p>每个I/O设备通过<strong>控制器或适配器</strong>与I/O总线相连，控制器为I/O设备本身或系统主板上的芯片组，适配器为插在主板插槽上的卡。</p><h4 id=主存ram>主存RAM</h4><p>临时存储设备，在处理器执行程序时用来存放程序和程序处理的数据。由一组<strong>动态随机存取存储器(DRAM)<strong>芯片组成。逻辑上，存储器是一个线性的字节数组，每个字节都有其唯一的</strong>地址</strong>(数组索引)，这些地址从零开始。</p><h4 id=处理器>处理器</h4><p>CPU是解释或执行存储在主存中指令的引擎，处理器的核心是一个大小为一个字的存储设备(<strong>寄存器</strong>)，称为程序计数器(PC)，PC指向主存中的某条机器语言指令（即包含该指令的地址）。</p><p>处理器在一直不停地执行程序计数器指向的指令，再更新程序计数器，使其指向下一条指令。处理器看上去是按照一个简单的指令执行模型来操作的，这个模型是<strong>指令集架构</strong>决定的。该模型中指令按照严格的顺序执行。执行一条指令包含一系列步骤，处理器从程序计数器指向的内存中读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新PC，使其指向下一条指令，循环操作。</p><p>这样的简单操作并不多，主要围绕**主存、寄存器文件和ALU(算术逻辑单元)**进行。寄存器文件是一个小型存储设备，由一些单个字长的寄存器组成，ALU计算新的数据和地址值。CPU可能进行以下操作：</p><ul><li>加载：从主存读取一个字到寄存器</li><li>存储：从寄存器赋值一个字到主存</li><li>操作：将两个寄存器的内容复制到ALU，ALU对两个字进行算术运算，将结果存放到一个寄存器中</li><li>跳转：从指令本身抽取一个字，将这个字复制到PC中</li></ul><p>指令集架构：每条机器代码指令的效果</p><p>微体系结构：处理器实际上是如何实现的</p><h3 id=运行hello程序>运行hello程序</h3><p>在键盘上输入<code>.\hello</code>后，shell会将这些字符逐一读入寄存器，再将其存放到内存中。按下回车后，shell知道命令输入已经结束，将执行一系列指令加载hello文件，这些指令会将hello目标文件中的代码和数据从磁盘复制到主存，利用DMA(直接存储器存取)技术，可将数据不经过CPU直接从磁盘放入主存。</p><p>目标文件hello被放入主存后，处理器就开始执行机器语言指令。</p><h2 id=高速缓存>高速缓存</h2><p>为了减少信息加载的时间，采用更小更快的存储设备作为数据或指令暂时的集结区域。处理器芯片上的L1高速缓存缓存的访问速度集合和访问寄存器文件一样快，容量更大的L2高速缓存通过特殊总线连接到寄处理器。高速缓存采用静态随机访问存储器（SRAM）技术实现。</p><h2 id=存储器层次>存储器层次：</h2><p>L0：寄存器</p><p>L1：L1高速缓存（SRAM）</p><p>L2：L2高速缓存（SRAM）</p><p>L3：L3高速缓存（SRAM）</p><p>L4：主存（DRAM）</p><p>L5：本地磁盘</p><p>L6：远程存储</p><p><img src=https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E4%B8%BE%E4%BE%8B.PNG alt></p><p>如上图为我的电脑的三级缓存示意。</p><h2 id=操作系统管理硬件>操作系统管理硬件</h2><p>前面的shell程序和hello程序都依靠<strong>操作系统</strong>提供的服务访问存储器。操作系统是应用程序和硬件之间的软件。</p><p>操作系统的主要功能有：</p><ul><li>防止硬件被失控的应用程序滥用</li><li>向应用程序提供简单的机制控制复杂又不同的低级硬件设备。</li></ul><p>操作系统通过几个基本抽象概念：进程、虚拟内存和文件实现这些功能。</p><p>文件是对I/O设备的抽象。</p><p>虚拟内存是对主存和磁盘I/O设备的抽象。</p><p>进程是对处理器、主存和磁盘I/O设备的抽象。</p><h3 id=进程>进程</h3><p>进程是操作系统对正在运行程序的一种抽象，一个系统可以同时运行多个进行，每个进程好像都在独占使用硬件。并发运行指的是多个不同程序进程指令交错运行。处理器通过在进程间切换来实现多个程序的并发运行，这种机制称为<strong>上下文切换</strong>。</p><p>操作系统保存跟踪进程运行所需要的所有状态信息，这种状态即为上下文。这些信息有很多，比如PC和寄存器文件的当前值。</p><p>任何一个时刻，单处理器只能执行一个进程的代码。当操作系统决定要把控制权从当前进程转移到新进程时，就会进行上下文切换。</p><p>从一个进程到另一个进程的切换是操作系统内核（kernal）管理的。<strong>内核</strong>是操作系统代码<strong>常驻主存</strong>的部分。内核不是一个独立的进程，是系统管理全部进程所用的代码和数据结构的集合。</p><h3 id=线程>线程</h3><p>一个进程可以有多个成为线程的执行单元组成，每个线程都运行在进程的上下文中，共享同样的代码和全部数据。多线程相比多进程更容易共享数据。</p><h3 id=虚拟内存>虚拟内存</h3><p>虚拟内存为每个进程提供一个假象，即每个进程都在<strong>独占地使用主存</strong>。每个进程看到内存都是一致的，成为虚拟地址空间。</p><p>每个进程看到的虚拟地址由大量准确定义的<strong>区</strong>构成，每个区都有专门的功能。以下从最低的地址逐步向上介绍：</p><ul><li>程序代码和数据：所有进程的代码是从同一固定地址开始，紧接着是和C全局变量对应的数据位置。代码和数据区是直接按照可执行目标文件的内容初始化的。</li><li>堆：当调用malloc和free这样的函数时，堆可以动态地扩展和收缩。</li><li>共享库：是一块用来存放像C标准库和数学库这样的共享库的代码和数据的区域。</li><li>栈：编译器用它来实现函数调用，栈在程序执行期间可以动态扩展和收缩。</li><li>内核虚拟内存：地址空间顶部区域是为内核保留的，不允许应用程序读写这个区域的内容或直接调用内核代码定义的函数。</li></ul><h3 id=文件>文件</h3><p>文件就是字节序列，系统所有输入输出都是通过使用一小组成为Unix I/O的系统函数调用读写文件实现的。</p><h2 id=系统之间利用网络通信>系统之间利用网络通信</h2><p>网络是一个I/O设备，通过网络适配器连接到系统总线。</p><h2 id=一些重要主题>一些重要主题</h2><h3 id=并发和并行>并发和并行</h3><p>并发：一个同时具有多个活动的系统</p><p>并行：用并发使得一个系统运行得更快</p><p>并行可以在计算机系统的多个抽象层次上运行。</p><h4 id=线程级并发>线程级并发</h4><h4 id=指令级并发>指令级并发</h4><h4 id=单指令多数据并行>单指令、多数据并行</h4><h3 id=计算机系统中抽象的重要性>计算机系统中抽象的重要性</h3><p>文件是对I/O设备的抽象，虚拟内存是对程序存储器的抽象，进程是对正在运行程序的抽象，虚拟机提供对整个计算机的抽象。</p><hr width=100% id=EOF><p style=color:#777>最后修改于 2021-06-11</p></div></div><nav class=post-pagination><a class=newer-posts href=https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/>下回<br>存储器详解</a>
-<a class=older-posts href=https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/>上回<br>cs231n——1.Nearest Neighbor Classifier</a></nav><div class=post-comment-wrapper><div id=gitalk-container></div></div></div></div></div></div><div id=single-column-footer>Hugo Theme <a href=https://github.com/amazingrise/hugo-theme-diary>Diary</a> by <a href=https://amazingrise.net>Rise</a><br>移植自 <a href=https://mak1t0.cc/ target=_blank rel="noreferrer noopener">Makito</a>'s <a href=https://github.com/SumiMakito/hexo-theme-journal/ target=_blank rel="noreferrer noopener">Journal.</a><br><br>&copy;
-2019-2021 By Jialong</div></div><script>let app;app=new Vue({el:'#app',data:{scrollY:0,navOpacity:0,isDrawerOpen:!1,mounted:!1,isDarkMode:!1},methods:{sgn(a,b){let c=1/(1-2*a);return b<=a?0:b>=1-a?1:c*(b-a)},handleScroll(){this.scrollY=window.scrollY,this.navOpacity=this.sgn(0,Math.min(1,Math.max(0,window.scrollY/(this.pageHeadHeight()-this.navBarHeight()*.8))));const{navBar:c,navBackground:a,navTitle:b,extraContainer:d,streamContainer:e}=this.$refs;this.navOpacity>=1?(a.style.opacity=1,b.style.opacity=1):(a.style.opacity=0,b.style.opacity=0)},handleResize(){const{navBar:c,navBackground:d,navTitle:e,extraContainer:a,streamContainer:b}=this.$refs;a.style.left=b.offsetWidth-a.offsetWidth+'px'},navBarHeight(){return this.$refs.navBar.offsetHeight},pageHeadHeight(){return this.$refs.pageHead.offsetHeight},toggleDrawer(){this.isDrawerOpen=!this.isDrawerOpen,document.getElementsByTagName('html')[0].style.overflow=this.isDrawerOpen?'hidden':'unset'},closeDrawer(){this.isDrawerOpen=!1,document.getElementsByTagName('html')[0].style.overflow=this.isDrawerOpen?'hidden':'unset'},toggleDarkMode(){this.isDarkMode=!this.isDarkMode,this.isDarkMode==!0?(document.cookie="night=1;path=/",document.body.classList.add("night")):(document.cookie="night=0;path=/",document.body.classList.remove("night"))},debounce(t,b,f){let e,g,l,d,a,c,i=0,q=!1,h=!1,n=!0;const s=!b&&b!==0&&typeof root.requestAnimationFrame=='function';if(typeof t!='function')throw new TypeError('Expected a function');function w(a){const b=typeof a;return a!=null&&(b==='object'||b==='function')}b=+b||0,w(f)&&(q=!!f.leading,h='maxWait'in f,l=h?Math.max(+f.maxWait||0,b):l,n='trailing'in f?!!f.trailing:n);function o(a){const b=e,c=g;return e=g=void 0,i=a,d=t.apply(c,b),d}function k(b,c){return s?(root.cancelAnimationFrame(a),root.requestAnimationFrame(b)):setTimeout(b,c)}function v(a){if(s)return root.cancelAnimationFrame(a);clearTimeout(a)}function A(c){return i=c,a=k(m,b),q?o(c):d}function u(a){const e=a-c,f=a-i,d=b-e;return h?Math.min(d,l-f):d}function r(a){const d=a-c,e=a-i;return c===void 0||d>=b||d<0||h&&e>=l}function m(){const b=Date.now();if(r(b))return p(b);a=k(m,u(b))}function p(b){return a=void 0,n&&e?o(b):(e=g=void 0,d)}function x(){a!==void 0&&v(a),i=0,e=c=g=a=void 0}function y(){return a===void 0?d:p(Date.now())}function z(){return a!==void 0}function j(...i){const f=Date.now(),j=r(f);if(e=i,g=this,c=f,j){if(a===void 0)return A(c);if(h)return a=k(m,b),o(c)}return a===void 0&&(a=k(m,b)),d}return j.cancel=x,j.flush=y,j.pending=z,j}},created(){window.addEventListener('scroll',this.handleScroll),window.addEventListener('resize',this.handleResize),window._nonDesktop=function(){let a=!1;return function(b){(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(b)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(b.substr(0,4)))&&(a=!0)}(navigator.userAgent||navigator.vendor||window.opera),a};var a=document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/,"$1");a==""?window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches:a=="1"&&this.toggleDarkMode()},mounted(){this.handleScroll(),this.handleResize(),this.mounted=!0,document.querySelectorAll("table").forEach(function(a){a.classList.add("table-striped"),a.classList.add("table"),a.classList.add("table-responsive"),a.classList.add("table-hover")}),spy(),window.addEventListener('scroll',this.debounce(spy,250,{maxWait:250}),!1)},destroyed(){window.removeEventListener('scroll',this.handleScroll),window.removeEventListener('resize',this.handleResize)}})</script></body></html>
+</code></pre></div><h3 id="系统的硬件组成">系统的硬件组成</h3>
+<h4 id="总线">总线</h4>
+<p>贯穿整个系统，负责信息字节在各个部件之间传递。</p>
+<p>通常被设计为传送定长的字节块，即<strong>字</strong>，字中的字节数（即字长）是基本的系统参数，如今大多数机器中字长为8字节(即64位)，4字节(32位)在逐渐被64位取代。</p>
+<h4 id="io设备">I/O设备</h4>
+<p>每个I/O设备通过<strong>控制器或适配器</strong>与I/O总线相连，控制器为I/O设备本身或系统主板上的芯片组，适配器为插在主板插槽上的卡。</p>
+<h4 id="主存ram">主存RAM</h4>
+<p>临时存储设备，在处理器执行程序时用来存放程序和程序处理的数据。由一组<strong>动态随机存取存储器(DRAM)<strong>芯片组成。逻辑上，存储器是一个线性的字节数组，每个字节都有其唯一的</strong>地址</strong>(数组索引)，这些地址从零开始。</p>
+<h4 id="处理器">处理器</h4>
+<p>CPU是解释或执行存储在主存中指令的引擎，处理器的核心是一个大小为一个字的存储设备(<strong>寄存器</strong>)，称为程序计数器(PC)，PC指向主存中的某条机器语言指令（即包含该指令的地址）。</p>
+<p>处理器在一直不停地执行程序计数器指向的指令，再更新程序计数器，使其指向下一条指令。处理器看上去是按照一个简单的指令执行模型来操作的，这个模型是<strong>指令集架构</strong>决定的。该模型中指令按照严格的顺序执行。执行一条指令包含一系列步骤，处理器从程序计数器指向的内存中读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新PC，使其指向下一条指令，循环操作。</p>
+<p>这样的简单操作并不多，主要围绕**主存、寄存器文件和ALU(算术逻辑单元)**进行。寄存器文件是一个小型存储设备，由一些单个字长的寄存器组成，ALU计算新的数据和地址值。CPU可能进行以下操作：</p>
+<ul>
+<li>加载：从主存读取一个字到寄存器</li>
+<li>存储：从寄存器赋值一个字到主存</li>
+<li>操作：将两个寄存器的内容复制到ALU，ALU对两个字进行算术运算，将结果存放到一个寄存器中</li>
+<li>跳转：从指令本身抽取一个字，将这个字复制到PC中</li>
+</ul>
+<p>指令集架构：每条机器代码指令的效果</p>
+<p>微体系结构：处理器实际上是如何实现的</p>
+<h3 id="运行hello程序">运行hello程序</h3>
+<p>在键盘上输入<code>.\hello</code>后，shell会将这些字符逐一读入寄存器，再将其存放到内存中。按下回车后，shell知道命令输入已经结束，将执行一系列指令加载hello文件，这些指令会将hello目标文件中的代码和数据从磁盘复制到主存，利用DMA(直接存储器存取)技术，可将数据不经过CPU直接从磁盘放入主存。</p>
+<p>目标文件hello被放入主存后，处理器就开始执行机器语言指令。</p>
+<h2 id="高速缓存">高速缓存</h2>
+<p>为了减少信息加载的时间，采用更小更快的存储设备作为数据或指令暂时的集结区域。处理器芯片上的L1高速缓存缓存的访问速度集合和访问寄存器文件一样快，容量更大的L2高速缓存通过特殊总线连接到寄处理器。高速缓存采用静态随机访问存储器（SRAM）技术实现。</p>
+<h2 id="存储器层次">存储器层次：</h2>
+<p>L0：寄存器</p>
+<p>L1：L1高速缓存（SRAM）</p>
+<p>L2：L2高速缓存（SRAM）</p>
+<p>L3：L3高速缓存（SRAM）</p>
+<p>L4：主存（DRAM）</p>
+<p>L5：本地磁盘</p>
+<p>L6：远程存储</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E4%B8%BE%E4%BE%8B.PNG" alt=""></p>
+<p>如上图为我的电脑的三级缓存示意。</p>
+<h2 id="操作系统管理硬件">操作系统管理硬件</h2>
+<p>前面的shell程序和hello程序都依靠<strong>操作系统</strong>提供的服务访问存储器。操作系统是应用程序和硬件之间的软件。</p>
+<p>操作系统的主要功能有：</p>
+<ul>
+<li>防止硬件被失控的应用程序滥用</li>
+<li>向应用程序提供简单的机制控制复杂又不同的低级硬件设备。</li>
+</ul>
+<p>操作系统通过几个基本抽象概念：进程、虚拟内存和文件实现这些功能。</p>
+<p>文件是对I/O设备的抽象。</p>
+<p>虚拟内存是对主存和磁盘I/O设备的抽象。</p>
+<p>进程是对处理器、主存和磁盘I/O设备的抽象。</p>
+<h3 id="进程">进程</h3>
+<p>进程是操作系统对正在运行程序的一种抽象，一个系统可以同时运行多个进行，每个进程好像都在独占使用硬件。并发运行指的是多个不同程序进程指令交错运行。处理器通过在进程间切换来实现多个程序的并发运行，这种机制称为<strong>上下文切换</strong>。</p>
+<p>操作系统保存跟踪进程运行所需要的所有状态信息，这种状态即为上下文。这些信息有很多，比如PC和寄存器文件的当前值。</p>
+<p>任何一个时刻，单处理器只能执行一个进程的代码。当操作系统决定要把控制权从当前进程转移到新进程时，就会进行上下文切换。</p>
+<p>从一个进程到另一个进程的切换是操作系统内核（kernal）管理的。<strong>内核</strong>是操作系统代码<strong>常驻主存</strong>的部分。内核不是一个独立的进程，是系统管理全部进程所用的代码和数据结构的集合。</p>
+<h3 id="线程">线程</h3>
+<p>一个进程可以有多个成为线程的执行单元组成，每个线程都运行在进程的上下文中，共享同样的代码和全部数据。多线程相比多进程更容易共享数据。</p>
+<h3 id="虚拟内存">虚拟内存</h3>
+<p>虚拟内存为每个进程提供一个假象，即每个进程都在<strong>独占地使用主存</strong>。每个进程看到内存都是一致的，成为虚拟地址空间。</p>
+<p>每个进程看到的虚拟地址由大量准确定义的<strong>区</strong>构成，每个区都有专门的功能。以下从最低的地址逐步向上介绍：</p>
+<ul>
+<li>程序代码和数据：所有进程的代码是从同一固定地址开始，紧接着是和C全局变量对应的数据位置。代码和数据区是直接按照可执行目标文件的内容初始化的。</li>
+<li>堆：当调用malloc和free这样的函数时，堆可以动态地扩展和收缩。</li>
+<li>共享库：是一块用来存放像C标准库和数学库这样的共享库的代码和数据的区域。</li>
+<li>栈：编译器用它来实现函数调用，栈在程序执行期间可以动态扩展和收缩。</li>
+<li>内核虚拟内存：地址空间顶部区域是为内核保留的，不允许应用程序读写这个区域的内容或直接调用内核代码定义的函数。</li>
+</ul>
+<h3 id="文件">文件</h3>
+<p>文件就是字节序列，系统所有输入输出都是通过使用一小组成为Unix I/O的系统函数调用读写文件实现的。</p>
+<h2 id="系统之间利用网络通信">系统之间利用网络通信</h2>
+<p>网络是一个I/O设备，通过网络适配器连接到系统总线。</p>
+<h2 id="一些重要主题">一些重要主题</h2>
+<h3 id="并发和并行">并发和并行</h3>
+<p>并发：一个同时具有多个活动的系统</p>
+<p>并行：用并发使得一个系统运行得更快</p>
+<p>并行可以在计算机系统的多个抽象层次上运行。</p>
+<h4 id="线程级并发">线程级并发</h4>
+<h4 id="指令级并发">指令级并发</h4>
+<h4 id="单指令多数据并行">单指令、多数据并行</h4>
+<h3 id="计算机系统中抽象的重要性">计算机系统中抽象的重要性</h3>
+<p>文件是对I/O设备的抽象，虚拟内存是对程序存储器的抽象，进程是对正在运行程序的抽象，虚拟机提供对整个计算机的抽象。</p>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-06-11</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts" href="https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/">
+			下回<br>存储器详解
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/">
+			上回<br>cs231n——1.Nearest Neighbor Classifier
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            },
+            debounce(func, wait, options) {
+                let lastArgs,
+                    lastThis,
+                    maxWait,
+                    result,
+                    timerId,
+                    lastCallTime
+
+                let lastInvokeTime = 0
+                let leading = false
+                let maxing = false
+                let trailing = true
+
+                
+                const useRAF = (!wait && wait !== 0 && typeof root.requestAnimationFrame === 'function')
+
+                if (typeof func !== 'function') {
+                    throw new TypeError('Expected a function')
+                }
+                function isObject(value) {
+                    const type = typeof value
+                    return value != null && (type === 'object' || type === 'function')
+                }
+
+                wait = +wait || 0
+                if (isObject(options)) {
+                    leading = !!options.leading
+                    maxing = 'maxWait' in options
+                    maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait
+                    trailing = 'trailing' in options ? !!options.trailing : trailing
+                }
+
+                function invokeFunc(time) {
+                    const args = lastArgs
+                    const thisArg = lastThis
+
+                    lastArgs = lastThis = undefined
+                    lastInvokeTime = time
+                    result = func.apply(thisArg, args)
+                    return result
+                }
+
+                function startTimer(pendingFunc, wait) {
+                    if (useRAF) {
+                    root.cancelAnimationFrame(timerId)
+                    return root.requestAnimationFrame(pendingFunc)
+                    }
+                    return setTimeout(pendingFunc, wait)
+                }
+
+                function cancelTimer(id) {
+                    if (useRAF) {
+                    return root.cancelAnimationFrame(id)
+                    }
+                    clearTimeout(id)
+                }
+
+                function leadingEdge(time) {
+                    
+                    lastInvokeTime = time
+                    
+                    timerId = startTimer(timerExpired, wait)
+                    
+                    return leading ? invokeFunc(time) : result
+                }
+
+                function remainingWait(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+                    const timeWaiting = wait - timeSinceLastCall
+
+                    return maxing
+                    ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+                    : timeWaiting
+                }
+
+                function shouldInvoke(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+
+                    
+                    
+                    
+                    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+                    (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait))
+                }
+
+                function timerExpired() {
+                    const time = Date.now()
+                    if (shouldInvoke(time)) {
+                    return trailingEdge(time)
+                    }
+                    
+                    timerId = startTimer(timerExpired, remainingWait(time))
+                }
+
+                function trailingEdge(time) {
+                    timerId = undefined
+
+                    
+                    
+                    if (trailing && lastArgs) {
+                    return invokeFunc(time)
+                    }
+                    lastArgs = lastThis = undefined
+                    return result
+                }
+
+                function cancel() {
+                    if (timerId !== undefined) {
+                    cancelTimer(timerId)
+                    }
+                    lastInvokeTime = 0
+                    lastArgs = lastCallTime = lastThis = timerId = undefined
+                }
+
+                function flush() {
+                    return timerId === undefined ? result : trailingEdge(Date.now())
+                }
+
+                function pending() {
+                    return timerId !== undefined
+                }
+
+                function debounced(...args) {
+                    const time = Date.now()
+                    const isInvoking = shouldInvoke(time)
+
+                    lastArgs = args
+                    lastThis = this
+                    lastCallTime = time
+
+                    if (isInvoking) {
+                    if (timerId === undefined) {
+                        return leadingEdge(lastCallTime)
+                    }
+                    if (maxing) {
+                        
+                        timerId = startTimer(timerExpired, wait)
+                        return invokeFunc(lastCallTime)
+                    }
+                    }
+                    if (timerId === undefined) {
+                    timerId = startTimer(timerExpired, wait)
+                    }
+                    return result
+                }
+                debounced.cancel = cancel
+                debounced.flush = flush
+                debounced.pending = pending
+                return debounced
+                }
+
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+        
+        
+
+        document.querySelectorAll("table").forEach(function(elem){
+            elem.classList.add("table-striped");
+            elem.classList.add("table");
+            elem.classList.add("table-responsive");
+            elem.classList.add("table-hover");
+        })
+
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
+        
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+
+
+
+</script>
+    </body>
+</html>

@@ -1,25 +1,63 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>机器学习 on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link><description>Recent content in 机器学习 on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Wed, 09 Jun 2021 17:41:44 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml"/><item><title>cs231n——1.Nearest Neighbor Classifier</title><link>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</link><pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</guid><description>图像分类规范化步骤：
-输入：输入带有不同标签的图像作为训练集 学习：使用训练集学习每种类别的抽象特征 评估：通过测试集评估分类器的质量。 Nearest Neighbor Classifier CIFAR-10 dataset:
-10 classes (airplane, automobile, bird, etc) 60,000 tiny images that are 32 pixels high and wide k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>机器学习 on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.github.io/blog2_public/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in 机器学习 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Wed, 09 Jun 2021 17:41:44 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cs231n——1.Nearest Neighbor Classifier</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</link>
+      <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/cs231n1-nearest-neighbor-classifier/</guid>
+      <description>图像分类规范化步骤：
+ 输入：输入带有不同标签的图像作为训练集 学习：使用训练集学习每种类别的抽象特征 评估：通过测试集评估分类器的质量。  Nearest Neighbor Classifier CIFAR-10 dataset:
+ 10 classes (airplane, automobile, bird, etc) 60,000 tiny images that are 32 pixels high and wide  k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。
 L1 distance: $$ d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right| $$
 将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。
 通常使用准确率来评估分类器
-Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic function we provide # flatten out all images to be one-dimensional Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3) # Xtr_rows becomes 50000 x 3072 Xte_rows = Xte.</description></item><item><title>机器学习——k近邻(k-NN)算法</title><link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link><pubDate>Wed, 12 May 2021 14:57:17 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid><description>&lt;h2 id="基本概念及原理">基本概念及原理&lt;/h2>
-&lt;p>k近邻(k-nearest neighbors)算法是一种基本分类和回归方法。&lt;/p>
-&lt;p>该算法是给定一个&lt;strong>训练数据集&lt;/strong>，对新的&lt;strong>输入测试集&lt;/strong>，在训练集中找到与该测试实例&lt;strong>最邻近&lt;/strong>的k个实例，这k个实例的多数属于某个类，就把该输入实例分类到这个类中。&lt;/p>
-&lt;p>&lt;img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/220px-KnnClassification.svg.png" alt="220px-KnnClassification.svg">&lt;/p>
-&lt;p>有两类不同样本分别用红色三角形和蓝色正方形表示，途中绿色圆形为待分类的数据。这时我们根据k-近邻的思想进行分类。&lt;/p>
-&lt;ul>
-&lt;li>当k=3时，判定样本属于红色三角形这一类；&lt;/li>
-&lt;li>当k=5时，判定样本属于蓝色正方形这一类。&lt;/li>
-&lt;/ul></description></item><item><title>机器学习——线性回归和梯度下降</title><link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link><pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid><description>线性回归Linear Regression 简介 线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。
+Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic function we provide # flatten out all images to be one-dimensional Xtr_rows = Xtr.reshape(Xtr.shape[0], 32 * 32 * 3) # Xtr_rows becomes 50000 x 3072 Xte_rows = Xte.</description>
+    </item>
+    
+    <item>
+      <title>机器学习——k近邻(k-NN)算法</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Wed, 12 May 2021 14:57:17 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
+      <description>&lt;h2 id=&#34;基本概念及原理&#34;&gt;基本概念及原理&lt;/h2&gt;
+&lt;p&gt;k近邻(k-nearest neighbors)算法是一种基本分类和回归方法。&lt;/p&gt;
+&lt;p&gt;该算法是给定一个&lt;strong&gt;训练数据集&lt;/strong&gt;，对新的&lt;strong&gt;输入测试集&lt;/strong&gt;，在训练集中找到与该测试实例&lt;strong&gt;最邻近&lt;/strong&gt;的k个实例，这k个实例的多数属于某个类，就把该输入实例分类到这个类中。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/220px-KnnClassification.svg.png&#34; alt=&#34;220px-KnnClassification.svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有两类不同样本分别用红色三角形和蓝色正方形表示，途中绿色圆形为待分类的数据。这时我们根据k-近邻的思想进行分类。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当k=3时，判定样本属于红色三角形这一类；&lt;/li&gt;
+&lt;li&gt;当k=5时，判定样本属于蓝色正方形这一类。&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>机器学习——线性回归和梯度下降</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
+      <pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
+      <description>线性回归Linear Regression 简介 线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。
 注意：
-因为是线性回归，所以学习到的函数为线性函数，即一次直线函数； 因为是单变量，所以只有一个x； 所以能够给出单变量线性回归的模型： $$ h(x)=b+mx $$ 我们称$x$为feature，$h(x)$为hypothesis。
+ 因为是线性回归，所以学习到的函数为线性函数，即一次直线函数； 因为是单变量，所以只有一个x；  所以能够给出单变量线性回归的模型： $$ h(x)=b+mx $$ 我们称$x$为feature，$h(x)$为hypothesis。
 代价函数Cost Function 我们需要根据代价函数来确定线性回归拟合的好不好。Cost Function越小，说明线性回归地越好，最小为0，完全拟合。 $$ J(b,m)=\frac{1}{2n}(h(x^{(i)})-y^{(i)})^2 $$ 如上所示为代价函数的构造，其中，$x^{(i)}$表示向量x的第i个元素，$y^{(i)}$表示向量y的第i个元素，即表示所有输入的训练集的点。$h(x)$表示已知的假设函数，n为训练集的个数。
 梯度下降 梯度下降能够找出代价函数Cost Function的最小值，梯度下降的方法步骤如下所示：
-先确定向下一步的步伐大小，我们称为Learning Rate； 任意给定初始值b, m； 确定一个向下的方向，按预定步骤向下走，并且更新b, m； 当下降高度(循环次数)小于某个定义的值时，停止下降。 循环下面的式子直到满足终止条件： $$ b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
+ 先确定向下一步的步伐大小，我们称为Learning Rate； 任意给定初始值b, m； 确定一个向下的方向，按预定步骤向下走，并且更新b, m； 当下降高度(循环次数)小于某个定义的值时，停止下降。  循环下面的式子直到满足终止条件： $$ b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
 m = m - \alpha\frac{\partial}{\partial m}J(b,m) $$ 上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。
 对Cost Function运用梯度下降 $$ \mathrm{repeat \ until \ convergence}{ \
 b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \
 m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \
-\ } $$</description></item></channel></rss>
+\ } $$</description>
+    </item>
+    
+  </channel>
+</rss>

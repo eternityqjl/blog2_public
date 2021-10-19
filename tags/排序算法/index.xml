@@ -1,3 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>排序算法 on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link><description>Recent content in 排序算法 on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Thu, 23 Jul 2020 14:59:12 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml"/><item><title>《算法（第4版）》学习笔记——（一）排序</title><link>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link><pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid><description>初级排序算法 选择排序 算法描述 首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。
-代码实现 public class Selection { public static void sort(Comparable[] a) { //将a按照升序排列 int N = a.length; for (int i = 0; i &amp;lt; N; i++) { int min = i; for (int j = i + 1; j &amp;lt; N; j++) { if (less(a[j], a[min])) min = j; } exch(a, i ,min); } } } 性能分析 对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。 该算法运行时间与输入无关，数据的移动是最少的。 插入排序 算法描述 插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。
-代码实现 public class Insertion { public static void sort(Comparable[] a) { int N = a.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>排序算法 on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.github.io/blog2_public/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 排序算法 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Thu, 23 Jul 2020 14:59:12 +0000</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/tags/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>《算法（第4版）》学习笔记——（一）排序</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
+      <description>初级排序算法 选择排序 算法描述 首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。
+代码实现 public class Selection { public static void sort(Comparable[] a) { //将a按照升序排列  int N = a.length; for (int i = 0; i &amp;lt; N; i++) { int min = i; for (int j = i + 1; j &amp;lt; N; j++) { if (less(a[j], a[min])) min = j; } exch(a, i ,min); } } } 性能分析  对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。 该算法运行时间与输入无关，数据的移动是最少的。  插入排序 算法描述 插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。
+代码实现 public class Insertion { public static void sort(Comparable[] a) { int N = a.</description>
+    </item>
+    
+  </channel>
+</rss>

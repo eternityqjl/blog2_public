@@ -1,4 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>LaTex on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/categories/latex/</link><description>Recent content in LaTex on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Sun, 18 Jul 2021 20:06:26 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/latex/index.xml" rel="self" type="application/rss+xml"/><item><title>LaTex环境配置和基本功能模块</title><link>https://eternityqjl.github.io/blog2_public/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link><pubDate>Sun, 18 Jul 2021 20:06:26 +0800</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid><description>环境配置 我选择使用VS code + Tex Live作为我的LaTex写作环境，具体配置过程参考自：Visual Studio Code (vscode)配置LaTeX
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LaTex on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.github.io/blog2_public/categories/latex/</link>
+    <description>Recent content in LaTex on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Sun, 18 Jul 2021 20:06:26 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/latex/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LaTex环境配置和基本功能模块</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Sun, 18 Jul 2021 20:06:26 +0800</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid>
+      <description>环境配置 我选择使用VS code + Tex Live作为我的LaTex写作环境，具体配置过程参考自：Visual Studio Code (vscode)配置LaTeX
 以下是关于使用过程中一些具体模块的讨论：
 部分内容参考自：一份其实很短的 LaTeX 入门文档
 这里使用xeLatTex进行编译。
@@ -7,17 +23,30 @@
 我们使用\usepackage{}来调用宏包。
 另外，我们使用CTex宏集来处理中文的版式和标点。
 \documentclass[UTF8]{ctexart} \begin{document} 你好，world! \end{document} 与开始相比，文档类别变为ctexart，并且增加了文档类选项UTF8.
-组织文章基本内容 标题、作者、日期 \documentclass[UTF8]{ctexart} \title{你好，world!} \author{Eternity} \date{\today} \begin{document} \maketitle 你好，world! \end{document} 以上代码中的控制序列\maketitle能将在导言区中定义的标题、作者、日期按照预定的格式展现出来。
+组织文章基本内容  标题、作者、日期  \documentclass[UTF8]{ctexart} \title{你好，world!} \author{Eternity} \date{\today} \begin{document} \maketitle 你好，world! \end{document} 以上代码中的控制序列\maketitle能将在导言区中定义的标题、作者、日期按照预定的格式展现出来。
 可以通过宏包titling修改上述默认格式。
-章节和段落 \documentclass[UTF8]{ctexart} \title{你好，world!} \author{Liam} \date{\today} \begin{document} \maketitle \section{你好中国} 中国在East Asia. \subsection{Hello Beijing} 北京是capital of China. \subsubsection{Hello Dongcheng District} \paragraph{Tian&amp;#39;anmen Square} is in the center of Beijing \subparagraph{Chairman Mao} is in the center of 天安门广场。 \subsection{Hello 山东} \paragraph{山东大学} is one of the best university in 山东。 \end{document} 文档类article/ctexart中定义了5个控制序列来调整文章组织结构：</description></item><item><title>第一次使用LaTex——问题整理</title><link>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</link><pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</guid><description>0.前言 第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。
+章节和段落  \documentclass[UTF8]{ctexart} \title{你好，world!} \author{Liam} \date{\today} \begin{document} \maketitle \section{你好中国} 中国在East Asia. \subsection{Hello Beijing} 北京是capital of China. \subsubsection{Hello Dongcheng District} \paragraph{Tian&amp;#39;anmen Square} is in the center of Beijing \subparagraph{Chairman Mao} is in the center of 天安门广场。 \subsection{Hello 山东} \paragraph{山东大学} is one of the best university in 山东。 \end{document} 文档类article/ctexart中定义了5个控制序列来调整文章组织结构：</description>
+    </item>
+    
+    <item>
+      <title>第一次使用LaTex——问题整理</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</link>
+      <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/latex-problems1/</guid>
+      <description>0.前言 第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。
 这是第一次实验报告导出的pdf文档封面展示：
 这是tex源代码。
 章节标题的特殊符号 当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令\texorpdfstring{}{}分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号{}中填写tex文档代码，第二个括号{}填写文本形式的书签，如下所示：
 %1.1 \subsection[第3题（1）]{第3题（1）求\texorpdfstring{$x_1(t)=1.5e^{-2t}u(t)$}{x1}， \texorpdfstring{$x_2(t)=cos(t2)[u(t)-u(t-2)]$}{x2}的卷积积分 \texorpdfstring{$y_1(t)=x_1(t)*x_2(t)$}{y1}。 } 代码段的设置 在文章中添加代码段需要用到listings宏包，代码段的基本设置参数如下所示：
-listings宏包文档
-\usepackage{listings} \lstset{ language=Matlab, escapeinside=``, numbers=left, numberstyle=\tiny, breaklines=true, backgroundcolor=\color{lightgray!40!white}, frame=single, framerule=0pt, extendedchars=false, keywordstyle=\color{blue!70}\bfseries, basicstyle=\ttfamily, commentstyle=\ttfamily\color{green!40!black}, showstringspaces=false} 同时，设置代码段颜色高亮时需要用到xcolor宏包。
+ listings宏包文档
+ \usepackage{listings} \lstset{ language=Matlab, escapeinside=``, numbers=left, numberstyle=\tiny, breaklines=true, backgroundcolor=\color{lightgray!40!white}, frame=single, framerule=0pt, extendedchars=false, keywordstyle=\color{blue!70}\bfseries, basicstyle=\ttfamily, commentstyle=\ttfamily\color{green!40!black}, showstringspaces=false} 同时，设置代码段颜色高亮时需要用到xcolor宏包。
 注意以下几点问题：
-代码段中最好不要出现中文，如果必须要使用中文，需要用逃逸字符` `将中文包括起来，如上面的基本参数中的escapeinside=` ` 所示。 如果代码段中出现tex语言的特殊符号，需要使用转义字符\，如#就需要转换为\#。 如果想要改变代码段中的字体，需要用到fontspec宏包，这个宏包需要用XeLaTex或LuaLaTex进行编译，由于我的实验报告封面使用的有些元素在使用这两者编译时无法识别，我这次就没使用，下次写实验报告一定仔细研究一下，实现这个功能。
-数学公式中的align 参考：“Erroneous nesting of equation structures” message- I can&amp;rsquo;t see what&amp;rsquo;s wrong?
-数学公式中需要写等号对齐的公式段是不需要写$$...$$或者begin{equation}...end{equation}，直接将公式写在begin{align}...end{align}的中间即可，如下所示：
-\begin{align} y_2[n] &amp;amp;=x_3[n]*x_4[n] \\ &amp;amp;=((-\frac{2}{3})^n u[n-1])*((-1)^{n+1}u[n-1]-(-2)^{n-2}u[n-2]) \\ &amp;amp;=\sum_{k=-\infty}^{+\infty}(-\frac{2}{3})^k u[k-1]((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]) \\ &amp;amp;=\sum_{k=1}^{+\infty}(-\frac{2}{3})^k ((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]) \\ &amp;amp;= \begin{cases} 0, \ n&amp;lt;0 \\ \sum_{k=1}^{+\infty}(-\frac{2}{3})^k (-1)^{n-k+1}u[n-k+1], \ 0 \leq n \leq 2 \\ \sum_{k=1}^{+\infty}(-\frac{2}{3})^k ((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]),\ n&amp;gt;2 \end{cases} \end{align}</description></item></channel></rss>
+ 代码段中最好不要出现中文，如果必须要使用中文，需要用逃逸字符` `将中文包括起来，如上面的基本参数中的escapeinside=` ` 所示。 如果代码段中出现tex语言的特殊符号，需要使用转义字符\，如#就需要转换为\#。  如果想要改变代码段中的字体，需要用到fontspec宏包，这个宏包需要用XeLaTex或LuaLaTex进行编译，由于我的实验报告封面使用的有些元素在使用这两者编译时无法识别，我这次就没使用，下次写实验报告一定仔细研究一下，实现这个功能。
+数学公式中的align  参考：“Erroneous nesting of equation structures” message- I can&amp;rsquo;t see what&amp;rsquo;s wrong?
+ 数学公式中需要写等号对齐的公式段是不需要写$$...$$或者begin{equation}...end{equation}，直接将公式写在begin{align}...end{align}的中间即可，如下所示：
+\begin{align} y_2[n] &amp;amp;=x_3[n]*x_4[n] \\ &amp;amp;=((-\frac{2}{3})^n u[n-1])*((-1)^{n+1}u[n-1]-(-2)^{n-2}u[n-2]) \\ &amp;amp;=\sum_{k=-\infty}^{+\infty}(-\frac{2}{3})^k u[k-1]((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]) \\ &amp;amp;=\sum_{k=1}^{+\infty}(-\frac{2}{3})^k ((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]) \\ &amp;amp;= \begin{cases} 0, \ n&amp;lt;0 \\ \sum_{k=1}^{+\infty}(-\frac{2}{3})^k (-1)^{n-k+1}u[n-k+1], \ 0 \leq n \leq 2 \\ \sum_{k=1}^{+\infty}(-\frac{2}{3})^k ((-1)^{n-k+1}u[n-k+1]-(-2)^{n-k-2}u[n-k-2]),\ n&amp;gt;2 \end{cases} \end{align} </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,33 +1,67 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>深入理解计算机系统学习日志 on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/</link><description>Recent content in 深入理解计算机系统学习日志 on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Mon, 09 Aug 2021 16:08:05 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml"/><item><title>csapp: 3.程序的机器级表示</title><link>https://eternityqjl.github.io/blog2_public/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</link><pubDate>Mon, 09 Aug 2021 16:08:05 +0800</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</guid><description>第三章 程序的机器级表示 历史观点 典型的编译器在将C程序结构变换成机器代码时所做的转换。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>深入理解计算机系统学习日志 on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.github.io/blog2_public/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/</link>
+    <description>Recent content in 深入理解计算机系统学习日志 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Mon, 09 Aug 2021 16:08:05 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>csapp: 3.程序的机器级表示</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</link>
+      <pubDate>Mon, 09 Aug 2021 16:08:05 +0800</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/</guid>
+      <description>第三章 程序的机器级表示 历史观点 典型的编译器在将C程序结构变换成机器代码时所做的转换。
 英特尔X86-64处理器的发展历史。
 从8086到Core i7
 程序编码 机器级代码 对于机器级编程来说，两种抽象非常重要：
-由指令集体系结构或**指令集架构(ISA, Instruction Set Architecture)**来定义机器级程序的格式和行为，它定义了处理器状态、指令格式，以及每条指令对状态的影响。 机器级程序使用的内存地址是虚拟地址。 x86-64机器码中，一些通常对C语言隐藏的处理器状态都是可见的：
-程序计数器(PC，在x86-64中用%rip表示)：给出将要执行的下一条指令在内存中的地址 整数寄存器文件：包含16个命名的位置，分别存储64位的值，这些寄存器可以存储地址(对应C语言指针)或整数数据。 条件码寄存器：保存最近执行的算数或逻辑指令的状态信息，用来实现控制或数据流中的条件变化。 x86-64的虚拟地址由64位的字表示，但目前这些地址的高16位必须设为零，相当于可以表示$2^{48}$或256TB内存范围内的一个字节。及目前的64位计算机只使用48位来表示地址范围。
+ 由指令集体系结构或**指令集架构(ISA, Instruction Set Architecture)**来定义机器级程序的格式和行为，它定义了处理器状态、指令格式，以及每条指令对状态的影响。 机器级程序使用的内存地址是虚拟地址。  x86-64机器码中，一些通常对C语言隐藏的处理器状态都是可见的：
+ 程序计数器(PC，在x86-64中用%rip表示)：给出将要执行的下一条指令在内存中的地址 整数寄存器文件：包含16个命名的位置，分别存储64位的值，这些寄存器可以存储地址(对应C语言指针)或整数数据。 条件码寄存器：保存最近执行的算数或逻辑指令的状态信息，用来实现控制或数据流中的条件变化。  x86-64的虚拟地址由64位的字表示，但目前这些地址的高16位必须设为零，相当于可以表示$2^{48}$或256TB内存范围内的一个字节。及目前的64位计算机只使用48位来表示地址范围。
 代码示例 机器对产生这些汇编语言指令的源代码几乎一无所知，全都是字节序列。
 生成可执行的代码需要对一组目标代码文件运行链接器，这组目标代码文件中必须含有一个main函数。
 链接器的任务之一就是为函数调用找到匹配的函数的可执行代码的位置。
 反汇编器
 关于格式的注解 ATT与Intel汇编代码格式的区别
-Intel代码省略了指示大小的后缀。例如看到的指令为push和mov而不是pushq和movq。 Intel代码胜率了寄存器名字前的%符号。 Intel代码 数据格式 Intel用字(word)表示16位数据类型，因此称32位数为双字，称64位数位四字。
+ Intel代码省略了指示大小的后缀。例如看到的指令为push和mov而不是pushq和movq。 Intel代码胜率了寄存器名字前的%符号。 Intel代码  数据格式 Intel用字(word)表示16位数据类型，因此称32位数为双字，称64位数位四字。
 下表给出了C语言基本数据类型对应的x86-64表示：
-C声明 Intel数据类型 汇编代码后缀 大小(字节) char 字节 b 1 short 字 w 2 int 双字 l 4 long 四字 q 8 char* 四字 q 8 float 单精度 s 4 double 双精度 l 8 大多数GCC生成的汇编代码指令都有一个字符的后缀，表明操作数的大小。例如数据传送指令有四个变种：movb(传送字节)、movw(传送字)、movl(传送双字)、movq(传送四字)。</description></item><item><title>csapp: 2.信息的表示和处理（部分完成）</title><link>https://eternityqjl.github.io/blog2_public/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link><pubDate>Mon, 12 Jul 2021 21:26:27 +0800</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid><description>第一部分内容：程序结构和执行
+   C声明 Intel数据类型 汇编代码后缀 大小(字节)     char 字节 b 1   short 字 w 2   int 双字 l 4   long 四字 q 8   char* 四字 q 8   float 单精度 s 4   double 双精度 l 8    大多数GCC生成的汇编代码指令都有一个字符的后缀，表明操作数的大小。例如数据传送指令有四个变种：movb(传送字节)、movw(传送字)、movl(传送双字)、movq(传送四字)。</description>
+    </item>
+    
+    <item>
+      <title>csapp: 2.信息的表示和处理（部分完成）</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>
+      <pubDate>Mon, 12 Jul 2021 21:26:27 +0800</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
+      <description>第一部分内容：程序结构和执行
 我们需要用方法表示基本数据类型，然后考虑机器级指令如何操作这样的数据，以及编译器如何将C程序翻译成这样的指令。接下来研究集中处理器的方法，使得我们能够更好地了解硬件资源如何被用来执行指令。
 信息存储 十六进制表示法及转换 二进制和十进制对描述位模式来说都不方便，因此采用16进制数(hex)来表示位模式。
 C语言中16进制数以0X或0x开头，字符‘A’~‘F’既可以是大写也可以是小写。
 二进制和十六进制之间的转换较为简单，不再赘述。
 十进制和十六进制数之间的转换要反复利用乘法和除法进行处理：
-从十进制到十六进制：反复用16除十进制数 从十六进制到十进制：用相应的16的幂乘以每个十六进制数。 字数据大小 字长指明指针数据的标称大小。虚拟地址是以这样一个字来编码的，所以字长决定的最重要的系统参数就是虚拟地址空间的最大大小。
+ 从十进制到十六进制：反复用16除十进制数 从十六进制到十进制：用相应的16的幂乘以每个十六进制数。  字数据大小 字长指明指针数据的标称大小。虚拟地址是以这样一个字来编码的，所以字长决定的最重要的系统参数就是虚拟地址空间的最大大小。
 对一个字长为w的机器而言，虚拟地址的范围是$0$ ~$2^w-1$，程序最多访问$2^w-1$个字节。
 近年，很多机器都从32位字长迁移到了64位字长。大多64位字长机器可以运行32位字长机器编译的程序。32位程序和64位程序的区别在于程序是如何编译成的，而不是运行的机器类型。
 寻址和字节顺序 小端法、大端法
 对于跨越多个字节的程序对象，我们必须明确：
-这个对象的地址是什么 如何在内存中排列这些字节 一般来说，多字节对象被存储为连续的字节序列，对象的地址为所使用字节中最小的地址。
-小端法：将最低有效字节放在最前面(最小地址)存储。（例如一个二进制数最右边的8位是最低有效字节）
-大端法：将最高有效字节放在最前面(最小地址)存储。
-大多Intel兼容机使用小端模式。
+ 这个对象的地址是什么 如何在内存中排列这些字节  一般来说，多字节对象被存储为连续的字节序列，对象的地址为所使用字节中最小的地址。
+  小端法：将最低有效字节放在最前面(最小地址)存储。（例如一个二进制数最右边的8位是最低有效字节）
+  大端法：将最高有效字节放在最前面(最小地址)存储。
+  大多Intel兼容机使用小端模式。
 以下代码使用强制类型转换来访问和打印不同程序对象的字节表示。
-#include &amp;lt;stdio.h&amp;gt; typedef unsigned char *byte_pointer; //将byte_pointer定义为一个指向类型为unsigned char对象的指针 //指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。 void show_bytes(byte_pointer start, size_t len) {//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法 size_t i; for (i = 0; i &amp;lt; len; i++) printf(&amp;#34;%.2x&amp;#34;, start[i]); printf(&amp;#34;\n&amp;#34;); } //使用sizeof确定对象使用的字节数 void show_int(int x) {//显示int对象的字节内容 show_bytes((byte_pointer) &amp;amp;x, sizeof(int)); } void show_float(float x) {//显示float对象的字节内容 show_bytes((byte_pointer) &amp;amp;x, sizeof(float)); } void show_pointer(void *x) {//显示void *对象的字节内容 show_bytes((byte_pointer) &amp;amp;x, sizeof(void *)); } 表示字符串 对文本进行编码。</description></item><item><title>csapp: 1.计算机系统漫游</title><link>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link><pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid><description>在本书中我们将会学习到一些使用技巧，比如如何避免由于计算机表示数字的方式引起的错误；通过一些技巧优化C代码，以充分利用现代处理器和存储器系统的设计；了解编译器如何实现过程调用，利用这些知识避免缓冲区溢出错误带来的安全漏洞；学习如何识别和避免链接时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；并发带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。
+#include &amp;lt;stdio.h&amp;gt; typedef unsigned char *byte_pointer;	//将byte_pointer定义为一个指向类型为unsigned char对象的指针 //指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。  void show_bytes(byte_pointer start, size_t len) {//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法 	size_t i; for (i = 0; i &amp;lt; len; i++) printf(&amp;#34;%.2x&amp;#34;, start[i]); printf(&amp;#34;\n&amp;#34;); } //使用sizeof确定对象使用的字节数 void show_int(int x) {//显示int对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(int)); } void show_float(float x) {//显示float对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(float)); } void show_pointer(void *x) {//显示void *对象的字节内容 	show_bytes((byte_pointer) &amp;amp;x, sizeof(void *)); } 表示字符串 对文本进行编码。</description>
+    </item>
+    
+    <item>
+      <title>csapp: 1.计算机系统漫游</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
+      <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
+      <description>在本书中我们将会学习到一些使用技巧，比如如何避免由于计算机表示数字的方式引起的错误；通过一些技巧优化C代码，以充分利用现代处理器和存储器系统的设计；了解编译器如何实现过程调用，利用这些知识避免缓冲区溢出错误带来的安全漏洞；学习如何识别和避免链接时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；并发带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。
 我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：
 #include &amp;lt;stdio.h&amp;gt;int main() { printf(&amp;#34;Hello, world\n&amp;#34;); return 0; } 信息就是位+上下文 8位为一个字节。
 现代计算机系统使用ASCII标准来表示文本字符。即用一个单字节大小的整数值表示一个符号。
@@ -35,8 +69,8 @@ C语言中16进制数以0X或0x开头，字符‘A’~‘F’既可以是大写�
 程序被翻译为不同的格式 hello.c中的每条C语句都会转换为一系列低级机器语言指令。这些指令按照可执行目标程序格式打包，以二进制磁盘文件的形式存放。
 编译系统：
 hello.c(源程序，文本) -&amp;gt; 预处理器(cpp) -&amp;gt; hello.i(修改了的源程序，文本) -&amp;gt; 编译器(ccl) -&amp;gt; hello.s(汇编程序，文本) -&amp;gt; 汇编器 -&amp;gt; hello.o(可重定位目标程序，二进制) -&amp;gt; 链接器 -&amp;gt; hello(可执行目标程序，二进制)
-预处理阶段：预处理器(cpp)根据以字符#开头的命令，修改原始C程序。例如#include &amp;lt;stdio.h&amp;gt;告诉预处理器读取系统头文件的内容，将其插入程序文本中，得到另一个C程序，以.i为扩展名。 编译阶段：编译器(ccl将hello.i翻译为hello.s，其包含了汇编语言程序。 汇编阶段：汇编器(as)将hello.s翻译为机器语言指令，将这些指令打包为可重定位目标程序，将结果保存在hello.o中，该文件为二进制文件。 链接阶段：hello程序调用了printf函数，它是C编译器提供的标准C库中的一个函数，printf函数存在于一个名为printf.o的单独预编译好的目标文件中，这个文件要以某种形式合并到我们的hello.o程序中，链接器(ld)负责这种合并，合并后就得到了可执行目标文件hello，其可以被加载到内存中，由系统执行。 编译器的工作方式 有一些重要原因使得我们必须知道编译器的工作方式：
-优化程序性能。我们需要了解一些机器代码及编译器将不同C语句转化为机器代码的方式，例如一个switch语句是否总比一系列if-else语句高效。 理解链接时出现的错误。 避免安全漏洞。缓冲区溢出错误是大多网络和服务器安全漏洞的主要原因。 处理器读取并解释储存在内存中的指令 要在Unix系统运行可执行目标文件hello，需要将文件名输入shell应用程序中：
+ 预处理阶段：预处理器(cpp)根据以字符#开头的命令，修改原始C程序。例如#include &amp;lt;stdio.h&amp;gt;告诉预处理器读取系统头文件的内容，将其插入程序文本中，得到另一个C程序，以.i为扩展名。 编译阶段：编译器(ccl将hello.i翻译为hello.s，其包含了汇编语言程序。 汇编阶段：汇编器(as)将hello.s翻译为机器语言指令，将这些指令打包为可重定位目标程序，将结果保存在hello.o中，该文件为二进制文件。 链接阶段：hello程序调用了printf函数，它是C编译器提供的标准C库中的一个函数，printf函数存在于一个名为printf.o的单独预编译好的目标文件中，这个文件要以某种形式合并到我们的hello.o程序中，链接器(ld)负责这种合并，合并后就得到了可执行目标文件hello，其可以被加载到内存中，由系统执行。  编译器的工作方式 有一些重要原因使得我们必须知道编译器的工作方式：
+ 优化程序性能。我们需要了解一些机器代码及编译器将不同C语句转化为机器代码的方式，例如一个switch语句是否总比一系列if-else语句高效。 理解链接时出现的错误。 避免安全漏洞。缓冲区溢出错误是大多网络和服务器安全漏洞的主要原因。  处理器读取并解释储存在内存中的指令 要在Unix系统运行可执行目标文件hello，需要将文件名输入shell应用程序中：
 linux&amp;gt; ./hello hello,world linux&amp;gt; 系统的硬件组成 总线 贯穿整个系统，负责信息字节在各个部件之间传递。
 通常被设计为传送定长的字节块，即字，字中的字节数（即字长）是基本的系统参数，如今大多数机器中字长为8字节(即64位)，4字节(32位)在逐渐被64位取代。
 I/O设备 每个I/O设备通过控制器或适配器与I/O总线相连，控制器为I/O设备本身或系统主板上的芯片组，适配器为插在主板插槽上的卡。
@@ -44,4 +78,8 @@ I/O设备 每个I/O设备通过控制器或适配器与I/O总线相连，控制�
 处理器 CPU是解释或执行存储在主存中指令的引擎，处理器的核心是一个大小为一个字的存储设备(寄存器)，称为程序计数器(PC)，PC指向主存中的某条机器语言指令（即包含该指令的地址）。
 处理器在一直不停地执行程序计数器指向的指令，再更新程序计数器，使其指向下一条指令。处理器看上去是按照一个简单的指令执行模型来操作的，这个模型是指令集架构决定的。该模型中指令按照严格的顺序执行。执行一条指令包含一系列步骤，处理器从程序计数器指向的内存中读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新PC，使其指向下一条指令，循环操作。
 这样的简单操作并不多，主要围绕**主存、寄存器文件和ALU(算术逻辑单元)**进行。寄存器文件是一个小型存储设备，由一些单个字长的寄存器组成，ALU计算新的数据和地址值。CPU可能进行以下操作：
-加载：从主存读取一个字到寄存器 存储：从寄存器赋值一个字到主存 操作：将两个寄存器的内容复制到ALU，ALU对两个字进行算术运算，将结果存放到一个寄存器中 跳转：从指令本身抽取一个字，将这个字复制到PC中 指令集架构：每条机器代码指令的效果</description></item></channel></rss>
+ 加载：从主存读取一个字到寄存器 存储：从寄存器赋值一个字到主存 操作：将两个寄存器的内容复制到ALU，ALU对两个字进行算术运算，将结果存放到一个寄存器中 跳转：从指令本身抽取一个字，将这个字复制到PC中  指令集架构：每条机器代码指令的效果</description>
+    </item>
+    
+  </channel>
+</rss>

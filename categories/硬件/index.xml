@@ -1,4 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>硬件 on Jialong's Blog</title><link>https://eternityqjl.github.io/blog2_public/categories/%E7%A1%AC%E4%BB%B6/</link><description>Recent content in 硬件 on Jialong's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>2019-2021 By Jialong</copyright><lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml"/><item><title>CAN总线</title><link>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</link><pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</guid><description>概要 Controller Area Network
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>硬件 on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.github.io/blog2_public/categories/%E7%A1%AC%E4%BB%B6/</link>
+    <description>Recent content in 硬件 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Mon, 12 Jul 2021 18:16:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.github.io/blog2_public/categories/%E7%A1%AC%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CAN总线</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</link>
+      <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/can%E6%80%BB%E7%BA%BF/</guid>
+      <description>概要 Controller Area Network
 CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于消息广播模式的串行通信总线。
 CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。
 CAN总线标准规定了物理层和数据链路层，应用层标准由具体应用决定。
@@ -21,22 +37,40 @@ CAN数据链路层 在SPI通信中，片选、时钟信号、数据输入及数�
 CAN总线不设定节点的地址，而是通过消息的标识符（Identifier）来区别消息。这种机制虽然会增加消息的复杂度（增加标识符），但是节点在此情况下可以无需了解其他节点的状况，而相互间独立工作。在总线上增加节点时仅需关注消息类型，而非系统上其他节点的状况。这种以消息标识符寻址的方式，让总线上增加节点变得更加灵活。
 总线访问 CSMA/CD+AMP
 多路载波侦听+基于消息优先级的冲突检测和非破坏性的仲裁机制（CSMA/CD+AMP）
-CSMA（Carrie Sense Multiple Access）指的是所有节点必须都等到总线处于空闲状态时才能往总线上发送消息；
-CD+AMP（Collision Detection + Arbitration on Message Priority）指的是如果多个节点往总线上发送消息时，具备最高优先级的消息获得总线。
-多路载波侦听：网络上所有节点以多点接入的方式连接在同一根总线上，且发送数据是广播式的。网络上各个节点在发送数据前都要检测总线上是否有数据传输：若网络上有数据，暂时不发送数据，等待网络空闲时再发；若网络上无数据，立即发送已经准备好的数据。
-冲突检测：节点在发送数据时，要不停的检测发送的数据，确定是否与其他节点数据发送冲突，如果有冲突，则保证优先级高的报文先发送。
-非破坏性仲裁机制：通过ID仲裁，ID数值越小，报文优先级越高。
-发送低优先级报文的节点退出仲裁后，在下次总线空闲时自动重发报文。
+  CSMA（Carrie Sense Multiple Access）指的是所有节点必须都等到总线处于空闲状态时才能往总线上发送消息；
+  CD+AMP（Collision Detection + Arbitration on Message Priority）指的是如果多个节点往总线上发送消息时，具备最高优先级的消息获得总线。
+  多路载波侦听：网络上所有节点以多点接入的方式连接在同一根总线上，且发送数据是广播式的。网络上各个节点在发送数据前都要检测总线上是否有数据传输：若网络上有数据，暂时不发送数据，等待网络空闲时再发；若网络上无数据，立即发送已经准备好的数据。
+  冲突检测：节点在发送数据时，要不停的检测发送的数据，确定是否与其他节点数据发送冲突，如果有冲突，则保证优先级高的报文先发送。
+  非破坏性仲裁机制：通过ID仲裁，ID数值越小，报文优先级越高。
+  发送低优先级报文的节点退出仲裁后，在下次总线空闲时自动重发报文。
 高优先级的报文不能中断低优先级报文的发送。
 报文接受过滤
 CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的报文。节点对接收到的报文进行过滤：比较消息ID与选择器（Accepter）中和接受过滤相关位是否相同。如果相同，接收；如果不相同，则过滤。
-报文种类及结构 在原始数据段的前面加上传输起始标签、片选（识别）标签、控制标签，在数据的尾段加上CRC校验标签、应答标签和传输结束标签。把这些内容按特定的格式打包好，就可以用一个通道表达各种信号了。</description></item><item><title>存储器详解</title><link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link><pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid><description>&lt;p>计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p>
-&lt;h2 id="易失性存储器随机存取存储器ram">易失性存储器（随机存取存储器，RAM）&lt;/h2>
-&lt;p>Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p>
-&lt;h3 id="动态随机存取存储器dram">动态随机存取存储器（DRAM）&lt;/h3>
-&lt;p>Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong>存储电荷的多寡&lt;/strong>来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong>定时刷新&lt;/strong>的特性，因此被称为“动态”存储器。&lt;/p></description></item><item><title>Altium Designer画图流程记录(简略)</title><link>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link><pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid><description>之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
+报文种类及结构 在原始数据段的前面加上传输起始标签、片选（识别）标签、控制标签，在数据的尾段加上CRC校验标签、应答标签和传输结束标签。把这些内容按特定的格式打包好，就可以用一个通道表达各种信号了。</description>
+    </item>
+    
+    <item>
+      <title>存储器详解</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
+      <description>&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
+&lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
+&lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
+&lt;h3 id=&#34;动态随机存取存储器dram&#34;&gt;动态随机存取存储器（DRAM）&lt;/h3&gt;
+&lt;p&gt;Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong&gt;存储电荷的多寡&lt;/strong&gt;来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong&gt;定时刷新&lt;/strong&gt;的特性，因此被称为“动态”存储器。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Altium Designer画图流程记录(简略)</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+      <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+      <description>之前看过博主半夜中暑的羊的原理图以及PCB绘制教程，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。
 共有以下几部分内容：
-原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板 PCB各层简介 参考自：PCB各层介绍
+ 原理图库 核心模块的原理图 为原理图添加封装 PCB布局 PCB布线 PCB敷铜 PCB生成BOM及投板  PCB各层简介 参考自：PCB各层介绍
 Mechanical layer(机械层) Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。
 Keep out layer(禁止布线层) 用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。
 Signal layer(信号层) 信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。
@@ -49,7 +83,16 @@ Drill layer(钻孔层) 钻孔层提供电路板制造过程中的钻孔信息(�
 原理图库器件画法 放置矩形
 添加Pin
 设置器件的Designator（例如P?）
-器件的PCB封装画法 确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。</description></item><item><title>串行通信协议详解：SPI、I2C、UART、JTAG</title><link>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</link><pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate><guid>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</guid><description>SPI、I2C、UART：串行通信协议
+器件的PCB封装画法 确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。</description>
+    </item>
+    
+    <item>
+      <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
+      <link>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</link>
+      <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
+      
+      <guid>https://eternityqjl.github.io/blog2_public/posts/%E4%B8%B2%E5%8F%A3/</guid>
+      <description>SPI、I2C、UART：串行通信协议
 COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
 TTL、RS-232指的是电平标准
 TTL电平：低电平为0，高电平为1
@@ -62,11 +105,15 @@ RS-232电平：正电平(+15V)为0，负电平(-15V)为1
 半双工是指可以及进行双向信号传输但同一时刻只能向一个方向传输。
 SPI协议 串行外设接口总线（Serial Peripheral Interface Bus，SPI）是一种用于芯片通信的同步串行通信接口规范，设备之间使用全双工模式通信，采用一对一或一对多的主从模式。一般用于短距离通信。
 SPI物理层接口 SPI总线共规定了4个逻辑信号接口：
-SCLK/SCK（Serial Clock）：时钟信号线，由主机产生，决定了SPI的通信速率。 MOSI（Master Output, Slave Input）：主机输出从机输入信号，数据由主机发出。 MISO（Master Input, Slave Output）：从机输出主机输入信号，数据由从机发出。 nSS（Slave Select）：片选信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。 （图片来自维基百科序列周边接口）
+ SCLK/SCK（Serial Clock）：时钟信号线，由主机产生，决定了SPI的通信速率。 MOSI（Master Output, Slave Input）：主机输出从机输入信号，数据由主机发出。 MISO（Master Input, Slave Output）：从机输出主机输入信号，数据由从机发出。 nSS（Slave Select）：片选信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。  （图片来自维基百科序列周边接口）
 SPI协议层 （图片来自SPI通讯协议介绍）
 如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。
 通信起始/结束信号 nSS信号由高电平变为低电平即为通信的起始，由低电平变为高电平即为通信的结束。
 有效数据的采集 上图中SCK为偶数边沿时数据得到有效采样，此时MISO和MOSI的数据有效，高电平表示1，低电平表示0，其他时刻的数据无效。
 数据传输时高位在先还是低位在先SPI协议并未规定，需要双方自行约定，一般采用高位在先（MSB）方式传输。
-两个概念：
-时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。 CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平 时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。 CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样 所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。</description></item></channel></rss>
+ 两个概念：
+ 时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。  CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平   时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。  CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样     所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。</description>
+    </item>
+    
+  </channel>
+</rss>
