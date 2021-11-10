@@ -904,7 +904,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h2 id="时间复杂度">时间复杂度</h2>
 <p><strong>大O符号表示法</strong> ，即 T(n) = O(f(n))，这是时间复杂度的公式，f(n)表示<strong>每行代码执行次数之和</strong>，O表示<strong>正比例关系</strong>。</p>
 <p>我们通过以下一个程序举例：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span>(i<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; i<span style="color:#333">&lt;=</span>n; <span style="color:#333">++</span>i)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span>(i<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; i<span style="color:#333">&lt;=</span>n; <span style="color:#333">++</span>i)
 {
    j <span style="color:#333">=</span> i;
    j<span style="color:#333">++</span>;
@@ -928,20 +928,20 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>下面来选取一些来举例：</p>
 <h3 id="常数阶o1">常数阶O(1)</h3>
 <p>无论代码执行了多少行，只要是没有循环等复杂结构，那这个代码的时间复杂度就都是O(1)，如：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
 <span style="color:#339;font-weight:bold">int</span> j <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">2</span>;
 <span style="color:#333">++</span>i;
 j<span style="color:#333">++</span>;
 <span style="color:#339;font-weight:bold">int</span> m <span style="color:#333">=</span> i <span style="color:#333">+</span> j;
 </code></pre></div><h3 id="线性阶on">线性阶O(n)</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span>(i<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; i<span style="color:#333">&lt;=</span>n; <span style="color:#333">++</span>i)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span>(i<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; i<span style="color:#333">&lt;=</span>n; <span style="color:#333">++</span>i)
 {
    j <span style="color:#333">=</span> i;
    j<span style="color:#333">++</span>;
 }
 </code></pre></div><p>for循环中的代码会执行n遍。</p>
 <h3 id="对数阶ologn">对数阶O(logN)</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
 <span style="color:#080;font-weight:bold">while</span>(i<span style="color:#333">&lt;</span>n)
 {
     i <span style="color:#333">=</span> i <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">2</span>;
@@ -949,7 +949,7 @@ j<span style="color:#333">++</span>;
 </code></pre></div><p>这里可以试着求解以下，假设循环x次后，i就大于n，循环就结束了，即$2^x=n$，那么$x=\log_2n$。即当循环$\log_2n$后代码就结束了，因此时间复杂度为O(logN).</p>
 <h3 id="线性对数阶onlongn">线性对数阶O(nlongN)</h3>
 <p>将时间复杂度为O(longN)的代码循环n遍就可以得到，将上面的代码稍作修改即可：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span>(m<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; m<span style="color:#333">&lt;</span>n; m<span style="color:#333">++</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span>(m<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; m<span style="color:#333">&lt;</span>n; m<span style="color:#333">++</span>)
 {
     i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
     <span style="color:#080;font-weight:bold">while</span>(i<span style="color:#333">&lt;</span>n)
@@ -959,7 +959,7 @@ j<span style="color:#333">++</span>;
 }
 </code></pre></div><h3 id="平方阶on2">平方阶O(n^2)</h3>
 <p>很容易理解，将两个n次循环嵌套即可得到：</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span>(x<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; i<span style="color:#333">&lt;=</span>n; x<span style="color:#333">++</span>)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span>(x<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; i<span style="color:#333">&lt;=</span>n; x<span style="color:#333">++</span>)
 {
    <span style="color:#080;font-weight:bold">for</span>(i<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>; i<span style="color:#333">&lt;=</span>n; i<span style="color:#333">++</span>)
     {
@@ -975,14 +975,14 @@ j<span style="color:#333">++</span>;
 <p>空间复杂度比较常用的有：O(1)、O(n)、O(n²)，我们下面来看看：</p>
 <h3 id="空间复杂度o1">空间复杂度O(1)</h3>
 <p>如果算法执行所需要的临时空间不随着某个变量n的大小而变化，即此算法空间复杂度为一个常量，可表示为 O(1)</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
 <span style="color:#339;font-weight:bold">int</span> j <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">2</span>;
 <span style="color:#333">++</span>i;
 j<span style="color:#333">++</span>;
 <span style="color:#339;font-weight:bold">int</span> m <span style="color:#333">=</span> i <span style="color:#333">+</span> j;
 </code></pre></div><p>代码中的 i、j、m 所分配的空间都不随着处理数据量变化，因此它的空间复杂度 S(n) = O(1)</p>
 <h3 id="空间复杂度on">空间复杂度O(n)</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#339;font-weight:bold">int</span><span style="color:#333">[]</span> m <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span><span style="color:#333">[</span>n<span style="color:#333">]</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#339;font-weight:bold">int</span><span style="color:#333">[]</span> m <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span><span style="color:#333">[</span>n<span style="color:#333">]</span>
 <span style="color:#06b;font-weight:bold">for</span><span style="color:#333">(</span>i<span style="color:#333">=</span>1<span style="color:#333">;</span> i<span style="color:#333">&lt;=</span>n<span style="color:#333">;</span> <span style="color:#333">++</span>i<span style="color:#333">)</span>
 <span style="color:#333">{</span>
    j <span style="color:#333">=</span> i<span style="color:#333">;</span>

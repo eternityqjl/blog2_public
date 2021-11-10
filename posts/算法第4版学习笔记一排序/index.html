@@ -2196,7 +2196,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="算法描述">算法描述</h4>
 <p>首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。</p>
 <h4 id="代码实现">代码实现</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Selection</span> <span style="color:#333">{</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Selection</span> <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
     <span style="color:#333">{</span>
         <span style="color:#888">//将a按照升序排列
@@ -2223,7 +2223,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="算法描述-1">算法描述</h4>
 <p>插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。</p>
 <h4 id="代码实现-1">代码实现</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Insertion</span> <span style="color:#333">{</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Insertion</span> <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
     <span style="color:#333">{</span>
         <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">;</span>
@@ -2249,7 +2249,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>交换不相邻的元素对数组的局部进行排序，并最终用插入排序将局部有序数组排序。</p>
 <p>希尔排序的思想是使数组中任意间隔为h的元素都是有序的，这样的数组被称为<strong>h有序数组</strong>，即h个相互独立的有序数组编织在一起组成的一个数组</p>
 <h4 id="代码实现-2">代码实现</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Shell</span> <span style="color:#333">{</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Shell</span> <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">srot</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
     <span style="color:#333">{</span>
         <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">;</span>
@@ -2272,7 +2272,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h2 id="归并排序">归并排序</h2>
 <p><strong>归并</strong>即将两个有序的数组归并成一个更大的有序数组。</p>
 <h3 id="原地归并">原地归并</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">merge</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> mid<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">merge</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> mid<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
     <span style="color:#333">{</span>
         <span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> lo<span style="color:#333">,</span> j <span style="color:#333">=</span> mid <span style="color:#333">+</span> 1<span style="color:#333">;</span>
         <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k <span style="color:#333">=</span> lo<span style="color:#333">;</span> k <span style="color:#333">&lt;=</span> hi<span style="color:#333">;</span> k<span style="color:#333">++)</span>
@@ -2289,7 +2289,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </code></pre></div><h3 id="自顶向下的归并排序">自顶向下的归并排序</h3>
 <h4 id="算法描述-3">算法描述</h4>
 <p>对子数组a[lo..hi]进行排序，先将其分为$\mathrm{a}[\mathrm{lo..mid}]$和$\mathrm{a[mid+1..hi]}$两部分，分别通过递归调用将其单独排序，最后将有序的子数组归并为最终的排序结果。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Merge</span> <span style="color:#333">{</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Merge</span> <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> Comparable<span style="color:#333">[]</span> aux<span style="color:#333">;</span>
     
     <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
@@ -2314,7 +2314,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="算法描述-4">算法描述</h4>
 <p>先归并那些微型数组，然后再成对地归并得到的子数组。首先进行两两归并（把每个元素当作一个大小为1的数组），然后是四四归并（将两个大小为2的数组归并为一个有4个元素的数组），然后是八八归并，以此类推。</p>
 <h4 id="代码实现-3">代码实现</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MergeBU</span> <span style="color:#333">{</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MergeBU</span> <span style="color:#333">{</span>
 	<span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> Comparable<span style="color:#333">[]</span> aux<span style="color:#333">;</span>
     <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span> <span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
     <span style="color:#333">{</span>
@@ -2334,7 +2334,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li><code>a[lo]</code>到<code>a[j-1]</code>中的所有元素都不大于<code>a[j]</code></li>
 <li><code>a[j+1]</code>到<code>a[hi]</code>中的所有元素都不小于<code>a[j]</code></li>
 </ul>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#888">//切分
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#888">//切分
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">partition</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
 <span style="color:#333">{</span>
     <span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> lo<span style="color:#333">,</span> j <span style="color:#333">=</span> hi <span style="color:#333">+</span> 1<span style="color:#333">;</span>
@@ -2360,7 +2360,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="算法描述-5">算法描述</h4>
 <p>通过递归地调用切分来进行排序。</p>
 <h4 id="代码实现-4">代码实现</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Quick</span> <span style="color:#333">{</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Quick</span> <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
     <span style="color:#333">{</span>
         StdRandom<span style="color:#333">.</span><span style="color:#00c">shuffle</span><span style="color:#333">(</span>a<span style="color:#333">);</span>	<span style="color:#888">//将输入乱序，消除堆输入的依赖
@@ -2380,7 +2380,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h3 id="三向切分快速排序">三向切分快速排序</h3>
 <p>在含有大量重复元素时使用该方法。将数组切分为三部分，分别对应小于、等于和大于切分元素的数组元素。</p>
 <h4 id="代码实现-5">代码实现</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Quick3way</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Quick3way</span>
 <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
     <span style="color:#333">{</span>
@@ -2414,7 +2414,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>我们可以通过计算数组的索引在树中上下移动：从$a[k]$向上一层就令$k=k/2$，向下一层则令$k=2k/2k+1$。</p>
 <h4 id="堆的算法">堆的算法</h4>
 <p><strong>由下至上的堆有序化（上浮swim）</strong></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">swim</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k<span style="color:#333">)</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">swim</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k<span style="color:#333">)</span>
 <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>k <span style="color:#333">&gt;</span> 1 <span style="color:#333">&amp;&amp;</span> less<span style="color:#333">(</span>k<span style="color:#333">/</span>2<span style="color:#333">,</span> k<span style="color:#333">))</span>
     <span style="color:#333">{</span>
@@ -2423,7 +2423,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
     <span style="color:#333">}</span>
 <span style="color:#333">}</span>
 </code></pre></div><p><strong>由上至下的堆有序化（下沉sink）</strong></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sink</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k<span style="color:#333">)</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sink</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k<span style="color:#333">)</span>
 <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>2<span style="color:#333">*</span>k <span style="color:#333">&lt;=</span> N<span style="color:#333">)</span>
     <span style="color:#333">{</span>
@@ -2435,7 +2435,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </span><span style="color:#888"></span>    <span style="color:#333">}</span>
 <span style="color:#333">}</span>
 </code></pre></div><h4 id="基于堆的优先队列的代码实现">基于堆的优先队列的代码实现</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MaxPQ</span><span style="color:#333">&lt;</span>Key <span style="color:#080;font-weight:bold">extends</span> Comparable<span style="color:#333">&lt;</span>key<span style="color:#333">&gt;&gt;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MaxPQ</span><span style="color:#333">&lt;</span>Key <span style="color:#080;font-weight:bold">extends</span> Comparable<span style="color:#333">&lt;</span>key<span style="color:#333">&gt;&gt;</span>
 <span style="color:#333">{</span>
     <span style="color:#080;font-weight:bold">private</span> Key<span style="color:#333">[]</span> pq<span style="color:#333">;</span>
     <span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> 0<span style="color:#333">;</span>
@@ -2477,7 +2477,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="下沉排序">下沉排序</h4>
 <p>将堆中的最大元素删去，然后将其放入堆缩小后数组中空出的位置。</p>
 <h4 id="堆排序代码实现">堆排序代码实现</h4>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
 <span style="color:#333">{</span>
     <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">;</span>
     <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k <span style="color:#333">=</span> N<span style="color:#333">/</span>2<span style="color:#333">;</span> k <span style="color:#333">&gt;=</span> 1<span style="color:#333">;</span> k<span style="color:#333">--)</span>	<span style="color:#888">//构造堆

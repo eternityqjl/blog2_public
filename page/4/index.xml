@@ -110,7 +110,7 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;http报文格式&#34;&gt;HTTP报文格式&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;请求报文&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;GET&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;/somedir/page.html&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.1&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;GET&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;/somedir/page.html&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.1&lt;/span&gt;
 Host&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; www.someschool.edu	#指明了对象所在主机
 Connection&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; close	#让服务器在发送完被请求对象后就关闭这条连接
 User-agent&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Mozilla/5.0		#浏览器类型
@@ -148,7 +148,7 @@ Accept-language&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; fr		#语言
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;响应报文&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.1&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;200&lt;/span&gt; &lt;span style=&#34;color:#f00;font-weight:bold&#34;&gt;OK&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-http&#34; data-lang=&#34;http&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;HTTP&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.1&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;200&lt;/span&gt; &lt;span style=&#34;color:#f00;font-weight:bold&#34;&gt;OK&lt;/span&gt;
 Connection&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; close	#发送完报文后关闭该TCP连接
 Date&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Tue, 18 Aug 2015 15:44:04 GMT		#指示服务器产生并发送该响应报文的日期和时间
 Server&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Apache/2.2.3 (CentOS)	#服务器类型及系统，对应于请求报文中的User-agent字段
@@ -381,7 +381,7 @@ Content-Type&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; text/html		#�
 &lt;p&gt;刚开始在每次更新内容的时候都需要一系列的git命令将原始内容仓库和构建的网页仓库同步到Github上，大概需要10条命令，如果你的更新频率很高的话，发布内容将会是有个痛苦的过程，但这里我们可以通过一个shell脚本只使用&lt;code&gt;$ sh deploy.sh&lt;/code&gt;一条命令完成同步内容和构建网页的所有过程。&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;p&gt;首先，在你的GitBook内容根目录下建一个&lt;code&gt;deploy.sh&lt;/code&gt;文件，使用文本编辑器打开，然后输入以下内容：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#!bin/sh
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#!bin/sh
 &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;git checkout master
 &lt;span style=&#34;color:#888&#34;&gt;# 切换到master分支，及内容所在的仓库&lt;/span&gt;
 git add .
@@ -402,7 +402,7 @@ git push -u origin gh-pages
 git checkout master
 &lt;span style=&#34;color:#888&#34;&gt;# 返回master主分支&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后打开命令行，为这个脚本授权：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ chmod +x deploy.sh
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ chmod +x deploy.sh
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;至此就完成了，以后在更新的时候只需要输入一条命令&lt;code&gt;$ sh deploy.sh&lt;/code&gt;就可以完成所有操作了。&lt;/p&gt;
 - https://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/ - 2019-2021 By Jialong</description>
         </item>
@@ -524,7 +524,7 @@ git checkout master
         
         <guid>https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/</guid>
         <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/ -&lt;p&gt;1.建立结构变量&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
@@ -540,13 +540,13 @@ git checkout master
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;所以struct book 相当于过去的int、double等类型。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
 } library;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该程序为上面声明的完整版。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; { &lt;span style=&#34;color:#888&#34;&gt;//无结构标记
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; { &lt;span style=&#34;color:#888&#34;&gt;//无结构标记
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
@@ -632,7 +632,7 @@ git checkout master
 &lt;li&gt;读取整行输入并&lt;strong&gt;用空字符替代换行符&lt;/strong&gt;，或者(在字符串未结束就遇到了空字符)读取一部分输入，并丢弃其余的部分。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;该函数的代码：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;s_gets&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; st, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;s_gets&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; st, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n)
 {
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ret_val;
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
@@ -811,7 +811,7 @@ git checkout master
 &lt;ul&gt;
 &lt;li&gt;示例：&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; first[MAX];
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; first[MAX];
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; last[MAX];
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; formal[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; MAX &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;];
 &lt;span style=&#34;color:#888&#34;&gt;//给以上前面两个数组赋值后就可以进行如下的操作
@@ -830,7 +830,7 @@ git checkout master
         
         <guid>https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
         <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/ -&lt;h2 id=&#34;一抽象数据类型的实现&#34;&gt;一、抽象数据类型的实现&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//数据类型的实现
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//数据类型的实现
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Counter&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#888&#34;&gt;//实例变量
@@ -1107,7 +1107,7 @@ git checkout master
 &lt;ul&gt;
 &lt;li&gt;example 1&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;};
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;};
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;)a;
 ptr&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;指针ptr的类型为int*，它指向的类型为int，被初始化为指向整型变量a。&lt;/p&gt;
@@ -1121,7 +1121,7 @@ ptr&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;li&gt;example 2&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;1.&lt;strong&gt;可以使用&lt;/strong&gt;一个循环&lt;/strong&gt;和&lt;strong&gt;一个指针&lt;/strong&gt;遍历一个数组。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; array[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;};
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; array[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;};
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; array;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
 {
@@ -1132,7 +1132,7 @@ ptr&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;ul&gt;
 &lt;li&gt;example 4&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;You_are_a_girl&amp;#34;&lt;/span&gt;;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;You_are_a_girl&amp;#34;&lt;/span&gt;;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;  &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;) a;
 ptr &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该例子中，指针ptr被加上了5个单元，编译器这样处理：&lt;/p&gt;
@@ -1157,7 +1157,7 @@ ptr &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;c
 &lt;ul&gt;
 &lt;li&gt;example&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a, b;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a, b;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; array[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;];
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pa;
 pa &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;a;&lt;span style=&#34;color:#888&#34;&gt;// &amp;amp;a是指针表达式
@@ -1176,7 +1176,7 @@ pa&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;h2 id=&#34;五指针和数组的关系&#34;&gt;五、指针和数组的关系&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;0.&lt;/strong&gt; 数组的数组名可以看作是一个指针&lt;/p&gt;
 &lt;p&gt;example&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; array[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;}, value;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; array[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;}, value;
 value &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; array[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]; &lt;span style=&#34;color:#888&#34;&gt;//or: value = *array;
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;value &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; array[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;]; &lt;span style=&#34;color:#888&#34;&gt;//or: value = *(array + 3);
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
@@ -1193,14 +1193,14 @@ value &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; array[&lt;span style
 &lt;ul&gt;
 &lt;li&gt;example&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fun1&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;);
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fun1&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;);
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pfun1)(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;);
 pfun1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fun1;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pfun1)(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;abcdefg&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;);&lt;span style=&#34;color:#888&#34;&gt;//通过函数指针调用函数
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以把指针作为函数的形参。在函数表达式中，可以用指针表达式来作为实参。&lt;/p&gt;
 &lt;h2 id=&#34;八指针类型转换&#34;&gt;八、指针类型转换&lt;/h2&gt;
 &lt;p&gt;初始化一个指针或者给一个指针赋值时，赋值号左边时一个指针，右边是一个指针表达式。绝大多数情况下，指针的类型和指针表达式的类型是一样的，指针所指向的类型和表达式所指向的类型是一样的。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; f &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;12.3&lt;/span&gt;;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; f &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;12.3&lt;/span&gt;;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;fptr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;f;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;p;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果我们想让指针p指向实数f，我们应该怎样操作？&lt;/p&gt;

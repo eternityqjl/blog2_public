@@ -28,7 +28,7 @@
 &lt;h2 id=&#34;时间复杂度&#34;&gt;时间复杂度&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;大O符号表示法&lt;/strong&gt; ，即 T(n) = O(f(n))，这是时间复杂度的公式，f(n)表示&lt;strong&gt;每行代码执行次数之和&lt;/strong&gt;，O表示&lt;strong&gt;正比例关系&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;我们通过以下一个程序举例：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i)
 {
    j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i;
    j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
@@ -52,20 +52,20 @@
 &lt;p&gt;下面来选取一些来举例：&lt;/p&gt;
 &lt;h3 id=&#34;常数阶o1&#34;&gt;常数阶O(1)&lt;/h3&gt;
 &lt;p&gt;无论代码执行了多少行，只要是没有循环等复杂结构，那这个代码的时间复杂度就都是O(1)，如：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
 &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i;
 j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; j;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;线性阶on&#34;&gt;线性阶O(n)&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i)
 {
    j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i;
    j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;for循环中的代码会执行n遍。&lt;/p&gt;
 &lt;h3 id=&#34;对数阶ologn&#34;&gt;对数阶O(logN)&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;n)
 {
     i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
@@ -73,7 +73,7 @@ j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里可以试着求解以下，假设循环x次后，i就大于n，循环就结束了，即$2^x=n$，那么$x=\log_2n$。即当循环$\log_2n$后代码就结束了，因此时间复杂度为O(logN).&lt;/p&gt;
 &lt;h3 id=&#34;线性对数阶onlongn&#34;&gt;线性对数阶O(nlongN)&lt;/h3&gt;
 &lt;p&gt;将时间复杂度为O(longN)的代码循环n遍就可以得到，将上面的代码稍作修改即可：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; m&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;n; m&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; m&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;n; m&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
 {
     i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;n)
@@ -83,7 +83,7 @@ j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;平方阶on2&#34;&gt;平方阶O(n^2)&lt;/h3&gt;
 &lt;p&gt;很容易理解，将两个n次循环嵌套即可得到：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(x&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; x&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(x&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; x&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
 {
    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
     {
@@ -99,14 +99,14 @@ j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;p&gt;空间复杂度比较常用的有：O(1)、O(n)、O(n²)，我们下面来看看：&lt;/p&gt;
 &lt;h3 id=&#34;空间复杂度o1&#34;&gt;空间复杂度O(1)&lt;/h3&gt;
 &lt;p&gt;如果算法执行所需要的临时空间不随着某个变量n的大小而变化，即此算法空间复杂度为一个常量，可表示为 O(1)&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
 &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i;
 j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; j;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;代码中的 i、j、m 所分配的空间都不随着处理数据量变化，因此它的空间复杂度 S(n) = O(1)&lt;/p&gt;
 &lt;h3 id=&#34;空间复杂度on&#34;&gt;空间复杂度O(n)&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;n&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;n&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;
 &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;for&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
    j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
@@ -238,13 +238,13 @@ j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
 &lt;p&gt;MOVZ：把目的中剩余的字节填充为0&lt;/p&gt;
 &lt;p&gt;MOVS：通过符号扩展来填充，把源操作的最高位进行复制&lt;/p&gt;
 &lt;h3 id=&#34;数据传送示例代码&#34;&gt;数据传送示例代码&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;exchange&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;xp, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; y)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;exchange&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;xp, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; y)
 {
 	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;xp;	&lt;span style=&#34;color:#888&#34;&gt;//解引用操作符，把指针xp指向地址的数值放入寄存器x
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;xp &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y;	&lt;span style=&#34;color:#888&#34;&gt;//指针符号，把数y放入指针xp指向的地址
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; x;
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;;xp in %rdi, y in %rsi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;;xp in %rdi, y in %rsi
 exchange:
 	movq (%rdi), %rax
 	movq %rsi, (%rdi)
@@ -456,14 +456,14 @@ exchange:
 &lt;p&gt;cqto指令：隐含读出%rax的符号位，并将其复制到%rdx的所有位。&lt;/p&gt;
 &lt;p&gt;汇编器能通过计算操作数数目，分辨想用哪条指令。&lt;/p&gt;
 &lt;p&gt;乘法代码示例：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;inttypes.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;inttypes.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; __int128 uint128_t;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;store_uprod&lt;/span&gt;(uint128_t &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;dest, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;uint64_t&lt;/span&gt; x, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;uint64_t&lt;/span&gt; y) {
     &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;dest &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; (uint128_t) y;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将x和y显式地声明为64位数字。使用GCC提供的128位整数支持。这段代码指明得到的乘积应该存放在指针dest指向的16字节处。&lt;/p&gt;
 &lt;p&gt;生成的汇编代码如下：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;;dest in %rdi, x in %rsi, y in %rdx
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;;dest in %rdi, x in %rsi, y in %rdx
 store_uprod:
 	movq %rsi, %rax
 	mulq %rdx
@@ -474,14 +474,14 @@ store_uprod:
 &lt;p&gt;除法操作由&lt;strong&gt;单操作数除法指令&lt;/strong&gt;来实现的。&lt;/p&gt;
 &lt;p&gt;有符号除法指令idivl将寄存器%rdx(高64位)和%rax(低64位)中的128位数作为被除数，而除数作为指令的操作数给出。指令将商存储在寄存器%rax，将余数存储在寄存器%rdx。&lt;/p&gt;
 &lt;p&gt;除法代码示例：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;remdiv&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; x, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; y, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;qp, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;rp) {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;remdiv&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; x, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; y, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;qp, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;rp) {
 	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; q &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;y;
 	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;y;
 	&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;qp &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; q;
 	&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;rp &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; r;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;生成的汇编代码如下：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;;x in %rdi, y in %rsi, qp in %rdx, rp in %rcx
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;;x in %rdi, y in %rsi, qp in %rdx, rp in %rcx
 remdiv:
 	movq %rdx, %r8
 	movq %rdx, %rax
@@ -730,12 +730,12 @@ remdiv:
 &lt;h3 id=&#34;用条件控制来实现条件分支&#34;&gt;用条件控制来实现条件分支&lt;/h3&gt;
 &lt;p&gt;将条件表达式从C语言翻译为机器码，最常用的方式是结合&lt;strong&gt;有条件和无条件跳转&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;C语言的if-else语句通用模板：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr)
 	then&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;汇编使用以下形式实现，这里用C语法来描述控制流：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;t &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;t &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;t)
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;goto&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;false&lt;/span&gt;;
 then&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
@@ -748,7 +748,7 @@ then&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
 &lt;p&gt;实现条件操作的传统方法是使用&lt;strong&gt;控制&lt;/strong&gt;的条件转移，当条件满足时，程序沿着一条执行路径执行，而当条件不满足时，就走另一条路径。这种机制简单，但在现代处理器中非常低效。&lt;/p&gt;
 &lt;p&gt;替代策略是使用&lt;strong&gt;数据&lt;/strong&gt;的条件转移。这种方法计算一个条件操作的两种结果，然后根据条件是否满足从中选取一个。&lt;/p&gt;
 &lt;p&gt;举例：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;absdiff&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; x, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; y)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;absdiff&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; x, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; y)
 {
 	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; result;
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (x &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; y)
@@ -758,7 +758,7 @@ then&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; result;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;产生的汇编代码为：&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;;x in %rdi, y in &amp;amp;rsi
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;;x in %rdi, y in &amp;amp;rsi
 absdiff:
 	movq %rsi, %rax
 	subq %rdi, %rax		;rval = y - x
@@ -852,7 +852,7 @@ absdiff:
 &lt;h3 id=&#34;循环&#34;&gt;循环&lt;/h3&gt;
 &lt;p&gt;汇编中没有相应的循环指令，可以使用条件测试和跳转组合起来实现。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;do-while&lt;/strong&gt;循环&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;loop&lt;/span&gt;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;loop&lt;/span&gt;:
 	body&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
 	t &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (t)
@@ -862,7 +862,7 @@ absdiff:
 &lt;ol&gt;
 &lt;li&gt;跳转到中间&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;goto&lt;/span&gt; test;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;goto&lt;/span&gt; test;
 &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;loop&lt;/span&gt;:
 	body&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
 &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;test&lt;/span&gt;:
@@ -873,7 +873,7 @@ absdiff:
 &lt;li&gt;guarded-do&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;首先用条件分支，如果初始条件不成立就跳过循环，把代码变换为do-while循环。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;t &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;t &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;t)
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;goto&lt;/span&gt; done;
 &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;loop&lt;/span&gt;:
@@ -883,9 +883,9 @@ absdiff:
 		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;goto&lt;/span&gt; loop;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;for&lt;/strong&gt;循环&lt;/p&gt;
 &lt;p&gt;for循环的通用形式为：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (init&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr; test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr; update&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr)	body&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (init&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr; test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr; update&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr)	body&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将其改写为使用while循环的形式：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;init&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr) {	body&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement	update&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;}
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;init&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (test&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr) {	body&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statement	update&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;expr;}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;switch语句&#34;&gt;switch语句&lt;/h3&gt;
 &lt;p&gt;switch语句可以根据一个&lt;strong&gt;整数索引值&lt;/strong&gt;进行多重分支。而且可以通过使用&lt;strong&gt;跳转表&lt;/strong&gt;这种数据结构使得实现更加高效。&lt;/p&gt;
 &lt;p&gt;跳转表是一个数组，表项i是一个代码段的地址，这个代码段实现当开关索引值等于i时程序应该采取的动作。&lt;/p&gt;
@@ -907,25 +907,25 @@ absdiff:
 &lt;p&gt;C语言可以产生指向数组中元素的指针，并对这些指针进行运算。在机器代码中，这些指针会被翻译为地址计算。&lt;/p&gt;
 &lt;h3 id=&#34;基本原则&#34;&gt;基本原则&lt;/h3&gt;
 &lt;p&gt;对于数据类型T和整型常数N，数组声明如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;T A[N];
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;T A[N];
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;起始位置为$x_A$，在内存中分配一个$L \cdot N$字节的连续区域，L为数据类型T的大小，其次，引入标识符A，可以用A作为指向数组开头的指针，该指针的值为$x_A$。&lt;/p&gt;
 &lt;p&gt;例如：&lt;code&gt;char A[12];&lt;/code&gt;，数组A由12个单字节(char)元素组成。&lt;/p&gt;
 &lt;h3 id=&#34;指针运算&#34;&gt;指针运算&lt;/h3&gt;
 &lt;h3 id=&#34;嵌套的数组&#34;&gt;嵌套的数组&lt;/h3&gt;
 &lt;p&gt;二维数组可以以嵌套声明，例如：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;][&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;];
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;][&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;];
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;等价于：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; row3_t[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;];
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; row3_t[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;];
 row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;];
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;二维数组一般按照行优先顺序进行排列。&lt;/p&gt;
 &lt;h3 id=&#34;定长数组&#34;&gt;定长数组&lt;/h3&gt;
 &lt;p&gt;一般使用&lt;code&gt;#define&lt;/code&gt;声明将常数与一个名字联系起来，然后一直使用这个名字代替常数的数值。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#define N 16
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#define N 16
 &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; fix_matrix[N][N];
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;变长数组&#34;&gt;变长数组&lt;/h3&gt;
 &lt;p&gt;ISO C99引入一种功能，允许数组的维度是表达式，在数组被分配时才计算出来。&lt;/p&gt;
 &lt;p&gt;例如：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;var_ele&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; n, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; A[n][n], &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; i, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; j){
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;var_ele&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; n, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; A[n][n], &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; i, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; j){
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; A[i][j];
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;参数&lt;code&gt;n&lt;/code&gt;必须在参数&lt;code&gt;A[n][n]&lt;/code&gt;之前.&lt;/p&gt;
@@ -1451,11 +1451,11 @@ row3_t A[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;]
 &lt;p&gt;对于root用户，文件权限不起作用。&lt;/p&gt;
 &lt;h3 id=&#34;chgrp改变文件属组&#34;&gt;chgrp：改变文件属组&lt;/h3&gt;
 &lt;p&gt;用法：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;chgrp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-R&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 属组名 文件名
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;chgrp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-R&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 属组名 文件名
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;-R&lt;/code&gt;：recursion，递归，改变目录下所有文件的属性&lt;/p&gt;
 &lt;h3 id=&#34;chown更改文件属主也可以同时更改文件属组&#34;&gt;chown：更改文件属主，也可以同时更改文件属组&lt;/h3&gt;
 &lt;p&gt;用法：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;chown &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-R&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 属主名 文件名
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;chown &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-R&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 属主名 文件名
 chown &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-r&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 属主名:属组名 文件名
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;chmod更改文件的9个属性&#34;&gt;chmod：更改文件的9个属性&lt;/h3&gt;
 &lt;p&gt;9个权限分别为&lt;strong&gt;owner/group/others(拥有者/组/其他)&lt;/strong&gt; 三种身份各有自己的 &lt;strong&gt;read/write/execute&lt;/strong&gt; 权限。&lt;/p&gt;
@@ -1496,7 +1496,7 @@ chown &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-r&lt;span style=&#34
 &lt;li&gt;-p：连同上一级的空目录一起删除&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;cp（copy file）：复制文件或目录&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;cp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-adfilprsu&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 来源档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;source&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; 目标档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;destination&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;cp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-adfilprsu&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 来源档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;source&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; 目标档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;destination&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
 cp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; source1 source2 ... directory
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;-a：相当于-pdr&lt;/li&gt;
@@ -1515,7 +1515,7 @@ cp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#
 &lt;li&gt;-i：互动模式，删除前会询问&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;mv（move file）：移动文件与目录，或修改文件、目录名称&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-fiu&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 来源档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;source&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; 目标档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;destination&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-fiu&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 来源档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;source&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; 目标档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;destination&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
 mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; source1 source2 ... directory
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
 &lt;li&gt;-f：force&lt;/li&gt;
@@ -1546,11 +1546,11 @@ mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;head：取出文件前面几行&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;head &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-n number&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 文件
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;head &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-n number&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 文件
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;tail：取出文件后面几行&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;tail &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-n number&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 文件
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;tail &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-n number&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 文件
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;磁盘管理&#34;&gt;磁盘管理&lt;/h2&gt;
@@ -1616,7 +1616,7 @@ mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#
 &lt;p&gt;这里使用&lt;code&gt;xeLatTex&lt;/code&gt;进行编译。&lt;/p&gt;
 &lt;h2 id=&#34;基本文档和中英文&#34;&gt;基本文档和中英文&lt;/h2&gt;
 &lt;h3 id=&#34;基本文档&#34;&gt;基本文档&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;% 这里是导言区
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 Hello, world!
@@ -1626,7 +1626,7 @@ Hello, world!
 &lt;p&gt;目前XeTeX 原生支持 Unicode，并且可以方便地调用系统字体。可以说解决了困扰中国 TeX 使用者多年的大问题。至此，我们只需要使用几个简单的宏包，就能完成中文支持了。&lt;/p&gt;
 &lt;p&gt;我们使用&lt;code&gt;\usepackage{}&lt;/code&gt;来调用宏包。&lt;/p&gt;
 &lt;p&gt;另外，我们使用&lt;code&gt;CTex&lt;/code&gt;宏集来处理中文的版式和标点。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 你好，world!
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
@@ -1635,7 +1635,7 @@ Hello, world!
 &lt;ol&gt;
 &lt;li&gt;标题、作者、日期&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\title&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;你好，world!&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Eternity&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\today&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
@@ -1649,7 +1649,7 @@ Hello, world!
 &lt;ol start=&#34;2&#34;&gt;
 &lt;li&gt;章节和段落&lt;/li&gt;
 &lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\title&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;你好，world!&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Liam&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\today&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
@@ -1686,13 +1686,13 @@ is in the center of 天安门广场。
 &lt;h3 id=&#34;页边距&#34;&gt;页边距&lt;/h3&gt;
 &lt;p&gt;使用&lt;code&gt;geometry&lt;/code&gt; 宏包。&lt;a href=&#34;https://texdoc.org/serve/geometry.pdf/0&#34;&gt;geometry文档&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;比如我希望，将纸张的长度设置为 20cm、宽度设置为 15cm、左边距 1cm、右边距 2cm、上边距 3cm、下边距 4cm，可以在导言区加上这样几行：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;geometry&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;geometry&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\geometry&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;papersize=&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;20cm,15cm&lt;span style=&#34;color:#007020&#34;&gt;}}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\geometry&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;left=1cm,right=2cm,top=3cm,bottom=4cm&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;页眉页脚&#34;&gt;页眉页脚&lt;/h3&gt;
 &lt;p&gt;设置页眉页脚，推荐使用 &lt;code&gt;fancyhdr&lt;/code&gt; 宏包。&lt;a href=&#34;https://texdoc.org/serve/fancyhdr.pdf/0&#34;&gt;fancyhdr文档&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;比如我希望，在页眉左边写上我的名字，中间写上今天的日期，右边写上我的电话；页脚的正中写上页码；页眉和正文之间有一道宽为 0.4pt 的横线分割，可以在导言区加上如下几行：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;fancyhdr&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;fancyhdr&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\pagestyle&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;fancy&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lhead&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\chead&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
@@ -1705,15 +1705,15 @@ is in the center of 天安门广场。
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\footrulewidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;0pt&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;行间距&#34;&gt;行间距&lt;/h3&gt;
 &lt;p&gt;我们可以通过 &lt;code&gt;setspace&lt;/code&gt; 宏包提供的命令来调整行间距。比如在导言区添加如下内容，可以将行距设置为字号的 1.5 倍：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;setspace&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;setspace&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\onehalfspacing&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;段间距&#34;&gt;段间距&lt;/h3&gt;
 &lt;p&gt;我们可以通过修改长度 &lt;code&gt;\parskip&lt;/code&gt; 的值来调整段间距。例如在导言区添加以下内容&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\addtolength&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\parskip&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;.4em&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\addtolength&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\parskip&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;.4em&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;代码&#34;&gt;代码&lt;/h2&gt;
 &lt;p&gt;希望代码中的特殊字符不被LaTex处理，并且希望有代码高亮。&lt;/p&gt;
 &lt;p&gt;使用&lt;code&gt;listings&lt;/code&gt;宏包来在tex中添加代码段。基本设置参数如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lstset&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;
 language=Matlab,
 escapeinside=``, 
@@ -1730,20 +1730,20 @@ commentstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily\c
 showstringspaces=false&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;图片&#34;&gt;图片&lt;/h2&gt;
 &lt;p&gt;在 LaTeX 中插入图片，有很多种方式。最好用的应当属利用 &lt;code&gt;graphicx&lt;/code&gt; 宏包提供的 &lt;code&gt;\includegraphics&lt;/code&gt; 命令。比如你在你的 TeX 源文件同目录下，有名为 &lt;code&gt;a.jpg&lt;/code&gt; 的图片，你可以用这样的方式将它插入到输出文档中：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;graphicx&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\includegraphics&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;a.jpg&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;图片可能很大，超过了输出文件的纸张大小，或者干脆就是你自己觉得输出的效果不爽。这时候你可以用 &lt;code&gt;\includegraphics&lt;/code&gt; 控制序列的可选参数来控制。比如&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\includegraphics&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[width = .8\textwidth]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;a.jpg&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\includegraphics&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[width = .8\textwidth]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;a.jpg&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样图片的宽度会被缩放至&lt;strong&gt;页面宽度的百分之八十&lt;/strong&gt;，图片的总高度会按比例缩放。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;code&gt;\includegraphics&lt;/code&gt;还有很多其他控制序列可以选择使用，可以查看宏包选择。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;表格&#34;&gt;表格&lt;/h2&gt;
 &lt;p&gt;&lt;code&gt;tabular&lt;/code&gt; 环境提供了最简单的表格功能。它用 &lt;code&gt;\hline&lt;/code&gt; 命令表示横线，在列格式中用 &lt;code&gt;|&lt;/code&gt; 表示竖线；用 &lt;code&gt;&amp;amp;&lt;/code&gt; 来分列，用 &lt;code&gt;\\&lt;/code&gt; 来换行；每列可以采用居左、居中、居右等横向对齐方式，分别用 &lt;code&gt;l&lt;/code&gt;、&lt;code&gt;c&lt;/code&gt;、&lt;code&gt;r&lt;/code&gt; 来表示。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;tabular&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;|l|c|r|&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;tabular&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;|l|c|r|&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
 操作系统&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; 发行版&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; 编辑器&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
@@ -1759,11 +1759,11 @@ Mac OS &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; MacTeX &
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
 &lt;h2 id=&#34;数学公式&#34;&gt;数学公式&lt;/h2&gt;
 &lt;p&gt;在导言区添加&lt;code&gt;amsmath&lt;/code&gt;宏包来使用数学功能：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;amsmath&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;amsmath&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;数学模式&#34;&gt;数学模式&lt;/h3&gt;
 &lt;p&gt;与Markdown中相同，LaTex共有&lt;strong&gt;行内公式&lt;/strong&gt;和&lt;strong&gt;行间公式&lt;/strong&gt;两种模式。&lt;/p&gt;
 &lt;p&gt;在行文中，使用 &lt;code&gt;$ ... $&lt;/code&gt; 可以插入行内公式，使用 &lt;code&gt;\[ ... \]&lt;/code&gt; 可以插入行间公式，如果需要对行间公式进行编号，则可以使用 &lt;code&gt;equation&lt;/code&gt; 环境：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;equation&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;equation&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 ...
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;equation&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
@@ -1780,14 +1780,14 @@ Mac OS &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; MacTeX &
 &lt;li&gt;长公式&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;不对齐：无须对齐的长公式可以使用 &lt;code&gt;multline&lt;/code&gt; 环境。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;multline&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;multline&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 x = a+b+c+&lt;span style=&#34;color:#007020&#34;&gt;{}&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
 d+e+f+g
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;multline&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
 &lt;p&gt;如果不需要编号，可以使用 &lt;code&gt;multline*&lt;/code&gt; 环境代替。&lt;/p&gt;
 &lt;p&gt;对齐：需要对齐的公式，可以使用 &lt;code&gt;aligned&lt;/code&gt; &lt;em&gt;次环境&lt;/em&gt;来实现，它必须包含在数学环境之内。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\[&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{aligned}
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\[&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{aligned}
 &lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x &lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{}&amp;amp; a&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{} &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;d&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;g
 &lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{aligned}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\]&lt;/span&gt;
@@ -1796,7 +1796,7 @@ d+e+f+g
 &lt;li&gt;公式组&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;无需对齐的公式组可以使用 &lt;code&gt;gather&lt;/code&gt; 环境，需要对齐的公式组可以使用 &lt;code&gt;align&lt;/code&gt; 环境。他们都带有编号，如果不需要编号可以使用带&lt;code&gt;*&lt;/code&gt;的版本。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;gather&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;gather&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 a = b+c+d &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
 x = y+z
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;gather&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
@@ -1809,7 +1809,7 @@ x &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;= y+z
 &lt;li&gt;分段函数&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;分段函数可以用&lt;code&gt;cases&lt;/code&gt;次环境来实现，它必须包含在数学环境之内。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\[&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; y&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{cases}
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\[&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; y&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{cases}
 &lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x,&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\quad&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; x&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\leq&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x,&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\quad&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; x&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{cases} &lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\]&lt;/span&gt;
@@ -1858,7 +1858,7 @@ x &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;= y+z
 &lt;/ul&gt;
 &lt;p&gt;大多Intel兼容机使用小端模式。&lt;/p&gt;
 &lt;p&gt;以下代码使用强制类型转换来访问和打印不同程序对象的字节表示。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;byte_pointer;	&lt;span style=&#34;color:#888&#34;&gt;//将byte_pointer定义为一个指向类型为unsigned char对象的指针
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
@@ -1949,9 +1949,9 @@ $$
 最高有效位$x_{w-1}$称为符号位，它的权重为$-2^{w-1}$，是无符号表示中权重的负数。&lt;/p&gt;
 &lt;p&gt;从维向量到整数映射的举例：
 $$
-B2T_4([0001])=1 \&lt;br&gt;
-B2T_4([0101])=5 \&lt;br&gt;
-B2T_4([1011])=5 \&lt;br&gt;
+B2T_4([0001])=1 \
+B2T_4([0101])=5 \
+B2T_4([1011])=5 \
 B2T_4([1111])=-1
 $$
 w位补码所能表示的值的范围是：$[-2^{w-1},2^{w-1}-1]$，例如长度为4的补码可以表示的范围是$[-8,7]$。与无符号数一样，在可表示的取值范围内，每个数字都唯一的w位补码。&lt;/p&gt;

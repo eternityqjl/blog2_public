@@ -1640,7 +1640,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </ul>
 <p>大多Intel兼容机使用小端模式。</p>
 <p>以下代码使用强制类型转换来访问和打印不同程序对象的字节表示。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;stdio.h&gt;</span><span style="color:#579">
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;stdio.h&gt;</span><span style="color:#579">
 </span><span style="color:#579"></span>
 <span style="color:#080;font-weight:bold">typedef</span> <span style="color:#339;font-weight:bold">unsigned</span> <span style="color:#339;font-weight:bold">char</span> <span style="color:#333">*</span>byte_pointer;	<span style="color:#888">//将byte_pointer定义为一个指向类型为unsigned char对象的指针
 </span><span style="color:#888">//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
@@ -1731,9 +1731,9 @@ $$
 最高有效位$x_{w-1}$称为符号位，它的权重为$-2^{w-1}$，是无符号表示中权重的负数。</p>
 <p>从维向量到整数映射的举例：
 $$
-B2T_4([0001])=1 \<br>
-B2T_4([0101])=5 \<br>
-B2T_4([1011])=5 \<br>
+B2T_4([0001])=1 \
+B2T_4([0101])=5 \
+B2T_4([1011])=5 \
 B2T_4([1111])=-1
 $$
 w位补码所能表示的值的范围是：$[-2^{w-1},2^{w-1}-1]$，例如长度为4的补码可以表示的范围是$[-8,7]$。与无符号数一样，在可表示的取值范围内，每个数字都唯一的w位补码。</p>

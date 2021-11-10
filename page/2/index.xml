@@ -20,7 +20,7 @@
         <guid>https://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</guid>
         <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ -&lt;p&gt;在本书中我们将会学习到一些使用技巧，比如如何避免由于&lt;strong&gt;计算机表示数字的方式&lt;/strong&gt;引起的错误；通过一些技巧&lt;strong&gt;优化C代码&lt;/strong&gt;，以充分利用现代处理器和存储器系统的设计；了解&lt;strong&gt;编译器&lt;/strong&gt;如何实现过程调用，利用这些知识避免&lt;strong&gt;缓冲区溢出&lt;/strong&gt;错误带来的安全漏洞；学习如何识别和避免&lt;strong&gt;链接&lt;/strong&gt;时的错误；如何编写Unix Shell、动态存储分配包、Web服务器；&lt;strong&gt;并发&lt;/strong&gt;带来的希望和陷阱，对于现在的单芯片集成多个处理器核心非常重要。&lt;/p&gt;
 &lt;p&gt;我们通过围绕Hello程序执行时的整个生命周期来对系统进行学习：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;()
 {
 	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Hello, world&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
@@ -49,7 +49,7 @@
 &lt;/ul&gt;
 &lt;h2 id=&#34;处理器读取并解释储存在内存中的指令&#34;&gt;处理器读取并解释储存在内存中的指令&lt;/h2&gt;
 &lt;p&gt;要在Unix系统运行可执行目标文件hello，需要将文件名输入shell应用程序中：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ./hello
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ./hello
 hello,world
 linux&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;系统的硬件组成&#34;&gt;系统的硬件组成&lt;/h3&gt;
@@ -159,7 +159,7 @@ d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right|
 $$&lt;/p&gt;
 &lt;p&gt;将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。&lt;/p&gt;
 &lt;p&gt;通常使用准确率来评估分类器&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;Xtr, Ytr, Xte, Yte &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; load_CIFAR10(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;data/cifar10/&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# a magic function we provide&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;Xtr, Ytr, Xte, Yte &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; load_CIFAR10(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;data/cifar10/&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# a magic function we provide&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# flatten out all images to be one-dimensional&lt;/span&gt;
 Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xtr_rows becomes 50000 x 3072&lt;/span&gt;
 Xte_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xte_rows becomes 10000 x 3072&lt;/span&gt;
@@ -171,7 +171,7 @@ Yte_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span sty
 &lt;span style=&#34;color:#888&#34;&gt;# of examples that are correctly predicted (i.e. label matches)&lt;/span&gt;
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; ( np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yte_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yte) )
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;NearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
@@ -204,7 +204,7 @@ Yte_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span sty
 d_{2}\left(I_{1}, I_{2}\right)=\sqrt{\sum_{p}\left(I_{1}^{p}-I_{2}^{p}\right)^{2}}
 $$&lt;/p&gt;
 &lt;p&gt;only replace a single line of code above:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;))
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;k---nearest-neighbor-classifier&#34;&gt;k - Nearest Neighbor Classifier&lt;/h2&gt;
 &lt;p&gt;找到距离最近的k个图片，k个图片中数量最多的一个标签即为测试图片所分的类别。&lt;/p&gt;
 &lt;h2 id=&#34;validation-sets-for-hyperparameter-tuning&#34;&gt;Validation sets for Hyperparameter tuning&lt;/h2&gt;
@@ -212,7 +212,7 @@ $$&lt;/p&gt;
 &lt;p&gt;Hyperparameter 。通常不能使用test set来调整Hyperparameter。Evaluate on the test set only a single time, at the very end.&lt;/p&gt;
 &lt;p&gt;将训练集划分为一个小一些的训练集和一个验证集(validation set)。例如使用CIFAR-10数据集时将训练集分为49,000个训练集和1,000个验证集。&lt;/p&gt;
 &lt;p&gt;验证集本质上是一个假的测试集，是用来调整Hyperparameter的。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# assume we have Xtr_rows, Ytr, Xte_rows, Yte as before&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# assume we have Xtr_rows, Ytr, Xte_rows, Yte as before&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# recall Xtr_rows is 50,000 x 3072 matrix&lt;/span&gt;
 Xval_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;, :] &lt;span style=&#34;color:#888&#34;&gt;# take first 1000 for validation&lt;/span&gt;
 Yval &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;]
@@ -271,7 +271,7 @@ validation_accuracies &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
 &lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
 &lt;p&gt;&lt;code&gt;def&lt;/code&gt; keyword&lt;/p&gt;
 &lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Greeter&lt;/span&gt;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Greeter&lt;/span&gt;:
 
     &lt;span style=&#34;color:#888&#34;&gt;# Constructor&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self, name):
@@ -294,7 +294,7 @@ g&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;greet(loud&lt;span style=&
 &lt;h3 id=&#34;array-indexing&#34;&gt;Array indexing&lt;/h3&gt;
 &lt;h4 id=&#34;slicing-1&#34;&gt;Slicing&lt;/h4&gt;
 &lt;p&gt;example&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 
 &lt;span style=&#34;color:#888&#34;&gt;# Create the following rank 2 array with shape (3, 4)&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# [[ 1  2  3  4]&lt;/span&gt;
@@ -309,7 +309,7 @@ a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;co
 b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;]
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(b)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Two ways of accessing the data in the middle row of the array. Mixing integer indexing with slices yields an array of lower rank, while using only slices yields an array of the same rank as the original array:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;row_r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, :]    &lt;span style=&#34;color:#888&#34;&gt;# Rank 1 view of the second row of a  &lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;row_r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, :]    &lt;span style=&#34;color:#888&#34;&gt;# Rank 1 view of the second row of a  &lt;/span&gt;
 row_r2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, :]  &lt;span style=&#34;color:#888&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
 row_r3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], :]  &lt;span style=&#34;color:#888&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r1, row_r1&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
@@ -317,7 +317,7 @@ row_r3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[[&lt;span style=&
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r3, row_r3&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;integer-array-indexing&#34;&gt;Integer array indexing&lt;/h4&gt;
 &lt;p&gt;Integer array indexing allows you to construct arbitrary arrays using the data from another array.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
 
 &lt;span style=&#34;color:#888&#34;&gt;# An example of integer array indexing.&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# The returned array will have shape (3,) and &lt;/span&gt;
@@ -327,17 +327,17 @@ row_r3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[[&lt;span style=&
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result:&lt;/p&gt;
 &lt;p&gt;[1 4 5]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# When using integer array indexing, you can reuse the same&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# When using integer array indexing, you can reuse the same&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# element from the source array:&lt;/span&gt;
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]])
 
 &lt;span style=&#34;color:#888&#34;&gt;# Equivalent to the previous integer array indexing example&lt;/span&gt;
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]]))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;One useful trick with integer array indexing is selecting or mutating one element from each row of a matrix:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create a new array from which we will select elements&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create a new array from which we will select elements&lt;/span&gt;
 a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create an array of indices&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create an array of indices&lt;/span&gt;
 b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
 
 &lt;span style=&#34;color:#888&#34;&gt;# Select one element from each row of a using the indices in b&lt;/span&gt;
@@ -345,7 +345,7 @@ b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;co
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[1 6 7 11]&lt;/p&gt;
 &lt;h4 id=&#34;boolean-array-indexing&#34;&gt;Boolean array indexing&lt;/h4&gt;
 &lt;p&gt;Frequently this type of indexing is used to select the elements of an array that &lt;strong&gt;satisfy some condition&lt;/strong&gt;.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 
 a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
 
@@ -358,7 +358,7 @@ bool_idx &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (a &lt;span style
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[False False]
 [ True  True]
 [ True  True]]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We use boolean array indexing to construct a rank 1 array&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We use boolean array indexing to construct a rank 1 array&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# consisting of the elements of a corresponding to the True values&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# of bool_idx&lt;/span&gt;
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[bool_idx])
@@ -369,14 +369,14 @@ bool_idx &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (a &lt;span style
 [3 4 5 6]&lt;/p&gt;
 &lt;h3 id=&#34;datatypes&#34;&gt;Datatypes&lt;/h3&gt;
 &lt;p&gt;Every numpy array is a grid of elements of the same type. Numpy provides a large set of numeric datatypes that you can use to construct arrays. Numpy tries to guess a datatype when you create an array, but functions that construct arrays usually also include an optional argument to explicitly specify the datatype. Here is an example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
 y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.0&lt;/span&gt;, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2.0&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
 z &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;int64)  &lt;span style=&#34;color:#888&#34;&gt;# Force a particular datatype&lt;/span&gt;
 
 &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype, y&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype, z&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;array-math&#34;&gt;Array math&lt;/h3&gt;
 &lt;p&gt;Note that unlike MATLAB, &lt;code&gt;*&lt;/code&gt; is elementwise multiplication, not matrix multiplication. We instead use the dot function to compute inner products of vectors, to multiply a vector by a matrix, and to multiply matrices. dot is available both as a function in the numpy module and as an instance method of array objects:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
 y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
 
 &lt;span style=&#34;color:#888&#34;&gt;# Elementwise product; both produce the array&lt;/span&gt;
@@ -386,7 +386,7 @@ y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;co
 [21. 32.]]
 [[ 5. 12.]
 [21. 32.]]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]])
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]])
 y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;]])
 
 v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;])
@@ -399,14 +399,14 @@ w &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;co
 219&lt;/p&gt;
 &lt;p&gt;You can also use the &lt;code&gt;@&lt;/code&gt; operator which is equivalent to numpy&amp;rsquo;s &lt;code&gt;dot&lt;/code&gt; operator.&lt;/p&gt;
 &lt;p&gt;to transpose a matrix, simply use the T attribute of an array object:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;transpose&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;transpose&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;transpose
 [[1 3]
 [2 4]]&lt;/p&gt;
 &lt;h3 id=&#34;broadcasting&#34;&gt;Broadcasting&lt;/h3&gt;
 &lt;p&gt;Broadcasting is a powerful mechanism that allows numpy to work with arrays of different shapes when performing arithmetic operations.&lt;/p&gt;
 &lt;p&gt;For example, suppose that we want to add a constant vector to each row of a matrix. We could do it like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
 x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
 v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
@@ -422,7 +422,7 @@ y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;co
 [ 8  8 10]
 [11 11 13]]&lt;/p&gt;
 &lt;p&gt;Numpy broadcasting allows us to perform this computation without actually creating multiple copies of v. Consider this version, using broadcasting:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 
 &lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
@@ -434,7 +434,7 @@ y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x &lt;span style=&#34;co
 &lt;h2 id=&#34;matplotlib&#34;&gt;Matplotlib&lt;/h2&gt;
 &lt;p&gt;Matplotlib is a plotting library. In this section give a brief introduction to the &lt;code&gt;matplotlib.pyplot&lt;/code&gt; module, which provides a plotting system similar to that of MATLAB.&lt;/p&gt;
 &lt;h3 id=&#34;plotting&#34;&gt;Plotting&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;plt&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;plt&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;matplotlib inline
 &lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on a sine curve&lt;/span&gt;
 x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.1&lt;/span&gt;)
@@ -443,7 +443,7 @@ y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;co
 &lt;span style=&#34;color:#888&#34;&gt;# Plot the points using matplotlib&lt;/span&gt;
 plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;subplots&#34;&gt;Subplots&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on sine and cosine curves&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on sine and cosine curves&lt;/span&gt;
 x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.1&lt;/span&gt;)
 y_sin &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sin(x)
 y_cos &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;cos(x)
@@ -1282,9 +1282,9 @@ $$
 其中，$x_i=(x_i^{(1)}, x_i^{(2)},&amp;hellip;,x_i^{(n)})$，同理$x_j$。&lt;/p&gt;
 &lt;h3 id=&#34;特征归一化的必要性&#34;&gt;特征归一化的必要性&lt;/h3&gt;
 &lt;p&gt;如果不进行归一化，让每个特征都同等重要，就会偏向于第一维度的特征，导致多个特征并不是等价重要的，会导致距离计算错误，最终导致预测结果错误。&lt;/p&gt;
-&lt;p&gt;进行KNN分类使用的样本特征是${ (x_{i1}, x_{i2},&amp;hellip;,x_{in}) }_{i=1}^m$，取每个轴上的最大值减去最小值得：
+&lt;p&gt;进行KNN分类使用的样本特征是${ (x_{i1}, x_{i2},&amp;hellip;,x_{in}) }&lt;em&gt;{i=1}^m$，取每个轴上的最大值减去最小值得：
 $$
-M_j=\max_{i=1,&amp;hellip;,m}x_{ij}-\min_{i=1,&amp;hellip;,m}x_{ij}
+M_j=\max&lt;/em&gt;{i=1,&amp;hellip;,m}x_{ij}-\min_{i=1,&amp;hellip;,m}x_{ij}
 $$
 并在计算距离时将每一个坐标轴除以相应的$M_j$进行归一化，即：
 $$
@@ -1298,7 +1298,7 @@ $$&lt;/p&gt;
 &lt;li&gt;计算每个聚类中所有点的坐标平均值，并将这个平均值作为新的聚类中心，反复执行上一步和该步，直到聚类中心不再进行大范围移动或聚类迭代次数达到要求位置。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;代码实现&#34;&gt;代码实现&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pandas&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pd&lt;/span&gt;
 
 data &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;read_csv(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&amp;#39;&lt;/span&gt;, header&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;None&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# 下载iris数据集&lt;/span&gt;
@@ -1382,7 +1382,7 @@ y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#
     accuracy &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(y_pred &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; y_test)
     &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;测试集预测准确率：&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; accuracy)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;测试集预测准确率：1.000000
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;测试集预测准确率：1.000000
 &lt;/code&gt;&lt;/pre&gt;- https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
         </item>
     
@@ -1427,7 +1427,7 @@ y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#
 &lt;p&gt;由于不能拷贝IO对象，因此我们也不能将形参或范围类型设置为流类型，进行IO操作额函数通常以&lt;strong&gt;引用&lt;/strong&gt;的方式传递和范围流。读写一个IO对象会改变其状态，因此传递和范围的引用不能是const的。&lt;/p&gt;
 &lt;h4 id=&#34;条件状态&#34;&gt;条件状态&lt;/h4&gt;
 &lt;p&gt;IO类定义了一些函数和标志，帮助我们访问和操纵流的条件状态：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;//strm为一种IO类型，即上一节给出的各个类型
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;//strm为一种IO类型，即上一节给出的各个类型
 strm::iostate	//提供了表达条件状态的完整功能
 strm::badbit	//用来指出流已崩溃
 strm::failbit	//用来指出一个IO操作失败
@@ -1445,13 +1445,13 @@ strm::goodbit	//用来指出流位处于错误状态。
 &lt;li&gt;一个输出流可能被关联到另一个输出流。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;刷新输出缓冲区：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空格，然后刷新缓冲区
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空格，然后刷新缓冲区
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; flush;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi，然后刷新缓冲区，不附加额外字符
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; ends;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空字符，然后刷新缓冲区
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;文件输入输出&#34;&gt;文件输入输出&lt;/h3&gt;
 &lt;p&gt;头文件定义了如上所示的三个类型来住处文件IO。&lt;/p&gt;
 &lt;p&gt;除了继承自iostream类型的行为外，fstream中的定义还增加了新的成员来管理与流关联的文件：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;fstream fstrm;	&lt;span style=&#34;color:#888&#34;&gt;//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;fstream fstrm;	&lt;span style=&#34;color:#888&#34;&gt;//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s);	&lt;span style=&#34;color:#888&#34;&gt;//创建一个fstream并打开名为s的文件
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s,mode);	&lt;span style=&#34;color:#888&#34;&gt;//与上一个相同，但按指定mode打开
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.open(s)	&lt;span style=&#34;color:#888&#34;&gt;//打开名为s的文件并将文件与fstrm绑定
@@ -1551,9 +1551,9 @@ strm::goodbit	//用来指出流位处于错误状态。
 &lt;/ul&gt;
 &lt;p&gt;容器通过&lt;strong&gt;尖括号&lt;/strong&gt;指定类型。&lt;/p&gt;
 &lt;h4 id=&#34;容器操作&#34;&gt;容器操作&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;iterator	
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;iterator	
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;迭代器&#34;&gt;迭代器&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;*iter	//返回迭代器iter所指元素的引用
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;*iter	//返回迭代器iter所指元素的引用
 iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员
 ++iter	//令iter指示容器中的下一个元素
 --iter	//令iter指示容器中的上一个元素
@@ -1562,7 +1562,7 @@ iter1 == iter2
 &lt;p&gt;对构成范围的迭代器的要求：&lt;strong&gt;end不在begin之前&lt;/strong&gt;。可以通过对begin进行若干次递增，使得begin==end。&lt;/p&gt;
 &lt;h4 id=&#34;容器类型成员&#34;&gt;容器类型成员&lt;/h4&gt;
 &lt;p&gt;每个容器都定义了多个类型。如之前使用过的&lt;code&gt;interator&lt;/code&gt;、&lt;code&gt;size_type&lt;/code&gt;等。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;interator
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;interator
 const_iterator
 size_type
 difference_type
@@ -1571,27 +1571,27 @@ reference
 const_reference
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;begin和end成员&#34;&gt;begin和end成员&lt;/h4&gt;
 &lt;p&gt;begin和end操作生成指向容器中第一个元素和尾元素之后位置的迭代器。还有不同类型的反向迭代器、const迭代器。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;list&amp;lt;int&amp;gt; a = {1, 2, 3};
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;list&amp;lt;int&amp;gt; a = {1, 2, 3};
 auto it1 = a.begin();	//list&amp;lt;int&amp;gt;::iterator
 auto it2 = a.rbegin();	//反向迭代器 list&amp;lt;int&amp;gt;::reverse_iterator
 auto it3 = a.cbegin();	//const迭代器 list&amp;lt;int&amp;gt;::const_iterator
 &lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;容器定义和初始化&#34;&gt;容器定义和初始化&lt;/h4&gt;
 &lt;p&gt;每个容器类型都定义了一个默认构造函数。除了array外，其他容器的默认构造函数都会创建一个指定类型的空容器。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;C c;	//默认构造函数
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;C c;	//默认构造函数
 C c1(c2)	//c1初始化为c2的拷贝。两者必须是相同类型的容器
 C c{a,b,c...}	//c初始化为初始化列表中元素的拷贝
 C c(b,e)	//c初始化为迭代器b和e指定范围中元素的拷贝
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;与顺序容器大小相关的构造函数：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//10个int元素，每个都初始化为1
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//10个int元素，每个都初始化为1
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;list&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; scev(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//10个元素，每个都是空string
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;标准库array具有固定大小&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//类型为保存42个int的数组
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//类型为保存42个int的数组
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//类型为保存10个string的数组
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用array时必须同时指定&lt;strong&gt;元素类型&lt;/strong&gt;和&lt;strong&gt;大小&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;::&lt;/span&gt;size_type j;	&lt;span style=&#34;color:#888&#34;&gt;//错误，未指定大小
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;array&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;::&lt;/span&gt;size_type j;	&lt;span style=&#34;color:#888&#34;&gt;//错误，未指定大小
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;赋值和swap&#34;&gt;赋值和swap&lt;/h4&gt;
 &lt;p&gt;赋值将左边容器中的所有元素替换为右边容器中元素的拷贝。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;c1 = c2;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;c1 = c2;
 c = {a, b, c}
 swap(c1, c2)
 c1.swap(c2)	//与上一个等价
@@ -1611,7 +1611,7 @@ seq.assign(il)	//将seq中的元素替换为初始化列表il中的元素
 &lt;p&gt;除了上一节介绍的所有容器都支持的操作外，本章剩余部分将介绍顺序容器的所有操作。&lt;/p&gt;
 &lt;h4 id=&#34;向顺序容器添加元素&#34;&gt;向顺序容器添加元素&lt;/h4&gt;
 &lt;p&gt;向顺序容器中除了array外添加元素的操作：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.push_back(t)			&lt;span style=&#34;color:#888&#34;&gt;//在c的尾部创建值为t或由args创建的元素
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.push_back(t)			&lt;span style=&#34;color:#888&#34;&gt;//在c的尾部创建值为t或由args创建的元素
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.emplace_back(args)
 c.push_front(t)			&lt;span style=&#34;color:#888&#34;&gt;//在c的头部创建值为t或由args创建的元素
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.emplace_front(args)
@@ -1624,7 +1624,7 @@ c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的�
 &lt;p&gt;使用这些操作时要注意策略，根据不同容器的不同数据结构的特性来使用。&lt;/p&gt;
 &lt;p&gt;emplace操作构造而不是拷贝元素，将参数传递给元素类型的构造函数，直接构造元素。&lt;/p&gt;
 &lt;h4 id=&#34;访问元素&#34;&gt;访问元素&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.back()		&lt;span style=&#34;color:#888&#34;&gt;//返回c中尾元素的引用，若c为空，则函数行为未定义。
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c.back()		&lt;span style=&#34;color:#888&#34;&gt;//返回c中尾元素的引用，若c为空，则函数行为未定义。
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.front()		&lt;span style=&#34;color:#888&#34;&gt;//范围c中首元素的引用
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c[n]			&lt;span style=&#34;color:#888&#34;&gt;//返回c中下标为n的元素的引用，n是一个无符号整数
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.at(n)			&lt;span style=&#34;color:#888&#34;&gt;//返回下标为n的元素的引用，若下标越界，则返回out_of_range异常
@@ -1786,18 +1786,18 @@ c.insert(p,t)			&lt;span style=&#34;color:#888&#34;&gt;//在迭代器p指向的�
 &lt;h3 id=&#34;复合类型&#34;&gt;复合类型&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;引用&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;左值引用，为对象起了另一个名字；将声明符写成&lt;code&gt;&amp;amp;d&lt;/code&gt;的形式来定义引用类型。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int ival = 1024;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int ival = 1024;
 int &amp;amp;refVal = ival;
 int &amp;amp;refVal2;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;引用即为对象的别名，引用本身不是一个对象，只是为一个已存在的对象起的另一个名字。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;指针&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;指针本身就是一个对象，允许对指针赋值和拷贝，无需再定义时赋值，定义指针时将声明符写作&lt;code&gt;*d&lt;/code&gt;形式，d为变量名。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; dp, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;dp2; &lt;span style=&#34;color:#888&#34;&gt;//dp2为指向double类型对象的指针
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; dp, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;dp2; &lt;span style=&#34;color:#888&#34;&gt;//dp2为指向double类型对象的指针
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;取地址符&lt;code&gt;&amp;amp;&lt;/code&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ival &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ival &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;p &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;ival;&lt;span style=&#34;color:#888&#34;&gt;//p存放ival的地址
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;解引用符&lt;code&gt;*&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int ival = 42;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int ival = 42;
 int *p = &amp;amp;ival;//p存放ival的地址
 cout &amp;lt;&amp;lt; *p;	//输出指针p所指的对象，42
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;空指针：不指向任何对象，使用字面值&lt;code&gt;nullptr&lt;/code&gt;来初始化指针。&lt;/p&gt;
@@ -1805,7 +1805,7 @@ cout &amp;lt;&amp;lt; *p;	//输出指针p所指的对象，42
 &lt;p&gt;&lt;code&gt;void*&lt;/code&gt;指针：一种特殊类型的指针，可用于存放任意对象的地址。&lt;/p&gt;
 &lt;p&gt;复合类型的声明：&lt;/p&gt;
 &lt;p&gt;变量的定义包含一个基本数据类型和一组声明符；同一条定义中，基本数据类型只有一个，但声明符的形式可以不同，即一条语句可以定义不同类型的变量：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;int i = 1024, *p = &amp;amp;i, &amp;amp;r = i;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int i = 1024, *p = &amp;amp;i, &amp;amp;r = i;
 //i是一个int数，p是一个int类型指针，r是一个int类型引用
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;一般把修饰符(&lt;code&gt;&amp;amp;,*&lt;/code&gt;)和变量标识符写在一起。&lt;/p&gt;
 &lt;p&gt;指向指针的指针：&lt;/p&gt;
@@ -1813,22 +1813,22 @@ cout &amp;lt;&amp;lt; *p;	//输出指针p所指的对象，42
 &lt;h3 id=&#34;const限定符&#34;&gt;const限定符&lt;/h3&gt;
 &lt;p&gt;让一种变量的值不变。congst对象必须要初始化，任何试图为const对象赋值的行为都将发生错误。&lt;/p&gt;
 &lt;p&gt;const对象仅在文件内有效；要想让const对象像其他非常量对象一样在不同文件中工作，即在一个文件中定义const，在其他多个文件中声明并使用它，需要添加&lt;code&gt;extern&lt;/code&gt;关键字&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//file.cpp定义并初始化了一个常量
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//file.cpp定义并初始化了一个常量
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; bufSize &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fcn();
 &lt;span style=&#34;color:#888&#34;&gt;//file.h头文件，与file.cpp定义的bufSize是同一个
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; bufSize;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;const的引用&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;可以把引用绑定到const对象上，但对常量的引用不能用于修改它所绑定的对象。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ci &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1024&lt;/span&gt;;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ci &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1024&lt;/span&gt;;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; ci;	&lt;span style=&#34;color:#888&#34;&gt;//正确：引用及其对应的对象都是常量
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;; &lt;span style=&#34;color:#888&#34;&gt;//错误
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;r2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; ci; &lt;span style=&#34;color:#888&#34;&gt;//错误，试图让一个非常量引用指向一个常量对象
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;引用的类型必须与所引用的对象类型一致，但有例外：&lt;/p&gt;
 &lt;p&gt;初始化常量引用时允许用任意表达式作为初始值，只要该表达式的结果能被转换为引用的类型即可。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//正确
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//正确
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;指针和const&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;可以令指针指向常量或非常量，&lt;strong&gt;指向常量的指针&lt;/strong&gt;不能用于改变其所指对象的值，要想存放常量对象，只能使用&lt;strong&gt;指向常量的指针&lt;/strong&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;const double pi = 3.14;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;const double pi = 3.14;
 double *ptr = &amp;amp;pi; //错误：ptr是普通指针
 const double *cptr = &amp;amp;pi;	//正确
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;顶层const&lt;/strong&gt;&lt;/p&gt;
@@ -1840,38 +1840,38 @@ const double *cptr = &amp;amp;pi;	//正确
 &lt;p&gt;底层const：表示指针所指的对象是一个常量。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;int i = 0;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;int i = 0;
 int *const p1 = &amp;amp;i;		//顶层const，表示指针p1本身是一个常量，不能改变p1的值
 const int *p2 = &amp;amp;ci;	//底层const，表示指针p2指的对象ci的地址是一个常量，p2的值可以改变，对象的值不能改变
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;constexpr和常量表达式&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;常量表达式指值不会改变并且在编译过程就能得到计算结果的表达式。字面值属于常量表达式，用常量表达式初始化的const对象也是常量表达式。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;constexpr变量&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;C++11允许将变量声明为constexpr类型以便由编译器验证变量的值是否是一个常量表达式。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mf &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//20是常量表达式
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mf &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//20是常量表达式
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;constexpr&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; size();	&lt;span style=&#34;color:#888&#34;&gt;//只有当size是一个constexpr函数是才是一条正确的声明语句
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;字面值类型：声明constexpr时用到的类型。算术类型、引用和指针都属于字面值类型；IO库、string类型不属于字面值类型，不能被定义为constexpr。&lt;/p&gt;
 &lt;h3 id=&#34;处理类型&#34;&gt;处理类型&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;类型别名&lt;/strong&gt;：&lt;/p&gt;
 &lt;p&gt;使用关键词&lt;code&gt;typedef&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; wages; &lt;span style=&#34;color:#888&#34;&gt;//wages是double的同义词
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; wages; &lt;span style=&#34;color:#888&#34;&gt;//wages是double的同义词
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另一种别名声明：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;using SI = Sales_item;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;using SI = Sales_item;
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;字符串向量和数组&#34;&gt;字符串、向量和数组&lt;/h2&gt;
 &lt;h3 id=&#34;命名空间和using声明&#34;&gt;命名空间和using声明&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;name;	&lt;span style=&#34;color:#888&#34;&gt;//命名空间::名字
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;name;	&lt;span style=&#34;color:#888&#34;&gt;//命名空间::名字
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;每个名字都需要独立的using声明；头文件不应该包含using声明&lt;/p&gt;
 &lt;h3 id=&#34;标准库类型string&#34;&gt;标准库类型string&lt;/h3&gt;
 &lt;p&gt;string表示可变长的字符序列&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;string&amp;gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#include &amp;lt;string&amp;gt;
 using std::string;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;定义和初始化：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;string s1;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;string s1;
 string s2(s1);
 string s3(&amp;quot;value&amp;quot;);
 string s3 = &amp;quot;value&amp;quot;;
 string s4(n, &#39;c&#39;); //s4初始化为由连续的n个字符组成的串
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;string对象上的操作：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;os &amp;lt;&amp;lt; s //将s写道输出流os中，返回os
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;os &amp;lt;&amp;lt; s //将s写道输出流os中，返回os
 is &amp;gt;&amp;gt; s //从is中读取字符串赋给s，字符串以空白分隔，返回is
 getline(is, s)	//从is中读取一行赋给s，返回is
 s.empty()
@@ -1880,62 +1880,62 @@ s[n]	//返回s中第n个字符的引用
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;string::size_type&lt;/code&gt;类型&lt;/p&gt;
 &lt;p&gt;size函数返回的为上述值，是一个无符号类型的值，能存放下任何string类型对象大小。&lt;/p&gt;
 &lt;p&gt;处理string对象中的字符：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;//cctype头文件中的函数
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;//cctype头文件中的函数
 isalnum(c)	//c是数字或字母时为真
 isalpha(c)
 ...
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用&lt;code&gt;for&lt;/code&gt;处理每个字符：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;string str(&amp;quot;some string&amp;quot;);
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;string str(&amp;quot;some string&amp;quot;);
 for (auto c : str)
 	cout &amp;lt;&amp;lt; c &amp;lt;&amp;lt; endl;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用下标运算符&lt;code&gt;[]&lt;/code&gt;处理一部分字符.&lt;/p&gt;
 &lt;h3 id=&#34;标准库类型vector&#34;&gt;标准库类型vector&lt;/h3&gt;
 &lt;p&gt;表示对象的集合，其中所有对象的类型都相同，集合中每个对象都有一个与之对应的索引，用于访问对象，因为vector容纳着其他对象，所以也被称之为&lt;strong&gt;容器&lt;/strong&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;vector&amp;gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;#include &amp;lt;vector&amp;gt;
 using std::vector;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;vector是一个&lt;strong&gt;类模板&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;模板&lt;/strong&gt;本身不是类或函数，可以看作编译器生成类或函数编写的一份说明，编译器根据模板创建类或函数的过程称为&lt;strong&gt;实例化&lt;/strong&gt;，使用模板时要指出编译器应该把类或函数实例化成何种类型。需要提供那些信息由模板决定，提供信息的方式是在模板名字后面跟一对尖括号，在括号内放入信息：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec;	//ivec保存int类型对象
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec;	//ivec保存int类型对象
 vector&amp;lt;vector&amp;lt;string&amp;gt;&amp;gt; file; 	//该向量的元素是vector对象
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;初始化vector对象&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;定义和初始化vector对象&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;T&amp;gt; v1;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;T&amp;gt; v1;
 vector&amp;lt;T&amp;gt; v2(v1);
 vector&amp;lt;T&amp;gt; v3(n, val);
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;可以默认初始化vector对象，从而创建一个指定类型的空vector。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; svec;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; svec;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;列表初始化对象：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; v1{&amp;quot;a&amp;quot;, &amp;quot;an&amp;quot;, &amp;quot;the&amp;quot;};
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; v1{&amp;quot;a&amp;quot;, &amp;quot;an&amp;quot;, &amp;quot;the&amp;quot;};
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;创建指定数量元素：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec(10, -1);
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec(10, -1);
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;值初始化：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec(10);	//10个元素，每个初始值都为0
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;int&amp;gt; ivec(10);	//10个元素，每个初始值都为0
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;向vector对象中添加元素&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用vector的成员函数&lt;code&gt;push_back()&lt;/code&gt;添加。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; str;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; str;
 string i = &amp;quot;111&amp;quot;;
 str.push_back(i);
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;其他vector操作&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;v.empty()	//判断v中是否含有元素，返回布尔值
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;v.empty()	//判断v中是否含有元素，返回布尔值
 v.size()	//返回v中元素个数
 v.push_back(t)	//向v尾端添加一个值为t的元素
 v[n]	//返回v中的n个位置上元素的引用
 v1 = v2	//用v2中的元素拷贝替换v1中的元素
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用下标运算符[]计算vector对象的索引，下标类型是size_type。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; str;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;string&amp;gt; str;
 string s = str[0];	//[]中的0为size_type类型
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;要使用size_type必须知名它是由哪种类型定义的。vector对象的类型总是包含着元素的类型&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt;::size_type	//正确
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;int&amp;gt;::size_type	//正确
 vector::size_type	//错误
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;不能用下标形式添加元素，以下为错误示范：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;;
 vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; ivec;
 ivec[ix] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; ix;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;迭代器iterator&#34;&gt;迭代器iterator&lt;/h3&gt;
 &lt;p&gt;迭代器可以用来访问容器的对象。&lt;/p&gt;
 &lt;p&gt;有迭代器的类型都拥有名为&lt;code&gt;beign&lt;/code&gt;和&lt;code&gt;end&lt;/code&gt;的成员函数，end成员返回指向容器尾元素下一位置的迭代器，即一个不存在的尾后元素。&lt;/p&gt;
 &lt;p&gt;迭代器运算符：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;*iter	//返回迭代器iter所指元素的引用
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;*iter	//返回迭代器iter所指元素的引用
 iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员
 ++iter	//令iter指示容器中的下一个元素
 --iter	//令iter指示容器中的上一个元素
@@ -1943,18 +1943,18 @@ iter1 == iter2
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;将迭代器从一个元素移动到另一个元素：&lt;/p&gt;
 &lt;p&gt;使用&lt;code&gt;++&lt;/code&gt;递增运算符。&lt;/p&gt;
 &lt;p&gt;迭代器类型：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;vector&amp;lt;int&amp;gt;::iterator it;	//it能读写vector&amp;lt;int&amp;gt;的元素
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vector&amp;lt;int&amp;gt;::iterator it;	//it能读写vector&amp;lt;int&amp;gt;的元素
 vector&amp;lt;int&amp;gt;::const_iterator it3;	//it3只能读元素，不能写元素
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;某些对vector对象的操作会使迭代器失效&lt;/p&gt;
 &lt;p&gt;迭代器运算：移动位置&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;iter + n	//加上一个整数仍然得到一个迭代器，迭代器指示的新位置与原来的位置相比向前移动了若干个元素
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;iter + n	//加上一个整数仍然得到一个迭代器，迭代器指示的新位置与原来的位置相比向前移动了若干个元素
 iter - n
 iter += n
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;表达式&#34;&gt;表达式&lt;/h2&gt;
 &lt;h3 id=&#34;成员访问运算符&#34;&gt;成员访问运算符&lt;/h3&gt;
 &lt;p&gt;箭头运算符与点运算符有关，表达式&lt;code&gt;ptr-&amp;gt;mem&lt;/code&gt;等价于&lt;code&gt;(*ptr).mem&lt;/code&gt;；&lt;/p&gt;
 &lt;h3 id=&#34;条件运算符&#34;&gt;条件运算符&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;cond ? expr1 : expr2;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cond ? expr1 : expr2;
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;位运算符&#34;&gt;位运算符&lt;/h3&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -1994,7 +1994,7 @@ iter += n
 &lt;/table&gt;
 &lt;h3 id=&#34;sizeof运算符&#34;&gt;sizeof运算符&lt;/h3&gt;
 &lt;p&gt;返回一条表达式或一个类型名字所占的字节数。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;sizeof data;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sizeof data;
 sizeof *p;	//指针所占的空间大小
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;逗号运算符&#34;&gt;逗号运算符&lt;/h3&gt;
 &lt;p&gt;含有两个运算对象，按从左向右的顺序依次求值。&lt;/p&gt;
@@ -2007,12 +2007,12 @@ sizeof *p;	//指针所占的空间大小
 &lt;p&gt;C++中异常处理机制包括：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;throw表达式&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;程序的异常检测部分使用throw表达式引发一个异常。表达式半酣关键词throw和紧随其后的一个表达式，其中表达式类型就是抛出的异常类型。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (item1.isbn() &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; item2.isbn())
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (item1.isbn() &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; item2.isbn())
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;throw&lt;/span&gt; runtime_error(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Data must refer to same ISBN&amp;#34;&lt;/span&gt;);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该异常是runtime_error的对象，抛出异常将终止当前函数，把控制权转移给能处理该异常的代码。&lt;/p&gt;
 &lt;p&gt;runtime_error是标准库异常类型的一种，定义在stdexcept头文件中。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;try语句块&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;try&lt;/span&gt; {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;try&lt;/span&gt; {
 	program&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statements
 } &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;catch&lt;/span&gt; (exception&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;declaration)	{
 	handler&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statements
@@ -2024,7 +2024,7 @@ sizeof *p;	//指针所占的空间大小
 &lt;h3 id=&#34;函数基础&#34;&gt;函数基础&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;形参列表&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;函数的形参列表可以为空，但不能省略；形参通常用都好隔开，每个形参都是含有一个声明符的声明，即使两个形参的类型相同，也必须把两个类型都写出来。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;void f1()	{}
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;void f1()	{}
 void f2(void)	{}
 int f3(int v1, v2)	//这样写是错的
 int f4(int v3, int v4)	//这样写正确
@@ -2035,26 +2035,26 @@ int f4(int v3, int v4)	//这样写正确
 &lt;p&gt;当用实参初始化形参时会忽略顶层const&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;数组形参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;数组的&lt;strong&gt;不允许拷贝&lt;/strong&gt;和使用时数组通常会将其转换成&lt;strong&gt;指针&lt;/strong&gt;的特殊性质对定义和使用在数组上的函数有很大影响。我们为函数传递一个数组时，实际上传递的是指向数组首元素的指针。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;);
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;);
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[]);
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;]);	&lt;span style=&#34;color:#888&#34;&gt;//这里的维度表示我们期望数组含有的元素数量，实际上不一定。
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面的三个函数是等价的，每个函数的形参都是const int*类型。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;数组引用形参&lt;/strong&gt;：&lt;/p&gt;
 &lt;p&gt;C++允许将变量定义为数组的引用，形参也可以是数组的引用。此时，引用形参绑定到对应实参上，也就是绑定到数组上：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;arr)[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;])
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;arr)[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;])
 {
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;elem&lt;/span&gt; : arr)
 		cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; elem &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如上为数组的引用而不是引用的数组。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;f(int &amp;amp;arr[10])	//将arr声明为了引用的数组
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;f(int &amp;amp;arr[10])	//将arr声明为了引用的数组
 f(int (&amp;amp;arr)[10])	//arr是具有10个整数的整形数组的引用
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;传递多维数组&lt;/strong&gt;：&lt;/p&gt;
 &lt;p&gt;多维数组实际上是数组的数组，将多维数组传递给函数实际上传递的是指向数组首元素的指针。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;matrix)[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;], &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; rowSize)	{}
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;matrix)[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;], &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; rowSize)	{}
 &lt;span style=&#34;color:#888&#34;&gt;//matrix指向数组的首元素，该数组的元素是由10个整数构成的数组。
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;main处理命令行选项&#34;&gt;main：处理命令行选项&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; argc, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;argv[])	{...}
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; argc, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;argv[])	{...}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;假定main函数位于可执行文件prog之内，我们可以想程序传递下面的选项：&lt;/p&gt;
 &lt;p&gt;prog -d -o ofile data0&lt;/p&gt;
 &lt;p&gt;第二个形参argv是一个数组，其元素为指向c风格字符串的指针；第一个形参argc表示数组中字符串的数量。&lt;/p&gt;
@@ -2065,15 +2065,15 @@ f(int (&amp;amp;arr)[10])	//arr是具有10个整数的整形数组的引用
 &lt;p&gt;不允许两个函数除了返回类型外其他所有的要素都相同。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;重载和const形参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一个拥有顶层const的形参无法和另一个没有顶层const的形参区分开来：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(Phone);
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(Phone);
 Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; Phone);	&lt;span style=&#34;color:#888&#34;&gt;//重复声明了Record lookup(Phone);
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果形参是某种类型的指针或引用，则通过区分指向的是&lt;strong&gt;常量对象&lt;/strong&gt;还是&lt;strong&gt;非常量对象&lt;/strong&gt;可以实现函数的重载，此时的const是底层const。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(Account&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//函数作用于Account的引用
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(Account&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//函数作用于Account的引用
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;Record &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lookup&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; Account&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//新韩淑，作用于常量的引用
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;特殊用途语言特性&#34;&gt;特殊用途语言特性&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;默认实参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;某些函数的一种形参在函数的多次调用中都被赋予了同一个值，此时我们把这个反复出现的值称为函数的默认实参，为了实现函数既能接纳默认值，又能接受我们具体指定的值，我们定义为如下形式：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; string&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;size_type sz;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; string&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;size_type sz;
 string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&gt;(sz ht &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;24&lt;/span&gt;, sz wid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;80&lt;/span&gt;, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; background &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;);
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;注意，一旦某个形参被赋予了默认值，它后面的所有形参都必须有默认值。&lt;/p&gt;
 &lt;p&gt;在给定作用域中一个形参只能被赋予一次默认实参。&lt;/p&gt;
@@ -2081,16 +2081,16 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 &lt;p&gt;把一些规模较小的表达式定义为函数有很多好处：容易读懂、容易修改、能重复利用；但也有缺点：调用函数一般比求等价表达式的值要慢；一次函数调用包含一系列工作：先保存寄存器，在返回时恢复；可能需要拷贝实参。&lt;/p&gt;
 &lt;p&gt;使用内联函数可以避免函数调用的开销，例如：&lt;/p&gt;
 &lt;p&gt;把shorterString函数定义为内联函数，则如下调用：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; shorterString(s1, s2) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; shorterString(s1, s2) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;在编译过程中会被展开为如下形式：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; (s1.size() &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; s2.size() &lt;span style=&#34;color:#333&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;s1&lt;/span&gt; : s2) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; (s1.size() &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; s2.size() &lt;span style=&#34;color:#333&#34;&gt;?&lt;/span&gt; &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;s1&lt;/span&gt; : s2) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;从而消除了函数运行时的开销。只需在函数的返回类型前加上&lt;code&gt;inline&lt;/code&gt;即可。&lt;/p&gt;
 &lt;p&gt;内联是向编译器发出的一个请求，编译器可以忽略这个请求。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;调试帮助&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;assert预处理宏&lt;/strong&gt;：&lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;assert(expr);
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;assert(expr);
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;assert是一种预处理宏，使用一个表达式作为它的条件；对expr求值，如果为0，assert输出信息并终止程序运行；如果为1，assert什么也不做。&lt;/p&gt;
 &lt;p&gt;assert宏定义在&lt;code&gt;cassert&lt;/code&gt;头文件中，由预处理器管理，无需提供using声明。&lt;/p&gt;
 &lt;ul&gt;
@@ -2099,7 +2099,7 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 &lt;p&gt;assert的行为依赖于名为NDEBUG的预处理变量的状态，如果定义了NDEBUG，则assert什么也不做。默认状态下没有定义NDEBUG，此时assert将执行。&lt;/p&gt;
 &lt;p&gt;可以使用一个&lt;code&gt;#define&lt;/code&gt;语句定义NDEBUG，从而关闭调试状态。&lt;/p&gt;
 &lt;p&gt;除了使用assert之外，可以使用NDEBUG编写自己的条件调试代码，使用&lt;code&gt;#ifndef&lt;/code&gt;和&lt;code&gt;#endif&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ia[], size_t size)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ia[], size_t size)
 {
 &lt;span style=&#34;color:#579&#34;&gt;#ifndef NDEBUG
 &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;	cerr &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; __fun__ &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;:array size is: &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; size &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
@@ -2116,7 +2116,7 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 &lt;p&gt;可以使用这些值在错误消息中提供更多信息。&lt;/p&gt;
 &lt;h2 id=&#34;类&#34;&gt;类&lt;/h2&gt;
 &lt;p&gt;以一个例子来说明类&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;strut Sales_data {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;strut Sales_data {
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
 	&lt;span style=&#34;color:#888&#34;&gt;//构造函数
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data() &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;default&lt;/span&gt;;
@@ -2157,7 +2157,7 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 &lt;p&gt;&lt;strong&gt;构造函数初始值列表&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;就对象的数据成员而言，初始化和赋值也有区别。如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化。&lt;/p&gt;
 &lt;p&gt;如果成员是&lt;strong&gt;const&lt;/strong&gt;或&lt;strong&gt;引用&lt;/strong&gt;的话，必须将其初始化。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;ConstRef&lt;/span&gt; {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;ConstRef&lt;/span&gt; {
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
 	ConstRef(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ii);
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
@@ -2169,7 +2169,7 @@ ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span 
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最好避免使用某些成员初始化其他成员。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;委托构造函数&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一个委托构造函数可以使用它属类的其他构造函数执行它自己的初始化过程。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Sales_data&lt;/span&gt; {
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Sales_data&lt;/span&gt; {
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
 	&lt;span style=&#34;color:#888&#34;&gt;//非委托构造函数使用对应的实参初始化成员
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string s, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; cnt, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; price)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
@@ -2188,7 +2188,7 @@ ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span 
 &lt;li&gt;没有类内初始值。&lt;/li&gt;
 &lt;li&gt;没有基类，没有virtual函数。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;pre&gt;&lt;code&gt;struct Data {
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct Data {
 	int ival;
 	string s;
 };
@@ -2211,7 +2211,7 @@ ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span 
 &lt;h3 id=&#34;类的作用域&#34;&gt;类的作用域&lt;/h3&gt;
 &lt;p&gt;在类的作用于之外，普通的数据和函数成员只能由&lt;strong&gt;对象、引用或指针&lt;/strong&gt;使用**成员访问运算符(&lt;code&gt;. -&amp;gt;&lt;/code&gt;)&lt;strong&gt;来访问；对于类类型成员，则使用&lt;/strong&gt;作用域运算符(&lt;code&gt;::&lt;/code&gt;)**访问。&lt;/p&gt;
 &lt;p&gt;一个类就是一个作用域，所以在类的外部定义成员函数时必须同时提供类名和函数名。在类的外部，成员的名字被隐藏起来了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; Window_mgr&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;clear(ScreenIndex i)
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; Window_mgr&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;clear(ScreenIndex i)
 {
 	Screen &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; screens[i];
 	s.contents &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; string(s.height &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; s.width, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;);
@@ -2222,7 +2222,7 @@ ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span 
 &lt;p&gt;类的静态成员存在于任何对象之外，对象中不包含任何与静态数据成员有关的数据。同样，&lt;strong&gt;类静态成员函数&lt;/strong&gt;也不与任何对象绑定在一起，它们不包含this指针。静态成员函数不能声明成const的，也不能在static函数体内使用this指针。&lt;/p&gt;
 &lt;p&gt;使用类的静态成员：&lt;/p&gt;
 &lt;p&gt;使用&lt;strong&gt;作用域运算符&lt;/strong&gt;直接访问静态成员：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; r;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; r;
 r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;rate();	&lt;span style=&#34;color:#888&#34;&gt;//Account为类名
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成员函数不用通过作用域运算符就能直接使用静态成员。&lt;/p&gt;
 &lt;p&gt;定义静态成员：&lt;/p&gt;
@@ -2268,21 +2268,21 @@ $$
 &lt;/ol&gt;
 &lt;p&gt;循环下面的式子直到满足终止条件：
 $$
-b = b - \alpha\frac{\partial}{\partial b}J(b,m) \&lt;br&gt;
+b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
 m = m - \alpha\frac{\partial}{\partial m}J(b,m)
 $$
 上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。&lt;/p&gt;
 &lt;h3 id=&#34;对cost-function运用梯度下降&#34;&gt;对Cost Function运用梯度下降&lt;/h3&gt;
 &lt;p&gt;$$
-\mathrm{repeat \ until \ convergence}{ \&lt;br&gt;
-b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \&lt;br&gt;
-m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \&lt;br&gt;
+\mathrm{repeat \ until \ convergence}{ \
+b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \
+m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \
 \ }
 $$&lt;/p&gt;
 &lt;p&gt;设定好初始值、循环次数、Learning Rate后即可开始拟合，最终得到结果b,m；得到拟合的线性函数。&lt;/p&gt;
 &lt;h2 id=&#34;代码实现&#34;&gt;代码实现&lt;/h2&gt;
 &lt;h3 id=&#34;使用sklearn库中的make_regression函数生成训练数据&#34;&gt;使用&lt;code&gt;sklearn&lt;/code&gt;库中的&lt;code&gt;make_regression&lt;/code&gt;函数生成训练数据&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;#generate the train data&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;#generate the train data&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;geneData&lt;/span&gt;():
     points &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
     xSet, ySet &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_regression(n_samples&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;, n_features&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, n_targets&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, noise&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;)
@@ -2292,12 +2292,12 @@ $$&lt;/p&gt;
         points&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;append(point)
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; points
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;定义代价函数&#34;&gt;定义代价函数&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;costFunction&lt;/span&gt;(b, m, points):
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;costFunction&lt;/span&gt;(b, m, points):
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:
         ErrorTotal &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; ((b &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]) &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]) &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; ErrorTotal &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;float&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;len&lt;/span&gt;(points)))
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;定义梯度下降函数&#34;&gt;定义梯度下降函数&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;stepGradient&lt;/span&gt;(b_current, m_current, b_gradient, m_gradient, points, learningRate):
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;stepGradient&lt;/span&gt;(b_current, m_current, b_gradient, m_gradient, points, learningRate):
     N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;float&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;len&lt;/span&gt;(points))
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:
         x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
@@ -2308,7 +2308,7 @@ $$&lt;/p&gt;
     new_m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; m_current &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; (learningRate &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; m_gradient)
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; [new_b, new_m, b_gradient, m_gradient]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;设置初始化参数并循环迭代最后画出结果&#34;&gt;设置初始化参数并循环迭代，最后画出结果&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
     iterations &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;    &lt;span style=&#34;color:#888&#34;&gt;#迭代次数&lt;/span&gt;
     learningRate &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.0001&lt;/span&gt;   &lt;span style=&#34;color:#888&#34;&gt;#学习率，决定了下降的步伐大小&lt;/span&gt;
     points &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; geneData() &lt;span style=&#34;color:#888&#34;&gt;#生成训练集&lt;/span&gt;
@@ -2334,7 +2334,7 @@ $$&lt;/p&gt;
     &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;m=&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;m)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;结果展示&#34;&gt;结果展示&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/Gradient_figure1.png&#34; alt=&#34;Gradient_figure1&#34;&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;b&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;4.824787&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;b&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;4.824787&lt;/span&gt;
 m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;46.528725&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;哲学思考&#34;&gt;哲学思考&lt;/h2&gt;
 &lt;p&gt;梯度下降是一个一阶最优化算法，通常也称为最陡下降法，要使用梯度下降法找到一个函数的局部极小值，必须向函数上当前点对应梯度的反方向规定的步长距离点进行迭代搜索。&lt;/p&gt;

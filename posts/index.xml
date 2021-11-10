@@ -467,12 +467,8 @@ int i = 1024, *p = &amp;amp;i, &amp;amp;r = i; //i是一个int数，p是一个in
  因为是线性回归，所以学习到的函数为线性函数，即一次直线函数； 因为是单变量，所以只有一个x；  所以能够给出单变量线性回归的模型： $$ h(x)=b+mx $$ 我们称$x$为feature，$h(x)$为hypothesis。
 代价函数Cost Function 我们需要根据代价函数来确定线性回归拟合的好不好。Cost Function越小，说明线性回归地越好，最小为0，完全拟合。 $$ J(b,m)=\frac{1}{2n}(h(x^{(i)})-y^{(i)})^2 $$ 如上所示为代价函数的构造，其中，$x^{(i)}$表示向量x的第i个元素，$y^{(i)}$表示向量y的第i个元素，即表示所有输入的训练集的点。$h(x)$表示已知的假设函数，n为训练集的个数。
 梯度下降 梯度下降能够找出代价函数Cost Function的最小值，梯度下降的方法步骤如下所示：
- 先确定向下一步的步伐大小，我们称为Learning Rate； 任意给定初始值b, m； 确定一个向下的方向，按预定步骤向下走，并且更新b, m； 当下降高度(循环次数)小于某个定义的值时，停止下降。  循环下面的式子直到满足终止条件： $$ b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
-m = m - \alpha\frac{\partial}{\partial m}J(b,m) $$ 上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。
-对Cost Function运用梯度下降 $$ \mathrm{repeat \ until \ convergence}{ \
-b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \
-m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \
-\ } $$</description>
+ 先确定向下一步的步伐大小，我们称为Learning Rate； 任意给定初始值b, m； 确定一个向下的方向，按预定步骤向下走，并且更新b, m； 当下降高度(循环次数)小于某个定义的值时，停止下降。  循环下面的式子直到满足终止条件： $$ b = b - \alpha\frac{\partial}{\partial b}J(b,m) \ m = m - \alpha\frac{\partial}{\partial m}J(b,m) $$ 上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。
+对Cost Function运用梯度下降 $$ \mathrm{repeat \ until \ convergence}{ \ b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \ m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \ \ } $$</description>
     </item>
     
     <item>
@@ -621,10 +617,8 @@ Email over SSL
 周期复指数信号和正弦信号 第二种重要的信号为将上式$a$限制为纯虚数的信号（复指数信号）： $$ x(t)=e^{jw_0t} $$ 当基波周期$T_0 = \left| \frac {2\pi} {w_0} \right|$时，该信号是周期信号。
 与该信号相关的另一种信号是正弦信号： $$ x(t)=A\cos(w_0t+\phi) $$ 利用欧拉公式，可以将复指数信号用与其相同几波周期的正弦信号来表示： $$ e^{jw_0t}=\cos w_0t + j\sin w_0t $$ $w_0$称为基波频率。
 上述复指数信号和正弦信号都是具有无限能量但有有限平均功率的信号。
-计算证明： $$ E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0 \
-P_{period}= \frac {1}{T_0} E_{period}=1 $$
-一般复指数信号 一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示： $$ C = \left| C \right| e^{j \theta} \
-a = r + j\omega_0 $$ 代入得： $$ \begin{align} Ce^{at} &amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t} \</description>
+计算证明： $$ E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0 \ P_{period}= \frac {1}{T_0} E_{period}=1 $$
+一般复指数信号 一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示： $$ C = \left| C \right| e^{j \theta} \ a = r + j\omega_0 $$ 代入得： $$ \begin{align} Ce^{at} &amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t} \ &amp;amp; = \left| C \right| e^{rt} e^{j(w_0t+\theta)} \ &amp;amp; = \left| C \right| e^{rt} \cos(w_0t+\theta) + j\left| C \right| e^{rt} \sin(w_0t+\theta) \end{align} $$ 若$r=0$，则复指数信号的实部和虚部都是正弦；若$r&amp;gt;0$，则实部和虚部是一个呈指数增长的正弦信号；若$r&amp;lt;0$，则二者都是一个呈指数衰减的正弦信号，该信号被称为阻尼正弦震荡。</description>
     </item>
     
     <item>

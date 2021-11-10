@@ -19,10 +19,8 @@
 周期复指数信号和正弦信号 第二种重要的信号为将上式$a$限制为纯虚数的信号（复指数信号）： $$ x(t)=e^{jw_0t} $$ 当基波周期$T_0 = \left| \frac {2\pi} {w_0} \right|$时，该信号是周期信号。
 与该信号相关的另一种信号是正弦信号： $$ x(t)=A\cos(w_0t+\phi) $$ 利用欧拉公式，可以将复指数信号用与其相同几波周期的正弦信号来表示： $$ e^{jw_0t}=\cos w_0t + j\sin w_0t $$ $w_0$称为基波频率。
 上述复指数信号和正弦信号都是具有无限能量但有有限平均功率的信号。
-计算证明： $$ E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0 \
-P_{period}= \frac {1}{T_0} E_{period}=1 $$
-一般复指数信号 一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示： $$ C = \left| C \right| e^{j \theta} \
-a = r + j\omega_0 $$ 代入得： $$ \begin{align} Ce^{at} &amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t} \</description>
+计算证明： $$ E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0 \ P_{period}= \frac {1}{T_0} E_{period}=1 $$
+一般复指数信号 一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示： $$ C = \left| C \right| e^{j \theta} \ a = r + j\omega_0 $$ 代入得： $$ \begin{align} Ce^{at} &amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t} \ &amp;amp; = \left| C \right| e^{rt} e^{j(w_0t+\theta)} \ &amp;amp; = \left| C \right| e^{rt} \cos(w_0t+\theta) + j\left| C \right| e^{rt} \sin(w_0t+\theta) \end{align} $$ 若$r=0$，则复指数信号的实部和虚部都是正弦；若$r&amp;gt;0$，则实部和虚部是一个呈指数增长的正弦信号；若$r&amp;lt;0$，则二者都是一个呈指数衰减的正弦信号，该信号被称为阻尼正弦震荡。</description>
     </item>
     
   </channel>

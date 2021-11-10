@@ -1542,7 +1542,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>
 <p>随着网络状态课端系统负载的变化，报文段的SampleRTT在不断地变化，为了找到一个典型地RTT，要采取一种方法对SampleRTT取平均，TCP会根据以下赋值公式来更新EstimatedRTT：
 $$
-EstimatedRTT = (1 - a) * EstimatedRTT + a * SampleRTT \<br>
+EstimatedRTT = (1 - a) * EstimatedRTT + a * SampleRTT \
 在[RFC6298]标准中推荐的a值为0.125
 $$
 上述的这种计算平均的方法被称为<em>指数加权移动平均</em>，这个加权平均最最近的样本赋予的权值要大于对旧样本赋予的权值。</p>
@@ -1550,7 +1550,7 @@ $$
 <li>
 <p>还有一种方式：测量RTT的变化。[RFC6298]定义了<em>RTT偏差DevRTT</em>：
 $$
-DevRTT = (1 - \beta) * DevRTT + \beta * |SampleRTT - EstimatedRTT| \<br>
+DevRTT = (1 - \beta) * DevRTT + \beta * |SampleRTT - EstimatedRTT| \
 \beta 的推荐值为0.25
 $$</p>
 </li>
@@ -1558,7 +1558,7 @@ $$</p>
 <p><strong>设置和管理重传超时间隔</strong>：</p>
 <p>确认超时间隔的值：
 $$
-TimeoutInterval = EstimatedRTT + 4 * DevRTT \<br>
+TimeoutInterval = EstimatedRTT + 4 * DevRTT \
 推荐的TimeoutInterval初始值为1秒
 $$</p>
 <h3 id="可靠数据传输">可靠数据传输</h3>

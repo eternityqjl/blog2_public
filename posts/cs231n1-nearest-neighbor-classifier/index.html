@@ -804,7 +804,7 @@ d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right|
 $$</p>
 <p>将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。</p>
 <p>通常使用准确率来评估分类器</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Xtr, Ytr, Xte, Yte <span style="color:#333">=</span> load_CIFAR10(<span style="background-color:#fff0f0">&#39;data/cifar10/&#39;</span>) <span style="color:#888"># a magic function we provide</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Xtr, Ytr, Xte, Yte <span style="color:#333">=</span> load_CIFAR10(<span style="background-color:#fff0f0">&#39;data/cifar10/&#39;</span>) <span style="color:#888"># a magic function we provide</span>
 <span style="color:#888"># flatten out all images to be one-dimensional</span>
 Xtr_rows <span style="color:#333">=</span> Xtr<span style="color:#333">.</span>reshape(Xtr<span style="color:#333">.</span>shape[<span style="color:#00d;font-weight:bold">0</span>], <span style="color:#00d;font-weight:bold">32</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">32</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">3</span>) <span style="color:#888"># Xtr_rows becomes 50000 x 3072</span>
 Xte_rows <span style="color:#333">=</span> Xte<span style="color:#333">.</span>reshape(Xte<span style="color:#333">.</span>shape[<span style="color:#00d;font-weight:bold">0</span>], <span style="color:#00d;font-weight:bold">32</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">32</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">3</span>) <span style="color:#888"># Xte_rows becomes 10000 x 3072</span>
@@ -816,7 +816,7 @@ Yte_predict <span style="color:#333">=</span> nn<span style="color:#333">.</span
 <span style="color:#888"># of examples that are correctly predicted (i.e. label matches)</span>
 <span style="color:#007020">print</span> <span style="background-color:#fff0f0">&#39;accuracy: </span><span style="background-color:#eee">%f</span><span style="background-color:#fff0f0">&#39;</span> <span style="color:#333">%</span> ( np<span style="color:#333">.</span>mean(Yte_predict <span style="color:#333">==</span> Yte) )
 </code></pre></div><p>Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
 
 <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">NearestNeighbor</span>(<span style="color:#007020">object</span>):
   <span style="color:#080;font-weight:bold">def</span> __init__(self):
@@ -849,7 +849,7 @@ Yte_predict <span style="color:#333">=</span> nn<span style="color:#333">.</span
 d_{2}\left(I_{1}, I_{2}\right)=\sqrt{\sum_{p}\left(I_{1}^{p}-I_{2}^{p}\right)^{2}}
 $$</p>
 <p>only replace a single line of code above:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">distances <span style="color:#333">=</span> np<span style="color:#333">.</span>sqrt(np<span style="color:#333">.</span>sum(np<span style="color:#333">.</span>square(self<span style="color:#333">.</span>Xtr <span style="color:#333">-</span> X[i,:]), axis <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>))
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">distances <span style="color:#333">=</span> np<span style="color:#333">.</span>sqrt(np<span style="color:#333">.</span>sum(np<span style="color:#333">.</span>square(self<span style="color:#333">.</span>Xtr <span style="color:#333">-</span> X[i,:]), axis <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>))
 </code></pre></div><h2 id="k---nearest-neighbor-classifier">k - Nearest Neighbor Classifier</h2>
 <p>找到距离最近的k个图片，k个图片中数量最多的一个标签即为测试图片所分的类别。</p>
 <h2 id="validation-sets-for-hyperparameter-tuning">Validation sets for Hyperparameter tuning</h2>
@@ -857,7 +857,7 @@ $$</p>
 <p>Hyperparameter 。通常不能使用test set来调整Hyperparameter。Evaluate on the test set only a single time, at the very end.</p>
 <p>将训练集划分为一个小一些的训练集和一个验证集(validation set)。例如使用CIFAR-10数据集时将训练集分为49,000个训练集和1,000个验证集。</p>
 <p>验证集本质上是一个假的测试集，是用来调整Hyperparameter的。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
 <span style="color:#888"># recall Xtr_rows is 50,000 x 3072 matrix</span>
 Xval_rows <span style="color:#333">=</span> Xtr_rows[:<span style="color:#00d;font-weight:bold">1000</span>, :] <span style="color:#888"># take first 1000 for validation</span>
 Yval <span style="color:#333">=</span> Ytr[:<span style="color:#00d;font-weight:bold">1000</span>]

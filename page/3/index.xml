@@ -196,7 +196,7 @@
 &lt;h4 id=&#34;算法描述&#34;&gt;算法描述&lt;/h4&gt;
 &lt;p&gt;首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。&lt;/p&gt;
 &lt;h4 id=&#34;代码实现&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Selection&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Selection&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
         &lt;span style=&#34;color:#888&#34;&gt;//将a按照升序排列
@@ -223,7 +223,7 @@
 &lt;h4 id=&#34;算法描述-1&#34;&gt;算法描述&lt;/h4&gt;
 &lt;p&gt;插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。&lt;/p&gt;
 &lt;h4 id=&#34;代码实现-1&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Insertion&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Insertion&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
         &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
@@ -249,7 +249,7 @@
 &lt;p&gt;交换不相邻的元素对数组的局部进行排序，并最终用插入排序将局部有序数组排序。&lt;/p&gt;
 &lt;p&gt;希尔排序的思想是使数组中任意间隔为h的元素都是有序的，这样的数组被称为&lt;strong&gt;h有序数组&lt;/strong&gt;，即h个相互独立的有序数组编织在一起组成的一个数组&lt;/p&gt;
 &lt;h4 id=&#34;代码实现-2&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Shell&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Shell&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;srot&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
         &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
@@ -272,7 +272,7 @@
 &lt;h2 id=&#34;归并排序&#34;&gt;归并排序&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;归并&lt;/strong&gt;即将两个有序的数组归并成一个更大的有序数组。&lt;/p&gt;
 &lt;h3 id=&#34;原地归并&#34;&gt;原地归并&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;merge&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;merge&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
         &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
         &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
@@ -289,7 +289,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;自顶向下的归并排序&#34;&gt;自顶向下的归并排序&lt;/h3&gt;
 &lt;h4 id=&#34;算法描述-3&#34;&gt;算法描述&lt;/h4&gt;
 &lt;p&gt;对子数组a[lo..hi]进行排序，先将其分为$\mathrm{a}[\mathrm{lo..mid}]$和$\mathrm{a[mid+1..hi]}$两部分，分别通过递归调用将其单独排序，最后将有序的子数组归并为最终的排序结果。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Merge&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Merge&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
     
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
@@ -314,7 +314,7 @@
 &lt;h4 id=&#34;算法描述-4&#34;&gt;算法描述&lt;/h4&gt;
 &lt;p&gt;先归并那些微型数组，然后再成对地归并得到的子数组。首先进行两两归并（把每个元素当作一个大小为1的数组），然后是四四归并（将两个大小为2的数组归并为一个有4个元素的数组），然后是八八归并，以此类推。&lt;/p&gt;
 &lt;h4 id=&#34;代码实现-3&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MergeBU&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MergeBU&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
@@ -334,7 +334,7 @@
 &lt;li&gt;&lt;code&gt;a[lo]&lt;/code&gt;到&lt;code&gt;a[j-1]&lt;/code&gt;中的所有元素都不大于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;a[j+1]&lt;/code&gt;到&lt;code&gt;a[hi]&lt;/code&gt;中的所有元素都不小于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//切分
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//切分
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;partition&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; hi &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
@@ -360,7 +360,7 @@
 &lt;h4 id=&#34;算法描述-5&#34;&gt;算法描述&lt;/h4&gt;
 &lt;p&gt;通过递归地调用切分来进行排序。&lt;/p&gt;
 &lt;h4 id=&#34;代码实现-4&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
         StdRandom&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;shuffle&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//将输入乱序，消除堆输入的依赖
@@ -380,7 +380,7 @@
 &lt;h3 id=&#34;三向切分快速排序&#34;&gt;三向切分快速排序&lt;/h3&gt;
 &lt;p&gt;在含有大量重复元素时使用该方法。将数组切分为三部分，分别对应小于、等于和大于切分元素的数组元素。&lt;/p&gt;
 &lt;h4 id=&#34;代码实现-5&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick3way&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick3way&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
@@ -414,7 +414,7 @@
 &lt;p&gt;我们可以通过计算数组的索引在树中上下移动：从$a[k]$向上一层就令$k=k/2$，向下一层则令$k=2k/2k+1$。&lt;/p&gt;
 &lt;h4 id=&#34;堆的算法&#34;&gt;堆的算法&lt;/h4&gt;
 &lt;p&gt;&lt;strong&gt;由下至上的堆有序化（上浮swim）&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;swim&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;swim&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1 &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
@@ -423,7 +423,7 @@
     &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;由上至下的堆有序化（下沉sink）&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sink&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sink&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
     &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
@@ -435,7 +435,7 @@
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列的代码实现&#34;&gt;基于堆的优先队列的代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Key &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extends&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;key&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Key &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extends&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;key&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; Key&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; pq&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
@@ -477,7 +477,7 @@
 &lt;h4 id=&#34;下沉排序&#34;&gt;下沉排序&lt;/h4&gt;
 &lt;p&gt;将堆中的最大元素删去，然后将其放入堆缩小后数组中空出的位置。&lt;/p&gt;
 &lt;h4 id=&#34;堆排序代码实现&#34;&gt;堆排序代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
 &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
     &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
     &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;--)&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//构造堆
@@ -512,7 +512,7 @@
 &lt;/ul&gt;
 &lt;!-- raw HTML omitted --&gt;
 &lt;h2 id=&#34;代码实现&#34;&gt;代码实现&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;edu.princeton.cs.algs4&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;edu.princeton.cs.algs4&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
 
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Evaluate&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
 	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
@@ -758,7 +758,7 @@
 &lt;li&gt;
 &lt;p&gt;随着网络状态课端系统负载的变化，报文段的SampleRTT在不断地变化，为了找到一个典型地RTT，要采取一种方法对SampleRTT取平均，TCP会根据以下赋值公式来更新EstimatedRTT：
 $$
-EstimatedRTT = (1 - a) * EstimatedRTT + a * SampleRTT \&lt;br&gt;
+EstimatedRTT = (1 - a) * EstimatedRTT + a * SampleRTT \
 在[RFC6298]标准中推荐的a值为0.125
 $$
 上述的这种计算平均的方法被称为&lt;em&gt;指数加权移动平均&lt;/em&gt;，这个加权平均最最近的样本赋予的权值要大于对旧样本赋予的权值。&lt;/p&gt;
@@ -766,7 +766,7 @@ $$
 &lt;li&gt;
 &lt;p&gt;还有一种方式：测量RTT的变化。[RFC6298]定义了&lt;em&gt;RTT偏差DevRTT&lt;/em&gt;：
 $$
-DevRTT = (1 - \beta) * DevRTT + \beta * |SampleRTT - EstimatedRTT| \&lt;br&gt;
+DevRTT = (1 - \beta) * DevRTT + \beta * |SampleRTT - EstimatedRTT| \
 \beta 的推荐值为0.25
 $$&lt;/p&gt;
 &lt;/li&gt;
@@ -774,7 +774,7 @@ $$&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;设置和管理重传超时间隔&lt;/strong&gt;：&lt;/p&gt;
 &lt;p&gt;确认超时间隔的值：
 $$
-TimeoutInterval = EstimatedRTT + 4 * DevRTT \&lt;br&gt;
+TimeoutInterval = EstimatedRTT + 4 * DevRTT \
 推荐的TimeoutInterval初始值为1秒
 $$&lt;/p&gt;
 &lt;h3 id=&#34;可靠数据传输&#34;&gt;可靠数据传输&lt;/h3&gt;
@@ -998,7 +998,7 @@ $$
 &lt;!-- raw HTML omitted --&gt;
 &lt;h2 id=&#34;章节标题的特殊符号&#34;&gt;章节标题的特殊符号&lt;/h2&gt;
 &lt;p&gt;当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令&lt;code&gt;\texorpdfstring{}{}&lt;/code&gt;分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号&lt;code&gt;{}&lt;/code&gt;中填写tex文档代码，第二个括号&lt;code&gt;{}&lt;/code&gt;填写文本形式的书签，如下所示：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;%1.1
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;%1.1
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[第3题（1）]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;第3题（1）求&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;e^{&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t}u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;x1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;，
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;cos&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)[&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)]&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;x2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;的卷积积分
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;y_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)*&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;y1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;。 &lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
@@ -1007,7 +1007,7 @@ $$
 &lt;blockquote&gt;
 &lt;p&gt;&lt;a href=&#34;http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf&#34;&gt;listings宏包文档&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lstset&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;
 language=Matlab,
 escapeinside=``, 
@@ -1034,7 +1034,7 @@ showstringspaces=false&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 &lt;p&gt;参考：&lt;a href=&#34;https://tex.stackexchange.com/questions/372384/erroneous-nesting-of-equation-structures-message-i-cant-see-whats-wrong&#34;&gt;“Erroneous nesting of equation structures” message- I can&amp;rsquo;t see what&amp;rsquo;s wrong?&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;数学公式中需要写等号对齐的公式段是不需要写&lt;code&gt;$$...$$&lt;/code&gt;或者&lt;code&gt;begin{equation}...end{equation}&lt;/code&gt;，直接将公式写在&lt;code&gt;begin{align}...end{align}&lt;/code&gt;的中间即可，如下所示：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
 y&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;2[n]
 &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=x&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;3[n]*x&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;4[n] &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
 &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=((-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;n u[n-1])*((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
@@ -1086,21 +1086,21 @@ $w_0$称为基波频率。&lt;/p&gt;
 &lt;p&gt;上述复指数信号和正弦信号都是&lt;strong&gt;具有无限能量&lt;/strong&gt;但&lt;strong&gt;有有限平均功率&lt;/strong&gt;的信号。&lt;/p&gt;
 &lt;p&gt;计算证明：
 $$
-E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0  \&lt;br&gt;
+E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0  \
 P_{period}= \frac {1}{T_0} E_{period}=1
 $$&lt;/p&gt;
 &lt;h4 id=&#34;一般复指数信号&#34;&gt;一般复指数信号&lt;/h4&gt;
 &lt;p&gt;一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示：
 $$
-C = \left| C \right| e^{j \theta} \&lt;br&gt;
+C = \left| C \right| e^{j \theta} \
 a = r + j\omega_0
 $$
 代入得：
 $$
 \begin{align}
 Ce^{at} 
-&amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t}  \&lt;br&gt;
-&amp;amp; = \left| C \right| e^{rt} e^{j(w_0t+\theta)}  \&lt;br&gt;
+&amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t}  \
+&amp;amp; = \left| C \right| e^{rt} e^{j(w_0t+\theta)}  \
 &amp;amp; = \left| C \right| e^{rt} \cos(w_0t+\theta) + j\left| C \right| e^{rt} \sin(w_0t+\theta)
 \end{align}
 $$
@@ -1152,7 +1152,7 @@ $m$为整数。同时，若$\frac{w_0}{2\pi}$是一个有理数，该信号就�
 $$
 \delta[n] = 
 \begin{cases}
-0, \quad n \ne 0  \&lt;br&gt;
+0, \quad n \ne 0  \
 1, \quad n = 0
 \end{cases}
 $$
@@ -1160,7 +1160,7 @@ $$
 $$
 u[n] =
 \begin{cases}
-0, \quad n &amp;lt; 0  \&lt;br&gt;
+0, \quad n &amp;lt; 0  \
 1, \quad n \geqslant 0
 \end{cases}
 $$
@@ -1174,7 +1174,7 @@ $$
 $$
 u(t)=
 \begin{cases}
-0, \quad t&amp;lt;0 \&lt;br&gt;
+0, \quad t&amp;lt;0 \
 1, \quad t&amp;gt;0
 \end{cases}
 $$
@@ -1183,7 +1183,7 @@ $$
 $$
 u(t) = \int_{-\infty}^{t} \delta(\tau) \mathrm{d}\tau
 $$
-同时可以看出，连续时间单位冲激可以看成连续时间单位阶跃的**一次微分**：
+同时可以看出，连续时间单位冲激可以看成连续时间单位阶跃的&lt;strong&gt;一次微分&lt;/strong&gt;：
 $$
 \delta(t) = \frac{\mathrm{d}u(t)}{\mathrm{d}t}
 $$
@@ -1212,11 +1212,11 @@ $$
 $$
 y[n]=\sum_{k=-\infty}^{n} x[k]
 $$
-第二个离散时间记忆系统的例子是一个**延迟单元**：
+第二个离散时间记忆系统的例子是一个&lt;strong&gt;延迟单元&lt;/strong&gt;：
 $$
 y[n] = x[n - 1]
 $$
-一个**连续时间记忆系统**的例子是**一个电容器**，将电流作为输入，电压作为输出，那么有：
+一个&lt;strong&gt;连续时间记忆系统&lt;/strong&gt;的例子是&lt;strong&gt;一个电容器&lt;/strong&gt;，将电流作为输入，电压作为输出，那么有：
 $$
 y(t)= \frac{1}{C} \int_{-\infty}^{t} x(\tau) \mathrm{d} \tau
 $$
