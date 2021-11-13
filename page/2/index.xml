@@ -6,9 +6,46 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 13 Aug 2021 16:15:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 13 Nov 2021 19:54:09 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>存储器详解</title>
+        <link>https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
+        <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/ -&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
+&lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
+&lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
+&lt;h3 id=&#34;动态随机存取存储器dram&#34;&gt;动态随机存取存储器（DRAM）&lt;/h3&gt;
+&lt;p&gt;Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong&gt;存储电荷的多寡&lt;/strong&gt;来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong&gt;定时刷新&lt;/strong&gt;的特性，因此被称为“动态”存储器。&lt;/p&gt;
+&lt;h3 id=&#34;静态随机存取存储器sram&#34;&gt;静态随机存取存储器（SRAM）&lt;/h3&gt;
+&lt;p&gt;Static Random Access Memory，所谓的“静态”，是指这种存储器只要保持通电，里面储存的数据就可以恒常保持。相对之下，动态随机存取存储器（DRAM）里面所储存的数据就需要周期性地更新。然而，当电力供应停止时，SRAM储存的数据还是会消失。&lt;/p&gt;
+&lt;p&gt;SRAM由存储矩阵、地址译码器和读/写控制电路组成，容量的扩展有两个方面：位数的扩展用芯片的并联，字数的扩展可用外加译码器控制芯片的片选输入端[2]。SRAM中的每一bit储存在由4个场效应管（M1, M2, M3, M4）构成两个交叉耦合的反相器中。另外两个场效应管（M5, M6）是储存基本单元到用于读写的位线（Bit Line）的控制开关。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SRAM_Cell_(6_Transistors).svg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;非易失性存储器主要为只读存储器rom&#34;&gt;非易失性存储器（主要为只读存储器，ROM）&lt;/h2&gt;
+&lt;p&gt;Read-Only Memory，一旦存储资料就无法再将之改变或删除，且内容不会因为电源关闭而消失。&lt;/p&gt;
+&lt;h3 id=&#34;可编程式只读存储器prom&#34;&gt;可编程式只读存储器（PROM）&lt;/h3&gt;
+&lt;p&gt;Programmable read-only memory，每个比特都由熔丝或反熔丝的状态决定资料内容。这种存储器用作永久存放程序之用。常用于电子游戏机、电子词典等预存固定资料或程序的各式电子产品之上。PROM与狭义的ROM（Mask ROM）的差别在于前者可在IC制造完成后才依需要写入资料，后者的资料需在制造IC时一并制作在里面。&lt;/p&gt;
+&lt;p&gt;一个典型的PROM一开始时每个比特都会是1，编程中如将该比特的熔丝（fuse）烧断则成为0，这一过程是不可逆的（即刻录后不能再改变），断电后也不会消失记忆，所以这种存储器是一种只读存储器。&lt;/p&gt;
+&lt;h3 id=&#34;可擦除可编程式只读存储器eprom&#34;&gt;可擦除可编程式只读存储器（EPROM）&lt;/h3&gt;
+&lt;p&gt;Erasable Programmable Read Only Memory，它是一组浮栅晶体管，被一个提供比电子电路中常用电压更高电压的电子器件分别编程。一旦编程完成后，EPROM只能用强紫外线照射来擦除。通过封装顶部能看见硅片的透明窗口，很容易识别EPROM，这个窗口同时用来进行紫外线擦除。&lt;/p&gt;
+&lt;h3 id=&#34;电子抹除式可复写只读存储器eeprom&#34;&gt;电子抹除式可复写只读存储器（EEPROM）&lt;/h3&gt;
+&lt;p&gt;Electrically-Erasable Programmable Read-Only Memory，是一种可以通过电子方式多次复写的半导体存储设备。相比EPROM， EEPROM 不需要用紫外线照射，也不需取下，就可以用特定的电压，来抹除芯片上的信息，以便写入新的数据， EEPROM 属于SPD（串行存在检测）技术的一种延伸。&lt;/p&gt;
+&lt;p&gt;在民用的DDR SDRAM及其主流后续产品中，一般 EEPROM 主要用于保存内存的开发者信息、生产时间、内存信息、通信协议、既定内存频率、供电电压、供电电流、物理信息以及内存XMP等信息，并且电脑会在开机自检（Power-On Self-Test；POST）时会读取这些信息以保持电脑的正常开机。&lt;/p&gt;
+&lt;h3 id=&#34;闪存flash-memory&#34;&gt;闪存（Flash Memory）&lt;/h3&gt;
+&lt;p&gt;闪存是一种特殊的、以宏块抹写的EEPROM。&lt;/p&gt;
+&lt;p&gt;NOR和NAND两种类型&lt;/p&gt;
+&lt;h4 id=&#34;nand-flash&#34;&gt;NAND Flash&lt;/h4&gt;
+&lt;p&gt;SLC(单阶存储单元)、MLC(多阶存储单元，一般指2)、TLC(三阶存储单元)、QLC&lt;/p&gt;
+&lt;p&gt;现在消费级产品都是TLC&lt;/p&gt;
+&lt;h4 id=&#34;移动端使用的闪存协议变化&#34;&gt;移动端使用的闪存协议变化&lt;/h4&gt;
+&lt;p&gt;eMMC-UFS&lt;/p&gt;- https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -2228,117 +2265,6 @@ r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#
 &lt;p&gt;定义静态成员：&lt;/p&gt;
 &lt;p&gt;我们既可以在类内部也可以在类外部定义静态成员函数，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。&lt;/p&gt;
 - https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>机器学习——线性回归和梯度下降</title>
-        <link>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
-        <pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ -&lt;h2 id=&#34;线性回归linear-regression&#34;&gt;线性回归Linear Regression&lt;/h2&gt;
-&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
-&lt;p&gt;线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。&lt;/p&gt;
-&lt;p&gt;注意：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;因为是线性回归，所以学习到的函数为线性函数，即一次直线函数；&lt;/li&gt;
-&lt;li&gt;因为是单变量，所以只有一个x；&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;所以能够给出&lt;strong&gt;单变量线性回归&lt;/strong&gt;的模型：
-$$
-h(x)=b+mx
-$$
-我们称$x$为feature，$h(x)$为hypothesis。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h3 id=&#34;代价函数cost-function&#34;&gt;代价函数Cost Function&lt;/h3&gt;
-&lt;p&gt;我们需要根据代价函数来确定线性回归拟合的好不好。Cost Function越小，说明线性回归地越好，最小为0，完全拟合。
-$$
-J(b,m)=\frac{1}{2n}(h(x^{(i)})-y^{(i)})^2
-$$
-如上所示为代价函数的构造，其中，$x^{(i)}$表示向量x的第i个元素，$y^{(i)}$表示向量y的第i个元素，即表示所有输入的训练集的点。$h(x)$表示已知的假设函数，n为训练集的个数。&lt;/p&gt;
-&lt;h2 id=&#34;梯度下降&#34;&gt;梯度下降&lt;/h2&gt;
-&lt;p&gt;梯度下降能够找出代价函数Cost Function的最小值，梯度下降的方法步骤如下所示：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;先确定向下一步的步伐大小，我们称为Learning Rate；&lt;/li&gt;
-&lt;li&gt;任意给定初始值b, m；&lt;/li&gt;
-&lt;li&gt;确定一个向下的方向，按预定步骤向下走，并且更新b, m；&lt;/li&gt;
-&lt;li&gt;当下降高度(循环次数)小于某个定义的值时，停止下降。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;循环下面的式子直到满足终止条件：
-$$
-b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
-m = m - \alpha\frac{\partial}{\partial m}J(b,m)
-$$
-上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。&lt;/p&gt;
-&lt;h3 id=&#34;对cost-function运用梯度下降&#34;&gt;对Cost Function运用梯度下降&lt;/h3&gt;
-&lt;p&gt;$$
-\mathrm{repeat \ until \ convergence}{ \
-b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \
-m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \
-\ }
-$$&lt;/p&gt;
-&lt;p&gt;设定好初始值、循环次数、Learning Rate后即可开始拟合，最终得到结果b,m；得到拟合的线性函数。&lt;/p&gt;
-&lt;h2 id=&#34;代码实现&#34;&gt;代码实现&lt;/h2&gt;
-&lt;h3 id=&#34;使用sklearn库中的make_regression函数生成训练数据&#34;&gt;使用&lt;code&gt;sklearn&lt;/code&gt;库中的&lt;code&gt;make_regression&lt;/code&gt;函数生成训练数据&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;#generate the train data&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;geneData&lt;/span&gt;():
-    points &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
-    xSet, ySet &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_regression(n_samples&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;, n_features&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, n_targets&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, noise&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;)
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; x,y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;zip&lt;/span&gt;(xSet,ySet):
-        x&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;x[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
-        point &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [x,y]
-        points&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;append(point)
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; points
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;定义代价函数&#34;&gt;定义代价函数&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;costFunction&lt;/span&gt;(b, m, points):
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:
-        ErrorTotal &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; ((b &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]) &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]) &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; ErrorTotal &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;float&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;len&lt;/span&gt;(points)))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;定义梯度下降函数&#34;&gt;定义梯度下降函数&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;stepGradient&lt;/span&gt;(b_current, m_current, b_gradient, m_gradient, points, learningRate):
-    N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;float&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;len&lt;/span&gt;(points))
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:
-        x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
-        y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]
-        b_gradient &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;N) &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; ((b_current &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m_current &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; x) &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; y)
-        m_gradient &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;N) &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; x &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; ((b_current &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m_current &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; x) &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; y)
-    new_b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; b_current &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; (learningRate &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; b_gradient)
-    new_m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; m_current &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; (learningRate &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; m_gradient)
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; [new_b, new_m, b_gradient, m_gradient]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;设置初始化参数并循环迭代最后画出结果&#34;&gt;设置初始化参数并循环迭代，最后画出结果&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
-    iterations &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;    &lt;span style=&#34;color:#888&#34;&gt;#迭代次数&lt;/span&gt;
-    learningRate &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.0001&lt;/span&gt;   &lt;span style=&#34;color:#888&#34;&gt;#学习率，决定了下降的步伐大小&lt;/span&gt;
-    points &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; geneData() &lt;span style=&#34;color:#888&#34;&gt;#生成训练集&lt;/span&gt;
-    b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;   &lt;span style=&#34;color:#888&#34;&gt;#线性方程参数b,m的初始值&lt;/span&gt;
-    m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;   
-    b_gradient &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;  &lt;span style=&#34;color:#888&#34;&gt;#代价函数梯度下降结果的初始值&lt;/span&gt;
-    m_gradient &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;list&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, iterations&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)):  &lt;span style=&#34;color:#888&#34;&gt;#循环进行梯度下降，求得结果&lt;/span&gt;
-        b,m,b_gradient,m_gradient &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; stepGradient(b,m,b_gradient,m_gradient,points,learningRate)
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:    &lt;span style=&#34;color:#888&#34;&gt;#画出样本点&lt;/span&gt;
-        plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;scatter(point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
-
-    &lt;span style=&#34;color:#888&#34;&gt;#画出得到的直线&lt;/span&gt;
-    t &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.01&lt;/span&gt;)
-    s &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; b &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; t
-    plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;scatter(t,s,linewidths&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.5&lt;/span&gt;)
-    plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
-
-    &lt;span style=&#34;color:#888&#34;&gt;#输出结果&lt;/span&gt;
-    &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;b=&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;b)
-    &lt;span style=&#34;color:#888&#34;&gt;#print(b)&lt;/span&gt;
-    &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;m=&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;m)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;结果展示&#34;&gt;结果展示&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/Gradient_figure1.png&#34; alt=&#34;Gradient_figure1&#34;&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;b&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;4.824787&lt;/span&gt;
-m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;46.528725&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;哲学思考&#34;&gt;哲学思考&lt;/h2&gt;
-&lt;p&gt;梯度下降是一个一阶最优化算法，通常也称为最陡下降法，要使用梯度下降法找到一个函数的局部极小值，必须向函数上当前点对应梯度的反方向规定的步长距离点进行迭代搜索。&lt;/p&gt;
-- https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ - 2019-2021 By Jialong</description>
         </item>
     
     

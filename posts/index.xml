@@ -7,7 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 13 Aug 2021 16:15:00 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 13 Nov 2021 19:54:09 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>现代操作系统学习日志——文件系统</title>
+      <link>https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</link>
+      <pubDate>Sat, 13 Nov 2021 19:54:09 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</guid>
+      <description>所有计算机应用程序都需要存储和检索信息。
+进程运行时可以在自己的地址空间中存储一定量的信息，但存储容量易受到虚拟地址空间大小的限制。另外，进程终止时，它保存的信息也随之丢失，但对于很多应用（例如数据库）而言，有关信息必须能够保存很长时间甚至永久保留。第三个问题是经常需要多个进程同时访问同一信息，解决方法是使得信息本身独立于任何一个进程。
+所以，长期存储信息有以下基本要求：
+ 能够存储大量信息 使用信息的进程终止时，信息仍旧存在 必须能使多个进程并发访问有关信息  磁盘能够进行长期存储，我们将其当作一种大小固定的块的线性序列，并且支持读块k和写块k的操作。
+文件是进程创建的信息逻辑单元，一块磁盘中可以有很多文件，每个文件是独立于其他文件的，文件是对磁盘的建模，而不是对RAM的建模。
+进程可以读取已经存在的文件，并在需要时建立新的文件。存储在文件中的信息必须是持久的。
+文件 文件命名 大小写
+扩展名
+文件结构  无结构的字节序列（Windows和Unix采用这种方法） 具有固定长度记录的序列 有一棵树构成的文件结构，每个记录不必具有相同长度，记录的固定位置上有一个键字段（在一些处理商业数据的大型计算机上广泛应用）  文件类型  普通文件  ASCII文件。优势是可以显示和打印，可以用任何文本编辑器进行编辑 二进制文件。有一定的内部结构，使用该文件的程序才了解这种结构   目录：管理文件系统结构的系统文件  另外，Unix还具有：
+ 字符特殊文件。与I/O有关，用于串行I/O设备。 块特殊文件。用于磁盘设备。  两个普通文件的例子：一个可执行文件、一个存档文件。详情见书上。
+文件访问  顺序访问 随机访问文件  read操作给出开始读文件的位置 用seek操作设置当前位置（Windows和UNIX使用这种方式）    文件属性 除了文件名和数据外的与文件相关的信息，称为文件属性或元数据。这些信息在不同系统中有着很大差异。主要具有以下属性类别：
+ 与文件保护相关的属性。创建者、所有者、口令等。 标志。用于控制或启动某些特殊属性。 用关键字查找记录的文件中的属性：记录长度、键的位置和长度等。 创建时间相关属性。 当前大小。  文件操作 与文件有关的最常用的一些系统调用：
+ create delete open close read write append。write的限制格式，只能从文件末尾添加数据。 seek get attributes set attributes rename  一个文件系统调用实现复制的简单程序 详情见书上。</description>
+    </item>
+    
     <item>
       <title>算法的时间复杂度和空间复杂度</title>
       <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>

@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html><head>
+<title>现代操作系统学习日志——文件系统</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="现代操作系统学习日志——文件系统" />
+<meta property="og:description" content="所有计算机应用程序都需要存储和检索信息。
+进程运行时可以在自己的地址空间中存储一定量的信息，但存储容量易受到虚拟地址空间大小的限制。另外，进程终止时，它保存的信息也随之丢失，但对于很多应用（例如数据库）而言，有关信息必须能够保存很长时间甚至永久保留。第三个问题是经常需要多个进程同时访问同一信息，解决方法是使得信息本身独立于任何一个进程。
+所以，长期存储信息有以下基本要求：
+ 能够存储大量信息 使用信息的进程终止时，信息仍旧存在 必须能使多个进程并发访问有关信息  磁盘能够进行长期存储，我们将其当作一种大小固定的块的线性序列，并且支持读块k和写块k的操作。
+文件是进程创建的信息逻辑单元，一块磁盘中可以有很多文件，每个文件是独立于其他文件的，文件是对磁盘的建模，而不是对RAM的建模。
+进程可以读取已经存在的文件，并在需要时建立新的文件。存储在文件中的信息必须是持久的。
+文件 文件命名 大小写
+扩展名
+文件结构  无结构的字节序列（Windows和Unix采用这种方法） 具有固定长度记录的序列 有一棵树构成的文件结构，每个记录不必具有相同长度，记录的固定位置上有一个键字段（在一些处理商业数据的大型计算机上广泛应用）  文件类型  普通文件  ASCII文件。优势是可以显示和打印，可以用任何文本编辑器进行编辑 二进制文件。有一定的内部结构，使用该文件的程序才了解这种结构   目录：管理文件系统结构的系统文件  另外，Unix还具有：
+ 字符特殊文件。与I/O有关，用于串行I/O设备。 块特殊文件。用于磁盘设备。  两个普通文件的例子：一个可执行文件、一个存档文件。详情见书上。
+文件访问  顺序访问 随机访问文件  read操作给出开始读文件的位置 用seek操作设置当前位置（Windows和UNIX使用这种方式）    文件属性 除了文件名和数据外的与文件相关的信息，称为文件属性或元数据。这些信息在不同系统中有着很大差异。主要具有以下属性类别：
+ 与文件保护相关的属性。创建者、所有者、口令等。 标志。用于控制或启动某些特殊属性。 用关键字查找记录的文件中的属性：记录长度、键的位置和长度等。 创建时间相关属性。 当前大小。  文件操作 与文件有关的最常用的一些系统调用：
+ create delete open close read write append。write的限制格式，只能从文件末尾添加数据。 seek get attributes set attributes rename  一个文件系统调用实现复制的简单程序 详情见书上。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-13T19:54:09+08:00" />
+<meta property="article:modified_time" content="2021-11-13T19:54:09+08:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="现代操作系统学习日志——文件系统"/>
+<meta name="twitter:description" content="所有计算机应用程序都需要存储和检索信息。
+进程运行时可以在自己的地址空间中存储一定量的信息，但存储容量易受到虚拟地址空间大小的限制。另外，进程终止时，它保存的信息也随之丢失，但对于很多应用（例如数据库）而言，有关信息必须能够保存很长时间甚至永久保留。第三个问题是经常需要多个进程同时访问同一信息，解决方法是使得信息本身独立于任何一个进程。
+所以，长期存储信息有以下基本要求：
+ 能够存储大量信息 使用信息的进程终止时，信息仍旧存在 必须能使多个进程并发访问有关信息  磁盘能够进行长期存储，我们将其当作一种大小固定的块的线性序列，并且支持读块k和写块k的操作。
+文件是进程创建的信息逻辑单元，一块磁盘中可以有很多文件，每个文件是独立于其他文件的，文件是对磁盘的建模，而不是对RAM的建模。
+进程可以读取已经存在的文件，并在需要时建立新的文件。存储在文件中的信息必须是持久的。
+文件 文件命名 大小写
+扩展名
+文件结构  无结构的字节序列（Windows和Unix采用这种方法） 具有固定长度记录的序列 有一棵树构成的文件结构，每个记录不必具有相同长度，记录的固定位置上有一个键字段（在一些处理商业数据的大型计算机上广泛应用）  文件类型  普通文件  ASCII文件。优势是可以显示和打印，可以用任何文本编辑器进行编辑 二进制文件。有一定的内部结构，使用该文件的程序才了解这种结构   目录：管理文件系统结构的系统文件  另外，Unix还具有：
+ 字符特殊文件。与I/O有关，用于串行I/O设备。 块特殊文件。用于磁盘设备。  两个普通文件的例子：一个可执行文件、一个存档文件。详情见书上。
+文件访问  顺序访问 随机访问文件  read操作给出开始读文件的位置 用seek操作设置当前位置（Windows和UNIX使用这种方式）    文件属性 除了文件名和数据外的与文件相关的信息，称为文件属性或元数据。这些信息在不同系统中有着很大差异。主要具有以下属性类别：
+ 与文件保护相关的属性。创建者、所有者、口令等。 标志。用于控制或启动某些特殊属性。 用关键字查找记录的文件中的属性：记录长度、键的位置和长度等。 创建时间相关属性。 当前大小。  文件操作 与文件有关的最常用的一些系统调用：
+ create delete open close read write append。write的限制格式，只能从文件末尾添加数据。 seek get attributes set attributes rename  一个文件系统调用实现复制的简单程序 详情见书上。"/>
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+  
+
+
+
+
+<link rel="icon" href="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/faviconJ.ico">
+
+
+
+<link rel="stylesheet" href="https://eternityqjl.top/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://eternityqjl.top/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+
+
+<script src="/js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="/js/toc.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://eternityqjl.top">
+    
+        <div class="nav-title">
+            Jialong&#39;s Blog
+        </div>
+        
+        <div class="nav-subtitle">
+            沉潜 自由 追寻幸福
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/posts">
+                网志
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6" onclick="onNavClick(`#文件-nav`)" id="文件-nav">
+									文件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e5%91%bd%e5%90%8d" onclick="onNavClick(`#文件命名-nav`)" id="文件命名-nav">
+									文件命名
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" onclick="onNavClick(`#文件结构-nav`)" id="文件结构-nav">
+									文件结构
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b1%bb%e5%9e%8b" onclick="onNavClick(`#文件类型-nav`)" id="文件类型-nav">
+									文件类型
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e8%ae%bf%e9%97%ae" onclick="onNavClick(`#文件访问-nav`)" id="文件访问-nav">
+									文件访问
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e5%b1%9e%e6%80%a7" onclick="onNavClick(`#文件属性-nav`)" id="文件属性-nav">
+									文件属性
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#文件操作-nav`)" id="文件操作-nav">
+									文件操作
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%80%e4%b8%aa%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8%e5%ae%9e%e7%8e%b0%e5%a4%8d%e5%88%b6%e7%9a%84%e7%ae%80%e5%8d%95%e7%a8%8b%e5%ba%8f" onclick="onNavClick(`#一个文件系统调用实现复制的简单程序-nav`)" id="一个文件系统调用实现复制的简单程序-nav">
+									一个文件系统调用实现复制的简单程序
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e7%9b%ae%e5%bd%95" onclick="onNavClick(`#目录-nav`)" id="目录-nav">
+									目录
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%b8%80%e7%ba%a7%e7%9b%ae%e5%bd%95" onclick="onNavClick(`#一级目录-nav`)" id="一级目录-nav">
+									一级目录
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%b1%82%e7%ba%a7%e7%9b%ae%e5%bd%95%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#层级目录系统-nav`)" id="层级目录系统-nav">
+									层级目录系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%b7%af%e5%be%84%e5%90%8d" onclick="onNavClick(`#路径名-nav`)" id="路径名-nav">
+									路径名
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%9b%ae%e5%bd%95%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#目录操作-nav`)" id="目录操作-nav">
+									目录操作
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%9a%84%e5%ae%9e%e7%8e%b0" onclick="onNavClick(`#文件系统的实现-nav`)" id="文件系统的实现-nav">
+									文件系统的实现
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e5%b8%83%e5%b1%80" onclick="onNavClick(`#文件系统布局-nav`)" id="文件系统布局-nav">
+									文件系统布局
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%9a%84%e5%ae%9e%e7%8e%b0" onclick="onNavClick(`#文件的实现-nav`)" id="文件的实现-nav">
+									文件的实现
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%9b%ae%e5%bd%95%e7%9a%84%e5%ae%9e%e7%8e%b0" onclick="onNavClick(`#目录的实现-nav`)" id="目录的实现-nav">
+									目录的实现
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b1%e4%ba%ab%e6%96%87%e4%bb%b6" onclick="onNavClick(`#共享文件-nav`)" id="共享文件-nav">
+									共享文件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%97%a5%e5%bf%97%e7%bb%93%e6%9e%84%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#日志结构文件系统-nav`)" id="日志结构文件系统-nav">
+									日志结构文件系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%97%a5%e5%bf%97%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#日志文件系统-nav`)" id="日志文件系统-nav">
+									日志文件系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#虚拟文件系统-nav`)" id="虚拟文件系统-nav">
+									虚拟文件系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%ae%a1%e7%90%86%e5%92%8c%e4%bc%98%e5%8c%96" onclick="onNavClick(`#文件系统管理和优化-nav`)" id="文件系统管理和优化-nav">
+									文件系统管理和优化
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%a3%81%e7%9b%98%e7%a9%ba%e9%97%b4%e7%ae%a1%e7%90%86" onclick="onNavClick(`#磁盘空间管理-nav`)" id="磁盘空间管理-nav">
+									磁盘空间管理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e5%a4%87%e4%bb%bd" onclick="onNavClick(`#文件系统备份-nav`)" id="文件系统备份-nav">
+									文件系统备份
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%9a%84%e4%b8%80%e8%87%b4%e6%80%a7" onclick="onNavClick(`#文件系统的一致性-nav`)" id="文件系统的一致性-nav">
+									文件系统的一致性
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e6%80%a7%e8%83%bd" onclick="onNavClick(`#文件系统性能-nav`)" id="文件系统性能-nav">
+									文件系统性能
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%a3%81%e7%9b%98%e7%a2%8e%e7%89%87%e6%95%b4%e7%90%86" onclick="onNavClick(`#磁盘碎片整理-nav`)" id="磁盘碎片整理-nav">
+									磁盘碎片整理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
+                    网志
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6" onclick="onNavClick(`#文件-nav`)" id="文件-nav">
+									文件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e5%91%bd%e5%90%8d" onclick="onNavClick(`#文件命名-nav`)" id="文件命名-nav">
+									文件命名
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%bb%93%e6%9e%84" onclick="onNavClick(`#文件结构-nav`)" id="文件结构-nav">
+									文件结构
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b1%bb%e5%9e%8b" onclick="onNavClick(`#文件类型-nav`)" id="文件类型-nav">
+									文件类型
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e8%ae%bf%e9%97%ae" onclick="onNavClick(`#文件访问-nav`)" id="文件访问-nav">
+									文件访问
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e5%b1%9e%e6%80%a7" onclick="onNavClick(`#文件属性-nav`)" id="文件属性-nav">
+									文件属性
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#文件操作-nav`)" id="文件操作-nav">
+									文件操作
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%80%e4%b8%aa%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8%e5%ae%9e%e7%8e%b0%e5%a4%8d%e5%88%b6%e7%9a%84%e7%ae%80%e5%8d%95%e7%a8%8b%e5%ba%8f" onclick="onNavClick(`#一个文件系统调用实现复制的简单程序-nav`)" id="一个文件系统调用实现复制的简单程序-nav">
+									一个文件系统调用实现复制的简单程序
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e7%9b%ae%e5%bd%95" onclick="onNavClick(`#目录-nav`)" id="目录-nav">
+									目录
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%b8%80%e7%ba%a7%e7%9b%ae%e5%bd%95" onclick="onNavClick(`#一级目录-nav`)" id="一级目录-nav">
+									一级目录
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%b1%82%e7%ba%a7%e7%9b%ae%e5%bd%95%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#层级目录系统-nav`)" id="层级目录系统-nav">
+									层级目录系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%b7%af%e5%be%84%e5%90%8d" onclick="onNavClick(`#路径名-nav`)" id="路径名-nav">
+									路径名
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%9b%ae%e5%bd%95%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#目录操作-nav`)" id="目录操作-nav">
+									目录操作
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%9a%84%e5%ae%9e%e7%8e%b0" onclick="onNavClick(`#文件系统的实现-nav`)" id="文件系统的实现-nav">
+									文件系统的实现
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e5%b8%83%e5%b1%80" onclick="onNavClick(`#文件系统布局-nav`)" id="文件系统布局-nav">
+									文件系统布局
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%9a%84%e5%ae%9e%e7%8e%b0" onclick="onNavClick(`#文件的实现-nav`)" id="文件的实现-nav">
+									文件的实现
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%9b%ae%e5%bd%95%e7%9a%84%e5%ae%9e%e7%8e%b0" onclick="onNavClick(`#目录的实现-nav`)" id="目录的实现-nav">
+									目录的实现
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b1%e4%ba%ab%e6%96%87%e4%bb%b6" onclick="onNavClick(`#共享文件-nav`)" id="共享文件-nav">
+									共享文件
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%97%a5%e5%bf%97%e7%bb%93%e6%9e%84%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#日志结构文件系统-nav`)" id="日志结构文件系统-nav">
+									日志结构文件系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%97%a5%e5%bf%97%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#日志文件系统-nav`)" id="日志文件系统-nav">
+									日志文件系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#虚拟文件系统-nav`)" id="虚拟文件系统-nav">
+									虚拟文件系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%ae%a1%e7%90%86%e5%92%8c%e4%bc%98%e5%8c%96" onclick="onNavClick(`#文件系统管理和优化-nav`)" id="文件系统管理和优化-nav">
+									文件系统管理和优化
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%a3%81%e7%9b%98%e7%a9%ba%e9%97%b4%e7%ae%a1%e7%90%86" onclick="onNavClick(`#磁盘空间管理-nav`)" id="磁盘空间管理-nav">
+									磁盘空间管理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e5%a4%87%e4%bb%bd" onclick="onNavClick(`#文件系统备份-nav`)" id="文件系统备份-nav">
+									文件系统备份
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%9a%84%e4%b8%80%e8%87%b4%e6%80%a7" onclick="onNavClick(`#文件系统的一致性-nav`)" id="文件系统的一致性-nav">
+									文件系统的一致性
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e6%80%a7%e8%83%bd" onclick="onNavClick(`#文件系统性能-nav`)" id="文件系统性能-nav">
+									文件系统性能
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%a3%81%e7%9b%98%e7%a2%8e%e7%89%87%e6%95%b4%e7%90%86" onclick="onNavClick(`#磁盘碎片整理-nav`)" id="磁盘碎片整理-nav">
+									磁盘碎片整理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.top">
+            Jialong&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://eternityqjl.top">
+        <div class="single-column-header-title">Jialong&#39;s Blog</div>
+        
+        <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/modernOS.jpg')"
+                    
+                
+            >
+                <div class="post-title">
+                    现代操作系统学习日志——文件系统
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-11-13 19:54
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">操作系统</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p>所有计算机应用程序都需要存储和检索信息。</p>
+<p>进程运行时可以在自己的地址空间中存储一定量的信息，但存储容量易受到虚拟地址空间大小的限制。另外，进程终止时，它保存的信息也随之丢失，但对于很多应用（例如数据库）而言，有关信息必须能够保存很长时间甚至永久保留。第三个问题是经常需要多个进程同时访问同一信息，解决方法是使得信息本身独立于任何一个进程。</p>
+<p>所以，长期存储信息有以下基本要求：</p>
+<ul>
+<li>能够存储大量信息</li>
+<li>使用信息的进程终止时，信息仍旧存在</li>
+<li>必须能使多个进程并发访问有关信息</li>
+</ul>
+<p>磁盘能够进行长期存储，我们将其当作一种大小固定的块的线性序列，并且支持读块k和写块k的操作。</p>
+<p><strong>文件</strong>是进程创建的信息逻辑单元，一块磁盘中可以有很多文件，每个文件是独立于其他文件的，文件是对磁盘的建模，而不是对RAM的建模。</p>
+<p>进程可以读取已经存在的文件，并在需要时建立新的文件。存储在文件中的信息必须是持久的。</p>
+<h2 id="文件">文件</h2>
+<h3 id="文件命名">文件命名</h3>
+<p><strong>大小写</strong></p>
+<p><strong>扩展名</strong></p>
+<h3 id="文件结构">文件结构</h3>
+<ul>
+<li>无结构的字节序列（Windows和Unix采用这种方法）</li>
+<li>具有固定长度记录的序列</li>
+<li>有一棵树构成的文件结构，每个记录不必具有相同长度，记录的固定位置上有一个键字段（在一些处理商业数据的大型计算机上广泛应用）</li>
+</ul>
+<h3 id="文件类型">文件类型</h3>
+<ul>
+<li>普通文件
+<ul>
+<li>ASCII文件。优势是可以显示和打印，可以用任何文本编辑器进行编辑</li>
+<li>二进制文件。有一定的内部结构，使用该文件的程序才了解这种结构</li>
+</ul>
+</li>
+<li>目录：管理文件系统结构的系统文件</li>
+</ul>
+<p>另外，Unix还具有：</p>
+<ul>
+<li>字符特殊文件。与I/O有关，用于串行I/O设备。</li>
+<li>块特殊文件。用于磁盘设备。</li>
+</ul>
+<p>两个普通文件的例子：一个可执行文件、一个存档文件。详情见书上。</p>
+<h3 id="文件访问">文件访问</h3>
+<ul>
+<li>顺序访问</li>
+<li>随机访问文件
+<ul>
+<li>read操作给出开始读文件的位置</li>
+<li>用seek操作设置当前位置（Windows和UNIX使用这种方式）</li>
+</ul>
+</li>
+</ul>
+<h3 id="文件属性">文件属性</h3>
+<p>除了文件名和数据外的与文件相关的信息，称为文件<strong>属性</strong>或<strong>元数据</strong>。这些信息在不同系统中有着很大差异。主要具有以下属性类别：</p>
+<ul>
+<li>与文件保护相关的属性。创建者、所有者、口令等。</li>
+<li>标志。用于控制或启动某些特殊属性。</li>
+<li>用关键字查找记录的文件中的属性：记录长度、键的位置和长度等。</li>
+<li>创建时间相关属性。</li>
+<li>当前大小。</li>
+</ul>
+<h3 id="文件操作">文件操作</h3>
+<p>与文件有关的最常用的一些系统调用：</p>
+<ul>
+<li>create</li>
+<li>delete</li>
+<li>open</li>
+<li>close</li>
+<li>read</li>
+<li>write</li>
+<li>append。write的限制格式，只能从文件末尾添加数据。</li>
+<li>seek</li>
+<li>get attributes</li>
+<li>set attributes</li>
+<li>rename</li>
+</ul>
+<h3 id="一个文件系统调用实现复制的简单程序">一个文件系统调用实现复制的简单程序</h3>
+<p>详情见书上。</p>
+<h2 id="目录">目录</h2>
+<p>文件系统提供<strong>目录或文件夹</strong>用于记录文件的位置。很多系统中目录本身也是文件。</p>
+<h3 id="一级目录">一级目录</h3>
+<p>有时也称为根目录。<strong>只有一个目录</strong>，部分原因是只有一个用户。这种目录系统常用于嵌入式装置中。</p>
+<h3 id="层级目录系统">层级目录系统</h3>
+<p>使用层次结构（即一个目录树）。可以把文件以自然的方式进行分组，每个而用户可以为自己的目录树拥有自己的私人根目录。用户可以创建任意数量的子目录。</p>
+<h3 id="路径名">路径名</h3>
+<ul>
+<li>绝对路径名</li>
+<li>相对路径名（又称工作目录）</li>
+</ul>
+<p>支持层次目录结构的大多数操作系统在每个目录中有两个特殊目录项<code>.</code>和<code>..</code>，常常读作dot和dotdot。dot指当前目录，dotdot指的是其父目录。使用一些与目录相关的命令时可以使用这两个目录项。</p>
+<h3 id="目录操作">目录操作</h3>
+<p>这里以UNIX为例。</p>
+<ul>
+<li>create（有时通过mdir完成）</li>
+<li>delete：删除目录，只有空目录可以删除。</li>
+<li>opendir</li>
+<li>closedir</li>
+<li>readdir</li>
+<li>rename</li>
+<li>link。链接技术允许多个目录中出现同一个文件。这种类型的链接增加了文件的i节点（i-node）计数器的计数，有时称为硬链接。</li>
+<li>unlink。删除目录项。</li>
+</ul>
+<h2 id="文件系统的实现">文件系统的实现</h2>
+<h3 id="文件系统布局">文件系统布局</h3>
+<p>文件系统存放在<strong>磁盘</strong>上，多数磁盘划分为<strong>一个或多个分区</strong>，每个分区有一个独立的文件系统。</p>
+<p>磁盘的<strong>0号扇区</strong>称为<strong>主引导记录（Master Boot Record，MBR）</strong>，用来引导计算机。</p>
+<p>MBR的结尾是<strong>分区表</strong>，该表给出了每个分区的起始地址和结束地址。</p>
+<p>计算机被引导时，BIOS读入并执行MBR，确定活动分区，读入其第一个块，称为<strong>引导块</strong>，并执行之。引导块中的程序将装载该分区中的操作系统。为了统一，每个分区都从一个引导块开始。</p>
+<p>除了从引导块开始，磁盘分区的布局随着文件系统的不同而变化。文件系统通常包含：超级块、空闲空间管理、i节点、根目录、其他文件和目录。</p>
+<h3 id="文件的实现">文件的实现</h3>
+<p><strong>连续分配</strong></p>
+<p>把每个文件作为一连串连续数据块存储在磁盘中。</p>
+<p>优点：记录每个文件的位置较为简单，只要记住第一块的磁盘地址和文件块数；读操作性能好，只需要一次寻找（一个块）。</p>
+<p>缺点：会产生碎片。</p>
+<p>CD-ROM和DVD使用的就是这种方法。</p>
+<p><strong>链表分配</strong></p>
+<p>为每个文件构造磁盘块链表，即每个块的第一个字作为指向下一块的指针，块的其他部分存储数据。</p>
+<p>这一方法可以中分利用每个磁盘块。</p>
+<p>这种分配方法中，顺序读文件十分方便，但随机访问相当缓慢。另外，指针占去了一些字节，每个磁盘块存储数据的字节数不再是2的整数次幂。这样怪异的大小降低了系统的运行效率。</p>
+<p><strong>采用内存中的表进行链表分配</strong></p>
+<p>取出每个磁盘块的指针字，把他们放在内存的一个表中，可以解决上述链表的不足。可以从一个块开始，顺着链走到最后，找到一个文件的全部磁盘块。内存中这样的一个表格称为<strong>文件分配表（File Allocation Table，FAT）。</strong></p>
+<p>这种方法的缺点是要把整个表都存放在内存中，例如对于一个1TB的磁盘和1KB大小的块，这张表需要有10亿项，每项至少3字节，这张表要占用2.4GB内存，显然并不实用。所以FAT方式不能较好地扩展并应用于大型磁盘中，只是在最初的MS-DOS文件系统比较实用。</p>
+<p><strong>i节点</strong></p>
+<p>给每个文件赋予一个称为i节点的数据结构，其中列出了<strong>文件属性</strong>和<strong>文件块的磁盘地址</strong>。</p>
+<p>只有在对应<strong>文件打开时</strong>其i节点才在<strong>内存中</strong>，如果每个i节点占有n个字节，最多K个文件同时打开，那么为了打开文件而保留i节点的数组所占的全部内存仅仅是kn个字节，只需提前保留这么多空间即可。</p>
+<p>这个数组通常比FAT占据的空间要小。因为保留所有磁盘块的链表的表大小正比于磁盘自身的大小。而i节点在内存中数组的大小正比于要<strong>同时打开文件的数量</strong>，与磁盘空间无关。</p>
+<p>i节点的一个问题是如果一个文件所含的磁盘块的数目超出i节点所能容纳的数据怎么办。解决方法为：</p>
+<ul>
+<li>最后一个磁盘地址不指向数据块，指向一个包含额外磁盘块地址的块的地址</li>
+<li>可以有两个或更多个包含磁盘地址的块，或者指向其他存放地址的磁盘块的磁盘块。NTFS采用了相似的方法。</li>
+</ul>
+<h3 id="目录的实现">目录的实现</h3>
+<p>读文件前必须先打开文件。操作系统利用用户给出的<strong>路径名</strong>找到相应的<strong>目录项</strong>。目录项中提供了查找文件磁盘块所需的信息，因系统而异，可以是上一节中介绍的几种方法对应的信息，如整个文件的磁盘地址（连续分配）、第一个块的编号（两种链表分配方案）、i节点号。</p>
+<p>目录系统的主要功能就是把<strong>ASCII文件名</strong>映射成<strong>定位文件数据所需的信息</strong>。</p>
+<p>与此相关的问题是在何处<strong>存放文件属性</strong>，共有两种方式：</p>
+<ul>
+<li>直接存放在<strong>目录项</strong>中</li>
+</ul>
+<p>目录中有一个固定大小的目录项列表，每个文件对应一项，其中包含文件名、文件属性的结构体以及说明磁盘块位置的一个或多个磁盘地址。</p>
+<ul>
+<li>存放在<strong>i节点</strong>中</li>
+</ul>
+<p>采用i节点系统采用的方式，不存放在目录项中。这种情形下<strong>目录项</strong>会更短：只有<strong>文件名和i节点号</strong>，这种方法更好。</p>
+<p><strong>实现可变长的长文件名的方法</strong></p>
+<ul>
+<li>一种方法是放弃所有目录项一样大。每个目录项有一个固定部分，这个固定部分以目录项长度开始，后面是固定格式的数据，包括各种属性，最后才是一个任意长度的实际文件名。为了使每个目录项从字的边界开始，每个文件名被填充成整数个字。这种方法的缺点是一走文件后引入了一个长度可变的空闲，下一个文件不一定适合这个空隙。另外，一个目录项可能分布在多个内存页面，读取文件名时可能发生缺页。</li>
+<li>另一种方法是使目录项有固定长度，文件名存放在目录后面的堆中。优点是移走一个文件的目录项后，另一个文件的目录项可以适合这个空隙。另外要对堆进行管理，处理文件名时还可能出现缺页。</li>
+</ul>
+<p><strong>加速查找文件名的方法</strong></p>
+<p>在每个目录中使用散列表进行查找。一般使用拉链法处理散列表的冲突。</p>
+<p>另一种加快大型目录查找速度的方法是将查找结果存入高速缓存。</p>
+<h3 id="共享文件">共享文件</h3>
+<p>通过<strong>链接</strong>来实现不同目录的用户共享同一个而文件，这样，文件系统本身就是一个<strong>有向无环图DAG</strong>而不是一棵树，这使得文件系统维护变得复杂，但也是必须付出的代价。</p>
+<p>共享也带来一些问题。若目录中包含磁盘地址，当链接文件时，必须把A目录中的地址复制到B目录，如果A或B随后又向目录中添加了内容，则新的数据块之列入进行添加工作的用户目录中，其他用户对此不知情。解决这个问题的方法有两种：</p>
+<ul>
+<li>磁盘块不列入目录，而是列入一个与文件本身关联的小型数据结构，目录指向这个小型数据结构。UNIX中使用的就是<strong>i节点</strong>。</li>
+<li><strong>符号链接法</strong>，又称软链接法。系统建立一个类型为LINK的新文件，将其存放在A的目录下，使得A与B的一个文件存在链接。新文件中只包含了它所链接的文件的路径名。当A读该链接文件时，操作系统看到要读的文件类型为LINK，则找到该文件所链接的文件的名字，去读那个文件。</li>
+</ul>
+<h3 id="日志结构文件系统">日志结构文件系统</h3>
+<p>解决磁盘寻道时间没有快速发展的问题。</p>
+<h3 id="日志文件系统">日志文件系统</h3>
+<p>借鉴日志结构文件系统的实际应用，基本思想是保存一个用于记录系统下一步要做什么的日志。这样当系统在完成它们即将完成的任务前崩溃时，重新启动后，可以通过查看日志，获取崩溃前计划完成的任务，并完成它们。</p>
+<h3 id="虚拟文件系统">虚拟文件系统</h3>
+<p>在同一个操作系统下可能使用很多不同的文件系统。Windows有一个主要的NTFS文件系统，但也包含老的FAT-32或FAT-16驱动器或分区，并且不时需要一个CD-ROM或DVD。Windows通过指定不同盘符来处理这些不同的文件系统。当一个进程打开一个文件，盘符是显式或隐式存在的，所以Windows知道向哪个文件系统传递请求，不需要整合不同类型文件系统。</p>
+<p>相比之下，现代UNIX系统将多种文件系统整合到一个统一的结构中。从用户的观点看，只有一个文件系统层级，他们事实上是多种不相容的文件系统，对用户和进程不可见。</p>
+<p>绝大多数UNIX操作系统都使用虚拟文件系统（Virtual File System, VFS）。关键思想就是抽象出所有文件系统共有的部分，并将这部分单独的代码放在单独一层。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.jpg" alt="虚拟文件系统"></p>
+<h2 id="文件系统管理和优化">文件系统管理和优化</h2>
+<h3 id="磁盘空间管理">磁盘空间管理</h3>
+<h3 id="文件系统备份">文件系统备份</h3>
+<h3 id="文件系统的一致性">文件系统的一致性</h3>
+<h3 id="文件系统性能">文件系统性能</h3>
+<h3 id="磁盘碎片整理">磁盘碎片整理</h3>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-11-13</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/">
+			上回<br>算法的时间复杂度和空间复杂度
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            },
+            debounce(func, wait, options) {
+                let lastArgs,
+                    lastThis,
+                    maxWait,
+                    result,
+                    timerId,
+                    lastCallTime
+
+                let lastInvokeTime = 0
+                let leading = false
+                let maxing = false
+                let trailing = true
+
+                
+                const useRAF = (!wait && wait !== 0 && typeof root.requestAnimationFrame === 'function')
+
+                if (typeof func !== 'function') {
+                    throw new TypeError('Expected a function')
+                }
+                function isObject(value) {
+                    const type = typeof value
+                    return value != null && (type === 'object' || type === 'function')
+                }
+
+                wait = +wait || 0
+                if (isObject(options)) {
+                    leading = !!options.leading
+                    maxing = 'maxWait' in options
+                    maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait
+                    trailing = 'trailing' in options ? !!options.trailing : trailing
+                }
+
+                function invokeFunc(time) {
+                    const args = lastArgs
+                    const thisArg = lastThis
+
+                    lastArgs = lastThis = undefined
+                    lastInvokeTime = time
+                    result = func.apply(thisArg, args)
+                    return result
+                }
+
+                function startTimer(pendingFunc, wait) {
+                    if (useRAF) {
+                    root.cancelAnimationFrame(timerId)
+                    return root.requestAnimationFrame(pendingFunc)
+                    }
+                    return setTimeout(pendingFunc, wait)
+                }
+
+                function cancelTimer(id) {
+                    if (useRAF) {
+                    return root.cancelAnimationFrame(id)
+                    }
+                    clearTimeout(id)
+                }
+
+                function leadingEdge(time) {
+                    
+                    lastInvokeTime = time
+                    
+                    timerId = startTimer(timerExpired, wait)
+                    
+                    return leading ? invokeFunc(time) : result
+                }
+
+                function remainingWait(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+                    const timeWaiting = wait - timeSinceLastCall
+
+                    return maxing
+                    ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+                    : timeWaiting
+                }
+
+                function shouldInvoke(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+
+                    
+                    
+                    
+                    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+                    (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait))
+                }
+
+                function timerExpired() {
+                    const time = Date.now()
+                    if (shouldInvoke(time)) {
+                    return trailingEdge(time)
+                    }
+                    
+                    timerId = startTimer(timerExpired, remainingWait(time))
+                }
+
+                function trailingEdge(time) {
+                    timerId = undefined
+
+                    
+                    
+                    if (trailing && lastArgs) {
+                    return invokeFunc(time)
+                    }
+                    lastArgs = lastThis = undefined
+                    return result
+                }
+
+                function cancel() {
+                    if (timerId !== undefined) {
+                    cancelTimer(timerId)
+                    }
+                    lastInvokeTime = 0
+                    lastArgs = lastCallTime = lastThis = timerId = undefined
+                }
+
+                function flush() {
+                    return timerId === undefined ? result : trailingEdge(Date.now())
+                }
+
+                function pending() {
+                    return timerId !== undefined
+                }
+
+                function debounced(...args) {
+                    const time = Date.now()
+                    const isInvoking = shouldInvoke(time)
+
+                    lastArgs = args
+                    lastThis = this
+                    lastCallTime = time
+
+                    if (isInvoking) {
+                    if (timerId === undefined) {
+                        return leadingEdge(lastCallTime)
+                    }
+                    if (maxing) {
+                        
+                        timerId = startTimer(timerExpired, wait)
+                        return invokeFunc(lastCallTime)
+                    }
+                    }
+                    if (timerId === undefined) {
+                    timerId = startTimer(timerExpired, wait)
+                    }
+                    return result
+                }
+                debounced.cancel = cancel
+                debounced.flush = flush
+                debounced.pending = pending
+                return debounced
+                }
+
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+        
+        
+
+        document.querySelectorAll("table").forEach(function(elem){
+            elem.classList.add("table-striped");
+            elem.classList.add("table");
+            elem.classList.add("table-responsive");
+            elem.classList.add("table-hover");
+        })
+
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
+        
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+
+
+
+</script>
+    </body>
+</html>
