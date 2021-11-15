@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>Posts</title>
+<title>C&#43;&#43; Primer——CH11 关联容器</title>
 
 
 
@@ -10,16 +10,18 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="">
+<meta name="description" content="《C&#43;&#43;  Primer 第5版》学习笔记">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
 
 
-<meta property="og:title" content="Posts" />
-<meta property="og:description" content="My HomePage Description" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://eternityqjl.top/posts/" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="C&#43;&#43; Primer——CH11 关联容器" />
+<meta property="og:description" content="《C&#43;&#43;  Primer 第5版》学习笔记" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-15T15:32:41+08:00" />
+<meta property="article:modified_time" content="2021-11-15T15:32:41+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -27,8 +29,8 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Posts"/>
-<meta name="twitter:description" content="My HomePage Description"/>
+<meta name="twitter:title" content="C&#43;&#43; Primer——CH11 关联容器"/>
+<meta name="twitter:description" content="《C&#43;&#43;  Primer 第5版》学习笔记"/>
 
 
 
@@ -64,7 +66,29 @@
 
 
 
+  
+    <script src="/js/toc.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -171,6 +195,308 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%bd%bf%e7%94%a8%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#使用关联容器-nav`)" id="使用关联容器-nav">
+									使用关联容器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%a6%82%e8%bf%b0" onclick="onNavClick(`#关联容器概述-nav`)" id="关联容器概述-nav">
+									关联容器概述
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%ae%9a%e4%b9%89%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#定义关联容器-nav`)" id="定义关联容器-nav">
+									定义关联容器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b3%e9%94%ae%e5%ad%97%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%a6%81%e6%b1%82" onclick="onNavClick(`#关键字类型的要求-nav`)" id="关键字类型的要求-nav">
+									关键字类型的要求
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#pair%e7%b1%bb%e5%9e%8b" onclick="onNavClick(`#pair类型-nav`)" id="pair类型-nav">
+									pair类型
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#关联容器操作-nav`)" id="关联容器操作-nav">
+									关联容器操作
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e8%bf%ad%e4%bb%a3%e5%99%a8" onclick="onNavClick(`#关联容器迭代器-nav`)" id="关联容器迭代器-nav">
+									关联容器迭代器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%b7%bb%e5%8a%a0%e5%85%83%e7%b4%a0" onclick="onNavClick(`#添加元素-nav`)" id="添加元素-nav">
+									添加元素
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%a0%e9%99%a4%e5%85%83%e7%b4%a0" onclick="onNavClick(`#删除元素-nav`)" id="删除元素-nav">
+									删除元素
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#map%e7%9a%84%e4%b8%8b%e6%a0%87%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#map的下标操作-nav`)" id="map的下标操作-nav">
+									map的下标操作
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%bf%e9%97%ae%e5%85%83%e7%b4%a0" onclick="onNavClick(`#访问元素-nav`)" id="访问元素-nav">
+									访问元素
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%97%a0%e5%ba%8f%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#无序容器-nav`)" id="无序容器-nav">
+									无序容器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%ae%a1%e7%90%86%e6%a1%b6" onclick="onNavClick(`#管理桶-nav`)" id="管理桶-nav">
+									管理桶
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%97%a0%e9%9c%80%e5%ae%b9%e5%99%a8%e5%af%b9%e5%85%b3%e9%94%ae%e5%ad%97%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%a6%81%e6%b1%82" onclick="onNavClick(`#无需容器对关键字类型的要求-nav`)" id="无需容器对关键字类型的要求-nav">
+									无需容器对关键字类型的要求
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -186,24 +512,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 brightness_7
             </i>
         </a>
-        
-        
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    1<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>5
-                </span>
-            </div>
-            
-            
-
-            
-            <a class="pagination-action" href="/posts/page/2/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
         
         
     </div>
@@ -268,6 +576,308 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             
             
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%bd%bf%e7%94%a8%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#使用关联容器-nav`)" id="使用关联容器-nav">
+									使用关联容器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%a6%82%e8%bf%b0" onclick="onNavClick(`#关联容器概述-nav`)" id="关联容器概述-nav">
+									关联容器概述
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%ae%9a%e4%b9%89%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#定义关联容器-nav`)" id="定义关联容器-nav">
+									定义关联容器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b3%e9%94%ae%e5%ad%97%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%a6%81%e6%b1%82" onclick="onNavClick(`#关键字类型的要求-nav`)" id="关键字类型的要求-nav">
+									关键字类型的要求
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#pair%e7%b1%bb%e5%9e%8b" onclick="onNavClick(`#pair类型-nav`)" id="pair类型-nav">
+									pair类型
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#关联容器操作-nav`)" id="关联容器操作-nav">
+									关联容器操作
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e8%bf%ad%e4%bb%a3%e5%99%a8" onclick="onNavClick(`#关联容器迭代器-nav`)" id="关联容器迭代器-nav">
+									关联容器迭代器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%b7%bb%e5%8a%a0%e5%85%83%e7%b4%a0" onclick="onNavClick(`#添加元素-nav`)" id="添加元素-nav">
+									添加元素
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%a0%e9%99%a4%e5%85%83%e7%b4%a0" onclick="onNavClick(`#删除元素-nav`)" id="删除元素-nav">
+									删除元素
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#map%e7%9a%84%e4%b8%8b%e6%a0%87%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#map的下标操作-nav`)" id="map的下标操作-nav">
+									map的下标操作
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%bf%e9%97%ae%e5%85%83%e7%b4%a0" onclick="onNavClick(`#访问元素-nav`)" id="访问元素-nav">
+									访问元素
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%97%a0%e5%ba%8f%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#无序容器-nav`)" id="无序容器-nav">
+									无序容器
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%ae%a1%e7%90%86%e6%a1%b6" onclick="onNavClick(`#管理桶-nav`)" id="管理桶-nav">
+									管理桶
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%97%a0%e9%9c%80%e5%ae%b9%e5%99%a8%e5%af%b9%e5%85%b3%e9%94%ae%e5%ad%97%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%a6%81%e6%b1%82" onclick="onNavClick(`#无需容器对关键字类型的要求-nav`)" id="无需容器对关键字类型的要求-nav">
+									无需容器对关键字类型的要求
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
         </div>
     </div>
 </div>
@@ -311,271 +921,151 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        
-            <a class="a-block">
-                <div class="post-item-wrapper post-item-wrapper-no-hover">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title post-item-title-small year">
-                                2021
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+        <div class="post">
             
-            <a href="/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                C&#43;&#43; Primer——CH09 顺序容器
-                            </div>
-                            <div class="post-item-meta">
-    2021-11-15
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            
+                
+            
 
-                        </div>
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://github.com/eternityqjl/blogGallery/blob/master/blog/cppprimer.jpg?raw=true')"
+                    
+                
+            >
+                <div class="post-title">
+                    C&#43;&#43; Primer——CH11 关联容器
+                    
+                    <div class="post-subtitle">
+                        《C&#43;&#43;  Primer 第5版》学习笔记
                     </div>
-                </div>
-            </a>
-            
-            <a href="/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                C&#43;&#43; Primer——CH11 关联容器
-                            </div>
-                            <div class="post-item-meta">
-    2021-11-15
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-11-15 15:32
+                        </time>
+                        
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                现代操作系统学习日志——文件系统
-                            </div>
-                            <div class="post-item-meta">
-    2021-11-13
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/c&#43;&#43;_primer">C&#43;&#43;_Primer</a>
+                                &nbsp;
+                        
 
-                        </div>
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/c&#43;&#43;">C&#43;&#43;</a>
+                                &nbsp;
+                            
+                                <a href="/tags/c&#43;&#43;_primer">C&#43;&#43;_Primer</a>
+                                &nbsp;
+                            
+                        
+                        
                     </div>
                 </div>
-            </a>
+            </div>
             
-            <a href="/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法的时间复杂度和空间复杂度
-                            </div>
-                            <div class="post-item-meta">
-    2021-08-13
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p>键值对。</p>
+<p>set和map</p>
+<h2 id="使用关联容器">使用关联容器</h2>
+<ul>
+<li>map： 关联数组，关键字——值。</li>
+<li>set：关键字的简单集合</li>
+</ul>
+<p>可以进行列表初始化</p>
+<h2 id="关联容器概述">关联容器概述</h2>
+<p>关联容器不支持顺序容器的位置相关的操作，例如<code>push_front</code>，原因是关联容器中的值是按照关键字存储的，这些操作没有意义。</p>
+<p>另外无序容器还提供调整哈希性能的操作。</p>
+<h3 id="定义关联容器">定义关联容器</h3>
+<h3 id="关键字类型的要求">关键字类型的要求</h3>
+<p>对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。</p>
+<h3 id="pair类型">pair类型</h3>
+<p>定义在头文件utility中。</p>
+<p>pair的默认构造函数对数据成员进行值初始化。也可以为每个成员提供初始化器。</p>
+<h2 id="关联容器操作">关联容器操作</h2>
+<p>除了之前在顺序容器P295页列出的类型，关联容器还定义了以下类型：</p>
+<ul>
+<li><code>key_type</code>：此容器类型的关键字类型</li>
+<li><code>mapped_type</code>：每个关键字关联的类型，只适用于map</li>
+<li><code>value_type</code>
+<ul>
+<li>对于set而言，与<code>key_type</code>相同</li>
+<li>对于map而言，为<code>pair&lt;const key_type, mapped_type&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="关联容器迭代器">关联容器迭代器</h3>
+<p>解引用一个关联容器迭代器时，就能得到一个类型为容器的value_type的值的引用。对于map而言，value_type是一个pair类型，其first成员保存const的关键字，second成员保存值。</p>
+<p>切记，一个map的value_type是一个pair，可以改变pair的值但不能该边关键字成员的值。</p>
+<p>我们通常不对关联容器使用泛型算法，关键字是const这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法需要向元素写入值，而set类型中的元素是count的，map中元素是pair，其第一个成员是const的。</p>
+<h3 id="添加元素">添加元素</h3>
+<p>关联容器的insert成员向容器中添加一个元素或一个元素范围，map和set不包含重复关键字，因此插入一个已存在的元素对容器没有任何影响。</p>
+<h3 id="删除元素">删除元素</h3>
+<p>关联容器定义了三个版本的erase，与顺序容器一样，我们可以通过传递给erase一个迭代器或一个迭代器对来删除一个元素或一个元素范围。</p>
+<p>关联容器额外提供一个erase操作，接受一个key_type参数，此版本删除所有匹配给定关键字的元素，返回实际删除的元素的数量。</p>
+<h3 id="map的下标操作">map的下标操作</h3>
+<p>map和unordered_map容器提供了下标运算符和一个对应的at函数，set类型不支持下标。</p>
+<h3 id="访问元素">访问元素</h3>
+<p>对于不允许重复关键字的容器，使用find和count没什么区别，但对于重复关键字的容器，count还会做更多的工作：如果元素在容器中，能够统计有多少个元素有相同的关键字。如果不需要技术，虽好使用find。</p>
+<h2 id="无序容器">无序容器</h2>
+<p>C++11 新定义了4个无序关联容器。这些容器不是使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。在关键字类型的元素没有明显的序关系的情况下，无序容器是非常有用的。</p>
+<p>虽然理论上哈希技术能获得更好的平均性能，但在实际中想要达到更好的效果还要进行一些性能测试和调优。</p>
+<h3 id="管理桶">管理桶</h3>
+<p>无序容器在存储上组织为<strong>一组桶</strong>，每个桶保存<strong>零个或多个元素</strong>。无序容器使用一个<strong>哈希函数</strong>将元素映射到桶。为了访问一个元素，容器首先计算元素的哈希值，它指出应该搜索哪个桶。容器将具有一个特定哈希值的所有元素都保存在相同的桶中（有点像散列表处理冲突时使用的拉链法）。无需容器的性能依赖于哈希函数的质量和桶的数量。</p>
+<h3 id="无需容器对关键字类型的要求">无需容器对关键字类型的要求</h3>
 
-                        </div>
-                    </div>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-11-15</p>
+                    
                 </div>
-            </a>
+            </div>
             
-            <a href="/posts/csapp-3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                csapp: 3.程序的机器级表示
-                            </div>
-                            <div class="post-item-meta">
-    2021-08-09
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            <nav class="post-pagination">
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%89%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                计算机网络学习日志（三）——网络层：数据平面
-                            </div>
-                            <div class="post-item-meta">
-    2021-08-05
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                
+                <a class="newer-posts" href="https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/">
+			下回<br>C&#43;&#43; Primer——CH09 顺序容器
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+			上回<br>现代操作系统学习日志——文件系统
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                计算机网络学习日志（五）——链路层
-                            </div>
-                            <div class="post-item-meta">
-    2021-08-01
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                Linux基础知识
-                            </div>
-                            <div class="post-item-meta">
-    2021-07-29
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+<div id="gitalk-container"></div>
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                计算机网络各层级理解
-                            </div>
-                            <div class="post-item-meta">
-    2021-07-23
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                LaTex环境配置和基本功能模块
-                            </div>
-                            <div class="post-item-meta">
-    2021-07-18
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-        
-    </div>
-</div>
+
+
+
+
 
 
             </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" style="opacity:0">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>1/5</span>
         </div>
-
-        
-        <a class="pagination-action" href="/posts/page/2/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
+    </div>
 </div>
 
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -842,6 +1332,9 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },

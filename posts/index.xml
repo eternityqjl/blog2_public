@@ -7,7 +7,55 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 13 Nov 2021 19:54:09 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Nov 2021 15:36:20 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; Primer——CH09 顺序容器</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Mon, 15 Nov 2021 15:36:20 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</guid>
+      <description>一个容器就是一些特定类型对象的集合。
+顺序容器提供了控制元素存储和访问顺序的能力。这种顺序与元素加入容器时的位置相对应。
+概述 顺序容器都提供了快速顺序访问元素的能力。
+   符号 顺序容器类型(名称) 性能     vector 可变大小数组 支持快速随机访问。在尾部之外的位置插入删除元素很慢   deque 双端队列 支持快速随机访问。在头尾插入删除速度很快   list 双向链表 只支持双向顺序访问。在list中任何位置插入删除元素都很快   forward_list 单项链表 只支持单项顺序访问。在forward_list中任何位置插入删除元素都很快   array 固定大小数组 支持快速随机访问。不能添加删除元素   string 与vector相似的容器，专门用于保存字符 随机访问快，在尾部插入删除速度快    除了固定大小的array外，其他容器都提供高效的内存管理。容器保存元素的策略对容器操作的效率有着很大影响。
+string和vector将元素保存在连续的内存空间中，因此由元素的下标来计算其地址非常快速。但在这两种容器的中间位置插入和删除元素的速度非常慢，因为一次插入或删除后，需要移动插入、删除位置后的所有元素以保证存储的连续。
+list和forward_list两个容器能令任何位置的添加和删除操作都很快，但这两种容器不支持随机访问，因为元素保存的内存空间不连续，只能通过遍历整个容器来访问一个元素。与vector和string相比，额外内存开销也很大。
+forward_list与最好的手写单向链表数据结构性能相当，因此没有size操作，因为保存或计算大小会多出额外开销。
+deque支持快读随机访问，在该容器中间位置添加或删除元素速度很慢，但在两端很快。
+容器库概览 容器类型上的操作分成了层次：
+ 某些操作式所有容器都提供的； 另外一些操作仅针对顺序容器、关联容器或无序容器； 还有一些操作只适合一小部分容器。  容器通过尖括号指定类型。
+容器操作 iterator	迭代器 *iter	//返回迭代器iter所指元素的引用 iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员 ++iter	//令iter指示容器中的下一个元素 --iter	//令iter指示容器中的上一个元素 iter1 == iter2 一个迭代器范围由一对迭代器表示，这两个迭代器被称为begin和end，begin指向容器第一个元素，end指向容器的尾后元素，这种元素范围被称为左闭合区间，即[begin, end)。</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; Primer——CH11 关联容器</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Mon, 15 Nov 2021 15:32:41 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</guid>
+      <description>键值对。
+set和map
+使用关联容器  map： 关联数组，关键字——值。 set：关键字的简单集合  可以进行列表初始化
+关联容器概述 关联容器不支持顺序容器的位置相关的操作，例如push_front，原因是关联容器中的值是按照关键字存储的，这些操作没有意义。
+另外无序容器还提供调整哈希性能的操作。
+定义关联容器 关键字类型的要求 对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。
+pair类型 定义在头文件utility中。
+pair的默认构造函数对数据成员进行值初始化。也可以为每个成员提供初始化器。
+关联容器操作 除了之前在顺序容器P295页列出的类型，关联容器还定义了以下类型：
+ key_type：此容器类型的关键字类型 mapped_type：每个关键字关联的类型，只适用于map value_type  对于set而言，与key_type相同 对于map而言，为pair&amp;lt;const key_type, mapped_type&amp;gt;    关联容器迭代器 解引用一个关联容器迭代器时，就能得到一个类型为容器的value_type的值的引用。对于map而言，value_type是一个pair类型，其first成员保存const的关键字，second成员保存值。
+切记，一个map的value_type是一个pair，可以改变pair的值但不能该边关键字成员的值。
+我们通常不对关联容器使用泛型算法，关键字是const这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法需要向元素写入值，而set类型中的元素是count的，map中元素是pair，其第一个成员是const的。
+添加元素 关联容器的insert成员向容器中添加一个元素或一个元素范围，map和set不包含重复关键字，因此插入一个已存在的元素对容器没有任何影响。
+删除元素 关联容器定义了三个版本的erase，与顺序容器一样，我们可以通过传递给erase一个迭代器或一个迭代器对来删除一个元素或一个元素范围。
+关联容器额外提供一个erase操作，接受一个key_type参数，此版本删除所有匹配给定关键字的元素，返回实际删除的元素的数量。
+map的下标操作 map和unordered_map容器提供了下标运算符和一个对应的at函数，set类型不支持下标。
+访问元素 对于不允许重复关键字的容器，使用find和count没什么区别，但对于重复关键字的容器，count还会做更多的工作：如果元素在容器中，能够统计有多少个元素有相同的关键字。如果不需要技术，虽好使用find。
+无序容器 C++11 新定义了4个无序关联容器。这些容器不是使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。在关键字类型的元素没有明显的序关系的情况下，无序容器是非常有用的。
+虽然理论上哈希技术能获得更好的平均性能，但在实际中想要达到更好的效果还要进行一些性能测试和调优。
+管理桶 无序容器在存储上组织为一组桶，每个桶保存零个或多个元素。无序容器使用一个哈希函数将元素映射到桶。为了访问一个元素，容器首先计算元素的哈希值，它指出应该搜索哪个桶。容器将具有一个特定哈希值的所有元素都保存在相同的桶中（有点像散列表处理冲突时使用的拉链法）。无需容器的性能依赖于哈希函数的质量和桶的数量。
+无需容器对关键字类型的要求 </description>
+    </item>
+    
     <item>
       <title>现代操作系统学习日志——文件系统</title>
       <link>https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</link>
@@ -392,10 +440,10 @@ Xtr, Ytr, Xte, Yte = load_CIFAR10(&amp;#39;data/cifar10/&amp;#39;) # a magic fun
     
     <item>
       <title>C&#43;&#43; Primer——CH08 IO库</title>
-      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</link>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2io%E5%BA%93/</link>
       <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
       
-      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2%E6%A0%87%E5%87%86%E5%BA%93/</guid>
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2io%E5%BA%93/</guid>
       <description>&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
 &lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
 &lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
