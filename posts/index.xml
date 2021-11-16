@@ -7,26 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 15 Nov 2021 15:36:20 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>C&#43;&#43; Primer——CH09 顺序容器</title>
-      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</link>
-      <pubDate>Mon, 15 Nov 2021 15:36:20 +0800</pubDate>
-      
-      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</guid>
-      <description>一个容器就是一些特定类型对象的集合。
-顺序容器提供了控制元素存储和访问顺序的能力。这种顺序与元素加入容器时的位置相对应。
-概述 顺序容器都提供了快速顺序访问元素的能力。
-   符号 顺序容器类型(名称) 性能     vector 可变大小数组 支持快速随机访问。在尾部之外的位置插入删除元素很慢   deque 双端队列 支持快速随机访问。在头尾插入删除速度很快   list 双向链表 只支持双向顺序访问。在list中任何位置插入删除元素都很快   forward_list 单项链表 只支持单项顺序访问。在forward_list中任何位置插入删除元素都很快   array 固定大小数组 支持快速随机访问。不能添加删除元素   string 与vector相似的容器，专门用于保存字符 随机访问快，在尾部插入删除速度快    除了固定大小的array外，其他容器都提供高效的内存管理。容器保存元素的策略对容器操作的效率有着很大影响。
-string和vector将元素保存在连续的内存空间中，因此由元素的下标来计算其地址非常快速。但在这两种容器的中间位置插入和删除元素的速度非常慢，因为一次插入或删除后，需要移动插入、删除位置后的所有元素以保证存储的连续。
-list和forward_list两个容器能令任何位置的添加和删除操作都很快，但这两种容器不支持随机访问，因为元素保存的内存空间不连续，只能通过遍历整个容器来访问一个元素。与vector和string相比，额外内存开销也很大。
-forward_list与最好的手写单向链表数据结构性能相当，因此没有size操作，因为保存或计算大小会多出额外开销。
-deque支持快读随机访问，在该容器中间位置添加或删除元素速度很慢，但在两端很快。
-容器库概览 容器类型上的操作分成了层次：
- 某些操作式所有容器都提供的； 另外一些操作仅针对顺序容器、关联容器或无序容器； 还有一些操作只适合一小部分容器。  容器通过尖括号指定类型。
-容器操作 iterator	迭代器 *iter	//返回迭代器iter所指元素的引用 iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员 ++iter	//令iter指示容器中的下一个元素 --iter	//令iter指示容器中的上一个元素 iter1 == iter2 一个迭代器范围由一对迭代器表示，这两个迭代器被称为begin和end，begin指向容器第一个元素，end指向容器的尾后元素，这种元素范围被称为左闭合区间，即[begin, end)。</description>
-    </item>
-    
+    <lastBuildDate>Mon, 15 Nov 2021 15:32:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>C&#43;&#43; Primer——CH11 关联容器</title>
       <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</link>
@@ -337,6 +318,25 @@ CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的�
     </item>
     
     <item>
+      <title>C&#43;&#43; Primer——CH09 顺序容器</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Tue, 15 Jun 2021 15:36:20 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</guid>
+      <description>一个容器就是一些特定类型对象的集合。
+顺序容器提供了控制元素存储和访问顺序的能力。这种顺序与元素加入容器时的位置相对应。
+概述 顺序容器都提供了快速顺序访问元素的能力。
+   符号 顺序容器类型(名称) 性能     vector 可变大小数组 支持快速随机访问。在尾部之外的位置插入删除元素很慢   deque 双端队列 支持快速随机访问。在头尾插入删除速度很快   list 双向链表 只支持双向顺序访问。在list中任何位置插入删除元素都很快   forward_list 单项链表 只支持单项顺序访问。在forward_list中任何位置插入删除元素都很快   array 固定大小数组 支持快速随机访问。不能添加删除元素   string 与vector相似的容器，专门用于保存字符 随机访问快，在尾部插入删除速度快    除了固定大小的array外，其他容器都提供高效的内存管理。容器保存元素的策略对容器操作的效率有着很大影响。
+string和vector将元素保存在连续的内存空间中，因此由元素的下标来计算其地址非常快速。但在这两种容器的中间位置插入和删除元素的速度非常慢，因为一次插入或删除后，需要移动插入、删除位置后的所有元素以保证存储的连续。
+list和forward_list两个容器能令任何位置的添加和删除操作都很快，但这两种容器不支持随机访问，因为元素保存的内存空间不连续，只能通过遍历整个容器来访问一个元素。与vector和string相比，额外内存开销也很大。
+forward_list与最好的手写单向链表数据结构性能相当，因此没有size操作，因为保存或计算大小会多出额外开销。
+deque支持快读随机访问，在该容器中间位置添加或删除元素速度很慢，但在两端很快。
+容器库概览 容器类型上的操作分成了层次：
+ 某些操作式所有容器都提供的； 另外一些操作仅针对顺序容器、关联容器或无序容器； 还有一些操作只适合一小部分容器。  容器通过尖括号指定类型。
+容器操作 iterator	迭代器 *iter	//返回迭代器iter所指元素的引用 iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员 ++iter	//令iter指示容器中的下一个元素 --iter	//令iter指示容器中的上一个元素 iter1 == iter2 一个迭代器范围由一对迭代器表示，这两个迭代器被称为begin和end，begin指向容器第一个元素，end指向容器的尾后元素，这种元素范围被称为左闭合区间，即[begin, end)。</description>
+    </item>
+    
+    <item>
       <title>csapp: 1.计算机系统漫游</title>
       <link>https://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/</link>
       <pubDate>Fri, 11 Jun 2021 12:18:22 +0000</pubDate>
@@ -498,7 +498,17 @@ Drill layer(钻孔层) 钻孔层提供电路板制造过程中的钻孔信息(�
     </item>
     
     <item>
-      <title>C&#43;&#43;回顾1——基础语法</title>
+      <title>C&#43;&#43; Primer——CH07 类</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/</link>
+      <pubDate>Tue, 27 Apr 2021 10:08:56 +0000</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/</guid>
+      <description>以一个例子来说明类
+strut Sales_data { public: //构造函数 	Sales_data() = default; Sales_data(const std::string &amp;amp;s) : bookNo(s) {} Sales_data(const std::string &amp;amp;s, unsigned n, double p): bookNo(s), units_sold(n), revenue(p*n) {} Sales_data(std::istream &amp;amp;); //成员函数： 	std::string isbn()	const {return bookNo; } Sales_data&amp;amp; combine(const Sales_data&amp;amp;); private: double avg_price() const; std::string bookNo; //类内初始值(数据成员) 	unsigned units_sold = 0; double revenue = 0.0; }; //在类的外部定义成员函数 double Sales_data::avg_price() const { if (units_sold) return revenue / units_sold; else return 0; } //在类的外部定义构造函数 Sales_data::Sales_data(std::istream &amp;amp;is) { read(is, *this);	//从is中读取一条信息然后存入this对象中 } 成员函数 成员函数的声明必须在类的内部，它的定义既可以在类的内部也可以在类的外部。作为接口的非成员函数，它的定义和声明都在类的外部。</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; Primer——CH01-06 基础内容</title>
       <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
       <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
       

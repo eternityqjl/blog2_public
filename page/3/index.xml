@@ -6,7 +6,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 15 Nov 2021 15:36:20 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 15 Nov 2021 15:32:41 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
     
@@ -115,7 +115,130 @@
     
     
         <item>
-        <title>C&#43;&#43;回顾1——基础语法</title>
+        <title>C&#43;&#43; Primer——CH07 类</title>
+        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/</link>
+        <pubDate>Tue, 27 Apr 2021 10:08:56 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/ -&lt;p&gt;以一个例子来说明类&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;strut Sales_data {
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
+	&lt;span style=&#34;color:#888&#34;&gt;//构造函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data() &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;default&lt;/span&gt;;
+	Sales_data(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s) &lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; bookNo(s) {}
+	Sales_data(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; n, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; p)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
+		bookNo(s), units_sold(n), revenue(p&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;n) {}
+	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istream &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
+	&lt;span style=&#34;color:#888&#34;&gt;//成员函数：
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string isbn()	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; {&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; bookNo; }
+	Sales_data&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt; combine(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; Sales_data&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; avg_price() &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt;;
+	std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string bookNo;
+	&lt;span style=&#34;color:#888&#34;&gt;//类内初始值(数据成员)
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; units_sold &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; revenue &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.0&lt;/span&gt;;
+};
+&lt;span style=&#34;color:#888&#34;&gt;//在类的外部定义成员函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; Sales_data&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;avg_price() &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; {
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (units_sold)
+		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; revenue &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; units_sold;
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
+		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+}
+&lt;span style=&#34;color:#888&#34;&gt;//在类的外部定义构造函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;Sales_data&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istream &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;is)
+{
+    read(is, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//从is中读取一条信息然后存入this对象中
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;成员函数&#34;&gt;成员函数&lt;/h2&gt;
+&lt;p&gt;成员函数的&lt;strong&gt;声明&lt;/strong&gt;必须在&lt;strong&gt;类的内部&lt;/strong&gt;，它的&lt;strong&gt;定义&lt;/strong&gt;既可以在类的内部也可以在类的外部。作为接口的非成员函数，它的定义和声明都在类的外部。&lt;/p&gt;
+&lt;h2 id=&#34;构造函数&#34;&gt;构造函数&lt;/h2&gt;
+&lt;p&gt;构造函数的任务时初始化类对象的数据成员，无论何时只要类被创建就会执行构造函数。&lt;/p&gt;
+&lt;p&gt;构造函数的名字和&lt;strong&gt;类名&lt;/strong&gt;相同，和其他函数不同，构造函数&lt;strong&gt;没有返回类型&lt;/strong&gt;；除此之外的特性类似于其他函数。&lt;/p&gt;
+&lt;p&gt;类可以包含多个构造函数，和其他的&lt;strong&gt;重载函数&lt;/strong&gt;差不多，不同构造函数之间必须在参数数量或参数类型上有所区别。&lt;/p&gt;
+&lt;p&gt;构造函数不能被声明成&lt;strong&gt;const&lt;/strong&gt;的。当我们创建类的一个const对象，直到构造函数完成初始化的过程，对象才能真正获得其常量属性。&lt;/p&gt;
+&lt;p&gt;在类的外部定义构造函数：如上代码所示。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;构造函数初始值列表&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;就对象的数据成员而言，初始化和赋值也有区别。如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化。&lt;/p&gt;
+&lt;p&gt;如果成员是&lt;strong&gt;const&lt;/strong&gt;或&lt;strong&gt;引用&lt;/strong&gt;的话，必须将其初始化。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;ConstRef&lt;/span&gt; {
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
+	ConstRef(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ii);
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i;
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ci;
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;ri;
+};
+ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ii)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; i(ii), ci(ii), ri(i) {}	&lt;span style=&#34;color:#888&#34;&gt;//显示地初始化引用和const成员
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最好避免使用某些成员初始化其他成员。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;委托构造函数&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一个委托构造函数可以使用它属类的其他构造函数执行它自己的初始化过程。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Sales_data&lt;/span&gt; {
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
+	&lt;span style=&#34;color:#888&#34;&gt;//非委托构造函数使用对应的实参初始化成员
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string s, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; cnt, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; price)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
+		bookNo(s), units_sold(cnt), revenue(cnt&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;price);
+	&lt;span style=&#34;color:#888&#34;&gt;//其余构造函数委托给另一个构造函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data()&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {}	&lt;span style=&#34;color:#888&#34;&gt;//默认构造函数，委托给了上面输入3个变量的构造函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string s)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data(s, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {}
+	Sales_Data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istrean &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;is)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data() {read(is, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;); }	&lt;span style=&#34;color:#888&#34;&gt;//委托给了默认构造函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;聚合类&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;聚合类使得用户可以直接访问其成员并且具有特殊的初始化语法形式。&lt;/p&gt;
+&lt;p&gt;定义：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;所有成员都是public的。&lt;/li&gt;
+&lt;li&gt;没有定义任何构造函数。&lt;/li&gt;
+&lt;li&gt;没有类内初始值。&lt;/li&gt;
+&lt;li&gt;没有基类，没有virtual函数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct Data {
+	int ival;
+	string s;
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;访问控制与封装&#34;&gt;访问控制与封装&lt;/h2&gt;
+&lt;p&gt;使用**访问说明符(access specifiers)**加强类的封装：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;public&lt;/strong&gt;说明符：定义在其之后的成员在整个程序内可被访问，public成员定义类的接口。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;private&lt;/strong&gt;说明符：定义在其后的成员可以被类的成员函数访问，但不能被使用该类的代码访问，该种封装隐藏了类的实现细节。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;struct&lt;/strong&gt;和&lt;strong&gt;class&lt;/strong&gt;关键词的区别：&lt;/p&gt;
+&lt;p&gt;我们可以用两个关键词中的任意一个定义类，唯一的区别是两者的&lt;strong&gt;默认访问权限&lt;/strong&gt;不太一样。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用&lt;code&gt;struct&lt;/code&gt;：定义在第一个访问说明符之前的成员是public的。&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;class&lt;/code&gt;：定义在第一个访问说明符之前的成员是private的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;友元&#34;&gt;友元&lt;/h2&gt;
+&lt;p&gt;类可以允许其他类或函数访问它的&lt;strong&gt;非公有成员&lt;/strong&gt;，方法是令其他类或函数称为它的友元；如果类想把&lt;strong&gt;一个函数&lt;/strong&gt;作为它的友元，只要增加一条以&lt;code&gt;friend&lt;/code&gt;关键词开头的&lt;strong&gt;函数声明语句&lt;/strong&gt;即可。&lt;/p&gt;
+&lt;p&gt;友元声明只能出现在&lt;strong&gt;类定义的内部&lt;/strong&gt;，但在类内出现的具体位置不限。&lt;/p&gt;
+&lt;p&gt;友元的声明仅仅指定了&lt;strong&gt;访问权限&lt;/strong&gt;，并非一个通常意义上的函数声明。如果希望类的用户能够调用某个友元函数，就必须&lt;strong&gt;在友元声明之外再专门对函数进行一次声明&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;类的作用域&#34;&gt;类的作用域&lt;/h2&gt;
+&lt;p&gt;在类的作用域之外，普通的数据和函数成员只能由&lt;strong&gt;对象、引用或指针&lt;/strong&gt;使用**成员访问运算符(&lt;code&gt;. -&amp;gt;&lt;/code&gt;)&lt;strong&gt;来访问；对于类类型成员，则使用&lt;/strong&gt;作用域运算符(&lt;code&gt;::&lt;/code&gt;)**访问。&lt;/p&gt;
+&lt;p&gt;一个类就是一个作用域，所以在类的外部定义成员函数时必须同时提供类名和函数名。在类的外部，成员的名字被隐藏起来了。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; Window_mgr&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;clear(ScreenIndex i)
+{
+	Screen &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; screens[i];
+	s.contents &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; string(s.height &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; s.width, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;类的静态成员&#34;&gt;类的静态成员&lt;/h2&gt;
+&lt;p&gt;有时候类需要它的一些成员&lt;strong&gt;与类本身直接相关&lt;/strong&gt;，而不是与类的各个对象保持关联。这是我们可以通过声明静态成员，即在成员的声明前加上关键字&lt;strong&gt;static&lt;/strong&gt;，使得其与类关联在一起。&lt;/p&gt;
+&lt;p&gt;静态成员可以是public或private的。&lt;/p&gt;
+&lt;p&gt;类的静态成员存在于任何对象之外，对象中不包含任何与静态数据成员有关的数据。同样，&lt;strong&gt;类静态成员函数&lt;/strong&gt;也不与任何对象绑定在一起，它们不包含this指针。静态成员函数不能声明成const的，也不能在static函数体内使用this指针。&lt;/p&gt;
+&lt;p&gt;使用类的静态成员：&lt;/p&gt;
+&lt;p&gt;使用&lt;strong&gt;作用域运算符&lt;/strong&gt;直接访问静态成员：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; r;
+r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;rate();	&lt;span style=&#34;color:#888&#34;&gt;//Account为类名
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成员函数不用通过作用域运算符就能直接使用静态成员。&lt;/p&gt;
+&lt;p&gt;定义静态成员：&lt;/p&gt;
+&lt;p&gt;我们既可以在类内部也可以在类外部&lt;strong&gt;定义静态成员函数&lt;/strong&gt;，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。&lt;/p&gt;
+- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>C&#43;&#43; Primer——CH01-06 基础内容</title>
         <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/</link>
         <pubDate>Sun, 25 Apr 2021 10:08:56 +0000</pubDate>
         
@@ -346,7 +469,7 @@ iter += n
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h3 id=&#34;sizeof运算符&#34;&gt;sizeof运算符&lt;/h3&gt;
-&lt;p&gt;返回一条表达式或一个类型名字所占的字节数。&lt;/p&gt;
+&lt;p&gt;返回一条&lt;strong&gt;表达式&lt;/strong&gt;或一个&lt;strong&gt;类型名&lt;/strong&gt;所占的字节数。&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sizeof data;
 sizeof *p;	//指针所占的空间大小
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;逗号运算符&#34;&gt;逗号运算符&lt;/h3&gt;
@@ -382,8 +505,8 @@ void f2(void)	{}
 int f3(int v1, v2)	//这样写是错的
 int f4(int v3, int v4)	//这样写正确
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;函数声明&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;函数的声明无需函数体，用一个分号代替。&lt;/p&gt;
-&lt;p&gt;一般在头文件中进行声明，在源文件中进行定义。&lt;/p&gt;
+&lt;p&gt;函数的声明&lt;strong&gt;无需函数体&lt;/strong&gt;，用一个&lt;strong&gt;分号&lt;/strong&gt;代替。&lt;/p&gt;
+&lt;p&gt;一般在&lt;strong&gt;头文件中&lt;/strong&gt;进行&lt;strong&gt;声明&lt;/strong&gt;，在&lt;strong&gt;源文件中&lt;/strong&gt;进行&lt;strong&gt;定义&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;const形参和实参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;当用实参初始化形参时会忽略顶层const&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;数组形参&lt;/strong&gt;&lt;/p&gt;
@@ -408,12 +531,12 @@ f(int (&amp;amp;arr)[10])	//arr是具有10个整数的整形数组的引用
 &lt;span style=&#34;color:#888&#34;&gt;//matrix指向数组的首元素，该数组的元素是由10个整数构成的数组。
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;main处理命令行选项&#34;&gt;main：处理命令行选项&lt;/h3&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; argc, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;argv[])	{...}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;假定main函数位于可执行文件prog之内，我们可以想程序传递下面的选项：&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;假定main函数位于可执行文件prog之内，我们可以向程序传递下面的选项：&lt;/p&gt;
 &lt;p&gt;prog -d -o ofile data0&lt;/p&gt;
-&lt;p&gt;第二个形参argv是一个数组，其元素为指向c风格字符串的指针；第一个形参argc表示数组中字符串的数量。&lt;/p&gt;
+&lt;p&gt;第二个形参argv是一个数组，其元素为&lt;strong&gt;指向c风格字符串的指针&lt;/strong&gt;；第一个形参argc表示&lt;strong&gt;数组中字符串的数量&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;当实参传递给main函数后，argc的第一个元素指向程序的名字或一个空字符串，接下来的元素依次传递命令行提供的实参。最后一个指针之后的元素值保证为0。&lt;/p&gt;
 &lt;h3 id=&#34;函数重载&#34;&gt;函数重载&lt;/h3&gt;
-&lt;p&gt;同一作用域内的几个函数名字相同但形参列表不同，称之为&lt;strong&gt;重载函数&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;同一作用域内的几个函数名字相同但&lt;strong&gt;形参列表不同&lt;/strong&gt;，称之为&lt;strong&gt;重载函数&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;这些函数接收的形参类型不一样，但执行的操作非常类似，调用时；编译器会根据传递的实参类型推断想要的是哪个函数。&lt;/p&gt;
 &lt;p&gt;不允许两个函数除了返回类型外其他所有的要素都相同。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;重载和const形参&lt;/strong&gt;&lt;/p&gt;
@@ -467,119 +590,6 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 &lt;li&gt;&lt;code&gt;__DATA__&lt;/code&gt;：存放文件编译日期的字符串字面值&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;可以使用这些值在错误消息中提供更多信息。&lt;/p&gt;
-&lt;h2 id=&#34;类&#34;&gt;类&lt;/h2&gt;
-&lt;p&gt;以一个例子来说明类&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;strut Sales_data {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#888&#34;&gt;//构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data() &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;default&lt;/span&gt;;
-	Sales_data(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s) &lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; bookNo(s) {}
-	Sales_data(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; n, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; p)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		bookNo(s), units_sold(n), revenue(p&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;n) {}
-	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istream &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
-	&lt;span style=&#34;color:#888&#34;&gt;//成员函数：
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string isbn()	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; {&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; bookNo; }
-	Sales_data&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt; combine(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; Sales_data&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; avg_price() &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt;;
-	std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string bookNo;
-	&lt;span style=&#34;color:#888&#34;&gt;//类内初始值(数据成员)
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; units_sold &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; revenue &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.0&lt;/span&gt;;
-};
-&lt;span style=&#34;color:#888&#34;&gt;//在类的外部定义成员函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; Sales_data&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;avg_price() &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; {
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (units_sold)
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; revenue &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; units_sold;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-}
-&lt;span style=&#34;color:#888&#34;&gt;//在类的外部定义构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;Sales_data&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istream &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;is)
-{
-    read(is, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//从is中读取一条信息然后存入this对象中
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;成员函数&#34;&gt;成员函数&lt;/h3&gt;
-&lt;p&gt;成员函数的&lt;strong&gt;声明&lt;/strong&gt;必须在&lt;strong&gt;类的内部&lt;/strong&gt;，它的&lt;strong&gt;定义&lt;/strong&gt;既可以在类的内部也可以在类的外部。作为接口的非成员函数，它的定义和声明都在类的外部。&lt;/p&gt;
-&lt;h3 id=&#34;构造函数&#34;&gt;构造函数&lt;/h3&gt;
-&lt;p&gt;构造函数的任务时初始化类对象的数据成员，无论何时只要类被创建就会执行构造函数。&lt;/p&gt;
-&lt;p&gt;构造函数的名字和&lt;strong&gt;类名&lt;/strong&gt;相同，和其他函数不同，构造函数&lt;strong&gt;没有返回类型&lt;/strong&gt;；除此之外的特性类似于其他函数。&lt;/p&gt;
-&lt;p&gt;类可以包含多个构造函数，和其他的&lt;strong&gt;重载函数&lt;/strong&gt;差不多，不同构造函数之间必须在参数数量或参数类型上有所区别。&lt;/p&gt;
-&lt;p&gt;构造函数不能被声明成&lt;strong&gt;const&lt;/strong&gt;的。当我们创建类的一个const对象，直到构造函数完成初始化的过程，对象才能真正获得其常量属性。&lt;/p&gt;
-&lt;p&gt;在类的外部定义构造函数：如上代码所示。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;构造函数初始值列表&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;就对象的数据成员而言，初始化和赋值也有区别。如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化。&lt;/p&gt;
-&lt;p&gt;如果成员是&lt;strong&gt;const&lt;/strong&gt;或&lt;strong&gt;引用&lt;/strong&gt;的话，必须将其初始化。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;ConstRef&lt;/span&gt; {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	ConstRef(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ii);
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ci;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;ri;
-};
-ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ii)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; i(ii), ci(ii), ri(i) {}	&lt;span style=&#34;color:#888&#34;&gt;//显示地初始化引用和const成员
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最好避免使用某些成员初始化其他成员。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;委托构造函数&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;一个委托构造函数可以使用它属类的其他构造函数执行它自己的初始化过程。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Sales_data&lt;/span&gt; {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#888&#34;&gt;//非委托构造函数使用对应的实参初始化成员
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string s, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; cnt, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; price)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		bookNo(s), units_sold(cnt), revenue(cnt&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;price);
-	&lt;span style=&#34;color:#888&#34;&gt;//其余构造函数委托给另一个构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data()&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {}	&lt;span style=&#34;color:#888&#34;&gt;//默认构造函数，委托给了上面输入3个变量的构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string s)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data(s, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {}
-	Sales_Data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istrean &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;is)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data() {read(is, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;); }	&lt;span style=&#34;color:#888&#34;&gt;//委托给了默认构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;聚合类&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;聚合类使得用户可以直接访问其成员并且具有特殊的初始化语法形式。&lt;/p&gt;
-&lt;p&gt;定义：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;所有成员都是public的。&lt;/li&gt;
-&lt;li&gt;没有定义任何构造函数。&lt;/li&gt;
-&lt;li&gt;没有类内初始值。&lt;/li&gt;
-&lt;li&gt;没有基类，没有virtual函数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct Data {
-	int ival;
-	string s;
-};
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;访问控制与封装&#34;&gt;访问控制与封装&lt;/h3&gt;
-&lt;p&gt;使用**访问说明符(access specifiers)**加强类的封装：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;public&lt;/strong&gt;说明符：定义在其之后的成员在整个程序内可被访问，public成员定义类的接口。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;private&lt;/strong&gt;说明符：定义在其后的成员可以被类的成员函数访问，但不能被使用该类的代码访问，该种封装隐藏了类的实现细节。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;struct&lt;/strong&gt;和&lt;strong&gt;class&lt;/strong&gt;关键词的区别：&lt;/p&gt;
-&lt;p&gt;我们可以用两个关键词中的任意一个定义类，唯一的区别是两者的&lt;strong&gt;默认访问权限&lt;/strong&gt;不太一样。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;使用&lt;code&gt;struct&lt;/code&gt;：定义在第一个访问说明符之前的成员是public的。&lt;/li&gt;
-&lt;li&gt;使用&lt;code&gt;class&lt;/code&gt;：定义在第一个访问说明符之前的成员是private的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;友元&#34;&gt;友元&lt;/h3&gt;
-&lt;p&gt;类可以允许其他类或函数访问它的非公有成员，方法是令其他类或函数称为它的友元；如果类想把&lt;strong&gt;一个函数&lt;/strong&gt;作为它的友元，只要增加一条以&lt;code&gt;friend&lt;/code&gt;关键词开头的&lt;strong&gt;函数声明语句&lt;/strong&gt;即可。&lt;/p&gt;
-&lt;p&gt;友元声明只能出现在类定义的内部，但在类内出现的具体位置不限。&lt;/p&gt;
-&lt;p&gt;友元的声明仅仅指定了&lt;strong&gt;访问权限&lt;/strong&gt;，并非一个通常意义上的函数声明。如果希望类的用户能够调用某个友元函数，就必须在友元声明之外再专门对函数进行一次声明。&lt;/p&gt;
-&lt;h3 id=&#34;类的作用域&#34;&gt;类的作用域&lt;/h3&gt;
-&lt;p&gt;在类的作用于之外，普通的数据和函数成员只能由&lt;strong&gt;对象、引用或指针&lt;/strong&gt;使用**成员访问运算符(&lt;code&gt;. -&amp;gt;&lt;/code&gt;)&lt;strong&gt;来访问；对于类类型成员，则使用&lt;/strong&gt;作用域运算符(&lt;code&gt;::&lt;/code&gt;)**访问。&lt;/p&gt;
-&lt;p&gt;一个类就是一个作用域，所以在类的外部定义成员函数时必须同时提供类名和函数名。在类的外部，成员的名字被隐藏起来了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; Window_mgr&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;clear(ScreenIndex i)
-{
-	Screen &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; screens[i];
-	s.contents &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; string(s.height &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; s.width, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;类的静态成员&#34;&gt;类的静态成员&lt;/h3&gt;
-&lt;p&gt;有时候类需要它的一些成员&lt;strong&gt;与类本身直接相关&lt;/strong&gt;，而不是与类的各个对象保持关联。这是我们可以通过声明静态成员，即在成员的声明前加上关键字&lt;strong&gt;static&lt;/strong&gt;，使得其与类关联在一起。&lt;/p&gt;
-&lt;p&gt;静态成员可以是public或private的。&lt;/p&gt;
-&lt;p&gt;类的静态成员存在于任何对象之外，对象中不包含任何与静态数据成员有关的数据。同样，&lt;strong&gt;类静态成员函数&lt;/strong&gt;也不与任何对象绑定在一起，它们不包含this指针。静态成员函数不能声明成const的，也不能在static函数体内使用this指针。&lt;/p&gt;
-&lt;p&gt;使用类的静态成员：&lt;/p&gt;
-&lt;p&gt;使用&lt;strong&gt;作用域运算符&lt;/strong&gt;直接访问静态成员：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; r;
-r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;rate();	&lt;span style=&#34;color:#888&#34;&gt;//Account为类名
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成员函数不用通过作用域运算符就能直接使用静态成员。&lt;/p&gt;
-&lt;p&gt;定义静态成员：&lt;/p&gt;
-&lt;p&gt;我们既可以在类内部也可以在类外部定义静态成员函数，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。&lt;/p&gt;
 - https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ - 2019-2021 By Jialong</description>
         </item>
     
@@ -1664,75 +1674,6 @@ $$
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 - https://eternityqjl.top/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>第一次使用LaTex——问题整理</title>
-        <link>https://eternityqjl.top/posts/latex-problems1/</link>
-        <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/latex-problems1/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/latex-problems1/ -&lt;h2 id=&#34;0前言&#34;&gt;0.前言&lt;/h2&gt;
-&lt;p&gt;第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。&lt;/p&gt;
-&lt;p&gt;这是第一次实验报告导出的&lt;a href=&#34;http://blog.eternityqjl.top/SS_test1.pdf&#34;&gt;pdf文档&lt;/a&gt;封面展示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1_cover.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这是&lt;a href=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1.tex&#34;&gt;tex源代码&lt;/a&gt;。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;章节标题的特殊符号&#34;&gt;章节标题的特殊符号&lt;/h2&gt;
-&lt;p&gt;当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令&lt;code&gt;\texorpdfstring{}{}&lt;/code&gt;分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号&lt;code&gt;{}&lt;/code&gt;中填写tex文档代码，第二个括号&lt;code&gt;{}&lt;/code&gt;填写文本形式的书签，如下所示：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;%1.1
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[第3题（1）]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;第3题（1）求&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;e^{&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t}u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;x1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;，
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;cos&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)[&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)]&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;x2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;的卷积积分
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;y_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)*&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;y1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;。 &lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;代码段的设置&#34;&gt;代码段的设置&lt;/h2&gt;
-&lt;p&gt;在文章中添加代码段需要用到&lt;code&gt;listings&lt;/code&gt;宏包，代码段的基本设置参数如下所示：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf&#34;&gt;listings宏包文档&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lstset&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;
-language=Matlab,
-escapeinside=``, 
-numbers=left,
-numberstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\tiny&lt;/span&gt;,
-breaklines=true, 
-backgroundcolor=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;lightgray!40!white&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;,
-frame=single,
-framerule=0pt,
-extendedchars=false, 
-keywordstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;blue!70&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\bfseries&lt;/span&gt;, 
-basicstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily&lt;/span&gt;,
-commentstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;green!40!black&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;, 
-showstringspaces=false&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同时，设置代码段颜色高亮时需要用到&lt;code&gt;xcolor&lt;/code&gt;宏包。&lt;/p&gt;
-&lt;p&gt;注意以下几点问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;代码段中最好不要出现中文，如果必须要使用中文，需要用逃逸字符` `将中文包括起来，如上面的基本参数中的escapeinside=` ` 所示。&lt;/li&gt;
-&lt;li&gt;如果代码段中出现tex语言的特殊符号，需要使用转义字符&lt;code&gt;\&lt;/code&gt;，如&lt;code&gt;#&lt;/code&gt;就需要转换为&lt;code&gt;\#&lt;/code&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如果想要改变代码段中的字体，需要用到&lt;code&gt;fontspec&lt;/code&gt;宏包，这个宏包需要用&lt;code&gt;XeLaTex&lt;/code&gt;或&lt;code&gt;LuaLaTex&lt;/code&gt;进行编译，由于我的实验报告封面使用的有些元素在使用这两者编译时无法识别，我这次就没使用，下次写实验报告一定仔细研究一下，实现这个功能。&lt;/p&gt;
-&lt;h2 id=&#34;数学公式中的align&#34;&gt;数学公式中的align&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;参考：&lt;a href=&#34;https://tex.stackexchange.com/questions/372384/erroneous-nesting-of-equation-structures-message-i-cant-see-whats-wrong&#34;&gt;“Erroneous nesting of equation structures” message- I can&amp;rsquo;t see what&amp;rsquo;s wrong?&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;数学公式中需要写等号对齐的公式段是不需要写&lt;code&gt;$$...$$&lt;/code&gt;或者&lt;code&gt;begin{equation}...end{equation}&lt;/code&gt;，直接将公式写在&lt;code&gt;begin{align}...end{align}&lt;/code&gt;的中间即可，如下所示：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-y&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;2[n]
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=x&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;3[n]*x&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;4[n] &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=((-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;n u[n-1])*((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k u[k-1]((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k ((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-	0, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;n&amp;lt;0 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k (-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1], &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;0 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\leq&lt;/span&gt; n &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\leq&lt;/span&gt; 2 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k ((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]),&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;n&amp;gt;2
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/equationSample.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-- https://eternityqjl.top/posts/latex-problems1/ - 2019-2021 By Jialong</description>
         </item>
     
     

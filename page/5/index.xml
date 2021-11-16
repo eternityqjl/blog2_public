@@ -6,9 +6,85 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 15 Nov 2021 15:36:20 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 15 Nov 2021 15:32:41 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>抽象数据类型</title>
+        <link>https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+        <pubDate>Tue, 24 Sep 2019 21:33:07 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/ -&lt;h2 id=&#34;一抽象数据类型的实现&#34;&gt;一、抽象数据类型的实现&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//数据类型的实现
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Counter&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;//实例变量
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;final&lt;/span&gt; String name&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#888&#34;&gt;//构造函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;Counter&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;String id&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; name &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; id&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#888&#34;&gt;//实例方法
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;tally&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; count &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; name&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#888&#34;&gt;//测试该数据类型的用例
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;//创建并初始化对象
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    Counter heads &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Counter&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;heads&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    Counter tails &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Counter&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;tails&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#888&#34;&gt;//调用实例方法
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;incerment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
+    heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
+    tails&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
+    
+    StdOut&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;heads &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; tails&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    StdOut&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;tally&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; tails&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;tally&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;相关概念&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;实例变量：
+&lt;ul&gt;
+&lt;li&gt;一个实例变量对应了无数的值，因为数据类型的每个实例对象都有有个。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;构造函数：
+&lt;ul&gt;
+&lt;li&gt;构造函数是用来创建一个对象的表示，即来初始化实例变量。&lt;/li&gt;
+&lt;li&gt;它由&lt;strong&gt;可见性修饰符、构造函数名称(即数据类型的名称)、参数变量&lt;/strong&gt;以及初始化实例变量的代码构成。&lt;/li&gt;
+&lt;li&gt;上一条加粗的三个组成了签名，例如&lt;code&gt;public Counter (String id) &lt;/code&gt;即为一个签名。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;实例方法：
+&lt;ul&gt;
+&lt;li&gt;是每个对象的具体行为，即实现数据类型的实例方法。&lt;/li&gt;
+&lt;li&gt;与静态方法的唯一区别是它能够访问并操作实力变量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;作用域
+&lt;ul&gt;
+&lt;li&gt;参数变量：作用域为整个方法。&lt;/li&gt;
+&lt;li&gt;局部变量：定义后的所有语句(一个花括号内)。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;实例变量&lt;/strong&gt;：整个类。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
