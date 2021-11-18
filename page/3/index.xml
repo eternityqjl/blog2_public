@@ -496,7 +496,6 @@ r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#
 &lt;li&gt;表达式&lt;/li&gt;
 &lt;li&gt;语句&lt;/li&gt;
 &lt;li&gt;函数&lt;/li&gt;
-&lt;li&gt;类&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;变量和基本类型&#34;&gt;变量和基本类型&lt;/h2&gt;
 &lt;h3 id=&#34;变量&#34;&gt;变量&lt;/h3&gt;
@@ -532,7 +531,7 @@ cout &amp;lt;&amp;lt; *p;	//输出指针p所指的对象，42
 &lt;p&gt;指向指针的指针：&lt;/p&gt;
 &lt;p&gt;指向指针的引用：&lt;/p&gt;
 &lt;h3 id=&#34;const限定符&#34;&gt;const限定符&lt;/h3&gt;
-&lt;p&gt;让一种变量的值不变。congst对象必须要初始化，任何试图为const对象赋值的行为都将发生错误。&lt;/p&gt;
+&lt;p&gt;让一种变量的值不变。const对象必须要初始化，任何试图为const对象赋值的行为都将发生错误。&lt;/p&gt;
 &lt;p&gt;const对象仅在文件内有效；要想让const对象像其他非常量对象一样在不同文件中工作，即在一个文件中定义const，在其他多个文件中声明并使用它，需要添加&lt;code&gt;extern&lt;/code&gt;关键字&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//file.cpp定义并初始化了一个常量
 &lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; bufSize &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fcn();
@@ -671,7 +670,10 @@ vector&amp;lt;int&amp;gt;::const_iterator it3;	//it3只能读元素，不能写�
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;iter + n	//加上一个整数仍然得到一个迭代器，迭代器指示的新位置与原来的位置相比向前移动了若干个元素
 iter - n
 iter += n
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;表达式&#34;&gt;表达式&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;数组和多维数组&#34;&gt;数组和多维数组&lt;/h3&gt;
+&lt;p&gt;数组与vector的不同是，数组的大小确定不变，不能随意向数组中增加元素。大小固定，对某些应用来说程序的运行性能较好，但也损失了一些灵活性。&lt;/p&gt;
+&lt;p&gt;随着C++11 标准的提出，通过使用auto和decltype就能尽可能避免在数组前面加上一个指针类型了。&lt;/p&gt;
+&lt;h2 id=&#34;表达式&#34;&gt;表达式&lt;/h2&gt;
 &lt;h3 id=&#34;成员访问运算符&#34;&gt;成员访问运算符&lt;/h3&gt;
 &lt;p&gt;箭头运算符与点运算符有关，表达式&lt;code&gt;ptr-&amp;gt;mem&lt;/code&gt;等价于&lt;code&gt;(*ptr).mem&lt;/code&gt;；&lt;/p&gt;
 &lt;h3 id=&#34;条件运算符&#34;&gt;条件运算符&lt;/h3&gt;
@@ -719,10 +721,21 @@ iter += n
 sizeof *p;	//指针所占的空间大小
 &lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;逗号运算符&#34;&gt;逗号运算符&lt;/h3&gt;
 &lt;p&gt;含有两个运算对象，按从左向右的顺序依次求值。&lt;/p&gt;
+&lt;h3 id=&#34;类型转换&#34;&gt;类型转换&lt;/h3&gt;
+&lt;p&gt;C++中，如果两个类型可以相互转换，那么他们之间就是关联的。&lt;/p&gt;
+&lt;p&gt;隐式转换无需程序员介入，自动完成。例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ival &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;3.541&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//编译器可能警告损失了运算精度
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;算数转换&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;把一种算术类型转换成另一种算数类型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;其他隐式类型转换&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;数组转换成指针、转换成布尔类型、转换成常量、类类型定义的转换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;显式转换&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&#34;语句&#34;&gt;语句&lt;/h2&gt;
+&lt;p&gt;简单的条件语句（if-else）、迭代语句（while、for、范围for、do-while语句）不作具体说明。&lt;/p&gt;
 &lt;h3 id=&#34;跳转语句&#34;&gt;跳转语句&lt;/h3&gt;
 &lt;p&gt;break：终止离它最近的while，do while，for或switch语句，并从这些语句之后的第一条语句开始执行。&lt;/p&gt;
 &lt;p&gt;continue：终止最近的循环中的当前迭代并立即开始下一次迭代。&lt;/p&gt;
+&lt;p&gt;goto：（不推荐使用，因此不过多介绍）&lt;/p&gt;
 &lt;h3 id=&#34;try语句块和异常处理&#34;&gt;try语句块和异常处理&lt;/h3&gt;
 &lt;p&gt;异常指的是一些超出了函数正常功能范围的反常行为。&lt;/p&gt;
 &lt;p&gt;C++中异常处理机制包括：&lt;/p&gt;
@@ -741,6 +754,14 @@ sizeof *p;	//指针所占的空间大小
 	handler&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;statements
 }	&lt;span style=&#34;color:#888&#34;&gt;//...
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;跟在try块后的是一个或多个catch子句；catch子句包括三部分：关键词catch、括号内的一个对象的声明(称为异常声明)以及一个块。当选中类某个catch子句处理异常后，执行与之对应的块。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;标准异常&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;C++标准库定义了一组类，用于报告标准库函数遇到的问题。这些异常类也可以在用户编写的程序中使用。这些异常定义在以下几个头文件中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;exception&lt;/li&gt;
+&lt;li&gt;stdexcept&lt;/li&gt;
+&lt;li&gt;new&lt;/li&gt;
+&lt;li&gt;type_info&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h2 id=&#34;函数&#34;&gt;函数&lt;/h2&gt;
 &lt;h3 id=&#34;函数基础&#34;&gt;函数基础&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;形参列表&lt;/strong&gt;&lt;/p&gt;
@@ -752,6 +773,7 @@ int f4(int v3, int v4)	//这样写正确
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;函数声明&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;函数的声明&lt;strong&gt;无需函数体&lt;/strong&gt;，用一个&lt;strong&gt;分号&lt;/strong&gt;代替。&lt;/p&gt;
 &lt;p&gt;一般在&lt;strong&gt;头文件中&lt;/strong&gt;进行&lt;strong&gt;声明&lt;/strong&gt;，在&lt;strong&gt;源文件中&lt;/strong&gt;进行&lt;strong&gt;定义&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;参数传递&#34;&gt;参数传递&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;const形参和实参&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;当用实参初始化形参时会忽略顶层const&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;数组形参&lt;/strong&gt;&lt;/p&gt;
@@ -774,7 +796,7 @@ f(int (&amp;amp;arr)[10])	//arr是具有10个整数的整形数组的引用
 &lt;p&gt;多维数组实际上是数组的数组，将多维数组传递给函数实际上传递的是指向数组首元素的指针。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;matrix)[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;], &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; rowSize)	{}
 &lt;span style=&#34;color:#888&#34;&gt;//matrix指向数组的首元素，该数组的元素是由10个整数构成的数组。
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;main处理命令行选项&#34;&gt;main：处理命令行选项&lt;/h3&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;main：处理命令行选项&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; argc, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;argv[])	{...}
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;假定main函数位于可执行文件prog之内，我们可以向程序传递下面的选项：&lt;/p&gt;
 &lt;p&gt;prog -d -o ofile data0&lt;/p&gt;
@@ -835,6 +857,21 @@ string &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;screen&lt;/span&g
 &lt;li&gt;&lt;code&gt;__DATA__&lt;/code&gt;：存放文件编译日期的字符串字面值&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;可以使用这些值在错误消息中提供更多信息。&lt;/p&gt;
+&lt;h3 id=&#34;函数指针&#34;&gt;函数指针&lt;/h3&gt;
+&lt;p&gt;函数指针指向的是函数而非对象，和其他指针一样，函数指针指向某种特定类型。函数类型由其返回类型和形参类型共同决定，与函数名无关。例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;lengthCompare&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数的类型是&lt;code&gt;bool(const string &amp;amp;, const string &amp;amp;)&lt;/code&gt;，要想声明一个可以指向该函数的指针，只需要用指针替换函数名即可。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pf) (&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当我们把函数名作为一个值使用时，该函数自动地转换成指针。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;pf &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lengthCompare;	&lt;span style=&#34;color:#888&#34;&gt;//pf指向名为lengthCompare的函数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;pf &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;lengthCompare;	&lt;span style=&#34;color:#888&#34;&gt;//取地址符是可选的
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;将auto和decltype用于函数指针类型&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;decltype以一个表达式为参数，返回表达式表示的类型&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;string&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;size_type sumLength (&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;decltype&lt;/span&gt;(sunLength) &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;getFcn(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;当我们将decltype作用域某个函数时，它返回函数类型而非指针类型，因此我们显式地加上*以表明我们需要返回指针而非函数本身。&lt;/p&gt;
 - https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE1%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9/ - 2019-2021 By Jialong</description>
         </item>
     
