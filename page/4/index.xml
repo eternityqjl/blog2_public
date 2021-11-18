@@ -6,9 +6,145 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 15 Nov 2021 15:32:41 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 18 Nov 2021 09:20:28 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>TLS（HTTPS）协议</title>
+        <link>https://eternityqjl.top/posts/tls/</link>
+        <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/tls/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/tls/ -&lt;h2 id=&#34;1-ssltls简介&#34;&gt;1. SSL/TLS简介&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;TLS&lt;/strong&gt;（&lt;strong&gt;T&lt;/strong&gt;ransport &lt;strong&gt;L&lt;/strong&gt;ayer &lt;strong&gt;S&lt;/strong&gt;ecurity，&lt;strong&gt;传输层安全协议&lt;/strong&gt;），以及它的前身&lt;strong&gt;SSL&lt;/strong&gt;（&lt;strong&gt;S&lt;/strong&gt;ecure &lt;strong&gt;S&lt;/strong&gt;ockets &lt;strong&gt;L&lt;/strong&gt;ayer，&lt;strong&gt;安全套接层&lt;/strong&gt;）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。&lt;/p&gt;
+&lt;p&gt;SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;几个知名的使用SSL加密的协议&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;HTTP over SSL (HTTPS)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;简称为HTTPS，它的产生是为了加密网页，HTTP是第一个使用SSL保障安全的应用层协议。HTTPS在RFC2818被标准化，HTTPS工作在443端口，HTTP默认工作在80端口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Email over SSL&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;类似于HTTP over SSL，协议如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SMTP、IMAP能够支持SSL&lt;/li&gt;
+&lt;li&gt;SMTP over TLS在标准文档RFC2487中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;2-ssl原理详解&#34;&gt;2. SSL原理详解&lt;/h2&gt;
+&lt;h3 id=&#34;20-基本运行过程&#34;&gt;2.0 基本运行过程&lt;/h3&gt;
+&lt;p&gt;SSL/TLS协议是采用&lt;strong&gt;公钥加密法&lt;/strong&gt;实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。&lt;/p&gt;
+&lt;h3 id=&#34;21-ssl建立的总过程&#34;&gt;2.1 SSL建立的总过程&lt;/h3&gt;
+&lt;p&gt;客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及&lt;strong&gt;四次握手&lt;/strong&gt;通信，且该阶段的通信都是明文的。以下一一来分析。&lt;/p&gt;
+&lt;h4 id=&#34;1-客户端发出请求clienthello&#34;&gt;1. 客户端发出请求（ClientHello）&lt;/h4&gt;
+&lt;p&gt;该步客户端（通常为浏览器）向服务器提供以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;支持的协议&lt;strong&gt;版本（Version）&lt;/strong&gt;，如TLSv1.0&lt;/li&gt;
+&lt;li&gt;一个客户端生成的&lt;strong&gt;随机数（Random）&lt;/strong&gt;，之后用于生成”对话密钥“&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;会话ID（Session id）&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;如果客户端第一次连接到服务器，那么该字段为空。&lt;/li&gt;
+&lt;li&gt;如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为&lt;strong&gt;SSL会话恢复&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;支持的&lt;strong&gt;加密套件（Cipher Suites）&lt;/strong&gt;，这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。&lt;/li&gt;
+&lt;li&gt;支持的&lt;strong&gt;压缩方法&lt;/strong&gt;，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。&lt;/li&gt;
+&lt;li&gt;扩展包。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;2-服务器回应serverhello&#34;&gt;2. 服务器回应（ServerHello）&lt;/h4&gt;
+&lt;p&gt;该步骤包含以下内容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;确认使用的&lt;strong&gt;版本&lt;/strong&gt;，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。&lt;/li&gt;
+&lt;li&gt;一个服务器生成的&lt;strong&gt;随机数&lt;/strong&gt;，之后用于生成”对话密钥“&lt;/li&gt;
+&lt;li&gt;确认使用的&lt;strong&gt;加密套件&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;会话ID&lt;/strong&gt;（Session ID）：
+&lt;ul&gt;
+&lt;li&gt;服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。&lt;/li&gt;
+&lt;li&gt;但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入&lt;strong&gt;Session Tickets&lt;/strong&gt;，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;扩展包&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;服务器证书&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。&lt;/p&gt;
+&lt;h4 id=&#34;3-客户端回应&#34;&gt;3. 客户端回应&lt;/h4&gt;
+&lt;p&gt;客户端收到服务器回应后首先验证服务器的证书，如果证书存在问题，如证书过期、由非可信机构颁布、或证书域名与实际域名不一致，会想客户端访问者发出警告，询问是否继续通信。&lt;/p&gt;
+&lt;p&gt;证书没有问题则客户端会从中取出公钥然后发送以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个&lt;strong&gt;随机数（pre-master-key)&lt;/strong&gt;；该随机数用服务器公钥加密，防止被窃听。&lt;/li&gt;
+&lt;li&gt;编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
+&lt;li&gt;客户端结束握手通知，该项同时也是前面发送所有内容的哈希值，用来供服务器验证。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上面第一项的随机数是握手阶段出现的第三个随机数，称“pre-master-key”，之后客户端和服务器就同时有了3个随机数，接着用双方事先商定的加密方法各自生成本次会话用的同一把“会话密钥”。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;pre-master-key与前面服务器和客户端在Hello阶段产生的两个随机数结合在一起生成了Master Secret。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;4-服务器的最后回应&#34;&gt;4. 服务器的最后回应&lt;/h4&gt;
+&lt;p&gt;服务器收到客户端第三个随机数pre-master-key后，计算生成本次会话使用的“会话密钥”，然后向客户端发送以下信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
+&lt;li&gt;服务器握手结束通知，该项同时也是前面发送的所有内容的哈希值，用来供客户端验证。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;至此整个握手阶段就结束了，接下来客户端与服务器进入加密通信，就是完全使用普通的HTTP协议，只是使用了“会话密钥”加密内容。&lt;/p&gt;
+&lt;h3 id=&#34;22-ssl协议的结构体系&#34;&gt;2.2 SSL协议的结构体系&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SSL%E5%8D%8F%E8%AE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;SSL体系结构包含两个协议子层，底层为&lt;strong&gt;SSL记录协议层&lt;/strong&gt;；高层为&lt;strong&gt;SSL握手协议层&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;SSL记录协议层&lt;/strong&gt;：记录协议为高层协议提供基本的安全服务，如数据封装、压缩、加密等基本功能。所以我们可以知道，所有的传输数据都被封装在记录中。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SSL握手协议层&lt;/strong&gt;包括：
+&lt;ul&gt;
+&lt;li&gt;SSL握手协议：协调客户和服务器的状态，是双方能达到状态的同步&lt;/li&gt;
+&lt;li&gt;SSL密码参数修改协议：更新用于当前连接的密码组。&lt;/li&gt;
+&lt;li&gt;SSL告警协议：发现异常时为对等方传递警告&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;3-参考&#34;&gt;3. 参考&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cshihong.github.io/2019/05/09/SSL%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/&#34;&gt;SSL/TLS协议详解|曹世宏的博客&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html&#34;&gt;SSL/TLS协议运行机制的概述|阮一峰&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/tls/ - 2019-2021 By Jialong</description>
+        </item>
+    
+    
+    
+        <item>
+        <title>PDF转换为SVG</title>
+        <link>https://eternityqjl.top/posts/convertpdftosvg/</link>
+        <pubDate>Wed, 08 Apr 2020 00:15:48 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/convertpdftosvg/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/convertpdftosvg/ -&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;p&gt;最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用&lt;strong&gt;Adobe Acrobat&lt;/strong&gt;和&lt;strong&gt;inkscape&lt;/strong&gt;两个软件将PDF中的矢量图导出为&lt;strong&gt;SVG&lt;/strong&gt;格式的矢量图。以下为具体步骤：&lt;/p&gt;
+&lt;h2 id=&#34;在adobe-acrobat中选择编辑pdf选项&#34;&gt;在&lt;code&gt;Adobe Acrobat&lt;/code&gt;中选择&lt;code&gt;编辑PDF&lt;/code&gt;选项&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_1.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;选择裁剪页面&#34;&gt;选择&lt;code&gt;裁剪页面&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_2.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;框选所需图片的区域&#34;&gt;框选所需图片的区域&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_3.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;双击框选的区域按如下所示设置&#34;&gt;双击框选的区域，按如下所示设置&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_4.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选择组织页面&#34;&gt;选择&lt;code&gt;组织页面&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_5.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选定裁切后的页面&#34;&gt;选定裁切后的页面&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_6.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;右击后选择打印页面&#34;&gt;右击后选择&lt;code&gt;打印页面&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_7.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印&#34;&gt;设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_8.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变&#34;&gt;用&lt;code&gt;inkscape&lt;/code&gt;打开刚才打印的PDF文件，注意，导入时设置为第一项&lt;code&gt;从Poppler/Cairo导入&lt;/code&gt;，类似于PS中的栅格化，这样才能保证图中的字体不发生改变&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_9.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区&#34;&gt;选择&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;文档属性&lt;/code&gt;，设置自定义尺寸为&lt;code&gt;缩放页面到内容&lt;/code&gt;$\rightarrow$&lt;code&gt;缩放页面到绘图或选区&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_10_0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_10.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_11.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;文件rightarrow另存为选择自己所需的格式我一般选svg&#34;&gt;&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;另存为&lt;/code&gt;，选择自己所需的格式，我一般选&lt;code&gt;SVG&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+- https://eternityqjl.top/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -908,312 +1044,6 @@ git checkout master
 &lt;/ol&gt;
 &lt;p&gt;二、&lt;/p&gt;
 - https://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>C语言结构</title>
-        <link>https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/</link>
-        <pubDate>Tue, 15 Oct 2019 20:03:54 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/ -&lt;p&gt;1.建立结构变量&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;该结构描述了由两个字符数组和一个float类型变量组成的结构。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;2.定义结构变量&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;struct book library;&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;把library声明为一个使用book结构类型的结构变量。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;所以struct book 相当于过去的int、double等类型。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
-} library;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该程序为上面声明的完整版。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; { &lt;span style=&#34;color:#888&#34;&gt;//无结构标记
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
-} library;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;声明结构和定义结构可以一步完成，如上所示。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;3.初始化结构&lt;/p&gt;
-&lt;p&gt;4.访问结构成员(点运算符)&lt;/p&gt;
-&lt;p&gt;5.结构初始化器&lt;/p&gt;
-&lt;p&gt;6.结构数组&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;struct book library[MAXBKS];&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;7.指向结构的指针&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;struct guy * him;&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;指针可以指向任何现有的guy类型如barney、fellow[0]（一个结构数组的一项即为一个结构变量）。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;him = &amp;amp;barney&lt;/code&gt; or &lt;code&gt;him = &amp;amp;fellow[0];&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;8.用指针访问成员&lt;/p&gt;
-&lt;p&gt;若&lt;code&gt;him == &amp;amp;barney&lt;/code&gt;，那么&lt;code&gt;him-&amp;gt;income&lt;/code&gt;即是&lt;code&gt;barney.income&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;同时，&lt;code&gt;*him&lt;/code&gt;即为指针指向的结构类型。所以，&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;barney.income == (*him).income == him-&amp;gt;income&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;9.向函数传递结构的成员、地址、结构本身&lt;/p&gt;
-&lt;p&gt;10.其他特性：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;使用指针传递信息(作为函数参数)：是使用原始结构进行计算的。&lt;/li&gt;
-&lt;li&gt;使用结构作为函数参数：是使用副本进行计算。&lt;/li&gt;
-&lt;/ul&gt;
-- https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>字符串输入、输出和字符串函数</title>
-        <link>https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</link>
-        <pubDate>Sat, 28 Sep 2019 12:15:42 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/ -&lt;h2 id=&#34;字符串输入&#34;&gt;字符串输入&lt;/h2&gt;
-&lt;p&gt;1.&lt;code&gt;gets()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;使用方法：读取整行输入，直到遇到&lt;strong&gt;换行符&lt;/strong&gt;，然后&lt;strong&gt;丢弃换行符&lt;/strong&gt;，储存其余的字符，并在字符末尾添加一个&lt;strong&gt;空字符&lt;/strong&gt;使之成为一个C字符串。&lt;/li&gt;
-&lt;li&gt;使用中存在的问题：&lt;code&gt;gets(words)&lt;/code&gt;（char words[STLEN]）的唯一参数为words，该函数无法检查数组是否装得下输入行。数组名会被转化成该数组首元素的地址，该函数只知道数组的开始处，并不知道数组在何处结束。&lt;/li&gt;
-&lt;li&gt;如果输入过长，会导致&lt;strong&gt;缓存区溢出&lt;/strong&gt;，详情见书上内容。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;2.&lt;code&gt;gets()&lt;/code&gt;的替代品：&lt;code&gt;fgets()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;fgets()&lt;/code&gt;函数通过第二个参数来限制读入的&lt;strong&gt;字符数&lt;/strong&gt;来解决溢出问题。&lt;/li&gt;
-&lt;li&gt;相较于&lt;code&gt;gets()&lt;/code&gt;的区别：
-&lt;ul&gt;
-&lt;li&gt;第二个参数指明了读入字符的最大数量，若该值为n，那么将读入n-1个字符，或遇到第一个&lt;strong&gt;换行符&lt;/strong&gt;为止。&lt;/li&gt;
-&lt;li&gt;第三个参数指明了要读入的文件，如果要从键盘输入，则参数设置为stdin标识符。&lt;/li&gt;
-&lt;li&gt;如果读到一个换行符，&lt;code&gt;fgets()&lt;/code&gt;会将其&lt;strong&gt;储存在数组中&lt;/strong&gt;，而不是将其丢弃。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;3.&lt;code&gt;gets_s()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;于&lt;code&gt;fgets()&lt;/code&gt;的区别&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;该函数只从标准输入中读取，所以无需第三个参数。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;读到&lt;strong&gt;换行符会将其丢弃&lt;/strong&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;如果读到最大字符数都没有读到换行符，会进行以下操作：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;首先设置目标数组的首字符为空字符&lt;/p&gt;
-&lt;p&gt;读取并丢弃随后的输入直至读到换行符或文件结尾&lt;/p&gt;
-&lt;p&gt;返回空指针&lt;/p&gt;
-&lt;p&gt;然后调用依赖实现的“处理函数”&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;4.&lt;code&gt;s_gets()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;读取整行输入并&lt;strong&gt;用空字符替代换行符&lt;/strong&gt;，或者(在字符串未结束就遇到了空字符)读取一部分输入，并丢弃其余的部分。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;该函数的代码：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;s_gets&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; st, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n)
-{
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ret_val;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-
-    ret_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fgets(st, n, stdin);
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (ret_val)
-    {
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (st[i] &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; st[i] &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\0&amp;#39;&lt;/span&gt;)
-            i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (st[i] &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;)
-            st[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\0&amp;#39;&lt;/span&gt;;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; 
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (getchar() &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;)
-                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;continue&lt;/span&gt;;
-    }
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; ret_val;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;5.&lt;code&gt;scanf()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;以第一个非空白字符座位读取的开始，以第一个空白字符(空行、空格、制表符、换行符)座位字符串的结束。&lt;/li&gt;
-&lt;li&gt;其他内容略。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;字符串输出&#34;&gt;字符串输出&lt;/h2&gt;
-&lt;p&gt;1.&lt;code&gt;puts()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;该函数显示字符串时会在末尾添加一个&lt;strong&gt;换行符&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;该函数的参数为地址，且用双引号括起来的字符串常量作为参数时，参数被视为该字符串的地址。&lt;/li&gt;
-&lt;li&gt;当参数为数组中某个项的地址时，如&lt;code&gt;str[5]&lt;/code&gt;,会从这个位置开始依次输出。&lt;/li&gt;
-&lt;li&gt;结束条件为&lt;strong&gt;空字符&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;2.&lt;code&gt;fputs()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第二个参数要指明写入数据的文件，若要打印在显示器上，则用stdout作为参数。&lt;/li&gt;
-&lt;li&gt;该函数&lt;strong&gt;不会在字符串末尾添加换行符&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;3.&lt;code&gt;printf()&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;省略&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;字符串函数&#34;&gt;字符串函数&lt;/h2&gt;
-&lt;p&gt;0.这里只写出书上详细介绍的5组字符串函数：&lt;code&gt;strlen()&lt;/code&gt; | &lt;code&gt;strcat()/strncat()&lt;/code&gt; | &lt;code&gt;strcmp()/strncmp()&lt;/code&gt; | &lt;code&gt;strcpy()/strncpy()&lt;/code&gt; | &lt;code&gt;sprintf()&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;1.&lt;code&gt;strlen&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;该函数用于统计字符串的长度，函数返回值为字符串的长度。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;2.&lt;code&gt;strcat()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;基本定义
-&lt;ul&gt;
-&lt;li&gt;该函数用于&lt;strong&gt;拼接字符串&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;接受两个字符串作为参数&lt;/li&gt;
-&lt;li&gt;把第二个字符串的备份附在第一个字符串的末尾，并把拼接后形成的新字符串作为第一个字符串，第二个字符串不变。&lt;/li&gt;
-&lt;li&gt;该函数的函数类型是&lt;code&gt;char *&lt;/code&gt;,即指向&lt;code&gt;char&lt;/code&gt;的指针。&lt;/li&gt;
-&lt;li&gt;所以该函数返回第一个参数，即拼接第二个字符串后的第一个字符串的&lt;strong&gt;地址&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;存在的问题
-&lt;ul&gt;
-&lt;li&gt;无法检查第一个数组是否能容纳第二个字符串。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;3.&lt;code&gt;strncat()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;该函数的第三个参数指定了最大添加字符数&lt;/li&gt;
-&lt;li&gt;例如&lt;code&gt;strncat(bugs, addon, 13)&lt;/code&gt;会把addon字符串的聂荣附加给bugs，加到第13个字符或者遇到空字符的时候停止&lt;/li&gt;
-&lt;li&gt;所以，算上空字符(必须要添加空字符，否则就不是字符串了)，bugs数组应该足够大，以容纳原始字符串(不包含空字符)、添加在后面的13个字符、末尾的空字符。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;4.&lt;code&gt;strcmp()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;用来把用户的响应于已储存的字符串作比较(比较&lt;strong&gt;两个字符串的内容&lt;/strong&gt;)&lt;/li&gt;
-&lt;li&gt;比较的是字符串的内容而不是字符串的地址，例如
-&lt;ul&gt;
-&lt;li&gt;定义：
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;#define ANSWER &amp;quot;Grant&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;#define SIZE 40&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;char try[SIZE]&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;s_gets(try, SIZE)&lt;/code&gt;\\输入Grant&lt;/li&gt;
-&lt;li&gt;如果使用&lt;code&gt;while (try == ANSWER)&lt;/code&gt;,则永远得不到两者相等的结果，因为while比较的是指针，即地址，二者的地址肯定不相同&lt;/li&gt;
-&lt;li&gt;但使用&lt;code&gt;strcmp(try, ANSWER)&lt;/code&gt;则能够得到两者内容相等的结果。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;注：该函数只会比较try中第一个空字符前面的部分，所以该函数可以比较储存在不同大小数组中的字符串。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;该函数的返回值：
-&lt;ul&gt;
-&lt;li&gt;返回实例：
-&lt;ul&gt;
-&lt;li&gt;比较“A&amp;quot;和本身，返回0&lt;/li&gt;
-&lt;li&gt;比较”A&amp;quot;和&amp;quot;B&amp;quot;，返回-1&lt;/li&gt;
-&lt;li&gt;比较“B&amp;quot;和”A“，返回1&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;结论：
-&lt;ul&gt;
-&lt;li&gt;二者相等返回0&lt;/li&gt;
-&lt;li&gt;第一个的ASCII码比第二个大就返回负数，比第二个大就返回整数&lt;/li&gt;
-&lt;li&gt;返回的整数和负数即为二者的ASCII码之差&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;注：
-&lt;ul&gt;
-&lt;li&gt;返回值的具体数值并不重要，重要的是它是0还是非0&lt;/li&gt;
-&lt;li&gt;该函数比较的是&lt;strong&gt;字符串而不是字符&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;局限：
-&lt;ul&gt;
-&lt;li&gt;该函数比较字符串中的字符，直到发现不同的字符为止，这个过程可能会持续到字符串末尾。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;5.&lt;code&gt;strncmp()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;该函数可以比较字符不同的地方，也可以只比较第三个参数指定的字符数&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;例如书中的实例：可以限定函数只查找这几个字符。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;6.&lt;code&gt;strcpy()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;该函数是用来拷贝整个字符串的内容，即相当于字符串赋值运算符
-&lt;ul&gt;
-&lt;li&gt;例如：
-&lt;ul&gt;
-&lt;li&gt;str1和str2都是指向字符串的指针&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;str2 = str1;&lt;/code&gt;这个语句拷贝的指针的地址而不是具体内容&lt;/li&gt;
-&lt;li&gt;所以要想拷贝整个字符串就要用到该函数&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;注意：
-&lt;ul&gt;
-&lt;li&gt;接受两个字符串指针作为参数，可以把第二个指针声明为指针、数组或者字符串常量&lt;/li&gt;
-&lt;li&gt;第一个指针应该指向一个数据对象如数组，且该字符串有足够的空间存储源字符串的副本。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;其他属性：
-&lt;ul&gt;
-&lt;li&gt;该函数的返回类型是&lt;code&gt;char *&lt;/code&gt;,返回的是第一个参数的值，即一个字符的地址。&lt;/li&gt;
-&lt;li&gt;第一个参数不必指向数组的开始，该属性可用于拷贝数组的一部分，详情见书上的程序。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;局限：
-&lt;ul&gt;
-&lt;li&gt;与&lt;code&gt;strcat()&lt;/code&gt;一样，不能检查目标空间是否能容纳的下源字符串的副本。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;7.&lt;code&gt;strncpy()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;该函数的第三个参数指明了可拷贝的最大字符数
-&lt;ul&gt;
-&lt;li&gt;如果要拷贝的字符超过了指定的参数n，当拷贝了n个字符后就会停止，并且也不会在后面添加空字符，容易出现错误，所以要非常注意。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;8.&lt;code&gt;sprintf()&lt;/code&gt;函数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;该函数与&lt;code&gt;printf()&lt;/code&gt;函数类似，但这个是把数据写入字符串，而不是打印在显示器上。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;该函数的第一个参数是目标字符串的地址，其余的与&lt;code&gt;printf()&lt;/code&gt;类似。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;示例：&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; first[MAX];
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; last[MAX];
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; formal[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; MAX &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;];
-&lt;span style=&#34;color:#888&#34;&gt;//给以上前面两个数组赋值后就可以进行如下的操作
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;sprintf(formal, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%s, %-19s&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, last, first);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/ - 2019-2021 By Jialong</description>
         </item>
     
     

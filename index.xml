@@ -6,9 +6,125 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 15 Nov 2021 15:32:41 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 18 Nov 2021 09:20:28 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>C&#43;&#43; Primer——CH12 动态内存</title>
+        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>
+        <pubDate>Thu, 18 Nov 2021 09:20:28 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/ -&lt;p&gt;C++支持动态分配对象，动态分配的对象的生存期与它们在哪里创建无关，只有当显示地被释放时，这些对象才会销毁。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;静态内存&lt;/strong&gt;用来保存局部static对象、类static数据成员以及定义在任何函数之外的变量。&lt;strong&gt;栈内存&lt;/strong&gt;用来保存定义在函数内的非static对象。分配在静态或栈内存中的对象由编译器自动创建和销毁。&lt;/p&gt;
+&lt;p&gt;除了静态内存和栈内存，每个程序还拥有一个&lt;strong&gt;内存池&lt;/strong&gt;，这部分内存被称为&lt;strong&gt;堆&lt;/strong&gt;，程序用堆来存储&lt;strong&gt;动态分配&lt;/strong&gt;的对象，即那些在程序运行时分配的对象。动态对象的&lt;strong&gt;生存期由程序来控制&lt;/strong&gt;，即动态对象不再使用时，我们的代码必须显示销毁它们。&lt;/p&gt;
+&lt;h2 id=&#34;动态内存与智能指针&#34;&gt;动态内存与智能指针&lt;/h2&gt;
+&lt;p&gt;动态内存的管理是通过&lt;code&gt;new&lt;/code&gt;和&lt;code&gt;delete&lt;/code&gt;完成的。new为对象分配空间并返回一个指向该对象的指针，delete接受一个动态对象的指针，销毁该对象，并释放与之关联的内存。&lt;/p&gt;
+&lt;p&gt;新的标准库提供了两种&lt;strong&gt;智能指针&lt;/strong&gt;类型来管理动态对象，这两种智能指针的区别在于管理底层指针的方式：&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;shared_ptr&lt;/code&gt;允许&lt;strong&gt;多个指针指向同一个对象&lt;/strong&gt;；&lt;code&gt;unique_ptr&lt;/code&gt;独占所指向的对象。标准库还顶一个名为&lt;code&gt;weak_ptr&lt;/code&gt;的伴随类，是一种弱引用，指向&lt;code&gt;shared_ptr&lt;/code&gt;所管理的对象。&lt;/p&gt;
+&lt;h3 id=&#34;shared_ptr类&#34;&gt;shared_ptr类&lt;/h3&gt;
+&lt;p&gt;类似于vector，&lt;strong&gt;智能指针&lt;/strong&gt;也是模板，当我们创建一个智能指针时，必须提供额外信息——指针&lt;strong&gt;可以指向的类型&lt;/strong&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p1;		&lt;span style=&#34;color:#888&#34;&gt;//可以指向string
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;list&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; p2;	&lt;span style=&#34;color:#888&#34;&gt;//可以指向int的list
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;默认初始化的智能指针中保存着一个空指针。使用方法与普通指针类似，解引用一个智能指针返回它指向的对象。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;make_shared函数&lt;/strong&gt;
+是最安全的用来分配和使用动态内存的标准库函数。&lt;/p&gt;
+&lt;p&gt;此函数在动态内存中分配一个对象并初始化它，返回指向此对象的&lt;code&gt;shared_ptr&lt;/code&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_shared&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;); &lt;span style=&#34;color:#888&#34;&gt;//指向一个值为42的int的shared_ptr
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用make_shared时要指定创建对象的类型，方法与定义模板类相同，在函数名后跟一个尖括号，在其中给出类型，如上所示。另外，make_shared用其参数来构造给定类型的对象。例如调用&lt;code&gt;make_shared&amp;lt;string&amp;gt;&lt;/code&gt;时传递参数必须与string的某个构造函数匹配。&lt;/p&gt;
+&lt;p&gt;一般使用auto来定义一个对象来保存make_shared的结果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; p6 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_shared&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;shared_ptr的拷贝和赋值&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;每个shared_ptr都会记录&lt;strong&gt;指向相同对象&lt;/strong&gt;的其他shared_ptr的数量。&lt;/p&gt;
+&lt;p&gt;每个shared_ptr都有一个关联的计数器，称其为&lt;strong&gt;引用计数&lt;/strong&gt;。无论何时拷贝一个shared_ptr，计数器都会递增。&lt;/p&gt;
+&lt;p&gt;当我们给shared_ptr赋予一个新值或shared_ptr被销毁时，计数器就会递减。&lt;/p&gt;
+&lt;p&gt;一旦一个shared_ptr的计数器变为0，它就会释放自己所管理的对象：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_shared&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;);
+r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; q;	&lt;span style=&#34;color:#888&#34;&gt;//给r赋值，令它指向另一个地址；递增q指向的对象的引用次数；递减r原来指向对象的引用次数；r原来指向的对象已经没有引用者，会自动释放
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;shared_ptr自动销毁所管理的对象&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;当指向一个对象的最后一个shared_ptr被销毁时，shared_ptr类会自动销毁此对象。这是通过另一个特殊成员函数——&lt;strong&gt;析构函数&lt;/strong&gt;完成的。析构函数一般用来释放对象多分配的资源。&lt;/p&gt;
+&lt;p&gt;shared_ptr的析构函数会&lt;strong&gt;递减&lt;/strong&gt;它所指向对象的引用次数，引用次数变为0后shared_ptr的析构函数就会自动销毁对象并释放内存。&lt;/p&gt;
+&lt;p&gt;由于最后一个shared_ptr销毁前内存都不会释放，保证shared_ptr在无用之后不再保留就非常重用，否则程序虽然会正常执行，但会浪费内存。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用动态内存的原因&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;程序不知道自己需要使用多少对象（容器类就是出于这种原因从而使用动态内存）&lt;/li&gt;
+&lt;li&gt;程序不知道对象的准确类型&lt;/li&gt;
+&lt;li&gt;程序需要在多个对象间共享数据&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;直接管理内存&#34;&gt;直接管理内存&lt;/h3&gt;
+&lt;p&gt;使用运算符&lt;code&gt;new&lt;/code&gt;分配内存，&lt;code&gt;delete&lt;/code&gt;释放new分配的内存&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用new动态分配和初始化对象&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在自由空间分配的&lt;strong&gt;内存是无名的&lt;/strong&gt;，因此new无法为其分配的对象命名，而是返回一个&lt;strong&gt;指向该对象的指针&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pi &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//pi指向一个动态分配的、未初始化的无名对象
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;默认情况下动态分配的对象是默认初始化的，这意味着内置类型或组合类型的对象的值将是未定义的。类类型对象将用默认构造函数进行初始化：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;string &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ps &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; string;	&lt;span style=&#34;color:#888&#34;&gt;//初始化为空string
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pi &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//pi指向一个未初始化的int
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; p1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt;(obj);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以通过括号包围的初始化器判断我们想到分配的对象类型，然后使用auto。但只有括号内仅有单一初始化器时才能使用auto。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;动态分配的const对象&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pci &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1024&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一个动态分配的const必须进行初始化，对于一个定义了默认构造函数的类类型，其const动态对象可以隐式初始化，其他类型的对象必须显式初始化。上面new返回的是一个指向const的指针。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;内存耗尽&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;程序内存耗尽后new表达式就会失败，然后抛出一个类型为&lt;code&gt;std::bad_alloc&lt;/code&gt;的异常。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;释放动态内存&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;delete&lt;/span&gt; p;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;delete接受一个指针，销毁其指向的对象，释放对应内存。&lt;/p&gt;
+&lt;p&gt;向delete传递的指针值必须指向动态分配的内存或是一个空指针。释放一块非new分配的内存，其行为未定义。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;动态对象的生存周期直到被释放为止&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;返回指向动态内存的指针（而不是智能指针）的函数给其调用者增加了额外负担，调用者必须记得释放内存。&lt;/p&gt;
+&lt;h3 id=&#34;shared_ptr和new结合使用&#34;&gt;shared_ptr和new结合使用&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p2(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;));
+shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//错误，必须使用直接初始化
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接受指针参数的智能指针的构造函数时explicit的，我们不能将一个内置指针隐式转换为一个智能指针，必须使用直接初始化形式来初始化一个智能指针.&lt;/p&gt;
+&lt;p&gt;不要混用内置指针和智能指针。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;其他shared_ptr操作&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;p.reset(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1024&lt;/span&gt;));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用reset将一个新的指针赋予一个shared_ptr.上面的例子中p指向了一个新对象。&lt;/p&gt;
+&lt;h3 id=&#34;智能指针和异常&#34;&gt;智能指针和异常&lt;/h3&gt;
+&lt;p&gt;使用智能指针时，即使程序块过早结束（发生异常），智能指针也能确保在内存不再需要时将其释放。&lt;/p&gt;
+&lt;p&gt;与之相对的，当发生异常时，我们直接管理的内存不会自动释放。如果使用内置指针管理内存，且在new之后再对应的delete之前发生异常，内存不会被释放。&lt;/p&gt;
+&lt;h3 id=&#34;unique_ptr&#34;&gt;unique_ptr&lt;/h3&gt;
+&lt;p&gt;一个unique_ptr&lt;strong&gt;拥有&lt;/strong&gt;它所指向的对象，某个时刻只能有&lt;strong&gt;一个unique_ptr指向一个给定对象&lt;/strong&gt;，因此其&lt;strong&gt;不支持普通的拷贝或赋值&lt;/strong&gt;操作；当unique_ptr被销毁时，它所指向的对象也被销毁。&lt;/p&gt;
+&lt;p&gt;unique_ptr没有类似于make_shared的标准库函数返回一个shared_ptr；我们定义一个unique_ptr时，需要将其绑定到一个&lt;strong&gt;new返回的指针&lt;/strong&gt;上；初始化unique_ptr必须采用&lt;strong&gt;直接初始化&lt;/strong&gt;形式，即使用括号直接初始化。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p2(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;));	&lt;span style=&#34;color:#888&#34;&gt;//p2指向一个值为42的int
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;unique_ptr的操作：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;T, D&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; u(d)	&lt;span style=&#34;color:#888&#34;&gt;//空unique_ptr，指向类型为T的对象，用类型为D的对象d代替delete
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;u &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;nullptr&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//释放u指向的对象，将u置为空
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;u.release()	&lt;span style=&#34;color:#888&#34;&gt;//u放弃对指针的控制权，返回指针，并将u置为空
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;u.reset()	&lt;span style=&#34;color:#888&#34;&gt;//释放u指向的对象
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;u.reset(q)	&lt;span style=&#34;color:#888&#34;&gt;//q为内置指针，另u指向这个对象
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;虽然我们不能拷贝或赋值unique_ptr，但可以通过调用&lt;strong&gt;release或reset&lt;/strong&gt;将指针的所有权从一个unique_ptr转移给另一个unique：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p2(p1.release());&lt;span style=&#34;color:#888&#34;&gt;//release将p1置为空
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p3(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; string(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Trex&amp;#34;&lt;/span&gt;));
+p2.reset(p3.release());	&lt;span style=&#34;color:#888&#34;&gt;//reset释放了p2原来指向的内存
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;weak_ptr&#34;&gt;weak_ptr&lt;/h3&gt;
+&lt;p&gt;weak_ptr是一种&lt;strong&gt;不控制所指向对象生存期&lt;/strong&gt;的智能指针，它指向一个&lt;strong&gt;shared_ptr管理的对象&lt;/strong&gt;。将一个weak_ptr绑定到shared_ptr&lt;strong&gt;不会改变对象的引用计数&lt;/strong&gt;。一旦最后一只指向对象的shared_ptr被销毁，对象就会被释放，即使有weak_ptr指向对象，对象还是会被释放。weak_ptr的名字抓住了这种指针弱共享的特点。&lt;/p&gt;
+&lt;h2 id=&#34;动态数组&#34;&gt;动态数组&lt;/h2&gt;
+&lt;p&gt;可以一次为很多对象分配动态内存。C++语言和标准库提供了两种一次分配一个对象数组的方法。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用new表达式语法&lt;/li&gt;
+&lt;li&gt;标准库中allocator的类，允许我们将分配和初始化分离&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;大多数应用应该使用标准库容器而不是动态分配的数组。使用容器更为简单，更不容易出现内存管理错误并可能有更好的性能。&lt;/p&gt;
+&lt;h3 id=&#34;new和数组&#34;&gt;new和数组&lt;/h3&gt;
+&lt;p&gt;为了让new分配一个对象数组，要在类型名之后跟一对&lt;strong&gt;方括号&lt;/strong&gt;，在其中要指明分配对象的数目。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pia &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt;];	&lt;span style=&#34;color:#888&#34;&gt;//pia指向第一个int
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面的例子中，new分配32个int对象并返回指向第一个int对象的指针。&lt;/p&gt;
+&lt;p&gt;也可以用一个表示数组类型的&lt;strong&gt;类型别名&lt;/strong&gt;来分配一个数组，这样new表达式就不需要方括号了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;智能指针和动态数组&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;标准库提供了一个可以管理new分配的数组的unique_ptr版本。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[]&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; up(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;]);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;为了用一个unique_ptr管理动态数组，必须在一个动态类型后面跟一对方括号。&lt;/p&gt;
+&lt;h3 id=&#34;allocator类&#34;&gt;allocator类&lt;/h3&gt;
+&lt;p&gt;标准库allocator类定义在头文件memory中，其帮助我们将内存分配和对象构造分离开来。它提供了一种类型感知的内存分配方法。&lt;/p&gt;
+&lt;h2 id=&#34;使用标准库文本查询程序&#34;&gt;使用标准库：文本查询程序&lt;/h2&gt;
+&lt;p&gt;这个例子作为标准库相关内容学习的总结。&lt;/p&gt;
+&lt;p&gt;现代C++程序应该尽可能使用智能指针。&lt;/p&gt;
+- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -2052,189 +2168,6 @@ x &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;= y+z
 &lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x,&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\quad&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; x&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
 &lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{cases} &lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\]&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>csapp: 2.信息的表示和处理（部分完成）</title>
-        <link>https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>
-        <pubDate>Mon, 12 Jul 2021 21:26:27 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/ -&lt;p&gt;第一部分内容：程序结构和执行&lt;/p&gt;
-&lt;p&gt;我们需要用方法表示&lt;strong&gt;基本数据类型&lt;/strong&gt;，然后考虑机器级指令如何操作这样的数据，以及编译器如何将C程序翻译成这样的指令。接下来研究集中处理器的方法，使得我们能够更好地了解硬件资源如何被用来执行指令。&lt;/p&gt;
-&lt;h2 id=&#34;信息存储&#34;&gt;信息存储&lt;/h2&gt;
-&lt;h3 id=&#34;十六进制表示法及转换&#34;&gt;十六进制表示法及转换&lt;/h3&gt;
-&lt;p&gt;二进制和十进制对描述&lt;strong&gt;位模式&lt;/strong&gt;来说都不方便，因此采用16进制数(hex)来表示位模式。&lt;/p&gt;
-&lt;p&gt;C语言中16进制数以0X或0x开头，字符‘A’~‘F’既可以是大写也可以是小写。&lt;/p&gt;
-&lt;p&gt;二进制和十六进制之间的转换较为简单，不再赘述。&lt;/p&gt;
-&lt;p&gt;十进制和十六进制数之间的转换要反复利用乘法和除法进行处理：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;从十进制到十六进制：反复用16除十进制数&lt;/li&gt;
-&lt;li&gt;从十六进制到十进制：用相应的16的幂乘以每个十六进制数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;字数据大小&#34;&gt;字数据大小&lt;/h3&gt;
-&lt;p&gt;字长指明指针数据的标称大小。虚拟地址是以这样一个字来编码的，所以字长决定的最重要的系统参数就是&lt;strong&gt;虚拟地址空间的最大大小&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;对一个字长为w的机器而言，虚拟地址的范围是$0$ ~$2^w-1$，程序最多访问$2^w-1$个字节。&lt;/p&gt;
-&lt;p&gt;近年，很多机器都从32位字长迁移到了64位字长。大多64位字长机器可以运行32位字长机器编译的程序。32位程序和64位程序的区别在于程序是&lt;strong&gt;如何编译&lt;/strong&gt;成的，而不是运行的机器类型。&lt;/p&gt;
-&lt;h3 id=&#34;寻址和字节顺序&#34;&gt;寻址和字节顺序&lt;/h3&gt;
-&lt;p&gt;小端法、大端法&lt;/p&gt;
-&lt;p&gt;对于跨越多个字节的程序对象，我们必须明确：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;这个对象的地址是什么&lt;/li&gt;
-&lt;li&gt;如何在内存中排列这些字节&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;一般来说，多字节对象被存储为&lt;strong&gt;连续的字节序列&lt;/strong&gt;，对象的地址为所使用字节中&lt;strong&gt;最小的地址&lt;/strong&gt;。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;小端法：将&lt;strong&gt;最低有效字节&lt;/strong&gt;放在最前面(最小地址)存储。（例如一个二进制数最右边的8位是最低有效字节）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;大端法：将&lt;strong&gt;最高有效字节&lt;/strong&gt;放在最前面(最小地址)存储。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;大多Intel兼容机使用小端模式。&lt;/p&gt;
-&lt;p&gt;以下代码使用强制类型转换来访问和打印不同程序对象的字节表示。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;byte_pointer;	&lt;span style=&#34;color:#888&#34;&gt;//将byte_pointer定义为一个指向类型为unsigned char对象的指针
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_bytes&lt;/span&gt;(byte_pointer start, size_t len)
-{&lt;span style=&#34;color:#888&#34;&gt;//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	size_t i;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; len; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
-		printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%.2x&amp;#34;&lt;/span&gt;, start[i]);
-	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
-}
-
-&lt;span style=&#34;color:#888&#34;&gt;//使用sizeof确定对象使用的字节数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_int&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; x)
-{&lt;span style=&#34;color:#888&#34;&gt;//显示int对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;));
-}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_float&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; x)
-{&lt;span style=&#34;color:#888&#34;&gt;//显示float对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt;));
-}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_pointer&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;x)
-{&lt;span style=&#34;color:#888&#34;&gt;//显示void *对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;));
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;表示字符串&#34;&gt;表示字符串&lt;/h3&gt;
-&lt;p&gt;对文本进行编码。&lt;/p&gt;
-&lt;p&gt;ASCII编码、Unicode编码&lt;/p&gt;
-&lt;p&gt;之前写过一篇相关博客：&lt;a href=&#34;http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/&#34;&gt;字符编码：Unicode, UTF-8&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;布尔代数&#34;&gt;布尔代数&lt;/h3&gt;
-&lt;p&gt;四种布尔运算：&lt;/p&gt;
-&lt;p&gt;与、或、非、异或&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;异或：当P或Q为真但不同时为真时，异或成立；即当p=1且q=0或p=1且q=1时，p^q=1&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;位向量的布尔运算&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;按位进行布尔运算。&lt;/p&gt;
-&lt;h3 id=&#34;c语言中的位级运算&#34;&gt;C语言中的位级运算&lt;/h3&gt;
-&lt;p&gt;按照对应位进行布尔运算。&lt;/p&gt;
-&lt;h3 id=&#34;c语言中的逻辑运算&#34;&gt;C语言中的逻辑运算&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;||&lt;/code&gt;、&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;、&lt;code&gt;!&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;逻辑运算和位级运算完全不同，逻辑运算认为所有非零的参数都表示TRUE，参数0表示FALSE。以下是一些表达式求值举例：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;表达式&lt;/th&gt;
-&lt;th&gt;结果&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;!0x41&lt;/td&gt;
-&lt;td&gt;0x00&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;!0x00&lt;/td&gt;
-&lt;td&gt;0x01&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;!!0x41&lt;/td&gt;
-&lt;td&gt;0x01&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;c语言中的移位运算&#34;&gt;C语言中的移位运算&lt;/h3&gt;
-&lt;p&gt;左移k位：将操作数向左移动k位，丢弃掉最高的k位并在右端补k个0&lt;/p&gt;
-&lt;p&gt;逻辑右移：在左端补k个0&lt;/p&gt;
-&lt;p&gt;算数右移：在左端补k个最高有效位的值&lt;/p&gt;
-&lt;p&gt;几乎所有编译器都对&lt;strong&gt;有符号数&lt;/strong&gt;使用&lt;strong&gt;算术右移&lt;/strong&gt;，对&lt;strong&gt;无符号数&lt;/strong&gt;使用逻辑右移。&lt;/p&gt;
-&lt;h2 id=&#34;整数表示&#34;&gt;整数表示&lt;/h2&gt;
-&lt;p&gt;用&lt;strong&gt;位&lt;/strong&gt;来编码整数的两种不同方式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一种只能表示&lt;strong&gt;非负数&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;另一种能表示&lt;strong&gt;负数、零和正数&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;整型数据类型&#34;&gt;整型数据类型&lt;/h3&gt;
-&lt;p&gt;C语言通过&lt;strong&gt;关键字&lt;/strong&gt;来表示多种整型数据类型，这些关键字包括char、short、long，同时还能指示被表示的数字是非负数（声明为unsigned）。&lt;/p&gt;
-&lt;p&gt;为不同大小分配的字节数根据程序编译为32位还是64位有所不同；根据字节分配，不同大小所能表示的值的范围是不同的。&lt;/p&gt;
-&lt;p&gt;取值范围是不对称的，负数的范围比正数大1.&lt;/p&gt;
-&lt;h3 id=&#34;无符号数的编码&#34;&gt;无符号数的编码&lt;/h3&gt;
-&lt;p&gt;直接按照二进制进行编码即可。B2U：将二进制编码映射到一个非负整数&lt;/p&gt;
-&lt;p&gt;无符号数的编码具有唯一性&lt;/p&gt;
-&lt;h3 id=&#34;补码编码&#34;&gt;补码编码&lt;/h3&gt;
-&lt;p&gt;(two&amp;rsquo;s-complement)。用来表示有符号数，将字的最高有效位解释为&lt;strong&gt;负权&lt;/strong&gt;，用$B2T_w$表示：
-$$
-B2T_w(\vec x)=-x_{w-1}2^{w-1}+\sum_{i=0}^{w-2}x_i2_i
-$$
-最高有效位$x_{w-1}$称为符号位，它的权重为$-2^{w-1}$，是无符号表示中权重的负数。&lt;/p&gt;
-&lt;p&gt;从维向量到整数映射的举例：
-$$
-B2T_4([0001])=1 \
-B2T_4([0101])=5 \
-B2T_4([1011])=5 \
-B2T_4([1111])=-1
-$$
-w位补码所能表示的值的范围是：$[-2^{w-1},2^{w-1}-1]$，例如长度为4的补码可以表示的范围是$[-8,7]$。与无符号数一样，在可表示的取值范围内，每个数字都唯一的w位补码。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;用补码来编码负数（有符号数）&lt;/strong&gt;。几乎所有现代机器目前都采用补码编码。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;反码：最高有效位的权是$-(2^{w-1}-1)$，其他和补码一样。&lt;/p&gt;
-&lt;p&gt;原码：最高有效位是符号位，用来确定剩下的位应该取负权还是正权。&lt;/p&gt;
-&lt;p&gt;这两种表示方式对于数字0都有两种不同的编码方式。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;有符号数和无符号数之间的转换&#34;&gt;有符号数和无符号数之间的转换&lt;/h3&gt;
-&lt;p&gt;对于多数C语言的实现来说，这个问题都是从&lt;strong&gt;位级&lt;/strong&gt;角度来看的，而不是&lt;strong&gt;数&lt;/strong&gt;的角度。&lt;/p&gt;
-&lt;p&gt;处理同样字长的有符号和无符号数之间相互转换的规则为：数值可能会改变，但&lt;strong&gt;位模式&lt;/strong&gt;不变。&lt;/p&gt;
-&lt;p&gt;补码转换为无符号数$T2U_w(x)$，当x&amp;lt;0时值改变，计算结果为$x+2^w$，当x&amp;gt;0时值不变。&lt;/p&gt;
-&lt;h3 id=&#34;c语言中的有符号数和无符号数&#34;&gt;C语言中的有符号数和无符号数&lt;/h3&gt;
-&lt;p&gt;C语言支持所有整型数据类型的有符号和无符号计算，几乎所有机器都采用&lt;strong&gt;补码&lt;/strong&gt;表示有符号数。通常大多数数字都默认是有符号的。&lt;/p&gt;
-&lt;h3 id=&#34;扩展一个数字的位表示&#34;&gt;扩展一个数字的位表示&lt;/h3&gt;
-&lt;p&gt;将无符号数扩展为一个更大的数据类型：只需在表示的开头添加0即可。&lt;/p&gt;
-&lt;p&gt;将一个补码扩展为一个更大的数据类型：执行一个&lt;strong&gt;符号扩展&lt;/strong&gt;，即在开头添加最高有效位数字。&lt;/p&gt;
-&lt;p&gt;符号扩展不改变补码表示的数字。&lt;/p&gt;
-&lt;h3 id=&#34;截断数字&#34;&gt;截断数字&lt;/h3&gt;
-&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
-&lt;p&gt;为了避免出现错误或漏洞，我们&lt;strong&gt;绝不使用无符号数&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;整数运算&#34;&gt;整数运算&lt;/h2&gt;
-&lt;h3 id=&#34;无符号加法&#34;&gt;无符号加法&lt;/h3&gt;
-&lt;p&gt;两个无符号数相加，如果完整的整数结果不能放到数据类型的字长限制中去，那么就会发生溢出，当无符号数加法发生溢出时，结果为丢弃溢出的最高位后的结果，即减去$2^w$。&lt;/p&gt;
-&lt;h3 id=&#34;补码加法&#34;&gt;补码加法&lt;/h3&gt;
-&lt;p&gt;分为正溢出、正常、负溢出三种情况。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;正溢出：和减去$2^w$&lt;/li&gt;
-&lt;li&gt;负溢出：和加上$2^w$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;补码的非&#34;&gt;补码的非&lt;/h3&gt;
-&lt;p&gt;当$x=\text{TMin}_w$时，补码的非的结果为：$\text{TMin}_w$，否则结果为$-x$&lt;/p&gt;
-&lt;h3 id=&#34;无符号乘法&#34;&gt;无符号乘法&lt;/h3&gt;
-&lt;p&gt;乘积可能需要$2w$位来表示，C语言中无符号被定义为产生w位值，即2w乘积结果的低2w位。将一个无符号数截断为w位等价于计算该值模$2^w$&lt;/p&gt;
-&lt;h3 id=&#34;补码乘法&#34;&gt;补码乘法&lt;/h3&gt;
-&lt;h3 id=&#34;总结-1&#34;&gt;总结&lt;/h3&gt;
-&lt;p&gt;计算机的整数运算实际上是一种模运算，表示数字时的有限字长限制了可能的值的取值范围，结果运算溢出。&lt;/p&gt;
-&lt;p&gt;补码提供了一种既能表示整数也能表示负数的灵活方法，同时使用了与执行无符号算术相同的位级实现。&lt;/p&gt;
-&lt;h2 id=&#34;浮点数&#34;&gt;浮点数&lt;/h2&gt;
-&lt;h3 id=&#34;二进制小数&#34;&gt;二进制小数&lt;/h3&gt;
-&lt;h3 id=&#34;ieee浮点数表示&#34;&gt;IEEE浮点数表示&lt;/h3&gt;
-&lt;h3 id=&#34;舍入&#34;&gt;舍入&lt;/h3&gt;
-&lt;h3 id=&#34;浮点运算&#34;&gt;浮点运算&lt;/h3&gt;
-- https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/ - 2019-2021 By Jialong</description>
         </item>
     
     

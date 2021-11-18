@@ -7,7 +7,42 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 15 Nov 2021 15:32:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Nov 2021 09:20:28 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; Primer——CH12 动态内存</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>
+      <pubDate>Thu, 18 Nov 2021 09:20:28 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</guid>
+      <description>C++支持动态分配对象，动态分配的对象的生存期与它们在哪里创建无关，只有当显示地被释放时，这些对象才会销毁。
+静态内存用来保存局部static对象、类static数据成员以及定义在任何函数之外的变量。栈内存用来保存定义在函数内的非static对象。分配在静态或栈内存中的对象由编译器自动创建和销毁。
+除了静态内存和栈内存，每个程序还拥有一个内存池，这部分内存被称为堆，程序用堆来存储动态分配的对象，即那些在程序运行时分配的对象。动态对象的生存期由程序来控制，即动态对象不再使用时，我们的代码必须显示销毁它们。
+动态内存与智能指针 动态内存的管理是通过new和delete完成的。new为对象分配空间并返回一个指向该对象的指针，delete接受一个动态对象的指针，销毁该对象，并释放与之关联的内存。
+新的标准库提供了两种智能指针类型来管理动态对象，这两种智能指针的区别在于管理底层指针的方式：
+shared_ptr允许多个指针指向同一个对象；unique_ptr独占所指向的对象。标准库还顶一个名为weak_ptr的伴随类，是一种弱引用，指向shared_ptr所管理的对象。
+shared_ptr类 类似于vector，智能指针也是模板，当我们创建一个智能指针时，必须提供额外信息——指针可以指向的类型。
+shared_ptr&amp;lt;string&amp;gt; p1;	//可以指向string shared_ptr&amp;lt;list&amp;lt;int&amp;gt;&amp;gt; p2;	//可以指向int的list 默认初始化的智能指针中保存着一个空指针。使用方法与普通指针类似，解引用一个智能指针返回它指向的对象。
+make_shared函数 是最安全的用来分配和使用动态内存的标准库函数。
+此函数在动态内存中分配一个对象并初始化它，返回指向此对象的shared_ptr。
+shared_ptr&amp;lt;int&amp;gt; p3 = make_shared&amp;lt;int&amp;gt;(42); //指向一个值为42的int的shared_ptr 使用make_shared时要指定创建对象的类型，方法与定义模板类相同，在函数名后跟一个尖括号，在其中给出类型，如上所示。另外，make_shared用其参数来构造给定类型的对象。例如调用make_shared&amp;lt;string&amp;gt;时传递参数必须与string的某个构造函数匹配。
+一般使用auto来定义一个对象来保存make_shared的结果：
+auto p6 = make_shared&amp;lt;vector&amp;lt;string&amp;gt;&amp;gt;(); shared_ptr的拷贝和赋值
+每个shared_ptr都会记录指向相同对象的其他shared_ptr的数量。
+每个shared_ptr都有一个关联的计数器，称其为引用计数。无论何时拷贝一个shared_ptr，计数器都会递增。
+当我们给shared_ptr赋予一个新值或shared_ptr被销毁时，计数器就会递减。
+一旦一个shared_ptr的计数器变为0，它就会释放自己所管理的对象：
+auto r = make_shared&amp;lt;int&amp;gt;(42); r = q;	//给r赋值，令它指向另一个地址；递增q指向的对象的引用次数；递减r原来指向对象的引用次数；r原来指向的对象已经没有引用者，会自动释放 shared_ptr自动销毁所管理的对象
+当指向一个对象的最后一个shared_ptr被销毁时，shared_ptr类会自动销毁此对象。这是通过另一个特殊成员函数——析构函数完成的。析构函数一般用来释放对象多分配的资源。
+shared_ptr的析构函数会递减它所指向对象的引用次数，引用次数变为0后shared_ptr的析构函数就会自动销毁对象并释放内存。
+由于最后一个shared_ptr销毁前内存都不会释放，保证shared_ptr在无用之后不再保留就非常重用，否则程序虽然会正常执行，但会浪费内存。
+使用动态内存的原因
+ 程序不知道自己需要使用多少对象（容器类就是出于这种原因从而使用动态内存） 程序不知道对象的准确类型 程序需要在多个对象间共享数据  直接管理内存 使用运算符new分配内存，delete释放new分配的内存
+使用new动态分配和初始化对象
+在自由空间分配的内存是无名的，因此new无法为其分配的对象命名，而是返回一个指向该对象的指针：
+int *pi = new int;	//pi指向一个动态分配的、未初始化的无名对象 默认情况下动态分配的对象是默认初始化的，这意味着内置类型或组合类型的对象的值将是未定义的。类类型对象将用默认构造函数进行初始化：
+string *ps = new string;	//初始化为空string int *pi = new int;	//pi指向一个未初始化的int auto p1 = new auto(obj); 可以通过括号包围的初始化器判断我们想到分配的对象类型，然后使用auto。但只有括号内仅有单一初始化器时才能使用auto。</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; Primer——CH11 关联容器</title>
       <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</link>
@@ -38,13 +73,47 @@ map的下标操作 map和unordered_map容器提供了下标运算符和一个对
     </item>
     
     <item>
+      <title>C&#43;&#43; Primer——CH10 泛型算法</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE6%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Sun, 18 Jul 2021 09:16:32 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE6%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/</guid>
+      <description>用来操纵容器。泛型算法独立于任何特定容器，可用于不同类型的容器和不同类型的元素。这些算法是一些经典算法的公共接口，例如排序和搜索。
+概述 大多数算法定义在algorithm头文件中，标准库还在numeric中定义了一组数值泛型算法。
+一般这些算法并不直接操作容器，而是遍历由两个迭代器指定的一个元素范围来进行操作。
+算法不依赖于容器，但依赖于元素类型的操作。
+基本算法 只读算法 只读取输入范围的元素，不改变元素。
+accumulate算法：
+其定义在头文件numeric中，接受三个参数，前两个指出了需要求和元素的范围，第三个参数是和的初值。
+int sum = accumulate(vec.cbegin(), vec.cend(), 0);	//对vec中元素求和，和的初值设为0 第三个参数的类型决定了函数中使用哪个加法运算符以及返回值的类型。
+即序列中的元素必须与第三个参数匹配或能够转换为第三个参数的类型。
+equal算法
+确定两个序列的值是否保存相同的值，将第一个序列的每个元素与第二个序列的对应元素比较。该算法接受三个迭代器，前两个表示第一个序列的范围，第三个表示第二个序列的首元素。
+equal利用迭代器完成操作，因此我们可以调用equal来比较两个不同类型容器中的元素，并且元素类型也可以不同。
+写容器元素算法 使用这类算法要保证序列原大小不小于算法写入的元素数目。
+fill算法
+fill接受一对迭代器和一个值，将这个值赋予输入序列中的每个元素。
+fill(vec.begin(), vec.end(), 0); 不能在空容器上调用fill_n.
+back_inserter插入迭代器
+接受一个指向容器的引用，返回一个与该容器绑定的插入迭代器。通过此迭代器赋值时，赋值运算符会调用push_back将一个具有给定值的元素添加到容器中。
+back_inserter是一个定义在头文件iterator中的函数。
+vector&amp;lt;int&amp;gt; vec;	//空vector auto it = back_inserter(vec);	//通过其赋值将元素添加到vec中 *it = 42; 拷贝算法
+copy是另一个向目的位置迭代器指向的输出序列中的元素写入数据的算法。
+该算法接受三个迭代器，前两个表示一个输入范围，第三个表示目的序列的起始位置。
+重排容器元素算法 sort、unique函数
+void elimDups(vector&amp;lt;string&amp;gt; &amp;amp;words) { //按字典排序words, 以便查找重复单词 	sort(words.begin(), words.end()); //unique重排输入范围，使每个单词只出现一次 	auto end_unique = unique(words.begin(), words.end()); //使用erase操作删除重复单词 	words.erase(end_unique, words.end()); } sort算法接受两个迭代器，表示要排序的元素范围。</description>
+    </item>
+    
+    <item>
       <title>C&#43;&#43; Primer——CH09 顺序容器</title>
       <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</link>
       <pubDate>Tue, 15 Jun 2021 15:36:20 +0800</pubDate>
       
       <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE4%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8/</guid>
-      <description>一个容器就是一些特定类型对象的集合。
+      <description>顺序容器
+一个容器就是一些特定类型对象的集合。
 顺序容器提供了控制元素存储和访问顺序的能力。这种顺序与元素加入容器时的位置相对应。
+关联容器与顺序容器有着根本不同，关联容器中的元素是按照关键词来保存和访问的，即Key-Value；与之相对的是顺序容器中的元素按照它们在容器中的位置来顺序保存和访问。
 概述 顺序容器都提供了快速顺序访问元素的能力。
    符号 顺序容器类型(名称) 性能     vector 可变大小数组 支持快速随机访问。在尾部之外的位置插入删除元素很慢   deque 双端队列 支持快速随机访问。在头尾插入删除速度很快   list 双向链表 只支持双向顺序访问。在list中任何位置插入删除元素都很快   forward_list 单项链表 只支持单项顺序访问。在forward_list中任何位置插入删除元素都很快   array 固定大小数组 支持快速随机访问。不能添加删除元素   string 与vector相似的容器，专门用于保存字符 随机访问快，在尾部插入删除速度快    除了固定大小的array外，其他容器都提供高效的内存管理。容器保存元素的策略对容器操作的效率有着很大影响。
 string和vector将元素保存在连续的内存空间中，因此由元素的下标来计算其地址非常快速。但在这两种容器的中间位置插入和删除元素的速度非常慢，因为一次插入或删除后，需要移动插入、删除位置后的所有元素以保证存储的连续。
@@ -53,7 +122,7 @@ forward_list与最好的手写单向链表数据结构性能相当，因此没�
 deque支持快读随机访问，在该容器中间位置添加或删除元素速度很慢，但在两端很快。
 容器库概览 容器类型上的操作分成了层次：
  某些操作式所有容器都提供的； 另外一些操作仅针对顺序容器、关联容器或无序容器； 还有一些操作只适合一小部分容器。  容器通过尖括号指定类型。
-容器操作 iterator	迭代器 *iter	//返回迭代器iter所指元素的引用 iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员 ++iter	//令iter指示容器中的下一个元素 --iter	//令iter指示容器中的上一个元素 iter1 == iter2 一个迭代器范围由一对迭代器表示，这两个迭代器被称为begin和end，begin指向容器第一个元素，end指向容器的尾后元素，这种元素范围被称为左闭合区间，即[begin, end)。</description>
+容器操作 iterator size_type 迭代器 *iter	//返回迭代器iter所指元素的引用 iter-&amp;gt;name	//解引用iter并获取该元素的名为mem的成员 ++iter	//令iter指示容器中的下一个元素 --iter	//令iter指示容器中的上一个元素 iter1 == iter2 一个迭代器范围由一对迭代器表示，这两个迭代器被称为begin和end，begin指向容器第一个元素，end指向容器的尾后元素，这种元素范围被称为左闭合区间，即[begin, end)。</description>
     </item>
     
     <item>

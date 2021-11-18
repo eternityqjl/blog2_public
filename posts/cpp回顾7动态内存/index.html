@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>C&#43;&#43; Primer——CH11 关联容器</title>
+<title>C&#43;&#43; Primer——CH12 动态内存</title>
 
 
 
@@ -10,18 +10,18 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="《C&#43;&#43;  Primer 第5版》学习笔记">
+<meta name="description" content="《C&#43;&#43;  Primer 第5版》学习笔记。">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
 
 
-<meta property="og:title" content="C&#43;&#43; Primer——CH11 关联容器" />
-<meta property="og:description" content="《C&#43;&#43;  Primer 第5版》学习笔记" />
+<meta property="og:title" content="C&#43;&#43; Primer——CH12 动态内存" />
+<meta property="og:description" content="《C&#43;&#43;  Primer 第5版》学习笔记。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-11-15T15:32:41+08:00" />
-<meta property="article:modified_time" content="2021-11-15T15:32:41+08:00" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:url" content="https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-11-18T09:20:28+08:00" />
+<meta property="article:modified_time" content="2021-11-18T09:20:28+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -29,8 +29,8 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="C&#43;&#43; Primer——CH11 关联容器"/>
-<meta name="twitter:description" content="《C&#43;&#43;  Primer 第5版》学习笔记"/>
+<meta name="twitter:title" content="C&#43;&#43; Primer——CH12 动态内存"/>
+<meta name="twitter:description" content="《C&#43;&#43;  Primer 第5版》学习笔记。"/>
 
 
 
@@ -223,26 +223,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e4%bd%bf%e7%94%a8%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#使用关联容器-nav`)" id="使用关联容器-nav">
-									使用关联容器
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%a6%82%e8%bf%b0" onclick="onNavClick(`#关联容器概述-nav`)" id="关联容器概述-nav">
-									关联容器概述
+								<a href="#%e5%8a%a8%e6%80%81%e5%86%85%e5%ad%98%e4%b8%8e%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88" onclick="onNavClick(`#动态内存与智能指针-nav`)" id="动态内存与智能指针-nav">
+									动态内存与智能指针
 								</a>
 							</li>
 						
@@ -265,8 +247,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%ae%9a%e4%b9%89%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#定义关联容器-nav`)" id="定义关联容器-nav">
-									定义关联容器
+								<a href="#shared_ptr%e7%b1%bb" onclick="onNavClick(`#shared_ptr类-nav`)" id="shared_ptr类-nav">
+									shared_ptr类
 								</a>
 							</li>
 						
@@ -283,8 +265,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%85%b3%e9%94%ae%e5%ad%97%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%a6%81%e6%b1%82" onclick="onNavClick(`#关键字类型的要求-nav`)" id="关键字类型的要求-nav">
-									关键字类型的要求
+								<a href="#%e7%9b%b4%e6%8e%a5%e7%ae%a1%e7%90%86%e5%86%85%e5%ad%98" onclick="onNavClick(`#直接管理内存-nav`)" id="直接管理内存-nav">
+									直接管理内存
 								</a>
 							</li>
 						
@@ -301,8 +283,62 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#pair%e7%b1%bb%e5%9e%8b" onclick="onNavClick(`#pair类型-nav`)" id="pair类型-nav">
-									pair类型
+								<a href="#shared_ptr%e5%92%8cnew%e7%bb%93%e5%90%88%e4%bd%bf%e7%94%a8" onclick="onNavClick(`#shared_ptr和new结合使用-nav`)" id="shared_ptr和new结合使用-nav">
+									shared_ptr和new结合使用
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%82%e5%b8%b8" onclick="onNavClick(`#智能指针和异常-nav`)" id="智能指针和异常-nav">
+									智能指针和异常
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#unique_ptr" onclick="onNavClick(`#unique_ptr-nav`)" id="unique_ptr-nav">
+									unique_ptr
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#weak_ptr" onclick="onNavClick(`#weak_ptr-nav`)" id="weak_ptr-nav">
+									weak_ptr
 								</a>
 							</li>
 						
@@ -323,8 +359,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#关联容器操作-nav`)" id="关联容器操作-nav">
-									关联容器操作
+								<a href="#%e5%8a%a8%e6%80%81%e6%95%b0%e7%bb%84" onclick="onNavClick(`#动态数组-nav`)" id="动态数组-nav">
+									动态数组
 								</a>
 							</li>
 						
@@ -347,8 +383,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e8%bf%ad%e4%bb%a3%e5%99%a8" onclick="onNavClick(`#关联容器迭代器-nav`)" id="关联容器迭代器-nav">
-									关联容器迭代器
+								<a href="#new%e5%92%8c%e6%95%b0%e7%bb%84" onclick="onNavClick(`#new和数组-nav`)" id="new和数组-nav">
+									new和数组
 								</a>
 							</li>
 						
@@ -365,62 +401,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e6%b7%bb%e5%8a%a0%e5%85%83%e7%b4%a0" onclick="onNavClick(`#添加元素-nav`)" id="添加元素-nav">
-									添加元素
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e5%88%a0%e9%99%a4%e5%85%83%e7%b4%a0" onclick="onNavClick(`#删除元素-nav`)" id="删除元素-nav">
-									删除元素
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#map%e7%9a%84%e4%b8%8b%e6%a0%87%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#map的下标操作-nav`)" id="map的下标操作-nav">
-									map的下标操作
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e8%ae%bf%e9%97%ae%e5%85%83%e7%b4%a0" onclick="onNavClick(`#访问元素-nav`)" id="访问元素-nav">
-									访问元素
+								<a href="#allocator%e7%b1%bb" onclick="onNavClick(`#allocator类-nav`)" id="allocator类-nav">
+									allocator类
 								</a>
 							</li>
 						
@@ -441,50 +423,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e6%97%a0%e5%ba%8f%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#无序容器-nav`)" id="无序容器-nav">
-									无序容器
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#%e7%ae%a1%e7%90%86%e6%a1%b6" onclick="onNavClick(`#管理桶-nav`)" id="管理桶-nav">
-									管理桶
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e6%97%a0%e9%9c%80%e5%ae%b9%e5%99%a8%e5%af%b9%e5%85%b3%e9%94%ae%e5%ad%97%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%a6%81%e6%b1%82" onclick="onNavClick(`#无需容器对关键字类型的要求-nav`)" id="无需容器对关键字类型的要求-nav">
-									无需容器对关键字类型的要求
+								<a href="#%e4%bd%bf%e7%94%a8%e6%a0%87%e5%87%86%e5%ba%93%e6%96%87%e6%9c%ac%e6%9f%a5%e8%af%a2%e7%a8%8b%e5%ba%8f" onclick="onNavClick(`#使用标准库文本查询程序-nav`)" id="使用标准库文本查询程序-nav">
+									使用标准库：文本查询程序
 								</a>
 							</li>
 						
@@ -604,26 +544,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e4%bd%bf%e7%94%a8%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#使用关联容器-nav`)" id="使用关联容器-nav">
-									使用关联容器
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%a6%82%e8%bf%b0" onclick="onNavClick(`#关联容器概述-nav`)" id="关联容器概述-nav">
-									关联容器概述
+								<a href="#%e5%8a%a8%e6%80%81%e5%86%85%e5%ad%98%e4%b8%8e%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88" onclick="onNavClick(`#动态内存与智能指针-nav`)" id="动态内存与智能指针-nav">
+									动态内存与智能指针
 								</a>
 							</li>
 						
@@ -646,8 +568,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%ae%9a%e4%b9%89%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#定义关联容器-nav`)" id="定义关联容器-nav">
-									定义关联容器
+								<a href="#shared_ptr%e7%b1%bb" onclick="onNavClick(`#shared_ptr类-nav`)" id="shared_ptr类-nav">
+									shared_ptr类
 								</a>
 							</li>
 						
@@ -664,8 +586,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%85%b3%e9%94%ae%e5%ad%97%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%a6%81%e6%b1%82" onclick="onNavClick(`#关键字类型的要求-nav`)" id="关键字类型的要求-nav">
-									关键字类型的要求
+								<a href="#%e7%9b%b4%e6%8e%a5%e7%ae%a1%e7%90%86%e5%86%85%e5%ad%98" onclick="onNavClick(`#直接管理内存-nav`)" id="直接管理内存-nav">
+									直接管理内存
 								</a>
 							</li>
 						
@@ -682,8 +604,62 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#pair%e7%b1%bb%e5%9e%8b" onclick="onNavClick(`#pair类型-nav`)" id="pair类型-nav">
-									pair类型
+								<a href="#shared_ptr%e5%92%8cnew%e7%bb%93%e5%90%88%e4%bd%bf%e7%94%a8" onclick="onNavClick(`#shared_ptr和new结合使用-nav`)" id="shared_ptr和new结合使用-nav">
+									shared_ptr和new结合使用
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88%e5%92%8c%e5%bc%82%e5%b8%b8" onclick="onNavClick(`#智能指针和异常-nav`)" id="智能指针和异常-nav">
+									智能指针和异常
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#unique_ptr" onclick="onNavClick(`#unique_ptr-nav`)" id="unique_ptr-nav">
+									unique_ptr
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#weak_ptr" onclick="onNavClick(`#weak_ptr-nav`)" id="weak_ptr-nav">
+									weak_ptr
 								</a>
 							</li>
 						
@@ -704,8 +680,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#关联容器操作-nav`)" id="关联容器操作-nav">
-									关联容器操作
+								<a href="#%e5%8a%a8%e6%80%81%e6%95%b0%e7%bb%84" onclick="onNavClick(`#动态数组-nav`)" id="动态数组-nav">
+									动态数组
 								</a>
 							</li>
 						
@@ -728,8 +704,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%85%b3%e8%81%94%e5%ae%b9%e5%99%a8%e8%bf%ad%e4%bb%a3%e5%99%a8" onclick="onNavClick(`#关联容器迭代器-nav`)" id="关联容器迭代器-nav">
-									关联容器迭代器
+								<a href="#new%e5%92%8c%e6%95%b0%e7%bb%84" onclick="onNavClick(`#new和数组-nav`)" id="new和数组-nav">
+									new和数组
 								</a>
 							</li>
 						
@@ -746,62 +722,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e6%b7%bb%e5%8a%a0%e5%85%83%e7%b4%a0" onclick="onNavClick(`#添加元素-nav`)" id="添加元素-nav">
-									添加元素
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e5%88%a0%e9%99%a4%e5%85%83%e7%b4%a0" onclick="onNavClick(`#删除元素-nav`)" id="删除元素-nav">
-									删除元素
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#map%e7%9a%84%e4%b8%8b%e6%a0%87%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#map的下标操作-nav`)" id="map的下标操作-nav">
-									map的下标操作
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e8%ae%bf%e9%97%ae%e5%85%83%e7%b4%a0" onclick="onNavClick(`#访问元素-nav`)" id="访问元素-nav">
-									访问元素
+								<a href="#allocator%e7%b1%bb" onclick="onNavClick(`#allocator类-nav`)" id="allocator类-nav">
+									allocator类
 								</a>
 							</li>
 						
@@ -822,50 +744,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e6%97%a0%e5%ba%8f%e5%ae%b9%e5%99%a8" onclick="onNavClick(`#无序容器-nav`)" id="无序容器-nav">
-									无序容器
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#%e7%ae%a1%e7%90%86%e6%a1%b6" onclick="onNavClick(`#管理桶-nav`)" id="管理桶-nav">
-									管理桶
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e6%97%a0%e9%9c%80%e5%ae%b9%e5%99%a8%e5%af%b9%e5%85%b3%e9%94%ae%e5%ad%97%e7%b1%bb%e5%9e%8b%e7%9a%84%e8%a6%81%e6%b1%82" onclick="onNavClick(`#无需容器对关键字类型的要求-nav`)" id="无需容器对关键字类型的要求-nav">
-									无需容器对关键字类型的要求
+								<a href="#%e4%bd%bf%e7%94%a8%e6%a0%87%e5%87%86%e5%ba%93%e6%96%87%e6%9c%ac%e6%9f%a5%e8%af%a2%e7%a8%8b%e5%ba%8f" onclick="onNavClick(`#使用标准库文本查询程序-nav`)" id="使用标准库文本查询程序-nav">
+									使用标准库：文本查询程序
 								</a>
 							</li>
 						
@@ -937,16 +817,16 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             >
                 <div class="post-title">
-                    C&#43;&#43; Primer——CH11 关联容器
+                    C&#43;&#43; Primer——CH12 动态内存
                     
                     <div class="post-subtitle">
-                        《C&#43;&#43;  Primer 第5版》学习笔记
+                        《C&#43;&#43;  Primer 第5版》学习笔记。
                     </div>
                     
                     <div class="post-meta">
                         
                         <time itemprop="datePublished">
-                            2021-11-15 15:32
+                            2021-11-18 09:20
                         </time>
                         
 
@@ -975,58 +855,115 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 <div class="post-body" v-pre>
                 
-                    <p>键值对。</p>
-<p>set和map</p>
-<h2 id="使用关联容器">使用关联容器</h2>
+                    <p>C++支持动态分配对象，动态分配的对象的生存期与它们在哪里创建无关，只有当显示地被释放时，这些对象才会销毁。</p>
+<p><strong>静态内存</strong>用来保存局部static对象、类static数据成员以及定义在任何函数之外的变量。<strong>栈内存</strong>用来保存定义在函数内的非static对象。分配在静态或栈内存中的对象由编译器自动创建和销毁。</p>
+<p>除了静态内存和栈内存，每个程序还拥有一个<strong>内存池</strong>，这部分内存被称为<strong>堆</strong>，程序用堆来存储<strong>动态分配</strong>的对象，即那些在程序运行时分配的对象。动态对象的<strong>生存期由程序来控制</strong>，即动态对象不再使用时，我们的代码必须显示销毁它们。</p>
+<h2 id="动态内存与智能指针">动态内存与智能指针</h2>
+<p>动态内存的管理是通过<code>new</code>和<code>delete</code>完成的。new为对象分配空间并返回一个指向该对象的指针，delete接受一个动态对象的指针，销毁该对象，并释放与之关联的内存。</p>
+<p>新的标准库提供了两种<strong>智能指针</strong>类型来管理动态对象，这两种智能指针的区别在于管理底层指针的方式：</p>
+<p><code>shared_ptr</code>允许<strong>多个指针指向同一个对象</strong>；<code>unique_ptr</code>独占所指向的对象。标准库还顶一个名为<code>weak_ptr</code>的伴随类，是一种弱引用，指向<code>shared_ptr</code>所管理的对象。</p>
+<h3 id="shared_ptr类">shared_ptr类</h3>
+<p>类似于vector，<strong>智能指针</strong>也是模板，当我们创建一个智能指针时，必须提供额外信息——指针<strong>可以指向的类型</strong>。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> p1;		<span style="color:#888">//可以指向string
+</span><span style="color:#888"></span>shared_ptr<span style="color:#333">&lt;</span>list<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;&gt;</span> p2;	<span style="color:#888">//可以指向int的list
+</span></code></pre></div><p>默认初始化的智能指针中保存着一个空指针。使用方法与普通指针类似，解引用一个智能指针返回它指向的对象。</p>
+<p><strong>make_shared函数</strong>
+是最安全的用来分配和使用动态内存的标准库函数。</p>
+<p>此函数在动态内存中分配一个对象并初始化它，返回指向此对象的<code>shared_ptr</code>。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> p3 <span style="color:#333">=</span> make_shared<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span>(<span style="color:#00d;font-weight:bold">42</span>); <span style="color:#888">//指向一个值为42的int的shared_ptr
+</span></code></pre></div><p>使用make_shared时要指定创建对象的类型，方法与定义模板类相同，在函数名后跟一个尖括号，在其中给出类型，如上所示。另外，make_shared用其参数来构造给定类型的对象。例如调用<code>make_shared&lt;string&gt;</code>时传递参数必须与string的某个构造函数匹配。</p>
+<p>一般使用auto来定义一个对象来保存make_shared的结果：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">auto</span> p6 <span style="color:#333">=</span> make_shared<span style="color:#333">&lt;</span>vector<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;&gt;</span>();
+</code></pre></div><p><strong>shared_ptr的拷贝和赋值</strong></p>
+<p>每个shared_ptr都会记录<strong>指向相同对象</strong>的其他shared_ptr的数量。</p>
+<p>每个shared_ptr都有一个关联的计数器，称其为<strong>引用计数</strong>。无论何时拷贝一个shared_ptr，计数器都会递增。</p>
+<p>当我们给shared_ptr赋予一个新值或shared_ptr被销毁时，计数器就会递减。</p>
+<p>一旦一个shared_ptr的计数器变为0，它就会释放自己所管理的对象：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">auto</span> r <span style="color:#333">=</span> make_shared<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span>(<span style="color:#00d;font-weight:bold">42</span>);
+r <span style="color:#333">=</span> q;	<span style="color:#888">//给r赋值，令它指向另一个地址；递增q指向的对象的引用次数；递减r原来指向对象的引用次数；r原来指向的对象已经没有引用者，会自动释放
+</span></code></pre></div><p><strong>shared_ptr自动销毁所管理的对象</strong></p>
+<p>当指向一个对象的最后一个shared_ptr被销毁时，shared_ptr类会自动销毁此对象。这是通过另一个特殊成员函数——<strong>析构函数</strong>完成的。析构函数一般用来释放对象多分配的资源。</p>
+<p>shared_ptr的析构函数会<strong>递减</strong>它所指向对象的引用次数，引用次数变为0后shared_ptr的析构函数就会自动销毁对象并释放内存。</p>
+<p>由于最后一个shared_ptr销毁前内存都不会释放，保证shared_ptr在无用之后不再保留就非常重用，否则程序虽然会正常执行，但会浪费内存。</p>
+<p><strong>使用动态内存的原因</strong></p>
 <ul>
-<li>map： 关联数组，关键字——值。</li>
-<li>set：关键字的简单集合</li>
+<li>程序不知道自己需要使用多少对象（容器类就是出于这种原因从而使用动态内存）</li>
+<li>程序不知道对象的准确类型</li>
+<li>程序需要在多个对象间共享数据</li>
 </ul>
-<p>可以进行列表初始化</p>
-<h2 id="关联容器概述">关联容器概述</h2>
-<p>关联容器不支持顺序容器的位置相关的操作，例如<code>push_front</code>，原因是关联容器中的值是按照关键字存储的，这些操作没有意义。</p>
-<p>另外无序容器还提供调整哈希性能的操作。</p>
-<h3 id="定义关联容器">定义关联容器</h3>
-<h3 id="关键字类型的要求">关键字类型的要求</h3>
-<p>对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。</p>
-<h3 id="pair类型">pair类型</h3>
-<p>定义在头文件utility中。</p>
-<p>pair的默认构造函数对数据成员进行值初始化。也可以为每个成员提供初始化器。</p>
-<h2 id="关联容器操作">关联容器操作</h2>
-<p>除了之前在顺序容器P295页列出的类型，关联容器还定义了以下类型：</p>
+<h3 id="直接管理内存">直接管理内存</h3>
+<p>使用运算符<code>new</code>分配内存，<code>delete</code>释放new分配的内存</p>
+<p><strong>使用new动态分配和初始化对象</strong></p>
+<p>在自由空间分配的<strong>内存是无名的</strong>，因此new无法为其分配的对象命名，而是返回一个<strong>指向该对象的指针</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pi <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>;	<span style="color:#888">//pi指向一个动态分配的、未初始化的无名对象
+</span></code></pre></div><p>默认情况下动态分配的对象是默认初始化的，这意味着内置类型或组合类型的对象的值将是未定义的。类类型对象将用默认构造函数进行初始化：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">string <span style="color:#333">*</span>ps <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> string;	<span style="color:#888">//初始化为空string
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pi <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>;	<span style="color:#888">//pi指向一个未初始化的int
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">auto</span> p1 <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#080;font-weight:bold">auto</span>(obj);
+</code></pre></div><p>可以通过括号包围的初始化器判断我们想到分配的对象类型，然后使用auto。但只有括号内仅有单一初始化器时才能使用auto。</p>
+<p><strong>动态分配的const对象</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pci <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> (<span style="color:#00d;font-weight:bold">1024</span>);
+</code></pre></div><p>一个动态分配的const必须进行初始化，对于一个定义了默认构造函数的类类型，其const动态对象可以隐式初始化，其他类型的对象必须显式初始化。上面new返回的是一个指向const的指针。</p>
+<p><strong>内存耗尽</strong></p>
+<p>程序内存耗尽后new表达式就会失败，然后抛出一个类型为<code>std::bad_alloc</code>的异常。</p>
+<p><strong>释放动态内存</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">delete</span> p;
+</code></pre></div><p>delete接受一个指针，销毁其指向的对象，释放对应内存。</p>
+<p>向delete传递的指针值必须指向动态分配的内存或是一个空指针。释放一块非new分配的内存，其行为未定义。</p>
+<p><strong>动态对象的生存周期直到被释放为止</strong></p>
+<p>返回指向动态内存的指针（而不是智能指针）的函数给其调用者增加了额外负担，调用者必须记得释放内存。</p>
+<h3 id="shared_ptr和new结合使用">shared_ptr和new结合使用</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> p2(<span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>(<span style="color:#00d;font-weight:bold">42</span>));
+shared_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> p3 <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>(<span style="color:#00d;font-weight:bold">42</span>);	<span style="color:#888">//错误，必须使用直接初始化
+</span></code></pre></div><p>接受指针参数的智能指针的构造函数时explicit的，我们不能将一个内置指针隐式转换为一个智能指针，必须使用直接初始化形式来初始化一个智能指针.</p>
+<p>不要混用内置指针和智能指针。</p>
+<p><strong>其他shared_ptr操作</strong></p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">p.reset(<span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>(<span style="color:#00d;font-weight:bold">1024</span>));
+</code></pre></div><p>用reset将一个新的指针赋予一个shared_ptr.上面的例子中p指向了一个新对象。</p>
+<h3 id="智能指针和异常">智能指针和异常</h3>
+<p>使用智能指针时，即使程序块过早结束（发生异常），智能指针也能确保在内存不再需要时将其释放。</p>
+<p>与之相对的，当发生异常时，我们直接管理的内存不会自动释放。如果使用内置指针管理内存，且在new之后再对应的delete之前发生异常，内存不会被释放。</p>
+<h3 id="unique_ptr">unique_ptr</h3>
+<p>一个unique_ptr<strong>拥有</strong>它所指向的对象，某个时刻只能有<strong>一个unique_ptr指向一个给定对象</strong>，因此其<strong>不支持普通的拷贝或赋值</strong>操作；当unique_ptr被销毁时，它所指向的对象也被销毁。</p>
+<p>unique_ptr没有类似于make_shared的标准库函数返回一个shared_ptr；我们定义一个unique_ptr时，需要将其绑定到一个<strong>new返回的指针</strong>上；初始化unique_ptr必须采用<strong>直接初始化</strong>形式，即使用括号直接初始化。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> p2(<span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>(<span style="color:#00d;font-weight:bold">42</span>));	<span style="color:#888">//p2指向一个值为42的int
+</span></code></pre></div><p>unique_ptr的操作：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#333">&lt;</span>T, D<span style="color:#333">&gt;</span> u(d)	<span style="color:#888">//空unique_ptr，指向类型为T的对象，用类型为D的对象d代替delete
+</span><span style="color:#888"></span>u <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">nullptr</span>	<span style="color:#888">//释放u指向的对象，将u置为空
+</span><span style="color:#888"></span>u.release()	<span style="color:#888">//u放弃对指针的控制权，返回指针，并将u置为空
+</span><span style="color:#888"></span>u.reset()	<span style="color:#888">//释放u指向的对象
+</span><span style="color:#888"></span>u.reset(q)	<span style="color:#888">//q为内置指针，另u指向这个对象
+</span></code></pre></div><p>虽然我们不能拷贝或赋值unique_ptr，但可以通过调用<strong>release或reset</strong>将指针的所有权从一个unique_ptr转移给另一个unique：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> p2(p1.release());<span style="color:#888">//release将p1置为空
+</span><span style="color:#888"></span>unique_ptr<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> p3(<span style="color:#080;font-weight:bold">new</span> string(<span style="background-color:#fff0f0">&#34;Trex&#34;</span>));
+p2.reset(p3.release());	<span style="color:#888">//reset释放了p2原来指向的内存
+</span></code></pre></div><h3 id="weak_ptr">weak_ptr</h3>
+<p>weak_ptr是一种<strong>不控制所指向对象生存期</strong>的智能指针，它指向一个<strong>shared_ptr管理的对象</strong>。将一个weak_ptr绑定到shared_ptr<strong>不会改变对象的引用计数</strong>。一旦最后一只指向对象的shared_ptr被销毁，对象就会被释放，即使有weak_ptr指向对象，对象还是会被释放。weak_ptr的名字抓住了这种指针弱共享的特点。</p>
+<h2 id="动态数组">动态数组</h2>
+<p>可以一次为很多对象分配动态内存。C++语言和标准库提供了两种一次分配一个对象数组的方法。</p>
 <ul>
-<li><code>key_type</code>：此容器类型的关键字类型</li>
-<li><code>mapped_type</code>：每个关键字关联的类型，只适用于map</li>
-<li><code>value_type</code>
-<ul>
-<li>对于set而言，与<code>key_type</code>相同</li>
-<li>对于map而言，为<code>pair&lt;const key_type, mapped_type&gt;</code></li>
+<li>使用new表达式语法</li>
+<li>标准库中allocator的类，允许我们将分配和初始化分离</li>
 </ul>
-</li>
-</ul>
-<h3 id="关联容器迭代器">关联容器迭代器</h3>
-<p>解引用一个关联容器迭代器时，就能得到一个类型为容器的value_type的值的引用。对于map而言，value_type是一个pair类型，其first成员保存const的关键字，second成员保存值。</p>
-<p>切记，一个map的value_type是一个pair，可以改变pair的值但不能该边关键字成员的值。</p>
-<p>我们通常不对关联容器使用泛型算法，关键字是const这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法需要向元素写入值，而set类型中的元素是count的，map中元素是pair，其第一个成员是const的。</p>
-<h3 id="添加元素">添加元素</h3>
-<p>关联容器的insert成员向容器中添加一个元素或一个元素范围，map和set不包含重复关键字，因此插入一个已存在的元素对容器没有任何影响。</p>
-<h3 id="删除元素">删除元素</h3>
-<p>关联容器定义了三个版本的erase，与顺序容器一样，我们可以通过传递给erase一个迭代器或一个迭代器对来删除一个元素或一个元素范围。</p>
-<p>关联容器额外提供一个erase操作，接受一个key_type参数，此版本删除所有匹配给定关键字的元素，返回实际删除的元素的数量。</p>
-<h3 id="map的下标操作">map的下标操作</h3>
-<p>map和unordered_map容器提供了下标运算符和一个对应的at函数，set类型不支持下标。</p>
-<h3 id="访问元素">访问元素</h3>
-<p>对于不允许重复关键字的容器，使用find和count没什么区别，但对于重复关键字的容器，count还会做更多的工作：如果元素在容器中，能够统计有多少个元素有相同的关键字。如果不需要技术，虽好使用find。</p>
-<h2 id="无序容器">无序容器</h2>
-<p>C++11 新定义了4个无序关联容器。这些容器不是使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。在关键字类型的元素没有明显的序关系的情况下，无序容器是非常有用的。</p>
-<p>虽然理论上哈希技术能获得更好的平均性能，但在实际中想要达到更好的效果还要进行一些性能测试和调优。</p>
-<h3 id="管理桶">管理桶</h3>
-<p>无序容器在存储上组织为<strong>一组桶</strong>，每个桶保存<strong>零个或多个元素</strong>。无序容器使用一个<strong>哈希函数</strong>将元素映射到桶。为了访问一个元素，容器首先计算元素的哈希值，它指出应该搜索哪个桶。容器将具有一个特定哈希值的所有元素都保存在相同的桶中（有点像散列表处理冲突时使用的拉链法）。无需容器的性能依赖于哈希函数的质量和桶的数量。</p>
-<h3 id="无需容器对关键字类型的要求">无需容器对关键字类型的要求</h3>
+<p>大多数应用应该使用标准库容器而不是动态分配的数组。使用容器更为简单，更不容易出现内存管理错误并可能有更好的性能。</p>
+<h3 id="new和数组">new和数组</h3>
+<p>为了让new分配一个对象数组，要在类型名之后跟一对<strong>方括号</strong>，在其中要指明分配对象的数目。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pia <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>[<span style="color:#00d;font-weight:bold">32</span>];	<span style="color:#888">//pia指向第一个int
+</span></code></pre></div><p>上面的例子中，new分配32个int对象并返回指向第一个int对象的指针。</p>
+<p>也可以用一个表示数组类型的<strong>类型别名</strong>来分配一个数组，这样new表达式就不需要方括号了。</p>
+<p><strong>智能指针和动态数组</strong></p>
+<p>标准库提供了一个可以管理new分配的数组的unique_ptr版本。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span>[]<span style="color:#333">&gt;</span> up(<span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>[<span style="color:#00d;font-weight:bold">10</span>]);
+</code></pre></div><p>为了用一个unique_ptr管理动态数组，必须在一个动态类型后面跟一对方括号。</p>
+<h3 id="allocator类">allocator类</h3>
+<p>标准库allocator类定义在头文件memory中，其帮助我们将内存分配和对象构造分离开来。它提供了一种类型感知的内存分配方法。</p>
+<h2 id="使用标准库文本查询程序">使用标准库：文本查询程序</h2>
+<p>这个例子作为标准库相关内容学习的总结。</p>
+<p>现代C++程序应该尽可能使用智能指针。</p>
 
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">最后修改于 2021-11-15</p>
+		    <p style="color:#777;">最后修改于 2021-11-18</p>
                     
                 </div>
             </div>
@@ -1035,14 +972,14 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/">
-			下回<br>C&#43;&#43; Primer——CH12 动态内存
+                <a class="newer-posts">
+			下回<br>已经到头啦。
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
-			上回<br>现代操作系统学习日志——文件系统
+                <a class="older-posts" href="https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/">
+			上回<br>C&#43;&#43; Primer——CH11 关联容器
                 </a>
                 
             </nav>
