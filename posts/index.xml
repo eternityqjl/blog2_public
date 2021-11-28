@@ -76,22 +76,13 @@ set和map
 使用关联容器  map： 关联数组，关键字——值。 set：关键字的简单集合  可以进行列表初始化
 关联容器概述 关联容器不支持顺序容器的位置相关的操作，例如push_front，原因是关联容器中的值是按照关键字存储的，这些操作没有意义。
 另外无序容器还提供调整哈希性能的操作。
-定义关联容器 关键字类型的要求 对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。
+定义关联容器 map&amp;lt;string, size_t&amp;gt; word_count;	//空容器 set&amp;lt;string&amp;gt; exclude = {&amp;#34;the&amp;#34;, &amp;#34;but&amp;#34;, &amp;#34;and&amp;#34;}; map&amp;lt;string, size_t&amp;gt; authors = {{&amp;#34;Joyce&amp;#34;, &amp;#34;James&amp;#34;}, {&amp;#34;Austen&amp;#34;, &amp;#34;Jane&amp;#34;}}; 初始化一个map时必须提供关键字类型和值类型。
+关键字类型的要求 对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。所提供的操作必须在关键字类型上定义一个严格弱序。
 pair类型 定义在头文件utility中。
 pair的默认构造函数对数据成员进行值初始化。也可以为每个成员提供初始化器。
-关联容器操作 除了之前在顺序容器P295页列出的类型，关联容器还定义了以下类型：
- key_type：此容器类型的关键字类型 mapped_type：每个关键字关联的类型，只适用于map value_type  对于set而言，与key_type相同 对于map而言，为pair&amp;lt;const key_type, mapped_type&amp;gt;    关联容器迭代器 解引用一个关联容器迭代器时，就能得到一个类型为容器的value_type的值的引用。对于map而言，value_type是一个pair类型，其first成员保存const的关键字，second成员保存值。
-切记，一个map的value_type是一个pair，可以改变pair的值但不能该边关键字成员的值。
-我们通常不对关联容器使用泛型算法，关键字是const这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法需要向元素写入值，而set类型中的元素是count的，map中元素是pair，其第一个成员是const的。
-添加元素 关联容器的insert成员向容器中添加一个元素或一个元素范围，map和set不包含重复关键字，因此插入一个已存在的元素对容器没有任何影响。
-删除元素 关联容器定义了三个版本的erase，与顺序容器一样，我们可以通过传递给erase一个迭代器或一个迭代器对来删除一个元素或一个元素范围。
-关联容器额外提供一个erase操作，接受一个key_type参数，此版本删除所有匹配给定关键字的元素，返回实际删除的元素的数量。
-map的下标操作 map和unordered_map容器提供了下标运算符和一个对应的at函数，set类型不支持下标。
-访问元素 对于不允许重复关键字的容器，使用find和count没什么区别，但对于重复关键字的容器，count还会做更多的工作：如果元素在容器中，能够统计有多少个元素有相同的关键字。如果不需要技术，虽好使用find。
-无序容器 C++11 新定义了4个无序关联容器。这些容器不是使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。在关键字类型的元素没有明显的序关系的情况下，无序容器是非常有用的。
-虽然理论上哈希技术能获得更好的平均性能，但在实际中想要达到更好的效果还要进行一些性能测试和调优。
-管理桶 无序容器在存储上组织为一组桶，每个桶保存零个或多个元素。无序容器使用一个哈希函数将元素映射到桶。为了访问一个元素，容器首先计算元素的哈希值，它指出应该搜索哪个桶。容器将具有一个特定哈希值的所有元素都保存在相同的桶中（有点像散列表处理冲突时使用的拉链法）。无需容器的性能依赖于哈希函数的质量和桶的数量。
-无需容器对关键字类型的要求 </description>
+pair&amp;lt;string, string&amp;gt; anon; pair&amp;lt;string, string&amp;gt; author{&amp;#34;James&amp;#34;, &amp;#34;Joyce&amp;#34;}; pair的数据成员是public的，两个成员分别命名为first和second，可以用普通的成员访问符号来访问它们。
+cout &amp;lt;&amp;lt; w.first &amp;lt;&amp;lt; &amp;#34; &amp;#34; &amp;lt;&amp;lt; w.second &amp;lt;&amp;lt; endl; 关联容器操作 除了之前在顺序容器P295页列出的类型，关联容器还定义了以下类型：
+ key_type：此容器类型的关键字类型 mapped_type：每个关键字关联的类型，只适用于map value_type  对于set而言，与key_type相同 对于map而言，为pair&amp;lt;const key_type, mapped_type&amp;gt;    我们使用作用域运算符来提取一个类型的成员，例如：map&amp;lt;string, int&amp;gt;::key_value.</description>
     </item>
     
     <item>

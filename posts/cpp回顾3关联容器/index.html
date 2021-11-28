@@ -987,12 +987,21 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>关联容器不支持顺序容器的位置相关的操作，例如<code>push_front</code>，原因是关联容器中的值是按照关键字存储的，这些操作没有意义。</p>
 <p>另外无序容器还提供调整哈希性能的操作。</p>
 <h3 id="定义关联容器">定义关联容器</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">map<span style="color:#333">&lt;</span>string, size_t<span style="color:#333">&gt;</span> word_count;	<span style="color:#888">//空容器
+</span><span style="color:#888"></span>set<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> exclude <span style="color:#333">=</span> {<span style="background-color:#fff0f0">&#34;the&#34;</span>, <span style="background-color:#fff0f0">&#34;but&#34;</span>, <span style="background-color:#fff0f0">&#34;and&#34;</span>};
+map<span style="color:#333">&lt;</span>string, size_t<span style="color:#333">&gt;</span> authors <span style="color:#333">=</span> {{<span style="background-color:#fff0f0">&#34;Joyce&#34;</span>, <span style="background-color:#fff0f0">&#34;James&#34;</span>},
+                               {<span style="background-color:#fff0f0">&#34;Austen&#34;</span>, <span style="background-color:#fff0f0">&#34;Jane&#34;</span>}};
+</code></pre></div><p>初始化一个map时必须提供关键字类型和值类型。</p>
 <h3 id="关键字类型的要求">关键字类型的要求</h3>
-<p>对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。</p>
+<p>对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。所提供的操作必须在关键字类型上定义一个严格弱序。</p>
 <h3 id="pair类型">pair类型</h3>
 <p>定义在头文件utility中。</p>
 <p>pair的默认构造函数对数据成员进行值初始化。也可以为每个成员提供初始化器。</p>
-<h2 id="关联容器操作">关联容器操作</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">pair<span style="color:#333">&lt;</span>string, string<span style="color:#333">&gt;</span> anon;
+pair<span style="color:#333">&lt;</span>string, string<span style="color:#333">&gt;</span> author{<span style="background-color:#fff0f0">&#34;James&#34;</span>, <span style="background-color:#fff0f0">&#34;Joyce&#34;</span>};
+</code></pre></div><p>pair的数据成员是public的，两个成员分别命名为first和second，可以用普通的成员访问符号来访问它们。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#333">&lt;&lt;</span> w.first <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34; &#34;</span> <span style="color:#333">&lt;&lt;</span> w.second <span style="color:#333">&lt;&lt;</span> endl;
+</code></pre></div><h2 id="关联容器操作">关联容器操作</h2>
 <p>除了之前在顺序容器P295页列出的类型，关联容器还定义了以下类型：</p>
 <ul>
 <li><code>key_type</code>：此容器类型的关键字类型</li>
@@ -1004,25 +1013,55 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </ul>
 </li>
 </ul>
+<p>我们使用作用域运算符来提取一个类型的成员，例如：<code>map&lt;string, int&gt;::key_value</code>.</p>
+<p>只有map类型才定义了<code>mapped_type</code></p>
 <h3 id="关联容器迭代器">关联容器迭代器</h3>
-<p>解引用一个关联容器迭代器时，就能得到一个类型为容器的value_type的值的引用。对于map而言，value_type是一个pair类型，其first成员保存const的关键字，second成员保存值。</p>
-<p>切记，一个map的value_type是一个pair，可以改变pair的值但不能该边关键字成员的值。</p>
-<p>我们通常不对关联容器使用泛型算法，关键字是const这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法需要向元素写入值，而set类型中的元素是count的，map中元素是pair，其第一个成员是const的。</p>
+<p>解引用一个关联容器迭代器时，就能得到一个类型为容器的value_type的值的引用。对于<strong>map</strong>而言，<strong>value_type是一个pair类型</strong>，其first成员保存<strong>const的关键字</strong>，second成员保存值。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">auto</span> map_it <span style="color:#333">=</span> word_count.begin();
+<span style="color:#888">//*map_it是指向一个pair&lt;const string, size_t&gt;对象的引用
+</span><span style="color:#888"></span>cout <span style="color:#333">&lt;&lt;</span> map_it<span style="color:#333">-&gt;</span>first;	<span style="color:#888">//打印此元素的关键字
+</span><span style="color:#888"></span>map_it<span style="color:#333">-&gt;</span>first <span style="color:#333">=</span> <span style="background-color:#fff0f0">&#34;new key&#34;</span>;	<span style="color:#888">//错误，关键字是const的
+</span></code></pre></div><p>切记，一个map的value_type是一个pair，可以改变pair的值但不能改变关键字成员的值。</p>
+<p>我们通常不对关联容器使用泛型算法，<strong>关键字是const</strong>这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法需要向元素写入值，而set类型中的元素是count的，map中元素是pair，其第一个成员是const的。</p>
+<p><strong>遍历关联容器</strong></p>
+<p>map和set都支持begin和end操作，我们可以用这些函数获取迭代器，然后用迭代器来遍历容器。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">auto</span> map_it <span style="color:#333">=</span> word_count.cbegin();
+<span style="color:#080;font-weight:bold">while</span> (map_it <span style="color:#333">!=</span> word_count.cend()) {
+    cout <span style="color:#333">&lt;&lt;</span> map_it<span style="color:#333">-&gt;</span>first <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;occurs &#34;</span> <span style="color:#333">&lt;&lt;</span> map_it<span style="color:#333">-&gt;</span>second <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;times&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;
+    <span style="color:#333">++</span>map_it;
+}
+</code></pre></div><p>另外我们通常不对关联容器使用泛型算法，关键字是const这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法要写入值。</p>
 <h3 id="添加元素">添加元素</h3>
-<p>关联容器的insert成员向容器中添加一个元素或一个元素范围，map和set不包含重复关键字，因此插入一个已存在的元素对容器没有任何影响。</p>
+<p>关联容器的<strong>insert成员</strong>向容器中添加一个元素或一个元素范围，map和set不包含重复关键字，因此插入一个已存在的元素对容器没有任何影响。</p>
+<p><strong>向map添加元素</strong></p>
+<p>记住元素类型是pair。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">word_count.insert({word, <span style="color:#00d;font-weight:bold">1</span>});
+word_count.insert(make_pair(word, <span style="color:#00d;font-weight:bold">1</span>));
+</code></pre></div><p><code>c.emplace(args)</code>：对于map和set，只有当元素的关键字不在c中时才插入（或构造）元素。</p>
+<p>insert返回的值依赖于容器类型和参数，对于不包含重复关键字的容器，添加单一元素的insert和emplace版本返回一个pair，告诉我们插入操作是否成功，pair的first成员是一个<strong>迭代器</strong>，指向具有给定关键字的元素；second成员是一个<strong>bool值</strong>，指出元素时插入成功还是已经存在于容器中。</p>
 <h3 id="删除元素">删除元素</h3>
-<p>关联容器定义了三个版本的erase，与顺序容器一样，我们可以通过传递给erase一个迭代器或一个迭代器对来删除一个元素或一个元素范围。</p>
+<p>关联容器定义了三个版本的erase，与顺序容器一样，我们可以通过传递给erase一个<strong>迭代器</strong>或一个<strong>迭代器对</strong>来删除一个元素或一个元素范围。</p>
 <p>关联容器额外提供一个erase操作，接受一个key_type参数，此版本删除所有匹配给定关键字的元素，返回实际删除的元素的数量。</p>
 <h3 id="map的下标操作">map的下标操作</h3>
 <p>map和unordered_map容器提供了下标运算符和一个对应的at函数，set类型不支持下标。</p>
-<h3 id="访问元素">访问元素</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">map<span style="color:#333">&lt;</span>string, size_t<span style="color:#333">&gt;</span> word_count;
+word_count[<span style="background-color:#fff0f0">&#34;Anna&#34;</span>] <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
+</code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">c[k]	<span style="color:#888">//返回关键字为k的元素；如果k不在c中，添加一个关键字为k的元素，对其进行值初始化
+</span><span style="color:#888"></span>c.at(k)	<span style="color:#888">//访问关键字为k的元素，带参数检查；若k不在c中，抛出一个out_of_range异常。
+</span></code></pre></div><h3 id="访问元素">访问元素</h3>
 <p>对于不允许重复关键字的容器，使用find和count没什么区别，但对于重复关键字的容器，count还会做更多的工作：如果元素在容器中，能够统计有多少个元素有相同的关键字。如果不需要技术，虽好使用find。</p>
-<h2 id="无序容器">无序容器</h2>
-<p>C++11 新定义了4个无序关联容器。这些容器不是使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。在关键字类型的元素没有明显的序关系的情况下，无序容器是非常有用的。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">set<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> iset <span style="color:#333">=</span> {<span style="color:#00d;font-weight:bold">0</span>,<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>,<span style="color:#00d;font-weight:bold">3</span>};
+iset.find(<span style="color:#00d;font-weight:bold">1</span>);	<span style="color:#888">//返回一个迭代器，指向key == 1的元素
+</span><span style="color:#888"></span>iset.count(<span style="color:#00d;font-weight:bold">1</span>);	<span style="color:#888">//返回1
+</span><span style="color:#888"></span>iset.count(<span style="color:#00d;font-weight:bold">11</span>);	<span style="color:#888">//返回0
+</span></code></pre></div><h2 id="无序容器">无序容器</h2>
+<p>C++11 新定义了4个无序关联容器。这些容器不是使用比较运算符来组织元素，而是使用一个<strong>哈希函数</strong>和关键字类型的**==运算符**。在关键字类型的元素没有明显的序关系的情况下，无序容器是非常有用的。</p>
 <p>虽然理论上哈希技术能获得更好的平均性能，但在实际中想要达到更好的效果还要进行一些性能测试和调优。</p>
-<h3 id="管理桶">管理桶</h3>
-<p>无序容器在存储上组织为<strong>一组桶</strong>，每个桶保存<strong>零个或多个元素</strong>。无序容器使用一个<strong>哈希函数</strong>将元素映射到桶。为了访问一个元素，容器首先计算元素的哈希值，它指出应该搜索哪个桶。容器将具有一个特定哈希值的所有元素都保存在相同的桶中（有点像散列表处理冲突时使用的拉链法）。无需容器的性能依赖于哈希函数的质量和桶的数量。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unordered_map<span style="color:#333">&lt;</span>string, size_t<span style="color:#333">&gt;</span> word_count;
+</code></pre></div><h3 id="管理桶">管理桶</h3>
+<p>无序容器在存储上组织为<strong>一组桶</strong>，每个桶保存<strong>零个或多个元素</strong>。无序容器使用一个<strong>哈希函数</strong>将元素映射到桶。为了访问一个元素，容器首先计算元素的哈希值，它指出应该搜索哪个桶。容器将具有一个<strong>特定哈希值</strong>的所有元素都保存在相同的桶中（有点像散列表处理冲突时使用的拉链法）。无需容器的性能依赖于哈希函数的质量和桶的数量。</p>
 <h3 id="无需容器对关键字类型的要求">无需容器对关键字类型的要求</h3>
+<p>默认情况下，无需容器使用关键字类型的==运算符来比较元素，它们还是用一个<strong>hash&lt;key_type&gt;类型</strong>的对象来生成每个元素的哈希值。标准库为内置类型（包括指针）提供了hash模板。</p>
 
                     
                     <HR width="100%" id="EOF">
