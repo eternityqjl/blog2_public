@@ -6,9 +6,47 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 27 Nov 2021 21:03:17 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 30 Nov 2021 22:16:50 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>GitBook自动发布脚本</title>
+        <link>https://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</link>
+        <pubDate>Fri, 18 Oct 2019 13:50:49 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/ -&lt;p&gt;GitBook作为一个非常好用的基于Node.js的命令行工具，可以输出HTML、PDF、eBook等多种格式的电子书，这里就不再详细讲述GitBook的构建以及发布到Github托管的过程，网络上有非常多的教程，可以自行Google查看。&lt;/p&gt;
+&lt;p&gt;刚开始在每次更新内容的时候都需要一系列的git命令将原始内容仓库和构建的网页仓库同步到Github上，大概需要10条命令，如果你的更新频率很高的话，发布内容将会是有个痛苦的过程，但这里我们可以通过一个shell脚本只使用&lt;code&gt;$ sh deploy.sh&lt;/code&gt;一条命令完成同步内容和构建网页的所有过程。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;首先，在你的GitBook内容根目录下建一个&lt;code&gt;deploy.sh&lt;/code&gt;文件，使用文本编辑器打开，然后输入以下内容：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#!bin/sh
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;git checkout master
+&lt;span style=&#34;color:#888&#34;&gt;# 切换到master分支，及内容所在的仓库&lt;/span&gt;
+git add .
+git commit -m &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Update&amp;#34;&lt;/span&gt;
+git push -u origin master
+&lt;span style=&#34;color:#888&#34;&gt;# 添加、提交到Git仓库，然后push到Github上&lt;/span&gt;
+gitbook build
+&lt;span style=&#34;color:#888&#34;&gt;# 构建Gitbook&lt;/span&gt;
+
+git checkout gh-pages
+&lt;span style=&#34;color:#888&#34;&gt;# 切换到gh-pages分支，即生成的HTML网页的仓库&lt;/span&gt;
+cp -r _book/* . 
+&lt;span style=&#34;color:#888&#34;&gt;# 复制前面构建的内容&lt;/span&gt;
+git add .
+git commit -m &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Update&amp;#34;&lt;/span&gt;
+git push -u origin gh-pages
+&lt;span style=&#34;color:#888&#34;&gt;# 添加、提交到Git仓库，然后push到Github上&lt;/span&gt;
+git checkout master
+&lt;span style=&#34;color:#888&#34;&gt;# 返回master主分支&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后打开命令行，为这个脚本授权：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;$ chmod +x deploy.sh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;至此就完成了，以后在更新的时候只需要输入一条命令&lt;code&gt;$ sh deploy.sh&lt;/code&gt;就可以完成所有操作了。&lt;/p&gt;
+- https://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     

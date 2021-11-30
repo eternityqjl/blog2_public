@@ -7,7 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 27 Nov 2021 21:03:17 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 Nov 2021 22:16:50 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>基础算法总结</title>
+      <link>https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 30 Nov 2021 22:16:50 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
+      <description>希望未来一段时间能够手动实现一下这些算法。
+线性表 顺序表 链表 栈和队列 栈的顺序、链式存储
+队列的顺序、链式存储
+双端队列
+优先队列（堆排序）
+字符串 KMP模式匹配
+树与二叉树 二叉树的遍历 前序、中序、后序
+二叉排序树 平衡二叉树 哈夫曼树 2-3树和红黑树 图 图的遍历 广度优先搜索和深度优先搜索
+最小生成树 Prim、Kruskal
+最短路径 Dijkstra、Floyd
+拓扑排序 活动的先后顺序
+关键路径 查找 顺序查找 折半查找 B树 散列表 排序 插入排序 希尔排序 冒泡排序 快速排序 选择排序 堆排序（优先队列） 删除最大元素、插入元素
+构造大根堆、小根堆
+归并排序 基数排序 </description>
+    </item>
+    
     <item>
       <title>算法——红黑树</title>
       <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/</link>
