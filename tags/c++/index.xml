@@ -7,7 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 18 Nov 2021 09:20:28 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Dec 2021 19:43:11 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>typedef和define宏详解</title>
+      <link>https://eternityqjl.top/posts/typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Wed, 01 Dec 2021 19:43:11 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/</guid>
+      <description>typedef是定义了一种类型的新别名，不同于宏，它不是简单的字符串替换。
+当const和typedef一起出现时，typedef不会是简单的字符串替换就行。
+typedef常用来定义一个标识符及关键字的别名，它是语言编译过程的一部分，但它并不实际分配内存空间
+#define为一宏定义语句，通常用它来定义常量(包括无参量与带参量)，以及用来实现那些“表面似和善、背后一长串”的宏，它本身并不在编译过程中进行，而是在这之前(预处理过程)就已经完成了，但也因此难以发现潜在的错误及其它代码维护问题
+#define用法详解 无参宏定义 #define 标识符 字符串 预处理命令。
+有参宏定义 #define 宏名(形参表) 字符串 宏定义中称为形参，宏调用中称为实参。带参数的宏，在调用中，不仅要宏展开，而且要用实参去代换形参。
+宏定义中的特殊操作符 （1）#
+希望在字符串中包含宏参数时使用，#作为一个预处理运算符，可以把语言符号转换为字符串，例如：
+#define NUM(x) printf(&amp;#34;the number is #x.\n&amp;#34;, x) （2）##
+##可以把两个字符串转换成单个字符串。
+#define XNAME(n) x##n int XNAME(1) = 12;	//相当于int x1 = 12; （3）可变宏 &amp;hellip;
+若要使用可变参数宏，可以在宏定义中将省略号指定为最后一个形参，并且替换标识符可以在定义中用于插入 __VA_ARGS__ 额外的参数。 __VA_ARGS__ 替换为与省略号匹配的所有参数，包括它们之间的逗号。
+// variadic_macros.cpp #include &amp;lt;stdio.h&amp;gt;#define EMPTY  #define CHECK1(x, ...) if (!(x)) { printf(__VA_ARGS__); } #define CHECK2(x, ...) if ((x)) { printf(__VA_ARGS__); } #define CHECK3(...) { printf(__VA_ARGS__); } #define MACRO(s, .</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; Primer——CH12 动态内存</title>
       <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>

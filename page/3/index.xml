@@ -6,9 +6,230 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 30 Nov 2021 22:16:50 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 01 Dec 2021 19:43:11 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Python基础和numpy</title>
+        <link>https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link>
+        <pubDate>Sun, 06 Jun 2021 13:04:49 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ -&lt;h2 id=&#34;basic-of-python&#34;&gt;Basic of Python&lt;/h2&gt;
+&lt;h3 id=&#34;basic-data-types&#34;&gt;Basic data types&lt;/h3&gt;
+&lt;h4 id=&#34;numbers&#34;&gt;Numbers&lt;/h4&gt;
+&lt;h4 id=&#34;bolleans&#34;&gt;Bolleans&lt;/h4&gt;
+&lt;h4 id=&#34;strings&#34;&gt;Strings&lt;/h4&gt;
+&lt;h3 id=&#34;containers&#34;&gt;Containers&lt;/h3&gt;
+&lt;h4 id=&#34;lists&#34;&gt;Lists&lt;/h4&gt;
+&lt;h4 id=&#34;slicing&#34;&gt;Slicing&lt;/h4&gt;
+&lt;h4 id=&#34;loops&#34;&gt;Loops&lt;/h4&gt;
+&lt;h4 id=&#34;dictionaries&#34;&gt;Dictionaries&lt;/h4&gt;
+&lt;p&gt;key-value&lt;/p&gt;
+&lt;h4 id=&#34;sets&#34;&gt;Sets&lt;/h4&gt;
+&lt;p&gt;unordered&lt;/p&gt;
+&lt;h4 id=&#34;tuples&#34;&gt;Tuples&lt;/h4&gt;
+&lt;p&gt;A tuple is in many ways similar to a list; one of the most important differences is that tuples can be used as keys in dictionaries and as elements of sets, while lists cannot.&lt;/p&gt;
+&lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;def&lt;/code&gt; keyword&lt;/p&gt;
+&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Greeter&lt;/span&gt;:
+
+    &lt;span style=&#34;color:#888&#34;&gt;# Constructor&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self, name):
+        self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; name  &lt;span style=&#34;color:#888&#34;&gt;# Create an instance variable&lt;/span&gt;
+
+    &lt;span style=&#34;color:#888&#34;&gt;# Instance method&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;greet&lt;/span&gt;(self, loud&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;False&lt;/span&gt;):
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; loud:
+          &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;HELLO, &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;format(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;upper()))
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;:
+          &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Hello, &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;!&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;format(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name))
+
+g &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Greeter(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Fred&amp;#39;&lt;/span&gt;)  &lt;span style=&#34;color:#888&#34;&gt;# Construct an instance of the Greeter class&lt;/span&gt;
+g&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;greet()            &lt;span style=&#34;color:#888&#34;&gt;# Call an instance method; prints &amp;#34;Hello, Fred&amp;#34;&lt;/span&gt;
+g&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;greet(loud&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;True&lt;/span&gt;)   &lt;span style=&#34;color:#888&#34;&gt;# Call an instance method; prints &amp;#34;HELLO, FRED!&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;numpy&#34;&gt;Numpy&lt;/h2&gt;
+&lt;p&gt;Numpy is the core library for scientific computing in Python. It provides a high-performance multidimensional array object, and tools for working with these arrays.&lt;/p&gt;
+&lt;h3 id=&#34;arrays&#34;&gt;Arrays&lt;/h3&gt;
+&lt;p&gt;A numpy array is &lt;strong&gt;a grid of values&lt;/strong&gt;, all of the &lt;strong&gt;same type&lt;/strong&gt;, and is indexed by a tuple of nonnegative integers. The number of dimensions is the rank of the array; the shape of an array is a tuple of integers giving the size of the array along each dimension.&lt;/p&gt;
+&lt;h3 id=&#34;array-indexing&#34;&gt;Array indexing&lt;/h3&gt;
+&lt;h4 id=&#34;slicing-1&#34;&gt;Slicing&lt;/h4&gt;
+&lt;p&gt;example&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+
+&lt;span style=&#34;color:#888&#34;&gt;# Create the following rank 2 array with shape (3, 4)&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# [[ 1  2  3  4]&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#  [ 5  6  7  8]&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#  [ 9 10 11 12]]&lt;/span&gt;
+a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
+
+&lt;span style=&#34;color:#888&#34;&gt;# Use slicing to pull out the subarray consisting of the first 2 rows&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# and columns 1 and 2; b is the following array of shape (2, 2):&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# [[2 3]&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#  [6 7]]&lt;/span&gt;
+b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;]
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(b)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Two ways of accessing the data in the middle row of the array. Mixing integer indexing with slices yields an array of lower rank, while using only slices yields an array of the same rank as the original array:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;row_r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, :]    &lt;span style=&#34;color:#888&#34;&gt;# Rank 1 view of the second row of a  &lt;/span&gt;
+row_r2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, :]  &lt;span style=&#34;color:#888&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
+row_r3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], :]  &lt;span style=&#34;color:#888&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r1, row_r1&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r2, row_r2&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r3, row_r3&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;integer-array-indexing&#34;&gt;Integer array indexing&lt;/h4&gt;
+&lt;p&gt;Integer array indexing allows you to construct arbitrary arrays using the data from another array.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
+
+&lt;span style=&#34;color:#888&#34;&gt;# An example of integer array indexing.&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# The returned array will have shape (3,) and &lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]])
+
+&lt;span style=&#34;color:#888&#34;&gt;# The above example of integer array indexing is equivalent to this:&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]]))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result:&lt;/p&gt;
+&lt;p&gt;[1 4 5]&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# When using integer array indexing, you can reuse the same&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# element from the source array:&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]])
+
+&lt;span style=&#34;color:#888&#34;&gt;# Equivalent to the previous integer array indexing example&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]]))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;One useful trick with integer array indexing is selecting or mutating one element from each row of a matrix:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create a new array from which we will select elements&lt;/span&gt;
+a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create an array of indices&lt;/span&gt;
+b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
+
+&lt;span style=&#34;color:#888&#34;&gt;# Select one element from each row of a using the indices in b&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;), b])  &lt;span style=&#34;color:#888&#34;&gt;# Prints &amp;#34;[ 1  6  7 11]&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[1 6 7 11]&lt;/p&gt;
+&lt;h4 id=&#34;boolean-array-indexing&#34;&gt;Boolean array indexing&lt;/h4&gt;
+&lt;p&gt;Frequently this type of indexing is used to select the elements of an array that &lt;strong&gt;satisfy some condition&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+
+a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
+
+bool_idx &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (a &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;)  &lt;span style=&#34;color:#888&#34;&gt;# Find the elements of a that are bigger than 2;&lt;/span&gt;
+                    &lt;span style=&#34;color:#888&#34;&gt;# this returns a numpy array of Booleans of the same&lt;/span&gt;
+                    &lt;span style=&#34;color:#888&#34;&gt;# shape as a, where each slot of bool_idx tells&lt;/span&gt;
+                    &lt;span style=&#34;color:#888&#34;&gt;# whether that element of a is &amp;gt; 2.&lt;/span&gt;
+
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(bool_idx)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[False False]
+[ True  True]
+[ True  True]]&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We use boolean array indexing to construct a rank 1 array&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# consisting of the elements of a corresponding to the True values&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# of bool_idx&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[bool_idx])
+
+&lt;span style=&#34;color:#888&#34;&gt;# We can do all of the above in a single concise statement:&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[a &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[3 4 5 6]
+[3 4 5 6]&lt;/p&gt;
+&lt;h3 id=&#34;datatypes&#34;&gt;Datatypes&lt;/h3&gt;
+&lt;p&gt;Every numpy array is a grid of elements of the same type. Numpy provides a large set of numeric datatypes that you can use to construct arrays. Numpy tries to guess a datatype when you create an array, but functions that construct arrays usually also include an optional argument to explicitly specify the datatype. Here is an example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.0&lt;/span&gt;, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2.0&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
+z &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;int64)  &lt;span style=&#34;color:#888&#34;&gt;# Force a particular datatype&lt;/span&gt;
+
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype, y&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype, z&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;array-math&#34;&gt;Array math&lt;/h3&gt;
+&lt;p&gt;Note that unlike MATLAB, &lt;code&gt;*&lt;/code&gt; is elementwise multiplication, not matrix multiplication. We instead use the dot function to compute inner products of vectors, to multiply a vector by a matrix, and to multiply matrices. dot is available both as a function in the numpy module and as an instance method of array objects:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
+
+&lt;span style=&#34;color:#888&#34;&gt;# Elementwise product; both produce the array&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(x &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; y)
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;multiply(x, y))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[ 5. 12.]
+[21. 32.]]
+[[ 5. 12.]
+[21. 32.]]&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]])
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;]])
+
+v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;])
+w &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;])
+
+&lt;span style=&#34;color:#888&#34;&gt;# Inner product of vectors; both produce 219&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(v&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(w))
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(v, w))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;219
+219&lt;/p&gt;
+&lt;p&gt;You can also use the &lt;code&gt;@&lt;/code&gt; operator which is equivalent to numpy&amp;rsquo;s &lt;code&gt;dot&lt;/code&gt; operator.&lt;/p&gt;
+&lt;p&gt;to transpose a matrix, simply use the T attribute of an array object:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;transpose&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;transpose
+[[1 3]
+[2 4]]&lt;/p&gt;
+&lt;h3 id=&#34;broadcasting&#34;&gt;Broadcasting&lt;/h3&gt;
+&lt;p&gt;Broadcasting is a powerful mechanism that allows numpy to work with arrays of different shapes when performing arithmetic operations.&lt;/p&gt;
+&lt;p&gt;For example, suppose that we want to add a constant vector to each row of a matrix. We could do it like this:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
+x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
+v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;empty_like(x)   &lt;span style=&#34;color:#888&#34;&gt;# Create an empty matrix with the same shape as x&lt;/span&gt;
+
+&lt;span style=&#34;color:#888&#34;&gt;# Add the vector v to each row of the matrix x with an explicit loop&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;):
+    y[i, :] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x[i, :] &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; v
+
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(y)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[ 2  2  4]
+[ 5  5  7]
+[ 8  8 10]
+[11 11 13]]&lt;/p&gt;
+&lt;p&gt;Numpy broadcasting allows us to perform this computation without actually creating multiple copies of v. Consider this version, using broadcasting:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+
+&lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
+x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
+v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; v  &lt;span style=&#34;color:#888&#34;&gt;# Add v to each row of x using broadcasting&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(y)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The line &lt;code&gt;y = x + v&lt;/code&gt; works even though &lt;code&gt;x&lt;/code&gt; has shape &lt;code&gt;(4, 3)&lt;/code&gt; and &lt;code&gt;v&lt;/code&gt; has shape &lt;code&gt;(3,)&lt;/code&gt; due to broadcasting; this line works as if v actually had shape &lt;code&gt;(4, 3)&lt;/code&gt;, where each row was a copy of &lt;code&gt;v&lt;/code&gt;, and the sum was performed elementwise.&lt;/p&gt;
+&lt;h2 id=&#34;matplotlib&#34;&gt;Matplotlib&lt;/h2&gt;
+&lt;p&gt;Matplotlib is a plotting library. In this section give a brief introduction to the &lt;code&gt;matplotlib.pyplot&lt;/code&gt; module, which provides a plotting system similar to that of MATLAB.&lt;/p&gt;
+&lt;h3 id=&#34;plotting&#34;&gt;Plotting&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;plt&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;matplotlib inline
+&lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on a sine curve&lt;/span&gt;
+x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.1&lt;/span&gt;)
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sin(x)
+
+&lt;span style=&#34;color:#888&#34;&gt;# Plot the points using matplotlib&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;subplots&#34;&gt;Subplots&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on sine and cosine curves&lt;/span&gt;
+x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.1&lt;/span&gt;)
+y_sin &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sin(x)
+y_cos &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;cos(x)
+
+&lt;span style=&#34;color:#888&#34;&gt;# Set up a subplot grid that has height 2 and width 1,&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# and set the first such subplot as active.&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;subplot(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
+
+&lt;span style=&#34;color:#888&#34;&gt;# Make the first plot&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y_sin)
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Sine&amp;#39;&lt;/span&gt;)
+
+&lt;span style=&#34;color:#888&#34;&gt;# Set the second subplot as active, and make the second plot.&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;subplot(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;)
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y_cos)
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Cosine&amp;#39;&lt;/span&gt;)
+
+&lt;span style=&#34;color:#888&#34;&gt;# Show the figure.&lt;/span&gt;
+plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1939,316 +2160,6 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/JTAG&#34;&gt;JTAG&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。&lt;/p&gt;
 - https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>《算法（第4版）》学习笔记——（一）排序</title>
-        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
-        <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ -&lt;h2 id=&#34;初级排序算法&#34;&gt;初级排序算法&lt;/h2&gt;
-&lt;h3 id=&#34;选择排序&#34;&gt;选择排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Selection&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#888&#34;&gt;//将a按照升序排列
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-            &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;min&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;
-                    min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-            &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-            exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt;min&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析&#34;&gt;性能分析&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。&lt;/li&gt;
-&lt;li&gt;该算法运行时间与输入无关，数据的移动是最少的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h3 id=&#34;插入排序&#34;&gt;插入排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-1&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-1&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Insertion&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#888&#34;&gt;//将相邻两个元素向左依次交换最终使得索引左侧的元素全部向右移动一位
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 0 &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;]);&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;--)&lt;/span&gt;
-                exch &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-1&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;对随机排列长度为$N$且主键不重复的数组，平均插入排序需要$N^2/4$次比较和$N^2/4$次交换。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;部分有序数组&lt;/strong&gt;：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;数组中每个元素距离它的最终位置都不远&lt;/li&gt;
-&lt;li&gt;一个有序大数组接一个小数组&lt;/li&gt;
-&lt;li&gt;数组中只有几个元素的位置不正确&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;插入排序对这样的部分有序数组非常有效。&lt;/p&gt;
-&lt;h3 id=&#34;希尔排序&#34;&gt;希尔排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-2&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;交换不相邻的元素对数组的局部进行排序，并最终用插入排序将局部有序数组排序。&lt;/p&gt;
-&lt;p&gt;希尔排序的思想是使数组中任意间隔为h的元素都是有序的，这样的数组被称为&lt;strong&gt;h有序数组&lt;/strong&gt;，即h个相互独立的有序数组编织在一起组成的一个数组&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-2&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Shell&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;srot&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 3&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 3 &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-            &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;]);&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-                    exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-            &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-            h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 3&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该希尔算法使用了序列$1/2(3^k-1)$，即序列${ 1,4,13 }$，称为&lt;strong&gt;增量序列&lt;/strong&gt;。&lt;/p&gt;
-&lt;h4 id=&#34;性能分析-2&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;希尔排序权衡了子数组的规模和有序性，希尔排序比插入排序和选择排序快得多，并且数组越大优势越大。&lt;/p&gt;
-&lt;h2 id=&#34;归并排序&#34;&gt;归并排序&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;归并&lt;/strong&gt;即将两个有序的数组归并成一个更大的有序数组。&lt;/p&gt;
-&lt;h3 id=&#34;原地归并&#34;&gt;原地归并&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;merge&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-            aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;                      a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;                  a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;    a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;                              a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;     
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;自顶向下的归并排序&#34;&gt;自顶向下的归并排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-3&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;对子数组a[lo..hi]进行排序，先将其分为$\mathrm{a}[\mathrm{lo..mid}]$和$\mathrm{a[mid+1..hi]}$两部分，分别通过递归调用将其单独排序，最后将有序的子数组归并为最终的排序结果。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Merge&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        aux &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        sort &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        sort &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        merge&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-3&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;对于长度为$N$的任意数组，自顶向下的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多需要访问数组$6N\lg N$次。&lt;/p&gt;
-&lt;p&gt;所以可知道归并排序所需要的时间与$N\lg N$成正比，主要缺点是辅助数组所使用的额外空间和N的大小成正比。&lt;/p&gt;
-&lt;h3 id=&#34;自底向上的归并排序&#34;&gt;自底向上的归并排序&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-4&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;先归并那些微型数组，然后再成对地归并得到的子数组。首先进行两两归并（把每个元素当作一个大小为1的数组），然后是四四归并（将两个大小为2的数组归并为一个有4个元素的数组），然后是八八归并，以此类推。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-3&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MergeBU&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        aux &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-        	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-        		merge&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; Math&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;min&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;));&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-4&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;对于长度为$N$的任意数组，自底向上的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多访问数组$6N\lg N$次。&lt;/p&gt;
-&lt;h2 id=&#34;快速排序&#34;&gt;快速排序&lt;/h2&gt;
-&lt;h3 id=&#34;快速排序的切分&#34;&gt;快速排序的切分&lt;/h3&gt;
-&lt;p&gt;根据切分点&lt;code&gt;j&lt;/code&gt;对数组进行切分，切分后的数组满足：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;a[lo]&lt;/code&gt;到&lt;code&gt;a[j-1]&lt;/code&gt;中的所有元素都不大于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;a[j+1]&lt;/code&gt;到&lt;code&gt;a[hi]&lt;/code&gt;中的所有元素都不小于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//切分
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;partition&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; hi &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    Comparable v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;lo&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[++&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; v&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[--&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;基本快速排序算法&#34;&gt;基本快速排序算法&lt;/h3&gt;
-&lt;h4 id=&#34;算法描述-5&#34;&gt;算法描述&lt;/h4&gt;
-&lt;p&gt;通过递归地调用切分来进行排序。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-4&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        StdRandom&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;shuffle&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//将输入乱序，消除堆输入的依赖
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; partition&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-5&#34;&gt;性能分析&lt;/h4&gt;
-&lt;p&gt;将长度为$N$的无重复数组排序，快速排序平均需要$2N\lg N$次比较，即$1/6N\lg N$次交换。&lt;/p&gt;
-&lt;h3 id=&#34;三向切分快速排序&#34;&gt;三向切分快速排序&lt;/h3&gt;
-&lt;p&gt;在含有大量重复元素时使用该方法。将数组切分为三部分，分别对应小于、等于和大于切分元素的数组元素。&lt;/p&gt;
-&lt;h4 id=&#34;代码实现-5&#34;&gt;代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick3way&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lt &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; gt &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        Comparable v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;lo&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; gt&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; cmp &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;].&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;compareTo&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lt&lt;span style=&#34;color:#333&#34;&gt;++,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++);&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; gt&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt;
-        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lt &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; gt &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;优先队列&#34;&gt;优先队列&lt;/h2&gt;
-&lt;p&gt;优先队列这种&lt;em&gt;数据结构&lt;/em&gt;应支持两种操作：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;删除最大元素&lt;/li&gt;
-&lt;li&gt;插入元素&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;初级实现有序数组无序数组链表&#34;&gt;初级实现：有序数组、无序数组、链表&lt;/h3&gt;
-&lt;p&gt;这些初级实现中，插入元素和删除最大元素的操作在最坏的情况下需要&lt;strong&gt;线性时间&lt;/strong&gt;来完成，无法满足我们的性能要求。接下来使用&lt;strong&gt;堆&lt;/strong&gt;来实现使这两种操作能更快地执行。&lt;/p&gt;
-&lt;h3 id=&#34;基于堆的优先队列&#34;&gt;基于堆的优先队列&lt;/h3&gt;
-&lt;h4 id=&#34;堆的定义&#34;&gt;堆的定义&lt;/h4&gt;
-&lt;p&gt;数据结构&lt;strong&gt;二叉堆&lt;/strong&gt;满足：每个元素大于等于两个特定位置的元素，这些位置的元素又要大于等于数组中的另外两个元素，这样的数据结构可以通过有序的完全二叉树来表示。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E6%9C%89%E5%BA%8F%E7%9A%84%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;在一个堆中，位置$k$的节点的父节点的位置为$k/2$，而它的两个子节点的位置为$2k$和$2k+1$。&lt;/p&gt;
-&lt;p&gt;我们可以通过计算数组的索引在树中上下移动：从$a[k]$向上一层就令$k=k/2$，向下一层则令$k=2k/2k+1$。&lt;/p&gt;
-&lt;h4 id=&#34;堆的算法&#34;&gt;堆的算法&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;由下至上的堆有序化（上浮swim）&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;swim&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1 &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;由上至下的堆有序化（下沉sink）&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sink&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 2&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;	j&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//选择父节点的两个子节点中较大的作为交换对象
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(!&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//将交换后子节点的位置作为父节点，循环进行下一次交换,继续下沉
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列的代码实现&#34;&gt;基于堆的优先队列的代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Key &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extends&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;key&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; Key&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; pq&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; maxN&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        pq &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Key&lt;span style=&#34;color:#333&#34;&gt;[])&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;maxN &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Key v&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//在数组的末尾输入，然后进行上浮swim操作
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        pq&lt;span style=&#34;color:#333&#34;&gt;[++&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; v&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        swim&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;};&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; Key &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;delMax&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        Key max &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pq&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;
-        pq&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;++]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; max&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列性能分析&#34;&gt;基于堆的优先队列性能分析&lt;/h4&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;堆排序&#34;&gt;堆排序&lt;/h3&gt;
-&lt;h4 id=&#34;堆的构造&#34;&gt;堆的构造&lt;/h4&gt;
-&lt;p&gt;高效的构造堆的方法是从右向左用&lt;code&gt;sink()&lt;/code&gt;函数构造子堆。数组的每个位置都是一个子堆的根结点，如果一个结点的两个子结点都已经是堆了，那么在该结点上调用&lt;code&gt;sink()&lt;/code&gt;可以将它们变成一个堆。我们只需要扫描一半的元素，因为可以跳过大小为1的子堆。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E5%A0%86%E7%9A%84%E6%9E%84%E9%80%A0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;下沉排序&#34;&gt;下沉排序&lt;/h4&gt;
-&lt;p&gt;将堆中的最大元素删去，然后将其放入堆缩小后数组中空出的位置。&lt;/p&gt;
-&lt;h4 id=&#34;堆排序代码实现&#34;&gt;堆排序代码实现&lt;/h4&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;--)&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//构造堆
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;N &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//堆排序，按递减顺序循环取出所有的最大值，最后得到排序结果。
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;堆排序性能分析&#34;&gt;堆排序性能分析&lt;/h4&gt;
-&lt;p&gt;将$N$个元素排序，堆排序只需要少于$(2N\lg N+2N)$次比较以及一半的交换次数。&lt;/p&gt;
-- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ - 2019-2021 By Jialong</description>
         </item>
     
     

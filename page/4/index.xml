@@ -6,9 +6,319 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 30 Nov 2021 22:16:50 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 01 Dec 2021 19:43:11 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>《算法（第4版）》学习笔记——（一）排序</title>
+        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</link>
+        <pubDate>Thu, 23 Jul 2020 14:59:12 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ -&lt;h2 id=&#34;初级排序算法&#34;&gt;初级排序算法&lt;/h2&gt;
+&lt;h3 id=&#34;选择排序&#34;&gt;选择排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Selection&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#888&#34;&gt;//将a按照升序排列
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
+            &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;min&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;
+                    min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+            &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+            exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt;min&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析&#34;&gt;性能分析&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。&lt;/li&gt;
+&lt;li&gt;该算法运行时间与输入无关，数据的移动是最少的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;插入排序&#34;&gt;插入排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-1&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-1&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Insertion&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#888&#34;&gt;//将相邻两个元素向左依次交换最终使得索引左侧的元素全部向右移动一位
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 0 &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;]);&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;--)&lt;/span&gt;
+                exch &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-1&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;对随机排列长度为$N$且主键不重复的数组，平均插入排序需要$N^2/4$次比较和$N^2/4$次交换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;部分有序数组&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数组中每个元素距离它的最终位置都不远&lt;/li&gt;
+&lt;li&gt;一个有序大数组接一个小数组&lt;/li&gt;
+&lt;li&gt;数组中只有几个元素的位置不正确&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;插入排序对这样的部分有序数组非常有效。&lt;/p&gt;
+&lt;h3 id=&#34;希尔排序&#34;&gt;希尔排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-2&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;交换不相邻的元素对数组的局部进行排序，并最终用插入排序将局部有序数组排序。&lt;/p&gt;
+&lt;p&gt;希尔排序的思想是使数组中任意间隔为h的元素都是有序的，这样的数组被称为&lt;strong&gt;h有序数组&lt;/strong&gt;，即h个相互独立的有序数组编织在一起组成的一个数组&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-2&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Shell&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;srot&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 3&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 3 &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
+            &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;]);&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+                    exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+            &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+            h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 3&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该希尔算法使用了序列$1/2(3^k-1)$，即序列${ 1,4,13 }$，称为&lt;strong&gt;增量序列&lt;/strong&gt;。&lt;/p&gt;
+&lt;h4 id=&#34;性能分析-2&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;希尔排序权衡了子数组的规模和有序性，希尔排序比插入排序和选择排序快得多，并且数组越大优势越大。&lt;/p&gt;
+&lt;h2 id=&#34;归并排序&#34;&gt;归并排序&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;归并&lt;/strong&gt;即将两个有序的数组归并成一个更大的有序数组。&lt;/p&gt;
+&lt;h3 id=&#34;原地归并&#34;&gt;原地归并&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;merge&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
+            aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
+
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;++)&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;                      a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;                  a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;    a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;                              a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;++];&lt;/span&gt;     
+        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;自顶向下的归并排序&#34;&gt;自顶向下的归并排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-3&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;对子数组a[lo..hi]进行排序，先将其分为$\mathrm{a}[\mathrm{lo..mid}]$和$\mathrm{a[mid+1..hi]}$两部分，分别通过递归调用将其单独排序，最后将有序的子数组归并为最终的排序结果。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Merge&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        aux &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
+        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; 2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        sort &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        sort &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        merge&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; mid&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-3&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;对于长度为$N$的任意数组，自顶向下的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多需要访问数组$6N\lg N$次。&lt;/p&gt;
+&lt;p&gt;所以可知道归并排序所需要的时间与$N\lg N$成正比，主要缺点是辅助数组所使用的额外空间和N的大小成正比。&lt;/p&gt;
+&lt;h3 id=&#34;自底向上的归并排序&#34;&gt;自底向上的归并排序&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-4&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;先归并那些微型数组，然后再成对地归并得到的子数组。首先进行两两归并（把每个元素当作一个大小为1的数组），然后是四四归并（将两个大小为2的数组归并为一个有4个元素的数组），然后是八八归并，以此类推。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-3&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MergeBU&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; aux&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        aux &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+        	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+        		merge&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; Math&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;min&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;));&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-4&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;对于长度为$N$的任意数组，自底向上的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多访问数组$6N\lg N$次。&lt;/p&gt;
+&lt;h2 id=&#34;快速排序&#34;&gt;快速排序&lt;/h2&gt;
+&lt;h3 id=&#34;快速排序的切分&#34;&gt;快速排序的切分&lt;/h3&gt;
+&lt;p&gt;根据切分点&lt;code&gt;j&lt;/code&gt;对数组进行切分，切分后的数组满足：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;a[lo]&lt;/code&gt;到&lt;code&gt;a[j-1]&lt;/code&gt;中的所有元素都不大于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;a[j+1]&lt;/code&gt;到&lt;code&gt;a[hi]&lt;/code&gt;中的所有元素都不小于&lt;code&gt;a[j]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//切分
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;partition&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; hi &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    Comparable v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;lo&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;[++&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;],&lt;/span&gt; v&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[--&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;]))&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;基本快速排序算法&#34;&gt;基本快速排序算法&lt;/h3&gt;
+&lt;h4 id=&#34;算法描述-5&#34;&gt;算法描述&lt;/h4&gt;
+&lt;p&gt;通过递归地调用切分来进行排序。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-4&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        StdRandom&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;shuffle&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//将输入乱序，消除堆输入的依赖
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; partition&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;性能分析-5&#34;&gt;性能分析&lt;/h4&gt;
+&lt;p&gt;将长度为$N$的无重复数组排序，快速排序平均需要$2N\lg N$次比较，即$1/6N\lg N$次交换。&lt;/p&gt;
+&lt;h3 id=&#34;三向切分快速排序&#34;&gt;三向切分快速排序&lt;/h3&gt;
+&lt;p&gt;在含有大量重复元素时使用该方法。将数组切分为三部分，分别对应小于、等于和大于切分元素的数组元素。&lt;/p&gt;
+&lt;h4 id=&#34;代码实现-5&#34;&gt;代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quick3way&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;hi &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lt &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; gt &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        Comparable v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;lo&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; gt&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; cmp &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;].&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;compareTo&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;v&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lt&lt;span style=&#34;color:#333&#34;&gt;++,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++);&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; gt&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt;
+        &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lo&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; lt &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        sort&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; gt &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; hi&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;优先队列&#34;&gt;优先队列&lt;/h2&gt;
+&lt;p&gt;优先队列这种&lt;em&gt;数据结构&lt;/em&gt;应支持两种操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;删除最大元素&lt;/li&gt;
+&lt;li&gt;插入元素&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;初级实现有序数组无序数组链表&#34;&gt;初级实现：有序数组、无序数组、链表&lt;/h3&gt;
+&lt;p&gt;这些初级实现中，插入元素和删除最大元素的操作在最坏的情况下需要&lt;strong&gt;线性时间&lt;/strong&gt;来完成，无法满足我们的性能要求。接下来使用&lt;strong&gt;堆&lt;/strong&gt;来实现使这两种操作能更快地执行。&lt;/p&gt;
+&lt;h3 id=&#34;基于堆的优先队列&#34;&gt;基于堆的优先队列&lt;/h3&gt;
+&lt;h4 id=&#34;堆的定义&#34;&gt;堆的定义&lt;/h4&gt;
+&lt;p&gt;数据结构&lt;strong&gt;二叉堆&lt;/strong&gt;满足：每个元素大于等于两个特定位置的元素，这些位置的元素又要大于等于数组中的另外两个元素，这样的数据结构可以通过有序的完全二叉树来表示。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E6%9C%89%E5%BA%8F%E7%9A%84%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在一个堆中，位置$k$的节点的父节点的位置为$k/2$，而它的两个子节点的位置为$2k$和$2k+1$。&lt;/p&gt;
+&lt;p&gt;我们可以通过计算数组的索引在树中上下移动：从$a[k]$向上一层就令$k=k/2$，向下一层则令$k=2k/2k+1$。&lt;/p&gt;
+&lt;h4 id=&#34;堆的算法&#34;&gt;堆的算法&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;由下至上的堆有序化（上浮swim）&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;swim&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1 &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;由上至下的堆有序化（下沉sink）&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sink&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 2&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;j&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;	j&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//选择父节点的两个子节点中较大的作为交换对象
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(!&lt;/span&gt;less&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; j&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//将交换后子节点的位置作为父节点，循环进行下一次交换,继续下沉
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列的代码实现&#34;&gt;基于堆的优先队列的代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Key &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extends&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;key&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; Key&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; pq&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;MaxPQ&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; maxN&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        pq &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Key&lt;span style=&#34;color:#333&#34;&gt;[])&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;maxN &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;isEmpty&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;size&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;insert&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Key v&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//在数组的末尾输入，然后进行上浮swim操作
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        pq&lt;span style=&#34;color:#333&#34;&gt;[++&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; v&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        swim&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;};&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; Key &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;delMax&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        Key max &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pq&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;];&lt;/span&gt;
+        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;
+        pq&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;N&lt;span style=&#34;color:#333&#34;&gt;++]&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; max&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;基于堆的优先队列性能分析&#34;&gt;基于堆的优先队列性能分析&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;堆排序&#34;&gt;堆排序&lt;/h3&gt;
+&lt;h4 id=&#34;堆的构造&#34;&gt;堆的构造&lt;/h4&gt;
+&lt;p&gt;高效的构造堆的方法是从右向左用&lt;code&gt;sink()&lt;/code&gt;函数构造子堆。数组的每个位置都是一个子堆的根结点，如果一个结点的两个子结点都已经是堆了，那么在该结点上调用&lt;code&gt;sink()&lt;/code&gt;可以将它们变成一个堆。我们只需要扫描一半的元素，因为可以跳过大小为1的子堆。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E5%A0%86%E7%9A%84%E6%9E%84%E9%80%A0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;下沉排序&#34;&gt;下沉排序&lt;/h4&gt;
+&lt;p&gt;将堆中的最大元素删去，然后将其放入堆缩小后数组中空出的位置。&lt;/p&gt;
+&lt;h4 id=&#34;堆排序代码实现&#34;&gt;堆排序代码实现&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sort&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Comparable&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;length&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;2&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;--)&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//构造堆
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;N &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        exch&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;--);&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//堆排序，按递减顺序循环取出所有的最大值，最后得到排序结果。
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        sink&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;a&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;堆排序性能分析&#34;&gt;堆排序性能分析&lt;/h4&gt;
+&lt;p&gt;将$N$个元素排序，堆排序只需要少于$(2N\lg N+2N)$次比较以及一半的交换次数。&lt;/p&gt;
+- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%AC%AC4%E7%89%88%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%80%E6%8E%92%E5%BA%8F/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1231,26 +1541,6 @@ Content-Type&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; text/html		#�
 &lt;li&gt;&lt;em&gt;当前流量条件&lt;/em&gt;：CDN能对当前集群和客户之间的时延和丢包性能进行周期性实时测量，基于此来选择。&lt;/li&gt;
 &lt;/ul&gt;
 - https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>关于</title>
-        <link>https://eternityqjl.top/about/</link>
-        <pubDate>Thu, 28 Nov 2019 18:09:24 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/about/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/about/ -&lt;p&gt;四川大学电气工程学院自动化专业在读。励志成为一个软硬兼修的优秀工程师。还在努力中。。。&lt;/p&gt;
-&lt;p&gt;喜欢摄影，尤爱拍飞机。&lt;/p&gt;
-&lt;p&gt;然后就是旅行过程中的街拍，以及各种奇奇怪怪的照片。&lt;/p&gt;
-&lt;p&gt;还偶尔拍一些火车，但现在已经很少拍。&lt;/p&gt;
-&lt;p&gt;写文字是我觉得最有趣的事情之一，希望自己能坚持写一些博客。&lt;/p&gt;
-&lt;p&gt;我已经初步建好了自己的飞行博物馆的GitBook，以后会逐渐地更新：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://museum.eternityqjl.top&#34;&gt;My Flight Museum&lt;/a&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;网站于2021年7月从Hexo平台迁移至Hugo。&lt;/p&gt;
-- https://eternityqjl.top/about/ - 2019-2021 By Jialong</description>
         </item>
     
     
