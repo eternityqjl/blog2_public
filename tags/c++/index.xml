@@ -7,13 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 01 Dec 2021 19:43:11 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Dec 2021 21:54:01 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cpp程序的内存分配</title>
+      <link>https://eternityqjl.top/posts/cpp%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</link>
+      <pubDate>Thu, 02 Dec 2021 21:54:01 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/</guid>
+      <description>栈区stack：由编译器自动分配和释放，用来存放函数的参数值、局部变量的值 堆区heap：一般由程序员分配和释放，用来创建动态内存 全局区static：全局变量、静态变量，程序结束后由系统释放 文字常量区：常量字符串存放在此 程序代码区：存放函数体的二进制代码  宏定义不占用内存和编译时间。</description>
+    </item>
+    
     <item>
       <title>typedef和define宏详解</title>
-      <link>https://eternityqjl.top/posts/typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/</link>
+      <link>https://eternityqjl.top/posts/cpp_typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/</link>
       <pubDate>Wed, 01 Dec 2021 19:43:11 +0800</pubDate>
       
-      <guid>https://eternityqjl.top/posts/typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/</guid>
+      <guid>https://eternityqjl.top/posts/cpp_typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/</guid>
       <description>typedef是定义了一种类型的新别名，不同于宏，它不是简单的字符串替换。
 当const和typedef一起出现时，typedef不会是简单的字符串替换就行。
 typedef常用来定义一个标识符及关键字的别名，它是语言编译过程的一部分，但它并不实际分配内存空间
