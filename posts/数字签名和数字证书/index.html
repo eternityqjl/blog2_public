@@ -21,26 +21,26 @@
 非对称加密使用一对密钥，一个为公钥Pub，另一个为私钥Priv
 明文P经过公钥Pub使用RSA加密算法混淆后变成了密文M，密文M无法用公钥Pub解开，只能用私钥Priv解开
 同样的，明文P经过私钥Priv使用RSA加密算法混淆后变成了密文N，密文N只能用公钥Pub解开
-1.信息安全 在信息安全中共有3个需要解决的问题：
+信息安全 在信息安全中共有3个需要解决的问题：
  保密性：保证信息在传输时不被泄露 完整性：信息在传输时不被篡改 有效性：信息的使用者是合法的  公钥密码能解决保密性的问题
 数字签名能解决完整性和有效性的问题
-2.数字签名(Digital Signature) 真实世界中，签名是为了表示某些内容是签名者写的或者他所认可的。计算机中，数字签名也有着相似的含义，数字签名用来证实消息是某个特定的人发送的，即有效性；同时还能证明消息没有被篡改，即完整性。这些是怎么实现的呢？这就是接下来要介绍有关于数字签名的内容。
+数字签名(Digital Signature) 真实世界中，签名是为了表示某些内容是签名者写的或者他所认可的。计算机中，数字签名也有着相似的含义，数字签名用来证实消息是某个特定的人发送的，即有效性；同时还能证明消息没有被篡改，即完整性。这些是怎么实现的呢？这就是接下来要介绍有关于数字签名的内容。
 数字签名是公钥密码加密的逆向应用：
 用私钥加密消息，用公钥解密消息。
- 签名：用私钥加密的消息，只有拥有私钥的用户可以生成签名，这也确保了数字签名的发送者是该用户。 验证签名：即用公钥解密签名，因为公钥是公开的，所以任何人都可以验证签名。  2.1 生成签名 一般不直接对消息进行签名，而是对消息进行哈希计算后的得到的哈希值进行签名。
+ 签名：用私钥加密的消息，只有拥有私钥的用户可以生成签名，这也确保了数字签名的发送者是该用户。 验证签名：即用公钥解密签名，因为公钥是公开的，所以任何人都可以验证签名。  生成签名 一般不直接对消息进行签名，而是对消息进行哈希计算后的得到的哈希值进行签名。
  HASH算法是密码学的基础，其中最重要的两条性质是不可逆和无冲突，
  不可逆：当你知道x的HASH值时，无法求出x 无冲突：你知道x，但无法求出一个y使得x与y的HASH值相同  这两个性质在数学上都是不成立的，理论上由无穷多不同的原始值，它们的HASH值都相同。但求逆和求冲突在计算上不可能实现，穷尽人类所有的计算资源都做不到。
  生成签名的步骤如下：
- 对消息进行哈希计算，得到哈希值 利用私钥对哈希值进行加密，生成签名 将签名附在消息后，一起发送  2.2 验证签名  收到签名后，提取消息中的签名 用公钥对签名进行解密，得到哈希值1 对消息中的正文进行哈希计算，得到哈希值2 比较哈希值1和2，如果相同，则验证成功  注：前面提到，哈希值的计算不可逆，因此才能以这种方式验证签名。
-3.数字证书(Digital Certificate) 数字证书是对公钥进行数字签名，是为了对公钥的合法性提供证明，如果公钥的合法性得不到证明，则就存在中间人攻击的风险。
+ 对消息进行哈希计算，得到哈希值 利用私钥对哈希值进行加密，生成签名 将签名附在消息后，一起发送  验证签名  收到签名后，提取消息中的签名 用公钥对签名进行解密，得到哈希值1 对消息中的正文进行哈希计算，得到哈希值2 比较哈希值1和2，如果相同，则验证成功  注：前面提到，哈希值的计算不可逆，因此才能以这种方式验证签名。
+数字证书(Digital Certificate) 数字证书是对公钥进行数字签名，是为了对公钥的合法性提供证明，如果公钥的合法性得不到证明，则就存在中间人攻击的风险。
  中间人攻击（Man-in-the-middle-attack）：
-攻击者与通讯的两端分别建立滴露的联系，并交换所受到的数据。即中间人通过截获两端通讯使用的公钥，并将双方的两个公钥都更改为自己的公钥来达到截获消息的目的。
+攻击者与通信的两端分别建立独立的联系，并交换所收到的数据。即中间人通过截获两端通讯使用的公钥，并将双方的两个公钥都更改为自己的公钥来达到截获消息的目的。
 详情可以参考维基百科：中间人攻击
  我们对于签名的验证需要使用公钥，而公钥的真实合法性就是通过数字证书来的。证书中包含：公钥、公钥的数字签名、公钥拥有者的信息。如果证书验证成功，则代表该公钥是合法的。
 但是，验证证书中的数字签名需要另一个公钥，该公钥的合法性又怎样保证呢？该问题可以无限地循环下去，那岂不是解决不了了？我们相信银行是一个可信的机构，可以放心地把钱存在里面，那么同样存在一个可信机构来颁发证书和提供公钥，我们相信这个机构提供的密钥是合法的。
 这种机构称为认证机构(Certification Authority, CA)，CA认定“公钥确实属于某个私钥的拥有者”，并能生成公钥的数字签名的组织或机构。
-3.1 如何生成证书？  证书即为公钥、公钥的数字签名、一些其他服务器信息的集合
-  服务器将公钥A交给CA CA通过哈希计算生成公钥A的哈希值，然后用自己的私钥B给公钥A的哈希值加密，生成数字签名A CA把公钥A、数字签名A、一些服务器信息整合，生成证书，发回给服务器  3." />
+如何生成证书？  证书即为公钥、公钥的数字签名、一些其他服务器信息的集合
+  服务器将公钥A交给CA CA通过哈希计算生成公钥A的哈希值，然后用自己的私钥B给公钥A的哈希值加密，生成数字签名A CA把公钥A、数字签名A、一些服务器信息整合，生成证书，发回给服务器  如何验证证书？  客户端得到证书 客户端通过CA得到证书的公钥B 客户端用公钥B对证书中的数字签名A解密，得到哈希值 客户端对公钥A进行哈希值计算 将两个哈希值对比，如果相同，则证书合法  公钥B和上述私钥B是配对的，分别用于解密和加密证书。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-12-06T19:42:38+00:00" />
@@ -57,26 +57,26 @@
 非对称加密使用一对密钥，一个为公钥Pub，另一个为私钥Priv
 明文P经过公钥Pub使用RSA加密算法混淆后变成了密文M，密文M无法用公钥Pub解开，只能用私钥Priv解开
 同样的，明文P经过私钥Priv使用RSA加密算法混淆后变成了密文N，密文N只能用公钥Pub解开
-1.信息安全 在信息安全中共有3个需要解决的问题：
+信息安全 在信息安全中共有3个需要解决的问题：
  保密性：保证信息在传输时不被泄露 完整性：信息在传输时不被篡改 有效性：信息的使用者是合法的  公钥密码能解决保密性的问题
 数字签名能解决完整性和有效性的问题
-2.数字签名(Digital Signature) 真实世界中，签名是为了表示某些内容是签名者写的或者他所认可的。计算机中，数字签名也有着相似的含义，数字签名用来证实消息是某个特定的人发送的，即有效性；同时还能证明消息没有被篡改，即完整性。这些是怎么实现的呢？这就是接下来要介绍有关于数字签名的内容。
+数字签名(Digital Signature) 真实世界中，签名是为了表示某些内容是签名者写的或者他所认可的。计算机中，数字签名也有着相似的含义，数字签名用来证实消息是某个特定的人发送的，即有效性；同时还能证明消息没有被篡改，即完整性。这些是怎么实现的呢？这就是接下来要介绍有关于数字签名的内容。
 数字签名是公钥密码加密的逆向应用：
 用私钥加密消息，用公钥解密消息。
- 签名：用私钥加密的消息，只有拥有私钥的用户可以生成签名，这也确保了数字签名的发送者是该用户。 验证签名：即用公钥解密签名，因为公钥是公开的，所以任何人都可以验证签名。  2.1 生成签名 一般不直接对消息进行签名，而是对消息进行哈希计算后的得到的哈希值进行签名。
+ 签名：用私钥加密的消息，只有拥有私钥的用户可以生成签名，这也确保了数字签名的发送者是该用户。 验证签名：即用公钥解密签名，因为公钥是公开的，所以任何人都可以验证签名。  生成签名 一般不直接对消息进行签名，而是对消息进行哈希计算后的得到的哈希值进行签名。
  HASH算法是密码学的基础，其中最重要的两条性质是不可逆和无冲突，
  不可逆：当你知道x的HASH值时，无法求出x 无冲突：你知道x，但无法求出一个y使得x与y的HASH值相同  这两个性质在数学上都是不成立的，理论上由无穷多不同的原始值，它们的HASH值都相同。但求逆和求冲突在计算上不可能实现，穷尽人类所有的计算资源都做不到。
  生成签名的步骤如下：
- 对消息进行哈希计算，得到哈希值 利用私钥对哈希值进行加密，生成签名 将签名附在消息后，一起发送  2.2 验证签名  收到签名后，提取消息中的签名 用公钥对签名进行解密，得到哈希值1 对消息中的正文进行哈希计算，得到哈希值2 比较哈希值1和2，如果相同，则验证成功  注：前面提到，哈希值的计算不可逆，因此才能以这种方式验证签名。
-3.数字证书(Digital Certificate) 数字证书是对公钥进行数字签名，是为了对公钥的合法性提供证明，如果公钥的合法性得不到证明，则就存在中间人攻击的风险。
+ 对消息进行哈希计算，得到哈希值 利用私钥对哈希值进行加密，生成签名 将签名附在消息后，一起发送  验证签名  收到签名后，提取消息中的签名 用公钥对签名进行解密，得到哈希值1 对消息中的正文进行哈希计算，得到哈希值2 比较哈希值1和2，如果相同，则验证成功  注：前面提到，哈希值的计算不可逆，因此才能以这种方式验证签名。
+数字证书(Digital Certificate) 数字证书是对公钥进行数字签名，是为了对公钥的合法性提供证明，如果公钥的合法性得不到证明，则就存在中间人攻击的风险。
  中间人攻击（Man-in-the-middle-attack）：
-攻击者与通讯的两端分别建立滴露的联系，并交换所受到的数据。即中间人通过截获两端通讯使用的公钥，并将双方的两个公钥都更改为自己的公钥来达到截获消息的目的。
+攻击者与通信的两端分别建立独立的联系，并交换所收到的数据。即中间人通过截获两端通讯使用的公钥，并将双方的两个公钥都更改为自己的公钥来达到截获消息的目的。
 详情可以参考维基百科：中间人攻击
  我们对于签名的验证需要使用公钥，而公钥的真实合法性就是通过数字证书来的。证书中包含：公钥、公钥的数字签名、公钥拥有者的信息。如果证书验证成功，则代表该公钥是合法的。
 但是，验证证书中的数字签名需要另一个公钥，该公钥的合法性又怎样保证呢？该问题可以无限地循环下去，那岂不是解决不了了？我们相信银行是一个可信的机构，可以放心地把钱存在里面，那么同样存在一个可信机构来颁发证书和提供公钥，我们相信这个机构提供的密钥是合法的。
 这种机构称为认证机构(Certification Authority, CA)，CA认定“公钥确实属于某个私钥的拥有者”，并能生成公钥的数字签名的组织或机构。
-3.1 如何生成证书？  证书即为公钥、公钥的数字签名、一些其他服务器信息的集合
-  服务器将公钥A交给CA CA通过哈希计算生成公钥A的哈希值，然后用自己的私钥B给公钥A的哈希值加密，生成数字签名A CA把公钥A、数字签名A、一些服务器信息整合，生成证书，发回给服务器  3."/>
+如何生成证书？  证书即为公钥、公钥的数字签名、一些其他服务器信息的集合
+  服务器将公钥A交给CA CA通过哈希计算生成公钥A的哈希值，然后用自己的私钥B给公钥A的哈希值加密，生成数字签名A CA把公钥A、数字签名A、一些服务器信息整合，生成证书，发回给服务器  如何验证证书？  客户端得到证书 客户端通过CA得到证书的公钥B 客户端用公钥B对证书中的数字签名A解密，得到哈希值 客户端对公钥A进行哈希值计算 将两个哈希值对比，如果相同，则证书合法  公钥B和上述私钥B是配对的，分别用于解密和加密证书。"/>
 
 
 
@@ -269,8 +269,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#1%e4%bf%a1%e6%81%af%e5%ae%89%e5%85%a8" onclick="onNavClick(`#1信息安全-nav`)" id="1信息安全-nav">
-									1.信息安全
+								<a href="#%e4%bf%a1%e6%81%af%e5%ae%89%e5%85%a8" onclick="onNavClick(`#信息安全-nav`)" id="信息安全-nav">
+									信息安全
 								</a>
 							</li>
 						
@@ -287,72 +287,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#2%e6%95%b0%e5%ad%97%e7%ad%be%e5%90%8ddigital-signature" onclick="onNavClick(`#2数字签名digital-signature-nav`)" id="2数字签名digital-signature-nav">
-									2.数字签名(Digital Signature)
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#21-%e7%94%9f%e6%88%90%e7%ad%be%e5%90%8d" onclick="onNavClick(`#21-生成签名-nav`)" id="21-生成签名-nav">
-									2.1 生成签名
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#22-%e9%aa%8c%e8%af%81%e7%ad%be%e5%90%8d" onclick="onNavClick(`#22-验证签名-nav`)" id="22-验证签名-nav">
-									2.2 验证签名
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-							
-								</ul>
-							
-						
-						
-						
-							<li>
-								<a href="#3%e6%95%b0%e5%ad%97%e8%af%81%e4%b9%a6digital-certificate" onclick="onNavClick(`#3数字证书digital-certificate-nav`)" id="3数字证书digital-certificate-nav">
-									3.数字证书(Digital Certificate)
+								<a href="#%e6%95%b0%e5%ad%97%e7%ad%be%e5%90%8ddigital-signature" onclick="onNavClick(`#数字签名digital-signature-nav`)" id="数字签名digital-signature-nav">
+									数字签名(Digital Signature)
 								</a>
 							</li>
 						
@@ -375,8 +311,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#31-%e5%a6%82%e4%bd%95%e7%94%9f%e6%88%90%e8%af%81%e4%b9%a6" onclick="onNavClick(`#31-如何生成证书-nav`)" id="31-如何生成证书-nav">
-									3.1 如何生成证书？
+								<a href="#%e7%94%9f%e6%88%90%e7%ad%be%e5%90%8d" onclick="onNavClick(`#生成签名-nav`)" id="生成签名-nav">
+									生成签名
 								</a>
 							</li>
 						
@@ -393,26 +329,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#32-%e5%a6%82%e4%bd%95%e9%aa%8c%e8%af%81%e8%af%81%e4%b9%a6" onclick="onNavClick(`#32-如何验证证书-nav`)" id="32-如何验证证书-nav">
-									3.2 如何验证证书？
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#33-%e8%af%81%e4%b9%a6%e4%bd%9c%e5%ba%9f" onclick="onNavClick(`#33-证书作废-nav`)" id="33-证书作废-nav">
-									3.3 证书作废
+								<a href="#%e9%aa%8c%e8%af%81%e7%ad%be%e5%90%8d" onclick="onNavClick(`#验证签名-nav`)" id="验证签名-nav">
+									验证签名
 								</a>
 							</li>
 						
@@ -433,8 +351,32 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#4%e5%ba%94%e7%94%a8" onclick="onNavClick(`#4应用-nav`)" id="4应用-nav">
-									4.应用
+								<a href="#%e6%95%b0%e5%ad%97%e8%af%81%e4%b9%a6digital-certificate" onclick="onNavClick(`#数字证书digital-certificate-nav`)" id="数字证书digital-certificate-nav">
+									数字证书(Digital Certificate)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%a6%82%e4%bd%95%e7%94%9f%e6%88%90%e8%af%81%e4%b9%a6" onclick="onNavClick(`#如何生成证书-nav`)" id="如何生成证书-nav">
+									如何生成证书？
 								</a>
 							</li>
 						
@@ -451,8 +393,66 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#5%e5%8f%82%e8%80%83" onclick="onNavClick(`#5参考-nav`)" id="5参考-nav">
-									5.参考
+								<a href="#%e5%a6%82%e4%bd%95%e9%aa%8c%e8%af%81%e8%af%81%e4%b9%a6" onclick="onNavClick(`#如何验证证书-nav`)" id="如何验证证书-nav">
+									如何验证证书？
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%af%81%e4%b9%a6%e4%bd%9c%e5%ba%9f" onclick="onNavClick(`#证书作废-nav`)" id="证书作废-nav">
+									证书作废
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%ba%94%e7%94%a8" onclick="onNavClick(`#应用-nav`)" id="应用-nav">
+									应用
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%82%e8%80%83" onclick="onNavClick(`#参考-nav`)" id="参考-nav">
+									参考
 								</a>
 							</li>
 						
@@ -572,8 +572,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#1%e4%bf%a1%e6%81%af%e5%ae%89%e5%85%a8" onclick="onNavClick(`#1信息安全-nav`)" id="1信息安全-nav">
-									1.信息安全
+								<a href="#%e4%bf%a1%e6%81%af%e5%ae%89%e5%85%a8" onclick="onNavClick(`#信息安全-nav`)" id="信息安全-nav">
+									信息安全
 								</a>
 							</li>
 						
@@ -590,72 +590,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#2%e6%95%b0%e5%ad%97%e7%ad%be%e5%90%8ddigital-signature" onclick="onNavClick(`#2数字签名digital-signature-nav`)" id="2数字签名digital-signature-nav">
-									2.数字签名(Digital Signature)
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#21-%e7%94%9f%e6%88%90%e7%ad%be%e5%90%8d" onclick="onNavClick(`#21-生成签名-nav`)" id="21-生成签名-nav">
-									2.1 生成签名
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#22-%e9%aa%8c%e8%af%81%e7%ad%be%e5%90%8d" onclick="onNavClick(`#22-验证签名-nav`)" id="22-验证签名-nav">
-									2.2 验证签名
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-							
-								</ul>
-							
-						
-						
-						
-							<li>
-								<a href="#3%e6%95%b0%e5%ad%97%e8%af%81%e4%b9%a6digital-certificate" onclick="onNavClick(`#3数字证书digital-certificate-nav`)" id="3数字证书digital-certificate-nav">
-									3.数字证书(Digital Certificate)
+								<a href="#%e6%95%b0%e5%ad%97%e7%ad%be%e5%90%8ddigital-signature" onclick="onNavClick(`#数字签名digital-signature-nav`)" id="数字签名digital-signature-nav">
+									数字签名(Digital Signature)
 								</a>
 							</li>
 						
@@ -678,8 +614,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#31-%e5%a6%82%e4%bd%95%e7%94%9f%e6%88%90%e8%af%81%e4%b9%a6" onclick="onNavClick(`#31-如何生成证书-nav`)" id="31-如何生成证书-nav">
-									3.1 如何生成证书？
+								<a href="#%e7%94%9f%e6%88%90%e7%ad%be%e5%90%8d" onclick="onNavClick(`#生成签名-nav`)" id="生成签名-nav">
+									生成签名
 								</a>
 							</li>
 						
@@ -696,26 +632,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#32-%e5%a6%82%e4%bd%95%e9%aa%8c%e8%af%81%e8%af%81%e4%b9%a6" onclick="onNavClick(`#32-如何验证证书-nav`)" id="32-如何验证证书-nav">
-									3.2 如何验证证书？
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#33-%e8%af%81%e4%b9%a6%e4%bd%9c%e5%ba%9f" onclick="onNavClick(`#33-证书作废-nav`)" id="33-证书作废-nav">
-									3.3 证书作废
+								<a href="#%e9%aa%8c%e8%af%81%e7%ad%be%e5%90%8d" onclick="onNavClick(`#验证签名-nav`)" id="验证签名-nav">
+									验证签名
 								</a>
 							</li>
 						
@@ -736,8 +654,32 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#4%e5%ba%94%e7%94%a8" onclick="onNavClick(`#4应用-nav`)" id="4应用-nav">
-									4.应用
+								<a href="#%e6%95%b0%e5%ad%97%e8%af%81%e4%b9%a6digital-certificate" onclick="onNavClick(`#数字证书digital-certificate-nav`)" id="数字证书digital-certificate-nav">
+									数字证书(Digital Certificate)
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%a6%82%e4%bd%95%e7%94%9f%e6%88%90%e8%af%81%e4%b9%a6" onclick="onNavClick(`#如何生成证书-nav`)" id="如何生成证书-nav">
+									如何生成证书？
 								</a>
 							</li>
 						
@@ -754,8 +696,66 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#5%e5%8f%82%e8%80%83" onclick="onNavClick(`#5参考-nav`)" id="5参考-nav">
-									5.参考
+								<a href="#%e5%a6%82%e4%bd%95%e9%aa%8c%e8%af%81%e8%af%81%e4%b9%a6" onclick="onNavClick(`#如何验证证书-nav`)" id="如何验证证书-nav">
+									如何验证证书？
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%af%81%e4%b9%a6%e4%bd%9c%e5%ba%9f" onclick="onNavClick(`#证书作废-nav`)" id="证书作废-nav">
+									证书作废
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%ba%94%e7%94%a8" onclick="onNavClick(`#应用-nav`)" id="应用-nav">
+									应用
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%8f%82%e8%80%83" onclick="onNavClick(`#参考-nav`)" id="参考-nav">
+									参考
 								</a>
 							</li>
 						
@@ -836,6 +836,12 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                         
 
                         
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6">数字证书</a>
+                                &nbsp;
+                            
+                        
                         
                     </div>
                 </div>
@@ -845,12 +851,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 <div class="post-body" v-pre>
                 
-                    <p>理解本文的基础是公钥密码加密，即非对称加密，比如其中一种非对称加密算法RSA。</p>
+                    <p>理解本文的基础是公钥密码加密，即<strong>非对称加密</strong>，比如其中一种非对称加密算法RSA。</p>
 <p>非对称加密使用一对密钥，一个为公钥Pub，另一个为私钥Priv</p>
 <p>明文P经过公钥Pub使用RSA加密算法混淆后变成了密文M，密文M无法用公钥Pub解开，只能用私钥Priv解开</p>
 <p>同样的，明文P经过私钥Priv使用RSA加密算法混淆后变成了密文N，密文N只能用公钥Pub解开</p>
-<!-- raw HTML omitted -->
-<h2 id="1信息安全">1.信息安全</h2>
+<h2 id="信息安全">信息安全</h2>
 <p>在信息安全中共有3个需要解决的问题：</p>
 <ul>
 <li>保密性：保证信息在传输时不被泄露</li>
@@ -859,7 +864,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </ul>
 <p><strong>公钥密码</strong>能解决保密性的问题</p>
 <p><strong>数字签名</strong>能解决完整性和有效性的问题</p>
-<h2 id="2数字签名digital-signature">2.数字签名(Digital Signature)</h2>
+<h2 id="数字签名digital-signature">数字签名(Digital Signature)</h2>
 <p>真实世界中，签名是为了表示某些内容是签名者写的或者他所认可的。计算机中，数字签名也有着相似的含义，数字签名用来证实<strong>消息</strong>是某个特定的人发送的，即有效性；同时还能证明消息没有被篡改，即完整性。这些是怎么实现的呢？这就是接下来要介绍有关于数字签名的内容。</p>
 <p>数字签名是公钥密码加密的逆向应用：</p>
 <p>用<strong>私钥</strong>加密消息，用<strong>公钥</strong>解密消息。</p>
@@ -867,7 +872,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li><strong>签名</strong>：用私钥加密的消息，只有拥有私钥的用户可以生成签名，这也确保了数字签名的发送者是该用户。</li>
 <li><strong>验证签名</strong>：即用公钥解密签名，因为公钥是公开的，所以任何人都可以验证签名。</li>
 </ul>
-<h3 id="21-生成签名">2.1 生成签名</h3>
+<h3 id="生成签名">生成签名</h3>
 <p>一般不直接对消息进行签名，而是对消息进行哈希计算后的得到的哈希值进行签名。</p>
 <blockquote>
 <p>HASH算法是密码学的基础，其中最重要的两条性质是<strong>不可逆</strong>和<strong>无冲突</strong>，</p>
@@ -883,7 +888,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>利用私钥对哈希值进行加密，生成签名</li>
 <li>将签名附在消息后，一起发送</li>
 </ul>
-<h3 id="22-验证签名">2.2 验证签名</h3>
+<h3 id="验证签名">验证签名</h3>
 <ul>
 <li>收到签名后，提取消息中的签名</li>
 <li>用公钥对签名进行解密，得到哈希值1</li>
@@ -891,17 +896,17 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>比较哈希值1和2，如果相同，则验证成功</li>
 </ul>
 <p>注：前面提到，哈希值的计算不可逆，因此才能以这种方式验证签名。</p>
-<h2 id="3数字证书digital-certificate">3.数字证书(Digital Certificate)</h2>
+<h2 id="数字证书digital-certificate">数字证书(Digital Certificate)</h2>
 <p>数字证书是对<strong>公钥</strong>进行数字签名，是为了对<strong>公钥的合法性</strong>提供证明，如果公钥的合法性得不到证明，则就存在中间人攻击的风险。</p>
 <blockquote>
 <p>中间人攻击（<strong>M</strong>an-<strong>i</strong>n-<strong>t</strong>he-<strong>m</strong>iddle-attack）：</p>
-<p>攻击者与通讯的两端分别建立滴露的联系，并交换所受到的数据。即中间人通过截获两端通讯使用的公钥，并将双方的两个公钥都更改为自己的公钥来达到截获消息的目的。</p>
+<p>攻击者与通信的两端分别建立独立的联系，并交换所收到的数据。即中间人通过截获两端通讯使用的公钥，并将双方的两个公钥都更改为自己的公钥来达到截获消息的目的。</p>
 <p>详情可以参考维基百科：<a href="https://zh.wikipedia.org/wiki/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB">中间人攻击</a></p>
 </blockquote>
 <p>我们对于签名的验证需要使用公钥，而公钥的真实合法性就是通过数字证书来的。<strong>证书</strong>中包含：<strong>公钥、公钥的数字签名、公钥拥有者的信息</strong>。如果证书验证成功，则代表该公钥是合法的。</p>
 <p>但是，验证证书中的数字签名需要另一个公钥，该公钥的合法性又怎样保证呢？该问题可以无限地循环下去，那岂不是解决不了了？我们相信银行是一个可信的机构，可以放心地把钱存在里面，那么同样存在一个可信机构来颁发证书和提供公钥，我们相信这个机构提供的密钥是合法的。</p>
 <p>这种机构称为<strong>认证机构(Certification Authority, CA)</strong>，CA认定“公钥确实属于某个私钥的拥有者”，并能生成公钥的数字签名的组织或机构。</p>
-<h3 id="31-如何生成证书">3.1 如何生成证书？</h3>
+<h3 id="如何生成证书">如何生成证书？</h3>
 <blockquote>
 <p>证书即为公钥、公钥的数字签名、一些其他服务器信息的集合</p>
 </blockquote>
@@ -910,7 +915,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>CA通过哈希计算生成公钥A的哈希值，然后用自己的<strong>私钥B</strong>给<strong>公钥A的哈希值</strong>加密，生成<strong>数字签名A</strong></li>
 <li>CA把公钥A、数字签名A、一些服务器信息整合，生成证书，发回给服务器</li>
 </ol>
-<h3 id="32-如何验证证书">3.2 如何验证证书？</h3>
+<h3 id="如何验证证书">如何验证证书？</h3>
 <ol>
 <li>客户端得到证书</li>
 <li>客户端通过CA得到证书的<strong>公钥B</strong></li>
@@ -919,12 +924,12 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>将两个哈希值对比，如果相同，则证书合法</li>
 </ol>
 <p>公钥B和上述私钥B是配对的，分别用于解密和加密证书。</p>
-<h3 id="33-证书作废">3.3 证书作废</h3>
+<h3 id="证书作废">证书作废</h3>
 <p>用户的私钥丢失或者被盗时，认证机构需要对证书进行作废，制作一张证书作废清单(Certificate Revocation List, CRL)</p>
 <p>在验证证书是否有效的时候除了看合法的认证机构签名、是否在有效期内，还需要查询认证机构最新的CRL。</p>
-<h2 id="4应用">4.应用</h2>
-<p>HTTPS协议，详见之后有关SSL/TLS的博客。</p>
-<h2 id="5参考">5.参考</h2>
+<h2 id="应用">应用</h2>
+<p>HTTPS协议，详见<a href="https://eternityqjl.top/posts/tls/">SSL/TLS的博客</a>。</p>
+<h2 id="参考">参考</h2>
 <p><a href="https://www.jianshu.com/p/9db57e761255">什么是数字签名和证书?</a></p>
 <p><a href="https://www.zhihu.com/question/20820286">什么是哈希算法？</a></p>
 

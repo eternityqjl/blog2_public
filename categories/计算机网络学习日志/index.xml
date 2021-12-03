@@ -119,26 +119,6 @@ rdt2.0：经具有比特差错信道的可靠数据传输
     </item>
     
     <item>
-      <title>TLS（HTTPS）协议</title>
-      <link>https://eternityqjl.top/posts/tls/</link>
-      <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
-      
-      <guid>https://eternityqjl.top/posts/tls/</guid>
-      <description>1. SSL/TLS简介 TLS（Transport Layer Security，传输层安全协议），以及它的前身SSL（Secure Sockets Layer，安全套接层）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。
-SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。
-几个知名的使用SSL加密的协议：
-HTTP over SSL (HTTPS)
-简称为HTTPS，它的产生是为了加密网页，HTTP是第一个使用SSL保障安全的应用层协议。HTTPS在RFC2818被标准化，HTTPS工作在443端口，HTTP默认工作在80端口。
-Email over SSL
-类似于HTTP over SSL，协议如下：
- SMTP、IMAP能够支持SSL SMTP over TLS在标准文档RFC2487中  2. SSL原理详解 2.0 基本运行过程 SSL/TLS协议是采用公钥加密法实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。
-2.1 SSL建立的总过程 客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及四次握手通信，且该阶段的通信都是明文的。以下一一来分析。
-1. 客户端发出请求（ClientHello） 该步客户端（通常为浏览器）向服务器提供以下信息：
- 支持的协议版本（Version），如TLSv1.0 一个客户端生成的随机数（Random），之后用于生成”对话密钥“ 会话ID（Session id）：  如果客户端第一次连接到服务器，那么该字段为空。 如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为SSL会话恢复。   支持的加密套件（Cipher Suites），这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。 支持的压缩方法，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。 扩展包。  2. 服务器回应（ServerHello） 该步骤包含以下内容：
- 确认使用的版本，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。 一个服务器生成的随机数，之后用于生成”对话密钥“ 确认使用的加密套件 会话ID（Session ID）：  服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。 但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入Session Tickets，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。   扩展包 服务器证书  当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。</description>
-    </item>
-    
-    <item>
       <title>计算机网络学习日志（一）——应用层</title>
       <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/</link>
       <pubDate>Thu, 28 Nov 2019 19:23:38 +0000</pubDate>

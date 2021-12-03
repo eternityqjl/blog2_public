@@ -1360,7 +1360,7 @@ $$
         <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
         
         <guid>https://eternityqjl.top/posts/tls/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/tls/ -&lt;h2 id=&#34;1-ssltls简介&#34;&gt;1. SSL/TLS简介&lt;/h2&gt;
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/tls/ -&lt;h2 id=&#34;ssltls简介&#34;&gt;SSL/TLS简介&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;TLS&lt;/strong&gt;（&lt;strong&gt;T&lt;/strong&gt;ransport &lt;strong&gt;L&lt;/strong&gt;ayer &lt;strong&gt;S&lt;/strong&gt;ecurity，&lt;strong&gt;传输层安全协议&lt;/strong&gt;），以及它的前身&lt;strong&gt;SSL&lt;/strong&gt;（&lt;strong&gt;S&lt;/strong&gt;ecure &lt;strong&gt;S&lt;/strong&gt;ockets &lt;strong&gt;L&lt;/strong&gt;ayer，&lt;strong&gt;安全套接层&lt;/strong&gt;）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。&lt;/p&gt;
 &lt;p&gt;SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;几个知名的使用SSL加密的协议&lt;/strong&gt;：&lt;/p&gt;
@@ -1372,11 +1372,10 @@ $$
 &lt;li&gt;SMTP、IMAP能够支持SSL&lt;/li&gt;
 &lt;li&gt;SMTP over TLS在标准文档RFC2487中&lt;/li&gt;
 &lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;2-ssl原理详解&#34;&gt;2. SSL原理详解&lt;/h2&gt;
-&lt;h3 id=&#34;20-基本运行过程&#34;&gt;2.0 基本运行过程&lt;/h3&gt;
+&lt;h2 id=&#34;ssl原理详解&#34;&gt;SSL原理详解&lt;/h2&gt;
+&lt;h3 id=&#34;基本运行过程&#34;&gt;基本运行过程&lt;/h3&gt;
 &lt;p&gt;SSL/TLS协议是采用&lt;strong&gt;公钥加密法&lt;/strong&gt;实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。&lt;/p&gt;
-&lt;h3 id=&#34;21-ssl建立的总过程&#34;&gt;2.1 SSL建立的总过程&lt;/h3&gt;
+&lt;h3 id=&#34;ssl建立的总过程&#34;&gt;SSL建立的总过程&lt;/h3&gt;
 &lt;p&gt;客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及&lt;strong&gt;四次握手&lt;/strong&gt;通信，且该阶段的通信都是明文的。以下一一来分析。&lt;/p&gt;
 &lt;h4 id=&#34;1-客户端发出请求clienthello&#34;&gt;1. 客户端发出请求（ClientHello）&lt;/h4&gt;
 &lt;p&gt;该步客户端（通常为浏览器）向服务器提供以下信息：&lt;/p&gt;
@@ -1408,27 +1407,27 @@ $$
 &lt;li&gt;&lt;strong&gt;扩展包&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;服务器证书&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，回向正式用户提供USB密钥（U盾），里面包含一张客户端证书。&lt;/p&gt;
+&lt;p&gt;当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，会向正式用户提供USB密钥（U盾），里面包含一张客户端证书。&lt;/p&gt;
 &lt;h4 id=&#34;3-客户端回应&#34;&gt;3. 客户端回应&lt;/h4&gt;
-&lt;p&gt;客户端收到服务器回应后首先验证服务器的证书，如果证书存在问题，如证书过期、由非可信机构颁布、或证书域名与实际域名不一致，会想客户端访问者发出警告，询问是否继续通信。&lt;/p&gt;
+&lt;p&gt;客户端收到服务器回应后首先验证服务器的证书，如果证书存在问题，如证书过期、由非可信机构颁布、或证书域名与实际域名不一致，会向客户端访问者发出警告，询问是否继续通信。&lt;/p&gt;
 &lt;p&gt;证书没有问题则客户端会从中取出公钥然后发送以下信息：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;一个&lt;strong&gt;随机数（pre-master-key)&lt;/strong&gt;；该随机数用服务器公钥加密，防止被窃听。&lt;/li&gt;
-&lt;li&gt;编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
-&lt;li&gt;客户端结束握手通知，该项同时也是前面发送所有内容的哈希值，用来供服务器验证。&lt;/li&gt;
+&lt;li&gt;一个&lt;strong&gt;随机数（pre-master-key)&lt;/strong&gt;；该随机数用服务器&lt;strong&gt;公钥加密&lt;/strong&gt;，防止被窃听。&lt;/li&gt;
+&lt;li&gt;**编码改变通知，**表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
+&lt;li&gt;客户端&lt;strong&gt;结束握手通知&lt;/strong&gt;，该项同时也是前面发送所有内容的哈希值，用来供服务器验证。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;上面第一项的随机数是握手阶段出现的第三个随机数，称“pre-master-key”，之后客户端和服务器就同时有了3个随机数，接着用双方事先商定的加密方法各自生成本次会话用的同一把“会话密钥”。&lt;/p&gt;
+&lt;p&gt;上面第一项的随机数是握手阶段出现的第三个随机数，称“pre-master-key”，之后客户端和服务器就同时有了3个随机数，接着用双方事先商定的加密方法&lt;strong&gt;各自生成本次会话用的同一把“会话密钥”&lt;/strong&gt;。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;pre-master-key与前面服务器和客户端在Hello阶段产生的两个随机数结合在一起生成了Master Secret。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4 id=&#34;4-服务器的最后回应&#34;&gt;4. 服务器的最后回应&lt;/h4&gt;
-&lt;p&gt;服务器收到客户端第三个随机数pre-master-key后，计算生成本次会话使用的“会话密钥”，然后向客户端发送以下信息：&lt;/p&gt;
+&lt;p&gt;服务器收到客户端第三个随机数pre-master-key后，计算生成&lt;strong&gt;本次会话使用的“会话密钥”&lt;/strong&gt;，然后向客户端发送以下信息：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
 &lt;li&gt;服务器握手结束通知，该项同时也是前面发送的所有内容的哈希值，用来供客户端验证。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;至此整个握手阶段就结束了，接下来客户端与服务器进入加密通信，就是完全使用普通的HTTP协议，只是使用了“会话密钥”加密内容。&lt;/p&gt;
-&lt;h3 id=&#34;22-ssl协议的结构体系&#34;&gt;2.2 SSL协议的结构体系&lt;/h3&gt;
+&lt;h3 id=&#34;ssl协议的结构体系&#34;&gt;SSL协议的结构体系&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SSL%E5%8D%8F%E8%AE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;SSL体系结构包含两个协议子层，底层为&lt;strong&gt;SSL记录协议层&lt;/strong&gt;；高层为&lt;strong&gt;SSL握手协议层&lt;/strong&gt;。&lt;/p&gt;
 &lt;ul&gt;
@@ -1441,7 +1440,7 @@ $$
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;3-参考&#34;&gt;3. 参考&lt;/h2&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://cshihong.github.io/2019/05/09/SSL%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/&#34;&gt;SSL/TLS协议详解|曹世宏的博客&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html&#34;&gt;SSL/TLS协议运行机制的概述|阮一峰&lt;/a&gt;&lt;/li&gt;
