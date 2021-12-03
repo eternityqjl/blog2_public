@@ -7,7 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 03 Dec 2021 11:10:28 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Dec 2021 11:21:29 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; Primer——CH18 用于大型工程的工具——命名空间</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE9%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/</link>
+      <pubDate>Fri, 03 Dec 2021 11:21:29 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE9%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/</guid>
+      <description>命名空间 大型程序往往使用多个独立开发的库，这些库又会定义大量全局名字，如类、函数、模板。当应用程序使用到多个供应商提供的库时，不可避免会发生某些名字的冲突。多个库名字放置在全局命名空间中会引发命名空间污染。
+命名空间提供了防止污染的可控机制。命名空间分隔了全局命名空间，每个命名空间是一个作用域。通过某个命名空间定义库名，可以避免全局名字固有的限制。
+定义命名空间 命名空间既可以定义在全局作用域中，也可以定义在其他命名空间中，但不能定义在函数或类的内部。
+每个命名空间都是一个作用域
+位于该命名空间之外的代码必须明确指出所用的名字属于哪个命名空间。
+命名空间可以是不连续的
+namespace nsp { //相关声明 } 可能定义了一个新命名空间，可以能为已存在的命名空间添加一些新成员。
+因此我们可以将几个独立的接口和实现文件组成一个命名空间。其组织方式类似于我们管理自定义类及函数的方式：
+ 命名空间中是定义类、声明作为类接口的函数及对象的部分，放置于头文件中，然后将这些头文件包含在使用了这些成员的文件中 命名空间成员的定义部分则置于另外的源文件中  程序中某些实体只能定义一次，如内联函数、变量等。命名空间中的定义也要满足这一要求。即接口与实现分离的机制。
+另外，我们不把#include放在命名空间内部。这样做的隐含意思是把头文件中所有名字定义成该命名空间的成员，这很有可能导致错误，例如可能将std命名空间嵌套在自己的命名空间内。
+定义命名空间成员
+命名空间中的名字可以直接使用名字，此时无需前缀。
+另外也可以将命名空间的外部定义该命名空间的成员，需要有完整的前缀。命名空间对于名字的声明必须在作用域内，同时改名字的定义需要明确指出其所属的命名空间。
+namespace cpp_primer { std::istream&amp;amp; operator&amp;gt;&amp;gt;(std::istream&amp;amp; in, Sales_data&amp;amp; s) {} } 模板特例化
+模板特例化必须定义在原始模板所属的命名空间中。只要我们在命名空间中声明了特例化，就能在命名空间外部定义它：
+namespace std { template &amp;lt;&amp;gt; struct hash&amp;lt;Sales_data&amp;gt;; } template &amp;lt;&amp;gt; struct std::hash&amp;lt;Sales_data&amp;gt; { .... } 全局命名空间
+全局作用域中定义的名字即定义在全局命名空间中。全局命名空间以隐式的方式声明，并且在所有程序中都存在。全局作用域中定义的名字被隐式地添加到全局命名空间中。
+作用域运算符同样可以用于全局作用域成员：(因为其是隐式地，所以没有名字)
+::nember_name 内联命名空间
+C++ 11引入的新的嵌套命名空间，称为内联命名空间。内联命名空间中的名字可以被外层命名空间直接使用。即无需在内联命名空间的名字前添加表示该命名空间的前缀。
+inline namespace FifthEd { } namespace FifthEd { ... } 关键字inline必须出现在命名空间第一次定义的地方，后续再打开时可以不写inline。
+当应用程序的代码在一次发布和另一次发布之间发生了改变时，常常用到内联命名空间。我们可以将当前版本的所有代码都放在一个内联命名空间中，把之前版本的代码都放在一个非内联命名空间中。这样在使用时，使用当前版本的成员的代码无需加前缀，如需使用之前版本的代码，则需加上完整的外层命名空间名字。</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; Primer——CH15 面向对象程序设计</title>
       <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</link>
