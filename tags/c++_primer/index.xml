@@ -7,7 +7,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 18 Nov 2021 09:20:28 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++_primer/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 03 Dec 2021 11:10:28 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++_primer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C&#43;&#43; Primer——CH15 面向对象程序设计</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Fri, 03 Dec 2021 11:10:28 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</guid>
+      <description>面向对象程序设计基于三个基本概念：数据抽象、继承和动态绑定。
+本章介绍剩余的继承和动态绑定。通过这两种特性我们可以更容易地定义与其他类相似但不完全相同的新类；另外在使用这些彼此相似的类编写函数时。我们可以在一定程度上忽略掉它们的区别。
+OOP：概述 继承 通过继承联系在一起的类构成了一种层次关系。通常在层次关系的根部有一个基类，其他类别从基类继承而来，这些继承而来的类称为派生类。基类负责定义所有类共同拥有的成员，而每个派生类定义各自特有的成员。
+对于某些函数，基类希望它的派生类各自定义适合自己的版本，此时基类就将这些函数声明成虚函数：
+class Quote { public: std::string isbn() const; virtual double net_price(std::size_t n)	const; }; 派生类必须通过使用类派生列表明确指出它是从哪个基类继承而来的。
+类派生列表的形式：首先是一个冒号，后面紧跟以逗号分隔的基类列表，每个基类列表前面可以有访问说明符：
+class Bulk_quote : public Quote { public: double net_price(std::size_t n)	const override; } 完全可以把Bulk_quote的对象当作Quote的对象来使用。
+派生类必须在其内部对所有重新定义的虚函数进行声明。C++11 允许派生类显式地注明它将使用哪个成员函数改写基类的虚函数，方法是在该函数的形参列表之后增加一个override关键字。
+动态绑定 又称为运行时绑定，根据运行时传入的实参选择函数的版本。通过动态绑定，我们可以用同一段代码分别处理Quote和Bulk_quote的对象。
+定义基类和派生类 定义基类 继承关系中的根节点的类通常会定义一个虚析构函数。
+对于一些操作，派生类需要提供自己的新定义以覆盖（override）从基类继承而来的就定义。需要覆盖的函数，基类通常将其定义为虚函数。
+成员函数如果没有被声明为虚函数，则其解析过程发生在编译时而非运行时。
+任何构造函数之外的非静态函数都可以是虚函数。virtual只能出现在类内部的声明语句。
+访问控制与继承
+一般情况下派生类可以继承定义在基类中的成员，但派生类的成员函数没有权限访问从基类继承而来的成员，派生类只能访问公有成员，不能访问私有成员。而有一种成员，基类希望它的派生类有权限访问该成员，同时禁止其他用户访问，我们使用受保护的（protected）访问运算符说明该成员。
+定义派生类 派生类必须通过使用类派生列表明确指出从哪个（哪些）基类继承而来的。
+类派生列表的形式：冒号后紧跟以逗号分隔的基类列表，每个基类前面可以有三个访问说明符中的一个：public、protected或private。
+class Bulk_quote : public Quote {	//Bulk_quote继承自Quote  }; 访问说明符的作用是控制派生类从基类继承而来的成员是否对派生类的用户可见。
+如果一个派生是公有的，则基类的公有成员也是派生类接口的组成部分；此外还能将公有派生类型的对象绑定到基类的引用或指针上。
+Quote item;	//基类对象 Bulk_quote bulk;	//派生类对象 Quote *p = &amp;amp;item;	//p指向Quote对象 p = &amp;amp;bulk;	//p指向bulk的Quote部分 Quote &amp;amp;r = bulk;	//r绑定到bulk的Quote部分 派生类可以在它覆盖的函数前使用virtual关键字，但不是非得这样做。</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43; Primer——CH12 动态内存</title>
       <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>
