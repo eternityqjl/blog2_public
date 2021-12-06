@@ -6,9 +6,78 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Mon, 06 Dec 2021 14:26:53 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Dec 2021 20:37:41 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>第一次使用LaTex——问题整理</title>
+        <link>https://eternityqjl.top/posts/latex-problems1/</link>
+        <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/latex-problems1/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/latex-problems1/ -&lt;h2 id=&#34;0前言&#34;&gt;0.前言&lt;/h2&gt;
+&lt;p&gt;第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。&lt;/p&gt;
+&lt;p&gt;这是第一次实验报告导出的&lt;a href=&#34;http://blog.eternityqjl.top/SS_test1.pdf&#34;&gt;pdf文档&lt;/a&gt;封面展示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1_cover.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;这是&lt;a href=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1.tex&#34;&gt;tex源代码&lt;/a&gt;。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;章节标题的特殊符号&#34;&gt;章节标题的特殊符号&lt;/h2&gt;
+&lt;p&gt;当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令&lt;code&gt;\texorpdfstring{}{}&lt;/code&gt;分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号&lt;code&gt;{}&lt;/code&gt;中填写tex文档代码，第二个括号&lt;code&gt;{}&lt;/code&gt;填写文本形式的书签，如下所示：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;%1.1
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[第3题（1）]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;第3题（1）求&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;e^{&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t}u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;x1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;，
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;cos&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)[&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)]&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;x2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;的卷积积分
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;y_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)*&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;y1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;。 &lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;代码段的设置&#34;&gt;代码段的设置&lt;/h2&gt;
+&lt;p&gt;在文章中添加代码段需要用到&lt;code&gt;listings&lt;/code&gt;宏包，代码段的基本设置参数如下所示：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf&#34;&gt;listings宏包文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lstset&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;
+language=Matlab,
+escapeinside=``, 
+numbers=left,
+numberstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\tiny&lt;/span&gt;,
+breaklines=true, 
+backgroundcolor=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;lightgray!40!white&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;,
+frame=single,
+framerule=0pt,
+extendedchars=false, 
+keywordstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;blue!70&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\bfseries&lt;/span&gt;, 
+basicstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily&lt;/span&gt;,
+commentstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;green!40!black&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;, 
+showstringspaces=false&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同时，设置代码段颜色高亮时需要用到&lt;code&gt;xcolor&lt;/code&gt;宏包。&lt;/p&gt;
+&lt;p&gt;注意以下几点问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;代码段中最好不要出现中文，如果必须要使用中文，需要用逃逸字符` `将中文包括起来，如上面的基本参数中的escapeinside=` ` 所示。&lt;/li&gt;
+&lt;li&gt;如果代码段中出现tex语言的特殊符号，需要使用转义字符&lt;code&gt;\&lt;/code&gt;，如&lt;code&gt;#&lt;/code&gt;就需要转换为&lt;code&gt;\#&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果想要改变代码段中的字体，需要用到&lt;code&gt;fontspec&lt;/code&gt;宏包，这个宏包需要用&lt;code&gt;XeLaTex&lt;/code&gt;或&lt;code&gt;LuaLaTex&lt;/code&gt;进行编译，由于我的实验报告封面使用的有些元素在使用这两者编译时无法识别，我这次就没使用，下次写实验报告一定仔细研究一下，实现这个功能。&lt;/p&gt;
+&lt;h2 id=&#34;数学公式中的align&#34;&gt;数学公式中的align&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;参考：&lt;a href=&#34;https://tex.stackexchange.com/questions/372384/erroneous-nesting-of-equation-structures-message-i-cant-see-whats-wrong&#34;&gt;“Erroneous nesting of equation structures” message- I can&amp;rsquo;t see what&amp;rsquo;s wrong?&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;数学公式中需要写等号对齐的公式段是不需要写&lt;code&gt;$$...$$&lt;/code&gt;或者&lt;code&gt;begin{equation}...end{equation}&lt;/code&gt;，直接将公式写在&lt;code&gt;begin{align}...end{align}&lt;/code&gt;的中间即可，如下所示：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+y&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;2[n]
+&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=x&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;3[n]*x&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;4[n] &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=((-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;n u[n-1])*((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k u[k-1]((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k ((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+	0, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;n&amp;lt;0 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k (-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1], &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;0 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\leq&lt;/span&gt; n &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\leq&lt;/span&gt; 2 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k ((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]),&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;n&amp;gt;2
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/equationSample.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+- https://eternityqjl.top/posts/latex-problems1/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1144,82 +1213,6 @@ git checkout master
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>抽象数据类型</title>
-        <link>https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
-        <pubDate>Tue, 24 Sep 2019 21:33:07 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/ -&lt;h2 id=&#34;一抽象数据类型的实现&#34;&gt;一、抽象数据类型的实现&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//数据类型的实现
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Counter&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#888&#34;&gt;//实例变量
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;final&lt;/span&gt; String name&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#888&#34;&gt;//构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;Counter&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;String id&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; name &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; id&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#888&#34;&gt;//实例方法
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;tally&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; count&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; String &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;toString&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt;
-    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; count &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; name&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-
-
-&lt;span style=&#34;color:#888&#34;&gt;//测试该数据类型的用例
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;String&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; args&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color:#888&#34;&gt;//创建并初始化对象
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    Counter heads &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Counter&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;heads&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    Counter tails &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Counter&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;tails&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    
-    &lt;span style=&#34;color:#888&#34;&gt;//调用实例方法
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;incerment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
-    heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
-    tails&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;increment&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;();&lt;/span&gt;
-    
-    StdOut&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;heads &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; tails&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
-    StdOut&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;println&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;heads&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;tally&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; tails&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;tally&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;()&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;;)&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;相关概念&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;实例变量：
-&lt;ul&gt;
-&lt;li&gt;一个实例变量对应了无数的值，因为数据类型的每个实例对象都有有个。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;构造函数：
-&lt;ul&gt;
-&lt;li&gt;构造函数是用来创建一个对象的表示，即来初始化实例变量。&lt;/li&gt;
-&lt;li&gt;它由&lt;strong&gt;可见性修饰符、构造函数名称(即数据类型的名称)、参数变量&lt;/strong&gt;以及初始化实例变量的代码构成。&lt;/li&gt;
-&lt;li&gt;上一条加粗的三个组成了签名，例如&lt;code&gt;public Counter (String id) &lt;/code&gt;即为一个签名。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;实例方法：
-&lt;ul&gt;
-&lt;li&gt;是每个对象的具体行为，即实现数据类型的实例方法。&lt;/li&gt;
-&lt;li&gt;与静态方法的唯一区别是它能够访问并操作实力变量。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;作用域
-&lt;ul&gt;
-&lt;li&gt;参数变量：作用域为整个方法。&lt;/li&gt;
-&lt;li&gt;局部变量：定义后的所有语句(一个花括号内)。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;实例变量&lt;/strong&gt;：整个类。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-- https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/ - 2019-2021 By Jialong</description>
         </item>
     
     
