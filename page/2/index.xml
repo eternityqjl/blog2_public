@@ -6,9 +6,115 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 03 Dec 2021 11:21:29 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Dec 2021 14:26:53 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>算法的时间复杂度和空间复杂度</title>
+        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
+        <pubDate>Fri, 13 Aug 2021 16:15:00 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/ -&lt;p&gt;用来衡量不同算法之间的优劣。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;时间维度：执行当前算法所&lt;strong&gt;消耗的时间&lt;/strong&gt;，用时间复杂度来描述。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul&gt;
+&lt;li&gt;空间维度：执行当前算法需要&lt;strong&gt;占用的内存空间&lt;/strong&gt;，我们通常用空间复杂度来描述。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;时间复杂度&#34;&gt;时间复杂度&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;大O符号表示法&lt;/strong&gt; ，即 T(n) = O(f(n))，这是时间复杂度的公式，f(n)表示&lt;strong&gt;每行代码执行次数之和&lt;/strong&gt;，O表示&lt;strong&gt;正比例关系&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;我们通过以下一个程序举例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i)
+{
+   j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i;
+   j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;假设每行代码的执行时间都一样，我们用&lt;strong&gt;1颗粒时间&lt;/strong&gt;来表示，那么这个例子的第一行耗时是1个颗粒时间，第三行的执行时间是 n个颗粒时间，第四行的执行时间也是 n个颗粒时间，那么总时间就是 1颗粒时间 + n颗粒时间 + n颗粒时间 ，即 (1+2n)个颗粒时间，即： T(n) = (1+2n)*颗粒时间，从这个结果可以看出，这个算法的耗时是随着n的变化而变化，因此，我们可以简化的将这个算法的时间复杂度表示为：T(n) = O(n)&lt;/p&gt;
+&lt;p&gt;大O符号表示法并不是用于来真实代表算法的执行时间的，它是用来表示代码执行时间的增长变化趋势的。&lt;/p&gt;
+&lt;p&gt;如果n无限大的时候，T(n) = time(1+2n)中的常量1就没有意义了，倍数2也意义不大。因此直接简化为T(n) = O(n) 就可以了。&lt;/p&gt;
+&lt;h3 id=&#34;时间复杂度级&#34;&gt;时间复杂度级&lt;/h3&gt;
+&lt;p&gt;常见的时间复杂度级有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;常数阶O(1)&lt;/li&gt;
+&lt;li&gt;对数阶O(logN)&lt;/li&gt;
+&lt;li&gt;线性阶O(n)&lt;/li&gt;
+&lt;li&gt;线性对数阶O(nlogN)&lt;/li&gt;
+&lt;li&gt;平方阶O(n²)&lt;/li&gt;
+&lt;li&gt;立方阶O(n³)&lt;/li&gt;
+&lt;li&gt;K次方阶O(n^k)&lt;/li&gt;
+&lt;li&gt;指数阶(2^n)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;从上向下时间复杂度越来越大，执行效率越来越低。&lt;/p&gt;
+&lt;p&gt;下面来选取一些来举例：&lt;/p&gt;
+&lt;h3 id=&#34;常数阶o1&#34;&gt;常数阶O(1)&lt;/h3&gt;
+&lt;p&gt;无论代码执行了多少行，只要是没有循环等复杂结构，那这个代码的时间复杂度就都是O(1)，如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
+&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i;
+j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; j;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;线性阶on&#34;&gt;线性阶O(n)&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i)
+{
+   j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i;
+   j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;for循环中的代码会执行n遍。&lt;/p&gt;
+&lt;h3 id=&#34;对数阶ologn&#34;&gt;对数阶O(logN)&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;n)
+{
+    i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里可以试着求解以下，假设循环x次后，i就大于n，循环就结束了，即$2^x=n$，那么$x=\log_2n$。即当循环$\log_2n$后代码就结束了，因此时间复杂度为O(logN).&lt;/p&gt;
+&lt;h3 id=&#34;线性对数阶onlongn&#34;&gt;线性对数阶O(nlongN)&lt;/h3&gt;
+&lt;p&gt;将时间复杂度为O(longN)的代码循环n遍就可以得到，将上面的代码稍作修改即可：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; m&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;n; m&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
+{
+    i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;n)
+    {
+        i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;平方阶on2&#34;&gt;平方阶O(n^2)&lt;/h3&gt;
+&lt;p&gt;很容易理解，将两个n次循环嵌套即可得到：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(x&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; x&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
+{
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt;(i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
+    {
+       j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i;
+       j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;立方阶on3k次方阶onk&#34;&gt;立方阶O(n^3)、k次方阶O(n^k)&lt;/h3&gt;
+&lt;p&gt;与平方阶类似，立方阶相当于3层循环。&lt;/p&gt;
+&lt;h2 id=&#34;空间复杂度&#34;&gt;空间复杂度&lt;/h2&gt;
+&lt;p&gt;空间复杂度与时间复杂度相同，实际上也不是用来计算程序实际占用的空间的。&lt;/p&gt;
+&lt;p&gt;空间复杂度是对一个算法在运行过程中临时占用存储空间大小的一个量度，同样反映的是一个趋势，我们用 S(n) 来定义。&lt;/p&gt;
+&lt;p&gt;空间复杂度比较常用的有：O(1)、O(n)、O(n²)，我们下面来看看：&lt;/p&gt;
+&lt;h3 id=&#34;空间复杂度o1&#34;&gt;空间复杂度O(1)&lt;/h3&gt;
+&lt;p&gt;如果算法执行所需要的临时空间不随着某个变量n的大小而变化，即此算法空间复杂度为一个常量，可表示为 O(1)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
+&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i;
+j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; j;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;代码中的 i、j、m 所分配的空间都不随着处理数据量变化，因此它的空间复杂度 S(n) = O(1)&lt;/p&gt;
+&lt;h3 id=&#34;空间复杂度on&#34;&gt;空间复杂度O(n)&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;[]&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;n&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt;
+&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;for&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;1&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt;n&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+   j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+   j&lt;span style=&#34;color:#333&#34;&gt;++;&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第一行new了一个数组，这个数据占用的大小为n，第2-6行虽然有循环，但没有分配新的空间，因此空间复杂度看第一行即可，即S(n)=O(n)。&lt;/p&gt;
+- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -2103,43 +2209,6 @@ w位补码所能表示的值的范围是：$[-2^{w-1},2^{w-1}-1]$，例如长度
 &lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
 &lt;p&gt;部分内容转载自：&lt;a href=&#34;https://zhuanlan.zhihu.com/p/32262127&#34;&gt;知乎-Choris-一口气从零读懂CAN总线&lt;/a&gt;&lt;/p&gt;
 - https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>存储器详解</title>
-        <link>https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
-        <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/ -&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
-&lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
-&lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
-&lt;h3 id=&#34;动态随机存取存储器dram&#34;&gt;动态随机存取存储器（DRAM）&lt;/h3&gt;
-&lt;p&gt;Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong&gt;存储电荷的多寡&lt;/strong&gt;来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong&gt;定时刷新&lt;/strong&gt;的特性，因此被称为“动态”存储器。&lt;/p&gt;
-&lt;h3 id=&#34;静态随机存取存储器sram&#34;&gt;静态随机存取存储器（SRAM）&lt;/h3&gt;
-&lt;p&gt;Static Random Access Memory，所谓的“静态”，是指这种存储器只要保持通电，里面储存的数据就可以恒常保持。相对之下，动态随机存取存储器（DRAM）里面所储存的数据就需要周期性地更新。然而，当电力供应停止时，SRAM储存的数据还是会消失。&lt;/p&gt;
-&lt;p&gt;SRAM由存储矩阵、地址译码器和读/写控制电路组成，容量的扩展有两个方面：位数的扩展用芯片的并联，字数的扩展可用外加译码器控制芯片的片选输入端[2]。SRAM中的每一bit储存在由4个场效应管（M1, M2, M3, M4）构成两个交叉耦合的反相器中。另外两个场效应管（M5, M6）是储存基本单元到用于读写的位线（Bit Line）的控制开关。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SRAM_Cell_(6_Transistors).svg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;非易失性存储器主要为只读存储器rom&#34;&gt;非易失性存储器（主要为只读存储器，ROM）&lt;/h2&gt;
-&lt;p&gt;Read-Only Memory，一旦存储资料就无法再将之改变或删除，且内容不会因为电源关闭而消失。&lt;/p&gt;
-&lt;h3 id=&#34;可编程式只读存储器prom&#34;&gt;可编程式只读存储器（PROM）&lt;/h3&gt;
-&lt;p&gt;Programmable read-only memory，每个比特都由熔丝或反熔丝的状态决定资料内容。这种存储器用作永久存放程序之用。常用于电子游戏机、电子词典等预存固定资料或程序的各式电子产品之上。PROM与狭义的ROM（Mask ROM）的差别在于前者可在IC制造完成后才依需要写入资料，后者的资料需在制造IC时一并制作在里面。&lt;/p&gt;
-&lt;p&gt;一个典型的PROM一开始时每个比特都会是1，编程中如将该比特的熔丝（fuse）烧断则成为0，这一过程是不可逆的（即刻录后不能再改变），断电后也不会消失记忆，所以这种存储器是一种只读存储器。&lt;/p&gt;
-&lt;h3 id=&#34;可擦除可编程式只读存储器eprom&#34;&gt;可擦除可编程式只读存储器（EPROM）&lt;/h3&gt;
-&lt;p&gt;Erasable Programmable Read Only Memory，它是一组浮栅晶体管，被一个提供比电子电路中常用电压更高电压的电子器件分别编程。一旦编程完成后，EPROM只能用强紫外线照射来擦除。通过封装顶部能看见硅片的透明窗口，很容易识别EPROM，这个窗口同时用来进行紫外线擦除。&lt;/p&gt;
-&lt;h3 id=&#34;电子抹除式可复写只读存储器eeprom&#34;&gt;电子抹除式可复写只读存储器（EEPROM）&lt;/h3&gt;
-&lt;p&gt;Electrically-Erasable Programmable Read-Only Memory，是一种可以通过电子方式多次复写的半导体存储设备。相比EPROM， EEPROM 不需要用紫外线照射，也不需取下，就可以用特定的电压，来抹除芯片上的信息，以便写入新的数据， EEPROM 属于SPD（串行存在检测）技术的一种延伸。&lt;/p&gt;
-&lt;p&gt;在民用的DDR SDRAM及其主流后续产品中，一般 EEPROM 主要用于保存内存的开发者信息、生产时间、内存信息、通信协议、既定内存频率、供电电压、供电电流、物理信息以及内存XMP等信息，并且电脑会在开机自检（Power-On Self-Test；POST）时会读取这些信息以保持电脑的正常开机。&lt;/p&gt;
-&lt;h3 id=&#34;闪存flash-memory&#34;&gt;闪存（Flash Memory）&lt;/h3&gt;
-&lt;p&gt;闪存是一种特殊的、以宏块抹写的EEPROM。&lt;/p&gt;
-&lt;p&gt;NOR和NAND两种类型&lt;/p&gt;
-&lt;h4 id=&#34;nand-flash&#34;&gt;NAND Flash&lt;/h4&gt;
-&lt;p&gt;SLC(单阶存储单元)、MLC(多阶存储单元，一般指2)、TLC(三阶存储单元)、QLC&lt;/p&gt;
-&lt;p&gt;现在消费级产品都是TLC&lt;/p&gt;
-&lt;h4 id=&#34;移动端使用的闪存协议变化&#34;&gt;移动端使用的闪存协议变化&lt;/h4&gt;
-&lt;p&gt;eMMC-UFS&lt;/p&gt;- https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/ - 2019-2021 By Jialong</description>
         </item>
     
     

@@ -6,9 +6,226 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 03 Dec 2021 11:21:29 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Dec 2021 14:26:53 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>信号与系统学习笔记——Chapter01 信号与系统</title>
+        <link>https://eternityqjl.top/posts/signalsystem-ch01/</link>
+        <pubDate>Sat, 14 Mar 2020 13:59:44 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/signalsystem-ch01/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/signalsystem-ch01/ -&lt;h2 id=&#34;13-指数信号与正弦信号&#34;&gt;1.3 指数信号与正弦信号&lt;/h2&gt;
+&lt;h3 id=&#34;131-连续时间复指数信号与正弦信号&#34;&gt;1.3.1 连续时间复指数信号与正弦信号&lt;/h3&gt;
+&lt;p&gt;连续时间复指数信号有如下形式：
+$$
+x(t)=Ce^{at}
+$$&lt;/p&gt;
+&lt;h4 id=&#34;实指数信号&#34;&gt;实指数信号&lt;/h4&gt;
+&lt;p&gt;上式中的$C$和$a$都为实数的信号。&lt;/p&gt;
+&lt;h4 id=&#34;周期复指数信号和正弦信号&#34;&gt;周期复指数信号和正弦信号&lt;/h4&gt;
+&lt;p&gt;第二种重要的信号为将上式$a$限制为纯虚数的信号（&lt;strong&gt;复指数信号&lt;/strong&gt;）：
+$$
+x(t)=e^{jw_0t}
+$$
+当基波周期$T_0 = \left| \frac {2\pi} {w_0} \right|$时，该信号是周期信号。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;与该信号相关的另一种信号是&lt;strong&gt;正弦信号&lt;/strong&gt;：
+$$
+x(t)=A\cos(w_0t+\phi)
+$$
+利用&lt;strong&gt;欧拉公式&lt;/strong&gt;，可以将复指数信号用与其相同几波周期的正弦信号来表示：
+$$
+e^{jw_0t}=\cos w_0t + j\sin w_0t
+$$
+$w_0$称为基波频率。&lt;/p&gt;
+&lt;p&gt;上述复指数信号和正弦信号都是&lt;strong&gt;具有无限能量&lt;/strong&gt;但&lt;strong&gt;有有限平均功率&lt;/strong&gt;的信号。&lt;/p&gt;
+&lt;p&gt;计算证明：
+$$
+E_{period}=\int_{o}^{T_0} \left| e^{jw_0t} \right|^2 \mathrm{d}t = \int_{o}^{T_0} 1 \cdot \mathrm{d}t = T_0  \
+P_{period}= \frac {1}{T_0} E_{period}=1
+$$&lt;/p&gt;
+&lt;h4 id=&#34;一般复指数信号&#34;&gt;一般复指数信号&lt;/h4&gt;
+&lt;p&gt;一复指数信号$Ce^{at}$，将复数$C$和$a$分别用指数式（极坐标）和代数式（笛卡尔坐标）表示：
+$$
+C = \left| C \right| e^{j \theta} \
+a = r + j\omega_0
+$$
+代入得：
+$$
+\begin{align}
+Ce^{at} 
+&amp;amp; = \left| C \right| e^{j\theta} e^{(r+jw_0)t}  \
+&amp;amp; = \left| C \right| e^{rt} e^{j(w_0t+\theta)}  \
+&amp;amp; = \left| C \right| e^{rt} \cos(w_0t+\theta) + j\left| C \right| e^{rt} \sin(w_0t+\theta)
+\end{align}
+$$
+若$r=0$，则复指数信号的实部和虚部都是&lt;strong&gt;正弦&lt;/strong&gt;；若$r&amp;gt;0$，则实部和虚部是一个&lt;strong&gt;呈指数增长&lt;/strong&gt;的正弦信号；若$r&amp;lt;0$，则二者都是一个&lt;strong&gt;呈指数衰减&lt;/strong&gt;的正弦信号，该信号被称为阻尼正弦震荡。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/increasingSineSignal.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;132-离散时间复指数信号与正弦信号&#34;&gt;1.3.2 离散时间复指数信号与正弦信号&lt;/h3&gt;
+&lt;p&gt;一种重要的离散时间信号是&lt;strong&gt;复指数信号&lt;/strong&gt;或&lt;strong&gt;序列&lt;/strong&gt;，定义为：
+$$
+x[n]=C\alpha ^n
+$$
+其中的$C$和$\alpha$一般为复数，若另$\alpha = e^{\beta}$，则有另外一种表达方式：
+$$
+x[n]=C e^{\beta n}
+$$
+从形式上看第二个式子与前面的连续时间复指数信号更相似，但在离散时间的情况下，第一种更为方便使用。&lt;/p&gt;
+&lt;h4 id=&#34;实指数信号-1&#34;&gt;实指数信号&lt;/h4&gt;
+&lt;p&gt;$C$和$\alpha$都为实数，有以下特性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若$\left| \alpha \right| &amp;gt; 1$，信号随n指数增长，若$\left| \alpha \right| &amp;lt; 1$，信号随n指数衰减。&lt;/li&gt;
+&lt;li&gt;$\left| \alpha \right|$为正值时，信号的所有值都为整数，$\left| \alpha \right|$为负值时，信号的符号在正负之间交替变化。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;正弦信号&#34;&gt;正弦信号&lt;/h4&gt;
+&lt;h4 id=&#34;一般复指数信号-1&#34;&gt;一般复指数信号&lt;/h4&gt;
+&lt;h3 id=&#34;133-离散时间复指数序列的周期性质&#34;&gt;1.3.3 离散时间复指数序列的周期性质&lt;/h3&gt;
+&lt;p&gt;这里讨论的关于离散时间复指数序列的性质都是相对于连续时间信号的不同之处。&lt;/p&gt;
+&lt;h4 id=&#34;频率性质&#34;&gt;频率性质&lt;/h4&gt;
+&lt;p&gt;对于频率为$w_0+2\pi$的离散时间复指数信号：
+$$
+e^{j(w_0+2\pi)n} = e^{j2\pi n}+e^{jw_0 n} = e^{jw_0 n}
+$$
+上式表明，频率为$w_0+2\pi$的离散时间复指数信号与频率为$w_0$的信号完全相同。所以离散时间复指数信号的频率只需要在一个$2\pi$间隔内选择，一般在$0\leqslant w_0 \leqslant 2\pi$或$-\pi \leqslant w_0 \leqslant \pi$中选择。&lt;/p&gt;
+&lt;p&gt;离散时间复指数信号的低频部分（变化慢的地方）位于$w_0$在0，$2\pi$及其他$\pi$的偶数倍值附近；高频部分位于$w_0$在$\pm \pi$及其他$\pi$的奇数倍附近。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/discreteTimeSignal.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h4 id=&#34;周期性质&#34;&gt;周期性质&lt;/h4&gt;
+&lt;p&gt;为了使得信号$e^{jw_0n}$是周期的，必须有：
+$$
+e^{jw_0(n+N)} = e^{jw_0n}
+$$
+这等效于：
+$$
+e^{jw_0N} = 1 \Leftrightarrow w_0N = 2\pi m \Leftrightarrow \frac{w_0}{2\pi} = \frac{m}{N}
+$$
+$m$为整数。同时，若$\frac{w_0}{2\pi}$是一个有理数，该信号就是周期的，否则就不是周期的。上式如果$N$和$m$没有公因子，那么$N$九尾基波周期。&lt;/p&gt;
+&lt;h4 id=&#34;连续时间和离散时间信号的比较&#34;&gt;连续时间和离散时间信号的比较&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/compare_discrete%2526continus.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;14-单位冲激与单位阶跃函数&#34;&gt;1.4 单位冲激与单位阶跃函数&lt;/h2&gt;
+&lt;h3 id=&#34;141-离散时间单位脉冲和单位阶跃序列&#34;&gt;1.4.1 离散时间单位脉冲和单位阶跃序列&lt;/h3&gt;
+&lt;p&gt;最简单的离散时间信号之一就是&lt;strong&gt;单位脉冲&lt;/strong&gt;（或&lt;strong&gt;单位样本&lt;/strong&gt;），定义为：
+$$
+\delta[n] = 
+\begin{cases}
+0, \quad n \ne 0  \
+1, \quad n = 0
+\end{cases}
+$$
+另一个基本离散时间信号为&lt;strong&gt;单位阶跃&lt;/strong&gt;，定义为：
+$$
+u[n] =
+\begin{cases}
+0, \quad n &amp;lt; 0  \
+1, \quad n \geqslant 0
+\end{cases}
+$$
+以上两个离散时间信号存在着密切的关系：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;单位脉冲是单位阶跃的&lt;strong&gt;一次差分&lt;/strong&gt;，即$\delta[n] = u[n] - u[n-1]$&lt;/li&gt;
+&lt;li&gt;离散时间阶跃是单位样本的&lt;strong&gt;求和函数&lt;/strong&gt;：$u[n] = \sum_{m = - \infty}^{n} \delta[m]$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;142-连续时间单位阶跃和单位冲激函数&#34;&gt;1.4.2 连续时间单位阶跃和单位冲激函数&lt;/h3&gt;
+&lt;p&gt;连续时间&lt;strong&gt;单位阶跃函数&lt;/strong&gt;定义为：
+$$
+u(t)=
+\begin{cases}
+0, \quad t&amp;lt;0 \
+1, \quad t&amp;gt;0
+\end{cases}
+$$
+单位阶跃在$t=0$这一单处不连续。&lt;/p&gt;
+&lt;p&gt;连续时间单位阶跃是连续时间单位冲激的&lt;strong&gt;积分函数&lt;/strong&gt;：
+$$
+u(t) = \int_{-\infty}^{t} \delta(\tau) \mathrm{d}\tau
+$$
+同时可以看出，连续时间单位冲激可以看成连续时间单位阶跃的&lt;strong&gt;一次微分&lt;/strong&gt;：
+$$
+\delta(t) = \frac{\mathrm{d}u(t)}{\mathrm{d}t}
+$$
+严格来说$u(t)$是不可微的，可以把上式近似为一个在较短时间$\Delta$内完成&lt;/p&gt;
+&lt;h2 id=&#34;15-连续时间和离散时间系统&#34;&gt;1.5 连续时间和离散时间系统&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;连续时间系统：$x(t) \rightarrow y(t)$&lt;/li&gt;
+&lt;li&gt;离散时间系统：$x[n] \rightarrow y[n]$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们的任务是要鉴别一类系统，透彻地了解一类系统的行为，在很多的实践中重要的系统都通过这一类系统来建模。本书重点关注的线性时不变系统这一特殊类别的系统就属于上述分类特性的一类。&lt;/p&gt;
+&lt;h3 id=&#34;151-系统的互联&#34;&gt;1.5.1 系统的互联&lt;/h3&gt;
+&lt;h4 id=&#34;串联级联&#34;&gt;串联（级联）&lt;/h4&gt;
+&lt;p&gt;eg：音频系统：无线电接收机$\rightarrow$唱片播放器$\rightarrow$扬声器&lt;/p&gt;
+&lt;h4 id=&#34;并联&#34;&gt;并联&lt;/h4&gt;
+&lt;h4 id=&#34;反馈互联&#34;&gt;反馈互联&lt;/h4&gt;
+&lt;p&gt;eg：数字控制的一架飞机&lt;/p&gt;
+&lt;h3 id=&#34;152-基本系统性质&#34;&gt;1.5.2 基本系统性质&lt;/h3&gt;
+&lt;h4 id=&#34;记忆系统和无记忆系统&#34;&gt;记忆系统和无记忆系统&lt;/h4&gt;
+&lt;p&gt;如果对自变量的每一个值，一个系统的输出仅仅取决于&lt;strong&gt;该时刻的输入&lt;/strong&gt;，这个系统就称为&lt;strong&gt;无记忆&lt;/strong&gt;系统。例如，如下的表达式：
+$$
+y[n]=(2x[n]-x^2[n])^2
+$$
+是一个无记忆系统，任何特定时刻$n_0$的输出$y[n]$只取决于该时刻的输入$x[n]$。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;恒等系统&lt;/strong&gt;（即输出等于输入）是一种最简单的无记忆系统。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;离散时间记忆系统&lt;/strong&gt;的一个例子就是&lt;strong&gt;累加器&lt;/strong&gt;：
+$$
+y[n]=\sum_{k=-\infty}^{n} x[k]
+$$
+第二个离散时间记忆系统的例子是一个&lt;strong&gt;延迟单元&lt;/strong&gt;：
+$$
+y[n] = x[n - 1]
+$$
+一个&lt;strong&gt;连续时间记忆系统&lt;/strong&gt;的例子是&lt;strong&gt;一个电容器&lt;/strong&gt;，将电流作为输入，电压作为输出，那么有：
+$$
+y(t)= \frac{1}{C} \int_{-\infty}^{t} x(\tau) \mathrm{d} \tau
+$$
+其中的$C$为电容值。&lt;/p&gt;
+&lt;p&gt;一个系统中记忆的概念相应于该系统具有&lt;strong&gt;保留或储存不是当前时刻输入信息的功能&lt;/strong&gt;，在许多实际系统中，记忆是直接与能量储存相关联的。&lt;/p&gt;
+&lt;h4 id=&#34;可逆性与可逆系统&#34;&gt;可逆性与可逆系统&lt;/h4&gt;
+&lt;p&gt;一个系统如果在不同输入下导致不同输出，就称该系统是&lt;strong&gt;可逆的&lt;/strong&gt;。一个系统可逆则一定有一个&lt;strong&gt;逆系统&lt;/strong&gt;存在，逆系统与原系统&lt;strong&gt;级联&lt;/strong&gt;后，会产生一个输出$w[n]$等于一个系统的输入$x[n]$。&lt;/p&gt;
+&lt;p&gt;可逆连续时间系统的一个例子：
+$$
+y(t)=2x(t)
+$$
+该可逆系统的逆系统为：
+$$
+w(t)=\frac{1}{2}y(t)
+$$
+一个&lt;strong&gt;不可逆&lt;/strong&gt;系统的例子如下：
+$$
+y[n]=0
+$$
+该系统对任何输入序列产生的都是零输出序列。&lt;/p&gt;
+&lt;p&gt;另外一个例子：
+$$
+y(t)=x^2(t)
+$$
+这种情况无法根据输出确定输入的正负。&lt;/p&gt;
+&lt;h4 id=&#34;因果性&#34;&gt;因果性&lt;/h4&gt;
+&lt;p&gt;如果一个系统&lt;strong&gt;在任何时刻的输出&lt;/strong&gt;只取决于&lt;strong&gt;现在的输入以及过去的输入&lt;/strong&gt;，该系统就称为&lt;strong&gt;因果系统&lt;/strong&gt;。这样的系统也被称为&lt;strong&gt;不可预测系统&lt;/strong&gt;，系统的输出值无法预测未来的输入值。&lt;/p&gt;
+&lt;p&gt;所有的无记忆系统都是因果的，因为输出仅仅对当前输入值作出响应。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;检验系统的因果性时要仔细看系统的输入——输出关系，举两个特殊例子：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$y[n]=x[-n]$，该系统当输入时间为负值是，输出就与输入的将来值有关，所以该系统不是因果系统。所以检验时要仔细检验在&lt;strong&gt;全部时间&lt;/strong&gt;上的输入——输出关系。&lt;/li&gt;
+&lt;li&gt;$y(t)=x(t)\cos(t+1)$，检验因果性时要&lt;strong&gt;把输入信号的影响仔细地与系统定义中的其他函数的影响分开&lt;/strong&gt;，该系统的输出等于同一时刻的输入乘以一个随时间变化的数，所以可以写作$y(t)=x(t)g(t)$，是因果的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;稳定性&#34;&gt;稳定性&lt;/h4&gt;
+&lt;p&gt;一个&lt;strong&gt;稳定系统&lt;/strong&gt;在小的输入下的响应不会&lt;strong&gt;发散&lt;/strong&gt;，这是稳定性的最直观理解。&lt;/p&gt;
+&lt;h4 id=&#34;时不变性&#34;&gt;时不变性&lt;/h4&gt;
+&lt;p&gt;系统的特性和行为不随时间而变，该系统就是时不变的。即如果在一个输入信号上有一个时移，在输出信号中产生同样的时移，那么这个系统就是时不变的。&lt;/p&gt;
+&lt;p&gt;具体而言，若$y[n]$是离散时间时不变系统在输入为$x[n]$是的输出，当输入为$x[x-x_0]$时，输出为为$y[x-x_0]$，连续时间情况也是相同的道理。&lt;/p&gt;
+&lt;h4 id=&#34;线性&#34;&gt;线性&lt;/h4&gt;
+&lt;p&gt;如果某个输入信号是由几个信号的&lt;strong&gt;加权和&lt;/strong&gt;组成，那么输出也就是系统对这组信号中每一个响应的加权和。&lt;/p&gt;
+&lt;p&gt;令$y_1(t)$是一个连续时间系统对输入$x_1(t)$的响应，$y_2(t)$是对输入$x_2(t)$的一个输出，那么一个线性系统就应该有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$y_1(t)+y_2(t)$是对$x_1(t)+x_2(t)$的响应&lt;/li&gt;
+&lt;li&gt;$ay_1(t)$是对$ax_1(t)$的响应，$a$为任意常数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上两个性质称为&lt;strong&gt;可加性&lt;/strong&gt;和&lt;strong&gt;齐次性&lt;/strong&gt;。&lt;/p&gt;
+- https://eternityqjl.top/posts/signalsystem-ch01/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1003,95 +1220,6 @@ git checkout master
 &lt;/li&gt;
 &lt;/ul&gt;
 - https://eternityqjl.top/posts/%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>测试GitBook格式</title>
-        <link>https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</link>
-        <pubDate>Fri, 20 Sep 2019 21:43:41 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/ -&lt;h1 id=&#34;flightmuseum-gitbook&#34;&gt;FlightMuseum-GitBook&lt;/h1&gt;
-&lt;h2 id=&#34;目录层级&#34;&gt;目录层级&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Preface&lt;/li&gt;
-&lt;li&gt;Airbus
-&lt;ul&gt;
-&lt;li&gt;A320
-&lt;ul&gt;
-&lt;li&gt;A319&lt;/li&gt;
-&lt;li&gt;A320-200&lt;/li&gt;
-&lt;li&gt;A320-200neo&lt;/li&gt;
-&lt;li&gt;A321&lt;/li&gt;
-&lt;li&gt;&amp;hellip;&amp;hellip;..&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;A330
-&lt;ul&gt;
-&lt;li&gt;A330-200&lt;/li&gt;
-&lt;li&gt;A330-300&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;A350
-&lt;ul&gt;
-&lt;li&gt;A350-900&lt;/li&gt;
-&lt;li&gt;A350-1000&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Boeing
-&lt;ul&gt;
-&lt;li&gt;B737&lt;/li&gt;
-&lt;li&gt;B747&lt;/li&gt;
-&lt;li&gt;B767&lt;/li&gt;
-&lt;li&gt;B777&lt;/li&gt;
-&lt;li&gt;B787
-&lt;ul&gt;
-&lt;li&gt;B787-8 Dreamliner&lt;/li&gt;
-&lt;li&gt;B787-9 Dreamliner&lt;/li&gt;
-&lt;li&gt;B787-10 Dreamliner&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&amp;hellip;&amp;hellip;.&lt;/li&gt;
-&lt;li&gt;Trains
-&lt;ul&gt;
-&lt;li&gt;CR&lt;/li&gt;
-&lt;li&gt;TRA&lt;/li&gt;
-&lt;li&gt;JR&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;一个具体层级的markdown编辑形式&#34;&gt;一个具体层级的Markdown编辑形式&lt;/h2&gt;
-&lt;h3 id=&#34;1cathay-pacific--国泰航空----b-lra&#34;&gt;1.Cathay Pacific | 国泰航空    B-LRA&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://py2kq5jlv.bkt.clouddn.com/DSCF0361.jpg&#34; alt=&#34;国泰航空A350-900&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Serial Number / 生产序列号&lt;/strong&gt;：29&lt;/li&gt;
-&lt;li&gt;**First Flight Date / 首飞日期：**24th. Mar 2016  &lt;strong&gt;/&lt;/strong&gt;  2016年3月24日&lt;/li&gt;
-&lt;li&gt;**Age (Shotted Date) / 机龄(拍摄日期)：**3.3 years as of 27th. Jul 2019  &lt;strong&gt;/&lt;/strong&gt;  3.3年  摄于2019年7月27日&lt;/li&gt;
-&lt;li&gt;**Shotted Place / 拍摄地：**Hong Kong  &lt;strong&gt;/&lt;/strong&gt;  香港&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.cathaypacific.com/cx/sc_CN/travel-information/flying-with-us/aircraft-and-fleet/airbus-a350/900.html&#34;&gt;&lt;strong&gt;Seat Configuration / 座位布局：&lt;/strong&gt;&lt;/a&gt;C38 W28 Y214&lt;/li&gt;
-&lt;li&gt;**Engines / 引擎：**2 x RR Trent XWB&lt;/li&gt;
-&lt;li&gt;Others：-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;2philippines-airlines--菲律宾航空----rp-c3506&#34;&gt;2.Philippines Airlines | 菲律宾航空    RP-C3506&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;http://py2kq5jlv.bkt.clouddn.com/DSCF4874.jpg&#34; alt=&#34;菲律宾航空A350-900&#34;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Serial Number / 生产序列号&lt;/strong&gt;：243&lt;/li&gt;
-&lt;li&gt;**First Flight Date / 首飞日期：**11st. Sep 2018  &lt;strong&gt;/&lt;/strong&gt;  2018年9月11日&lt;/li&gt;
-&lt;li&gt;**Age (Shotted Date) / 机龄(拍摄日期)：**0.8 years as of 9th. Aug 2019  &lt;strong&gt;/&lt;/strong&gt;  0.8年  摄于2019年8月9日&lt;/li&gt;
-&lt;li&gt;**Shotted Place / 拍摄地：**Hong Kong  &lt;strong&gt;/&lt;/strong&gt;  香港&lt;/li&gt;
-&lt;li&gt;**Seat Configuration / 座位布局：**C30 W24 Y241&lt;/li&gt;
-&lt;li&gt;**Engines / 引擎：**2 x RR Trent XWB&lt;/li&gt;
-&lt;li&gt;Others：-&lt;/li&gt;
-&lt;/ul&gt;
-- https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/ - 2019-2021 By Jialong</description>
         </item>
     
     
