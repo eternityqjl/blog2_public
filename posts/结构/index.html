@@ -390,10 +390,10 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 <div class="post-body" v-pre>
                 
                     <p>1.建立结构变量</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">struct</span> book {
-    <span style="color:#339;font-weight:bold">char</span> title[MAXTITL];
-    <span style="color:#339;font-weight:bold">char</span> author[MAXAUTL];
-    <span style="color:#339;font-weight:bold">float</span> value;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">struct</span> book {
+    <span style="color:#458;font-weight:bold">char</span> title[MAXTITL];
+    <span style="color:#458;font-weight:bold">char</span> author[MAXAUTL];
+    <span style="color:#458;font-weight:bold">float</span> value;
 }
 </code></pre></div><ul>
 <li>该结构描述了由两个字符数组和一个float类型变量组成的结构。</li>
@@ -406,16 +406,16 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </li>
 <li>
 <p>所以struct book 相当于过去的int、double等类型。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">struct</span> book {
-    <span style="color:#339;font-weight:bold">char</span> title[MAXTITL];
-    <span style="color:#339;font-weight:bold">char</span> author[MAXAUTL];
-    <span style="color:#339;font-weight:bold">float</span> value;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">struct</span> book {
+    <span style="color:#458;font-weight:bold">char</span> title[MAXTITL];
+    <span style="color:#458;font-weight:bold">char</span> author[MAXAUTL];
+    <span style="color:#458;font-weight:bold">float</span> value;
 } library;
 </code></pre></div><p>该程序为上面声明的完整版。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">struct</span> { <span style="color:#888">//无结构标记
-</span><span style="color:#888"></span>    <span style="color:#339;font-weight:bold">char</span> title[MAXTITL];
-    <span style="color:#339;font-weight:bold">char</span> author[MAXAUTL];
-    <span style="color:#339;font-weight:bold">float</span> value;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">struct</span> { <span style="color:#998;font-style:italic">//无结构标记
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#458;font-weight:bold">char</span> title[MAXTITL];
+    <span style="color:#458;font-weight:bold">char</span> author[MAXAUTL];
+    <span style="color:#458;font-weight:bold">float</span> value;
 } library;
 </code></pre></div><p>声明结构和定义结构可以一步完成，如上所示。</p>
 </li>

@@ -1018,12 +1018,12 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>对于root用户，文件权限不起作用。</p>
 <h3 id="chgrp改变文件属组">chgrp：改变文件属组</h3>
 <p>用法：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chgrp <span style="color:#333">[</span>-R<span style="color:#333">]</span> 属组名 文件名
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chgrp <span style="color:#000;font-weight:bold">[</span>-R<span style="color:#000;font-weight:bold">]</span> 属组名 文件名
 </code></pre></div><p><code>-R</code>：recursion，递归，改变目录下所有文件的属性</p>
 <h3 id="chown更改文件属主也可以同时更改文件属组">chown：更改文件属主，也可以同时更改文件属组</h3>
 <p>用法：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chown <span style="color:#333">[</span>-R<span style="color:#333">]</span> 属主名 文件名
-chown <span style="color:#333">[</span>-r<span style="color:#333">]</span> 属主名:属组名 文件名
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chown <span style="color:#000;font-weight:bold">[</span>-R<span style="color:#000;font-weight:bold">]</span> 属主名 文件名
+chown <span style="color:#000;font-weight:bold">[</span>-r<span style="color:#000;font-weight:bold">]</span> 属主名:属组名 文件名
 </code></pre></div><h3 id="chmod更改文件的9个属性">chmod：更改文件的9个属性</h3>
 <p>9个权限分别为<strong>owner/group/others(拥有者/组/其他)</strong> 三种身份各有自己的 <strong>read/write/execute</strong> 权限。</p>
 <p>第一种方法使用数字来表示，各权限的分数如下：</p>
@@ -1063,8 +1063,8 @@ chown <span style="color:#333">[</span>-r<span style="color:#333">]</span> 属�
 <li>-p：连同上一级的空目录一起删除</li>
 </ul>
 <p>cp（copy file）：复制文件或目录</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp <span style="color:#333">[</span>-adfilprsu<span style="color:#333">]</span> 来源档<span style="color:#333">(</span><span style="color:#007020">source</span><span style="color:#333">)</span> 目标档<span style="color:#333">(</span>destination<span style="color:#333">)</span>
-cp <span style="color:#333">[</span>options<span style="color:#333">]</span> source1 source2 ... directory
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp <span style="color:#000;font-weight:bold">[</span>-adfilprsu<span style="color:#000;font-weight:bold">]</span> 来源档<span style="color:#000;font-weight:bold">(</span><span style="color:#0086b3">source</span><span style="color:#000;font-weight:bold">)</span> 目标档<span style="color:#000;font-weight:bold">(</span>destination<span style="color:#000;font-weight:bold">)</span>
+cp <span style="color:#000;font-weight:bold">[</span>options<span style="color:#000;font-weight:bold">]</span> source1 source2 ... directory
 </code></pre></div><ul>
 <li>-a：相当于-pdr</li>
 <li>-d：若来源档为连结档的属性(link file)，则复制连结档属性而非文件本身</li>
@@ -1082,8 +1082,8 @@ cp <span style="color:#333">[</span>options<span style="color:#333">]</span> sou
 <li>-i：互动模式，删除前会询问</li>
 </ul>
 <p>mv（move file）：移动文件与目录，或修改文件、目录名称</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mv <span style="color:#333">[</span>-fiu<span style="color:#333">]</span> 来源档<span style="color:#333">(</span><span style="color:#007020">source</span><span style="color:#333">)</span> 目标档<span style="color:#333">(</span>destination<span style="color:#333">)</span>
-mv <span style="color:#333">[</span>options<span style="color:#333">]</span> source1 source2 ... directory
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mv <span style="color:#000;font-weight:bold">[</span>-fiu<span style="color:#000;font-weight:bold">]</span> 来源档<span style="color:#000;font-weight:bold">(</span><span style="color:#0086b3">source</span><span style="color:#000;font-weight:bold">)</span> 目标档<span style="color:#000;font-weight:bold">(</span>destination<span style="color:#000;font-weight:bold">)</span>
+mv <span style="color:#000;font-weight:bold">[</span>options<span style="color:#000;font-weight:bold">]</span> source1 source2 ... directory
 </code></pre></div><ul>
 <li>-f：force</li>
 <li>-i：若目标文件 (destination) 已经存在时，就会询问是否覆盖</li>
@@ -1113,11 +1113,11 @@ mv <span style="color:#333">[</span>options<span style="color:#333">]</span> sou
 </li>
 <li>
 <p>head：取出文件前面几行</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">head <span style="color:#333">[</span>-n number<span style="color:#333">]</span> 文件
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">head <span style="color:#000;font-weight:bold">[</span>-n number<span style="color:#000;font-weight:bold">]</span> 文件
 </code></pre></div></li>
 <li>
 <p>tail：取出文件后面几行</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">tail <span style="color:#333">[</span>-n number<span style="color:#333">]</span> 文件
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">tail <span style="color:#000;font-weight:bold">[</span>-n number<span style="color:#000;font-weight:bold">]</span> 文件
 </code></pre></div></li>
 </ul>
 <h2 id="磁盘管理">磁盘管理</h2>

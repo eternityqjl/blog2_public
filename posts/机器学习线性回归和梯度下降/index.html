@@ -997,60 +997,60 @@ $$</p>
 <p>设定好初始值、循环次数、Learning Rate后即可开始拟合，最终得到结果b,m；得到拟合的线性函数。</p>
 <h2 id="代码实现">代码实现</h2>
 <h3 id="使用sklearn库中的make_regression函数生成训练数据">使用<code>sklearn</code>库中的<code>make_regression</code>函数生成训练数据</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888">#generate the train data</span>
-<span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">geneData</span>():
-    points <span style="color:#333">=</span> []
-    xSet, ySet <span style="color:#333">=</span> make_regression(n_samples<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">100</span>, n_features<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>, n_targets<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>, noise<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">20</span>)
-    <span style="color:#080;font-weight:bold">for</span> x,y <span style="color:#000;font-weight:bold">in</span> <span style="color:#007020">zip</span>(xSet,ySet):
-        x<span style="color:#333">=</span>x[<span style="color:#00d;font-weight:bold">0</span>]
-        point <span style="color:#333">=</span> [x,y]
-        points<span style="color:#333">.</span>append(point)
-    <span style="color:#080;font-weight:bold">return</span> points
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#998;font-style:italic">#generate the train data</span>
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">geneData</span>():
+    points <span style="color:#000;font-weight:bold">=</span> []
+    xSet, ySet <span style="color:#000;font-weight:bold">=</span> make_regression(n_samples<span style="color:#000;font-weight:bold">=</span><span style="color:#099">100</span>, n_features<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>, n_targets<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>, noise<span style="color:#000;font-weight:bold">=</span><span style="color:#099">20</span>)
+    <span style="color:#000;font-weight:bold">for</span> x,y <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">zip</span>(xSet,ySet):
+        x<span style="color:#000;font-weight:bold">=</span>x[<span style="color:#099">0</span>]
+        point <span style="color:#000;font-weight:bold">=</span> [x,y]
+        points<span style="color:#000;font-weight:bold">.</span>append(point)
+    <span style="color:#000;font-weight:bold">return</span> points
 </code></pre></div><h3 id="定义代价函数">定义代价函数</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">costFunction</span>(b, m, points):
-    <span style="color:#080;font-weight:bold">for</span> point <span style="color:#000;font-weight:bold">in</span> points:
-        ErrorTotal <span style="color:#333">+=</span> ((b <span style="color:#333">+</span> m<span style="color:#333">*</span>point[<span style="color:#00d;font-weight:bold">0</span>]) <span style="color:#333">-</span> point[<span style="color:#00d;font-weight:bold">1</span>]) <span style="color:#333">**</span> <span style="color:#00d;font-weight:bold">2</span>
-    <span style="color:#080;font-weight:bold">return</span> ErrorTotal <span style="color:#333">/</span> (<span style="color:#00d;font-weight:bold">2</span> <span style="color:#333">*</span> <span style="color:#007020">float</span>(<span style="color:#007020">len</span>(points)))
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">costFunction</span>(b, m, points):
+    <span style="color:#000;font-weight:bold">for</span> point <span style="color:#000;font-weight:bold">in</span> points:
+        ErrorTotal <span style="color:#000;font-weight:bold">+=</span> ((b <span style="color:#000;font-weight:bold">+</span> m<span style="color:#000;font-weight:bold">*</span>point[<span style="color:#099">0</span>]) <span style="color:#000;font-weight:bold">-</span> point[<span style="color:#099">1</span>]) <span style="color:#000;font-weight:bold">**</span> <span style="color:#099">2</span>
+    <span style="color:#000;font-weight:bold">return</span> ErrorTotal <span style="color:#000;font-weight:bold">/</span> (<span style="color:#099">2</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#0086b3">float</span>(<span style="color:#0086b3">len</span>(points)))
 </code></pre></div><h3 id="定义梯度下降函数">定义梯度下降函数</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">stepGradient</span>(b_current, m_current, b_gradient, m_gradient, points, learningRate):
-    N <span style="color:#333">=</span> <span style="color:#007020">float</span>(<span style="color:#007020">len</span>(points))
-    <span style="color:#080;font-weight:bold">for</span> point <span style="color:#000;font-weight:bold">in</span> points:
-        x <span style="color:#333">=</span> point[<span style="color:#00d;font-weight:bold">0</span>]
-        y <span style="color:#333">=</span> point[<span style="color:#00d;font-weight:bold">1</span>]
-        b_gradient <span style="color:#333">+=</span> (<span style="color:#00d;font-weight:bold">2</span><span style="color:#333">/</span>N) <span style="color:#333">*</span> ((b_current <span style="color:#333">+</span> m_current <span style="color:#333">*</span> x) <span style="color:#333">-</span> y)
-        m_gradient <span style="color:#333">+=</span> (<span style="color:#00d;font-weight:bold">2</span><span style="color:#333">/</span>N) <span style="color:#333">*</span> x <span style="color:#333">*</span> ((b_current <span style="color:#333">+</span> m_current <span style="color:#333">*</span> x) <span style="color:#333">-</span> y)
-    new_b <span style="color:#333">=</span> b_current <span style="color:#333">-</span> (learningRate <span style="color:#333">*</span> b_gradient)
-    new_m <span style="color:#333">=</span> m_current <span style="color:#333">-</span> (learningRate <span style="color:#333">*</span> m_gradient)
-    <span style="color:#080;font-weight:bold">return</span> [new_b, new_m, b_gradient, m_gradient]
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">stepGradient</span>(b_current, m_current, b_gradient, m_gradient, points, learningRate):
+    N <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">float</span>(<span style="color:#0086b3">len</span>(points))
+    <span style="color:#000;font-weight:bold">for</span> point <span style="color:#000;font-weight:bold">in</span> points:
+        x <span style="color:#000;font-weight:bold">=</span> point[<span style="color:#099">0</span>]
+        y <span style="color:#000;font-weight:bold">=</span> point[<span style="color:#099">1</span>]
+        b_gradient <span style="color:#000;font-weight:bold">+=</span> (<span style="color:#099">2</span><span style="color:#000;font-weight:bold">/</span>N) <span style="color:#000;font-weight:bold">*</span> ((b_current <span style="color:#000;font-weight:bold">+</span> m_current <span style="color:#000;font-weight:bold">*</span> x) <span style="color:#000;font-weight:bold">-</span> y)
+        m_gradient <span style="color:#000;font-weight:bold">+=</span> (<span style="color:#099">2</span><span style="color:#000;font-weight:bold">/</span>N) <span style="color:#000;font-weight:bold">*</span> x <span style="color:#000;font-weight:bold">*</span> ((b_current <span style="color:#000;font-weight:bold">+</span> m_current <span style="color:#000;font-weight:bold">*</span> x) <span style="color:#000;font-weight:bold">-</span> y)
+    new_b <span style="color:#000;font-weight:bold">=</span> b_current <span style="color:#000;font-weight:bold">-</span> (learningRate <span style="color:#000;font-weight:bold">*</span> b_gradient)
+    new_m <span style="color:#000;font-weight:bold">=</span> m_current <span style="color:#000;font-weight:bold">-</span> (learningRate <span style="color:#000;font-weight:bold">*</span> m_gradient)
+    <span style="color:#000;font-weight:bold">return</span> [new_b, new_m, b_gradient, m_gradient]
 </code></pre></div><h3 id="设置初始化参数并循环迭代最后画出结果">设置初始化参数并循环迭代，最后画出结果</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">if</span> __name__ <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;__main__&#39;</span>:
-    iterations <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">100</span>    <span style="color:#888">#迭代次数</span>
-    learningRate <span style="color:#333">=</span> <span style="color:#60e;font-weight:bold">0.0001</span>   <span style="color:#888">#学习率，决定了下降的步伐大小</span>
-    points <span style="color:#333">=</span> geneData() <span style="color:#888">#生成训练集</span>
-    b <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>   <span style="color:#888">#线性方程参数b,m的初始值</span>
-    m <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>   
-    b_gradient <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>  <span style="color:#888">#代价函数梯度下降结果的初始值</span>
-    m_gradient <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>
-    <span style="color:#080;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#007020">list</span>(<span style="color:#007020">range</span>(<span style="color:#00d;font-weight:bold">1</span>, iterations<span style="color:#333">+</span><span style="color:#00d;font-weight:bold">1</span>)):  <span style="color:#888">#循环进行梯度下降，求得结果</span>
-        b,m,b_gradient,m_gradient <span style="color:#333">=</span> stepGradient(b,m,b_gradient,m_gradient,points,learningRate)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">if</span> __name__ <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#39;__main__&#39;</span>:
+    iterations <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">100</span>    <span style="color:#998;font-style:italic">#迭代次数</span>
+    learningRate <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0.0001</span>   <span style="color:#998;font-style:italic">#学习率，决定了下降的步伐大小</span>
+    points <span style="color:#000;font-weight:bold">=</span> geneData() <span style="color:#998;font-style:italic">#生成训练集</span>
+    b <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>   <span style="color:#998;font-style:italic">#线性方程参数b,m的初始值</span>
+    m <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>   
+    b_gradient <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>  <span style="color:#998;font-style:italic">#代价函数梯度下降结果的初始值</span>
+    m_gradient <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+    <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">list</span>(<span style="color:#0086b3">range</span>(<span style="color:#099">1</span>, iterations<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>)):  <span style="color:#998;font-style:italic">#循环进行梯度下降，求得结果</span>
+        b,m,b_gradient,m_gradient <span style="color:#000;font-weight:bold">=</span> stepGradient(b,m,b_gradient,m_gradient,points,learningRate)
 
-    <span style="color:#080;font-weight:bold">for</span> point <span style="color:#000;font-weight:bold">in</span> points:    <span style="color:#888">#画出样本点</span>
-        plt<span style="color:#333">.</span>scatter(point[<span style="color:#00d;font-weight:bold">0</span>], point[<span style="color:#00d;font-weight:bold">1</span>])
+    <span style="color:#000;font-weight:bold">for</span> point <span style="color:#000;font-weight:bold">in</span> points:    <span style="color:#998;font-style:italic">#画出样本点</span>
+        plt<span style="color:#000;font-weight:bold">.</span>scatter(point[<span style="color:#099">0</span>], point[<span style="color:#099">1</span>])
 
-    <span style="color:#888">#画出得到的直线</span>
-    t <span style="color:#333">=</span> np<span style="color:#333">.</span>arange(<span style="color:#333">-</span><span style="color:#00d;font-weight:bold">3</span>,<span style="color:#00d;font-weight:bold">3</span>,<span style="color:#60e;font-weight:bold">0.01</span>)
-    s <span style="color:#333">=</span> b <span style="color:#333">+</span> m <span style="color:#333">*</span> t
-    plt<span style="color:#333">.</span>scatter(t,s,linewidths<span style="color:#333">=</span><span style="color:#60e;font-weight:bold">0.5</span>)
-    plt<span style="color:#333">.</span>show()
+    <span style="color:#998;font-style:italic">#画出得到的直线</span>
+    t <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>arange(<span style="color:#000;font-weight:bold">-</span><span style="color:#099">3</span>,<span style="color:#099">3</span>,<span style="color:#099">0.01</span>)
+    s <span style="color:#000;font-weight:bold">=</span> b <span style="color:#000;font-weight:bold">+</span> m <span style="color:#000;font-weight:bold">*</span> t
+    plt<span style="color:#000;font-weight:bold">.</span>scatter(t,s,linewidths<span style="color:#000;font-weight:bold">=</span><span style="color:#099">0.5</span>)
+    plt<span style="color:#000;font-weight:bold">.</span>show()
 
-    <span style="color:#888">#输出结果</span>
-    <span style="color:#007020">print</span>(<span style="background-color:#fff0f0">&#34;b=</span><span style="background-color:#eee">%f</span><span style="background-color:#fff0f0">&#34;</span><span style="color:#333">%</span>b)
-    <span style="color:#888">#print(b)</span>
-    <span style="color:#007020">print</span>(<span style="background-color:#fff0f0">&#34;m=</span><span style="background-color:#eee">%f</span><span style="background-color:#fff0f0">&#34;</span><span style="color:#333">%</span>m)
+    <span style="color:#998;font-style:italic">#输出结果</span>
+    <span style="color:#0086b3">print</span>(<span style="color:#d14">&#34;b=</span><span style="color:#d14">%f</span><span style="color:#d14">&#34;</span><span style="color:#000;font-weight:bold">%</span>b)
+    <span style="color:#998;font-style:italic">#print(b)</span>
+    <span style="color:#0086b3">print</span>(<span style="color:#d14">&#34;m=</span><span style="color:#d14">%f</span><span style="color:#d14">&#34;</span><span style="color:#000;font-weight:bold">%</span>m)
 </code></pre></div><h2 id="结果展示">结果展示</h2>
 <p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/Gradient_figure1.png" alt="Gradient_figure1"></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">b<span style="color:#333">=</span><span style="color:#60e;font-weight:bold">4.824787</span>
-m<span style="color:#333">=</span><span style="color:#60e;font-weight:bold">46.528725</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">b<span style="color:#000;font-weight:bold">=</span><span style="color:#099">4.824787</span>
+m<span style="color:#000;font-weight:bold">=</span><span style="color:#099">46.528725</span>
 </code></pre></div><h2 id="哲学思考">哲学思考</h2>
 <p>梯度下降是一个一阶最优化算法，通常也称为最陡下降法，要使用梯度下降法找到一个函数的局部极小值，必须向函数上当前点对应梯度的反方向规定的步长距离点进行迭代搜索。</p>
 

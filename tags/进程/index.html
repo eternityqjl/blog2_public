@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>C&#43;&#43; Primer——CH18 用于大型工程的工具——命名空间</title>
+<title>进程</title>
 
 
 
@@ -10,18 +10,16 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="只学习了命名空间部分">
+<meta name="description" content="">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
 
 
-<meta property="og:title" content="C&#43;&#43; Primer——CH18 用于大型工程的工具——命名空间" />
-<meta property="og:description" content="只学习了命名空间部分" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE9%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-12-03T11:21:29+08:00" />
-<meta property="article:modified_time" content="2021-12-03T11:21:29+08:00" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="进程" />
+<meta property="og:description" content="My HomePage Description" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://eternityqjl.top/tags/%E8%BF%9B%E7%A8%8B/" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -29,8 +27,8 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="C&#43;&#43; Primer——CH18 用于大型工程的工具——命名空间"/>
-<meta name="twitter:description" content="只学习了命名空间部分"/>
+<meta name="twitter:title" content="进程"/>
+<meta name="twitter:description" content="My HomePage Description"/>
 
 
 
@@ -66,29 +64,7 @@
 
 
 
-  
-    <script src="/js/toc.js"></script>
-  
 
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script src="/vendor/js/md5.min.js"></script>
-<script>
-  var gitalk = new Gitalk({
-  clientID: '41f4d7bc98749bddfc28',
-  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
-  repo: 'blog2_public',
-  owner: 'eternityqjl',
-  admin: ['eternityqjl'],
-  id: md5(location.pathname),
-  distractionFreeMode: 'false'
-  });
-  window.onload = function () {
-        gitalk.render('gitalk-container')
-  }
-</script>
 
 
 
@@ -125,11 +101,9 @@
             
             
             
-                
             
             
-            
-            <a class="a-block nav-link-item active" href="/posts">
+            <a class="a-block nav-link-item false" href="/posts">
                 网志
             </a>
             
@@ -147,9 +121,11 @@
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="/tags">
+            
+            <a class="a-block nav-link-item active" href="/tags">
                 标签
             </a>
             
@@ -195,90 +171,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
-    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
-
-
-	<div class="toc-content">
-	
-		
-		
-		
-		<center>- 目录 -</center>
-		
-		
-		<ul>
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4" onclick="onNavClick(`#命名空间-nav`)" id="命名空间-nav">
-									命名空间
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#%e5%ae%9a%e4%b9%89%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4" onclick="onNavClick(`#定义命名空间-nav`)" id="定义命名空间-nav">
-									定义命名空间
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e4%bd%bf%e7%94%a8%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e6%88%90%e5%91%98" onclick="onNavClick(`#使用命名空间成员-nav`)" id="使用命名空间成员-nav">
-									使用命名空间成员
-								</a>
-							</li>
-						
-						
-					
-				
-			
-		</ul>
-	</div>
-
-</div>
-    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -296,6 +188,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
         </a>
         
         
+        
+        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -308,11 +202,9 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                    
                 
                 
-                
-                <a class="a-block drawer-menu-item active" href="/posts">
+                <a class="a-block drawer-menu-item false" href="/posts">
                     网志
                 </a>
                 
@@ -330,9 +222,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="/tags">
+                
+                <a class="a-block drawer-menu-item active" href="/tags">
                     标签
                 </a>
                 
@@ -357,90 +251,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 </a>
                 
             
-            
-            <div class="toc">
-
-
-	<div class="toc-content">
-	
-		
-		
-		
-		<center>- 目录 -</center>
-		
-		
-		<ul>
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4" onclick="onNavClick(`#命名空间-nav`)" id="命名空间-nav">
-									命名空间
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#%e5%ae%9a%e4%b9%89%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4" onclick="onNavClick(`#定义命名空间-nav`)" id="定义命名空间-nav">
-									定义命名空间
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e4%bd%bf%e7%94%a8%e5%91%bd%e5%90%8d%e7%a9%ba%e9%97%b4%e6%88%90%e5%91%98" onclick="onNavClick(`#使用命名空间成员-nav`)" id="使用命名空间成员-nav">
-									使用命名空间成员
-								</a>
-							</li>
-						
-						
-					
-				
-			
-		</ul>
-	</div>
-
-</div>
             
         </div>
     </div>
@@ -485,169 +295,41 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-                
-            
-
-            <div class="post-head-wrapper"
-                
-                    
-                    
-                    style="background-image: url('https://github.com/eternityqjl/blogGallery/blob/master/blog/cppprimer.jpg?raw=true')"
-                    
-                
-            >
-                <div class="post-title">
-                    C&#43;&#43; Primer——CH18 用于大型工程的工具——命名空间
-                    
-                    <div class="post-subtitle">
-                        只学习了命名空间部分
-                    </div>
-                    
-                    <div class="post-meta">
-                        
-                        <time itemprop="datePublished">
-                            2021-12-03 11:21
-                        </time>
-                        
-
-                        
-                            <i class="material-icons" style="">folder</i>
-                                <a href="/categories/c&#43;&#43;_primer">C&#43;&#43;_Primer</a>
-                                &nbsp;
-                        
-
-                        
-                            <i class="material-icons" style="">label</i>
-                            
-                                <a href="/tags/c&#43;&#43;">C&#43;&#43;</a>
-                                &nbsp;
-                            
-                                <a href="/tags/c&#43;&#43;_primer">C&#43;&#43;_Primer</a>
-                                &nbsp;
-                            
-                        
-                        
+        <div class="post-item-wrapper post-item-wrapper-no-hover">
+            <div class="post-item post-item-no-gaps">
+                <div class="post-item-info-wrapper">
+                    <div class="post-item-title  post-item-title-small">
+                        <a href="https://eternityqjl.top/">Jialong&#39;s Blog</a> / 进程
                     </div>
                 </div>
             </div>
-            
-            <div class="post-body-wrapper">
-                
-                <div class="post-body" v-pre>
-                
-                    <h2 id="命名空间">命名空间</h2>
-<p>大型程序往往使用多个独立开发的库，这些库又会定义大量全局名字，如类、函数、模板。当应用程序使用到多个供应商提供的库时，不可避免会发生某些名字的冲突。多个库名字放置在全局命名空间中会引发<strong>命名空间污染</strong>。</p>
-<p>命名空间提供了防止污染的可控机制。命名空间分隔了全局命名空间，每个命名空间是一个<strong>作用域</strong>。通过某个命名空间定义库名，可以避免全局名字固有的限制。</p>
-<h3 id="定义命名空间">定义命名空间</h3>
-<p>命名空间既可以定义在<strong>全局作用域</strong>中，也可以定义在<strong>其他命名空间</strong>中，但<strong>不能</strong>定义在<strong>函数或类的内部</strong>。</p>
-<p><strong>每个命名空间都是一个作用域</strong></p>
-<p>位于该命名空间之外的代码必须明确指出所用的名字属于哪个命名空间。</p>
-<p><strong>命名空间可以是不连续的</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">namespace</span> nsp {
-<span style="color:#998;font-style:italic">//相关声明
-</span><span style="color:#998;font-style:italic"></span>}
-</code></pre></div><p>可能定义了一个新命名空间，可以能为已存在的命名空间添加一些新成员。</p>
-<p>因此我们可以将几个独立的接口和实现文件组成一个命名空间。其组织方式类似于我们管理自定义类及函数的方式：</p>
-<ul>
-<li>命名空间中是定义类、声明作为类接口的函数及对象的部分，放置于<strong>头文件</strong>中，然后将这些头文件包含在使用了这些成员的文件中</li>
-<li>命名空间成员的定义部分则置于另外的<strong>源文件</strong>中</li>
-</ul>
-<p>程序中某些实体只能定义一次，如内联函数、变量等。命名空间中的定义也要满足这一要求。即接口与实现分离的机制。</p>
-<p>另外，我们<strong>不把#include放在命名空间内部</strong>。这样做的隐含意思是把头文件中所有名字定义成该命名空间的成员，这很有可能导致错误，例如可能将std命名空间嵌套在自己的命名空间内。</p>
-<p><strong>定义命名空间成员</strong></p>
-<p>命名空间中的名字可以直接使用名字，此时无需前缀。</p>
-<p>另外也可以将命名空间的外部定义该命名空间的成员，需要有完整的前缀。命名空间对于名字的声明必须在作用域内，同时改名字的定义需要明确指出其所属的命名空间。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">namespace</span> cpp_primer {
-	std<span style="color:#000;font-weight:bold">::</span>istream<span style="color:#000;font-weight:bold">&amp;</span>
-	<span style="color:#000;font-weight:bold">operator</span><span style="color:#000;font-weight:bold">&gt;&gt;</span>(std<span style="color:#000;font-weight:bold">::</span>istream<span style="color:#000;font-weight:bold">&amp;</span> in, Sales_data<span style="color:#000;font-weight:bold">&amp;</span> s) {}
-}
-</code></pre></div><p><strong>模板特例化</strong></p>
-<p>模板特例化必须定义在原始模板所属的命名空间中。只要我们在命名空间中声明了特例化，就能在命名空间外部定义它：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">namespace</span> std {
-	<span style="color:#000;font-weight:bold">template</span> <span style="color:#000;font-weight:bold">&lt;&gt;</span> <span style="color:#000;font-weight:bold">struct</span> <span style="color:#458;font-weight:bold">hash</span><span style="color:#000;font-weight:bold">&lt;</span>Sales_data<span style="color:#000;font-weight:bold">&gt;</span>;
-}
-<span style="color:#000;font-weight:bold">template</span> <span style="color:#000;font-weight:bold">&lt;&gt;</span> <span style="color:#000;font-weight:bold">struct</span> <span style="color:#458;font-weight:bold">std</span><span style="color:#000;font-weight:bold">::</span>hash<span style="color:#000;font-weight:bold">&lt;</span>Sales_data<span style="color:#000;font-weight:bold">&gt;</span>
-{
-	....
-}
-</code></pre></div><p><strong>全局命名空间</strong></p>
-<p>全局作用域中定义的名字即定义在全局命名空间中。全局命名空间以隐式的方式声明，并且在所有程序中都存在。全局作用域中定义的名字被隐式地添加到全局命名空间中。</p>
-<p>作用域运算符同样可以用于全局作用域成员：(因为其是隐式地，所以没有名字)</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">::</span>nember_name
-</code></pre></div><p><strong>内联命名空间</strong></p>
-<p>C++ 11引入的新的嵌套命名空间，称为内联命名空间。内联命名空间中的名字可以被外层命名空间直接使用。即无需在内联命名空间的名字前添加表示该命名空间的前缀。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">inline</span> <span style="color:#000;font-weight:bold">namespace</span> FifthEd {
-
-}
-<span style="color:#000;font-weight:bold">namespace</span> FifthEd {
-	...
-}
-</code></pre></div><p>关键字inline必须出现在命名空间第一次定义的地方，后续再打开时可以不写inline。</p>
-<p>当应用程序的代码在一次发布和另一次发布之间发生了改变时，常常用到内联命名空间。我们可以将当前版本的所有代码都放在一个内联命名空间中，把之前版本的代码都放在一个非内联命名空间中。这样在使用时，使用当前版本的成员的代码无需加前缀，如需使用之前版本的代码，则需加上完整的外层命名空间名字。</p>
-<p><strong>未命名的命名空间</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">namespace</span> {
-
-}
-</code></pre></div><p>未命名的命名空间拥有静态生命周期，在第一次使用前创建，直到程序结束才销毁。</p>
-<p>一个未命名的命名空间可以在某个给定文件内不连续，但不能跨越多个文件。每个文件定义自己的未命名的命名空间，多个文件的未命名的命名空间之间没有关系。</p>
-<p>如果未命名的命名空间定义在文件的最外层作用域中，则该命名空间中成员的名字一定要与全局作用域中的名字有所区别。</p>
-<blockquote>
-<p>未命名的命名空间取代文件中的静态声明</p>
-<p>标准C++引入命名空间前，程序要将名字声明称static使得其堆整个文件有效，这是从C语言继承而来的。而如今在C++中直接使用未命名的命名空间。</p>
-</blockquote>
-<h3 id="使用命名空间成员">使用命名空间成员</h3>
-<p>我们可以通过使用using声明以及命名空间别名或using指示等来更加便捷地使用命名空间的成员。</p>
-<blockquote>
-<p>我们应当避免使用using指示</p>
-<p>using指示一次性注入某个命名空间的所有名字，这种用法充满了风险，将命名空间中的所有成员的名字变得可见。使用多个库时，可能导致全局命名空间污染。</p>
-</blockquote>
-
-                    
-                    <HR width="100%" id="EOF">
-		    <p style="color:#777;">最后修改于 2021-12-03</p>
-                    
-                </div>
-            </div>
-            
-            
-            <nav class="post-pagination">
-
-                
-                <a class="newer-posts" href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%A0%86%E6%8E%92%E5%BA%8F%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/">
-			下回<br>算法——堆排序和优先队列
-                </a>
-                
-                
-                
-                <a class="older-posts" href="https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">
-			上回<br>C&#43;&#43; Primer——CH15 面向对象程序设计
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-<div id="gitalk-container"></div>
-
-
-
-
-
-
-
-
-
-            </div>
-        </div>
-    </div>
+        </div><a href="/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" class="a-block">
+            <div class="post-item-wrapper">
+                <div class="post-item post-item-no-gaps">
+                    <div class="post-item-info-wrapper">
+                        <div class="post-item-title">
+                            现代操作系统学习日志——进程与线程
+                        </div>
+                        <div class="post-item-meta">
+    2021-12-07
+    &emsp;
+    
+    
+    
+    &emsp;
+    
 </div>
 
-            </div><div id="single-column-footer">
+                    </div>
+                </div>
+            </div>
+        </a></div>
+</div>
+
+            </div>
+
+
+<div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -914,9 +596,6 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
-        
-        spy();
-        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },

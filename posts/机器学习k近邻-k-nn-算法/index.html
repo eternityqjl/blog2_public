@@ -815,89 +815,89 @@ $$</p>
 <li>计算每个聚类中所有点的坐标平均值，并将这个平均值作为新的聚类中心，反复执行上一步和该步，直到聚类中心不再进行大范围移动或聚类迭代次数达到要求位置。</li>
 </ul>
 <h3 id="代码实现">代码实现</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
-<span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">pandas</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">pd</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">numpy</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">np</span>
+<span style="color:#000;font-weight:bold">import</span> <span style="color:#555">pandas</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">pd</span>
 
-data <span style="color:#333">=</span> pd<span style="color:#333">.</span>read_csv(<span style="background-color:#fff0f0">&#39;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&#39;</span>, header<span style="color:#333">=</span><span style="color:#080;font-weight:bold">None</span>)    <span style="color:#888"># 下载iris数据集</span>
-<span style="color:#888">#data = pd.read_csv(&#39;./data/iris.data.csv&#39;, header=None)</span>
-data<span style="color:#333">.</span>columns <span style="color:#333">=</span> [<span style="background-color:#fff0f0">&#39;sepal length&#39;</span>, <span style="background-color:#fff0f0">&#39;sepal width&#39;</span>, <span style="background-color:#fff0f0">&#39;petal length&#39;</span>, <span style="background-color:#fff0f0">&#39;petal width&#39;</span>, <span style="background-color:#fff0f0">&#39;species&#39;</span>]    <span style="color:#888"># 特征及类别名称</span>
+data <span style="color:#000;font-weight:bold">=</span> pd<span style="color:#000;font-weight:bold">.</span>read_csv(<span style="color:#d14">&#39;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&#39;</span>, header<span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">None</span>)    <span style="color:#998;font-style:italic"># 下载iris数据集</span>
+<span style="color:#998;font-style:italic">#data = pd.read_csv(&#39;./data/iris.data.csv&#39;, header=None)</span>
+data<span style="color:#000;font-weight:bold">.</span>columns <span style="color:#000;font-weight:bold">=</span> [<span style="color:#d14">&#39;sepal length&#39;</span>, <span style="color:#d14">&#39;sepal width&#39;</span>, <span style="color:#d14">&#39;petal length&#39;</span>, <span style="color:#d14">&#39;petal width&#39;</span>, <span style="color:#d14">&#39;species&#39;</span>]    <span style="color:#998;font-style:italic"># 特征及类别名称</span>
 
-X <span style="color:#333">=</span> data<span style="color:#333">.</span>iloc[<span style="color:#00d;font-weight:bold">0</span>:<span style="color:#00d;font-weight:bold">150</span>, <span style="color:#00d;font-weight:bold">0</span>:<span style="color:#00d;font-weight:bold">4</span>]<span style="color:#333">.</span>values
-y <span style="color:#333">=</span> data<span style="color:#333">.</span>iloc[<span style="color:#00d;font-weight:bold">0</span>:<span style="color:#00d;font-weight:bold">150</span>, <span style="color:#00d;font-weight:bold">4</span>]<span style="color:#333">.</span>values
-y[y <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;Iris-setosa&#39;</span>] <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>                                 <span style="color:#888"># Iris-setosa 输出label用0表示</span>
-y[y <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;Iris-versicolor&#39;</span>] <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>                             <span style="color:#888"># Iris-versicolor 输出label用1表示</span>
-y[y <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#39;Iris-virginica&#39;</span>] <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">2</span>                              <span style="color:#888"># Iris-virginica 输出label用2表示</span>
-X_setosa, y_setosa <span style="color:#333">=</span> X[<span style="color:#00d;font-weight:bold">0</span>:<span style="color:#00d;font-weight:bold">50</span>], y[<span style="color:#00d;font-weight:bold">0</span>:<span style="color:#00d;font-weight:bold">50</span>]                     <span style="color:#888"># Iris-setosa 4个特征</span>
-X_versicolor, y_versicolor <span style="color:#333">=</span> X[<span style="color:#00d;font-weight:bold">50</span>:<span style="color:#00d;font-weight:bold">100</span>], y[<span style="color:#00d;font-weight:bold">50</span>:<span style="color:#00d;font-weight:bold">100</span>]         <span style="color:#888"># Iris-versicolor 4个特征</span>
-X_virginica, y_virginica <span style="color:#333">=</span> X[<span style="color:#00d;font-weight:bold">100</span>:<span style="color:#00d;font-weight:bold">150</span>], y[<span style="color:#00d;font-weight:bold">100</span>:<span style="color:#00d;font-weight:bold">150</span>]         <span style="color:#888"># Iris-virginica 4个特征</span>
-
-
-<span style="color:#888"># training set</span>
-X_setosa_train <span style="color:#333">=</span> X_setosa[:<span style="color:#00d;font-weight:bold">30</span>, :]
-y_setosa_train <span style="color:#333">=</span> y_setosa[:<span style="color:#00d;font-weight:bold">30</span>]
-X_versicolor_train <span style="color:#333">=</span> X_versicolor[:<span style="color:#00d;font-weight:bold">30</span>, :]
-y_versicolor_train <span style="color:#333">=</span> y_versicolor[:<span style="color:#00d;font-weight:bold">30</span>]
-X_virginica_train <span style="color:#333">=</span> X_virginica[:<span style="color:#00d;font-weight:bold">30</span>, :]
-y_virginica_train <span style="color:#333">=</span> y_virginica[:<span style="color:#00d;font-weight:bold">30</span>]
-X_train <span style="color:#333">=</span> np<span style="color:#333">.</span>vstack([X_setosa_train, X_versicolor_train, X_virginica_train])
-y_train <span style="color:#333">=</span> np<span style="color:#333">.</span>hstack([y_setosa_train, y_versicolor_train, y_virginica_train])
-
-<span style="color:#888"># validation set</span>
-X_setosa_val <span style="color:#333">=</span> X_setosa[<span style="color:#00d;font-weight:bold">30</span>:<span style="color:#00d;font-weight:bold">40</span>, :]
-y_setosa_val <span style="color:#333">=</span> y_setosa[<span style="color:#00d;font-weight:bold">30</span>:<span style="color:#00d;font-weight:bold">40</span>]
-X_versicolor_val <span style="color:#333">=</span> X_versicolor[<span style="color:#00d;font-weight:bold">30</span>:<span style="color:#00d;font-weight:bold">40</span>, :]
-y_versicolor_val <span style="color:#333">=</span> y_versicolor[<span style="color:#00d;font-weight:bold">30</span>:<span style="color:#00d;font-weight:bold">40</span>]
-X_virginica_val <span style="color:#333">=</span> X_virginica[<span style="color:#00d;font-weight:bold">30</span>:<span style="color:#00d;font-weight:bold">40</span>, :]
-y_virginica_val <span style="color:#333">=</span> y_virginica[<span style="color:#00d;font-weight:bold">30</span>:<span style="color:#00d;font-weight:bold">40</span>]
-X_val <span style="color:#333">=</span> np<span style="color:#333">.</span>vstack([X_setosa_val, X_versicolor_val, X_virginica_val])
-y_val <span style="color:#333">=</span> np<span style="color:#333">.</span>hstack([y_setosa_val, y_versicolor_val, y_virginica_val])
-
-<span style="color:#888"># test set</span>
-X_setosa_test <span style="color:#333">=</span> X_setosa[<span style="color:#00d;font-weight:bold">40</span>:<span style="color:#00d;font-weight:bold">50</span>, :]
-y_setosa_test <span style="color:#333">=</span> y_setosa[<span style="color:#00d;font-weight:bold">40</span>:<span style="color:#00d;font-weight:bold">50</span>]
-X_versicolor_test <span style="color:#333">=</span> X_versicolor[<span style="color:#00d;font-weight:bold">40</span>:<span style="color:#00d;font-weight:bold">50</span>, :]
-y_versicolor_test <span style="color:#333">=</span> y_versicolor[<span style="color:#00d;font-weight:bold">40</span>:<span style="color:#00d;font-weight:bold">50</span>]
-X_virginica_test <span style="color:#333">=</span> X_virginica[<span style="color:#00d;font-weight:bold">40</span>:<span style="color:#00d;font-weight:bold">50</span>, :]
-y_virginica_test <span style="color:#333">=</span> y_virginica[<span style="color:#00d;font-weight:bold">40</span>:<span style="color:#00d;font-weight:bold">50</span>]
-X_test <span style="color:#333">=</span> np<span style="color:#333">.</span>vstack([X_setosa_test, X_versicolor_test, X_virginica_test])
-y_test <span style="color:#333">=</span> np<span style="color:#333">.</span>hstack([y_setosa_test, y_versicolor_test, y_virginica_test])
+X <span style="color:#000;font-weight:bold">=</span> data<span style="color:#000;font-weight:bold">.</span>iloc[<span style="color:#099">0</span>:<span style="color:#099">150</span>, <span style="color:#099">0</span>:<span style="color:#099">4</span>]<span style="color:#000;font-weight:bold">.</span>values
+y <span style="color:#000;font-weight:bold">=</span> data<span style="color:#000;font-weight:bold">.</span>iloc[<span style="color:#099">0</span>:<span style="color:#099">150</span>, <span style="color:#099">4</span>]<span style="color:#000;font-weight:bold">.</span>values
+y[y <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#39;Iris-setosa&#39;</span>] <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>                                 <span style="color:#998;font-style:italic"># Iris-setosa 输出label用0表示</span>
+y[y <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#39;Iris-versicolor&#39;</span>] <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>                             <span style="color:#998;font-style:italic"># Iris-versicolor 输出label用1表示</span>
+y[y <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#39;Iris-virginica&#39;</span>] <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">2</span>                              <span style="color:#998;font-style:italic"># Iris-virginica 输出label用2表示</span>
+X_setosa, y_setosa <span style="color:#000;font-weight:bold">=</span> X[<span style="color:#099">0</span>:<span style="color:#099">50</span>], y[<span style="color:#099">0</span>:<span style="color:#099">50</span>]                     <span style="color:#998;font-style:italic"># Iris-setosa 4个特征</span>
+X_versicolor, y_versicolor <span style="color:#000;font-weight:bold">=</span> X[<span style="color:#099">50</span>:<span style="color:#099">100</span>], y[<span style="color:#099">50</span>:<span style="color:#099">100</span>]         <span style="color:#998;font-style:italic"># Iris-versicolor 4个特征</span>
+X_virginica, y_virginica <span style="color:#000;font-weight:bold">=</span> X[<span style="color:#099">100</span>:<span style="color:#099">150</span>], y[<span style="color:#099">100</span>:<span style="color:#099">150</span>]         <span style="color:#998;font-style:italic"># Iris-virginica 4个特征</span>
 
 
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">KNearestNeighbor</span>(<span style="color:#007020">object</span>):
-   <span style="color:#080;font-weight:bold">def</span> __init__(self):
-       <span style="color:#080;font-weight:bold">pass</span>
+<span style="color:#998;font-style:italic"># training set</span>
+X_setosa_train <span style="color:#000;font-weight:bold">=</span> X_setosa[:<span style="color:#099">30</span>, :]
+y_setosa_train <span style="color:#000;font-weight:bold">=</span> y_setosa[:<span style="color:#099">30</span>]
+X_versicolor_train <span style="color:#000;font-weight:bold">=</span> X_versicolor[:<span style="color:#099">30</span>, :]
+y_versicolor_train <span style="color:#000;font-weight:bold">=</span> y_versicolor[:<span style="color:#099">30</span>]
+X_virginica_train <span style="color:#000;font-weight:bold">=</span> X_virginica[:<span style="color:#099">30</span>, :]
+y_virginica_train <span style="color:#000;font-weight:bold">=</span> y_virginica[:<span style="color:#099">30</span>]
+X_train <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>vstack([X_setosa_train, X_versicolor_train, X_virginica_train])
+y_train <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>hstack([y_setosa_train, y_versicolor_train, y_virginica_train])
 
-   <span style="color:#888"># 训练函数</span>
-   <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">train</span>(self, X, y):
-       self<span style="color:#333">.</span>X_train <span style="color:#333">=</span> X
-       self<span style="color:#333">.</span>y_train <span style="color:#333">=</span> y
+<span style="color:#998;font-style:italic"># validation set</span>
+X_setosa_val <span style="color:#000;font-weight:bold">=</span> X_setosa[<span style="color:#099">30</span>:<span style="color:#099">40</span>, :]
+y_setosa_val <span style="color:#000;font-weight:bold">=</span> y_setosa[<span style="color:#099">30</span>:<span style="color:#099">40</span>]
+X_versicolor_val <span style="color:#000;font-weight:bold">=</span> X_versicolor[<span style="color:#099">30</span>:<span style="color:#099">40</span>, :]
+y_versicolor_val <span style="color:#000;font-weight:bold">=</span> y_versicolor[<span style="color:#099">30</span>:<span style="color:#099">40</span>]
+X_virginica_val <span style="color:#000;font-weight:bold">=</span> X_virginica[<span style="color:#099">30</span>:<span style="color:#099">40</span>, :]
+y_virginica_val <span style="color:#000;font-weight:bold">=</span> y_virginica[<span style="color:#099">30</span>:<span style="color:#099">40</span>]
+X_val <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>vstack([X_setosa_val, X_versicolor_val, X_virginica_val])
+y_val <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>hstack([y_setosa_val, y_versicolor_val, y_virginica_val])
 
-   <span style="color:#888"># 预测函数</span>
-   <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">predict</span>(self, X, k<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>):
-       <span style="color:#888"># 计算L2距离</span>
-       num_test <span style="color:#333">=</span> X<span style="color:#333">.</span>shape[<span style="color:#00d;font-weight:bold">0</span>]
-       num_train <span style="color:#333">=</span> self<span style="color:#333">.</span>X_train<span style="color:#333">.</span>shape[<span style="color:#00d;font-weight:bold">0</span>]
-       dists <span style="color:#333">=</span> np<span style="color:#333">.</span>zeros((num_test, num_train))    <span style="color:#888"># 初始化距离函数</span>
-       <span style="color:#888"># because(X - X_train)*(X - X_train) = -2X*X_train + X*X + X_train*X_train, so</span>
-       d1 <span style="color:#333">=</span> <span style="color:#333">-</span><span style="color:#00d;font-weight:bold">2</span> <span style="color:#333">*</span> np<span style="color:#333">.</span>dot(X, self<span style="color:#333">.</span>X_train<span style="color:#333">.</span>T)    <span style="color:#888"># shape (num_test, num_train)</span>
-       d2 <span style="color:#333">=</span> np<span style="color:#333">.</span>sum(np<span style="color:#333">.</span>square(X), axis<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>, keepdims<span style="color:#333">=</span><span style="color:#080;font-weight:bold">True</span>)    <span style="color:#888"># shape (num_test, 1)</span>
-       d3 <span style="color:#333">=</span> np<span style="color:#333">.</span>sum(np<span style="color:#333">.</span>square(self<span style="color:#333">.</span>X_train), axis<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">1</span>)    <span style="color:#888"># shape (1, num_train)</span>
-       dist <span style="color:#333">=</span> np<span style="color:#333">.</span>sqrt(d1 <span style="color:#333">+</span> d2 <span style="color:#333">+</span> d3)
-       <span style="color:#888"># 根据K值，选择最可能属于的类别</span>
-       y_pred <span style="color:#333">=</span> np<span style="color:#333">.</span>zeros(num_test)
-       <span style="color:#080;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#007020">range</span>(num_test):
-           dist_k_min <span style="color:#333">=</span> np<span style="color:#333">.</span>argsort(dist[i])[:k]    <span style="color:#888"># 最近邻k个实例位置</span>
-           y_kclose <span style="color:#333">=</span> self<span style="color:#333">.</span>y_train[dist_k_min]     <span style="color:#888"># 最近邻k个实例对应的标签</span>
-           y_pred[i] <span style="color:#333">=</span> np<span style="color:#333">.</span>argmax(np<span style="color:#333">.</span>bincount(y_kclose<span style="color:#333">.</span>tolist()))    <span style="color:#888"># 找出k个标签中从属类别最多的作为预测类别</span>
+<span style="color:#998;font-style:italic"># test set</span>
+X_setosa_test <span style="color:#000;font-weight:bold">=</span> X_setosa[<span style="color:#099">40</span>:<span style="color:#099">50</span>, :]
+y_setosa_test <span style="color:#000;font-weight:bold">=</span> y_setosa[<span style="color:#099">40</span>:<span style="color:#099">50</span>]
+X_versicolor_test <span style="color:#000;font-weight:bold">=</span> X_versicolor[<span style="color:#099">40</span>:<span style="color:#099">50</span>, :]
+y_versicolor_test <span style="color:#000;font-weight:bold">=</span> y_versicolor[<span style="color:#099">40</span>:<span style="color:#099">50</span>]
+X_virginica_test <span style="color:#000;font-weight:bold">=</span> X_virginica[<span style="color:#099">40</span>:<span style="color:#099">50</span>, :]
+y_virginica_test <span style="color:#000;font-weight:bold">=</span> y_virginica[<span style="color:#099">40</span>:<span style="color:#099">50</span>]
+X_test <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>vstack([X_setosa_test, X_versicolor_test, X_virginica_test])
+y_test <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>hstack([y_setosa_test, y_versicolor_test, y_virginica_test])
 
-       <span style="color:#080;font-weight:bold">return</span> y_pred
 
-<span style="color:#080;font-weight:bold">if</span> __name__ <span style="color:#333">==</span> <span style="background-color:#fff0f0">&#34;__main__&#34;</span>:
-    KNN <span style="color:#333">=</span> KNearestNeighbor()
-    KNN<span style="color:#333">.</span>train(X_train, y_train)
-    y_pred <span style="color:#333">=</span> KNN<span style="color:#333">.</span>predict(X_test, k<span style="color:#333">=</span><span style="color:#00d;font-weight:bold">6</span>)
-    accuracy <span style="color:#333">=</span> np<span style="color:#333">.</span>mean(y_pred <span style="color:#333">==</span> y_test)
-    <span style="color:#007020">print</span>(<span style="background-color:#fff0f0">&#39;测试集预测准确率：</span><span style="background-color:#eee">%f</span><span style="background-color:#fff0f0">&#39;</span> <span style="color:#333">%</span> accuracy)
+<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">KNearestNeighbor</span>(<span style="color:#0086b3">object</span>):
+   <span style="color:#000;font-weight:bold">def</span> __init__(<span style="color:#999">self</span>):
+       <span style="color:#000;font-weight:bold">pass</span>
+
+   <span style="color:#998;font-style:italic"># 训练函数</span>
+   <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">train</span>(<span style="color:#999">self</span>, X, y):
+       <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>X_train <span style="color:#000;font-weight:bold">=</span> X
+       <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>y_train <span style="color:#000;font-weight:bold">=</span> y
+
+   <span style="color:#998;font-style:italic"># 预测函数</span>
+   <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">predict</span>(<span style="color:#999">self</span>, X, k<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>):
+       <span style="color:#998;font-style:italic"># 计算L2距离</span>
+       num_test <span style="color:#000;font-weight:bold">=</span> X<span style="color:#000;font-weight:bold">.</span>shape[<span style="color:#099">0</span>]
+       num_train <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>X_train<span style="color:#000;font-weight:bold">.</span>shape[<span style="color:#099">0</span>]
+       dists <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>zeros((num_test, num_train))    <span style="color:#998;font-style:italic"># 初始化距离函数</span>
+       <span style="color:#998;font-style:italic"># because(X - X_train)*(X - X_train) = -2X*X_train + X*X + X_train*X_train, so</span>
+       d1 <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">2</span> <span style="color:#000;font-weight:bold">*</span> np<span style="color:#000;font-weight:bold">.</span>dot(X, <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>X_train<span style="color:#000;font-weight:bold">.</span>T)    <span style="color:#998;font-style:italic"># shape (num_test, num_train)</span>
+       d2 <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>sum(np<span style="color:#000;font-weight:bold">.</span>square(X), axis<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>, keepdims<span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">True</span>)    <span style="color:#998;font-style:italic"># shape (num_test, 1)</span>
+       d3 <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>sum(np<span style="color:#000;font-weight:bold">.</span>square(<span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>X_train), axis<span style="color:#000;font-weight:bold">=</span><span style="color:#099">1</span>)    <span style="color:#998;font-style:italic"># shape (1, num_train)</span>
+       dist <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>sqrt(d1 <span style="color:#000;font-weight:bold">+</span> d2 <span style="color:#000;font-weight:bold">+</span> d3)
+       <span style="color:#998;font-style:italic"># 根据K值，选择最可能属于的类别</span>
+       y_pred <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>zeros(num_test)
+       <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(num_test):
+           dist_k_min <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>argsort(dist[i])[:k]    <span style="color:#998;font-style:italic"># 最近邻k个实例位置</span>
+           y_kclose <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>y_train[dist_k_min]     <span style="color:#998;font-style:italic"># 最近邻k个实例对应的标签</span>
+           y_pred[i] <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>argmax(np<span style="color:#000;font-weight:bold">.</span>bincount(y_kclose<span style="color:#000;font-weight:bold">.</span>tolist()))    <span style="color:#998;font-style:italic"># 找出k个标签中从属类别最多的作为预测类别</span>
+
+       <span style="color:#000;font-weight:bold">return</span> y_pred
+
+<span style="color:#000;font-weight:bold">if</span> __name__ <span style="color:#000;font-weight:bold">==</span> <span style="color:#d14">&#34;__main__&#34;</span>:
+    KNN <span style="color:#000;font-weight:bold">=</span> KNearestNeighbor()
+    KNN<span style="color:#000;font-weight:bold">.</span>train(X_train, y_train)
+    y_pred <span style="color:#000;font-weight:bold">=</span> KNN<span style="color:#000;font-weight:bold">.</span>predict(X_test, k<span style="color:#000;font-weight:bold">=</span><span style="color:#099">6</span>)
+    accuracy <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>mean(y_pred <span style="color:#000;font-weight:bold">==</span> y_test)
+    <span style="color:#0086b3">print</span>(<span style="color:#d14">&#39;测试集预测准确率：</span><span style="color:#d14">%f</span><span style="color:#d14">&#39;</span> <span style="color:#000;font-weight:bold">%</span> accuracy)
 </code></pre></div><p>结果如下：</p>
 <pre tabindex="0"><code>测试集预测准确率：1.000000
 </code></pre>
