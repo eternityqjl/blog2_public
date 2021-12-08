@@ -1497,22 +1497,22 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h3 id="functions">Functions</h3>
 <p><code>def</code> keyword</p>
 <h3 id="classes">Classes</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Greeter</span>:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Greeter</span>:
 
-    <span style="color:#998;font-style:italic"># Constructor</span>
-    <span style="color:#000;font-weight:bold">def</span> __init__(<span style="color:#999">self</span>, name):
-        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>name <span style="color:#000;font-weight:bold">=</span> name  <span style="color:#998;font-style:italic"># Create an instance variable</span>
+    <span style="color:#888"># Constructor</span>
+    <span style="color:#080;font-weight:bold">def</span> __init__(self, name):
+        self<span style="color:#333">.</span>name <span style="color:#333">=</span> name  <span style="color:#888"># Create an instance variable</span>
 
-    <span style="color:#998;font-style:italic"># Instance method</span>
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">greet</span>(<span style="color:#999">self</span>, loud<span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">False</span>):
-        <span style="color:#000;font-weight:bold">if</span> loud:
-          <span style="color:#0086b3">print</span>(<span style="color:#d14">&#39;HELLO, </span><span style="color:#d14">{}</span><span style="color:#d14">&#39;</span><span style="color:#000;font-weight:bold">.</span>format(<span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>name<span style="color:#000;font-weight:bold">.</span>upper()))
-        <span style="color:#000;font-weight:bold">else</span>:
-          <span style="color:#0086b3">print</span>(<span style="color:#d14">&#39;Hello, </span><span style="color:#d14">{}</span><span style="color:#d14">!&#39;</span><span style="color:#000;font-weight:bold">.</span>format(<span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>name))
+    <span style="color:#888"># Instance method</span>
+    <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">greet</span>(self, loud<span style="color:#333">=</span><span style="color:#080;font-weight:bold">False</span>):
+        <span style="color:#080;font-weight:bold">if</span> loud:
+          <span style="color:#007020">print</span>(<span style="background-color:#fff0f0">&#39;HELLO, </span><span style="background-color:#eee">{}</span><span style="background-color:#fff0f0">&#39;</span><span style="color:#333">.</span>format(self<span style="color:#333">.</span>name<span style="color:#333">.</span>upper()))
+        <span style="color:#080;font-weight:bold">else</span>:
+          <span style="color:#007020">print</span>(<span style="background-color:#fff0f0">&#39;Hello, </span><span style="background-color:#eee">{}</span><span style="background-color:#fff0f0">!&#39;</span><span style="color:#333">.</span>format(self<span style="color:#333">.</span>name))
 
-g <span style="color:#000;font-weight:bold">=</span> Greeter(<span style="color:#d14">&#39;Fred&#39;</span>)  <span style="color:#998;font-style:italic"># Construct an instance of the Greeter class</span>
-g<span style="color:#000;font-weight:bold">.</span>greet()            <span style="color:#998;font-style:italic"># Call an instance method; prints &#34;Hello, Fred&#34;</span>
-g<span style="color:#000;font-weight:bold">.</span>greet(loud<span style="color:#000;font-weight:bold">=</span><span style="color:#000;font-weight:bold">True</span>)   <span style="color:#998;font-style:italic"># Call an instance method; prints &#34;HELLO, FRED!&#34;</span>
+g <span style="color:#333">=</span> Greeter(<span style="background-color:#fff0f0">&#39;Fred&#39;</span>)  <span style="color:#888"># Construct an instance of the Greeter class</span>
+g<span style="color:#333">.</span>greet()            <span style="color:#888"># Call an instance method; prints &#34;Hello, Fred&#34;</span>
+g<span style="color:#333">.</span>greet(loud<span style="color:#333">=</span><span style="color:#080;font-weight:bold">True</span>)   <span style="color:#888"># Call an instance method; prints &#34;HELLO, FRED!&#34;</span>
 </code></pre></div><h2 id="numpy">Numpy</h2>
 <p>Numpy is the core library for scientific computing in Python. It provides a high-performance multidimensional array object, and tools for working with these arrays.</p>
 <h3 id="arrays">Arrays</h3>
@@ -1520,175 +1520,175 @@ g<span style="color:#000;font-weight:bold">.</span>greet(loud<span style="color:
 <h3 id="array-indexing">Array indexing</h3>
 <h4 id="slicing-1">Slicing</h4>
 <p>example</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">numpy</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">np</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
 
-<span style="color:#998;font-style:italic"># Create the following rank 2 array with shape (3, 4)</span>
-<span style="color:#998;font-style:italic"># [[ 1  2  3  4]</span>
-<span style="color:#998;font-style:italic">#  [ 5  6  7  8]</span>
-<span style="color:#998;font-style:italic">#  [ 9 10 11 12]]</span>
-a <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">1</span>,<span style="color:#099">2</span>,<span style="color:#099">3</span>,<span style="color:#099">4</span>], [<span style="color:#099">5</span>,<span style="color:#099">6</span>,<span style="color:#099">7</span>,<span style="color:#099">8</span>], [<span style="color:#099">9</span>,<span style="color:#099">10</span>,<span style="color:#099">11</span>,<span style="color:#099">12</span>]])
+<span style="color:#888"># Create the following rank 2 array with shape (3, 4)</span>
+<span style="color:#888"># [[ 1  2  3  4]</span>
+<span style="color:#888">#  [ 5  6  7  8]</span>
+<span style="color:#888">#  [ 9 10 11 12]]</span>
+a <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>,<span style="color:#00d;font-weight:bold">3</span>,<span style="color:#00d;font-weight:bold">4</span>], [<span style="color:#00d;font-weight:bold">5</span>,<span style="color:#00d;font-weight:bold">6</span>,<span style="color:#00d;font-weight:bold">7</span>,<span style="color:#00d;font-weight:bold">8</span>], [<span style="color:#00d;font-weight:bold">9</span>,<span style="color:#00d;font-weight:bold">10</span>,<span style="color:#00d;font-weight:bold">11</span>,<span style="color:#00d;font-weight:bold">12</span>]])
 
-<span style="color:#998;font-style:italic"># Use slicing to pull out the subarray consisting of the first 2 rows</span>
-<span style="color:#998;font-style:italic"># and columns 1 and 2; b is the following array of shape (2, 2):</span>
-<span style="color:#998;font-style:italic"># [[2 3]</span>
-<span style="color:#998;font-style:italic">#  [6 7]]</span>
-b <span style="color:#000;font-weight:bold">=</span> a[:<span style="color:#099">2</span>, <span style="color:#099">1</span>:<span style="color:#099">3</span>]
-<span style="color:#0086b3">print</span>(b)
+<span style="color:#888"># Use slicing to pull out the subarray consisting of the first 2 rows</span>
+<span style="color:#888"># and columns 1 and 2; b is the following array of shape (2, 2):</span>
+<span style="color:#888"># [[2 3]</span>
+<span style="color:#888">#  [6 7]]</span>
+b <span style="color:#333">=</span> a[:<span style="color:#00d;font-weight:bold">2</span>, <span style="color:#00d;font-weight:bold">1</span>:<span style="color:#00d;font-weight:bold">3</span>]
+<span style="color:#007020">print</span>(b)
 </code></pre></div><p>Two ways of accessing the data in the middle row of the array. Mixing integer indexing with slices yields an array of lower rank, while using only slices yields an array of the same rank as the original array:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">row_r1 <span style="color:#000;font-weight:bold">=</span> a[<span style="color:#099">1</span>, :]    <span style="color:#998;font-style:italic"># Rank 1 view of the second row of a  </span>
-row_r2 <span style="color:#000;font-weight:bold">=</span> a[<span style="color:#099">1</span>:<span style="color:#099">2</span>, :]  <span style="color:#998;font-style:italic"># Rank 2 view of the second row of a</span>
-row_r3 <span style="color:#000;font-weight:bold">=</span> a[[<span style="color:#099">1</span>], :]  <span style="color:#998;font-style:italic"># Rank 2 view of the second row of a</span>
-<span style="color:#0086b3">print</span>(row_r1, row_r1<span style="color:#000;font-weight:bold">.</span>shape)
-<span style="color:#0086b3">print</span>(row_r2, row_r2<span style="color:#000;font-weight:bold">.</span>shape)
-<span style="color:#0086b3">print</span>(row_r3, row_r3<span style="color:#000;font-weight:bold">.</span>shape)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">row_r1 <span style="color:#333">=</span> a[<span style="color:#00d;font-weight:bold">1</span>, :]    <span style="color:#888"># Rank 1 view of the second row of a  </span>
+row_r2 <span style="color:#333">=</span> a[<span style="color:#00d;font-weight:bold">1</span>:<span style="color:#00d;font-weight:bold">2</span>, :]  <span style="color:#888"># Rank 2 view of the second row of a</span>
+row_r3 <span style="color:#333">=</span> a[[<span style="color:#00d;font-weight:bold">1</span>], :]  <span style="color:#888"># Rank 2 view of the second row of a</span>
+<span style="color:#007020">print</span>(row_r1, row_r1<span style="color:#333">.</span>shape)
+<span style="color:#007020">print</span>(row_r2, row_r2<span style="color:#333">.</span>shape)
+<span style="color:#007020">print</span>(row_r3, row_r3<span style="color:#333">.</span>shape)
 </code></pre></div><h4 id="integer-array-indexing">Integer array indexing</h4>
 <p>Integer array indexing allows you to construct arbitrary arrays using the data from another array.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">1</span>,<span style="color:#099">2</span>], [<span style="color:#099">3</span>, <span style="color:#099">4</span>], [<span style="color:#099">5</span>, <span style="color:#099">6</span>]])
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">a <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>], [<span style="color:#00d;font-weight:bold">3</span>, <span style="color:#00d;font-weight:bold">4</span>], [<span style="color:#00d;font-weight:bold">5</span>, <span style="color:#00d;font-weight:bold">6</span>]])
 
-<span style="color:#998;font-style:italic"># An example of integer array indexing.</span>
-<span style="color:#998;font-style:italic"># The returned array will have shape (3,) and </span>
-<span style="color:#0086b3">print</span>(a[[<span style="color:#099">0</span>, <span style="color:#099">1</span>, <span style="color:#099">2</span>], [<span style="color:#099">0</span>, <span style="color:#099">1</span>, <span style="color:#099">0</span>]])
+<span style="color:#888"># An example of integer array indexing.</span>
+<span style="color:#888"># The returned array will have shape (3,) and </span>
+<span style="color:#007020">print</span>(a[[<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">2</span>], [<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">0</span>]])
 
-<span style="color:#998;font-style:italic"># The above example of integer array indexing is equivalent to this:</span>
-<span style="color:#0086b3">print</span>(np<span style="color:#000;font-weight:bold">.</span>array([a[<span style="color:#099">0</span>, <span style="color:#099">0</span>], a[<span style="color:#099">1</span>, <span style="color:#099">1</span>], a[<span style="color:#099">2</span>, <span style="color:#099">0</span>]]))
+<span style="color:#888"># The above example of integer array indexing is equivalent to this:</span>
+<span style="color:#007020">print</span>(np<span style="color:#333">.</span>array([a[<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">0</span>], a[<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">1</span>], a[<span style="color:#00d;font-weight:bold">2</span>, <span style="color:#00d;font-weight:bold">0</span>]]))
 </code></pre></div><p>result:</p>
 <p>[1 4 5]</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#998;font-style:italic"># When using integer array indexing, you can reuse the same</span>
-<span style="color:#998;font-style:italic"># element from the source array:</span>
-<span style="color:#0086b3">print</span>(a[[<span style="color:#099">0</span>, <span style="color:#099">0</span>], [<span style="color:#099">1</span>, <span style="color:#099">1</span>]])
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># When using integer array indexing, you can reuse the same</span>
+<span style="color:#888"># element from the source array:</span>
+<span style="color:#007020">print</span>(a[[<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">0</span>], [<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">1</span>]])
 
-<span style="color:#998;font-style:italic"># Equivalent to the previous integer array indexing example</span>
-<span style="color:#0086b3">print</span>(np<span style="color:#000;font-weight:bold">.</span>array([a[<span style="color:#099">0</span>, <span style="color:#099">1</span>], a[<span style="color:#099">0</span>, <span style="color:#099">1</span>]]))
+<span style="color:#888"># Equivalent to the previous integer array indexing example</span>
+<span style="color:#007020">print</span>(np<span style="color:#333">.</span>array([a[<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">1</span>], a[<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">1</span>]]))
 </code></pre></div><p>One useful trick with integer array indexing is selecting or mutating one element from each row of a matrix:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#998;font-style:italic"># Create a new array from which we will select elements</span>
-a <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">1</span>,<span style="color:#099">2</span>,<span style="color:#099">3</span>], [<span style="color:#099">4</span>,<span style="color:#099">5</span>,<span style="color:#099">6</span>], [<span style="color:#099">7</span>,<span style="color:#099">8</span>,<span style="color:#099">9</span>], [<span style="color:#099">10</span>, <span style="color:#099">11</span>, <span style="color:#099">12</span>]])
-<span style="color:#0086b3">print</span>(a)
-</code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#998;font-style:italic"># Create an array of indices</span>
-b <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([<span style="color:#099">0</span>, <span style="color:#099">2</span>, <span style="color:#099">0</span>, <span style="color:#099">1</span>])
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># Create a new array from which we will select elements</span>
+a <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>,<span style="color:#00d;font-weight:bold">3</span>], [<span style="color:#00d;font-weight:bold">4</span>,<span style="color:#00d;font-weight:bold">5</span>,<span style="color:#00d;font-weight:bold">6</span>], [<span style="color:#00d;font-weight:bold">7</span>,<span style="color:#00d;font-weight:bold">8</span>,<span style="color:#00d;font-weight:bold">9</span>], [<span style="color:#00d;font-weight:bold">10</span>, <span style="color:#00d;font-weight:bold">11</span>, <span style="color:#00d;font-weight:bold">12</span>]])
+<span style="color:#007020">print</span>(a)
+</code></pre></div><div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># Create an array of indices</span>
+b <span style="color:#333">=</span> np<span style="color:#333">.</span>array([<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">2</span>, <span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">1</span>])
 
-<span style="color:#998;font-style:italic"># Select one element from each row of a using the indices in b</span>
-<span style="color:#0086b3">print</span>(a[np<span style="color:#000;font-weight:bold">.</span>arange(<span style="color:#099">4</span>), b])  <span style="color:#998;font-style:italic"># Prints &#34;[ 1  6  7 11]&#34;</span>
+<span style="color:#888"># Select one element from each row of a using the indices in b</span>
+<span style="color:#007020">print</span>(a[np<span style="color:#333">.</span>arange(<span style="color:#00d;font-weight:bold">4</span>), b])  <span style="color:#888"># Prints &#34;[ 1  6  7 11]&#34;</span>
 </code></pre></div><p>[1 6 7 11]</p>
 <h4 id="boolean-array-indexing">Boolean array indexing</h4>
 <p>Frequently this type of indexing is used to select the elements of an array that <strong>satisfy some condition</strong>.</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">numpy</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">np</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
 
-a <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">1</span>,<span style="color:#099">2</span>], [<span style="color:#099">3</span>, <span style="color:#099">4</span>], [<span style="color:#099">5</span>, <span style="color:#099">6</span>]])
+a <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>], [<span style="color:#00d;font-weight:bold">3</span>, <span style="color:#00d;font-weight:bold">4</span>], [<span style="color:#00d;font-weight:bold">5</span>, <span style="color:#00d;font-weight:bold">6</span>]])
 
-bool_idx <span style="color:#000;font-weight:bold">=</span> (a <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#099">2</span>)  <span style="color:#998;font-style:italic"># Find the elements of a that are bigger than 2;</span>
-                    <span style="color:#998;font-style:italic"># this returns a numpy array of Booleans of the same</span>
-                    <span style="color:#998;font-style:italic"># shape as a, where each slot of bool_idx tells</span>
-                    <span style="color:#998;font-style:italic"># whether that element of a is &gt; 2.</span>
+bool_idx <span style="color:#333">=</span> (a <span style="color:#333">&gt;</span> <span style="color:#00d;font-weight:bold">2</span>)  <span style="color:#888"># Find the elements of a that are bigger than 2;</span>
+                    <span style="color:#888"># this returns a numpy array of Booleans of the same</span>
+                    <span style="color:#888"># shape as a, where each slot of bool_idx tells</span>
+                    <span style="color:#888"># whether that element of a is &gt; 2.</span>
 
-<span style="color:#0086b3">print</span>(bool_idx)
+<span style="color:#007020">print</span>(bool_idx)
 </code></pre></div><p>[[False False]
 [ True  True]
 [ True  True]]</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#998;font-style:italic"># We use boolean array indexing to construct a rank 1 array</span>
-<span style="color:#998;font-style:italic"># consisting of the elements of a corresponding to the True values</span>
-<span style="color:#998;font-style:italic"># of bool_idx</span>
-<span style="color:#0086b3">print</span>(a[bool_idx])
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># We use boolean array indexing to construct a rank 1 array</span>
+<span style="color:#888"># consisting of the elements of a corresponding to the True values</span>
+<span style="color:#888"># of bool_idx</span>
+<span style="color:#007020">print</span>(a[bool_idx])
 
-<span style="color:#998;font-style:italic"># We can do all of the above in a single concise statement:</span>
-<span style="color:#0086b3">print</span>(a[a <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#099">2</span>])
+<span style="color:#888"># We can do all of the above in a single concise statement:</span>
+<span style="color:#007020">print</span>(a[a <span style="color:#333">&gt;</span> <span style="color:#00d;font-weight:bold">2</span>])
 </code></pre></div><p>[3 4 5 6]
 [3 4 5 6]</p>
 <h3 id="datatypes">Datatypes</h3>
 <p>Every numpy array is a grid of elements of the same type. Numpy provides a large set of numeric datatypes that you can use to construct arrays. Numpy tries to guess a datatype when you create an array, but functions that construct arrays usually also include an optional argument to explicitly specify the datatype. Here is an example:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([<span style="color:#099">1</span>, <span style="color:#099">2</span>])  <span style="color:#998;font-style:italic"># Let numpy choose the datatype</span>
-y <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([<span style="color:#099">1.0</span>, <span style="color:#099">2.0</span>])  <span style="color:#998;font-style:italic"># Let numpy choose the datatype</span>
-z <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([<span style="color:#099">1</span>, <span style="color:#099">2</span>], dtype<span style="color:#000;font-weight:bold">=</span>np<span style="color:#000;font-weight:bold">.</span>int64)  <span style="color:#998;font-style:italic"># Force a particular datatype</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#333">=</span> np<span style="color:#333">.</span>array([<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">2</span>])  <span style="color:#888"># Let numpy choose the datatype</span>
+y <span style="color:#333">=</span> np<span style="color:#333">.</span>array([<span style="color:#60e;font-weight:bold">1.0</span>, <span style="color:#60e;font-weight:bold">2.0</span>])  <span style="color:#888"># Let numpy choose the datatype</span>
+z <span style="color:#333">=</span> np<span style="color:#333">.</span>array([<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">2</span>], dtype<span style="color:#333">=</span>np<span style="color:#333">.</span>int64)  <span style="color:#888"># Force a particular datatype</span>
 
-<span style="color:#0086b3">print</span>(x<span style="color:#000;font-weight:bold">.</span>dtype, y<span style="color:#000;font-weight:bold">.</span>dtype, z<span style="color:#000;font-weight:bold">.</span>dtype)
+<span style="color:#007020">print</span>(x<span style="color:#333">.</span>dtype, y<span style="color:#333">.</span>dtype, z<span style="color:#333">.</span>dtype)
 </code></pre></div><h3 id="array-math">Array math</h3>
 <p>Note that unlike MATLAB, <code>*</code> is elementwise multiplication, not matrix multiplication. We instead use the dot function to compute inner products of vectors, to multiply a vector by a matrix, and to multiply matrices. dot is available both as a function in the numpy module and as an instance method of array objects:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">1</span>,<span style="color:#099">2</span>],[<span style="color:#099">3</span>,<span style="color:#099">4</span>]], dtype<span style="color:#000;font-weight:bold">=</span>np<span style="color:#000;font-weight:bold">.</span>float64)
-y <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">5</span>,<span style="color:#099">6</span>],[<span style="color:#099">7</span>,<span style="color:#099">8</span>]], dtype<span style="color:#000;font-weight:bold">=</span>np<span style="color:#000;font-weight:bold">.</span>float64)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>],[<span style="color:#00d;font-weight:bold">3</span>,<span style="color:#00d;font-weight:bold">4</span>]], dtype<span style="color:#333">=</span>np<span style="color:#333">.</span>float64)
+y <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">5</span>,<span style="color:#00d;font-weight:bold">6</span>],[<span style="color:#00d;font-weight:bold">7</span>,<span style="color:#00d;font-weight:bold">8</span>]], dtype<span style="color:#333">=</span>np<span style="color:#333">.</span>float64)
 
-<span style="color:#998;font-style:italic"># Elementwise product; both produce the array</span>
-<span style="color:#0086b3">print</span>(x <span style="color:#000;font-weight:bold">*</span> y)
-<span style="color:#0086b3">print</span>(np<span style="color:#000;font-weight:bold">.</span>multiply(x, y))
+<span style="color:#888"># Elementwise product; both produce the array</span>
+<span style="color:#007020">print</span>(x <span style="color:#333">*</span> y)
+<span style="color:#007020">print</span>(np<span style="color:#333">.</span>multiply(x, y))
 </code></pre></div><p>[[ 5. 12.]
 [21. 32.]]
 [[ 5. 12.]
 [21. 32.]]</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">1</span>,<span style="color:#099">2</span>],[<span style="color:#099">3</span>,<span style="color:#099">4</span>]])
-y <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">5</span>,<span style="color:#099">6</span>],[<span style="color:#099">7</span>,<span style="color:#099">8</span>]])
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>],[<span style="color:#00d;font-weight:bold">3</span>,<span style="color:#00d;font-weight:bold">4</span>]])
+y <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">5</span>,<span style="color:#00d;font-weight:bold">6</span>],[<span style="color:#00d;font-weight:bold">7</span>,<span style="color:#00d;font-weight:bold">8</span>]])
 
-v <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([<span style="color:#099">9</span>,<span style="color:#099">10</span>])
-w <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([<span style="color:#099">11</span>, <span style="color:#099">12</span>])
+v <span style="color:#333">=</span> np<span style="color:#333">.</span>array([<span style="color:#00d;font-weight:bold">9</span>,<span style="color:#00d;font-weight:bold">10</span>])
+w <span style="color:#333">=</span> np<span style="color:#333">.</span>array([<span style="color:#00d;font-weight:bold">11</span>, <span style="color:#00d;font-weight:bold">12</span>])
 
-<span style="color:#998;font-style:italic"># Inner product of vectors; both produce 219</span>
-<span style="color:#0086b3">print</span>(v<span style="color:#000;font-weight:bold">.</span>dot(w))
-<span style="color:#0086b3">print</span>(np<span style="color:#000;font-weight:bold">.</span>dot(v, w))
+<span style="color:#888"># Inner product of vectors; both produce 219</span>
+<span style="color:#007020">print</span>(v<span style="color:#333">.</span>dot(w))
+<span style="color:#007020">print</span>(np<span style="color:#333">.</span>dot(v, w))
 </code></pre></div><p>219
 219</p>
 <p>You can also use the <code>@</code> operator which is equivalent to numpy&rsquo;s <code>dot</code> operator.</p>
 <p>to transpose a matrix, simply use the T attribute of an array object:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#0086b3">print</span>(<span style="color:#d14">&#34;transpose</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>, x<span style="color:#000;font-weight:bold">.</span>T)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#007020">print</span>(<span style="background-color:#fff0f0">&#34;transpose</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>, x<span style="color:#333">.</span>T)
 </code></pre></div><p>transpose
 [[1 3]
 [2 4]]</p>
 <h3 id="broadcasting">Broadcasting</h3>
 <p>Broadcasting is a powerful mechanism that allows numpy to work with arrays of different shapes when performing arithmetic operations.</p>
 <p>For example, suppose that we want to add a constant vector to each row of a matrix. We could do it like this:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#998;font-style:italic"># We will add the vector v to each row of the matrix x,</span>
-<span style="color:#998;font-style:italic"># storing the result in the matrix y</span>
-x <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">1</span>,<span style="color:#099">2</span>,<span style="color:#099">3</span>], [<span style="color:#099">4</span>,<span style="color:#099">5</span>,<span style="color:#099">6</span>], [<span style="color:#099">7</span>,<span style="color:#099">8</span>,<span style="color:#099">9</span>], [<span style="color:#099">10</span>, <span style="color:#099">11</span>, <span style="color:#099">12</span>]])
-v <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([<span style="color:#099">1</span>, <span style="color:#099">0</span>, <span style="color:#099">1</span>])
-y <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>empty_like(x)   <span style="color:#998;font-style:italic"># Create an empty matrix with the same shape as x</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># We will add the vector v to each row of the matrix x,</span>
+<span style="color:#888"># storing the result in the matrix y</span>
+x <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>,<span style="color:#00d;font-weight:bold">3</span>], [<span style="color:#00d;font-weight:bold">4</span>,<span style="color:#00d;font-weight:bold">5</span>,<span style="color:#00d;font-weight:bold">6</span>], [<span style="color:#00d;font-weight:bold">7</span>,<span style="color:#00d;font-weight:bold">8</span>,<span style="color:#00d;font-weight:bold">9</span>], [<span style="color:#00d;font-weight:bold">10</span>, <span style="color:#00d;font-weight:bold">11</span>, <span style="color:#00d;font-weight:bold">12</span>]])
+v <span style="color:#333">=</span> np<span style="color:#333">.</span>array([<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">1</span>])
+y <span style="color:#333">=</span> np<span style="color:#333">.</span>empty_like(x)   <span style="color:#888"># Create an empty matrix with the same shape as x</span>
 
-<span style="color:#998;font-style:italic"># Add the vector v to each row of the matrix x with an explicit loop</span>
-<span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">4</span>):
-    y[i, :] <span style="color:#000;font-weight:bold">=</span> x[i, :] <span style="color:#000;font-weight:bold">+</span> v
+<span style="color:#888"># Add the vector v to each row of the matrix x with an explicit loop</span>
+<span style="color:#080;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#007020">range</span>(<span style="color:#00d;font-weight:bold">4</span>):
+    y[i, :] <span style="color:#333">=</span> x[i, :] <span style="color:#333">+</span> v
 
-<span style="color:#0086b3">print</span>(y)
+<span style="color:#007020">print</span>(y)
 </code></pre></div><p>[[ 2  2  4]
 [ 5  5  7]
 [ 8  8 10]
 [11 11 13]]</p>
 <p>Numpy broadcasting allows us to perform this computation without actually creating multiple copies of v. Consider this version, using broadcasting:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">numpy</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">np</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
 
-<span style="color:#998;font-style:italic"># We will add the vector v to each row of the matrix x,</span>
-<span style="color:#998;font-style:italic"># storing the result in the matrix y</span>
-x <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([[<span style="color:#099">1</span>,<span style="color:#099">2</span>,<span style="color:#099">3</span>], [<span style="color:#099">4</span>,<span style="color:#099">5</span>,<span style="color:#099">6</span>], [<span style="color:#099">7</span>,<span style="color:#099">8</span>,<span style="color:#099">9</span>], [<span style="color:#099">10</span>, <span style="color:#099">11</span>, <span style="color:#099">12</span>]])
-v <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>array([<span style="color:#099">1</span>, <span style="color:#099">0</span>, <span style="color:#099">1</span>])
-y <span style="color:#000;font-weight:bold">=</span> x <span style="color:#000;font-weight:bold">+</span> v  <span style="color:#998;font-style:italic"># Add v to each row of x using broadcasting</span>
-<span style="color:#0086b3">print</span>(y)
+<span style="color:#888"># We will add the vector v to each row of the matrix x,</span>
+<span style="color:#888"># storing the result in the matrix y</span>
+x <span style="color:#333">=</span> np<span style="color:#333">.</span>array([[<span style="color:#00d;font-weight:bold">1</span>,<span style="color:#00d;font-weight:bold">2</span>,<span style="color:#00d;font-weight:bold">3</span>], [<span style="color:#00d;font-weight:bold">4</span>,<span style="color:#00d;font-weight:bold">5</span>,<span style="color:#00d;font-weight:bold">6</span>], [<span style="color:#00d;font-weight:bold">7</span>,<span style="color:#00d;font-weight:bold">8</span>,<span style="color:#00d;font-weight:bold">9</span>], [<span style="color:#00d;font-weight:bold">10</span>, <span style="color:#00d;font-weight:bold">11</span>, <span style="color:#00d;font-weight:bold">12</span>]])
+v <span style="color:#333">=</span> np<span style="color:#333">.</span>array([<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">1</span>])
+y <span style="color:#333">=</span> x <span style="color:#333">+</span> v  <span style="color:#888"># Add v to each row of x using broadcasting</span>
+<span style="color:#007020">print</span>(y)
 </code></pre></div><p>The line <code>y = x + v</code> works even though <code>x</code> has shape <code>(4, 3)</code> and <code>v</code> has shape <code>(3,)</code> due to broadcasting; this line works as if v actually had shape <code>(4, 3)</code>, where each row was a copy of <code>v</code>, and the sum was performed elementwise.</p>
 <h2 id="matplotlib">Matplotlib</h2>
 <p>Matplotlib is a plotting library. In this section give a brief introduction to the <code>matplotlib.pyplot</code> module, which provides a plotting system similar to that of MATLAB.</p>
 <h3 id="plotting">Plotting</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">matplotlib.pyplot</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">plt</span>
-<span style="color:#000;font-weight:bold">%</span>matplotlib inline
-<span style="color:#998;font-style:italic"># Compute the x and y coordinates for points on a sine curve</span>
-x <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>arange(<span style="color:#099">0</span>, <span style="color:#099">3</span> <span style="color:#000;font-weight:bold">*</span> np<span style="color:#000;font-weight:bold">.</span>pi, <span style="color:#099">0.1</span>)
-y <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>sin(x)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">matplotlib.pyplot</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">plt</span>
+<span style="color:#333">%</span>matplotlib inline
+<span style="color:#888"># Compute the x and y coordinates for points on a sine curve</span>
+x <span style="color:#333">=</span> np<span style="color:#333">.</span>arange(<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">3</span> <span style="color:#333">*</span> np<span style="color:#333">.</span>pi, <span style="color:#60e;font-weight:bold">0.1</span>)
+y <span style="color:#333">=</span> np<span style="color:#333">.</span>sin(x)
 
-<span style="color:#998;font-style:italic"># Plot the points using matplotlib</span>
-plt<span style="color:#000;font-weight:bold">.</span>plot(x, y)
+<span style="color:#888"># Plot the points using matplotlib</span>
+plt<span style="color:#333">.</span>plot(x, y)
 </code></pre></div><h3 id="subplots">Subplots</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#998;font-style:italic"># Compute the x and y coordinates for points on sine and cosine curves</span>
-x <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>arange(<span style="color:#099">0</span>, <span style="color:#099">3</span> <span style="color:#000;font-weight:bold">*</span> np<span style="color:#000;font-weight:bold">.</span>pi, <span style="color:#099">0.1</span>)
-y_sin <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>sin(x)
-y_cos <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>cos(x)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># Compute the x and y coordinates for points on sine and cosine curves</span>
+x <span style="color:#333">=</span> np<span style="color:#333">.</span>arange(<span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">3</span> <span style="color:#333">*</span> np<span style="color:#333">.</span>pi, <span style="color:#60e;font-weight:bold">0.1</span>)
+y_sin <span style="color:#333">=</span> np<span style="color:#333">.</span>sin(x)
+y_cos <span style="color:#333">=</span> np<span style="color:#333">.</span>cos(x)
 
-<span style="color:#998;font-style:italic"># Set up a subplot grid that has height 2 and width 1,</span>
-<span style="color:#998;font-style:italic"># and set the first such subplot as active.</span>
-plt<span style="color:#000;font-weight:bold">.</span>subplot(<span style="color:#099">2</span>, <span style="color:#099">1</span>, <span style="color:#099">1</span>)
+<span style="color:#888"># Set up a subplot grid that has height 2 and width 1,</span>
+<span style="color:#888"># and set the first such subplot as active.</span>
+plt<span style="color:#333">.</span>subplot(<span style="color:#00d;font-weight:bold">2</span>, <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">1</span>)
 
-<span style="color:#998;font-style:italic"># Make the first plot</span>
-plt<span style="color:#000;font-weight:bold">.</span>plot(x, y_sin)
-plt<span style="color:#000;font-weight:bold">.</span>title(<span style="color:#d14">&#39;Sine&#39;</span>)
+<span style="color:#888"># Make the first plot</span>
+plt<span style="color:#333">.</span>plot(x, y_sin)
+plt<span style="color:#333">.</span>title(<span style="background-color:#fff0f0">&#39;Sine&#39;</span>)
 
-<span style="color:#998;font-style:italic"># Set the second subplot as active, and make the second plot.</span>
-plt<span style="color:#000;font-weight:bold">.</span>subplot(<span style="color:#099">2</span>, <span style="color:#099">1</span>, <span style="color:#099">2</span>)
-plt<span style="color:#000;font-weight:bold">.</span>plot(x, y_cos)
-plt<span style="color:#000;font-weight:bold">.</span>title(<span style="color:#d14">&#39;Cosine&#39;</span>)
+<span style="color:#888"># Set the second subplot as active, and make the second plot.</span>
+plt<span style="color:#333">.</span>subplot(<span style="color:#00d;font-weight:bold">2</span>, <span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">2</span>)
+plt<span style="color:#333">.</span>plot(x, y_cos)
+plt<span style="color:#333">.</span>title(<span style="background-color:#fff0f0">&#39;Cosine&#39;</span>)
 
-<span style="color:#998;font-style:italic"># Show the figure.</span>
-plt<span style="color:#000;font-weight:bold">.</span>show()
+<span style="color:#888"># Show the figure.</span>
+plt<span style="color:#333">.</span>show()
 </code></pre></div>
                     
                     <HR width="100%" id="EOF">

@@ -436,42 +436,42 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 <div class="post-body" v-pre>
                 
                     <h2 id="一抽象数据类型的实现">一、抽象数据类型的实现</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#998;font-style:italic">//数据类型的实现
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Counter</span>
-<span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#998;font-style:italic">//实例变量
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">final</span> String name<span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> count<span style="color:#000;font-weight:bold">;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#888">//数据类型的实现
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Counter</span>
+<span style="color:#333">{</span>
+    <span style="color:#888">//实例变量
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">final</span> String name<span style="color:#333">;</span>
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">int</span> count<span style="color:#333">;</span>
     
-    <span style="color:#998;font-style:italic">//构造函数
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">Counter</span><span style="color:#000;font-weight:bold">(</span>String id<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span> name <span style="color:#000;font-weight:bold">=</span> id<span style="color:#000;font-weight:bold">;</span> <span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#888">//构造函数
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">Counter</span><span style="color:#333">(</span>String id<span style="color:#333">)</span>
+    <span style="color:#333">{</span> name <span style="color:#333">=</span> id<span style="color:#333">;</span> <span style="color:#333">}</span>
     
-    <span style="color:#998;font-style:italic">//实例方法
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">increment</span><span style="color:#000;font-weight:bold">()</span>
-    <span style="color:#000;font-weight:bold">{</span> count<span style="color:#000;font-weight:bold">++;</span> <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">tally</span><span style="color:#000;font-weight:bold">()</span>
-    <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">return</span> count<span style="color:#000;font-weight:bold">;</span> <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">public</span> String <span style="color:#900;font-weight:bold">toString</span><span style="color:#000;font-weight:bold">()</span>
-    <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">return</span> count <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34; &#34;</span> <span style="color:#000;font-weight:bold">+</span> name<span style="color:#000;font-weight:bold">;</span> <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#888">//实例方法
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">increment</span><span style="color:#333">()</span>
+    <span style="color:#333">{</span> count<span style="color:#333">++;</span> <span style="color:#333">}</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">tally</span><span style="color:#333">()</span>
+    <span style="color:#333">{</span> <span style="color:#080;font-weight:bold">return</span> count<span style="color:#333">;</span> <span style="color:#333">}</span>
+    <span style="color:#080;font-weight:bold">public</span> String <span style="color:#06b;font-weight:bold">toString</span><span style="color:#333">()</span>
+    <span style="color:#333">{</span> <span style="color:#080;font-weight:bold">return</span> count <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#34; &#34;</span> <span style="color:#333">+</span> name<span style="color:#333">;</span> <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 
 
-<span style="color:#998;font-style:italic">//测试该数据类型的用例
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span><span style="color:#000;font-weight:bold">(</span>String<span style="color:#000;font-weight:bold">[]</span> args<span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#998;font-style:italic">//创建并初始化对象
-</span><span style="color:#998;font-style:italic"></span>    Counter heads <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Counter<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;heads&#34;</span><span style="color:#000;font-weight:bold">);</span>
-    Counter tails <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Counter<span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;tails&#34;</span><span style="color:#000;font-weight:bold">);</span>
+<span style="color:#888">//测试该数据类型的用例
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span><span style="color:#333">(</span>String<span style="color:#333">[]</span> args<span style="color:#333">)</span>
+<span style="color:#333">{</span>
+    <span style="color:#888">//创建并初始化对象
+</span><span style="color:#888"></span>    Counter heads <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> Counter<span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;heads&#34;</span><span style="color:#333">);</span>
+    Counter tails <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> Counter<span style="color:#333">(</span><span style="background-color:#fff0f0">&#34;tails&#34;</span><span style="color:#333">);</span>
     
-    <span style="color:#998;font-style:italic">//调用实例方法
-</span><span style="color:#998;font-style:italic"></span>    heads<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">incerment</span><span style="color:#000;font-weight:bold">();</span>
-    heads<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">increment</span><span style="color:#000;font-weight:bold">();</span>
-    tails<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">increment</span><span style="color:#000;font-weight:bold">();</span>
+    <span style="color:#888">//调用实例方法
+</span><span style="color:#888"></span>    heads<span style="color:#333">.</span><span style="color:#00c">incerment</span><span style="color:#333">();</span>
+    heads<span style="color:#333">.</span><span style="color:#00c">increment</span><span style="color:#333">();</span>
+    tails<span style="color:#333">.</span><span style="color:#00c">increment</span><span style="color:#333">();</span>
     
-    StdOut<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>heads <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34; &#34;</span> <span style="color:#000;font-weight:bold">+</span> tails<span style="color:#000;font-weight:bold">);</span>
-    StdOut<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">println</span><span style="color:#000;font-weight:bold">(</span>heads<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">tally</span> <span style="color:#000;font-weight:bold">+</span> tails<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">tally</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">;)</span>
-<span style="color:#000;font-weight:bold">}</span>
+    StdOut<span style="color:#333">.</span><span style="color:#00c">println</span><span style="color:#333">(</span>heads <span style="color:#333">+</span> <span style="background-color:#fff0f0">&#34; &#34;</span> <span style="color:#333">+</span> tails<span style="color:#333">);</span>
+    StdOut<span style="color:#333">.</span><span style="color:#00c">println</span><span style="color:#333">(</span>heads<span style="color:#333">.</span><span style="color:#00c">tally</span> <span style="color:#333">+</span> tails<span style="color:#333">.</span><span style="color:#00c">tally</span><span style="color:#333">()</span> <span style="color:#333">;)</span>
+<span style="color:#333">}</span>
 </code></pre></div><p><strong>相关概念</strong></p>
 <ul>
 <li>实例变量：

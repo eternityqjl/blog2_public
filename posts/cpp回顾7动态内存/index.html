@@ -864,23 +864,23 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p><code>shared_ptr</code>允许<strong>多个指针指向同一个对象</strong>；<code>unique_ptr</code>独占所指向的对象。标准库还顶一个名为<code>weak_ptr</code>的伴随类，是一种弱引用，指向<code>shared_ptr</code>所管理的对象。</p>
 <h3 id="shared_ptr类">shared_ptr类</h3>
 <p>类似于vector，<strong>智能指针</strong>也是模板，当我们创建一个智能指针时，必须提供额外信息——指针<strong>可以指向的类型</strong>。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>string<span style="color:#000;font-weight:bold">&gt;</span> p1;		<span style="color:#998;font-style:italic">//可以指向string
-</span><span style="color:#998;font-style:italic"></span>shared_ptr<span style="color:#000;font-weight:bold">&lt;</span>list<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;&gt;</span> p2;	<span style="color:#998;font-style:italic">//可以指向int的list
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> p1;		<span style="color:#888">//可以指向string
+</span><span style="color:#888"></span>shared_ptr<span style="color:#333">&lt;</span>list<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;&gt;</span> p2;	<span style="color:#888">//可以指向int的list
 </span></code></pre></div><p>默认初始化的智能指针中保存着一个空指针。使用方法与普通指针类似，解引用一个智能指针返回它指向的对象。</p>
 <p><strong>make_shared函数</strong>
 是最安全的用来分配和使用动态内存的标准库函数。</p>
 <p>此函数在动态内存中分配一个对象并初始化它，返回指向此对象的<code>shared_ptr</code>。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span> p3 <span style="color:#000;font-weight:bold">=</span> make_shared<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span>(<span style="color:#099">42</span>); <span style="color:#998;font-style:italic">//指向一个值为42的int的shared_ptr
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> p3 <span style="color:#333">=</span> make_shared<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span>(<span style="color:#00d;font-weight:bold">42</span>); <span style="color:#888">//指向一个值为42的int的shared_ptr
 </span></code></pre></div><p>使用make_shared时要指定创建对象的类型，方法与定义模板类相同，在函数名后跟一个尖括号，在其中给出类型，如上所示。另外，make_shared用其参数来构造给定类型的对象。例如调用<code>make_shared&lt;string&gt;</code>时传递参数必须与string的某个构造函数匹配。</p>
 <p>一般使用auto来定义一个对象来保存make_shared的结果：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">auto</span> p6 <span style="color:#000;font-weight:bold">=</span> make_shared<span style="color:#000;font-weight:bold">&lt;</span>vector<span style="color:#000;font-weight:bold">&lt;</span>string<span style="color:#000;font-weight:bold">&gt;&gt;</span>();
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">auto</span> p6 <span style="color:#333">=</span> make_shared<span style="color:#333">&lt;</span>vector<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;&gt;</span>();
 </code></pre></div><p><strong>shared_ptr的拷贝和赋值</strong></p>
 <p>每个shared_ptr都会记录<strong>指向相同对象</strong>的其他shared_ptr的数量。</p>
 <p>每个shared_ptr都有一个关联的计数器，称其为<strong>引用计数</strong>。无论何时拷贝一个shared_ptr，计数器都会递增。</p>
 <p>当我们给shared_ptr赋予一个新值或shared_ptr被销毁时，计数器就会递减。</p>
 <p>一旦一个shared_ptr的计数器变为0，它就会释放自己所管理的对象：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">auto</span> r <span style="color:#000;font-weight:bold">=</span> make_shared<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span>(<span style="color:#099">42</span>);
-r <span style="color:#000;font-weight:bold">=</span> q;	<span style="color:#998;font-style:italic">//给r赋值，令它指向另一个地址；递增q指向的对象的引用次数；递减r原来指向对象的引用次数；r原来指向的对象已经没有引用者，会自动释放
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">auto</span> r <span style="color:#333">=</span> make_shared<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span>(<span style="color:#00d;font-weight:bold">42</span>);
+r <span style="color:#333">=</span> q;	<span style="color:#888">//给r赋值，令它指向另一个地址；递增q指向的对象的引用次数；递减r原来指向对象的引用次数；r原来指向的对象已经没有引用者，会自动释放
 </span></code></pre></div><p><strong>shared_ptr自动销毁所管理的对象</strong></p>
 <p>当指向一个对象的最后一个shared_ptr被销毁时，shared_ptr类会自动销毁此对象。这是通过另一个特殊成员函数——<strong>析构函数</strong>完成的。析构函数一般用来释放对象多分配的资源。</p>
 <p>shared_ptr的析构函数会<strong>递减</strong>它所指向对象的引用次数，引用次数变为0后shared_ptr的析构函数就会自动销毁对象并释放内存。</p>
@@ -895,30 +895,30 @@ r <span style="color:#000;font-weight:bold">=</span> q;	<span style="color:#998;
 <p>使用运算符<code>new</code>分配内存，<code>delete</code>释放new分配的内存</p>
 <p><strong>使用new动态分配和初始化对象</strong></p>
 <p>在自由空间分配的<strong>内存是无名的</strong>，因此new无法为其分配的对象命名，而是返回一个<strong>指向该对象的指针</strong>：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>pi <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span>;	<span style="color:#998;font-style:italic">//pi指向一个动态分配的、未初始化的无名对象
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pi <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>;	<span style="color:#888">//pi指向一个动态分配的、未初始化的无名对象
 </span></code></pre></div><p>默认情况下动态分配的对象是默认初始化的，这意味着内置类型或组合类型的对象的值将是未定义的。类类型对象将用默认构造函数进行初始化：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">string <span style="color:#000;font-weight:bold">*</span>ps <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> string;	<span style="color:#998;font-style:italic">//初始化为空string
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>pi <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span>;	<span style="color:#998;font-style:italic">//pi指向一个未初始化的int
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">auto</span> p1 <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> <span style="color:#000;font-weight:bold">auto</span>(obj);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">string <span style="color:#333">*</span>ps <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> string;	<span style="color:#888">//初始化为空string
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pi <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>;	<span style="color:#888">//pi指向一个未初始化的int
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">auto</span> p1 <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#080;font-weight:bold">auto</span>(obj);
 </code></pre></div><p>可以通过括号包围的初始化器判断我们想到分配的对象类型，然后使用auto。但只有括号内仅有单一初始化器时才能使用auto。</p>
 <p><strong>动态分配的const对象</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>pci <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> (<span style="color:#099">1024</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pci <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> (<span style="color:#00d;font-weight:bold">1024</span>);
 </code></pre></div><p>一个动态分配的const必须进行初始化，对于一个定义了默认构造函数的类类型，其const动态对象可以隐式初始化，其他类型的对象必须显式初始化。上面new返回的是一个指向const的指针。</p>
 <p><strong>内存耗尽</strong></p>
 <p>程序内存耗尽后new表达式就会失败，然后抛出一个类型为<code>std::bad_alloc</code>的异常。</p>
 <p><strong>释放动态内存</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">delete</span> p;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">delete</span> p;
 </code></pre></div><p>delete接受一个指针，销毁其指向的对象，释放对应内存。</p>
 <p>向delete传递的指针值必须指向动态分配的内存或是一个空指针。释放一块非new分配的内存，其行为未定义。</p>
 <p><strong>动态对象的生存周期直到被释放为止</strong></p>
 <p>返回指向动态内存的指针（而不是智能指针）的函数给其调用者增加了额外负担，调用者必须记得释放内存。</p>
 <h3 id="shared_ptr和new结合使用">shared_ptr和new结合使用</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span> p2(<span style="color:#000;font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span>(<span style="color:#099">42</span>));
-shared_ptr<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span> p3 <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span>(<span style="color:#099">42</span>);	<span style="color:#998;font-style:italic">//错误，必须使用直接初始化
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">shared_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> p2(<span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>(<span style="color:#00d;font-weight:bold">42</span>));
+shared_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> p3 <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>(<span style="color:#00d;font-weight:bold">42</span>);	<span style="color:#888">//错误，必须使用直接初始化
 </span></code></pre></div><p>接受指针参数的智能指针的构造函数时explicit的，我们不能将一个内置指针隐式转换为一个智能指针，必须使用直接初始化形式来初始化一个智能指针.</p>
 <p>不要混用内置指针和智能指针。</p>
 <p><strong>其他shared_ptr操作</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">p.reset(<span style="color:#000;font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span>(<span style="color:#099">1024</span>));
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">p.reset(<span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>(<span style="color:#00d;font-weight:bold">1024</span>));
 </code></pre></div><p>用reset将一个新的指针赋予一个shared_ptr.上面的例子中p指向了一个新对象。</p>
 <h3 id="智能指针和异常">智能指针和异常</h3>
 <p>使用智能指针时，即使程序块过早结束（发生异常），智能指针也能确保在内存不再需要时将其释放。</p>
@@ -926,17 +926,17 @@ shared_ptr<span style="color:#000;font-weight:bold">&lt;</span><span style="colo
 <h3 id="unique_ptr">unique_ptr</h3>
 <p>一个unique_ptr<strong>拥有</strong>它所指向的对象，某个时刻只能有<strong>一个unique_ptr指向一个给定对象</strong>，因此其<strong>不支持普通的拷贝或赋值</strong>操作；当unique_ptr被销毁时，它所指向的对象也被销毁。</p>
 <p>unique_ptr没有类似于make_shared的标准库函数返回一个shared_ptr；我们定义一个unique_ptr时，需要将其绑定到一个<strong>new返回的指针</strong>上；初始化unique_ptr必须采用<strong>直接初始化</strong>形式，即使用括号直接初始化。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span> p2(<span style="color:#000;font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span>(<span style="color:#099">42</span>));	<span style="color:#998;font-style:italic">//p2指向一个值为42的int
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> p2(<span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>(<span style="color:#00d;font-weight:bold">42</span>));	<span style="color:#888">//p2指向一个值为42的int
 </span></code></pre></div><p>unique_ptr的操作：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#000;font-weight:bold">&lt;</span>T, D<span style="color:#000;font-weight:bold">&gt;</span> u(d)	<span style="color:#998;font-style:italic">//空unique_ptr，指向类型为T的对象，用类型为D的对象d代替delete
-</span><span style="color:#998;font-style:italic"></span>u <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">nullptr</span>	<span style="color:#998;font-style:italic">//释放u指向的对象，将u置为空
-</span><span style="color:#998;font-style:italic"></span>u.release()	<span style="color:#998;font-style:italic">//u放弃对指针的控制权，返回指针，并将u置为空
-</span><span style="color:#998;font-style:italic"></span>u.reset()	<span style="color:#998;font-style:italic">//释放u指向的对象
-</span><span style="color:#998;font-style:italic"></span>u.reset(q)	<span style="color:#998;font-style:italic">//q为内置指针，另u指向这个对象
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#333">&lt;</span>T, D<span style="color:#333">&gt;</span> u(d)	<span style="color:#888">//空unique_ptr，指向类型为T的对象，用类型为D的对象d代替delete
+</span><span style="color:#888"></span>u <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">nullptr</span>	<span style="color:#888">//释放u指向的对象，将u置为空
+</span><span style="color:#888"></span>u.release()	<span style="color:#888">//u放弃对指针的控制权，返回指针，并将u置为空
+</span><span style="color:#888"></span>u.reset()	<span style="color:#888">//释放u指向的对象
+</span><span style="color:#888"></span>u.reset(q)	<span style="color:#888">//q为内置指针，另u指向这个对象
 </span></code></pre></div><p>虽然我们不能拷贝或赋值unique_ptr，但可以通过调用<strong>release或reset</strong>将指针的所有权从一个unique_ptr转移给另一个unique：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#000;font-weight:bold">&lt;</span>string<span style="color:#000;font-weight:bold">&gt;</span> p2(p1.release());<span style="color:#998;font-style:italic">//release将p1置为空
-</span><span style="color:#998;font-style:italic"></span>unique_ptr<span style="color:#000;font-weight:bold">&lt;</span>string<span style="color:#000;font-weight:bold">&gt;</span> p3(<span style="color:#000;font-weight:bold">new</span> string(<span style="color:#d14">&#34;Trex&#34;</span>));
-p2.reset(p3.release());	<span style="color:#998;font-style:italic">//reset释放了p2原来指向的内存
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> p2(p1.release());<span style="color:#888">//release将p1置为空
+</span><span style="color:#888"></span>unique_ptr<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> p3(<span style="color:#080;font-weight:bold">new</span> string(<span style="background-color:#fff0f0">&#34;Trex&#34;</span>));
+p2.reset(p3.release());	<span style="color:#888">//reset释放了p2原来指向的内存
 </span></code></pre></div><h3 id="weak_ptr">weak_ptr</h3>
 <p>weak_ptr是一种<strong>不控制所指向对象生存期</strong>的智能指针，它指向一个<strong>shared_ptr管理的对象</strong>。将一个weak_ptr绑定到shared_ptr<strong>不会改变对象的引用计数</strong>。一旦最后一只指向对象的shared_ptr被销毁，对象就会被释放，即使有weak_ptr指向对象，对象还是会被释放。weak_ptr的名字抓住了这种指针弱共享的特点。</p>
 <h2 id="动态数组">动态数组</h2>
@@ -948,12 +948,12 @@ p2.reset(p3.release());	<span style="color:#998;font-style:italic">//reset释放
 <p>大多数应用应该使用标准库容器而不是动态分配的数组。使用容器更为简单，更不容易出现内存管理错误并可能有更好的性能。</p>
 <h3 id="new和数组">new和数组</h3>
 <p>为了让new分配一个对象数组，要在类型名之后跟一对<strong>方括号</strong>，在其中要指明分配对象的数目。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>pia <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span>[<span style="color:#099">32</span>];	<span style="color:#998;font-style:italic">//pia指向第一个int
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>pia <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>[<span style="color:#00d;font-weight:bold">32</span>];	<span style="color:#888">//pia指向第一个int
 </span></code></pre></div><p>上面的例子中，new分配32个int对象并返回指向第一个int对象的指针。</p>
 <p>也可以用一个表示数组类型的<strong>类型别名</strong>来分配一个数组，这样new表达式就不需要方括号了。</p>
 <p><strong>智能指针和动态数组</strong></p>
 <p>标准库提供了一个可以管理new分配的数组的unique_ptr版本。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span>[]<span style="color:#000;font-weight:bold">&gt;</span> up(<span style="color:#000;font-weight:bold">new</span> <span style="color:#458;font-weight:bold">int</span>[<span style="color:#099">10</span>]);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">unique_ptr<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span>[]<span style="color:#333">&gt;</span> up(<span style="color:#080;font-weight:bold">new</span> <span style="color:#339;font-weight:bold">int</span>[<span style="color:#00d;font-weight:bold">10</span>]);
 </code></pre></div><p>为了用一个unique_ptr管理动态数组，必须在一个动态类型后面跟一对方括号。</p>
 <h3 id="allocator类">allocator类</h3>
 <p>标准库allocator类定义在头文件memory中，其帮助我们将内存分配和对象构造分离开来。它提供了一种类型感知的内存分配方法。</p>

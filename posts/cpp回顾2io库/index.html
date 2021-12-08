@@ -882,18 +882,18 @@ strm::goodbit	//用来指出流位处于错误状态。
 <li>一个输出流可能被关联到另一个输出流。</li>
 </ul>
 <p>刷新输出缓冲区：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;hi&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> endl;	<span style="color:#998;font-style:italic">//输出hi和一个空格，然后刷新缓冲区
-</span><span style="color:#998;font-style:italic"></span>cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;hi&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> flush;	<span style="color:#998;font-style:italic">//输出hi，然后刷新缓冲区，不附加额外字符
-</span><span style="color:#998;font-style:italic"></span>cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;hi&#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> ends;	<span style="color:#998;font-style:italic">//输出hi和一个空字符，然后刷新缓冲区
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;hi&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;	<span style="color:#888">//输出hi和一个空格，然后刷新缓冲区
+</span><span style="color:#888"></span>cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;hi&#34;</span> <span style="color:#333">&lt;&lt;</span> flush;	<span style="color:#888">//输出hi，然后刷新缓冲区，不附加额外字符
+</span><span style="color:#888"></span>cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;hi&#34;</span> <span style="color:#333">&lt;&lt;</span> ends;	<span style="color:#888">//输出hi和一个空字符，然后刷新缓冲区
 </span></code></pre></div><h3 id="文件输入输出">文件输入输出</h3>
 <p>头文件定义了如上所示的三个类型来住处文件IO。</p>
 <p>除了继承自iostream类型的行为外，fstream中的定义还增加了新的成员来管理与流关联的文件：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">fstream fstrm;	<span style="color:#998;font-style:italic">//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
-</span><span style="color:#998;font-style:italic"></span>fstream <span style="color:#900;font-weight:bold">fstrm</span>(s);	<span style="color:#998;font-style:italic">//创建一个fstream并打开名为s的文件
-</span><span style="color:#998;font-style:italic"></span>fstream <span style="color:#900;font-weight:bold">fstrm</span>(s,mode);	<span style="color:#998;font-style:italic">//与上一个相同，但按指定mode打开
-</span><span style="color:#998;font-style:italic"></span>fstrm.open(s)	<span style="color:#998;font-style:italic">//打开名为s的文件并将文件与fstrm绑定
-</span><span style="color:#998;font-style:italic"></span>fstrm.close()	<span style="color:#998;font-style:italic">//关闭与fstrm绑定的文件，返回void
-</span><span style="color:#998;font-style:italic"></span>fstrm.is_open()	<span style="color:#998;font-style:italic">//返回一个bool, 指出关联的文件是否成功打开尚未关闭
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">fstream fstrm;	<span style="color:#888">//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
+</span><span style="color:#888"></span>fstream <span style="color:#06b;font-weight:bold">fstrm</span>(s);	<span style="color:#888">//创建一个fstream并打开名为s的文件
+</span><span style="color:#888"></span>fstream <span style="color:#06b;font-weight:bold">fstrm</span>(s,mode);	<span style="color:#888">//与上一个相同，但按指定mode打开
+</span><span style="color:#888"></span>fstrm.open(s)	<span style="color:#888">//打开名为s的文件并将文件与fstrm绑定
+</span><span style="color:#888"></span>fstrm.close()	<span style="color:#888">//关闭与fstrm绑定的文件，返回void
+</span><span style="color:#888"></span>fstrm.is_open()	<span style="color:#888">//返回一个bool, 指出关联的文件是否成功打开尚未关闭
 </span></code></pre></div><h4 id="使用文件流对象">使用文件流对象</h4>
 <h4 id="文件模式">文件模式</h4>
 <table>

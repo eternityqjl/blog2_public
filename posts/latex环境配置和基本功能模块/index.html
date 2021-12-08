@@ -1105,57 +1105,57 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>这里使用<code>xeLatTex</code>进行编译。</p>
 <h2 id="基本文档和中英文">基本文档和中英文</h2>
 <h3 id="基本文档">基本文档</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\documentclass</span><span style="color:#0086b3">{</span>article<span style="color:#0086b3">}</span>
-<span style="color:#998;font-style:italic">% 这里是导言区
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\documentclass</span><span style="color:#007020">{</span>article<span style="color:#007020">}</span>
+<span style="color:#888">% 这里是导言区
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
 Hello, world!
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
 </code></pre></div><p>Tex以<code>%</code>作为注释标记。若要输出百分号<code>%</code>字符本身，则要在前面加上反斜杠<code>\</code>进行转义（escape）。</p>
 <h3 id="中英文混排">中英文混排</h3>
 <p>目前XeTeX 原生支持 Unicode，并且可以方便地调用系统字体。可以说解决了困扰中国 TeX 使用者多年的大问题。至此，我们只需要使用几个简单的宏包，就能完成中文支持了。</p>
 <p>我们使用<code>\usepackage{}</code>来调用宏包。</p>
 <p>另外，我们使用<code>CTex</code>宏集来处理中文的版式和标点。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\documentclass</span><span style="color:#008080">[UTF8]</span><span style="color:#0086b3">{</span>ctexart<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\documentclass</span><span style="color:#00c">[UTF8]</span><span style="color:#007020">{</span>ctexart<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
 你好，world!
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
 </code></pre></div><p>与开始相比，文档类别变为<code>ctexart</code>，并且增加了文档类选项<code>UTF8</code>.</p>
 <h3 id="组织文章基本内容">组织文章基本内容</h3>
 <ol>
 <li>标题、作者、日期</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\documentclass</span><span style="color:#008080">[UTF8]</span><span style="color:#0086b3">{</span>ctexart<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\title</span><span style="color:#0086b3">{</span>你好，world!<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\author</span><span style="color:#0086b3">{</span>Eternity<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\date</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\today</span><span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\maketitle</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\documentclass</span><span style="color:#00c">[UTF8]</span><span style="color:#007020">{</span>ctexart<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\title</span><span style="color:#007020">{</span>你好，world!<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\author</span><span style="color:#007020">{</span>Eternity<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\date</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\today</span><span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\maketitle</span>
 你好，world!
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
 </code></pre></div><p>以上代码中的控制序列<code>\maketitle</code>能将在导言区中定义的标题、作者、日期按照预定的格式展现出来。</p>
 <p>可以通过宏包<code>titling</code>修改上述默认格式。</p>
 <p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/tex_basic_1.PNG" alt=""></p>
 <ol start="2">
 <li>章节和段落</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\documentclass</span><span style="color:#008080">[UTF8]</span><span style="color:#0086b3">{</span>ctexart<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\title</span><span style="color:#0086b3">{</span>你好，world!<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\author</span><span style="color:#0086b3">{</span>Liam<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\date</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\today</span><span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\maketitle</span>
-<span style="color:#000;font-weight:bold">\section</span><span style="color:#0086b3">{</span>你好中国<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\documentclass</span><span style="color:#00c">[UTF8]</span><span style="color:#007020">{</span>ctexart<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\title</span><span style="color:#007020">{</span>你好，world!<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\author</span><span style="color:#007020">{</span>Liam<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\date</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\today</span><span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\maketitle</span>
+<span style="color:#080;font-weight:bold">\section</span><span style="color:#007020">{</span>你好中国<span style="color:#007020">}</span>
 中国在East Asia.
-<span style="color:#000;font-weight:bold">\subsection</span><span style="color:#0086b3">{</span>Hello Beijing<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\subsection</span><span style="color:#007020">{</span>Hello Beijing<span style="color:#007020">}</span>
 北京是capital of China.
-<span style="color:#000;font-weight:bold">\subsubsection</span><span style="color:#0086b3">{</span>Hello Dongcheng District<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\paragraph</span><span style="color:#0086b3">{</span>Tian&#39;anmen Square<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\subsubsection</span><span style="color:#007020">{</span>Hello Dongcheng District<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\paragraph</span><span style="color:#007020">{</span>Tian&#39;anmen Square<span style="color:#007020">}</span>
 is in the center of Beijing
-<span style="color:#000;font-weight:bold">\subparagraph</span><span style="color:#0086b3">{</span>Chairman Mao<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\subparagraph</span><span style="color:#007020">{</span>Chairman Mao<span style="color:#007020">}</span>
 is in the center of 天安门广场。
-<span style="color:#000;font-weight:bold">\subsection</span><span style="color:#0086b3">{</span>Hello 山东<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\paragraph</span><span style="color:#0086b3">{</span>山东大学<span style="color:#0086b3">}</span> is one of the best university in 山东。
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\subsection</span><span style="color:#007020">{</span>Hello 山东<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\paragraph</span><span style="color:#007020">{</span>山东大学<span style="color:#007020">}</span> is one of the best university in 山东。
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
 </code></pre></div><p>文档类<code>article</code>/<code>ctexart</code>中定义了5个控制序列来调整文章组织结构：</p>
 <ul>
 <li><code>\section{·}</code></li>
@@ -1175,86 +1175,86 @@ is in the center of 天安门广场。
 <h3 id="页边距">页边距</h3>
 <p>使用<code>geometry</code> 宏包。<a href="https://texdoc.org/serve/geometry.pdf/0">geometry文档</a></p>
 <p>比如我希望，将纸张的长度设置为 20cm、宽度设置为 15cm、左边距 1cm、右边距 2cm、上边距 3cm、下边距 4cm，可以在导言区加上这样几行：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\usepackage</span><span style="color:#0086b3">{</span>geometry<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\geometry</span><span style="color:#0086b3">{</span>papersize=<span style="color:#0086b3">{</span>20cm,15cm<span style="color:#0086b3">}}</span>
-<span style="color:#000;font-weight:bold">\geometry</span><span style="color:#0086b3">{</span>left=1cm,right=2cm,top=3cm,bottom=4cm<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\usepackage</span><span style="color:#007020">{</span>geometry<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\geometry</span><span style="color:#007020">{</span>papersize=<span style="color:#007020">{</span>20cm,15cm<span style="color:#007020">}}</span>
+<span style="color:#080;font-weight:bold">\geometry</span><span style="color:#007020">{</span>left=1cm,right=2cm,top=3cm,bottom=4cm<span style="color:#007020">}</span>
 </code></pre></div><h3 id="页眉页脚">页眉页脚</h3>
 <p>设置页眉页脚，推荐使用 <code>fancyhdr</code> 宏包。<a href="https://texdoc.org/serve/fancyhdr.pdf/0">fancyhdr文档</a></p>
 <p>比如我希望，在页眉左边写上我的名字，中间写上今天的日期，右边写上我的电话；页脚的正中写上页码；页眉和正文之间有一道宽为 0.4pt 的横线分割，可以在导言区加上如下几行：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\usepackage</span><span style="color:#0086b3">{</span>fancyhdr<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\pagestyle</span><span style="color:#0086b3">{</span>fancy<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\lhead</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\author</span><span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\chead</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\date</span><span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\rhead</span><span style="color:#0086b3">{</span>152xxxxxxxx<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\lfoot</span><span style="color:#0086b3">{}</span>
-<span style="color:#000;font-weight:bold">\cfoot</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\thepage</span><span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\rfoot</span><span style="color:#0086b3">{}</span>
-<span style="color:#000;font-weight:bold">\renewcommand</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\headrulewidth</span><span style="color:#0086b3">}{</span>0.4pt<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\renewcommand</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\headwidth</span><span style="color:#0086b3">}{</span><span style="color:#000;font-weight:bold">\textwidth</span><span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\renewcommand</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\footrulewidth</span><span style="color:#0086b3">}{</span>0pt<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\usepackage</span><span style="color:#007020">{</span>fancyhdr<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\pagestyle</span><span style="color:#007020">{</span>fancy<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\lhead</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\author</span><span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\chead</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\date</span><span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\rhead</span><span style="color:#007020">{</span>152xxxxxxxx<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\lfoot</span><span style="color:#007020">{}</span>
+<span style="color:#080;font-weight:bold">\cfoot</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\thepage</span><span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\rfoot</span><span style="color:#007020">{}</span>
+<span style="color:#080;font-weight:bold">\renewcommand</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\headrulewidth</span><span style="color:#007020">}{</span>0.4pt<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\renewcommand</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\headwidth</span><span style="color:#007020">}{</span><span style="color:#080;font-weight:bold">\textwidth</span><span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\renewcommand</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\footrulewidth</span><span style="color:#007020">}{</span>0pt<span style="color:#007020">}</span>
 </code></pre></div><h3 id="行间距">行间距</h3>
 <p>我们可以通过 <code>setspace</code> 宏包提供的命令来调整行间距。比如在导言区添加如下内容，可以将行距设置为字号的 1.5 倍：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\usepackage</span><span style="color:#0086b3">{</span>setspace<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\onehalfspacing</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\usepackage</span><span style="color:#007020">{</span>setspace<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\onehalfspacing</span>
 </code></pre></div><h3 id="段间距">段间距</h3>
 <p>我们可以通过修改长度 <code>\parskip</code> 的值来调整段间距。例如在导言区添加以下内容</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\addtolength</span><span style="color:#0086b3">{</span><span style="color:#000;font-weight:bold">\parskip</span><span style="color:#0086b3">}{</span>.4em<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\addtolength</span><span style="color:#007020">{</span><span style="color:#080;font-weight:bold">\parskip</span><span style="color:#007020">}{</span>.4em<span style="color:#007020">}</span>
 </code></pre></div><h2 id="代码">代码</h2>
 <p>希望代码中的特殊字符不被LaTex处理，并且希望有代码高亮。</p>
 <p>使用<code>listings</code>宏包来在tex中添加代码段。基本设置参数如下：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\usepackage</span><span style="color:#0086b3">{</span>listings<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\lstset</span><span style="color:#0086b3">{</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\usepackage</span><span style="color:#007020">{</span>listings<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\lstset</span><span style="color:#007020">{</span>
 language=Matlab,
 escapeinside=``, 
 numbers=left,
-numberstyle=<span style="color:#000;font-weight:bold">\tiny</span>,
+numberstyle=<span style="color:#080;font-weight:bold">\tiny</span>,
 breaklines=true, 
-backgroundcolor=<span style="color:#000;font-weight:bold">\color</span><span style="color:#0086b3">{</span>lightgray!40!white<span style="color:#0086b3">}</span>,
+backgroundcolor=<span style="color:#080;font-weight:bold">\color</span><span style="color:#007020">{</span>lightgray!40!white<span style="color:#007020">}</span>,
 frame=single,
 framerule=0pt,
 extendedchars=false, 
-keywordstyle=<span style="color:#000;font-weight:bold">\color</span><span style="color:#0086b3">{</span>blue!70<span style="color:#0086b3">}</span><span style="color:#000;font-weight:bold">\bfseries</span>, 
-basicstyle=<span style="color:#000;font-weight:bold">\ttfamily</span>,
-commentstyle=<span style="color:#000;font-weight:bold">\ttfamily\color</span><span style="color:#0086b3">{</span>green!40!black<span style="color:#0086b3">}</span>, 
-showstringspaces=false<span style="color:#0086b3">}</span>
+keywordstyle=<span style="color:#080;font-weight:bold">\color</span><span style="color:#007020">{</span>blue!70<span style="color:#007020">}</span><span style="color:#080;font-weight:bold">\bfseries</span>, 
+basicstyle=<span style="color:#080;font-weight:bold">\ttfamily</span>,
+commentstyle=<span style="color:#080;font-weight:bold">\ttfamily\color</span><span style="color:#007020">{</span>green!40!black<span style="color:#007020">}</span>, 
+showstringspaces=false<span style="color:#007020">}</span>
 </code></pre></div><h2 id="图片">图片</h2>
 <p>在 LaTeX 中插入图片，有很多种方式。最好用的应当属利用 <code>graphicx</code> 宏包提供的 <code>\includegraphics</code> 命令。比如你在你的 TeX 源文件同目录下，有名为 <code>a.jpg</code> 的图片，你可以用这样的方式将它插入到输出文档中：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\documentclass</span><span style="color:#0086b3">{</span>article<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\usepackage</span><span style="color:#0086b3">{</span>graphicx<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\includegraphics</span><span style="color:#0086b3">{</span>a.jpg<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>document<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\documentclass</span><span style="color:#007020">{</span>article<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\usepackage</span><span style="color:#007020">{</span>graphicx<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\includegraphics</span><span style="color:#007020">{</span>a.jpg<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>document<span style="color:#007020">}</span>
 </code></pre></div><p>图片可能很大，超过了输出文件的纸张大小，或者干脆就是你自己觉得输出的效果不爽。这时候你可以用 <code>\includegraphics</code> 控制序列的可选参数来控制。比如</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\includegraphics</span><span style="color:#008080">[width = .8\textwidth]</span><span style="color:#0086b3">{</span>a.jpg<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\includegraphics</span><span style="color:#00c">[width = .8\textwidth]</span><span style="color:#007020">{</span>a.jpg<span style="color:#007020">}</span>
 </code></pre></div><p>这样图片的宽度会被缩放至<strong>页面宽度的百分之八十</strong>，图片的总高度会按比例缩放。</p>
 <blockquote>
 <p><code>\includegraphics</code>还有很多其他控制序列可以选择使用，可以查看宏包选择。</p>
 </blockquote>
 <h2 id="表格">表格</h2>
 <p><code>tabular</code> 环境提供了最简单的表格功能。它用 <code>\hline</code> 命令表示横线，在列格式中用 <code>|</code> 表示竖线；用 <code>&amp;</code> 来分列，用 <code>\\</code> 来换行；每列可以采用居左、居中、居右等横向对齐方式，分别用 <code>l</code>、<code>c</code>、<code>r</code> 来表示。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>tabular<span style="color:#0086b3">}{</span>|l|c|r|<span style="color:#0086b3">}</span>
- <span style="color:#000;font-weight:bold">\hline</span>
-操作系统<span style="color:#0086b3">&amp;</span> 发行版<span style="color:#0086b3">&amp;</span> 编辑器<span style="color:#000;font-weight:bold">\\</span>
- <span style="color:#000;font-weight:bold">\hline</span>
-Windows <span style="color:#0086b3">&amp;</span> MikTeX <span style="color:#0086b3">&amp;</span> TexMakerX <span style="color:#000;font-weight:bold">\\</span>
- <span style="color:#000;font-weight:bold">\hline</span>
-Unix/Linux <span style="color:#0086b3">&amp;</span> teTeX <span style="color:#0086b3">&amp;</span> Kile <span style="color:#000;font-weight:bold">\\</span>
- <span style="color:#000;font-weight:bold">\hline</span>
-Mac OS <span style="color:#0086b3">&amp;</span> MacTeX <span style="color:#0086b3">&amp;</span> TeXShop <span style="color:#000;font-weight:bold">\\</span>
- <span style="color:#000;font-weight:bold">\hline</span>
-通用<span style="color:#0086b3">&amp;</span> TeX Live <span style="color:#0086b3">&amp;</span> TeXworks <span style="color:#000;font-weight:bold">\\</span>
- <span style="color:#000;font-weight:bold">\hline</span>
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>tabular<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>tabular<span style="color:#007020">}{</span>|l|c|r|<span style="color:#007020">}</span>
+ <span style="color:#080;font-weight:bold">\hline</span>
+操作系统<span style="color:#007020">&amp;</span> 发行版<span style="color:#007020">&amp;</span> 编辑器<span style="color:#080;font-weight:bold">\\</span>
+ <span style="color:#080;font-weight:bold">\hline</span>
+Windows <span style="color:#007020">&amp;</span> MikTeX <span style="color:#007020">&amp;</span> TexMakerX <span style="color:#080;font-weight:bold">\\</span>
+ <span style="color:#080;font-weight:bold">\hline</span>
+Unix/Linux <span style="color:#007020">&amp;</span> teTeX <span style="color:#007020">&amp;</span> Kile <span style="color:#080;font-weight:bold">\\</span>
+ <span style="color:#080;font-weight:bold">\hline</span>
+Mac OS <span style="color:#007020">&amp;</span> MacTeX <span style="color:#007020">&amp;</span> TeXShop <span style="color:#080;font-weight:bold">\\</span>
+ <span style="color:#080;font-weight:bold">\hline</span>
+通用<span style="color:#007020">&amp;</span> TeX Live <span style="color:#007020">&amp;</span> TeXworks <span style="color:#080;font-weight:bold">\\</span>
+ <span style="color:#080;font-weight:bold">\hline</span>
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>tabular<span style="color:#007020">}</span>
 </code></pre></div><p>效果如下：</p>
 <h2 id="数学公式">数学公式</h2>
 <p>在导言区添加<code>amsmath</code>宏包来使用数学功能：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\usepackage</span><span style="color:#0086b3">{</span>amsmath<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\usepackage</span><span style="color:#007020">{</span>amsmath<span style="color:#007020">}</span>
 </code></pre></div><h3 id="数学模式">数学模式</h3>
 <p>与Markdown中相同，LaTex共有<strong>行内公式</strong>和<strong>行间公式</strong>两种模式。</p>
 <p>在行文中，使用 <code>$ ... $</code> 可以插入行内公式，使用 <code>\[ ... \]</code> 可以插入行间公式，如果需要对行间公式进行编号，则可以使用 <code>equation</code> 环境：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>equation<span style="color:#0086b3">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>equation<span style="color:#007020">}</span>
 ...
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>equation<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>equation<span style="color:#007020">}</span>
 </code></pre></div><blockquote>
 <p>无编号的行间公式也可以使用 <code>\begin{displaymath} ... \end{displaymath}</code> 或者 <code>\begin{equation*} ... \end{equation*}</code> 来插入，但略显麻烦。（<code>equation*</code> 中的 <code>*</code> 表示环境不编号）</p>
 <p>也有 plainTeX 风格的 <code>$$ ... $$</code> 来插入不编号的行间公式。但是在 LaTeX 中这样做会改变行文的默认行间距，不推荐。</p>
@@ -1269,39 +1269,39 @@ Mac OS <span style="color:#0086b3">&amp;</span> MacTeX <span style="color:#0086b
 <li>长公式</li>
 </ol>
 <p>不对齐：无须对齐的长公式可以使用 <code>multline</code> 环境。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>multline<span style="color:#0086b3">}</span>
-x = a+b+c+<span style="color:#0086b3">{}</span> <span style="color:#000;font-weight:bold">\\</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>multline<span style="color:#007020">}</span>
+x = a+b+c+<span style="color:#007020">{}</span> <span style="color:#080;font-weight:bold">\\</span>
 d+e+f+g
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>multline<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>multline<span style="color:#007020">}</span>
 </code></pre></div><p>效果如下：</p>
 <p>如果不需要编号，可以使用 <code>multline*</code> 环境代替。</p>
 <p>对齐：需要对齐的公式，可以使用 <code>aligned</code> <em>次环境</em>来实现，它必须包含在数学环境之内。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#d14">\[</span><span style="color:#008080">\begin</span><span style="color:#0086b3">{aligned}
-</span><span style="color:#0086b3">x </span><span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">{}&amp; a</span><span style="color:#000;font-weight:bold">+</span><span style="color:#0086b3">b</span><span style="color:#000;font-weight:bold">+</span><span style="color:#0086b3">c</span><span style="color:#000;font-weight:bold">+</span><span style="color:#0086b3">{} </span><span style="color:#008080">\\</span><span style="color:#0086b3">
-</span><span style="color:#0086b3">&amp;d</span><span style="color:#000;font-weight:bold">+</span><span style="color:#0086b3">e</span><span style="color:#000;font-weight:bold">+</span><span style="color:#0086b3">f</span><span style="color:#000;font-weight:bold">+</span><span style="color:#0086b3">g
-</span><span style="color:#0086b3"></span><span style="color:#008080">\end</span><span style="color:#0086b3">{aligned}</span><span style="color:#d14">\]</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="background-color:#fff0f0">\[</span><span style="color:#963">\begin</span><span style="color:#007020">{aligned}
+</span><span style="color:#007020">x </span><span style="color:#333">=</span><span style="color:#007020">{}&amp; a</span><span style="color:#333">+</span><span style="color:#007020">b</span><span style="color:#333">+</span><span style="color:#007020">c</span><span style="color:#333">+</span><span style="color:#007020">{} </span><span style="color:#963">\\</span><span style="color:#007020">
+</span><span style="color:#007020">&amp;d</span><span style="color:#333">+</span><span style="color:#007020">e</span><span style="color:#333">+</span><span style="color:#007020">f</span><span style="color:#333">+</span><span style="color:#007020">g
+</span><span style="color:#007020"></span><span style="color:#963">\end</span><span style="color:#007020">{aligned}</span><span style="background-color:#fff0f0">\]</span>
 </code></pre></div><p>效果如下：</p>
 <ol start="2">
 <li>公式组</li>
 </ol>
 <p>无需对齐的公式组可以使用 <code>gather</code> 环境，需要对齐的公式组可以使用 <code>align</code> 环境。他们都带有编号，如果不需要编号可以使用带<code>*</code>的版本。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>gather<span style="color:#0086b3">}</span>
-a = b+c+d <span style="color:#000;font-weight:bold">\\</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>gather<span style="color:#007020">}</span>
+a = b+c+d <span style="color:#080;font-weight:bold">\\</span>
 x = y+z
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>gather<span style="color:#0086b3">}</span>
-<span style="color:#000;font-weight:bold">\begin</span><span style="color:#0086b3">{</span>align<span style="color:#0086b3">}</span>
-a <span style="color:#0086b3">&amp;</span>= b+c+d <span style="color:#000;font-weight:bold">\\</span>
-x <span style="color:#0086b3">&amp;</span>= y+z
-<span style="color:#000;font-weight:bold">\end</span><span style="color:#0086b3">{</span>align<span style="color:#0086b3">}</span>
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>gather<span style="color:#007020">}</span>
+<span style="color:#080;font-weight:bold">\begin</span><span style="color:#007020">{</span>align<span style="color:#007020">}</span>
+a <span style="color:#007020">&amp;</span>= b+c+d <span style="color:#080;font-weight:bold">\\</span>
+x <span style="color:#007020">&amp;</span>= y+z
+<span style="color:#080;font-weight:bold">\end</span><span style="color:#007020">{</span>align<span style="color:#007020">}</span>
 </code></pre></div><p>效果如下：</p>
 <ol start="3">
 <li>分段函数</li>
 </ol>
 <p>分段函数可以用<code>cases</code>次环境来实现，它必须包含在数学环境之内。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="color:#d14">\[</span><span style="color:#0086b3"> y</span><span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3"> </span><span style="color:#008080">\begin</span><span style="color:#0086b3">{cases}
-</span><span style="color:#0086b3"></span><span style="color:#000;font-weight:bold">-</span><span style="color:#0086b3">x,</span><span style="color:#008080">\quad</span><span style="color:#0086b3"> x</span><span style="color:#008080">\leq</span><span style="color:#0086b3"> </span><span style="color:#099">0</span><span style="color:#0086b3"> </span><span style="color:#008080">\\</span><span style="color:#0086b3">
-</span><span style="color:#0086b3">x,</span><span style="color:#008080">\quad</span><span style="color:#0086b3"> x&gt;</span><span style="color:#099">0</span><span style="color:#0086b3">
-</span><span style="color:#0086b3"></span><span style="color:#008080">\end</span><span style="color:#0086b3">{cases} </span><span style="color:#d14">\]</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-tex" data-lang="tex"><span style="background-color:#fff0f0">\[</span><span style="color:#007020"> y</span><span style="color:#333">=</span><span style="color:#007020"> </span><span style="color:#963">\begin</span><span style="color:#007020">{cases}
+</span><span style="color:#007020"></span><span style="color:#333">-</span><span style="color:#007020">x,</span><span style="color:#963">\quad</span><span style="color:#007020"> x</span><span style="color:#963">\leq</span><span style="color:#007020"> </span><span style="color:#60e;font-weight:bold">0</span><span style="color:#007020"> </span><span style="color:#963">\\</span><span style="color:#007020">
+</span><span style="color:#007020">x,</span><span style="color:#963">\quad</span><span style="color:#007020"> x&gt;</span><span style="color:#60e;font-weight:bold">0</span><span style="color:#007020">
+</span><span style="color:#007020"></span><span style="color:#963">\end</span><span style="color:#007020">{cases} </span><span style="background-color:#fff0f0">\]</span>
 </code></pre></div>
                     
                     <HR width="100%" id="EOF">

@@ -855,45 +855,45 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>#define为一宏定义语句，通常用它来定义常量(包括无参量与带参量)，以及用来实现那些“表面似和善、背后一长串”的宏，它本身并不在编译过程中进行，而是在这之前(<strong>预处理过程</strong>)就已经完成了，但也因此难以发现潜在的错误及其它代码维护问题</p>
 <h2 id="define用法详解">#define用法详解</h2>
 <h3 id="无参宏定义">无参宏定义</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-weight:bold;font-style:italic">#define 标识符 字符串
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#579">#define 标识符 字符串
 </span></code></pre></div><p>预处理命令。</p>
 <h3 id="有参宏定义">有参宏定义</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-weight:bold;font-style:italic">#define 宏名(形参表) 字符串
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#579">#define 宏名(形参表) 字符串
 </span></code></pre></div><p>宏定义中称为形参，宏调用中称为实参。带参数的宏，在调用中，不仅要宏展开，而且要用实参去代换形参。</p>
 <h3 id="宏定义中的特殊操作符">宏定义中的特殊操作符</h3>
 <p><strong>（1）#</strong></p>
 <p>希望在字符串中包含宏参数时使用，#作为一个预处理运算符，可以把语言符号转换为字符串，例如：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-weight:bold;font-style:italic">#define NUM(x) printf(&#34;the number is #x.\n&#34;, x)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#579">#define NUM(x) printf(&#34;the number is #x.\n&#34;, x)
 </span></code></pre></div><p><strong>（2）##</strong></p>
 <p>##可以把两个字符串转换成单个字符串。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-weight:bold;font-style:italic">#define XNAME(n) x##n
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">XNAME</span>(<span style="color:#099">1</span>) <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">12</span>;	<span style="color:#998;font-style:italic">//相当于int x1 = 12;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#579">#define XNAME(n) x##n
+</span><span style="color:#579"></span><span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">XNAME</span>(<span style="color:#00d;font-weight:bold">1</span>) <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">12</span>;	<span style="color:#888">//相当于int x1 = 12;
 </span></code></pre></div><p><strong>（3）可变宏 &hellip;</strong></p>
 <p>若要使用可变参数宏，可以在宏定义中将省略号指定为<strong>最后一个形参</strong>，并且替换标识符可以在定义中用于插入 <code>__VA_ARGS__</code> 额外的参数。 <code>__VA_ARGS__</code> 替换为与省略号匹配的所有参数，包括它们之间的逗号。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#998;font-style:italic">// variadic_macros.cpp
-</span><span style="color:#998;font-style:italic"></span><span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;stdio.h&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
-</span><span style="color:#999;font-weight:bold;font-style:italic">#define EMPTY
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
-<span style="color:#999;font-weight:bold;font-style:italic">#define CHECK1(x, ...) if (!(x)) { printf(__VA_ARGS__); }
-</span><span style="color:#999;font-weight:bold;font-style:italic">#define CHECK2(x, ...) if ((x)) { printf(__VA_ARGS__); }
-</span><span style="color:#999;font-weight:bold;font-style:italic">#define CHECK3(...) { printf(__VA_ARGS__); }
-</span><span style="color:#999;font-weight:bold;font-style:italic">#define MACRO(s, ...) printf(s, __VA_ARGS__)
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>() {
-    CHECK1(<span style="color:#099">0</span>, <span style="color:#d14">&#34;here %s %s %s&#34;</span>, <span style="color:#d14">&#34;are&#34;</span>, <span style="color:#d14">&#34;some&#34;</span>, <span style="color:#d14">&#34;varargs1(1)</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>);
-    CHECK1(<span style="color:#099">1</span>, <span style="color:#d14">&#34;here %s %s %s&#34;</span>, <span style="color:#d14">&#34;are&#34;</span>, <span style="color:#d14">&#34;some&#34;</span>, <span style="color:#d14">&#34;varargs1(2)</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>);   <span style="color:#998;font-style:italic">// won&#39;t print
-</span><span style="color:#998;font-style:italic"></span>
-    CHECK2(<span style="color:#099">0</span>, <span style="color:#d14">&#34;here %s %s %s&#34;</span>, <span style="color:#d14">&#34;are&#34;</span>, <span style="color:#d14">&#34;some&#34;</span>, <span style="color:#d14">&#34;varargs2(3)</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>);   <span style="color:#998;font-style:italic">// won&#39;t print
-</span><span style="color:#998;font-style:italic"></span>    CHECK2(<span style="color:#099">1</span>, <span style="color:#d14">&#34;here %s %s %s&#34;</span>, <span style="color:#d14">&#34;are&#34;</span>, <span style="color:#d14">&#34;some&#34;</span>, <span style="color:#d14">&#34;varargs2(4)</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#888">// variadic_macros.cpp
+</span><span style="color:#888"></span><span style="color:#579">#include</span> <span style="color:#579">&lt;stdio.h&gt;</span><span style="color:#579">
+</span><span style="color:#579">#define EMPTY
+</span><span style="color:#579"></span>
+<span style="color:#579">#define CHECK1(x, ...) if (!(x)) { printf(__VA_ARGS__); }
+</span><span style="color:#579">#define CHECK2(x, ...) if ((x)) { printf(__VA_ARGS__); }
+</span><span style="color:#579">#define CHECK3(...) { printf(__VA_ARGS__); }
+</span><span style="color:#579">#define MACRO(s, ...) printf(s, __VA_ARGS__)
+</span><span style="color:#579"></span>
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">main</span>() {
+    CHECK1(<span style="color:#00d;font-weight:bold">0</span>, <span style="background-color:#fff0f0">&#34;here %s %s %s&#34;</span>, <span style="background-color:#fff0f0">&#34;are&#34;</span>, <span style="background-color:#fff0f0">&#34;some&#34;</span>, <span style="background-color:#fff0f0">&#34;varargs1(1)</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>);
+    CHECK1(<span style="color:#00d;font-weight:bold">1</span>, <span style="background-color:#fff0f0">&#34;here %s %s %s&#34;</span>, <span style="background-color:#fff0f0">&#34;are&#34;</span>, <span style="background-color:#fff0f0">&#34;some&#34;</span>, <span style="background-color:#fff0f0">&#34;varargs1(2)</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>);   <span style="color:#888">// won&#39;t print
+</span><span style="color:#888"></span>
+    CHECK2(<span style="color:#00d;font-weight:bold">0</span>, <span style="background-color:#fff0f0">&#34;here %s %s %s&#34;</span>, <span style="background-color:#fff0f0">&#34;are&#34;</span>, <span style="background-color:#fff0f0">&#34;some&#34;</span>, <span style="background-color:#fff0f0">&#34;varargs2(3)</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>);   <span style="color:#888">// won&#39;t print
+</span><span style="color:#888"></span>    CHECK2(<span style="color:#00d;font-weight:bold">1</span>, <span style="background-color:#fff0f0">&#34;here %s %s %s&#34;</span>, <span style="background-color:#fff0f0">&#34;are&#34;</span>, <span style="background-color:#fff0f0">&#34;some&#34;</span>, <span style="background-color:#fff0f0">&#34;varargs2(4)</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>);
 
-    <span style="color:#998;font-style:italic">// always invokes printf in the macro
-</span><span style="color:#998;font-style:italic"></span>    CHECK3(<span style="color:#d14">&#34;here %s %s %s&#34;</span>, <span style="color:#d14">&#34;are&#34;</span>, <span style="color:#d14">&#34;some&#34;</span>, <span style="color:#d14">&#34;varargs3(5)</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>);
+    <span style="color:#888">// always invokes printf in the macro
+</span><span style="color:#888"></span>    CHECK3(<span style="background-color:#fff0f0">&#34;here %s %s %s&#34;</span>, <span style="background-color:#fff0f0">&#34;are&#34;</span>, <span style="background-color:#fff0f0">&#34;some&#34;</span>, <span style="background-color:#fff0f0">&#34;varargs3(5)</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>);
 
-    MACRO(<span style="color:#d14">&#34;hello, world</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>);
+    MACRO(<span style="background-color:#fff0f0">&#34;hello, world</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>);
 
-    MACRO(<span style="color:#d14">&#34;error</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>, EMPTY); <span style="color:#998;font-style:italic">// would cause error C2059, except VC++
-</span><span style="color:#998;font-style:italic"></span>                             <span style="color:#998;font-style:italic">// suppresses the trailing comma
-</span><span style="color:#998;font-style:italic"></span>}
+    MACRO(<span style="background-color:#fff0f0">&#34;error</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>, EMPTY); <span style="color:#888">// would cause error C2059, except VC++
+</span><span style="color:#888"></span>                             <span style="color:#888">// suppresses the trailing comma
+</span><span style="color:#888"></span>}
 </code></pre></div><p>输出结果为：</p>
 <pre tabindex="0"><code>here are some varargs1(1)
 here are some varargs2(4)
@@ -904,97 +904,97 @@ error
 <p>在每一个换行的地方加上一个<code>/</code></p>
 <h2 id="简单函数指针">简单函数指针</h2>
 <h3 id="形式1返回类型函数名参数表">形式1：返回类型(*函数名)(参数表)</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">char</span> (<span style="color:#000;font-weight:bold">*</span>pFun)(<span style="color:#458;font-weight:bold">int</span>); 
-<span style="color:#458;font-weight:bold">char</span> <span style="color:#900;font-weight:bold">glFun</span>(<span style="color:#458;font-weight:bold">int</span> a){ <span style="color:#000;font-weight:bold">return</span>;} 
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span>() 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">char</span> (<span style="color:#333">*</span>pFun)(<span style="color:#339;font-weight:bold">int</span>); 
+<span style="color:#339;font-weight:bold">char</span> <span style="color:#06b;font-weight:bold">glFun</span>(<span style="color:#339;font-weight:bold">int</span> a){ <span style="color:#080;font-weight:bold">return</span>;} 
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>() 
 { 
-    pFun <span style="color:#000;font-weight:bold">=</span> glFun; 
-    (<span style="color:#000;font-weight:bold">*</span>pFun)(<span style="color:#099">2</span>); 
+    pFun <span style="color:#333">=</span> glFun; 
+    (<span style="color:#333">*</span>pFun)(<span style="color:#00d;font-weight:bold">2</span>); 
 }
 </code></pre></div><p>第一行定义了一个指针变量pFun，它是一种指向某种函数的指针，这种函数是一个int型，返回值是char型。</p>
 <p>第二行定义了一个函数glFun()。该函数正好是一个以int为参数返回char的函数。我们要从指针的层次上理解函数——函数的函数名实际上就是一个指针，函数名指向该函数的代码在内存中的首地址。</p>
 <p>main()函数中将函数glFun的地址赋值给变量pFun。main()函数的第二句中“*pFun”显然是取pFun所指向地址的内容，当然也就是取出了函数glFun()的内容，然后给定参数为2。</p>
 <h2 id="typedef函数指针">typedef函数指针</h2>
 <h3 id="形式2typedef--返回类型新类型参数表">形式2：typedef  返回类型(*新类型)(参数表)</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">typedef</span> <span style="color:#900;font-weight:bold">char</span> (<span style="color:#000;font-weight:bold">*</span>PTRFUN)(<span style="color:#458;font-weight:bold">int</span>); 
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">typedef</span> <span style="color:#06b;font-weight:bold">char</span> (<span style="color:#333">*</span>PTRFUN)(<span style="color:#339;font-weight:bold">int</span>); 
 PTRFUN pFun; 
-<span style="color:#458;font-weight:bold">char</span> <span style="color:#900;font-weight:bold">glFun</span>(<span style="color:#458;font-weight:bold">int</span> a){ <span style="color:#000;font-weight:bold">return</span>;} 
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span>() 
+<span style="color:#339;font-weight:bold">char</span> <span style="color:#06b;font-weight:bold">glFun</span>(<span style="color:#339;font-weight:bold">int</span> a){ <span style="color:#080;font-weight:bold">return</span>;} 
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>() 
 { 
-    pFun <span style="color:#000;font-weight:bold">=</span> glFun; 
-    (<span style="color:#000;font-weight:bold">*</span>pFun)(<span style="color:#099">2</span>); 
+    pFun <span style="color:#333">=</span> glFun; 
+    (<span style="color:#333">*</span>pFun)(<span style="color:#00d;font-weight:bold">2</span>); 
 } 
 </code></pre></div><p>typedef的功能是<strong>定义新的类型</strong>。第一句就是定义了一种PTRFUN的类型，并定义这种类型为<strong>指向某种函数的指针</strong>，这种函数以一个int为参数并返回char类型。后面就可以像使用int,char一样使用PTRFUN了。</p>
 <p>第二行的代码便使用这个新类型定义了变量pFun，此时就可以像使用形式1一样使用这个变量了。</p>
 <h2 id="举例说明">举例说明</h2>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;stdio.h&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
-</span><span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;assert.h&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span> 
-<span style="color:#000;font-weight:bold">typedef</span> <span style="color:#900;font-weight:bold">int</span> (<span style="color:#000;font-weight:bold">*</span>FP_CALC)(<span style="color:#458;font-weight:bold">int</span>,<span style="color:#458;font-weight:bold">int</span>);<span style="color:#998;font-style:italic">//定义一个函数指针类型
-</span><span style="color:#998;font-style:italic"></span> 
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">add</span>(<span style="color:#458;font-weight:bold">int</span> a, <span style="color:#458;font-weight:bold">int</span> b) {
-	<span style="color:#000;font-weight:bold">return</span> a <span style="color:#000;font-weight:bold">+</span> b;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#579">#include</span> <span style="color:#579">&lt;stdio.h&gt;</span><span style="color:#579">
+</span><span style="color:#579">#include</span> <span style="color:#579">&lt;assert.h&gt;</span><span style="color:#579">
+</span><span style="color:#579"></span> 
+<span style="color:#080;font-weight:bold">typedef</span> <span style="color:#06b;font-weight:bold">int</span> (<span style="color:#333">*</span>FP_CALC)(<span style="color:#339;font-weight:bold">int</span>,<span style="color:#339;font-weight:bold">int</span>);<span style="color:#888">//定义一个函数指针类型
+</span><span style="color:#888"></span> 
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">add</span>(<span style="color:#339;font-weight:bold">int</span> a, <span style="color:#339;font-weight:bold">int</span> b) {
+	<span style="color:#080;font-weight:bold">return</span> a <span style="color:#333">+</span> b;
 }
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">sub</span>(<span style="color:#458;font-weight:bold">int</span> a, <span style="color:#458;font-weight:bold">int</span> b) {
-	<span style="color:#000;font-weight:bold">return</span> a <span style="color:#000;font-weight:bold">-</span> b;
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">sub</span>(<span style="color:#339;font-weight:bold">int</span> a, <span style="color:#339;font-weight:bold">int</span> b) {
+	<span style="color:#080;font-weight:bold">return</span> a <span style="color:#333">-</span> b;
 }
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">mul</span>(<span style="color:#458;font-weight:bold">int</span> a, <span style="color:#458;font-weight:bold">int</span> b) {
-	<span style="color:#000;font-weight:bold">return</span> a <span style="color:#000;font-weight:bold">*</span> b;
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">mul</span>(<span style="color:#339;font-weight:bold">int</span> a, <span style="color:#339;font-weight:bold">int</span> b) {
+	<span style="color:#080;font-weight:bold">return</span> a <span style="color:#333">*</span> b;
 }
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">div</span>(<span style="color:#458;font-weight:bold">int</span> a, <span style="color:#458;font-weight:bold">int</span> b) {
-	<span style="color:#000;font-weight:bold">return</span> b <span style="color:#000;font-weight:bold">?</span> a<span style="color:#000;font-weight:bold">/</span><span style="color:#900;font-weight:bold">b</span> : <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>;
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">div</span>(<span style="color:#339;font-weight:bold">int</span> a, <span style="color:#339;font-weight:bold">int</span> b) {
+	<span style="color:#080;font-weight:bold">return</span> b <span style="color:#333">?</span> a<span style="color:#333">/</span><span style="color:#970;font-weight:bold">b</span> : <span style="color:#333">-</span><span style="color:#00d;font-weight:bold">1</span>;
 }
 
-<span style="color:#998;font-style:italic">//定义一个函数，参数为op，返回一个指针,该指针类型为拥有两个int参数、
-</span><span style="color:#998;font-style:italic">//返回类型为int的函数指针。它的作用是根据操作符返回相应函数的地址
-</span><span style="color:#998;font-style:italic"></span>FP_CALC <span style="color:#900;font-weight:bold">calc_func</span>(<span style="color:#458;font-weight:bold">char</span> op)
-{	<span style="color:#998;font-style:italic">//函数名即为对应函数指针
-</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">switch</span>( op )
+<span style="color:#888">//定义一个函数，参数为op，返回一个指针,该指针类型为拥有两个int参数、
+</span><span style="color:#888">//返回类型为int的函数指针。它的作用是根据操作符返回相应函数的地址
+</span><span style="color:#888"></span>FP_CALC <span style="color:#06b;font-weight:bold">calc_func</span>(<span style="color:#339;font-weight:bold">char</span> op)
+{	<span style="color:#888">//函数名即为对应函数指针
+</span><span style="color:#888"></span>	<span style="color:#080;font-weight:bold">switch</span>( op )
 	{
-	<span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#39;+&#39;</span><span style="color:#000;font-weight:bold">:</span>
-		<span style="color:#000;font-weight:bold">return</span> add;
-	<span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#39;-&#39;</span><span style="color:#000;font-weight:bold">:</span>
-		<span style="color:#000;font-weight:bold">return</span> sub;
-	<span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#39;*&#39;</span><span style="color:#000;font-weight:bold">:</span>
-		<span style="color:#000;font-weight:bold">return</span> mul;
-	<span style="color:#000;font-weight:bold">case</span> <span style="color:#d14">&#39;/&#39;</span><span style="color:#000;font-weight:bold">:</span>
-		<span style="color:#000;font-weight:bold">return</span> div;
-	<span style="color:#000;font-weight:bold">default</span><span style="color:#000;font-weight:bold">:</span>
-		<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">NULL</span>;
+	<span style="color:#080;font-weight:bold">case</span> <span style="color:#04d;background-color:#fff0f0">&#39;+&#39;</span><span style="color:#333">:</span>
+		<span style="color:#080;font-weight:bold">return</span> add;
+	<span style="color:#080;font-weight:bold">case</span> <span style="color:#04d;background-color:#fff0f0">&#39;-&#39;</span><span style="color:#333">:</span>
+		<span style="color:#080;font-weight:bold">return</span> sub;
+	<span style="color:#080;font-weight:bold">case</span> <span style="color:#04d;background-color:#fff0f0">&#39;*&#39;</span><span style="color:#333">:</span>
+		<span style="color:#080;font-weight:bold">return</span> mul;
+	<span style="color:#080;font-weight:bold">case</span> <span style="color:#04d;background-color:#fff0f0">&#39;/&#39;</span><span style="color:#333">:</span>
+		<span style="color:#080;font-weight:bold">return</span> div;
+	<span style="color:#080;font-weight:bold">default</span><span style="color:#333">:</span>
+		<span style="color:#080;font-weight:bold">return</span> <span style="color:#007020">NULL</span>;
 	}
-	<span style="color:#000;font-weight:bold">return</span> <span style="color:#0086b3">NULL</span>;
+	<span style="color:#080;font-weight:bold">return</span> <span style="color:#007020">NULL</span>;
 }
  
-<span style="color:#998;font-style:italic">//s_calc_func为函数，它的参数是 op，   
-</span><span style="color:#998;font-style:italic">//返回值为一个拥有两个int参数、返回类型为int的函数指针  
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">int</span> (<span style="color:#000;font-weight:bold">*</span>s_calc_func(<span style="color:#458;font-weight:bold">char</span> op)) (<span style="color:#458;font-weight:bold">int</span> , <span style="color:#458;font-weight:bold">int</span>)
+<span style="color:#888">//s_calc_func为函数，它的参数是 op，   
+</span><span style="color:#888">//返回值为一个拥有两个int参数、返回类型为int的函数指针  
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">int</span> (<span style="color:#333">*</span>s_calc_func(<span style="color:#339;font-weight:bold">char</span> op)) (<span style="color:#339;font-weight:bold">int</span> , <span style="color:#339;font-weight:bold">int</span>)
 {
-	<span style="color:#000;font-weight:bold">return</span> <span style="color:#900;font-weight:bold">calc_func</span>(op);
+	<span style="color:#080;font-weight:bold">return</span> <span style="color:#06b;font-weight:bold">calc_func</span>(op);
 }
  
-<span style="color:#998;font-style:italic">//最终用户直接调用的函数，该函数接收两个int整数，
-</span><span style="color:#998;font-style:italic">//和一个算术运算符，返回两数的运算结果
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">calc</span>(<span style="color:#458;font-weight:bold">int</span> a, <span style="color:#458;font-weight:bold">int</span> b, <span style="color:#458;font-weight:bold">char</span> op)
+<span style="color:#888">//最终用户直接调用的函数，该函数接收两个int整数，
+</span><span style="color:#888">//和一个算术运算符，返回两数的运算结果
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">calc</span>(<span style="color:#339;font-weight:bold">int</span> a, <span style="color:#339;font-weight:bold">int</span> b, <span style="color:#339;font-weight:bold">char</span> op)
 {
-	FP_CALC fp <span style="color:#000;font-weight:bold">=</span> calc_func(op);
-	<span style="color:#458;font-weight:bold">int</span> (<span style="color:#000;font-weight:bold">*</span>s_fp)(<span style="color:#458;font-weight:bold">int</span>,<span style="color:#458;font-weight:bold">int</span>) <span style="color:#000;font-weight:bold">=</span> s_calc_func(op);<span style="color:#998;font-style:italic">//用于测试
-</span><span style="color:#998;font-style:italic"></span> 
-	assert(fp <span style="color:#000;font-weight:bold">==</span> s_fp);<span style="color:#998;font-style:italic">// 可以断言这两个是相等的
-</span><span style="color:#998;font-style:italic"></span> 
-	<span style="color:#000;font-weight:bold">if</span>(fp)
-		<span style="color:#000;font-weight:bold">return</span> fp(a,b);
-	<span style="color:#000;font-weight:bold">else</span>
-		<span style="color:#000;font-weight:bold">return</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>;
+	FP_CALC fp <span style="color:#333">=</span> calc_func(op);
+	<span style="color:#339;font-weight:bold">int</span> (<span style="color:#333">*</span>s_fp)(<span style="color:#339;font-weight:bold">int</span>,<span style="color:#339;font-weight:bold">int</span>) <span style="color:#333">=</span> s_calc_func(op);<span style="color:#888">//用于测试
+</span><span style="color:#888"></span> 
+	assert(fp <span style="color:#333">==</span> s_fp);<span style="color:#888">// 可以断言这两个是相等的
+</span><span style="color:#888"></span> 
+	<span style="color:#080;font-weight:bold">if</span>(fp)
+		<span style="color:#080;font-weight:bold">return</span> fp(a,b);
+	<span style="color:#080;font-weight:bold">else</span>
+		<span style="color:#080;font-weight:bold">return</span> <span style="color:#333">-</span><span style="color:#00d;font-weight:bold">1</span>;
 }
  
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">main</span>()
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">main</span>()
 {
-	<span style="color:#458;font-weight:bold">int</span> a <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">100</span>, b <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">20</span>;
+	<span style="color:#339;font-weight:bold">int</span> a <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">100</span>, b <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">20</span>;
  
-	printf(<span style="color:#d14">&#34;calc(%d, %d, %c) = %d</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>, a, b, <span style="color:#d14">&#39;+&#39;</span>, calc(a, b, <span style="color:#d14">&#39;+&#39;</span>));
-	printf(<span style="color:#d14">&#34;calc(%d, %d, %c) = %d</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>, a, b, <span style="color:#d14">&#39;-&#39;</span>, calc(a, b, <span style="color:#d14">&#39;-&#39;</span>));   
-    printf(<span style="color:#d14">&#34;calc(%d, %d, %c) = %d</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>, a, b, <span style="color:#d14">&#39;*&#39;</span>, calc(a, b, <span style="color:#d14">&#39;*&#39;</span>));   
-    printf(<span style="color:#d14">&#34;calc(%d, %d, %c) = %d</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>, a, b, <span style="color:#d14">&#39;/&#39;</span>, calc(a, b, <span style="color:#d14">&#39;/&#39;</span>)); 
+	printf(<span style="background-color:#fff0f0">&#34;calc(%d, %d, %c) = %d</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>, a, b, <span style="color:#04d;background-color:#fff0f0">&#39;+&#39;</span>, calc(a, b, <span style="color:#04d;background-color:#fff0f0">&#39;+&#39;</span>));
+	printf(<span style="background-color:#fff0f0">&#34;calc(%d, %d, %c) = %d</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>, a, b, <span style="color:#04d;background-color:#fff0f0">&#39;-&#39;</span>, calc(a, b, <span style="color:#04d;background-color:#fff0f0">&#39;-&#39;</span>));   
+    printf(<span style="background-color:#fff0f0">&#34;calc(%d, %d, %c) = %d</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>, a, b, <span style="color:#04d;background-color:#fff0f0">&#39;*&#39;</span>, calc(a, b, <span style="color:#04d;background-color:#fff0f0">&#39;*&#39;</span>));   
+    printf(<span style="background-color:#fff0f0">&#34;calc(%d, %d, %c) = %d</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>, a, b, <span style="color:#04d;background-color:#fff0f0">&#39;/&#39;</span>, calc(a, b, <span style="color:#04d;background-color:#fff0f0">&#39;/&#39;</span>)); 
 }
 </code></pre></div>
                     

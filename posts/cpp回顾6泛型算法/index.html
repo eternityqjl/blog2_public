@@ -1065,7 +1065,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>只读取输入范围的元素，<strong>不改变元素</strong>。</p>
 <p><strong><code>accumulate</code>算法：</strong></p>
 <p>其定义在头文件numeric中，接受三个参数，前两个指出了需要求和元素的范围，第三个参数是和的初值。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">int</span> sum <span style="color:#000;font-weight:bold">=</span> accumulate(vec.cbegin(), vec.cend(), <span style="color:#099">0</span>);	<span style="color:#998;font-style:italic">//对vec中元素求和，和的初值设为0
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">int</span> sum <span style="color:#333">=</span> accumulate(vec.cbegin(), vec.cend(), <span style="color:#00d;font-weight:bold">0</span>);	<span style="color:#888">//对vec中元素求和，和的初值设为0
 </span></code></pre></div><p>第三个参数的类型决定了函数中使用哪个<strong>加法运算符</strong>以及<strong>返回值的类型</strong>。</p>
 <p>即序列中的元素必须与第三个参数<strong>匹配</strong>或<strong>能够转换为第三个参数的类型</strong>。</p>
 <p><strong><code>equal</code>算法</strong></p>
@@ -1075,27 +1075,27 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>使用这类算法要保证序列原大小<strong>不小于</strong>算法写入的元素数目。</p>
 <p><strong><code>fill</code>算法</strong></p>
 <p>fill接受<strong>一对迭代器</strong>和<strong>一个值</strong>，将这个值赋予输入序列中的每个元素。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">fill(vec.begin(), vec.end(), <span style="color:#099">0</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">fill(vec.begin(), vec.end(), <span style="color:#00d;font-weight:bold">0</span>);
 </code></pre></div><p>不能在空容器上调用fill_n.</p>
 <p><strong>back_inserter插入迭代器</strong></p>
 <p>接受一个<strong>指向容器的引用</strong>，返回一个与该容器绑定的插入迭代器。通过此迭代器赋值时，赋值运算符会调用push_back将一个具有给定值的元素添加到容器中。</p>
 <p>back_inserter是一个定义在头文件iterator中的函数。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">vector<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span> vec;	<span style="color:#998;font-style:italic">//空vector
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">auto</span> it <span style="color:#000;font-weight:bold">=</span> back_inserter(vec);	<span style="color:#998;font-style:italic">//通过其赋值将元素添加到vec中
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">*</span>it <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">42</span>;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">vector<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> vec;	<span style="color:#888">//空vector
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">auto</span> it <span style="color:#333">=</span> back_inserter(vec);	<span style="color:#888">//通过其赋值将元素添加到vec中
+</span><span style="color:#888"></span><span style="color:#333">*</span>it <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">42</span>;
 </code></pre></div><p><strong>拷贝算法</strong></p>
 <p>copy是另一个向目的位置迭代器指向的输出序列中的元素写入数据的算法。</p>
 <p>该算法接受三个迭代器，前两个表示一个输入范围，第三个表示目的序列的起始位置。</p>
 <h3 id="重排容器元素算法">重排容器元素算法</h3>
 <p><strong><code>sort</code>、<code>unique</code>函数</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">elimDups</span>(vector<span style="color:#000;font-weight:bold">&lt;</span>string<span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#000;font-weight:bold">&amp;</span>words)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">elimDups</span>(vector<span style="color:#333">&lt;</span>string<span style="color:#333">&gt;</span> <span style="color:#333">&amp;</span>words)
 {
-	<span style="color:#998;font-style:italic">//按字典排序words, 以便查找重复单词
-</span><span style="color:#998;font-style:italic"></span>	sort(words.begin(), words.end());
-	<span style="color:#998;font-style:italic">//unique重排输入范围，使每个单词只出现一次
-</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">auto</span> end_unique <span style="color:#000;font-weight:bold">=</span> unique(words.begin(), words.end());
-	<span style="color:#998;font-style:italic">//使用erase操作删除重复单词
-</span><span style="color:#998;font-style:italic"></span>	words.erase(end_unique, words.end());
+	<span style="color:#888">//按字典排序words, 以便查找重复单词
+</span><span style="color:#888"></span>	sort(words.begin(), words.end());
+	<span style="color:#888">//unique重排输入范围，使每个单词只出现一次
+</span><span style="color:#888"></span>	<span style="color:#080;font-weight:bold">auto</span> end_unique <span style="color:#333">=</span> unique(words.begin(), words.end());
+	<span style="color:#888">//使用erase操作删除重复单词
+</span><span style="color:#888"></span>	words.erase(end_unique, words.end());
 }
 </code></pre></div><p>sort算法接受两个迭代器，表示要排序的元素范围。</p>
 <p><strong>使用unique</strong></p>
@@ -1105,8 +1105,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h3 id="向算法传递函数">向算法传递函数</h3>
 <p><strong>谓词</strong></p>
 <p>谓词是一个可调用的<strong>表达式</strong>，其返回结果是一个能<strong>用作条件的值</strong>。标准库算法使用的谓词分为：一元谓词和二元谓词。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">bool</span> <span style="color:#900;font-weight:bold">isShorter</span>(<span style="color:#000;font-weight:bold">const</span> string <span style="color:#000;font-weight:bold">&amp;</span>s1, <span style="color:#000;font-weight:bold">const</span> string <span style="color:#000;font-weight:bold">&amp;</span>s2) {
-    <span style="color:#000;font-weight:bold">return</span> s1.size() <span style="color:#000;font-weight:bold">&lt;</span> s2.size();
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">bool</span> <span style="color:#06b;font-weight:bold">isShorter</span>(<span style="color:#080;font-weight:bold">const</span> string <span style="color:#333">&amp;</span>s1, <span style="color:#080;font-weight:bold">const</span> string <span style="color:#333">&amp;</span>s2) {
+    <span style="color:#080;font-weight:bold">return</span> s1.size() <span style="color:#333">&lt;</span> s2.size();
 }
 sort(words.begin(), words.end(), isShorter);
 </code></pre></div><p><strong>stable_sort</strong></p>
@@ -1134,8 +1134,8 @@ sort(words.begin(), words.end(), isShorter);
 <p>链表类型还定义了splice算法，该算法是链表数据结构所独有的，因此不需要通用版本。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">lst.splice(args)
 flst.splice_after(args)
-(p, lst2)	<span style="color:#998;font-style:italic">//p是一个指向lst中元素的迭代器或一个指向flst首前位置的迭代器。函数将lst2所有元素移动到lst中p之前的位置或flst中p之后的位置。将元素从lst2中删除。lst2的类型必须与lst或lst相同，且不能是同一个链表。
-</span><span style="color:#998;font-style:italic"></span>(p, lst2, p2)
+(p, lst2)	<span style="color:#888">//p是一个指向lst中元素的迭代器或一个指向flst首前位置的迭代器。函数将lst2所有元素移动到lst中p之前的位置或flst中p之后的位置。将元素从lst2中删除。lst2的类型必须与lst或lst相同，且不能是同一个链表。
+</span><span style="color:#888"></span>(p, lst2, p2)
 (p, lst2, b, e)
 </code></pre></div><p><strong>链表特有的操作会改变容器</strong></p>
 

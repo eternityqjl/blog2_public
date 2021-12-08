@@ -1507,10 +1507,10 @@ int &amp;refVal2;
 </code></pre><p>引用即为对象的别名，引用本身不是一个对象，只是为一个已存在的对象起的另一个名字。</p>
 <p><strong>指针</strong></p>
 <p>指针本身就是一个对象，允许对指针赋值和拷贝，无需再定义时赋值，定义指针时将声明符写作<code>*d</code>形式，d为变量名。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">double</span> dp, <span style="color:#000;font-weight:bold">*</span>dp2; <span style="color:#998;font-style:italic">//dp2为指向double类型对象的指针
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#339;font-weight:bold">double</span> dp, <span style="color:#333">*</span>dp2; <span style="color:#888">//dp2为指向double类型对象的指针
 </span></code></pre></div><p>取地址符<code>&amp;</code>：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">int</span> ival <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">42</span>;
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">*</span>p <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">&amp;</span>ival;<span style="color:#998;font-style:italic">//p存放ival的地址
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#339;font-weight:bold">int</span> ival <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">42</span>;
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>p <span style="color:#333">=</span> <span style="color:#333">&amp;</span>ival;<span style="color:#888">//p存放ival的地址
 </span></code></pre></div><p>解引用符<code>*</code>：</p>
 <pre tabindex="0"><code>int ival = 42;
 int *p = &amp;ival;//p存放ival的地址
@@ -1528,19 +1528,19 @@ cout &lt;&lt; *p;	//输出指针p所指的对象，42
 <h3 id="const限定符">const限定符</h3>
 <p>让一种变量的值不变。const对象必须要初始化，任何试图为const对象赋值的行为都将发生错误。</p>
 <p>const对象仅在文件内有效；要想让const对象像其他非常量对象一样在不同文件中工作，即在一个文件中定义const，在其他多个文件中声明并使用它，需要添加<code>extern</code>关键字</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#998;font-style:italic">//file.cpp定义并初始化了一个常量
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">extern</span> <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> bufSize <span style="color:#000;font-weight:bold">=</span> fcn();
-<span style="color:#998;font-style:italic">//file.h头文件，与file.cpp定义的bufSize是同一个
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">extern</span> <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> bufSize;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#888">//file.cpp定义并初始化了一个常量
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">extern</span> <span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> bufSize <span style="color:#333">=</span> fcn();
+<span style="color:#888">//file.h头文件，与file.cpp定义的bufSize是同一个
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">extern</span> <span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> bufSize;
 </code></pre></div><p><strong>const的引用</strong></p>
 <p>可以把引用绑定到const对象上，但对常量的引用不能用于修改它所绑定的对象。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> ci <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1024</span>;
-<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">&amp;</span>r1 <span style="color:#000;font-weight:bold">=</span> ci;	<span style="color:#998;font-style:italic">//正确：引用及其对应的对象都是常量
-</span><span style="color:#998;font-style:italic"></span>r1 <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">42</span>; <span style="color:#998;font-style:italic">//错误
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">&amp;</span>r2 <span style="color:#000;font-weight:bold">=</span> ci; <span style="color:#998;font-style:italic">//错误，试图让一个非常量引用指向一个常量对象
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> ci <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1024</span>;
+<span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> <span style="color:#333">&amp;</span>r1 <span style="color:#333">=</span> ci;	<span style="color:#888">//正确：引用及其对应的对象都是常量
+</span><span style="color:#888"></span>r1 <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">42</span>; <span style="color:#888">//错误
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">&amp;</span>r2 <span style="color:#333">=</span> ci; <span style="color:#888">//错误，试图让一个非常量引用指向一个常量对象
 </span></code></pre></div><p>引用的类型必须与所引用的对象类型一致，但有例外：</p>
 <p>初始化常量引用时允许用任意表达式作为初始值，只要该表达式的结果能被转换为引用的类型即可。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">&amp;</span>r1 <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">42</span>;	<span style="color:#998;font-style:italic">//正确
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> <span style="color:#333">&amp;</span>r1 <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">42</span>;	<span style="color:#888">//正确
 </span></code></pre></div><p><strong>指针和const</strong></p>
 <p>可以令指针指向常量或非常量，<strong>指向常量的指针</strong>不能用于改变其所指对象的值，要想存放常量对象，只能使用<strong>指向常量的指针</strong>：</p>
 <pre tabindex="0"><code>const double pi = 3.14;
@@ -1562,18 +1562,18 @@ const int *p2 = &amp;ci;	//底层const，表示指针p2指的对象ci的地址�
 <p>常量表达式指值不会改变并且在编译过程就能得到计算结果的表达式。字面值属于常量表达式，用常量表达式初始化的const对象也是常量表达式。</p>
 <p><strong>constexpr变量</strong></p>
 <p>C++11允许将变量声明为constexpr类型以便由编译器验证变量的值是否是一个常量表达式。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">constexpr</span> <span style="color:#458;font-weight:bold">int</span> mf <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">20</span>;	<span style="color:#998;font-style:italic">//20是常量表达式
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">constexpr</span> <span style="color:#458;font-weight:bold">int</span> sz <span style="color:#000;font-weight:bold">=</span> size();	<span style="color:#998;font-style:italic">//只有当size是一个constexpr函数是才是一条正确的声明语句
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">constexpr</span> <span style="color:#339;font-weight:bold">int</span> mf <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">20</span>;	<span style="color:#888">//20是常量表达式
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">constexpr</span> <span style="color:#339;font-weight:bold">int</span> sz <span style="color:#333">=</span> size();	<span style="color:#888">//只有当size是一个constexpr函数是才是一条正确的声明语句
 </span></code></pre></div><p>字面值类型：声明constexpr时用到的类型。算术类型、引用和指针都属于字面值类型；IO库、string类型不属于字面值类型，不能被定义为constexpr。</p>
 <h3 id="处理类型">处理类型</h3>
 <p><strong>类型别名</strong>：</p>
 <p>使用关键词<code>typedef</code></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">typedef</span> <span style="color:#458;font-weight:bold">double</span> wages; <span style="color:#998;font-style:italic">//wages是double的同义词
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#080;font-weight:bold">typedef</span> <span style="color:#339;font-weight:bold">double</span> wages; <span style="color:#888">//wages是double的同义词
 </span></code></pre></div><p>另一种别名声明：</p>
 <pre tabindex="0"><code>using SI = Sales_item;
 </code></pre><h2 id="字符串向量和数组">字符串、向量和数组</h2>
 <h3 id="命名空间和using声明">命名空间和using声明</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#000;font-weight:bold">using</span> <span style="color:#000;font-weight:bold">namespace</span><span style="color:#000;font-weight:bold">::</span>name;	<span style="color:#998;font-style:italic">//命名空间::名字
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#080;font-weight:bold">using</span> <span style="color:#080;font-weight:bold">namespace</span><span style="color:#333">::</span>name;	<span style="color:#888">//命名空间::名字
 </span></code></pre></div><p>每个名字都需要独立的using声明；头文件不应该包含using声明</p>
 <h3 id="标准库类型string">标准库类型string</h3>
 <p>string表示可变长的字符序列</p>
@@ -1643,9 +1643,9 @@ string s = str[0];	//[]中的0为size_type类型
 <pre tabindex="0"><code>vector&lt;int&gt;::size_type	//正确
 vector::size_type	//错误
 </code></pre><p>不能用下标形式添加元素，以下为错误示范：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">5</span>;
-vector<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">&gt;</span> ivec;
-ivec[ix] <span style="color:#000;font-weight:bold">=</span> ix;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">-</span> <span style="color:#00d;font-weight:bold">5</span>;
+vector<span style="color:#333">&lt;</span><span style="color:#339;font-weight:bold">int</span><span style="color:#333">&gt;</span> ivec;
+ivec[ix] <span style="color:#333">=</span> ix;
 </code></pre></div><h3 id="迭代器iterator">迭代器iterator</h3>
 <p>迭代器可以用来访问容器的对象。</p>
 <p>有迭代器的类型都拥有名为<code>beign</code>和<code>end</code>的成员函数，end成员返回指向容器尾元素下一位置的迭代器，即一个不存在的尾后元素。</p>
@@ -1719,7 +1719,7 @@ sizeof *p;	//指针所占的空间大小
 <h3 id="类型转换">类型转换</h3>
 <p>C++中，如果两个类型可以相互转换，那么他们之间就是关联的。</p>
 <p>隐式转换无需程序员介入，自动完成。例如：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">int</span> ival <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">3.541</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">3</span>;	<span style="color:#998;font-style:italic">//编译器可能警告损失了运算精度
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">int</span> ival <span style="color:#333">=</span> <span style="color:#60e;font-weight:bold">3.541</span> <span style="color:#333">+</span> <span style="color:#00d;font-weight:bold">3</span>;	<span style="color:#888">//编译器可能警告损失了运算精度
 </span></code></pre></div><p><strong>算数转换</strong></p>
 <p>把一种算术类型转换成另一种算数类型。</p>
 <p><strong>其他隐式类型转换</strong></p>
@@ -1736,18 +1736,18 @@ sizeof *p;	//指针所占的空间大小
 <p>C++中异常处理机制包括：</p>
 <p><strong>throw表达式</strong></p>
 <p>程序的异常检测部分使用throw表达式引发一个异常。表达式半酣关键词throw和紧随其后的一个表达式，其中表达式类型就是抛出的异常类型。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">if</span> (item1.isbn() <span style="color:#000;font-weight:bold">!=</span> item2.isbn())
-	<span style="color:#000;font-weight:bold">throw</span> runtime_error(<span style="color:#d14">&#34;Data must refer to same ISBN&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">if</span> (item1.isbn() <span style="color:#333">!=</span> item2.isbn())
+	<span style="color:#080;font-weight:bold">throw</span> runtime_error(<span style="background-color:#fff0f0">&#34;Data must refer to same ISBN&#34;</span>);
 </code></pre></div><p>该异常是runtime_error的对象，抛出异常将终止当前函数，把控制权转移给能处理该异常的代码。</p>
 <p>runtime_error是标准库异常类型的一种，定义在stdexcept头文件中。</p>
 <p><strong>try语句块</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">try</span> {
-	program<span style="color:#000;font-weight:bold">-</span>statements
-} <span style="color:#000;font-weight:bold">catch</span> (exception<span style="color:#000;font-weight:bold">-</span>declaration)	{
-	handler<span style="color:#000;font-weight:bold">-</span>statements
-} <span style="color:#000;font-weight:bold">catch</span> (exception<span style="color:#000;font-weight:bold">-</span>declaration)	{
-	handler<span style="color:#000;font-weight:bold">-</span>statements
-}	<span style="color:#998;font-style:italic">//...
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">try</span> {
+	program<span style="color:#333">-</span>statements
+} <span style="color:#080;font-weight:bold">catch</span> (exception<span style="color:#333">-</span>declaration)	{
+	handler<span style="color:#333">-</span>statements
+} <span style="color:#080;font-weight:bold">catch</span> (exception<span style="color:#333">-</span>declaration)	{
+	handler<span style="color:#333">-</span>statements
+}	<span style="color:#888">//...
 </span></code></pre></div><p>跟在try块后的是一个或多个catch子句；catch子句包括三部分：关键词catch、括号内的一个对象的声明(称为异常声明)以及一个块。当选中类某个catch子句处理异常后，执行与之对应的块。</p>
 <p><strong>标准异常</strong></p>
 <p>C++标准库定义了一组类，用于报告标准库函数遇到的问题。这些异常类也可以在用户编写的程序中使用。这些异常定义在以下几个头文件中：</p>
@@ -1773,26 +1773,26 @@ int f4(int v3, int v4)	//这样写正确
 <p>当用实参初始化形参时会忽略顶层const</p>
 <p><strong>数组形参</strong></p>
 <p>数组的<strong>不允许拷贝</strong>和使用时数组通常会将其转换成<strong>指针</strong>的特殊性质对定义和使用在数组上的函数有很大影响。我们为函数传递一个数组时，实际上传递的是指向数组首元素的指针。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">print</span>(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span><span style="color:#000;font-weight:bold">*</span>);
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">print</span>(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span>[]);
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">print</span>(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span>[<span style="color:#099">10</span>]);	<span style="color:#998;font-style:italic">//这里的维度表示我们期望数组含有的元素数量，实际上不一定。
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">print</span>(<span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span><span style="color:#333">*</span>);
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">print</span>(<span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span>[]);
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">print</span>(<span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span>[<span style="color:#00d;font-weight:bold">10</span>]);	<span style="color:#888">//这里的维度表示我们期望数组含有的元素数量，实际上不一定。
 </span></code></pre></div><p>上面的三个函数是等价的，每个函数的形参都是const int*类型。</p>
 <p><strong>数组引用形参</strong>：</p>
 <p>C++允许将变量定义为数组的引用，形参也可以是数组的引用。此时，引用形参绑定到对应实参上，也就是绑定到数组上：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">print</span>(<span style="color:#458;font-weight:bold">int</span> (<span style="color:#000;font-weight:bold">&amp;</span>arr)[<span style="color:#099">10</span>])
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">print</span>(<span style="color:#339;font-weight:bold">int</span> (<span style="color:#333">&amp;</span>arr)[<span style="color:#00d;font-weight:bold">10</span>])
 {
-	<span style="color:#000;font-weight:bold">for</span> (<span style="color:#000;font-weight:bold">auto</span> <span style="color:#900;font-weight:bold">elem</span> : arr)
-		cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> elem <span style="color:#000;font-weight:bold">&lt;&lt;</span> endl;
+	<span style="color:#080;font-weight:bold">for</span> (<span style="color:#080;font-weight:bold">auto</span> <span style="color:#970;font-weight:bold">elem</span> : arr)
+		cout <span style="color:#333">&lt;&lt;</span> elem <span style="color:#333">&lt;&lt;</span> endl;
 }
 </code></pre></div><p>如上为数组的引用而不是引用的数组。</p>
 <pre tabindex="0"><code>f(int &amp;arr[10])	//将arr声明为了引用的数组
 f(int (&amp;arr)[10])	//arr是具有10个整数的整形数组的引用
 </code></pre><p><strong>传递多维数组</strong>：</p>
 <p>多维数组实际上是数组的数组，将多维数组传递给函数实际上传递的是指向数组首元素的指针。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">print</span>(<span style="color:#458;font-weight:bold">int</span> (<span style="color:#000;font-weight:bold">*</span>matrix)[<span style="color:#099">10</span>], <span style="color:#458;font-weight:bold">int</span> rowSize)	{}
-<span style="color:#998;font-style:italic">//matrix指向数组的首元素，该数组的元素是由10个整数构成的数组。
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">print</span>(<span style="color:#339;font-weight:bold">int</span> (<span style="color:#333">*</span>matrix)[<span style="color:#00d;font-weight:bold">10</span>], <span style="color:#339;font-weight:bold">int</span> rowSize)	{}
+<span style="color:#888">//matrix指向数组的首元素，该数组的元素是由10个整数构成的数组。
 </span></code></pre></div><p>main：处理命令行选项</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">main</span>(<span style="color:#458;font-weight:bold">int</span> argc, <span style="color:#458;font-weight:bold">char</span> <span style="color:#000;font-weight:bold">*</span>argv[])	{...}
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">main</span>(<span style="color:#339;font-weight:bold">int</span> argc, <span style="color:#339;font-weight:bold">char</span> <span style="color:#333">*</span>argv[])	{...}
 </code></pre></div><p>假定main函数位于可执行文件prog之内，我们可以向程序传递下面的选项：</p>
 <p>prog -d -o ofile data0</p>
 <p>第二个形参argv是一个数组，其元素为<strong>指向c风格字符串的指针</strong>；第一个形参argc表示<strong>数组中字符串的数量</strong>。</p>
@@ -1803,25 +1803,25 @@ f(int (&amp;arr)[10])	//arr是具有10个整数的整形数组的引用
 <p>不允许两个函数除了返回类型外其他所有的要素都相同。</p>
 <p><strong>重载和const形参</strong></p>
 <p>一个拥有顶层const的形参无法和另一个没有顶层const的形参区分开来：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Record <span style="color:#900;font-weight:bold">lookup</span>(Phone);
-Record <span style="color:#900;font-weight:bold">lookup</span>(<span style="color:#000;font-weight:bold">const</span> Phone);	<span style="color:#998;font-style:italic">//重复声明了Record lookup(Phone);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Record <span style="color:#06b;font-weight:bold">lookup</span>(Phone);
+Record <span style="color:#06b;font-weight:bold">lookup</span>(<span style="color:#080;font-weight:bold">const</span> Phone);	<span style="color:#888">//重复声明了Record lookup(Phone);
 </span></code></pre></div><p>如果形参是某种类型的指针或引用，则通过区分指向的是<strong>常量对象</strong>还是<strong>非常量对象</strong>可以实现函数的重载，此时的const是底层const。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Record <span style="color:#900;font-weight:bold">lookup</span>(Account<span style="color:#000;font-weight:bold">&amp;</span>);	<span style="color:#998;font-style:italic">//函数作用于Account的引用
-</span><span style="color:#998;font-style:italic"></span>Record <span style="color:#900;font-weight:bold">lookup</span>(<span style="color:#000;font-weight:bold">const</span> Account<span style="color:#000;font-weight:bold">&amp;</span>);	<span style="color:#998;font-style:italic">//新韩淑，作用于常量的引用
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Record <span style="color:#06b;font-weight:bold">lookup</span>(Account<span style="color:#333">&amp;</span>);	<span style="color:#888">//函数作用于Account的引用
+</span><span style="color:#888"></span>Record <span style="color:#06b;font-weight:bold">lookup</span>(<span style="color:#080;font-weight:bold">const</span> Account<span style="color:#333">&amp;</span>);	<span style="color:#888">//新韩淑，作用于常量的引用
 </span></code></pre></div><h3 id="特殊用途语言特性">特殊用途语言特性</h3>
 <p><strong>默认实参</strong></p>
 <p>某些函数的一种形参在函数的多次调用中都被赋予了同一个值，此时我们把这个反复出现的值称为函数的默认实参，为了实现函数既能接纳默认值，又能接受我们具体指定的值，我们定义为如下形式：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">typedef</span> string<span style="color:#000;font-weight:bold">::</span>size_type sz;
-string <span style="color:#900;font-weight:bold">screen</span>(sz ht <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">24</span>, sz wid <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">80</span>, <span style="color:#458;font-weight:bold">char</span> background <span style="color:#000;font-weight:bold">=</span> <span style="color:#d14">&#39; &#39;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">typedef</span> string<span style="color:#333">::</span>size_type sz;
+string <span style="color:#06b;font-weight:bold">screen</span>(sz ht <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">24</span>, sz wid <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">80</span>, <span style="color:#339;font-weight:bold">char</span> background <span style="color:#333">=</span> <span style="color:#04d;background-color:#fff0f0">&#39; &#39;</span>);
 </code></pre></div><p>注意，一旦某个形参被赋予了默认值，它后面的所有形参都必须有默认值。</p>
 <p>在给定作用域中一个形参只能被赋予一次默认实参。</p>
 <p><strong>内联函数</strong></p>
 <p>把一些规模较小的表达式定义为函数有很多好处：容易读懂、容易修改、能重复利用；但也有缺点：调用函数一般比求等价表达式的值要慢；一次函数调用包含一系列工作：先保存寄存器，在返回时恢复；可能需要拷贝实参。</p>
 <p>使用内联函数可以避免函数调用的开销，例如：</p>
 <p>把shorterString函数定义为内联函数，则如下调用：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> shorterString(s1, s2) <span style="color:#000;font-weight:bold">&lt;&lt;</span> endl;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#333">&lt;&lt;</span> shorterString(s1, s2) <span style="color:#333">&lt;&lt;</span> endl;
 </code></pre></div><p>在编译过程中会被展开为如下形式：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#000;font-weight:bold">&lt;&lt;</span> (s1.size() <span style="color:#000;font-weight:bold">&lt;</span> s2.size() <span style="color:#000;font-weight:bold">?</span> <span style="color:#900;font-weight:bold">s1</span> : s2) <span style="color:#000;font-weight:bold">&lt;&lt;</span> endl;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">cout <span style="color:#333">&lt;&lt;</span> (s1.size() <span style="color:#333">&lt;</span> s2.size() <span style="color:#333">?</span> <span style="color:#970;font-weight:bold">s1</span> : s2) <span style="color:#333">&lt;&lt;</span> endl;
 </code></pre></div><p>从而消除了函数运行时的开销。只需在函数的返回类型前加上<code>inline</code>即可。</p>
 <p>内联是向编译器发出的一个请求，编译器可以忽略这个请求。</p>
 <p><strong>调试帮助</strong></p>
@@ -1837,12 +1837,12 @@ string <span style="color:#900;font-weight:bold">screen</span>(sz ht <span style
 <p>assert的行为依赖于名为NDEBUG的预处理变量的状态，如果定义了NDEBUG，则assert什么也不做。默认状态下没有定义NDEBUG，此时assert将执行。</p>
 <p>可以使用一个<code>#define</code>语句定义NDEBUG，从而关闭调试状态。</p>
 <p>除了使用assert之外，可以使用NDEBUG编写自己的条件调试代码，使用<code>#ifndef</code>和<code>#endif</code>。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">print</span>(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> ia[], size_t size)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">print</span>(<span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> ia[], size_t size)
 {
-<span style="color:#999;font-weight:bold;font-style:italic">#ifndef NDEBUG
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span>	cerr <span style="color:#000;font-weight:bold">&lt;&lt;</span> __fun__ <span style="color:#000;font-weight:bold">&lt;&lt;</span> <span style="color:#d14">&#34;:array size is: &#34;</span> <span style="color:#000;font-weight:bold">&lt;&lt;</span> size <span style="color:#000;font-weight:bold">&lt;&lt;</span> endl;
-<span style="color:#999;font-weight:bold;font-style:italic">#endif
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span>...
+<span style="color:#579">#ifndef NDEBUG
+</span><span style="color:#579"></span>	cerr <span style="color:#333">&lt;&lt;</span> __fun__ <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;:array size is: &#34;</span> <span style="color:#333">&lt;&lt;</span> size <span style="color:#333">&lt;&lt;</span> endl;
+<span style="color:#579">#endif
+</span><span style="color:#579"></span>...
 }
 </code></pre></div><p><code>__fun__</code>为编译器定义的局部静态变量，用于存放函数名字；预处理器还定义了一些有用的名字：</p>
 <ul>
@@ -1854,18 +1854,18 @@ string <span style="color:#900;font-weight:bold">screen</span>(sz ht <span style
 <p>可以使用这些值在错误消息中提供更多信息。</p>
 <h3 id="函数指针">函数指针</h3>
 <p>函数指针指向的是函数而非对象，和其他指针一样，函数指针指向某种特定类型。函数类型由其返回类型和形参类型共同决定，与函数名无关。例如：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">bool</span> <span style="color:#900;font-weight:bold">lengthCompare</span>(<span style="color:#000;font-weight:bold">const</span> string <span style="color:#000;font-weight:bold">&amp;</span>, <span style="color:#000;font-weight:bold">const</span> string <span style="color:#000;font-weight:bold">&amp;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">bool</span> <span style="color:#06b;font-weight:bold">lengthCompare</span>(<span style="color:#080;font-weight:bold">const</span> string <span style="color:#333">&amp;</span>, <span style="color:#080;font-weight:bold">const</span> string <span style="color:#333">&amp;</span>);
 </code></pre></div><p>该函数的类型是<code>bool(const string &amp;, const string &amp;)</code>，要想声明一个可以指向该函数的指针，只需要用指针替换函数名即可。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">bool</span> (<span style="color:#000;font-weight:bold">*</span>pf) (<span style="color:#000;font-weight:bold">const</span> string <span style="color:#000;font-weight:bold">&amp;</span>, <span style="color:#000;font-weight:bold">const</span> string <span style="color:#000;font-weight:bold">&amp;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">bool</span> (<span style="color:#333">*</span>pf) (<span style="color:#080;font-weight:bold">const</span> string <span style="color:#333">&amp;</span>, <span style="color:#080;font-weight:bold">const</span> string <span style="color:#333">&amp;</span>);
 </code></pre></div><p>当我们把函数名作为一个值使用时，该函数自动地转换成指针。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">pf <span style="color:#000;font-weight:bold">=</span> lengthCompare;	<span style="color:#998;font-style:italic">//pf指向名为lengthCompare的函数
-</span><span style="color:#998;font-style:italic"></span>pf <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">&amp;</span>lengthCompare;	<span style="color:#998;font-style:italic">//取地址符是可选的
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">pf <span style="color:#333">=</span> lengthCompare;	<span style="color:#888">//pf指向名为lengthCompare的函数
+</span><span style="color:#888"></span>pf <span style="color:#333">=</span> <span style="color:#333">&amp;</span>lengthCompare;	<span style="color:#888">//取地址符是可选的
 </span></code></pre></div><p><strong>将auto和decltype用于函数指针类型</strong></p>
 <blockquote>
 <p>decltype以一个表达式为参数，返回表达式表示的类型</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">string<span style="color:#000;font-weight:bold">::</span>size_type sumLength (<span style="color:#000;font-weight:bold">const</span> string<span style="color:#000;font-weight:bold">&amp;</span>, <span style="color:#000;font-weight:bold">const</span> string<span style="color:#000;font-weight:bold">&amp;</span>);
-<span style="color:#000;font-weight:bold">decltype</span>(sunLength) <span style="color:#000;font-weight:bold">*</span>getFcn(<span style="color:#000;font-weight:bold">const</span> string <span style="color:#000;font-weight:bold">&amp;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">string<span style="color:#333">::</span>size_type sumLength (<span style="color:#080;font-weight:bold">const</span> string<span style="color:#333">&amp;</span>, <span style="color:#080;font-weight:bold">const</span> string<span style="color:#333">&amp;</span>);
+<span style="color:#080;font-weight:bold">decltype</span>(sunLength) <span style="color:#333">*</span>getFcn(<span style="color:#080;font-weight:bold">const</span> string <span style="color:#333">&amp;</span>);
 </code></pre></div><p>当我们将decltype作用域某个函数时，它返回函数类型而非指针类型，因此我们显式地加上*以表明我们需要返回指针而非函数本身。</p>
 
                     

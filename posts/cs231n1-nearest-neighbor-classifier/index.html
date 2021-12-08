@@ -804,52 +804,52 @@ d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right|
 $$</p>
 <p>将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。</p>
 <p>通常使用准确率来评估分类器</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Xtr, Ytr, Xte, Yte <span style="color:#000;font-weight:bold">=</span> load_CIFAR10(<span style="color:#d14">&#39;data/cifar10/&#39;</span>) <span style="color:#998;font-style:italic"># a magic function we provide</span>
-<span style="color:#998;font-style:italic"># flatten out all images to be one-dimensional</span>
-Xtr_rows <span style="color:#000;font-weight:bold">=</span> Xtr<span style="color:#000;font-weight:bold">.</span>reshape(Xtr<span style="color:#000;font-weight:bold">.</span>shape[<span style="color:#099">0</span>], <span style="color:#099">32</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">32</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">3</span>) <span style="color:#998;font-style:italic"># Xtr_rows becomes 50000 x 3072</span>
-Xte_rows <span style="color:#000;font-weight:bold">=</span> Xte<span style="color:#000;font-weight:bold">.</span>reshape(Xte<span style="color:#000;font-weight:bold">.</span>shape[<span style="color:#099">0</span>], <span style="color:#099">32</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">32</span> <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">3</span>) <span style="color:#998;font-style:italic"># Xte_rows becomes 10000 x 3072</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">Xtr, Ytr, Xte, Yte <span style="color:#333">=</span> load_CIFAR10(<span style="background-color:#fff0f0">&#39;data/cifar10/&#39;</span>) <span style="color:#888"># a magic function we provide</span>
+<span style="color:#888"># flatten out all images to be one-dimensional</span>
+Xtr_rows <span style="color:#333">=</span> Xtr<span style="color:#333">.</span>reshape(Xtr<span style="color:#333">.</span>shape[<span style="color:#00d;font-weight:bold">0</span>], <span style="color:#00d;font-weight:bold">32</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">32</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">3</span>) <span style="color:#888"># Xtr_rows becomes 50000 x 3072</span>
+Xte_rows <span style="color:#333">=</span> Xte<span style="color:#333">.</span>reshape(Xte<span style="color:#333">.</span>shape[<span style="color:#00d;font-weight:bold">0</span>], <span style="color:#00d;font-weight:bold">32</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">32</span> <span style="color:#333">*</span> <span style="color:#00d;font-weight:bold">3</span>) <span style="color:#888"># Xte_rows becomes 10000 x 3072</span>
 
-nn <span style="color:#000;font-weight:bold">=</span> NearestNeighbor() <span style="color:#998;font-style:italic"># create a Nearest Neighbor classifier class</span>
-nn<span style="color:#000;font-weight:bold">.</span>train(Xtr_rows, Ytr) <span style="color:#998;font-style:italic"># train the classifier on the training images and labels</span>
-Yte_predict <span style="color:#000;font-weight:bold">=</span> nn<span style="color:#000;font-weight:bold">.</span>predict(Xte_rows) <span style="color:#998;font-style:italic"># predict labels on the test images</span>
-<span style="color:#998;font-style:italic"># and now print the classification accuracy, which is the average number</span>
-<span style="color:#998;font-style:italic"># of examples that are correctly predicted (i.e. label matches)</span>
-<span style="color:#0086b3">print</span> <span style="color:#d14">&#39;accuracy: </span><span style="color:#d14">%f</span><span style="color:#d14">&#39;</span> <span style="color:#000;font-weight:bold">%</span> ( np<span style="color:#000;font-weight:bold">.</span>mean(Yte_predict <span style="color:#000;font-weight:bold">==</span> Yte) )
+nn <span style="color:#333">=</span> NearestNeighbor() <span style="color:#888"># create a Nearest Neighbor classifier class</span>
+nn<span style="color:#333">.</span>train(Xtr_rows, Ytr) <span style="color:#888"># train the classifier on the training images and labels</span>
+Yte_predict <span style="color:#333">=</span> nn<span style="color:#333">.</span>predict(Xte_rows) <span style="color:#888"># predict labels on the test images</span>
+<span style="color:#888"># and now print the classification accuracy, which is the average number</span>
+<span style="color:#888"># of examples that are correctly predicted (i.e. label matches)</span>
+<span style="color:#007020">print</span> <span style="background-color:#fff0f0">&#39;accuracy: </span><span style="background-color:#eee">%f</span><span style="background-color:#fff0f0">&#39;</span> <span style="color:#333">%</span> ( np<span style="color:#333">.</span>mean(Yte_predict <span style="color:#333">==</span> Yte) )
 </code></pre></div><p>Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">import</span> <span style="color:#555">numpy</span> <span style="color:#000;font-weight:bold">as</span> <span style="color:#555">np</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-weight:bold">import</span> <span style="color:#0e84b5;font-weight:bold">numpy</span> <span style="color:#080;font-weight:bold">as</span> <span style="color:#0e84b5;font-weight:bold">np</span>
 
-<span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">NearestNeighbor</span>(<span style="color:#0086b3">object</span>):
-  <span style="color:#000;font-weight:bold">def</span> __init__(<span style="color:#999">self</span>):
-    <span style="color:#000;font-weight:bold">pass</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">NearestNeighbor</span>(<span style="color:#007020">object</span>):
+  <span style="color:#080;font-weight:bold">def</span> __init__(self):
+    <span style="color:#080;font-weight:bold">pass</span>
 
-  <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">train</span>(<span style="color:#999">self</span>, X, y):
-    <span style="color:#d14">&#34;&#34;&#34; X is N x D where each row is an example. Y is 1-dimension of size N &#34;&#34;&#34;</span>
-    <span style="color:#998;font-style:italic"># the nearest neighbor classifier simply remembers all the training data</span>
-    <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>Xtr <span style="color:#000;font-weight:bold">=</span> X
-    <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>ytr <span style="color:#000;font-weight:bold">=</span> y
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">train</span>(self, X, y):
+    <span style="background-color:#fff0f0">&#34;&#34;&#34; X is N x D where each row is an example. Y is 1-dimension of size N &#34;&#34;&#34;</span>
+    <span style="color:#888"># the nearest neighbor classifier simply remembers all the training data</span>
+    self<span style="color:#333">.</span>Xtr <span style="color:#333">=</span> X
+    self<span style="color:#333">.</span>ytr <span style="color:#333">=</span> y
 
-  <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">predict</span>(<span style="color:#999">self</span>, X):
-    <span style="color:#d14">&#34;&#34;&#34; X is N x D where each row is an example we wish to predict label for &#34;&#34;&#34;</span>
-    num_test <span style="color:#000;font-weight:bold">=</span> X<span style="color:#000;font-weight:bold">.</span>shape[<span style="color:#099">0</span>]	<span style="color:#998;font-style:italic">#训练样本数量</span>
-    <span style="color:#998;font-style:italic"># lets make sure that the output type matches the input type</span>
-    Ypred <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>zeros(num_test, dtype <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>ytr<span style="color:#000;font-weight:bold">.</span>dtype)
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06b;font-weight:bold">predict</span>(self, X):
+    <span style="background-color:#fff0f0">&#34;&#34;&#34; X is N x D where each row is an example we wish to predict label for &#34;&#34;&#34;</span>
+    num_test <span style="color:#333">=</span> X<span style="color:#333">.</span>shape[<span style="color:#00d;font-weight:bold">0</span>]	<span style="color:#888">#训练样本数量</span>
+    <span style="color:#888"># lets make sure that the output type matches the input type</span>
+    Ypred <span style="color:#333">=</span> np<span style="color:#333">.</span>zeros(num_test, dtype <span style="color:#333">=</span> self<span style="color:#333">.</span>ytr<span style="color:#333">.</span>dtype)
 
-    <span style="color:#998;font-style:italic"># loop over all test rows</span>
-    <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(num_test):
-      <span style="color:#998;font-style:italic"># find the nearest training image to the i&#39;th test image</span>
-      <span style="color:#998;font-style:italic"># using the L1 distance (sum of absolute value differences)</span>
-      distances <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>sum(np<span style="color:#000;font-weight:bold">.</span>abs(<span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>Xtr <span style="color:#000;font-weight:bold">-</span> X[i,:]), axis <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>)
-      min_index <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>argmin(distances) <span style="color:#998;font-style:italic"># get the index with smallest distance</span>
-      Ypred[i] <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>ytr[min_index] <span style="color:#998;font-style:italic"># predict the label of the nearest example</span>
+    <span style="color:#888"># loop over all test rows</span>
+    <span style="color:#080;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#007020">range</span>(num_test):
+      <span style="color:#888"># find the nearest training image to the i&#39;th test image</span>
+      <span style="color:#888"># using the L1 distance (sum of absolute value differences)</span>
+      distances <span style="color:#333">=</span> np<span style="color:#333">.</span>sum(np<span style="color:#333">.</span>abs(self<span style="color:#333">.</span>Xtr <span style="color:#333">-</span> X[i,:]), axis <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>)
+      min_index <span style="color:#333">=</span> np<span style="color:#333">.</span>argmin(distances) <span style="color:#888"># get the index with smallest distance</span>
+      Ypred[i] <span style="color:#333">=</span> self<span style="color:#333">.</span>ytr[min_index] <span style="color:#888"># predict the label of the nearest example</span>
 
-    <span style="color:#000;font-weight:bold">return</span> Ypred
+    <span style="color:#080;font-weight:bold">return</span> Ypred
 </code></pre></div><p>使用L1距离测试的准确率只有38.6%.</p>
 <h3 id="l2-distance">L2 distance</h3>
 <p>$$
 d_{2}\left(I_{1}, I_{2}\right)=\sqrt{\sum_{p}\left(I_{1}^{p}-I_{2}^{p}\right)^{2}}
 $$</p>
 <p>only replace a single line of code above:</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">distances <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>sqrt(np<span style="color:#000;font-weight:bold">.</span>sum(np<span style="color:#000;font-weight:bold">.</span>square(<span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>Xtr <span style="color:#000;font-weight:bold">-</span> X[i,:]), axis <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>))
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">distances <span style="color:#333">=</span> np<span style="color:#333">.</span>sqrt(np<span style="color:#333">.</span>sum(np<span style="color:#333">.</span>square(self<span style="color:#333">.</span>Xtr <span style="color:#333">-</span> X[i,:]), axis <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>))
 </code></pre></div><h2 id="k---nearest-neighbor-classifier">k - Nearest Neighbor Classifier</h2>
 <p>找到距离最近的k个图片，k个图片中数量最多的一个标签即为测试图片所分的类别。</p>
 <h2 id="validation-sets-for-hyperparameter-tuning">Validation sets for Hyperparameter tuning</h2>
@@ -857,27 +857,27 @@ $$</p>
 <p>Hyperparameter 。通常不能使用test set来调整Hyperparameter。Evaluate on the test set only a single time, at the very end.</p>
 <p>将训练集划分为一个小一些的训练集和一个验证集(validation set)。例如使用CIFAR-10数据集时将训练集分为49,000个训练集和1,000个验证集。</p>
 <p>验证集本质上是一个假的测试集，是用来调整Hyperparameter的。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#998;font-style:italic"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
-<span style="color:#998;font-style:italic"># recall Xtr_rows is 50,000 x 3072 matrix</span>
-Xval_rows <span style="color:#000;font-weight:bold">=</span> Xtr_rows[:<span style="color:#099">1000</span>, :] <span style="color:#998;font-style:italic"># take first 1000 for validation</span>
-Yval <span style="color:#000;font-weight:bold">=</span> Ytr[:<span style="color:#099">1000</span>]
-Xtr_rows <span style="color:#000;font-weight:bold">=</span> Xtr_rows[<span style="color:#099">1000</span>:, :] <span style="color:#998;font-style:italic"># keep last 49,000 for train</span>
-Ytr <span style="color:#000;font-weight:bold">=</span> Ytr[<span style="color:#099">1000</span>:]
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#888"># assume we have Xtr_rows, Ytr, Xte_rows, Yte as before</span>
+<span style="color:#888"># recall Xtr_rows is 50,000 x 3072 matrix</span>
+Xval_rows <span style="color:#333">=</span> Xtr_rows[:<span style="color:#00d;font-weight:bold">1000</span>, :] <span style="color:#888"># take first 1000 for validation</span>
+Yval <span style="color:#333">=</span> Ytr[:<span style="color:#00d;font-weight:bold">1000</span>]
+Xtr_rows <span style="color:#333">=</span> Xtr_rows[<span style="color:#00d;font-weight:bold">1000</span>:, :] <span style="color:#888"># keep last 49,000 for train</span>
+Ytr <span style="color:#333">=</span> Ytr[<span style="color:#00d;font-weight:bold">1000</span>:]
 
-<span style="color:#998;font-style:italic"># find hyperparameters that work best on the validation set</span>
-validation_accuracies <span style="color:#000;font-weight:bold">=</span> []
-<span style="color:#000;font-weight:bold">for</span> k <span style="color:#000;font-weight:bold">in</span> [<span style="color:#099">1</span>, <span style="color:#099">3</span>, <span style="color:#099">5</span>, <span style="color:#099">10</span>, <span style="color:#099">20</span>, <span style="color:#099">50</span>, <span style="color:#099">100</span>]:
+<span style="color:#888"># find hyperparameters that work best on the validation set</span>
+validation_accuracies <span style="color:#333">=</span> []
+<span style="color:#080;font-weight:bold">for</span> k <span style="color:#000;font-weight:bold">in</span> [<span style="color:#00d;font-weight:bold">1</span>, <span style="color:#00d;font-weight:bold">3</span>, <span style="color:#00d;font-weight:bold">5</span>, <span style="color:#00d;font-weight:bold">10</span>, <span style="color:#00d;font-weight:bold">20</span>, <span style="color:#00d;font-weight:bold">50</span>, <span style="color:#00d;font-weight:bold">100</span>]:
 
-  <span style="color:#998;font-style:italic"># use a particular value of k and evaluation on validation data</span>
-  nn <span style="color:#000;font-weight:bold">=</span> NearestNeighbor()
-  nn<span style="color:#000;font-weight:bold">.</span>train(Xtr_rows, Ytr)
-  <span style="color:#998;font-style:italic"># here we assume a modified NearestNeighbor class that can take a k as input</span>
-  Yval_predict <span style="color:#000;font-weight:bold">=</span> nn<span style="color:#000;font-weight:bold">.</span>predict(Xval_rows, k <span style="color:#000;font-weight:bold">=</span> k)
-  acc <span style="color:#000;font-weight:bold">=</span> np<span style="color:#000;font-weight:bold">.</span>mean(Yval_predict <span style="color:#000;font-weight:bold">==</span> Yval)
-  <span style="color:#0086b3">print</span> <span style="color:#d14">&#39;accuracy: </span><span style="color:#d14">%f</span><span style="color:#d14">&#39;</span> <span style="color:#000;font-weight:bold">%</span> (acc,)
+  <span style="color:#888"># use a particular value of k and evaluation on validation data</span>
+  nn <span style="color:#333">=</span> NearestNeighbor()
+  nn<span style="color:#333">.</span>train(Xtr_rows, Ytr)
+  <span style="color:#888"># here we assume a modified NearestNeighbor class that can take a k as input</span>
+  Yval_predict <span style="color:#333">=</span> nn<span style="color:#333">.</span>predict(Xval_rows, k <span style="color:#333">=</span> k)
+  acc <span style="color:#333">=</span> np<span style="color:#333">.</span>mean(Yval_predict <span style="color:#333">==</span> Yval)
+  <span style="color:#007020">print</span> <span style="background-color:#fff0f0">&#39;accuracy: </span><span style="background-color:#eee">%f</span><span style="background-color:#fff0f0">&#39;</span> <span style="color:#333">%</span> (acc,)
 
-  <span style="color:#998;font-style:italic"># keep track of what works on the validation set</span>
-  validation_accuracies<span style="color:#000;font-weight:bold">.</span>append((k, acc))
+  <span style="color:#888"># keep track of what works on the validation set</span>
+  validation_accuracies<span style="color:#333">.</span>append((k, acc))
 </code></pre></div><h3 id="cross-validation">Cross-validation</h3>
 <p>当训练集数量较少时，使用更为复杂的交叉验证来调整hyperparameter。我们通过迭代不同的验证集并平均计算这些验证集的结果来确定k。例如在5次迭代的交叉验证中，将训练集分为5份，使用4份训练，1份验证，然后改变验证集，迭代5次，最终使用5次的平均结果确定k。</p>
 <h2 id="nearest-neighbor-classifier的优缺点">Nearest Neighbor classifier的优缺点</h2>

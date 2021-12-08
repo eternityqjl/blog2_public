@@ -2203,23 +2203,23 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="算法描述">算法描述</h4>
 <p>首先找到数组中最小的一个元素，将其与数组的第一个元素进行交换；再在剩余的元素找到最小的一个元素，将其与数组的第二个元素进行交换。如此循环往复，直到将整个数字排序。</p>
 <h4 id="代码实现">代码实现</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Selection</span> <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#998;font-style:italic">//将a按照升序排列
-</span><span style="color:#998;font-style:italic"></span>        <span style="color:#458;font-weight:bold">int</span> N <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> N<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>
-        <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#458;font-weight:bold">int</span> min <span style="color:#000;font-weight:bold">=</span> i<span style="color:#000;font-weight:bold">;</span>
-            <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> j <span style="color:#000;font-weight:bold">=</span> i <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">;</span> j <span style="color:#000;font-weight:bold">&lt;</span> N<span style="color:#000;font-weight:bold">;</span> j<span style="color:#000;font-weight:bold">++)</span>
-            <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>less<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">[</span>j<span style="color:#000;font-weight:bold">],</span> a<span style="color:#000;font-weight:bold">[</span>min<span style="color:#000;font-weight:bold">]))</span>
-                    min <span style="color:#000;font-weight:bold">=</span> j<span style="color:#000;font-weight:bold">;</span>
-            <span style="color:#000;font-weight:bold">}</span>
-            exch<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> i <span style="color:#000;font-weight:bold">,</span>min<span style="color:#000;font-weight:bold">);</span>
-        <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Selection</span> <span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#888">//将a按照升序排列
+</span><span style="color:#888"></span>        <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">;</span>
+        <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> 0<span style="color:#333">;</span> i <span style="color:#333">&lt;</span> N<span style="color:#333">;</span> i<span style="color:#333">++)</span>
+        <span style="color:#333">{</span>
+            <span style="color:#339;font-weight:bold">int</span> min <span style="color:#333">=</span> i<span style="color:#333">;</span>
+            <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> j <span style="color:#333">=</span> i <span style="color:#333">+</span> 1<span style="color:#333">;</span> j <span style="color:#333">&lt;</span> N<span style="color:#333">;</span> j<span style="color:#333">++)</span>
+            <span style="color:#333">{</span>
+                <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>less<span style="color:#333">(</span>a<span style="color:#333">[</span>j<span style="color:#333">],</span> a<span style="color:#333">[</span>min<span style="color:#333">]))</span>
+                    min <span style="color:#333">=</span> j<span style="color:#333">;</span>
+            <span style="color:#333">}</span>
+            exch<span style="color:#333">(</span>a<span style="color:#333">,</span> i <span style="color:#333">,</span>min<span style="color:#333">);</span>
+        <span style="color:#333">}</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h4 id="性能分析">性能分析</h4>
 <ul>
 <li>对长度为$N$的数组，选择排序大概需要$N^2/2$次比较和$N$次交换。</li>
@@ -2230,18 +2230,18 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="算法描述-1">算法描述</h4>
 <p>插入排序当前索引左边的所有元素都是有序的，但他们的最终位置还不确定，为了给更小的元素腾出空间，他们可能会被向右移动，当索引到达数组的最右端时，排序就完成了。</p>
 <h4 id="代码实现-1">代码实现</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Insertion</span> <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#458;font-weight:bold">int</span> N <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> 1<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> N<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>
-        <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#998;font-style:italic">//将相邻两个元素向左依次交换最终使得索引左侧的元素全部向右移动一位
-</span><span style="color:#998;font-style:italic"></span>            <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> j <span style="color:#000;font-weight:bold">=</span> i<span style="color:#000;font-weight:bold">;</span> j <span style="color:#000;font-weight:bold">&gt;</span> 0 <span style="color:#000;font-weight:bold">&amp;&amp;</span> less<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">[</span>j<span style="color:#000;font-weight:bold">],</span> a<span style="color:#000;font-weight:bold">[</span>j <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">]);</span> j<span style="color:#000;font-weight:bold">--)</span>
-                exch <span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> j<span style="color:#000;font-weight:bold">,</span> j <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">);</span>
-        <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Insertion</span> <span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">;</span>
+        <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> 1<span style="color:#333">;</span> i <span style="color:#333">&lt;</span> N<span style="color:#333">;</span> i<span style="color:#333">++)</span>
+        <span style="color:#333">{</span>
+            <span style="color:#888">//将相邻两个元素向左依次交换最终使得索引左侧的元素全部向右移动一位
+</span><span style="color:#888"></span>            <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> j <span style="color:#333">=</span> i<span style="color:#333">;</span> j <span style="color:#333">&gt;</span> 0 <span style="color:#333">&amp;&amp;</span> less<span style="color:#333">(</span>a<span style="color:#333">[</span>j<span style="color:#333">],</span> a<span style="color:#333">[</span>j <span style="color:#333">-</span> 1<span style="color:#333">]);</span> j<span style="color:#333">--)</span>
+                exch <span style="color:#333">(</span>a<span style="color:#333">,</span> j<span style="color:#333">,</span> j <span style="color:#333">-</span> 1<span style="color:#333">);</span>
+        <span style="color:#333">}</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h4 id="性能分析-1">性能分析</h4>
 <p>对随机排列长度为$N$且主键不重复的数组，平均插入排序需要$N^2/4$次比较和$N^2/4$次交换。</p>
 <p><strong>部分有序数组</strong>：</p>
@@ -2256,64 +2256,64 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>交换不相邻的元素对数组的局部进行排序，并最终用插入排序将局部有序数组排序。</p>
 <p>希尔排序的思想是使数组中任意间隔为h的元素都是有序的，这样的数组被称为<strong>h有序数组</strong>，即h个相互独立的有序数组编织在一起组成的一个数组</p>
 <h4 id="代码实现-2">代码实现</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Shell</span> <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">srot</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#458;font-weight:bold">int</span> N <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#458;font-weight:bold">int</span> h <span style="color:#000;font-weight:bold">=</span> 1<span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>h <span style="color:#000;font-weight:bold">&lt;</span> N <span style="color:#000;font-weight:bold">/</span> 3<span style="color:#000;font-weight:bold">)</span>   h <span style="color:#000;font-weight:bold">=</span> 3 <span style="color:#000;font-weight:bold">*</span> h <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>h <span style="color:#000;font-weight:bold">&gt;</span> 1<span style="color:#000;font-weight:bold">)</span>
-        <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> h<span style="color:#000;font-weight:bold">;</span> i <span style="color:#000;font-weight:bold">&lt;</span> N<span style="color:#000;font-weight:bold">;</span> i<span style="color:#000;font-weight:bold">++)</span>
-            <span style="color:#000;font-weight:bold">{</span>
-                <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> j <span style="color:#000;font-weight:bold">=</span> i<span style="color:#000;font-weight:bold">;</span> j <span style="color:#000;font-weight:bold">&gt;=</span> h <span style="color:#000;font-weight:bold">&amp;&amp;</span> less<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">[</span>j<span style="color:#000;font-weight:bold">],</span> a<span style="color:#000;font-weight:bold">[</span>j <span style="color:#000;font-weight:bold">-</span> h<span style="color:#000;font-weight:bold">]);</span> j <span style="color:#000;font-weight:bold">-=</span> h<span style="color:#000;font-weight:bold">)</span>
-                    exch<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> j<span style="color:#000;font-weight:bold">,</span> j <span style="color:#000;font-weight:bold">-</span> h<span style="color:#000;font-weight:bold">);</span>
-            <span style="color:#000;font-weight:bold">}</span>
-            h <span style="color:#000;font-weight:bold">=</span> h <span style="color:#000;font-weight:bold">/</span> 3<span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Shell</span> <span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">srot</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">;</span>
+        <span style="color:#339;font-weight:bold">int</span> h <span style="color:#333">=</span> 1<span style="color:#333">;</span>
+        <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>h <span style="color:#333">&lt;</span> N <span style="color:#333">/</span> 3<span style="color:#333">)</span>   h <span style="color:#333">=</span> 3 <span style="color:#333">*</span> h <span style="color:#333">+</span> 1<span style="color:#333">;</span>
+        <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>h <span style="color:#333">&gt;</span> 1<span style="color:#333">)</span>
+        <span style="color:#333">{</span>
+            <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> h<span style="color:#333">;</span> i <span style="color:#333">&lt;</span> N<span style="color:#333">;</span> i<span style="color:#333">++)</span>
+            <span style="color:#333">{</span>
+                <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> j <span style="color:#333">=</span> i<span style="color:#333">;</span> j <span style="color:#333">&gt;=</span> h <span style="color:#333">&amp;&amp;</span> less<span style="color:#333">(</span>a<span style="color:#333">[</span>j<span style="color:#333">],</span> a<span style="color:#333">[</span>j <span style="color:#333">-</span> h<span style="color:#333">]);</span> j <span style="color:#333">-=</span> h<span style="color:#333">)</span>
+                    exch<span style="color:#333">(</span>a<span style="color:#333">,</span> j<span style="color:#333">,</span> j <span style="color:#333">-</span> h<span style="color:#333">);</span>
+            <span style="color:#333">}</span>
+            h <span style="color:#333">=</span> h <span style="color:#333">/</span> 3<span style="color:#333">;</span>
+        <span style="color:#333">}</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><p>该希尔算法使用了序列$1/2(3^k-1)$，即序列${ 1,4,13 }$，称为<strong>增量序列</strong>。</p>
 <h4 id="性能分析-2">性能分析</h4>
 <p>希尔排序权衡了子数组的规模和有序性，希尔排序比插入排序和选择排序快得多，并且数组越大优势越大。</p>
 <h2 id="归并排序">归并排序</h2>
 <p><strong>归并</strong>即将两个有序的数组归并成一个更大的有序数组。</p>
 <h3 id="原地归并">原地归并</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">merge</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> lo<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> mid<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> hi<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> lo<span style="color:#000;font-weight:bold">,</span> j <span style="color:#000;font-weight:bold">=</span> mid <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> k <span style="color:#000;font-weight:bold">=</span> lo<span style="color:#000;font-weight:bold">;</span> k <span style="color:#000;font-weight:bold">&lt;=</span> hi<span style="color:#000;font-weight:bold">;</span> k<span style="color:#000;font-weight:bold">++)</span>
-            aux<span style="color:#000;font-weight:bold">[</span>k<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">[</span>k<span style="color:#000;font-weight:bold">];</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">merge</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> mid<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> lo<span style="color:#333">,</span> j <span style="color:#333">=</span> mid <span style="color:#333">+</span> 1<span style="color:#333">;</span>
+        <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k <span style="color:#333">=</span> lo<span style="color:#333">;</span> k <span style="color:#333">&lt;=</span> hi<span style="color:#333">;</span> k<span style="color:#333">++)</span>
+            aux<span style="color:#333">[</span>k<span style="color:#333">]</span> <span style="color:#333">=</span> a<span style="color:#333">[</span>k<span style="color:#333">];</span>
 
-        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> k <span style="color:#000;font-weight:bold">=</span> lo<span style="color:#000;font-weight:bold">;</span> k <span style="color:#000;font-weight:bold">&lt;=</span> hi<span style="color:#000;font-weight:bold">;</span> k<span style="color:#000;font-weight:bold">++)</span>
-        <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>i <span style="color:#000;font-weight:bold">&gt;</span> mid<span style="color:#000;font-weight:bold">)</span>                      a<span style="color:#000;font-weight:bold">[</span>k<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> aux<span style="color:#000;font-weight:bold">[</span>j<span style="color:#000;font-weight:bold">++];</span>
-            <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>j <span style="color:#000;font-weight:bold">&gt;</span> hi<span style="color:#000;font-weight:bold">)</span>                  a<span style="color:#000;font-weight:bold">[</span>k<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> aux<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">++];</span>
-            <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>less<span style="color:#000;font-weight:bold">(</span>aux<span style="color:#000;font-weight:bold">[</span>j<span style="color:#000;font-weight:bold">],</span> aux<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">]))</span>    a<span style="color:#000;font-weight:bold">[</span>k<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> aux<span style="color:#000;font-weight:bold">[</span>j<span style="color:#000;font-weight:bold">++];</span>
-            <span style="color:#000;font-weight:bold">else</span>                              a<span style="color:#000;font-weight:bold">[</span>k<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> aux<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">++];</span>     
-        <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">}</span>
+        <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k <span style="color:#333">=</span> lo<span style="color:#333">;</span> k <span style="color:#333">&lt;=</span> hi<span style="color:#333">;</span> k<span style="color:#333">++)</span>
+        <span style="color:#333">{</span>
+            <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>i <span style="color:#333">&gt;</span> mid<span style="color:#333">)</span>                      a<span style="color:#333">[</span>k<span style="color:#333">]</span> <span style="color:#333">=</span> aux<span style="color:#333">[</span>j<span style="color:#333">++];</span>
+            <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>j <span style="color:#333">&gt;</span> hi<span style="color:#333">)</span>                  a<span style="color:#333">[</span>k<span style="color:#333">]</span> <span style="color:#333">=</span> aux<span style="color:#333">[</span>i<span style="color:#333">++];</span>
+            <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>less<span style="color:#333">(</span>aux<span style="color:#333">[</span>j<span style="color:#333">],</span> aux<span style="color:#333">[</span>i<span style="color:#333">]))</span>    a<span style="color:#333">[</span>k<span style="color:#333">]</span> <span style="color:#333">=</span> aux<span style="color:#333">[</span>j<span style="color:#333">++];</span>
+            <span style="color:#080;font-weight:bold">else</span>                              a<span style="color:#333">[</span>k<span style="color:#333">]</span> <span style="color:#333">=</span> aux<span style="color:#333">[</span>i<span style="color:#333">++];</span>     
+        <span style="color:#333">}</span>
+    <span style="color:#333">}</span>
 </code></pre></div><h3 id="自顶向下的归并排序">自顶向下的归并排序</h3>
 <h4 id="算法描述-3">算法描述</h4>
 <p>对子数组a[lo..hi]进行排序，先将其分为$\mathrm{a}[\mathrm{lo..mid}]$和$\mathrm{a[mid+1..hi]}$两部分，分别通过递归调用将其单独排序，最后将有序的子数组归并为最终的排序结果。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Merge</span> <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> Comparable<span style="color:#000;font-weight:bold">[]</span> aux<span style="color:#000;font-weight:bold">;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Merge</span> <span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> Comparable<span style="color:#333">[]</span> aux<span style="color:#333">;</span>
     
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        aux <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Comparable<span style="color:#000;font-weight:bold">[</span>a<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">];</span>
-        sort<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> 0<span style="color:#000;font-weight:bold">,</span> a<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span> <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        aux <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> Comparable<span style="color:#333">[</span>a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">];</span>
+        sort<span style="color:#333">(</span>a<span style="color:#333">,</span> 0<span style="color:#333">,</span> a<span style="color:#333">.</span><span style="color:#00c">length</span> <span style="color:#333">-</span> 1<span style="color:#333">);</span>
+    <span style="color:#333">}</span>
 
-    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> lo<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> hi<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>hi <span style="color:#000;font-weight:bold">&lt;=</span> lo<span style="color:#000;font-weight:bold">)</span>   <span style="color:#000;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#458;font-weight:bold">int</span> mid <span style="color:#000;font-weight:bold">=</span> lo <span style="color:#000;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span>hi <span style="color:#000;font-weight:bold">-</span> lo<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">/</span> 2<span style="color:#000;font-weight:bold">;</span>
-        sort <span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> lo<span style="color:#000;font-weight:bold">,</span> mid<span style="color:#000;font-weight:bold">);</span>
-        sort <span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> mid <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">,</span> hi<span style="color:#000;font-weight:bold">);</span>
-        merge<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> lo<span style="color:#000;font-weight:bold">,</span> mid<span style="color:#000;font-weight:bold">,</span> hi<span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>hi <span style="color:#333">&lt;=</span> lo<span style="color:#333">)</span>   <span style="color:#080;font-weight:bold">return</span><span style="color:#333">;</span>
+        <span style="color:#339;font-weight:bold">int</span> mid <span style="color:#333">=</span> lo <span style="color:#333">+</span> <span style="color:#333">(</span>hi <span style="color:#333">-</span> lo<span style="color:#333">)</span> <span style="color:#333">/</span> 2<span style="color:#333">;</span>
+        sort <span style="color:#333">(</span>a<span style="color:#333">,</span> lo<span style="color:#333">,</span> mid<span style="color:#333">);</span>
+        sort <span style="color:#333">(</span>a<span style="color:#333">,</span> mid <span style="color:#333">+</span> 1<span style="color:#333">,</span> hi<span style="color:#333">);</span>
+        merge<span style="color:#333">(</span>a<span style="color:#333">,</span> lo<span style="color:#333">,</span> mid<span style="color:#333">,</span> hi<span style="color:#333">);</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h4 id="性能分析-3">性能分析</h4>
 <p>对于长度为$N$的任意数组，自顶向下的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多需要访问数组$6N\lg N$次。</p>
 <p>所以可知道归并排序所需要的时间与$N\lg N$成正比，主要缺点是辅助数组所使用的额外空间和N的大小成正比。</p>
@@ -2321,17 +2321,17 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="算法描述-4">算法描述</h4>
 <p>先归并那些微型数组，然后再成对地归并得到的子数组。首先进行两两归并（把每个元素当作一个大小为1的数组），然后是四四归并（将两个大小为2的数组归并为一个有4个元素的数组），然后是八八归并，以此类推。</p>
 <h4 id="代码实现-3">代码实现</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">MergeBU</span> <span style="color:#000;font-weight:bold">{</span>
-	<span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> Comparable<span style="color:#000;font-weight:bold">[]</span> aux<span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span> <span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#458;font-weight:bold">int</span> N <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">;</span>
-        aux <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">new</span> Comparable<span style="color:#000;font-weight:bold">[</span>N<span style="color:#000;font-weight:bold">];</span>
-        <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> sz <span style="color:#000;font-weight:bold">=</span> 1<span style="color:#000;font-weight:bold">;</span> sz <span style="color:#000;font-weight:bold">&lt;</span> N<span style="color:#000;font-weight:bold">;</span> sz <span style="color:#000;font-weight:bold">=</span> sz <span style="color:#000;font-weight:bold">+</span> sz<span style="color:#000;font-weight:bold">)</span>
-        	<span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> lo <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span> lo <span style="color:#000;font-weight:bold">&lt;</span> N <span style="color:#000;font-weight:bold">-</span> sz<span style="color:#000;font-weight:bold">;</span> lo <span style="color:#000;font-weight:bold">+=</span> sz <span style="color:#000;font-weight:bold">+</span> sz<span style="color:#000;font-weight:bold">)</span>
-        		merge<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> lo<span style="color:#000;font-weight:bold">,</span> lo <span style="color:#000;font-weight:bold">+</span> sz <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">,</span> Math<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">min</span><span style="color:#000;font-weight:bold">(</span>lo <span style="color:#000;font-weight:bold">+</span> sz <span style="color:#000;font-weight:bold">+</span> sz <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">,</span> N <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">));</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MergeBU</span> <span style="color:#333">{</span>
+	<span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> Comparable<span style="color:#333">[]</span> aux<span style="color:#333">;</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span> <span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">;</span>
+        aux <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">new</span> Comparable<span style="color:#333">[</span>N<span style="color:#333">];</span>
+        <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> sz <span style="color:#333">=</span> 1<span style="color:#333">;</span> sz <span style="color:#333">&lt;</span> N<span style="color:#333">;</span> sz <span style="color:#333">=</span> sz <span style="color:#333">+</span> sz<span style="color:#333">)</span>
+        	<span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> lo <span style="color:#333">=</span> 0<span style="color:#333">;</span> lo <span style="color:#333">&lt;</span> N <span style="color:#333">-</span> sz<span style="color:#333">;</span> lo <span style="color:#333">+=</span> sz <span style="color:#333">+</span> sz<span style="color:#333">)</span>
+        		merge<span style="color:#333">(</span>a<span style="color:#333">,</span> lo<span style="color:#333">,</span> lo <span style="color:#333">+</span> sz <span style="color:#333">-</span> 1<span style="color:#333">,</span> Math<span style="color:#333">.</span><span style="color:#00c">min</span><span style="color:#333">(</span>lo <span style="color:#333">+</span> sz <span style="color:#333">+</span> sz <span style="color:#333">-</span> 1<span style="color:#333">,</span> N <span style="color:#333">-</span> 1<span style="color:#333">));</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h4 id="性能分析-4">性能分析</h4>
 <p>对于长度为$N$的任意数组，自底向上的归并排序需要$1/2N\lg N$至$N\lg N$次比较，最多访问数组$6N\lg N$次。</p>
 <h2 id="快速排序">快速排序</h2>
@@ -2341,70 +2341,70 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li><code>a[lo]</code>到<code>a[j-1]</code>中的所有元素都不大于<code>a[j]</code></li>
 <li><code>a[j+1]</code>到<code>a[hi]</code>中的所有元素都不小于<code>a[j]</code></li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#998;font-style:italic">//切分
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">partition</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> lo<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> hi<span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#458;font-weight:bold">int</span> i <span style="color:#000;font-weight:bold">=</span> lo<span style="color:#000;font-weight:bold">,</span> j <span style="color:#000;font-weight:bold">=</span> hi <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">;</span>
-    Comparable v <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">[</span>lo<span style="color:#000;font-weight:bold">];</span>
-    <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">true</span><span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>less<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">[++</span>i<span style="color:#000;font-weight:bold">],</span> v<span style="color:#000;font-weight:bold">))</span>
-        <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>i <span style="color:#000;font-weight:bold">==</span> hi<span style="color:#000;font-weight:bold">)</span>    <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">}</span>
-        <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>less<span style="color:#000;font-weight:bold">(</span>v<span style="color:#000;font-weight:bold">,</span> a<span style="color:#000;font-weight:bold">[--</span>j<span style="color:#000;font-weight:bold">]))</span>
-        <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>j <span style="color:#000;font-weight:bold">==</span> lo<span style="color:#000;font-weight:bold">)</span>    <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">}</span>
-        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>i <span style="color:#000;font-weight:bold">&gt;=</span> j<span style="color:#000;font-weight:bold">)</span>    <span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
-        exch<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> i<span style="color:#000;font-weight:bold">,</span> j<span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#000;font-weight:bold">}</span>
-    exch<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> lo<span style="color:#000;font-weight:bold">,</span> j<span style="color:#000;font-weight:bold">);</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#888">//切分
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">partition</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
+<span style="color:#333">{</span>
+    <span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> lo<span style="color:#333">,</span> j <span style="color:#333">=</span> hi <span style="color:#333">+</span> 1<span style="color:#333">;</span>
+    Comparable v <span style="color:#333">=</span> a<span style="color:#333">[</span>lo<span style="color:#333">];</span>
+    <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span><span style="color:#080;font-weight:bold">true</span><span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>less<span style="color:#333">(</span>a<span style="color:#333">[++</span>i<span style="color:#333">],</span> v<span style="color:#333">))</span>
+        <span style="color:#333">{</span>
+            <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>i <span style="color:#333">==</span> hi<span style="color:#333">)</span>    <span style="color:#080;font-weight:bold">break</span><span style="color:#333">;</span>
+        <span style="color:#333">}</span>
+        <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>less<span style="color:#333">(</span>v<span style="color:#333">,</span> a<span style="color:#333">[--</span>j<span style="color:#333">]))</span>
+        <span style="color:#333">{</span>
+            <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>j <span style="color:#333">==</span> lo<span style="color:#333">)</span>    <span style="color:#080;font-weight:bold">break</span><span style="color:#333">;</span>
+        <span style="color:#333">}</span>
+        <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>i <span style="color:#333">&gt;=</span> j<span style="color:#333">)</span>    <span style="color:#080;font-weight:bold">break</span><span style="color:#333">;</span>
+        exch<span style="color:#333">(</span>a<span style="color:#333">,</span> i<span style="color:#333">,</span> j<span style="color:#333">);</span>
+    <span style="color:#333">}</span>
+    exch<span style="color:#333">(</span>a<span style="color:#333">,</span> lo<span style="color:#333">,</span> j<span style="color:#333">);</span>
 
-    <span style="color:#000;font-weight:bold">return</span> j<span style="color:#000;font-weight:bold">;</span>
-<span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#080;font-weight:bold">return</span> j<span style="color:#333">;</span>
+<span style="color:#333">}</span>
 </code></pre></div><h3 id="基本快速排序算法">基本快速排序算法</h3>
 <h4 id="算法描述-5">算法描述</h4>
 <p>通过递归地调用切分来进行排序。</p>
 <h4 id="代码实现-4">代码实现</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Quick</span> <span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        StdRandom<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">shuffle</span><span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">);</span>	<span style="color:#998;font-style:italic">//将输入乱序，消除堆输入的依赖
-</span><span style="color:#998;font-style:italic"></span>        sort<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> 0<span style="color:#000;font-weight:bold">,</span> a<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span> <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Quick</span> <span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        StdRandom<span style="color:#333">.</span><span style="color:#00c">shuffle</span><span style="color:#333">(</span>a<span style="color:#333">);</span>	<span style="color:#888">//将输入乱序，消除堆输入的依赖
+</span><span style="color:#888"></span>        sort<span style="color:#333">(</span>a<span style="color:#333">,</span> 0<span style="color:#333">,</span> a<span style="color:#333">.</span><span style="color:#00c">length</span> <span style="color:#333">-</span> 1<span style="color:#333">);</span>
+    <span style="color:#333">}</span>
 
-    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span> <span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> lo<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> hi<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>hi <span style="color:#000;font-weight:bold">&lt;=</span> lo<span style="color:#000;font-weight:bold">)</span>   <span style="color:#000;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#458;font-weight:bold">int</span> j <span style="color:#000;font-weight:bold">=</span> partition<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> lo<span style="color:#000;font-weight:bold">,</span> hi<span style="color:#000;font-weight:bold">);</span>
-        sort<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> lo<span style="color:#000;font-weight:bold">,</span> j <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">);</span>
-        sort<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> j <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">,</span> hi<span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span> <span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>hi <span style="color:#333">&lt;=</span> lo<span style="color:#333">)</span>   <span style="color:#080;font-weight:bold">return</span><span style="color:#333">;</span>
+        <span style="color:#339;font-weight:bold">int</span> j <span style="color:#333">=</span> partition<span style="color:#333">(</span>a<span style="color:#333">,</span> lo<span style="color:#333">,</span> hi<span style="color:#333">);</span>
+        sort<span style="color:#333">(</span>a<span style="color:#333">,</span> lo<span style="color:#333">,</span> j <span style="color:#333">-</span> 1<span style="color:#333">);</span>
+        sort<span style="color:#333">(</span>a<span style="color:#333">,</span> j <span style="color:#333">+</span> 1<span style="color:#333">,</span> hi<span style="color:#333">);</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h4 id="性能分析-5">性能分析</h4>
 <p>将长度为$N$的无重复数组排序，快速排序平均需要$2N\lg N$次比较，即$1/6N\lg N$次交换。</p>
 <h3 id="三向切分快速排序">三向切分快速排序</h3>
 <p>在含有大量重复元素时使用该方法。将数组切分为三部分，分别对应小于、等于和大于切分元素的数组元素。</p>
 <h4 id="代码实现-5">代码实现</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Quick3way</span>
-<span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> lo<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> hi<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>hi <span style="color:#000;font-weight:bold">&lt;=</span> lo<span style="color:#000;font-weight:bold">)</span>	<span style="color:#000;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#458;font-weight:bold">int</span> lt <span style="color:#000;font-weight:bold">=</span> lo<span style="color:#000;font-weight:bold">,</span> i <span style="color:#000;font-weight:bold">=</span> lo <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">;</span> gt <span style="color:#000;font-weight:bold">=</span> hi<span style="color:#000;font-weight:bold">;</span>
-        Comparable v <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">[</span>lo<span style="color:#000;font-weight:bold">];</span>
-        <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>i <span style="color:#000;font-weight:bold">&lt;=</span> gt<span style="color:#000;font-weight:bold">)</span>
-        <span style="color:#000;font-weight:bold">{</span>
-            <span style="color:#458;font-weight:bold">int</span> cmp <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">[</span>i<span style="color:#000;font-weight:bold">].</span><span style="color:#008080">compareTo</span><span style="color:#000;font-weight:bold">(</span>v<span style="color:#000;font-weight:bold">);</span>
-            <span style="color:#000;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span>cmp <span style="color:#000;font-weight:bold">&lt;</span> 0<span style="color:#000;font-weight:bold">)</span>	exch<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> lt<span style="color:#000;font-weight:bold">++,</span> i<span style="color:#000;font-weight:bold">++);</span>
-            <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>cmp <span style="color:#000;font-weight:bold">&gt;</span> 0<span style="color:#000;font-weight:bold">)</span>	exch<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> i<span style="color:#000;font-weight:bold">,</span> gt<span style="color:#000;font-weight:bold">--);</span>
-            <span style="color:#000;font-weight:bold">else</span> i<span style="color:#000;font-weight:bold">++;</span>
-        <span style="color:#000;font-weight:bold">}</span>
-        sort<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> lo<span style="color:#000;font-weight:bold">,</span> lt <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">);</span>
-        sort<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> gt <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">,</span> hi<span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Quick3way</span>
+<span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> lo<span style="color:#333">,</span> <span style="color:#339;font-weight:bold">int</span> hi<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>hi <span style="color:#333">&lt;=</span> lo<span style="color:#333">)</span>	<span style="color:#080;font-weight:bold">return</span><span style="color:#333">;</span>
+        <span style="color:#339;font-weight:bold">int</span> lt <span style="color:#333">=</span> lo<span style="color:#333">,</span> i <span style="color:#333">=</span> lo <span style="color:#333">+</span> 1<span style="color:#333">;</span> gt <span style="color:#333">=</span> hi<span style="color:#333">;</span>
+        Comparable v <span style="color:#333">=</span> a<span style="color:#333">[</span>lo<span style="color:#333">];</span>
+        <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>i <span style="color:#333">&lt;=</span> gt<span style="color:#333">)</span>
+        <span style="color:#333">{</span>
+            <span style="color:#339;font-weight:bold">int</span> cmp <span style="color:#333">=</span> a<span style="color:#333">[</span>i<span style="color:#333">].</span><span style="color:#00c">compareTo</span><span style="color:#333">(</span>v<span style="color:#333">);</span>
+            <span style="color:#080;font-weight:bold">if</span><span style="color:#333">(</span>cmp <span style="color:#333">&lt;</span> 0<span style="color:#333">)</span>	exch<span style="color:#333">(</span>a<span style="color:#333">,</span> lt<span style="color:#333">++,</span> i<span style="color:#333">++);</span>
+            <span style="color:#080;font-weight:bold">else</span> <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>cmp <span style="color:#333">&gt;</span> 0<span style="color:#333">)</span>	exch<span style="color:#333">(</span>a<span style="color:#333">,</span> i<span style="color:#333">,</span> gt<span style="color:#333">--);</span>
+            <span style="color:#080;font-weight:bold">else</span> i<span style="color:#333">++;</span>
+        <span style="color:#333">}</span>
+        sort<span style="color:#333">(</span>a<span style="color:#333">,</span> lo<span style="color:#333">,</span> lt <span style="color:#333">-</span> 1<span style="color:#333">);</span>
+        sort<span style="color:#333">(</span>a<span style="color:#333">,</span> gt <span style="color:#333">+</span> 1<span style="color:#333">,</span> hi<span style="color:#333">);</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h2 id="优先队列">优先队列</h2>
 <p>优先队列这种<em>数据结构</em>应支持两种操作：</p>
 <ul>
@@ -2421,60 +2421,60 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>我们可以通过计算数组的索引在树中上下移动：从$a[k]$向上一层就令$k=k/2$，向下一层则令$k=2k/2k+1$。</p>
 <h4 id="堆的算法">堆的算法</h4>
 <p><strong>由下至上的堆有序化（上浮swim）</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">swim</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> k<span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>k <span style="color:#000;font-weight:bold">&gt;</span> 1 <span style="color:#000;font-weight:bold">&amp;&amp;</span> less<span style="color:#000;font-weight:bold">(</span>k<span style="color:#000;font-weight:bold">/</span>2<span style="color:#000;font-weight:bold">,</span> k<span style="color:#000;font-weight:bold">))</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        exch<span style="color:#000;font-weight:bold">(</span>k<span style="color:#000;font-weight:bold">/</span>2<span style="color:#000;font-weight:bold">,</span> k<span style="color:#000;font-weight:bold">);</span>
-        k <span style="color:#000;font-weight:bold">=</span> k<span style="color:#000;font-weight:bold">/</span>2<span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">swim</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k<span style="color:#333">)</span>
+<span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>k <span style="color:#333">&gt;</span> 1 <span style="color:#333">&amp;&amp;</span> less<span style="color:#333">(</span>k<span style="color:#333">/</span>2<span style="color:#333">,</span> k<span style="color:#333">))</span>
+    <span style="color:#333">{</span>
+        exch<span style="color:#333">(</span>k<span style="color:#333">/</span>2<span style="color:#333">,</span> k<span style="color:#333">);</span>
+        k <span style="color:#333">=</span> k<span style="color:#333">/</span>2<span style="color:#333">;</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><p><strong>由上至下的堆有序化（下沉sink）</strong></p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sink</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> k<span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>2<span style="color:#000;font-weight:bold">*</span>k <span style="color:#000;font-weight:bold">&lt;=</span> N<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#458;font-weight:bold">int</span> j <span style="color:#000;font-weight:bold">=</span> 2<span style="color:#000;font-weight:bold">*</span>k<span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span>j <span style="color:#000;font-weight:bold">&lt;</span> N <span style="color:#000;font-weight:bold">&amp;&amp;</span> less<span style="color:#000;font-weight:bold">(</span>j<span style="color:#000;font-weight:bold">,</span> j<span style="color:#000;font-weight:bold">+</span>1<span style="color:#000;font-weight:bold">))</span>	j<span style="color:#000;font-weight:bold">++;</span>	<span style="color:#998;font-style:italic">//选择父节点的两个子节点中较大的作为交换对象
-</span><span style="color:#998;font-style:italic"></span>        <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(!</span>less<span style="color:#000;font-weight:bold">(</span>k<span style="color:#000;font-weight:bold">,</span> j<span style="color:#000;font-weight:bold">))</span>	<span style="color:#000;font-weight:bold">break</span><span style="color:#000;font-weight:bold">;</span>
-        exch<span style="color:#000;font-weight:bold">(</span>k<span style="color:#000;font-weight:bold">,</span> j<span style="color:#000;font-weight:bold">);</span>
-        k <span style="color:#000;font-weight:bold">=</span> j<span style="color:#000;font-weight:bold">;</span>	<span style="color:#998;font-style:italic">//将交换后子节点的位置作为父节点，循环进行下一次交换,继续下沉
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sink</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k<span style="color:#333">)</span>
+<span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>2<span style="color:#333">*</span>k <span style="color:#333">&lt;=</span> N<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        <span style="color:#339;font-weight:bold">int</span> j <span style="color:#333">=</span> 2<span style="color:#333">*</span>k<span style="color:#333">;</span>
+        <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(</span>j <span style="color:#333">&lt;</span> N <span style="color:#333">&amp;&amp;</span> less<span style="color:#333">(</span>j<span style="color:#333">,</span> j<span style="color:#333">+</span>1<span style="color:#333">))</span>	j<span style="color:#333">++;</span>	<span style="color:#888">//选择父节点的两个子节点中较大的作为交换对象
+</span><span style="color:#888"></span>        <span style="color:#080;font-weight:bold">if</span> <span style="color:#333">(!</span>less<span style="color:#333">(</span>k<span style="color:#333">,</span> j<span style="color:#333">))</span>	<span style="color:#080;font-weight:bold">break</span><span style="color:#333">;</span>
+        exch<span style="color:#333">(</span>k<span style="color:#333">,</span> j<span style="color:#333">);</span>
+        k <span style="color:#333">=</span> j<span style="color:#333">;</span>	<span style="color:#888">//将交换后子节点的位置作为父节点，循环进行下一次交换,继续下沉
+</span><span style="color:#888"></span>    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h4 id="基于堆的优先队列的代码实现">基于堆的优先队列的代码实现</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">MaxPQ</span><span style="color:#000;font-weight:bold">&lt;</span>Key <span style="color:#000;font-weight:bold">extends</span> Comparable<span style="color:#000;font-weight:bold">&lt;</span>key<span style="color:#000;font-weight:bold">&gt;&gt;</span>
-<span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#000;font-weight:bold">private</span> Key<span style="color:#000;font-weight:bold">[]</span> pq<span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#000;font-weight:bold">private</span> <span style="color:#458;font-weight:bold">int</span> N <span style="color:#000;font-weight:bold">=</span> 0<span style="color:#000;font-weight:bold">;</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">MaxPQ</span><span style="color:#333">&lt;</span>Key <span style="color:#080;font-weight:bold">extends</span> Comparable<span style="color:#333">&lt;</span>key<span style="color:#333">&gt;&gt;</span>
+<span style="color:#333">{</span>
+    <span style="color:#080;font-weight:bold">private</span> Key<span style="color:#333">[]</span> pq<span style="color:#333">;</span>
+    <span style="color:#080;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> 0<span style="color:#333">;</span>
     
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">MaxPQ</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> maxN<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        pq <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span>Key<span style="color:#000;font-weight:bold">[])</span> <span style="color:#000;font-weight:bold">new</span> Comparable<span style="color:#000;font-weight:bold">[</span>maxN <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">];</span>
-    <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">isEmpty</span><span style="color:#000;font-weight:bold">()</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">return</span> N <span style="color:#000;font-weight:bold">==</span> 0<span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#000;font-weight:bold">}</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">size</span><span style="color:#000;font-weight:bold">()</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">return</span> N<span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#06b;font-weight:bold">MaxPQ</span><span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> maxN<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        pq <span style="color:#333">=</span> <span style="color:#333">(</span>Key<span style="color:#333">[])</span> <span style="color:#080;font-weight:bold">new</span> Comparable<span style="color:#333">[</span>maxN <span style="color:#333">+</span> 1<span style="color:#333">];</span>
+    <span style="color:#333">}</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">boolean</span> <span style="color:#06b;font-weight:bold">isEmpty</span><span style="color:#333">()</span>
+    <span style="color:#333">{</span>
+        <span style="color:#080;font-weight:bold">return</span> N <span style="color:#333">==</span> 0<span style="color:#333">;</span>
+    <span style="color:#333">}</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">size</span><span style="color:#333">()</span>
+    <span style="color:#333">{</span>
+        <span style="color:#080;font-weight:bold">return</span> N<span style="color:#333">;</span>
+    <span style="color:#333">}</span>
     
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">insert</span><span style="color:#000;font-weight:bold">(</span>Key v<span style="color:#000;font-weight:bold">)</span>	<span style="color:#998;font-style:italic">//在数组的末尾输入，然后进行上浮swim操作
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">{</span>
-        pq<span style="color:#000;font-weight:bold">[++</span>N<span style="color:#000;font-weight:bold">]</span> <span style="color:#000;font-weight:bold">=</span> v<span style="color:#000;font-weight:bold">;</span>
-        swim<span style="color:#000;font-weight:bold">(</span>N<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">};</span>
+    <span style="color:#080;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">insert</span><span style="color:#333">(</span>Key v<span style="color:#333">)</span>	<span style="color:#888">//在数组的末尾输入，然后进行上浮swim操作
+</span><span style="color:#888"></span>    <span style="color:#333">{</span>
+        pq<span style="color:#333">[++</span>N<span style="color:#333">]</span> <span style="color:#333">=</span> v<span style="color:#333">;</span>
+        swim<span style="color:#333">(</span>N<span style="color:#333">)</span>
+    <span style="color:#333">};</span>
     
-    <span style="color:#000;font-weight:bold">public</span> Key <span style="color:#900;font-weight:bold">delMax</span><span style="color:#000;font-weight:bold">()</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        Key max <span style="color:#000;font-weight:bold">=</span> pq<span style="color:#000;font-weight:bold">[</span>1<span style="color:#000;font-weight:bold">];</span>
-        exch<span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">,</span> N<span style="color:#000;font-weight:bold">--);</span>
-        pq<span style="color:#000;font-weight:bold">[</span>N<span style="color:#000;font-weight:bold">++]</span> <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
-        sink<span style="color:#000;font-weight:bold">(</span>1<span style="color:#000;font-weight:bold">);</span>
-        <span style="color:#000;font-weight:bold">return</span> max<span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+    <span style="color:#080;font-weight:bold">public</span> Key <span style="color:#06b;font-weight:bold">delMax</span><span style="color:#333">()</span>
+    <span style="color:#333">{</span>
+        Key max <span style="color:#333">=</span> pq<span style="color:#333">[</span>1<span style="color:#333">];</span>
+        exch<span style="color:#333">(</span>1<span style="color:#333">,</span> N<span style="color:#333">--);</span>
+        pq<span style="color:#333">[</span>N<span style="color:#333">++]</span> <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">null</span><span style="color:#333">;</span>
+        sink<span style="color:#333">(</span>1<span style="color:#333">);</span>
+        <span style="color:#080;font-weight:bold">return</span> max<span style="color:#333">;</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h4 id="基于堆的优先队列性能分析">基于堆的优先队列性能分析</h4>
 <p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90.PNG" alt=""></p>
 <h3 id="堆排序">堆排序</h3>
@@ -2484,17 +2484,17 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h4 id="下沉排序">下沉排序</h4>
 <p>将堆中的最大元素删去，然后将其放入堆缩小后数组中空出的位置。</p>
 <h4 id="堆排序代码实现">堆排序代码实现</h4>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">sort</span><span style="color:#000;font-weight:bold">(</span>Comparable<span style="color:#000;font-weight:bold">[]</span> a<span style="color:#000;font-weight:bold">)</span>
-<span style="color:#000;font-weight:bold">{</span>
-    <span style="color:#458;font-weight:bold">int</span> N <span style="color:#000;font-weight:bold">=</span> a<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">length</span><span style="color:#000;font-weight:bold">;</span>
-    <span style="color:#000;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> k <span style="color:#000;font-weight:bold">=</span> N<span style="color:#000;font-weight:bold">/</span>2<span style="color:#000;font-weight:bold">;</span> k <span style="color:#000;font-weight:bold">&gt;=</span> 1<span style="color:#000;font-weight:bold">;</span> k<span style="color:#000;font-weight:bold">--)</span>	<span style="color:#998;font-style:italic">//构造堆
-</span><span style="color:#998;font-style:italic"></span>        sink<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> k<span style="color:#000;font-weight:bold">,</span> N<span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#000;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span>N <span style="color:#000;font-weight:bold">&gt;</span> 1<span style="color:#000;font-weight:bold">)</span>
-    <span style="color:#000;font-weight:bold">{</span>
-        exch<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> 1<span style="color:#000;font-weight:bold">,</span> N<span style="color:#000;font-weight:bold">--);</span>	<span style="color:#998;font-style:italic">//堆排序，按递减顺序循环取出所有的最大值，最后得到排序结果。
-</span><span style="color:#998;font-style:italic"></span>        sink<span style="color:#000;font-weight:bold">(</span>a<span style="color:#000;font-weight:bold">,</span> 1<span style="color:#000;font-weight:bold">,</span> N<span style="color:#000;font-weight:bold">);</span>
-    <span style="color:#000;font-weight:bold">}</span>
-<span style="color:#000;font-weight:bold">}</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">sort</span><span style="color:#333">(</span>Comparable<span style="color:#333">[]</span> a<span style="color:#333">)</span>
+<span style="color:#333">{</span>
+    <span style="color:#339;font-weight:bold">int</span> N <span style="color:#333">=</span> a<span style="color:#333">.</span><span style="color:#00c">length</span><span style="color:#333">;</span>
+    <span style="color:#080;font-weight:bold">for</span> <span style="color:#333">(</span><span style="color:#339;font-weight:bold">int</span> k <span style="color:#333">=</span> N<span style="color:#333">/</span>2<span style="color:#333">;</span> k <span style="color:#333">&gt;=</span> 1<span style="color:#333">;</span> k<span style="color:#333">--)</span>	<span style="color:#888">//构造堆
+</span><span style="color:#888"></span>        sink<span style="color:#333">(</span>a<span style="color:#333">,</span> k<span style="color:#333">,</span> N<span style="color:#333">);</span>
+    <span style="color:#080;font-weight:bold">while</span> <span style="color:#333">(</span>N <span style="color:#333">&gt;</span> 1<span style="color:#333">)</span>
+    <span style="color:#333">{</span>
+        exch<span style="color:#333">(</span>a<span style="color:#333">,</span> 1<span style="color:#333">,</span> N<span style="color:#333">--);</span>	<span style="color:#888">//堆排序，按递减顺序循环取出所有的最大值，最后得到排序结果。
+</span><span style="color:#888"></span>        sink<span style="color:#333">(</span>a<span style="color:#333">,</span> 1<span style="color:#333">,</span> N<span style="color:#333">);</span>
+    <span style="color:#333">}</span>
+<span style="color:#333">}</span>
 </code></pre></div><h4 id="堆排序性能分析">堆排序性能分析</h4>
 <p>将$N$个元素排序，堆排序只需要少于$(2N\lg N+2N)$次比较以及一半的交换次数。</p>
 

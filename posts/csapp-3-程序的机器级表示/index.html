@@ -2348,11 +2348,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>MOVZ：把目的中剩余的字节填充为0</p>
 <p>MOVS：通过符号扩展来填充，把源操作的最高位进行复制</p>
 <h3 id="数据传送示例代码">数据传送示例代码</h3>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">exchange</span>(<span style="color:#458;font-weight:bold">long</span> <span style="color:#000;font-weight:bold">*</span>xp, <span style="color:#458;font-weight:bold">long</span> y)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">long</span> <span style="color:#06b;font-weight:bold">exchange</span>(<span style="color:#339;font-weight:bold">long</span> <span style="color:#333">*</span>xp, <span style="color:#339;font-weight:bold">long</span> y)
 {
-	<span style="color:#458;font-weight:bold">long</span> x <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">*</span>xp;	<span style="color:#998;font-style:italic">//解引用操作符，把指针xp指向地址的数值放入寄存器x
-</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">*</span>xp <span style="color:#000;font-weight:bold">=</span> y;	<span style="color:#998;font-style:italic">//指针符号，把数y放入指针xp指向的地址
-</span><span style="color:#998;font-style:italic"></span>	<span style="color:#000;font-weight:bold">return</span> x;
+	<span style="color:#339;font-weight:bold">long</span> x <span style="color:#333">=</span> <span style="color:#333">*</span>xp;	<span style="color:#888">//解引用操作符，把指针xp指向地址的数值放入寄存器x
+</span><span style="color:#888"></span>	<span style="color:#333">*</span>xp <span style="color:#333">=</span> y;	<span style="color:#888">//指针符号，把数y放入指针xp指向的地址
+</span><span style="color:#888"></span>	<span style="color:#080;font-weight:bold">return</span> x;
 }
 </code></pre></div><pre tabindex="0"><code class="language-assembly" data-lang="assembly">;xp in %rdi, y in %rsi
 exchange:
@@ -2566,10 +2566,10 @@ exchange:
 <p>cqto指令：隐含读出%rax的符号位，并将其复制到%rdx的所有位。</p>
 <p>汇编器能通过计算操作数数目，分辨想用哪条指令。</p>
 <p>乘法代码示例：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;inttypes.h&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span><span style="color:#000;font-weight:bold">typedef</span> <span style="color:#458;font-weight:bold">unsigned</span> __int128 uint128_t;
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">store_uprod</span>(uint128_t <span style="color:#000;font-weight:bold">*</span>dest, <span style="color:#458;font-weight:bold">uint64_t</span> x, <span style="color:#458;font-weight:bold">uint64_t</span> y) {
-    <span style="color:#000;font-weight:bold">*</span>dest <span style="color:#000;font-weight:bold">=</span> x <span style="color:#000;font-weight:bold">*</span> (uint128_t) y;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;inttypes.h&gt;</span><span style="color:#579">
+</span><span style="color:#579"></span><span style="color:#080;font-weight:bold">typedef</span> <span style="color:#339;font-weight:bold">unsigned</span> __int128 uint128_t;
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">store_uprod</span>(uint128_t <span style="color:#333">*</span>dest, <span style="color:#339;font-weight:bold">uint64_t</span> x, <span style="color:#339;font-weight:bold">uint64_t</span> y) {
+    <span style="color:#333">*</span>dest <span style="color:#333">=</span> x <span style="color:#333">*</span> (uint128_t) y;
 }
 </code></pre></div><p>将x和y显式地声明为64位数字。使用GCC提供的128位整数支持。这段代码指明得到的乘积应该存放在指针dest指向的16字节处。</p>
 <p>生成的汇编代码如下：</p>
@@ -2584,11 +2584,11 @@ store_uprod:
 <p>除法操作由<strong>单操作数除法指令</strong>来实现的。</p>
 <p>有符号除法指令idivl将寄存器%rdx(高64位)和%rax(低64位)中的128位数作为被除数，而除数作为指令的操作数给出。指令将商存储在寄存器%rax，将余数存储在寄存器%rdx。</p>
 <p>除法代码示例：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">remdiv</span>(<span style="color:#458;font-weight:bold">long</span> x, <span style="color:#458;font-weight:bold">long</span> y, <span style="color:#458;font-weight:bold">long</span> <span style="color:#000;font-weight:bold">*</span>qp, <span style="color:#458;font-weight:bold">long</span> <span style="color:#000;font-weight:bold">*</span>rp) {
-	<span style="color:#458;font-weight:bold">long</span> q <span style="color:#000;font-weight:bold">=</span> x<span style="color:#000;font-weight:bold">/</span>y;
-	<span style="color:#458;font-weight:bold">long</span> r <span style="color:#000;font-weight:bold">=</span> x<span style="color:#000;font-weight:bold">%</span>y;
-	<span style="color:#000;font-weight:bold">*</span>qp <span style="color:#000;font-weight:bold">=</span> q;
-	<span style="color:#000;font-weight:bold">*</span>rp <span style="color:#000;font-weight:bold">=</span> r;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">remdiv</span>(<span style="color:#339;font-weight:bold">long</span> x, <span style="color:#339;font-weight:bold">long</span> y, <span style="color:#339;font-weight:bold">long</span> <span style="color:#333">*</span>qp, <span style="color:#339;font-weight:bold">long</span> <span style="color:#333">*</span>rp) {
+	<span style="color:#339;font-weight:bold">long</span> q <span style="color:#333">=</span> x<span style="color:#333">/</span>y;
+	<span style="color:#339;font-weight:bold">long</span> r <span style="color:#333">=</span> x<span style="color:#333">%</span>y;
+	<span style="color:#333">*</span>qp <span style="color:#333">=</span> q;
+	<span style="color:#333">*</span>rp <span style="color:#333">=</span> r;
 }
 </code></pre></div><p>生成的汇编代码如下：</p>
 <pre tabindex="0"><code class="language-assembly" data-lang="assembly">;x in %rdi, y in %rsi, qp in %rdx, rp in %rcx
@@ -2840,32 +2840,32 @@ remdiv:
 <h3 id="用条件控制来实现条件分支">用条件控制来实现条件分支</h3>
 <p>将条件表达式从C语言翻译为机器码，最常用的方式是结合<strong>有条件和无条件跳转</strong>。</p>
 <p>C语言的if-else语句通用模板：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">if</span> (test<span style="color:#000;font-weight:bold">-</span>expr)
-	then<span style="color:#000;font-weight:bold">-</span>statement
-<span style="color:#000;font-weight:bold">else</span>
-	<span style="color:#000;font-weight:bold">else</span><span style="color:#000;font-weight:bold">-</span>statement
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">if</span> (test<span style="color:#333">-</span>expr)
+	then<span style="color:#333">-</span>statement
+<span style="color:#080;font-weight:bold">else</span>
+	<span style="color:#080;font-weight:bold">else</span><span style="color:#333">-</span>statement
 </code></pre></div><p>汇编使用以下形式实现，这里用C语法来描述控制流：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">t <span style="color:#000;font-weight:bold">=</span> test<span style="color:#000;font-weight:bold">-</span>expr;
-<span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>t)
-	<span style="color:#000;font-weight:bold">goto</span> <span style="color:#0086b3">false</span>;
-then<span style="color:#000;font-weight:bold">-</span>statement
-<span style="color:#000;font-weight:bold">goto</span> done;
-<span style="color:#0086b3">false</span><span style="color:#000;font-weight:bold">:</span>
-	<span style="color:#000;font-weight:bold">else</span><span style="color:#000;font-weight:bold">-</span>statement
-<span style="color:#900;font-weight:bold">done</span>:
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">t <span style="color:#333">=</span> test<span style="color:#333">-</span>expr;
+<span style="color:#080;font-weight:bold">if</span> (<span style="color:#333">!</span>t)
+	<span style="color:#080;font-weight:bold">goto</span> <span style="color:#007020">false</span>;
+then<span style="color:#333">-</span>statement
+<span style="color:#080;font-weight:bold">goto</span> done;
+<span style="color:#007020">false</span><span style="color:#333">:</span>
+	<span style="color:#080;font-weight:bold">else</span><span style="color:#333">-</span>statement
+<span style="color:#970;font-weight:bold">done</span>:
 </code></pre></div><p>汇编器位then-statement和else-statement产生了各自的代码块，它会插入条件和无条件分支，保证能执行正确代码块。</p>
 <h3 id="用条件传送实现条件分支">用条件传送实现条件分支</h3>
 <p>实现条件操作的传统方法是使用<strong>控制</strong>的条件转移，当条件满足时，程序沿着一条执行路径执行，而当条件不满足时，就走另一条路径。这种机制简单，但在现代处理器中非常低效。</p>
 <p>替代策略是使用<strong>数据</strong>的条件转移。这种方法计算一个条件操作的两种结果，然后根据条件是否满足从中选取一个。</p>
 <p>举例：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">absdiff</span>(<span style="color:#458;font-weight:bold">long</span> x, <span style="color:#458;font-weight:bold">long</span> y)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">long</span> <span style="color:#06b;font-weight:bold">absdiff</span>(<span style="color:#339;font-weight:bold">long</span> x, <span style="color:#339;font-weight:bold">long</span> y)
 {
-	<span style="color:#458;font-weight:bold">long</span> result;
-	<span style="color:#000;font-weight:bold">if</span> (x <span style="color:#000;font-weight:bold">&lt;</span> y)
-		result <span style="color:#000;font-weight:bold">=</span> y <span style="color:#000;font-weight:bold">-</span> x;
-	<span style="color:#000;font-weight:bold">else</span>
-		result <span style="color:#000;font-weight:bold">=</span> x <span style="color:#000;font-weight:bold">-</span> y;
-	<span style="color:#000;font-weight:bold">return</span> result;
+	<span style="color:#339;font-weight:bold">long</span> result;
+	<span style="color:#080;font-weight:bold">if</span> (x <span style="color:#333">&lt;</span> y)
+		result <span style="color:#333">=</span> y <span style="color:#333">-</span> x;
+	<span style="color:#080;font-weight:bold">else</span>
+		result <span style="color:#333">=</span> x <span style="color:#333">-</span> y;
+	<span style="color:#080;font-weight:bold">return</span> result;
 }
 </code></pre></div><p>产生的汇编代码为：</p>
 <pre tabindex="0"><code class="language-assembly" data-lang="assembly">;x in %rdi, y in &amp;rsi
@@ -2962,40 +2962,40 @@ absdiff:
 <h3 id="循环">循环</h3>
 <p>汇编中没有相应的循环指令，可以使用条件测试和跳转组合起来实现。</p>
 <p><strong>do-while</strong>循环</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#900;font-weight:bold">loop</span>:
-	body<span style="color:#000;font-weight:bold">-</span>statement
-	t <span style="color:#000;font-weight:bold">=</span> test<span style="color:#000;font-weight:bold">-</span>expr;
-	<span style="color:#000;font-weight:bold">if</span> (t)
-		<span style="color:#000;font-weight:bold">goto</span> loop;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#970;font-weight:bold">loop</span>:
+	body<span style="color:#333">-</span>statement
+	t <span style="color:#333">=</span> test<span style="color:#333">-</span>expr;
+	<span style="color:#080;font-weight:bold">if</span> (t)
+		<span style="color:#080;font-weight:bold">goto</span> loop;
 </code></pre></div><p><strong>while</strong>循环</p>
 <p>两种方法：</p>
 <ol>
 <li>跳转到中间</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">goto</span> test;
-<span style="color:#900;font-weight:bold">loop</span>:
-	body<span style="color:#000;font-weight:bold">-</span>statement
-<span style="color:#900;font-weight:bold">test</span>:
-	t <span style="color:#000;font-weight:bold">=</span> test<span style="color:#000;font-weight:bold">-</span>expr;
-	<span style="color:#000;font-weight:bold">if</span> (t)
-		<span style="color:#000;font-weight:bold">goto</span> loop;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">goto</span> test;
+<span style="color:#970;font-weight:bold">loop</span>:
+	body<span style="color:#333">-</span>statement
+<span style="color:#970;font-weight:bold">test</span>:
+	t <span style="color:#333">=</span> test<span style="color:#333">-</span>expr;
+	<span style="color:#080;font-weight:bold">if</span> (t)
+		<span style="color:#080;font-weight:bold">goto</span> loop;
 </code></pre></div><ol start="2">
 <li>guarded-do</li>
 </ol>
 <p>首先用条件分支，如果初始条件不成立就跳过循环，把代码变换为do-while循环。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">t <span style="color:#000;font-weight:bold">-</span> test<span style="color:#000;font-weight:bold">-</span>expr;
-<span style="color:#000;font-weight:bold">if</span> (<span style="color:#000;font-weight:bold">!</span>t)
-	<span style="color:#000;font-weight:bold">goto</span> done;
-<span style="color:#900;font-weight:bold">loop</span>:
-	body<span style="color:#000;font-weight:bold">-</span>statement
-	t <span style="color:#000;font-weight:bold">=</span> test<span style="color:#000;font-weight:bold">-</span>expr;
-	<span style="color:#000;font-weight:bold">if</span> (t)
-		<span style="color:#000;font-weight:bold">goto</span> loop;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">t <span style="color:#333">-</span> test<span style="color:#333">-</span>expr;
+<span style="color:#080;font-weight:bold">if</span> (<span style="color:#333">!</span>t)
+	<span style="color:#080;font-weight:bold">goto</span> done;
+<span style="color:#970;font-weight:bold">loop</span>:
+	body<span style="color:#333">-</span>statement
+	t <span style="color:#333">=</span> test<span style="color:#333">-</span>expr;
+	<span style="color:#080;font-weight:bold">if</span> (t)
+		<span style="color:#080;font-weight:bold">goto</span> loop;
 </code></pre></div><p><strong>for</strong>循环</p>
 <p>for循环的通用形式为：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">for</span> (init<span style="color:#000;font-weight:bold">-</span>expr; test<span style="color:#000;font-weight:bold">-</span>expr; update<span style="color:#000;font-weight:bold">-</span>expr)	body<span style="color:#000;font-weight:bold">-</span>statement
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">for</span> (init<span style="color:#333">-</span>expr; test<span style="color:#333">-</span>expr; update<span style="color:#333">-</span>expr)	body<span style="color:#333">-</span>statement
 </code></pre></div><p>将其改写为使用while循环的形式：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">init<span style="color:#000;font-weight:bold">-</span>expr;<span style="color:#000;font-weight:bold">while</span> (test<span style="color:#000;font-weight:bold">-</span>expr) {	body<span style="color:#000;font-weight:bold">-</span>statement	update<span style="color:#000;font-weight:bold">-</span>expr;}
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">init<span style="color:#333">-</span>expr;<span style="color:#080;font-weight:bold">while</span> (test<span style="color:#333">-</span>expr) {	body<span style="color:#333">-</span>statement	update<span style="color:#333">-</span>expr;}
 </code></pre></div><h3 id="switch语句">switch语句</h3>
 <p>switch语句可以根据一个<strong>整数索引值</strong>进行多重分支。而且可以通过使用<strong>跳转表</strong>这种数据结构使得实现更加高效。</p>
 <p>跳转表是一个数组，表项i是一个代码段的地址，这个代码段实现当开关索引值等于i时程序应该采取的动作。</p>
@@ -3023,20 +3023,20 @@ absdiff:
 <h3 id="指针运算">指针运算</h3>
 <h3 id="嵌套的数组">嵌套的数组</h3>
 <p>二维数组可以以嵌套声明，例如：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> A[<span style="color:#099">5</span>][<span style="color:#099">3</span>];
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> A[<span style="color:#00d;font-weight:bold">5</span>][<span style="color:#00d;font-weight:bold">3</span>];
 </code></pre></div><p>等价于：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#000;font-weight:bold">typedef</span> <span style="color:#458;font-weight:bold">int</span> row3_t[<span style="color:#099">3</span>];
-row3_t A[<span style="color:#099">5</span>];
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">typedef</span> <span style="color:#339;font-weight:bold">int</span> row3_t[<span style="color:#00d;font-weight:bold">3</span>];
+row3_t A[<span style="color:#00d;font-weight:bold">5</span>];
 </code></pre></div><p>二维数组一般按照行优先顺序进行排列。</p>
 <h3 id="定长数组">定长数组</h3>
 <p>一般使用<code>#define</code>声明将常数与一个名字联系起来，然后一直使用这个名字代替常数的数值。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#999;font-weight:bold;font-style:italic">#define N 16
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span><span style="color:#000;font-weight:bold">typedef</span> <span style="color:#458;font-weight:bold">int</span> fix_matrix[N][N];
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#define N 16
+</span><span style="color:#579"></span><span style="color:#080;font-weight:bold">typedef</span> <span style="color:#339;font-weight:bold">int</span> fix_matrix[N][N];
 </code></pre></div><h3 id="变长数组">变长数组</h3>
 <p>ISO C99引入一种功能，允许数组的维度是表达式，在数组被分配时才计算出来。</p>
 <p>例如：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">var_ele</span>(<span style="color:#458;font-weight:bold">long</span> n, <span style="color:#458;font-weight:bold">int</span> A[n][n], <span style="color:#458;font-weight:bold">long</span> i, <span style="color:#458;font-weight:bold">long</span> j){
-	<span style="color:#000;font-weight:bold">return</span> A[i][j];
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">var_ele</span>(<span style="color:#339;font-weight:bold">long</span> n, <span style="color:#339;font-weight:bold">int</span> A[n][n], <span style="color:#339;font-weight:bold">long</span> i, <span style="color:#339;font-weight:bold">long</span> j){
+	<span style="color:#080;font-weight:bold">return</span> A[i][j];
 }
 </code></pre></div><p>参数<code>n</code>必须在参数<code>A[n][n]</code>之前.</p>
 <h2 id="数据结构struct和union">数据结构struct和union</h2>

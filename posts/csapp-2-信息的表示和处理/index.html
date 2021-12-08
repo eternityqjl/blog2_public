@@ -1640,31 +1640,31 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </ul>
 <p>大多Intel兼容机使用小端模式。</p>
 <p>以下代码使用强制类型转换来访问和打印不同程序对象的字节表示。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#999;font-weight:bold;font-style:italic">#include</span> <span style="color:#999;font-weight:bold;font-style:italic">&lt;stdio.h&gt;</span><span style="color:#999;font-weight:bold;font-style:italic">
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span>
-<span style="color:#000;font-weight:bold">typedef</span> <span style="color:#458;font-weight:bold">unsigned</span> <span style="color:#458;font-weight:bold">char</span> <span style="color:#000;font-weight:bold">*</span>byte_pointer;	<span style="color:#998;font-style:italic">//将byte_pointer定义为一个指向类型为unsigned char对象的指针
-</span><span style="color:#998;font-style:italic">//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
-</span><span style="color:#998;font-style:italic"></span>
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">show_bytes</span>(byte_pointer start, size_t len)
-{<span style="color:#998;font-style:italic">//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法
-</span><span style="color:#998;font-style:italic"></span>	size_t i;
-	<span style="color:#000;font-weight:bold">for</span> (i <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>; i <span style="color:#000;font-weight:bold">&lt;</span> len; i<span style="color:#000;font-weight:bold">++</span>)
-		printf(<span style="color:#d14">&#34;%.2x&#34;</span>, start[i]);
-	printf(<span style="color:#d14">&#34;</span><span style="color:#d14">\n</span><span style="color:#d14">&#34;</span>);
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;stdio.h&gt;</span><span style="color:#579">
+</span><span style="color:#579"></span>
+<span style="color:#080;font-weight:bold">typedef</span> <span style="color:#339;font-weight:bold">unsigned</span> <span style="color:#339;font-weight:bold">char</span> <span style="color:#333">*</span>byte_pointer;	<span style="color:#888">//将byte_pointer定义为一个指向类型为unsigned char对象的指针
+</span><span style="color:#888">//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
+</span><span style="color:#888"></span>
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">show_bytes</span>(byte_pointer start, size_t len)
+{<span style="color:#888">//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法
+</span><span style="color:#888"></span>	size_t i;
+	<span style="color:#080;font-weight:bold">for</span> (i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>; i <span style="color:#333">&lt;</span> len; i<span style="color:#333">++</span>)
+		printf(<span style="background-color:#fff0f0">&#34;%.2x&#34;</span>, start[i]);
+	printf(<span style="background-color:#fff0f0">&#34;</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>);
 }
 
-<span style="color:#998;font-style:italic">//使用sizeof确定对象使用的字节数
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">show_int</span>(<span style="color:#458;font-weight:bold">int</span> x)
-{<span style="color:#998;font-style:italic">//显示int对象的字节内容
-</span><span style="color:#998;font-style:italic"></span>	show_bytes((byte_pointer) <span style="color:#000;font-weight:bold">&amp;</span>x, <span style="color:#000;font-weight:bold">sizeof</span>(<span style="color:#458;font-weight:bold">int</span>));
+<span style="color:#888">//使用sizeof确定对象使用的字节数
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">show_int</span>(<span style="color:#339;font-weight:bold">int</span> x)
+{<span style="color:#888">//显示int对象的字节内容
+</span><span style="color:#888"></span>	show_bytes((byte_pointer) <span style="color:#333">&amp;</span>x, <span style="color:#080;font-weight:bold">sizeof</span>(<span style="color:#339;font-weight:bold">int</span>));
 }
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">show_float</span>(<span style="color:#458;font-weight:bold">float</span> x)
-{<span style="color:#998;font-style:italic">//显示float对象的字节内容
-</span><span style="color:#998;font-style:italic"></span>	show_bytes((byte_pointer) <span style="color:#000;font-weight:bold">&amp;</span>x, <span style="color:#000;font-weight:bold">sizeof</span>(<span style="color:#458;font-weight:bold">float</span>));
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">show_float</span>(<span style="color:#339;font-weight:bold">float</span> x)
+{<span style="color:#888">//显示float对象的字节内容
+</span><span style="color:#888"></span>	show_bytes((byte_pointer) <span style="color:#333">&amp;</span>x, <span style="color:#080;font-weight:bold">sizeof</span>(<span style="color:#339;font-weight:bold">float</span>));
 }
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">show_pointer</span>(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>x)
-{<span style="color:#998;font-style:italic">//显示void *对象的字节内容
-</span><span style="color:#998;font-style:italic"></span>	show_bytes((byte_pointer) <span style="color:#000;font-weight:bold">&amp;</span>x, <span style="color:#000;font-weight:bold">sizeof</span>(<span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>));
+<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">show_pointer</span>(<span style="color:#339;font-weight:bold">void</span> <span style="color:#333">*</span>x)
+{<span style="color:#888">//显示void *对象的字节内容
+</span><span style="color:#888"></span>	show_bytes((byte_pointer) <span style="color:#333">&amp;</span>x, <span style="color:#080;font-weight:bold">sizeof</span>(<span style="color:#339;font-weight:bold">void</span> <span style="color:#333">*</span>));
 }
 </code></pre></div><h3 id="表示字符串">表示字符串</h3>
 <p>对文本进行编码。</p>

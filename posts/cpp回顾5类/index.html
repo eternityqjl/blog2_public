@@ -637,35 +637,35 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                     <p>以一个例子来说明类</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">strut Sales_data {
-<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
-	<span style="color:#998;font-style:italic">//构造函数
-</span><span style="color:#998;font-style:italic"></span>	Sales_data() <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">default</span>;
-	Sales_data(<span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>string <span style="color:#000;font-weight:bold">&amp;</span>s) <span style="color:#000;font-weight:bold">:</span> bookNo(s) {}
-	Sales_data(<span style="color:#000;font-weight:bold">const</span> std<span style="color:#000;font-weight:bold">::</span>string <span style="color:#000;font-weight:bold">&amp;</span>s, <span style="color:#458;font-weight:bold">unsigned</span> n, <span style="color:#458;font-weight:bold">double</span> p)<span style="color:#000;font-weight:bold">:</span>
-		bookNo(s), units_sold(n), revenue(p<span style="color:#000;font-weight:bold">*</span>n) {}
-	Sales_data(std<span style="color:#000;font-weight:bold">::</span>istream <span style="color:#000;font-weight:bold">&amp;</span>);
-	<span style="color:#998;font-style:italic">//成员函数：
-</span><span style="color:#998;font-style:italic"></span>	std<span style="color:#000;font-weight:bold">::</span>string isbn()	<span style="color:#000;font-weight:bold">const</span> {<span style="color:#000;font-weight:bold">return</span> bookNo; }
-	Sales_data<span style="color:#000;font-weight:bold">&amp;</span> combine(<span style="color:#000;font-weight:bold">const</span> Sales_data<span style="color:#000;font-weight:bold">&amp;</span>);
-<span style="color:#000;font-weight:bold">private</span><span style="color:#000;font-weight:bold">:</span>
-	<span style="color:#458;font-weight:bold">double</span> avg_price() <span style="color:#000;font-weight:bold">const</span>;
-	std<span style="color:#000;font-weight:bold">::</span>string bookNo;
-	<span style="color:#998;font-style:italic">//类内初始值(数据成员)
-</span><span style="color:#998;font-style:italic"></span>	<span style="color:#458;font-weight:bold">unsigned</span> units_sold <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>;
-	<span style="color:#458;font-weight:bold">double</span> revenue <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0.0</span>;
+<span style="color:#080;font-weight:bold">public</span><span style="color:#333">:</span>
+	<span style="color:#888">//构造函数
+</span><span style="color:#888"></span>	Sales_data() <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">default</span>;
+	Sales_data(<span style="color:#080;font-weight:bold">const</span> std<span style="color:#333">::</span>string <span style="color:#333">&amp;</span>s) <span style="color:#333">:</span> bookNo(s) {}
+	Sales_data(<span style="color:#080;font-weight:bold">const</span> std<span style="color:#333">::</span>string <span style="color:#333">&amp;</span>s, <span style="color:#339;font-weight:bold">unsigned</span> n, <span style="color:#339;font-weight:bold">double</span> p)<span style="color:#333">:</span>
+		bookNo(s), units_sold(n), revenue(p<span style="color:#333">*</span>n) {}
+	Sales_data(std<span style="color:#333">::</span>istream <span style="color:#333">&amp;</span>);
+	<span style="color:#888">//成员函数：
+</span><span style="color:#888"></span>	std<span style="color:#333">::</span>string isbn()	<span style="color:#080;font-weight:bold">const</span> {<span style="color:#080;font-weight:bold">return</span> bookNo; }
+	Sales_data<span style="color:#333">&amp;</span> combine(<span style="color:#080;font-weight:bold">const</span> Sales_data<span style="color:#333">&amp;</span>);
+<span style="color:#080;font-weight:bold">private</span><span style="color:#333">:</span>
+	<span style="color:#339;font-weight:bold">double</span> avg_price() <span style="color:#080;font-weight:bold">const</span>;
+	std<span style="color:#333">::</span>string bookNo;
+	<span style="color:#888">//类内初始值(数据成员)
+</span><span style="color:#888"></span>	<span style="color:#339;font-weight:bold">unsigned</span> units_sold <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>;
+	<span style="color:#339;font-weight:bold">double</span> revenue <span style="color:#333">=</span> <span style="color:#60e;font-weight:bold">0.0</span>;
 };
-<span style="color:#998;font-style:italic">//在类的外部定义成员函数
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">double</span> Sales_data<span style="color:#000;font-weight:bold">::</span>avg_price() <span style="color:#000;font-weight:bold">const</span> {
-	<span style="color:#000;font-weight:bold">if</span> (units_sold)
-		<span style="color:#000;font-weight:bold">return</span> revenue <span style="color:#000;font-weight:bold">/</span> units_sold;
-	<span style="color:#000;font-weight:bold">else</span>
-		<span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>;
+<span style="color:#888">//在类的外部定义成员函数
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">double</span> Sales_data<span style="color:#333">::</span>avg_price() <span style="color:#080;font-weight:bold">const</span> {
+	<span style="color:#080;font-weight:bold">if</span> (units_sold)
+		<span style="color:#080;font-weight:bold">return</span> revenue <span style="color:#333">/</span> units_sold;
+	<span style="color:#080;font-weight:bold">else</span>
+		<span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">0</span>;
 }
-<span style="color:#998;font-style:italic">//在类的外部定义构造函数
-</span><span style="color:#998;font-style:italic"></span>Sales_data<span style="color:#000;font-weight:bold">::</span>Sales_data(std<span style="color:#000;font-weight:bold">::</span>istream <span style="color:#000;font-weight:bold">&amp;</span>is)
+<span style="color:#888">//在类的外部定义构造函数
+</span><span style="color:#888"></span>Sales_data<span style="color:#333">::</span>Sales_data(std<span style="color:#333">::</span>istream <span style="color:#333">&amp;</span>is)
 {
-    read(is, <span style="color:#000;font-weight:bold">*</span><span style="color:#000;font-weight:bold">this</span>);	<span style="color:#998;font-style:italic">//从is中读取一条信息然后存入this对象中
-</span><span style="color:#998;font-style:italic"></span>}
+    read(is, <span style="color:#333">*</span><span style="color:#080;font-weight:bold">this</span>);	<span style="color:#888">//从is中读取一条信息然后存入this对象中
+</span><span style="color:#888"></span>}
 </code></pre></div><h2 id="成员函数">成员函数</h2>
 <p>成员函数的<strong>声明</strong>必须在<strong>类的内部</strong>，它的<strong>定义</strong>既可以在类的内部也可以在类的外部。作为接口的非成员函数，它的定义和声明都在类的外部。</p>
 <h2 id="构造函数">构造函数</h2>
@@ -677,28 +677,28 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p><strong>构造函数初始值列表</strong></p>
 <p>就对象的数据成员而言，初始化和赋值也有区别。如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化。</p>
 <p>如果成员是<strong>const</strong>或<strong>引用</strong>的话，必须将其初始化。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">ConstRef</span> {
-<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
-	ConstRef(<span style="color:#458;font-weight:bold">int</span> ii);
-<span style="color:#000;font-weight:bold">private</span><span style="color:#000;font-weight:bold">:</span>
-	<span style="color:#458;font-weight:bold">int</span> i;
-	<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">int</span> ci;
-	<span style="color:#458;font-weight:bold">int</span> <span style="color:#000;font-weight:bold">&amp;</span>ri;
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">ConstRef</span> {
+<span style="color:#080;font-weight:bold">public</span><span style="color:#333">:</span>
+	ConstRef(<span style="color:#339;font-weight:bold">int</span> ii);
+<span style="color:#080;font-weight:bold">private</span><span style="color:#333">:</span>
+	<span style="color:#339;font-weight:bold">int</span> i;
+	<span style="color:#080;font-weight:bold">const</span> <span style="color:#339;font-weight:bold">int</span> ci;
+	<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">&amp;</span>ri;
 };
-ConstRef<span style="color:#000;font-weight:bold">::</span>ConstRef(<span style="color:#458;font-weight:bold">int</span> ii)<span style="color:#000;font-weight:bold">:</span> i(ii), ci(ii), ri(i) {}	<span style="color:#998;font-style:italic">//显示地初始化引用和const成员
+ConstRef<span style="color:#333">::</span>ConstRef(<span style="color:#339;font-weight:bold">int</span> ii)<span style="color:#333">:</span> i(ii), ci(ii), ri(i) {}	<span style="color:#888">//显示地初始化引用和const成员
 </span></code></pre></div><p>最好避免使用某些成员初始化其他成员。</p>
 <p><strong>委托构造函数</strong></p>
 <p>一个委托构造函数可以使用它属类的其他构造函数执行它自己的初始化过程。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Sales_data</span> {
-<span style="color:#000;font-weight:bold">public</span><span style="color:#000;font-weight:bold">:</span>
-	<span style="color:#998;font-style:italic">//非委托构造函数使用对应的实参初始化成员
-</span><span style="color:#998;font-style:italic"></span>	Sales_data(std<span style="color:#000;font-weight:bold">::</span>string s, <span style="color:#458;font-weight:bold">unsigned</span> cnt, <span style="color:#458;font-weight:bold">double</span> price)<span style="color:#000;font-weight:bold">:</span>
-		bookNo(s), units_sold(cnt), revenue(cnt<span style="color:#000;font-weight:bold">*</span>price);
-	<span style="color:#998;font-style:italic">//其余构造函数委托给另一个构造函数
-</span><span style="color:#998;font-style:italic"></span>	Sales_data()<span style="color:#000;font-weight:bold">:</span> Sales_data(<span style="color:#d14">&#34;&#34;</span>, <span style="color:#099">0</span>, <span style="color:#099">0</span>) {}	<span style="color:#998;font-style:italic">//默认构造函数，委托给了上面输入3个变量的构造函数
-</span><span style="color:#998;font-style:italic"></span>	Sales_data(std<span style="color:#000;font-weight:bold">::</span>string s)<span style="color:#000;font-weight:bold">:</span> Sales_data(s, <span style="color:#099">0</span>, <span style="color:#099">0</span>) {}
-	Sales_Data(std<span style="color:#000;font-weight:bold">::</span>istrean <span style="color:#000;font-weight:bold">&amp;</span>is)<span style="color:#000;font-weight:bold">:</span> Sales_data() {read(is, <span style="color:#000;font-weight:bold">*</span><span style="color:#000;font-weight:bold">this</span>); }	<span style="color:#998;font-style:italic">//委托给了默认构造函数
-</span><span style="color:#998;font-style:italic"></span>}
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Sales_data</span> {
+<span style="color:#080;font-weight:bold">public</span><span style="color:#333">:</span>
+	<span style="color:#888">//非委托构造函数使用对应的实参初始化成员
+</span><span style="color:#888"></span>	Sales_data(std<span style="color:#333">::</span>string s, <span style="color:#339;font-weight:bold">unsigned</span> cnt, <span style="color:#339;font-weight:bold">double</span> price)<span style="color:#333">:</span>
+		bookNo(s), units_sold(cnt), revenue(cnt<span style="color:#333">*</span>price);
+	<span style="color:#888">//其余构造函数委托给另一个构造函数
+</span><span style="color:#888"></span>	Sales_data()<span style="color:#333">:</span> Sales_data(<span style="background-color:#fff0f0">&#34;&#34;</span>, <span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">0</span>) {}	<span style="color:#888">//默认构造函数，委托给了上面输入3个变量的构造函数
+</span><span style="color:#888"></span>	Sales_data(std<span style="color:#333">::</span>string s)<span style="color:#333">:</span> Sales_data(s, <span style="color:#00d;font-weight:bold">0</span>, <span style="color:#00d;font-weight:bold">0</span>) {}
+	Sales_Data(std<span style="color:#333">::</span>istrean <span style="color:#333">&amp;</span>is)<span style="color:#333">:</span> Sales_data() {read(is, <span style="color:#333">*</span><span style="color:#080;font-weight:bold">this</span>); }	<span style="color:#888">//委托给了默认构造函数
+</span><span style="color:#888"></span>}
 </code></pre></div><p><strong>聚合类</strong></p>
 <p>聚合类使得用户可以直接访问其成员并且具有特殊的初始化语法形式。</p>
 <p>定义：</p>
@@ -731,10 +731,10 @@ ConstRef<span style="color:#000;font-weight:bold">::</span>ConstRef(<span style=
 <h2 id="类的作用域">类的作用域</h2>
 <p>在类的作用域之外，普通的数据和函数成员只能由<strong>对象、引用或指针</strong>使用**成员访问运算符(<code>. -&gt;</code>)<strong>来访问；对于类类型成员，则使用</strong>作用域运算符(<code>::</code>)**访问。</p>
 <p>一个类就是一个作用域，所以在类的外部定义成员函数时必须同时提供类名和函数名。在类的外部，成员的名字被隐藏起来了。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">void</span> Window_mgr<span style="color:#000;font-weight:bold">::</span>clear(ScreenIndex i)
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> Window_mgr<span style="color:#333">::</span>clear(ScreenIndex i)
 {
-	Screen <span style="color:#000;font-weight:bold">&amp;</span>s <span style="color:#000;font-weight:bold">=</span> screens[i];
-	s.contents <span style="color:#000;font-weight:bold">=</span> string(s.height <span style="color:#000;font-weight:bold">*</span> s.width, <span style="color:#d14">&#39; &#39;</span>);
+	Screen <span style="color:#333">&amp;</span>s <span style="color:#333">=</span> screens[i];
+	s.contents <span style="color:#333">=</span> string(s.height <span style="color:#333">*</span> s.width, <span style="color:#04d;background-color:#fff0f0">&#39; &#39;</span>);
 }
 </code></pre></div><h2 id="类的静态成员">类的静态成员</h2>
 <p>有时候类需要它的一些成员<strong>与类本身直接相关</strong>，而不是与类的各个对象保持关联。这是我们可以通过声明静态成员，即在成员的声明前加上关键字<strong>static</strong>，使得其与类关联在一起。</p>
@@ -742,8 +742,8 @@ ConstRef<span style="color:#000;font-weight:bold">::</span>ConstRef(<span style=
 <p>类的静态成员存在于任何对象之外，对象中不包含任何与静态数据成员有关的数据。同样，<strong>类静态成员函数</strong>也不与任何对象绑定在一起，它们不包含this指针。静态成员函数不能声明成const的，也不能在static函数体内使用this指针。</p>
 <p>使用类的静态成员：</p>
 <p>使用<strong>作用域运算符</strong>直接访问静态成员：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#458;font-weight:bold">double</span> r;
-r <span style="color:#000;font-weight:bold">=</span> Account<span style="color:#000;font-weight:bold">::</span>rate();	<span style="color:#998;font-style:italic">//Account为类名
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">double</span> r;
+r <span style="color:#333">=</span> Account<span style="color:#333">::</span>rate();	<span style="color:#888">//Account为类名
 </span></code></pre></div><p>成员函数不用通过作用域运算符就能直接使用静态成员。</p>
 <p>定义静态成员：</p>
 <p>我们既可以在类内部也可以在类外部<strong>定义静态成员函数</strong>，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。</p>

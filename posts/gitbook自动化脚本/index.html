@@ -373,26 +373,26 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>刚开始在每次更新内容的时候都需要一系列的git命令将原始内容仓库和构建的网页仓库同步到Github上，大概需要10条命令，如果你的更新频率很高的话，发布内容将会是有个痛苦的过程，但这里我们可以通过一个shell脚本只使用<code>$ sh deploy.sh</code>一条命令完成同步内容和构建网页的所有过程。</p>
 <!-- raw HTML omitted -->
 <p>首先，在你的GitBook内容根目录下建一个<code>deploy.sh</code>文件，使用文本编辑器打开，然后输入以下内容：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#999;font-weight:bold;font-style:italic">#!bin/sh
-</span><span style="color:#999;font-weight:bold;font-style:italic"></span>git checkout master
-<span style="color:#998;font-style:italic"># 切换到master分支，及内容所在的仓库</span>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#579">#!bin/sh
+</span><span style="color:#579"></span>git checkout master
+<span style="color:#888"># 切换到master分支，及内容所在的仓库</span>
 git add .
-git commit -m <span style="color:#d14">&#34;Update&#34;</span>
+git commit -m <span style="background-color:#fff0f0">&#34;Update&#34;</span>
 git push -u origin master
-<span style="color:#998;font-style:italic"># 添加、提交到Git仓库，然后push到Github上</span>
+<span style="color:#888"># 添加、提交到Git仓库，然后push到Github上</span>
 gitbook build
-<span style="color:#998;font-style:italic"># 构建Gitbook</span>
+<span style="color:#888"># 构建Gitbook</span>
 
 git checkout gh-pages
-<span style="color:#998;font-style:italic"># 切换到gh-pages分支，即生成的HTML网页的仓库</span>
+<span style="color:#888"># 切换到gh-pages分支，即生成的HTML网页的仓库</span>
 cp -r _book/* . 
-<span style="color:#998;font-style:italic"># 复制前面构建的内容</span>
+<span style="color:#888"># 复制前面构建的内容</span>
 git add .
-git commit -m <span style="color:#d14">&#34;Update&#34;</span>
+git commit -m <span style="background-color:#fff0f0">&#34;Update&#34;</span>
 git push -u origin gh-pages
-<span style="color:#998;font-style:italic"># 添加、提交到Git仓库，然后push到Github上</span>
+<span style="color:#888"># 添加、提交到Git仓库，然后push到Github上</span>
 git checkout master
-<span style="color:#998;font-style:italic"># 返回master主分支</span>
+<span style="color:#888"># 返回master主分支</span>
 </code></pre></div><p>然后打开命令行，为这个脚本授权：</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$ chmod +x deploy.sh
 </code></pre></div><p>至此就完成了，以后在更新的时候只需要输入一条命令<code>$ sh deploy.sh</code>就可以完成所有操作了。</p>
