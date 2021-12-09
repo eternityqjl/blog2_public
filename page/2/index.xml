@@ -6,9 +6,151 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 09 Dec 2021 09:31:30 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Dec 2021 10:55:47 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>算法——红黑树</title>
+        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/</link>
+        <pubDate>Sat, 27 Nov 2021 21:03:17 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/ -&lt;p&gt;本节是为了介绍一种二分查找树，无论如何构造，它的运行时间都是对数级别的。在一棵含有N个结点的树中，树的高为$\lg N$。&lt;/p&gt;
+&lt;h2 id=&#34;2-3查找树&#34;&gt;2-3查找树&lt;/h2&gt;
+&lt;p&gt;允许一个结点保存多个键。一颗2-3查找树由2-结点和3-结点组成。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2-结点：含有一个键（及其对应键值）和两条链接&lt;/li&gt;
+&lt;li&gt;3-结点：含有两个键（及其对应键值）和三条链接&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;同样地，将指向一颗空树的链接称为空链接。&lt;/p&gt;
+&lt;h3 id=&#34;查找&#34;&gt;查找&lt;/h3&gt;
+&lt;p&gt;与二叉查找树基本相同，只是可能多了中间结点，从上向下一次递归查找。&lt;/p&gt;
+&lt;h3 id=&#34;插入新键&#34;&gt;插入新键&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;向2-结点插入新键&lt;/li&gt;
+&lt;li&gt;向一棵只含有3-结点的树中插入新键&lt;/li&gt;
+&lt;li&gt;向一个父结点为2-结点的3-结点中插入新键&lt;/li&gt;
+&lt;li&gt;向一个父结点为3-结点的3-结点中插入新键&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;全局性质&#34;&gt;全局性质&lt;/h3&gt;
+&lt;p&gt;任意空链接到根结点的路径长度都是相等的。&lt;/p&gt;
+&lt;p&gt;一棵含有N个结点的2-3树高度在$\lfloor \log_3N\rfloor$（树中全是3-结点）和$\lfloor \lg N\rfloor$（树中全是2-结点）之间。&lt;/p&gt;
+&lt;h2 id=&#34;红黑二叉查找树&#34;&gt;红黑二叉查找树&lt;/h2&gt;
+&lt;p&gt;用标准二叉查找树和一些额外的信息来表示2-3树。将树中的链接分为两种类型：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;红链接：将两个2-结点连接起来构成一个3-结点&lt;/li&gt;
+&lt;li&gt;黑链接：2-3树中的普通链接&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;相当于将3-结点表示为一条左斜的红色链接。这种方法的优点是我们无需修改就可以直接使用标准二叉查找树的&lt;code&gt;get()&lt;/code&gt;方法。对于任意的2-3树，只需对结点进行转换，就可以立即派生出一棵对应的二叉查找树。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一种等价的定义&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;红黑树的另一种定义是含有红黑链接并满足下列条件的二叉查找树：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;红链接均为左链接&lt;/li&gt;
+&lt;li&gt;没有任何一个结点同时和两条红链接相连&lt;/li&gt;
+&lt;li&gt;该树是完美黑色平衡的，即任意空链接到根结点路径上的黑链接数量相同&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;插入操作的方法&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;左旋转、右旋转、颜色转换&lt;/p&gt;
+&lt;h2 id=&#34;红黑树的实现&#34;&gt;红黑树的实现&lt;/h2&gt;
+&lt;p&gt;红黑树的插入算法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;boolean&lt;/span&gt; RED &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;true&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;final&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;boolean&lt;/span&gt; BLACK &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Node&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    Key key&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    Value val&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    Node left&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; right&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;boolean&lt;/span&gt; color&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    
+    Node&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Key key&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; Value val&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;boolean&lt;/span&gt; color&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;key&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; key&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; val&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;N&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; N&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; color&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;boolean&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;isRed&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Node x&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;x &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;false&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; RED&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+
+Node &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;rotateLeft&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Node h&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    Node x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; RED&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;N&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;N&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;N&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; size&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; size&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; x&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+
+Bode &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;rotateRight&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Node h&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    Node x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; RED&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;N&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;N&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;N&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; size&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; size&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; x&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;flipColors&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Node h&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; RED&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; BLACK&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; BLACK&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;RedBlackBST&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Key &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extends&lt;/span&gt; Comparable&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Key&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;,&lt;/span&gt; Value&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; Node root&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Key key&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; Value val&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        root &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; put&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;root&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; key&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; val&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        root&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;color&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; BLACK&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt; Node &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;put&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Node h&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; Key key&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; Value val&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;{&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; Node&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;key&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; val&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; 1&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; RED&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; cmp &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; key&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;compareTo&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;key&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; 		&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; put&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; key&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; val&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;cmp &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; 0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;	h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; put&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; key&lt;span style=&#34;color:#333&#34;&gt;,&lt;/span&gt; val&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;val&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; val&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+        
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;isRed&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;isRed&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;		h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; rotateLeft&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;isRed&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; isRed&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;	h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; rotateRight&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;isRed&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; isRed&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;))&lt;/span&gt;		flipColors&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        
+        h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;N&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; 1 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; size&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;left&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; size&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;h&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;right&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;);&lt;/span&gt;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;;&lt;/span&gt;
+    &lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;   
+&lt;span style=&#34;color:#333&#34;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第一条if语句：将任意含有红色右链接的3-结点（或临时4-结点）向左旋转；&lt;/p&gt;
+&lt;p&gt;第二条if语句：将临时的4-结点中两条连续红链接中的上层链接向右旋转；&lt;/p&gt;
+&lt;p&gt;第三条if语句：进行颜色转换，并将红链接在树中向上传递。&lt;/p&gt;
+&lt;h2 id=&#34;红黑树的删除操作&#34;&gt;红黑树的删除操作&lt;/h2&gt;
+&lt;h3 id=&#34;自顶向下的2-3-4树&#34;&gt;自顶向下的2-3-4树&lt;/h3&gt;
+&lt;h2 id=&#34;红黑树的性质&#34;&gt;红黑树的性质&lt;/h2&gt;
+&lt;p&gt;所有基于红黑树的符号表（键值对）实现都能保证操作的运行时间为&lt;strong&gt;对数级别&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;一棵大小为N的红黑树的高度不会超过$2\lg N$。&lt;/p&gt;
+&lt;p&gt;一颗大小为N的红黑树中，根结点到任意结点的平均路径为$\lg N$。&lt;/p&gt;
+&lt;p&gt;红黑树的实现中最复杂的代码仅限于插入和删除方法，其他的二叉查找树中的查找最大最小键不做任何变动即可继续使用。&lt;/p&gt;
+- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -2028,221 +2170,6 @@ mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#
 &lt;h2 id=&#34;交换机和路由器&#34;&gt;交换机和路由器&lt;/h2&gt;
 &lt;p&gt;见&lt;a href=&#34;http://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/#wlan%e5%9f%ba%e7%a1%80%e5%86%85%e5%ae%b9&#34;&gt;WLAN基本内容和802.11ax&lt;/a&gt;中的内容。&lt;/p&gt;
 - https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>LaTex环境配置和基本功能模块</title>
-        <link>https://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</link>
-        <pubDate>Sun, 18 Jul 2021 20:06:26 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/ -&lt;h2 id=&#34;环境配置&#34;&gt;环境配置&lt;/h2&gt;
-&lt;p&gt;我选择使用VS code + Tex Live作为我的LaTex写作环境，具体配置过程参考自：&lt;a href=&#34;https://zhuanlan.zhihu.com/p/166523064&#34;&gt;Visual Studio Code (vscode)配置LaTeX&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;以下是关于使用过程中一些具体模块的讨论：&lt;/p&gt;
-&lt;p&gt;部分内容参考自：&lt;a href=&#34;https://liam.page/2014/09/08/latex-introduction/&#34;&gt;一份其实很短的 LaTeX 入门文档&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;这里使用&lt;code&gt;xeLatTex&lt;/code&gt;进行编译。&lt;/p&gt;
-&lt;h2 id=&#34;基本文档和中英文&#34;&gt;基本文档和中英文&lt;/h2&gt;
-&lt;h3 id=&#34;基本文档&#34;&gt;基本文档&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;% 这里是导言区
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-Hello, world!
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Tex以&lt;code&gt;%&lt;/code&gt;作为注释标记。若要输出百分号&lt;code&gt;%&lt;/code&gt;字符本身，则要在前面加上反斜杠&lt;code&gt;\&lt;/code&gt;进行转义（escape）。&lt;/p&gt;
-&lt;h3 id=&#34;中英文混排&#34;&gt;中英文混排&lt;/h3&gt;
-&lt;p&gt;目前XeTeX 原生支持 Unicode，并且可以方便地调用系统字体。可以说解决了困扰中国 TeX 使用者多年的大问题。至此，我们只需要使用几个简单的宏包，就能完成中文支持了。&lt;/p&gt;
-&lt;p&gt;我们使用&lt;code&gt;\usepackage{}&lt;/code&gt;来调用宏包。&lt;/p&gt;
-&lt;p&gt;另外，我们使用&lt;code&gt;CTex&lt;/code&gt;宏集来处理中文的版式和标点。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-你好，world!
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;与开始相比，文档类别变为&lt;code&gt;ctexart&lt;/code&gt;，并且增加了文档类选项&lt;code&gt;UTF8&lt;/code&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;组织文章基本内容&#34;&gt;组织文章基本内容&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;标题、作者、日期&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\title&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;你好，world!&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Eternity&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\today&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\maketitle&lt;/span&gt;
-你好，world!
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上代码中的控制序列&lt;code&gt;\maketitle&lt;/code&gt;能将在导言区中定义的标题、作者、日期按照预定的格式展现出来。&lt;/p&gt;
-&lt;p&gt;可以通过宏包&lt;code&gt;titling&lt;/code&gt;修改上述默认格式。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/tex_basic_1.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;章节和段落&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[UTF8]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;ctexart&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\title&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;你好，world!&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Liam&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\today&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\maketitle&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\section&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;你好中国&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-中国在East Asia.
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Hello Beijing&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-北京是capital of China.
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsubsection&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Hello Dongcheng District&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\paragraph&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Tian&amp;#39;anmen Square&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-is in the center of Beijing
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subparagraph&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Chairman Mao&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-is in the center of 天安门广场。
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;Hello 山东&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\paragraph&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;山东大学&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt; is one of the best university in 山东。
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;文档类&lt;code&gt;article&lt;/code&gt;/&lt;code&gt;ctexart&lt;/code&gt;中定义了5个控制序列来调整文章组织结构：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;\section{·}&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;\subsection{·}&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;\subsubsection{·}&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;\paragraph{·}&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;\subparagraph{·}&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/tex_basic_2.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;插入目录&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;在控制序列&lt;code&gt;\maketitle&lt;/code&gt;加入&lt;code&gt;tableofcontents&lt;/code&gt;，编译两次观察效果：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/tex_basic_3.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;LaTeX 将一个换行当做是一个简单的空格来处理，如果需要换行另起一段，则需要用两个换行（一个空行）来实现。&lt;/p&gt;
-&lt;h2 id=&#34;版面设置&#34;&gt;版面设置&lt;/h2&gt;
-&lt;h3 id=&#34;页边距&#34;&gt;页边距&lt;/h3&gt;
-&lt;p&gt;使用&lt;code&gt;geometry&lt;/code&gt; 宏包。&lt;a href=&#34;https://texdoc.org/serve/geometry.pdf/0&#34;&gt;geometry文档&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;比如我希望，将纸张的长度设置为 20cm、宽度设置为 15cm、左边距 1cm、右边距 2cm、上边距 3cm、下边距 4cm，可以在导言区加上这样几行：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;geometry&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\geometry&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;papersize=&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;20cm,15cm&lt;span style=&#34;color:#007020&#34;&gt;}}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\geometry&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;left=1cm,right=2cm,top=3cm,bottom=4cm&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;页眉页脚&#34;&gt;页眉页脚&lt;/h3&gt;
-&lt;p&gt;设置页眉页脚，推荐使用 &lt;code&gt;fancyhdr&lt;/code&gt; 宏包。&lt;a href=&#34;https://texdoc.org/serve/fancyhdr.pdf/0&#34;&gt;fancyhdr文档&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;比如我希望，在页眉左边写上我的名字，中间写上今天的日期，右边写上我的电话；页脚的正中写上页码；页眉和正文之间有一道宽为 0.4pt 的横线分割，可以在导言区加上如下几行：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;fancyhdr&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\pagestyle&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;fancy&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lhead&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\author&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\chead&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\date&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\rhead&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;152xxxxxxxx&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lfoot&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\cfoot&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\thepage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\rfoot&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\headrulewidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;0.4pt&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\headwidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\textwidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\renewcommand&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\footrulewidth&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;0pt&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;行间距&#34;&gt;行间距&lt;/h3&gt;
-&lt;p&gt;我们可以通过 &lt;code&gt;setspace&lt;/code&gt; 宏包提供的命令来调整行间距。比如在导言区添加如下内容，可以将行距设置为字号的 1.5 倍：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;setspace&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\onehalfspacing&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;段间距&#34;&gt;段间距&lt;/h3&gt;
-&lt;p&gt;我们可以通过修改长度 &lt;code&gt;\parskip&lt;/code&gt; 的值来调整段间距。例如在导言区添加以下内容&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\addtolength&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\parskip&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;.4em&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;代码&#34;&gt;代码&lt;/h2&gt;
-&lt;p&gt;希望代码中的特殊字符不被LaTex处理，并且希望有代码高亮。&lt;/p&gt;
-&lt;p&gt;使用&lt;code&gt;listings&lt;/code&gt;宏包来在tex中添加代码段。基本设置参数如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lstset&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;
-language=Matlab,
-escapeinside=``, 
-numbers=left,
-numberstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\tiny&lt;/span&gt;,
-breaklines=true, 
-backgroundcolor=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;lightgray!40!white&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;,
-frame=single,
-framerule=0pt,
-extendedchars=false, 
-keywordstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;blue!70&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\bfseries&lt;/span&gt;, 
-basicstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily&lt;/span&gt;,
-commentstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;green!40!black&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;, 
-showstringspaces=false&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;图片&#34;&gt;图片&lt;/h2&gt;
-&lt;p&gt;在 LaTeX 中插入图片，有很多种方式。最好用的应当属利用 &lt;code&gt;graphicx&lt;/code&gt; 宏包提供的 &lt;code&gt;\includegraphics&lt;/code&gt; 命令。比如你在你的 TeX 源文件同目录下，有名为 &lt;code&gt;a.jpg&lt;/code&gt; 的图片，你可以用这样的方式将它插入到输出文档中：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\documentclass&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;article&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;graphicx&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\includegraphics&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;a.jpg&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;document&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;图片可能很大，超过了输出文件的纸张大小，或者干脆就是你自己觉得输出的效果不爽。这时候你可以用 &lt;code&gt;\includegraphics&lt;/code&gt; 控制序列的可选参数来控制。比如&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\includegraphics&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[width = .8\textwidth]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;a.jpg&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样图片的宽度会被缩放至&lt;strong&gt;页面宽度的百分之八十&lt;/strong&gt;，图片的总高度会按比例缩放。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;\includegraphics&lt;/code&gt;还有很多其他控制序列可以选择使用，可以查看宏包选择。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;表格&#34;&gt;表格&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;tabular&lt;/code&gt; 环境提供了最简单的表格功能。它用 &lt;code&gt;\hline&lt;/code&gt; 命令表示横线，在列格式中用 &lt;code&gt;|&lt;/code&gt; 表示竖线；用 &lt;code&gt;&amp;amp;&lt;/code&gt; 来分列，用 &lt;code&gt;\\&lt;/code&gt; 来换行；每列可以采用居左、居中、居右等横向对齐方式，分别用 &lt;code&gt;l&lt;/code&gt;、&lt;code&gt;c&lt;/code&gt;、&lt;code&gt;r&lt;/code&gt; 来表示。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;tabular&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;|l|c|r|&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
- &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
-操作系统&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; 发行版&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; 编辑器&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
- &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
-Windows &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; MikTeX &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; TexMakerX &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
- &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
-Unix/Linux &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; teTeX &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; Kile &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
- &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
-Mac OS &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; MacTeX &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; TeXShop &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
- &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
-通用&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; TeX Live &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt; TeXworks &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
- &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\hline&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;tabular&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
-&lt;h2 id=&#34;数学公式&#34;&gt;数学公式&lt;/h2&gt;
-&lt;p&gt;在导言区添加&lt;code&gt;amsmath&lt;/code&gt;宏包来使用数学功能：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;amsmath&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;数学模式&#34;&gt;数学模式&lt;/h3&gt;
-&lt;p&gt;与Markdown中相同，LaTex共有&lt;strong&gt;行内公式&lt;/strong&gt;和&lt;strong&gt;行间公式&lt;/strong&gt;两种模式。&lt;/p&gt;
-&lt;p&gt;在行文中，使用 &lt;code&gt;$ ... $&lt;/code&gt; 可以插入行内公式，使用 &lt;code&gt;\[ ... \]&lt;/code&gt; 可以插入行间公式，如果需要对行间公式进行编号，则可以使用 &lt;code&gt;equation&lt;/code&gt; 环境：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;equation&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-...
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;equation&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;无编号的行间公式也可以使用 &lt;code&gt;\begin{displaymath} ... \end{displaymath}&lt;/code&gt; 或者 &lt;code&gt;\begin{equation*} ... \end{equation*}&lt;/code&gt; 来插入，但略显麻烦。（&lt;code&gt;equation*&lt;/code&gt; 中的 &lt;code&gt;*&lt;/code&gt; 表示环境不编号）&lt;/p&gt;
-&lt;p&gt;也有 plainTeX 风格的 &lt;code&gt;$$ ... $$&lt;/code&gt; 来插入不编号的行间公式。但是在 LaTeX 中这样做会改变行文的默认行间距，不推荐。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;标点符号&#34;&gt;标点符号&lt;/h3&gt;
-&lt;p&gt;行内公式和行间公式对标点的要求是不同的：行内公式的标点，应该放在数学模式的限定符之外，而行间公式则应该放在数学模式限定符之内。&lt;/p&gt;
-&lt;h3 id=&#34;多行公式&#34;&gt;多行公式&lt;/h3&gt;
-&lt;p&gt;有的公式特别长，我们需要手动为他们换行；&lt;/p&gt;
-&lt;p&gt;有几个公式是一组，我们需要将他们放在一起；&lt;/p&gt;
-&lt;p&gt;还有些类似分段函数，我们需要给它加上一个左边的花括号。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;长公式&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;不对齐：无须对齐的长公式可以使用 &lt;code&gt;multline&lt;/code&gt; 环境。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;multline&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-x = a+b+c+&lt;span style=&#34;color:#007020&#34;&gt;{}&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-d+e+f+g
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;multline&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
-&lt;p&gt;如果不需要编号，可以使用 &lt;code&gt;multline*&lt;/code&gt; 环境代替。&lt;/p&gt;
-&lt;p&gt;对齐：需要对齐的公式，可以使用 &lt;code&gt;aligned&lt;/code&gt; &lt;em&gt;次环境&lt;/em&gt;来实现，它必须包含在数学环境之内。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\[&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{aligned}
-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x &lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{}&amp;amp; a&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;b&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;c&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{} &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;d&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;e&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;g
-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{aligned}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
-&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;公式组&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;无需对齐的公式组可以使用 &lt;code&gt;gather&lt;/code&gt; 环境，需要对齐的公式组可以使用 &lt;code&gt;align&lt;/code&gt; 环境。他们都带有编号，如果不需要编号可以使用带&lt;code&gt;*&lt;/code&gt;的版本。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;gather&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-a = b+c+d &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-x = y+z
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;gather&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-a &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;= b+c+d &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-x &lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;= y+z
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;效果如下：&lt;/p&gt;
-&lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;分段函数&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;分段函数可以用&lt;code&gt;cases&lt;/code&gt;次环境来实现，它必须包含在数学环境之内。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\[&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; y&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{cases}
-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x,&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\quad&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; x&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\leq&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\\&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x,&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\quad&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt; x&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#963&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{cases} &lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;\]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/latex%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97/ - 2019-2021 By Jialong</description>
         </item>
     
     

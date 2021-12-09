@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>Categories</title>
+<title>算法——桶排序&amp;计数排序&amp;基数排序</title>
 
 
 
@@ -16,10 +16,19 @@
 
 
 
-<meta property="og:title" content="Categories" />
-<meta property="og:description" content="My HomePage Description" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://eternityqjl.top/categories/" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="算法——桶排序&amp;计数排序&amp;基数排序" />
+<meta property="og:description" content="桶排序（Bucket Sort）  将待排元素划分到不同的桶中。先扫描一遍序列，找出最大值max和最小值min，设桶的个数为k，则把区间[min, max]划分为k个区间，每个区间就是一个桶。将序列中的元素分配到各自的桶。 对每个桶内的元素进行排序。一般使用快速排序。 将各桶中的元素合并为一个大的有序序列。  当k接近于n时，桶排序的时间复杂度为O(n)，即桶越多，时间效率就越高。
+计数排序（Counting Sort） 新建一个大小为maxValue-minValue&#43;1的数组nums，然后：
+ 分配。扫描一遍原始数组，以扫描到的当前值val减去1作为下标，将下标对应位置数组加1，即nums[val]&#43;&#43; 收集。顺序扫描一遍数组nums。数组的每个元素代表了按当前下标&#43;1对应值的个数，将这些值收集起来放入新的数组就得到最终排序结果。  例如：nums=[2,1,3,1,5]，首先扫描一遍取最大值maxValue=5和最小值minValue=1，新建一个长度为5-1&#43;1=5的数组nums：
+ 分配：得到nums=[2,1,1,0,1]，例如nums[0]表示值为0&#43;minValue=1出现了两次。 收集：得到结果，[1,1,2,3,5]  本质上是一种特殊的桶排序。当桶的个数等于元素个数时就是计数排序。
+基数排序 基于关键字各位的大小进行排序。是一种借助多关键字排序的思想对单逻辑关键字进行排序的方法。
+共有最高位优先MSD和最低位优先LSD两种。
+ 将所有待排序整数（注意，必须是非负整数）统一为位数相同的整数，位数较少的前面补零。一般用10进制，也可以用16进制甚至2进制。所以前提是能够找到最大值，得到最长的位数，设k进制下最长为位数为d。 从最低位开始，依次进行一次稳定排序。这样从最低位一直到最高位排序完成以后，整个序列就变成了一个有序序列。  基数排序可以看作是多轮桶排序，每个数位上都进行一次桶排序。
+当使用2进制时， k=2 最小，位数 d 最大，时间复杂度 O(nd) 会变大，空间复杂度 O(n&#43;k) 会变小。当用最大值作为基数时， k=maxV 最大， d=1 最小，此时时间复杂度 O(nd) 变小，但是空间复杂度 O(n&#43;k) 会急剧增大，此时基数排序退化成了计数排序。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E6%A1%B6%E6%8E%92%E5%BA%8F_%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F_%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-09T10:55:47+08:00" />
+<meta property="article:modified_time" content="2021-12-09T10:55:47+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -27,8 +36,15 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Categories"/>
-<meta name="twitter:description" content="My HomePage Description"/>
+<meta name="twitter:title" content="算法——桶排序&amp;计数排序&amp;基数排序"/>
+<meta name="twitter:description" content="桶排序（Bucket Sort）  将待排元素划分到不同的桶中。先扫描一遍序列，找出最大值max和最小值min，设桶的个数为k，则把区间[min, max]划分为k个区间，每个区间就是一个桶。将序列中的元素分配到各自的桶。 对每个桶内的元素进行排序。一般使用快速排序。 将各桶中的元素合并为一个大的有序序列。  当k接近于n时，桶排序的时间复杂度为O(n)，即桶越多，时间效率就越高。
+计数排序（Counting Sort） 新建一个大小为maxValue-minValue&#43;1的数组nums，然后：
+ 分配。扫描一遍原始数组，以扫描到的当前值val减去1作为下标，将下标对应位置数组加1，即nums[val]&#43;&#43; 收集。顺序扫描一遍数组nums。数组的每个元素代表了按当前下标&#43;1对应值的个数，将这些值收集起来放入新的数组就得到最终排序结果。  例如：nums=[2,1,3,1,5]，首先扫描一遍取最大值maxValue=5和最小值minValue=1，新建一个长度为5-1&#43;1=5的数组nums：
+ 分配：得到nums=[2,1,1,0,1]，例如nums[0]表示值为0&#43;minValue=1出现了两次。 收集：得到结果，[1,1,2,3,5]  本质上是一种特殊的桶排序。当桶的个数等于元素个数时就是计数排序。
+基数排序 基于关键字各位的大小进行排序。是一种借助多关键字排序的思想对单逻辑关键字进行排序的方法。
+共有最高位优先MSD和最低位优先LSD两种。
+ 将所有待排序整数（注意，必须是非负整数）统一为位数相同的整数，位数较少的前面补零。一般用10进制，也可以用16进制甚至2进制。所以前提是能够找到最大值，得到最长的位数，设k进制下最长为位数为d。 从最低位开始，依次进行一次稳定排序。这样从最低位一直到最高位排序完成以后，整个序列就变成了一个有序序列。  基数排序可以看作是多轮桶排序，每个数位上都进行一次桶排序。
+当使用2进制时， k=2 最小，位数 d 最大，时间复杂度 O(nd) 会变大，空间复杂度 O(n&#43;k) 会变小。当用最大值作为基数时， k=maxV 最大， d=1 最小，此时时间复杂度 O(nd) 变小，但是空间复杂度 O(n&#43;k) 会急剧增大，此时基数排序退化成了计数排序。"/>
 
 
 
@@ -64,7 +80,29 @@
 
 
 
+  
+    <script src="/js/toc.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -101,9 +139,11 @@
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="/posts">
+            
+            <a class="a-block nav-link-item active" href="/posts">
                 网志
             </a>
             
@@ -111,11 +151,9 @@
             
             
             
-                
             
             
-            
-            <a class="a-block nav-link-item active" href="/categories">
+            <a class="a-block nav-link-item false" href="/categories">
                 分类
             </a>
             
@@ -171,6 +209,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%a1%b6%e6%8e%92%e5%ba%8fbucket-sort" onclick="onNavClick(`#桶排序bucket-sort-nav`)" id="桶排序bucket-sort-nav">
+									桶排序（Bucket Sort）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e6%95%b0%e6%8e%92%e5%ba%8fcounting-sort" onclick="onNavClick(`#计数排序counting-sort-nav`)" id="计数排序counting-sort-nav">
+									计数排序（Counting Sort）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9f%ba%e6%95%b0%e6%8e%92%e5%ba%8f" onclick="onNavClick(`#基数排序-nav`)" id="基数排序-nav">
+									基数排序
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -188,24 +304,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
         </a>
         
         
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    1<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>2
-                </span>
-            </div>
-            
-            
-
-            
-            <a class="pagination-action" href="/categories/page/2/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
-        
-        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -218,9 +316,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="/posts">
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
                     网志
                 </a>
                 
@@ -228,11 +328,9 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                    
                 
                 
-                
-                <a class="a-block drawer-menu-item active" href="/categories">
+                <a class="a-block drawer-menu-item false" href="/categories">
                     分类
                 </a>
                 
@@ -267,6 +365,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 </a>
                 
             
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%a1%b6%e6%8e%92%e5%ba%8fbucket-sort" onclick="onNavClick(`#桶排序bucket-sort-nav`)" id="桶排序bucket-sort-nav">
+									桶排序（Bucket Sort）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e6%95%b0%e6%8e%92%e5%ba%8fcounting-sort" onclick="onNavClick(`#计数排序counting-sort-nav`)" id="计数排序counting-sort-nav">
+									计数排序（Counting Sort）
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9f%ba%e6%95%b0%e6%8e%92%e5%ba%8f" onclick="onNavClick(`#基数排序-nav`)" id="基数排序-nav">
+									基数排序
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
             
         </div>
     </div>
@@ -311,170 +487,123 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        <a class="a-block">
-            <div class="post-item-wrapper post-item-wrapper-no-hover">
-                <div class="post-item post-item-no-gaps">
-                    <div class="post-item-info-wrapper">
-                        <div class="post-item-title post-item-title-small">
-                            Categories
-                        </div>
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    算法——桶排序&amp;计数排序&amp;基数排序
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-12-09 10:55
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95">数据结构与算法</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/%E6%A1%B6%E6%8E%92%E5%BA%8F">桶排序</a>
+                                &nbsp;
+                            
+                                <a href="/tags/%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F">计数排序</a>
+                                &nbsp;
+                            
+                                <a href="/tags/%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F">基数排序</a>
+                                &nbsp;
+                            
+                        
+                        
                     </div>
                 </div>
             </div>
-        </a>
-        
-        
-                <a href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    数据结构与算法
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h2 id="桶排序bucket-sort">桶排序（Bucket Sort）</h2>
+<ul>
+<li>将待排元素划分到不同的桶中。先扫描一遍序列，找出最大值max和最小值min，设桶的个数为k，则把区间[min, max]划分为k个区间，每个区间就是一个桶。将序列中的元素分配到各自的桶。</li>
+<li>对每个桶内的元素进行排序。一般使用快速排序。</li>
+<li>将各桶中的元素合并为一个大的有序序列。</li>
+</ul>
+<p>当k接近于n时，桶排序的时间复杂度为O(n)，即桶越多，时间效率就越高。</p>
+<h2 id="计数排序counting-sort">计数排序（Counting Sort）</h2>
+<p>新建一个大小为maxValue-minValue+1的数组nums，然后：</p>
+<ul>
+<li>分配。扫描一遍原始数组，以扫描到的当前值val减去1作为下标，将下标对应位置数组加1，即nums[val]++</li>
+<li>收集。顺序扫描一遍数组nums。数组的每个元素代表了按当前下标+1对应值的个数，将这些值收集起来放入新的数组就得到最终排序结果。</li>
+</ul>
+<p>例如：nums=[2,1,3,1,5]，首先扫描一遍取最大值maxValue=5和最小值minValue=1，新建一个长度为5-1+1=5的数组nums：</p>
+<ul>
+<li>分配：得到nums=[2,1,1,0,1]，例如nums[0]表示值为0+minValue=1出现了两次。</li>
+<li>收集：得到结果，[1,1,2,3,5]</li>
+</ul>
+<p>本质上是一种<strong>特殊的桶排序</strong>。当桶的个数等于元素个数时就是计数排序。</p>
+<h2 id="基数排序">基数排序</h2>
+<p>基于关键字各位的大小进行排序。是一种借助多关键字排序的思想对单逻辑关键字进行排序的方法。</p>
+<p>共有<strong>最高位优先MSD</strong>和<strong>最低位优先LSD</strong>两种。</p>
+<ul>
+<li>将所有待排序整数（注意，必须是非负整数）统一为位数相同的整数，位数较少的前面补零。一般用10进制，也可以用16进制甚至2进制。所以前提是能够找到最大值，得到最长的位数，设k进制下最长为位数为d。</li>
+<li>从最低位开始，依次进行一次稳定排序。这样从最低位一直到最高位排序完成以后，整个序列就变成了一个有序序列。</li>
+</ul>
+<p>基数排序可以看作是多轮桶排序，每个数位上都进行一次桶排序。</p>
+<p>当使用2进制时， k=2 最小，位数 d 最大，时间复杂度 O(nd) 会变大，空间复杂度 O(n+k) 会变小。当用最大值作为基数时， k=maxV 最大， d=1 最小，此时时间复杂度 O(nd) 变小，但是空间复杂度 O(n+k) 会急剧增大，此时基数排序退化成了计数排序。</p>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-12-09</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
                 </a>
-        
-                <a href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    计算机网络相关
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/">
+			上回<br>TCP三次握手四次挥手详解
                 </a>
-        
-                <a href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    计算机操作系统
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/categories/c&#43;&#43;_primer/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    C&#43;&#43;_Primer
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/categories/c&#43;&#43;%E8%AF%AD%E8%A8%80/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    C&#43;&#43;语言
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/categories/%E7%AE%97%E6%B3%95/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    算法
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    深入理解计算机系统学习日志
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    计算机网络学习日志
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    计算机基础
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/categories/latex/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    LaTex
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-    </div>
-</div>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
 
 
             </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" style="opacity:0">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>1/2</span>
         </div>
-
-        
-        <a class="pagination-action" href="/categories/page/2/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
+    </div>
 </div>
 
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -741,6 +870,9 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },
