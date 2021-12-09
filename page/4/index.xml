@@ -1000,12 +1000,11 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;p&gt;TTL电平：低电平为0，高电平为1&lt;/p&gt;
 &lt;p&gt;RS-232电平：正电平(+15V)为0，负电平(-15V)为1&lt;/p&gt;
 &lt;p&gt;最近在画PCB研究几个MCU的时候遇到引脚连接方面的一些问题，对于MCU进行串行通信传输数据的过程不太了解，因此写一篇博客来学习一下这些通信协议。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
 &lt;h2 id=&#34;一些概念&#34;&gt;一些概念&lt;/h2&gt;
 &lt;h3 id=&#34;同步synchronous和异步asynchronous&#34;&gt;同步(Synchronous)和异步(Asynchronous)&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;同步&lt;/strong&gt;就是整个处理过程顺序执行，当各个过程都执行完毕后，返回结果。这是一种线性执行的方式，执行的流程不能跨越。一般用于流程性比较强的程序。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;异步&lt;/strong&gt;：是只发送了调用的命令，调用者无需等待被调用的方法完全执行完毕，可以继续执行下面的流程，是一种并行处理的方式。比如页面数据架子啊的过程，不需要等待所有数据获取后再显示页面。&lt;/p&gt;
-&lt;p&gt;二者的区别就在于同步需要等待，异步不需要等待。&lt;/p&gt;
+&lt;p&gt;二者的区别就在于同步需要等待，异步不需要等待。因此同步通信需要&lt;strong&gt;时钟线&lt;/strong&gt;，异步不需要，但异步需要通信双方约定好传输&lt;strong&gt;波特率&lt;/strong&gt;。&lt;/p&gt;
 &lt;h3 id=&#34;全双工和半双工&#34;&gt;全双工和半双工&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;全双工&lt;/strong&gt;是指可以&lt;strong&gt;同时&lt;/strong&gt;进行&lt;strong&gt;双向信号&lt;/strong&gt;传输。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;半双工&lt;/strong&gt;是指可以及进行&lt;strong&gt;双向信号传输&lt;/strong&gt;但&lt;strong&gt;同一时刻只能向一个&lt;/strong&gt;方向传输。&lt;/p&gt;
@@ -1141,6 +1140,11 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;p&gt;结束位(1bit)：高电平。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
+&lt;h2 id=&#34;协议区别和应用场景&#34;&gt;协议区别和应用场景&lt;/h2&gt;
+&lt;p&gt;I2C和SPI都是同步协议，都有时钟信号，在一条总线上也都可以挂多个从设备，但是I2C的从设备是通过地址来区分的，SPI的从设备是通过片选线来区分的，所以SPI总线上，每多挂一个从设备，就要多用一个线作为片选线，而I2C则不用，只要地址不冲突，可以随便挂设备。&lt;/p&gt;
+&lt;p&gt;I2C总线速度一般普遍慢于SPI，I2C一般的速度是100kbs、400kbps和1Mbps，而SPI的速度可以在几Mbps，也可以10+Mbps。所以看使用场合，低速的话，I2C就挺合适的，如果速度快一些，则一般都要选用SPI。&lt;/p&gt;
+&lt;p&gt;另外，I2C总线的管脚都是开漏输出，必须外接上拉电阻，阻值可以根据总线速度来推算，一般我们常用400kbps传输速率，上拉电阻选用2.2K。&lt;/p&gt;
+&lt;p&gt;UART和SPI、I2C不同，他是异步传输的，一般来说传输速度比较慢，传统的传输速度一般在115200bps或以下，不过现在大部分UART控制器也能支持到4Mbps或者8Mbps了。UART目前最常用的就是调试接口，因为UART比较简单，所以CPU输出log一般都通过一个UART口来输出。&lt;/p&gt;
 &lt;h2 id=&#34;jtag边界扫描&#34;&gt;JTAG边界扫描&lt;/h2&gt;
 &lt;p&gt;JTAG主要用于验证设计和测试印刷电路板。&lt;/p&gt;
 &lt;h3 id=&#34;电气特性&#34;&gt;电气特性&lt;/h3&gt;
