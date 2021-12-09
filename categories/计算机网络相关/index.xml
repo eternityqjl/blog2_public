@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 23 Jul 2021 12:59:05 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 09 Dec 2021 09:31:30 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TCP三次握手四次挥手详解</title>
+      <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/</link>
+      <pubDate>Thu, 09 Dec 2021 09:31:30 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/</guid>
+      <description>三次握手建立连接  第一步：客户机的TCP向服务器的TCP发送连接请求报文段。该报文段的同步位SYN置为1，同时选择一个初始序号seq=x。SYN报文段不能携带数据，但要消耗掉一个序号。这是客户机进入SYN-SENT同步已发送状态。 第二步：服务器的TCP收到连接请求后，如果同意建立连接，则向客户机发回确认，并为该TCP分配缓存和变量。在确认报文段中，SYN和ACK都置为1，确认号是ack=x+1，同时为自己选择一个初始序号seq=y。确认报文不能携带数据，但也要消耗一个序号。此时服务器进入SYN-RCVD同步收到状态。 第三步：客户机收到确认报文后，还要向服务器给出确认，并为该TCP连接分配缓存和变量。确认报文段的ACK置为1，确认号ack=y+1，序号seq=x+1.该报文段可以携带数据，若不携带则不消耗序号。此时TCP客户进程进入ESTABLISH已建立连接状态。  四次挥手关闭连接  第一步：客户端TCP发送连接释放报文段，并停止发送数据，终止位FIN置为1，序号seq=u，等于之前已经传送的数据的最后一个字节的序号加1，FIN报文段即使不携带数据也要消耗一个序号。此时TCP客户机进入FIN-WAIT-1状态。 第二步：服务器收到连接释放报文后即发出确认，确认号ack=u+1，序号seq=v，等于前面已经传输过的数据的最后一个字节的序号加1。然后服务器进入CLOSE-WAIT状态。此时从客户机到服务器的连接就释放了，TCP连接处于半关闭状态。 第三步：若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时其发出FIN=1的连接释放报文段，该报文段的序号seq=w（在半关闭的时候可能又传输了一些数据），还需重复上次已经发送的确认号ack=u+1.此时服务器进入LAST-ACK状态。 第四步：客户机收到连接释放报文段后，要发送确认。把确认报文中的确认位ACK置为1，确认号ack=w+1，序号seq=u+1。此时连接还未释放，要等到计时器的设置时间**2MSL（最长报文寿命）**后客户机才进入CLOSED状态。  粘包 应用层一次recv接收了多个send。原因是TCP协议是面向字节流的，无法区分边界，需要应用层协议去解决。可以通过在应用层为数据流加上特定标志开头。还有就是关闭Nagle协议。</description>
+    </item>
+    
     <item>
       <title>计算机网络各层级理解</title>
       <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</link>

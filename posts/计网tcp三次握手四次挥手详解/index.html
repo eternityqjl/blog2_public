@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html><head>
-	<meta name="generator" content="Hugo 0.89.2" />
-<title>Jialong&#39;s Blog</title>
+<title>TCP三次握手四次挥手详解</title>
 
 
-
-  
 
 
 <meta charset="utf-8">
@@ -13,16 +10,18 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="My HomePage Description">
+<meta name="description" content="">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
 
 
-<meta property="og:title" content="Jialong&#39;s Blog" />
-<meta property="og:description" content="My HomePage Description" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://eternityqjl.top/" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="TCP三次握手四次挥手详解" />
+<meta property="og:description" content="三次握手建立连接  第一步：客户机的TCP向服务器的TCP发送连接请求报文段。该报文段的同步位SYN置为1，同时选择一个初始序号seq=x。SYN报文段不能携带数据，但要消耗掉一个序号。这是客户机进入SYN-SENT同步已发送状态。 第二步：服务器的TCP收到连接请求后，如果同意建立连接，则向客户机发回确认，并为该TCP分配缓存和变量。在确认报文段中，SYN和ACK都置为1，确认号是ack=x&#43;1，同时为自己选择一个初始序号seq=y。确认报文不能携带数据，但也要消耗一个序号。此时服务器进入SYN-RCVD同步收到状态。 第三步：客户机收到确认报文后，还要向服务器给出确认，并为该TCP连接分配缓存和变量。确认报文段的ACK置为1，确认号ack=y&#43;1，序号seq=x&#43;1.该报文段可以携带数据，若不携带则不消耗序号。此时TCP客户进程进入ESTABLISH已建立连接状态。  四次挥手关闭连接  第一步：客户端TCP发送连接释放报文段，并停止发送数据，终止位FIN置为1，序号seq=u，等于之前已经传送的数据的最后一个字节的序号加1，FIN报文段即使不携带数据也要消耗一个序号。此时TCP客户机进入FIN-WAIT-1状态。 第二步：服务器收到连接释放报文后即发出确认，确认号ack=u&#43;1，序号seq=v，等于前面已经传输过的数据的最后一个字节的序号加1。然后服务器进入CLOSE-WAIT状态。此时从客户机到服务器的连接就释放了，TCP连接处于半关闭状态。 第三步：若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时其发出FIN=1的连接释放报文段，该报文段的序号seq=w（在半关闭的时候可能又传输了一些数据），还需重复上次已经发送的确认号ack=u&#43;1.此时服务器进入LAST-ACK状态。 第四步：客户机收到连接释放报文段后，要发送确认。把确认报文中的确认位ACK置为1，确认号ack=w&#43;1，序号seq=u&#43;1。此时连接还未释放，要等到计时器的设置时间**2MSL（最长报文寿命）**后客户机才进入CLOSED状态。  粘包 应用层一次recv接收了多个send。原因是TCP协议是面向字节流的，无法区分边界，需要应用层协议去解决。可以通过在应用层为数据流加上特定标志开头。还有就是关闭Nagle协议。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-09T09:31:30+08:00" />
+<meta property="article:modified_time" content="2021-12-09T09:31:30+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -30,8 +29,8 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Jialong&#39;s Blog"/>
-<meta name="twitter:description" content="My HomePage Description"/>
+<meta name="twitter:title" content="TCP三次握手四次挥手详解"/>
+<meta name="twitter:description" content="三次握手建立连接  第一步：客户机的TCP向服务器的TCP发送连接请求报文段。该报文段的同步位SYN置为1，同时选择一个初始序号seq=x。SYN报文段不能携带数据，但要消耗掉一个序号。这是客户机进入SYN-SENT同步已发送状态。 第二步：服务器的TCP收到连接请求后，如果同意建立连接，则向客户机发回确认，并为该TCP分配缓存和变量。在确认报文段中，SYN和ACK都置为1，确认号是ack=x&#43;1，同时为自己选择一个初始序号seq=y。确认报文不能携带数据，但也要消耗一个序号。此时服务器进入SYN-RCVD同步收到状态。 第三步：客户机收到确认报文后，还要向服务器给出确认，并为该TCP连接分配缓存和变量。确认报文段的ACK置为1，确认号ack=y&#43;1，序号seq=x&#43;1.该报文段可以携带数据，若不携带则不消耗序号。此时TCP客户进程进入ESTABLISH已建立连接状态。  四次挥手关闭连接  第一步：客户端TCP发送连接释放报文段，并停止发送数据，终止位FIN置为1，序号seq=u，等于之前已经传送的数据的最后一个字节的序号加1，FIN报文段即使不携带数据也要消耗一个序号。此时TCP客户机进入FIN-WAIT-1状态。 第二步：服务器收到连接释放报文后即发出确认，确认号ack=u&#43;1，序号seq=v，等于前面已经传输过的数据的最后一个字节的序号加1。然后服务器进入CLOSE-WAIT状态。此时从客户机到服务器的连接就释放了，TCP连接处于半关闭状态。 第三步：若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时其发出FIN=1的连接释放报文段，该报文段的序号seq=w（在半关闭的时候可能又传输了一些数据），还需重复上次已经发送的确认号ack=u&#43;1.此时服务器进入LAST-ACK状态。 第四步：客户机收到连接释放报文段后，要发送确认。把确认报文中的确认位ACK置为1，确认号ack=w&#43;1，序号seq=u&#43;1。此时连接还未释放，要等到计时器的设置时间**2MSL（最长报文寿命）**后客户机才进入CLOSED状态。  粘包 应用层一次recv接收了多个send。原因是TCP协议是面向字节流的，无法区分边界，需要应用层协议去解决。可以通过在应用层为数据流加上特定标志开头。还有就是关闭Nagle协议。"/>
 
 
 
@@ -67,7 +66,29 @@
 
 
 
+  
+    <script src="/js/toc.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -86,7 +107,7 @@
 <body>
     	<div id="app"><div ref="sideContainer" class="side-container">
     
-    <a class="a-block nav-head active" href="https://eternityqjl.top">
+    <a class="a-block nav-head false" href="https://eternityqjl.top">
     
         <div class="nav-title">
             Jialong&#39;s Blog
@@ -104,9 +125,11 @@
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="/posts">
+            
+            <a class="a-block nav-link-item active" href="/posts">
                 网志
             </a>
             
@@ -172,6 +195,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%b8%89%e6%ac%a1%e6%8f%a1%e6%89%8b%e5%bb%ba%e7%ab%8b%e8%bf%9e%e6%8e%a5" onclick="onNavClick(`#三次握手建立连接-nav`)" id="三次握手建立连接-nav">
+									三次握手建立连接
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9b%9b%e6%ac%a1%e6%8c%a5%e6%89%8b%e5%85%b3%e9%97%ad%e8%bf%9e%e6%8e%a5" onclick="onNavClick(`#四次挥手关闭连接-nav`)" id="四次挥手关闭连接-nav">
+									四次挥手关闭连接
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%b2%98%e5%8c%85" onclick="onNavClick(`#粘包-nav`)" id="粘包-nav">
+									粘包
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -189,30 +290,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
         </a>
         
         
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    5<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>6
-                </span>
-            </div>
-            
-            
-            <a class="pagination-action" href="/page/4/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_left
-                </i>
-            </a>
-            
-
-            
-            <a class="pagination-action" href="/page/6/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
-        
-        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -225,9 +302,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="/posts">
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
                     网志
                 </a>
                 
@@ -273,6 +352,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             
             
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%b8%89%e6%ac%a1%e6%8f%a1%e6%89%8b%e5%bb%ba%e7%ab%8b%e8%bf%9e%e6%8e%a5" onclick="onNavClick(`#三次握手建立连接-nav`)" id="三次握手建立连接-nav">
+									三次握手建立连接
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9b%9b%e6%ac%a1%e6%8c%a5%e6%89%8b%e5%85%b3%e9%97%ad%e8%bf%9e%e6%8e%a5" onclick="onNavClick(`#四次挥手关闭连接-nav`)" id="四次挥手关闭连接-nav">
+									四次挥手关闭连接
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%b2%98%e5%8c%85" onclick="onNavClick(`#粘包-nav`)" id="粘包-nav">
+									粘包
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
         </div>
     </div>
 </div>
@@ -314,339 +471,100 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div>
 
             <div id="content">
-
 <div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-no-background">
-        
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
             
-            <a href="https://eternityqjl.top/posts/tls/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                TLS（HTTPS）协议
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2020-04-19
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            
 
-                        </div>
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    TCP三次握手四次挥手详解
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-12-09 09:31
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3">计算机网络相关</a>
+                                &nbsp;
+                        
+
                         
                         
                     </div>
                 </div>
+            </div>
             
-        
-            
-            <a href="https://eternityqjl.top/posts/convertpdftosvg/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                PDF转换为SVG
-                            </div>
-                            <div class="post-item-summary">
-                                使用Adobe Acrobat和inscape软件将PDF文档中的矢量图导出为SVG格式的图片
-                            </div>
-                            <div class="post-item-meta">
-    2020-04-08
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h2 id="三次握手建立连接">三次握手建立连接</h2>
+<ul>
+<li>第一步：客户机的TCP向服务器的TCP发送连接请求报文段。该报文段的同步位<strong>SYN置为1</strong>，同时选择一个初始序号<strong>seq=x</strong>。SYN报文段<strong>不能携带数据</strong>，但要<strong>消耗掉一个序号</strong>。这是客户机进入<strong>SYN-SENT同步已发送</strong>状态。</li>
+<li>第二步：服务器的TCP收到连接请求后，如果同意建立连接，则向客户机发回确认，并为该TCP分配缓存和变量。在确认报文段中，<strong>SYN和ACK都置为1</strong>，确认号是<strong>ack=x+1</strong>，同时为自己选择一个初始序号<strong>seq=y</strong>。确认报文<strong>不能携带数据</strong>，但也要<strong>消耗一个序号</strong>。此时服务器进入<strong>SYN-RCVD同步收到</strong>状态。</li>
+<li>第三步：客户机收到确认报文后，还要向服务器给出确认，并为该TCP连接<strong>分配缓存和变量</strong>。确认报文段的<strong>ACK置为1</strong>，确认号<strong>ack=y+1</strong>，序号<strong>seq=x+1</strong>.该报文段<strong>可以携带数据</strong>，若<strong>不携带则不消耗序号</strong>。此时TCP客户进程进入<strong>ESTABLISH已建立连接</strong>状态。</li>
+</ul>
+<h2 id="四次挥手关闭连接">四次挥手关闭连接</h2>
+<ul>
+<li>第一步：客户端TCP发送连接释放报文段，并<strong>停止发送数据</strong>，终止位<strong>FIN置为1</strong>，序号<strong>seq=u</strong>，等于之前<strong>已经传送的数据的最后一个字节的序号加1</strong>，FIN报文段即使<strong>不携带数据也要消耗一个序号</strong>。此时TCP客户机进入<strong>FIN-WAIT-1状态</strong>。</li>
+<li>第二步：服务器收到连接释放报文后即发出确认，确认号<strong>ack=u+1</strong>，序号<strong>seq=v</strong>，等于前面<strong>已经传输过的数据的最后一个字节的序号加1</strong>。然后服务器进入<strong>CLOSE-WAIT状态</strong>。此时从客户机到服务器的连接就释放了，TCP连接处于<strong>半关闭</strong>状态。</li>
+<li>第三步：若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时其发出<strong>FIN=1</strong>的<strong>连接释放报文段</strong>，该报文段的序号<strong>seq=w</strong>（在半关闭的时候可能又传输了一些数据），还需重复上次已经发送的确认号<strong>ack=u+1</strong>.此时服务器进入<strong>LAST-ACK状态</strong>。</li>
+<li>第四步：客户机收到连接释放报文段后，要发送确认。把确认报文中的<strong>确认位ACK置为1</strong>，确认号<strong>ack=w+1</strong>，序号<strong>seq=u+1</strong>。此时连接还未释放，要等到计时器的设置时间**2MSL（最长报文寿命）**后客户机才进入CLOSED状态。</li>
+</ul>
+<h2 id="粘包">粘包</h2>
+<p>应用层一次recv接收了多个send。原因是TCP协议是面向字节流的，无法区分边界，需要应用层协议去解决。可以通过在应用层为数据流加上特定标志开头。还有就是关闭Nagle协议。</p>
 
-                        </div>
-                        
-                        
-                    </div>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-12-09</p>
+                    
                 </div>
+            </div>
             
-        
             
-            <a href="https://eternityqjl.top/posts/latex-problems1/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                第一次使用LaTex——问题整理
-                            </div>
-                            <div class="post-item-summary">
-                                首次使用LaTex排版实验报告过程中遇到的问题总结
-                            </div>
-                            <div class="post-item-meta">
-    2020-03-29
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <nav class="post-pagination">
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/signalsystem-ch01/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                信号与系统学习笔记——Chapter01 信号与系统
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2020-03-14
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/">
+			上回<br>现代操作系统学习日志——进程与线程
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                数字签名和数字证书
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-12-06
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                写在2019年的最后一个月的开始
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-12-01
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+<div id="gitalk-container"></div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                计算机网络学习日志（一）——应用层
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-11-28
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                            
-                            <div class="post-item-image-wrapper">
-                            <div class="post-item-image"
-                            
-                                 style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/computer_network_ATop-down_Approach_logo.PNG')"
-                            
-                            ></div>
-                            </div>
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/about/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                关于
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-11-28
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                            
-                            <div class="post-item-image-wrapper">
-                            <div class="post-item-image"
-                            
-                                 style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/about_background_1_scuLibrary.jpg')"
-                            
-                            ></div>
-                            </div>
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                GitBook自动发布脚本
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-10-18
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                储存类别、链接和内存管理
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-10-18
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-        </a>
+
+
+
+
+            </div>
+        </div>
     </div>
 </div>
 
-            </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" href="/page/4/" style="opacity:1">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>5/6</span>
-        </div>
-
-        
-        <a class="pagination-action" href="/page/6/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-</div>
-
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -913,6 +831,9 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },

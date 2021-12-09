@@ -6,9 +6,147 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 07 Dec 2021 17:14:52 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Dec 2021 09:31:30 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>机器学习——k近邻(k-NN)算法</title>
+        <link>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
+        <pubDate>Wed, 12 May 2021 14:57:17 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ -&lt;h2 id=&#34;基本概念及原理&#34;&gt;基本概念及原理&lt;/h2&gt;
+&lt;p&gt;k近邻(k-nearest neighbors)算法是一种基本分类和回归方法。&lt;/p&gt;
+&lt;p&gt;该算法是给定一个&lt;strong&gt;训练数据集&lt;/strong&gt;，对新的&lt;strong&gt;输入测试集&lt;/strong&gt;，在训练集中找到与该测试实例&lt;strong&gt;最邻近&lt;/strong&gt;的k个实例，这k个实例的多数属于某个类，就把该输入实例分类到这个类中。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/220px-KnnClassification.svg.png&#34; alt=&#34;220px-KnnClassification.svg&#34;&gt;&lt;/p&gt;
+&lt;p&gt;有两类不同样本分别用红色三角形和蓝色正方形表示，途中绿色圆形为待分类的数据。这时我们根据k-近邻的思想进行分类。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当k=3时，判定样本属于红色三角形这一类；&lt;/li&gt;
+&lt;li&gt;当k=5时，判定样本属于蓝色正方形这一类。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;k的选取及特征归一化&#34;&gt;k的选取及特征归一化&lt;/h2&gt;
+&lt;h3 id=&#34;选取k值及其影响&#34;&gt;选取k值及其影响&lt;/h3&gt;
+&lt;p&gt;选取较小的k值，整体模型会变得更加复杂，容易发生&lt;strong&gt;过拟合&lt;/strong&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;过拟合就是在训练集上准确率非常高，而在测试集上准确率低。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;k太小会导致过拟合，容易将一些噪声学习到模型中。&lt;/p&gt;
+&lt;p&gt;选取较大的k值，整体模型变得简单，因为当k等于训练样本个数时，无论输入什么测试实例，都将简单地预测它属于&lt;strong&gt;在训练实例中最多的类&lt;/strong&gt;，相当于没有训练模型。&lt;/p&gt;
+&lt;p&gt;所以，模型即不能过大也不能过小，一般选取一个较小的数值，通过采取&lt;strong&gt;交叉验证法&lt;/strong&gt;来选取最优的k值，即通过实验调参选取。&lt;/p&gt;
+&lt;h3 id=&#34;距离的度量&#34;&gt;距离的度量&lt;/h3&gt;
+&lt;p&gt;我们通常使用常见的&lt;strong&gt;欧氏距离&lt;/strong&gt;来衡量高维空间中两个点的距离，即：
+$$
+L_2(x_i,x_j)=(\sum_{l=1}^{n}| x_i^{(l)}-x_j^{(l)} |)^{\frac{1}{2}}
+$$
+其中，$x_i=(x_i^{(1)}, x_i^{(2)},&amp;hellip;,x_i^{(n)})$，同理$x_j$。&lt;/p&gt;
+&lt;h3 id=&#34;特征归一化的必要性&#34;&gt;特征归一化的必要性&lt;/h3&gt;
+&lt;p&gt;如果不进行归一化，让每个特征都同等重要，就会偏向于第一维度的特征，导致多个特征并不是等价重要的，会导致距离计算错误，最终导致预测结果错误。&lt;/p&gt;
+&lt;p&gt;进行KNN分类使用的样本特征是${ (x_{i1}, x_{i2},&amp;hellip;,x_{in}) }&lt;em&gt;{i=1}^m$，取每个轴上的最大值减去最小值得：
+$$
+M_j=\max&lt;/em&gt;{i=1,&amp;hellip;,m}x_{ij}-\min_{i=1,&amp;hellip;,m}x_{ij}
+$$
+并在计算距离时将每一个坐标轴除以相应的$M_j$进行归一化，即：
+$$
+d((y_1,&amp;hellip;,y_n),(z_1,&amp;hellip;,z_n))=\sqrt{\sum_{j=1}^{n}(\frac{y_j}{M_j}-\frac{z_j}{M_j})^2}
+$$&lt;/p&gt;
+&lt;h2 id=&#34;k-nn实现iris鸢尾花数据集聚类&#34;&gt;k-NN实现Iris鸢尾花数据集聚类&lt;/h2&gt;
+&lt;h3 id=&#34;k-means聚类算法的实现步骤&#34;&gt;K-Means聚类算法的实现步骤：&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;为待聚类的点随机寻找几个聚类中心(类别个数)；&lt;/li&gt;
+&lt;li&gt;计算每个点到聚类中心的距离，将各个点归类到离该点最近的聚类中去；&lt;/li&gt;
+&lt;li&gt;计算每个聚类中所有点的坐标平均值，并将这个平均值作为新的聚类中心，反复执行上一步和该步，直到聚类中心不再进行大范围移动或聚类迭代次数达到要求位置。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;代码实现&#34;&gt;代码实现&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pandas&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pd&lt;/span&gt;
+
+data &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;read_csv(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&amp;#39;&lt;/span&gt;, header&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;None&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# 下载iris数据集&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;#data = pd.read_csv(&amp;#39;./data/iris.data.csv&amp;#39;, header=None)&lt;/span&gt;
+data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;columns &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;sepal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;sepal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;petal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;petal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;species&amp;#39;&lt;/span&gt;]    &lt;span style=&#34;color:#888&#34;&gt;# 特征及类别名称&lt;/span&gt;
+
+X &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;values
+y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;values
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-setosa&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;                                 &lt;span style=&#34;color:#888&#34;&gt;# Iris-setosa 输出label用0表示&lt;/span&gt;
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-versicolor&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;                             &lt;span style=&#34;color:#888&#34;&gt;# Iris-versicolor 输出label用1表示&lt;/span&gt;
+y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-virginica&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;                              &lt;span style=&#34;color:#888&#34;&gt;# Iris-virginica 输出label用2表示&lt;/span&gt;
+X_setosa, y_setosa &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]                     &lt;span style=&#34;color:#888&#34;&gt;# Iris-setosa 4个特征&lt;/span&gt;
+X_versicolor, y_versicolor &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;]         &lt;span style=&#34;color:#888&#34;&gt;# Iris-versicolor 4个特征&lt;/span&gt;
+X_virginica, y_virginica &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;]         &lt;span style=&#34;color:#888&#34;&gt;# Iris-virginica 4个特征&lt;/span&gt;
+
+
+&lt;span style=&#34;color:#888&#34;&gt;# training set&lt;/span&gt;
+X_setosa_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_setosa_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_versicolor_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_versicolor_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_virginica_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
+y_virginica_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
+X_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_train, X_versicolor_train, X_virginica_train])
+y_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_train, y_versicolor_train, y_virginica_train])
+
+&lt;span style=&#34;color:#888&#34;&gt;# validation set&lt;/span&gt;
+X_setosa_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_setosa_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_versicolor_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_versicolor_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_virginica_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
+y_virginica_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
+X_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_val, X_versicolor_val, X_virginica_val])
+y_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_val, y_versicolor_val, y_virginica_val])
+
+&lt;span style=&#34;color:#888&#34;&gt;# test set&lt;/span&gt;
+X_setosa_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_setosa_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_versicolor_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_versicolor_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_virginica_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
+y_virginica_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
+X_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_test, X_versicolor_test, X_virginica_test])
+y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_test, y_versicolor_test, y_virginica_test])
+
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;KNearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;pass&lt;/span&gt;
+
+   &lt;span style=&#34;color:#888&#34;&gt;# 训练函数&lt;/span&gt;
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;train&lt;/span&gt;(self, X, y):
+       self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X
+       self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;y_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y
+
+   &lt;span style=&#34;color:#888&#34;&gt;# 预测函数&lt;/span&gt;
+   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;predict&lt;/span&gt;(self, X, k&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;):
+       &lt;span style=&#34;color:#888&#34;&gt;# 计算L2距离&lt;/span&gt;
+       num_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
+       num_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
+       dists &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros((num_test, num_train))    &lt;span style=&#34;color:#888&#34;&gt;# 初始化距离函数&lt;/span&gt;
+       &lt;span style=&#34;color:#888&#34;&gt;# because(X - X_train)*(X - X_train) = -2X*X_train + X*X + X_train*X_train, so&lt;/span&gt;
+       d1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(X, self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)    &lt;span style=&#34;color:#888&#34;&gt;# shape (num_test, num_train)&lt;/span&gt;
+       d2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(X), axis&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, keepdims&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;True&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# shape (num_test, 1)&lt;/span&gt;
+       d3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train), axis&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# shape (1, num_train)&lt;/span&gt;
+       dist &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(d1 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; d2 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; d3)
+       &lt;span style=&#34;color:#888&#34;&gt;# 根据K值，选择最可能属于的类别&lt;/span&gt;
+       y_pred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros(num_test)
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(num_test):
+           dist_k_min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argsort(dist[i])[:k]    &lt;span style=&#34;color:#888&#34;&gt;# 最近邻k个实例位置&lt;/span&gt;
+           y_kclose &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;y_train[dist_k_min]     &lt;span style=&#34;color:#888&#34;&gt;# 最近邻k个实例对应的标签&lt;/span&gt;
+           y_pred[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argmax(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;bincount(y_kclose&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;tolist()))    &lt;span style=&#34;color:#888&#34;&gt;# 找出k个标签中从属类别最多的作为预测类别&lt;/span&gt;
+
+       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; y_pred
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+    KNN &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; KNearestNeighbor()
+    KNN&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(X_train, y_train)
+    y_pred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; KNN&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(X_test, k&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;)
+    accuracy &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(y_pred &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; y_test)
+    &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;测试集预测准确率：&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; accuracy)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;测试集预测准确率：1.000000
+&lt;/code&gt;&lt;/pre&gt;- https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1682,102 +1820,6 @@ $$
 &lt;p&gt;&lt;strong&gt;端到端拥塞控制&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;该控制方法中，网络层没有为运输层拥塞控制提供显式帮助。端系统必须通过对网络行为的观察来推断网络拥塞1&lt;/p&gt;
 - https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%8C%E4%BC%A0%E8%BE%93%E5%B1%82/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>TLS（HTTPS）协议</title>
-        <link>https://eternityqjl.top/posts/tls/</link>
-        <pubDate>Sun, 19 Apr 2020 16:15:26 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/tls/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/tls/ -&lt;h2 id=&#34;ssltls简介&#34;&gt;SSL/TLS简介&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;TLS&lt;/strong&gt;（&lt;strong&gt;T&lt;/strong&gt;ransport &lt;strong&gt;L&lt;/strong&gt;ayer &lt;strong&gt;S&lt;/strong&gt;ecurity，&lt;strong&gt;传输层安全协议&lt;/strong&gt;），以及它的前身&lt;strong&gt;SSL&lt;/strong&gt;（&lt;strong&gt;S&lt;/strong&gt;ecure &lt;strong&gt;S&lt;/strong&gt;ockets &lt;strong&gt;L&lt;/strong&gt;ayer，&lt;strong&gt;安全套接层&lt;/strong&gt;）是一种安全协议。Netscape公司在1994年推出HTTPS协议，使用SSL进行加密，这是SSL的起源。1999年公布了第一版的TLS协议，类似于SLLv3，只是对其做出了一些更改。&lt;/p&gt;
-&lt;p&gt;SSL协议处在计算机网络中的应用层和运输层之间，它不依赖于平台和运行程序的协议。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;几个知名的使用SSL加密的协议&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;HTTP over SSL (HTTPS)&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;简称为HTTPS，它的产生是为了加密网页，HTTP是第一个使用SSL保障安全的应用层协议。HTTPS在RFC2818被标准化，HTTPS工作在443端口，HTTP默认工作在80端口。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Email over SSL&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;类似于HTTP over SSL，协议如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SMTP、IMAP能够支持SSL&lt;/li&gt;
-&lt;li&gt;SMTP over TLS在标准文档RFC2487中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;ssl原理详解&#34;&gt;SSL原理详解&lt;/h2&gt;
-&lt;h3 id=&#34;基本运行过程&#34;&gt;基本运行过程&lt;/h3&gt;
-&lt;p&gt;SSL/TLS协议是采用&lt;strong&gt;公钥加密法&lt;/strong&gt;实现的，客户端先向服务器端索要公钥，用公钥加密信息，服务器收到密文后，用自己的私钥解密；二者协商生成”对话密钥“，采用该”对话密钥“进行加密通信。&lt;/p&gt;
-&lt;h3 id=&#34;ssl建立的总过程&#34;&gt;SSL建立的总过程&lt;/h3&gt;
-&lt;p&gt;客户端向服务器索要并验证公钥，双方协商生成”对话密钥“的过程又称为”握手阶段“，该阶段涉及&lt;strong&gt;四次握手&lt;/strong&gt;通信，且该阶段的通信都是明文的。以下一一来分析。&lt;/p&gt;
-&lt;h4 id=&#34;1-客户端发出请求clienthello&#34;&gt;1. 客户端发出请求（ClientHello）&lt;/h4&gt;
-&lt;p&gt;该步客户端（通常为浏览器）向服务器提供以下信息：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;支持的协议&lt;strong&gt;版本（Version）&lt;/strong&gt;，如TLSv1.0&lt;/li&gt;
-&lt;li&gt;一个客户端生成的&lt;strong&gt;随机数（Random）&lt;/strong&gt;，之后用于生成”对话密钥“&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;会话ID（Session id）&lt;/strong&gt;：
-&lt;ul&gt;
-&lt;li&gt;如果客户端第一次连接到服务器，那么该字段为空。&lt;/li&gt;
-&lt;li&gt;如果该字段不为空，则说明以前与服务器有连接，在此期间，服务器使用Session ID映射对称密钥，并将Session ID存储在客户端浏览器中，为映射设置一个时间限，如果浏览器将来连接到同一台服务器，它将发送Session ID，服务器对映射的Session ID进行验证，并使用以前用过的对称密钥来恢复会话，该情况下不需要握手，也成为&lt;strong&gt;SSL会话恢复&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;支持的&lt;strong&gt;加密套件（Cipher Suites）&lt;/strong&gt;，这是由客户按优先级排列的，但完全由服务器决定发送与否。服务器会从客户端发送的加密套件中选择一种作为共同的加密套件，如RSA公钥加密。&lt;/li&gt;
-&lt;li&gt;支持的&lt;strong&gt;压缩方法&lt;/strong&gt;，这是为了减少带宽。从TLS 1.3开始，协议禁用了TLS压缩，因为使用压缩时攻击可以捕获到用HTTP头发送的参数，该攻击可以劫持Cookie。&lt;/li&gt;
-&lt;li&gt;扩展包。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&#34;2-服务器回应serverhello&#34;&gt;2. 服务器回应（ServerHello）&lt;/h4&gt;
-&lt;p&gt;该步骤包含以下内容：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;确认使用的&lt;strong&gt;版本&lt;/strong&gt;，如TLSv1.0，如果浏览器与服务器支持的版本不一致，服务器会关闭加密通信。&lt;/li&gt;
-&lt;li&gt;一个服务器生成的&lt;strong&gt;随机数&lt;/strong&gt;，之后用于生成”对话密钥“&lt;/li&gt;
-&lt;li&gt;确认使用的&lt;strong&gt;加密套件&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;会话ID&lt;/strong&gt;（Session ID）：
-&lt;ul&gt;
-&lt;li&gt;服务器将约定的Session参数存储在TLS缓存中，并生成与之对应的Session ID，它将与ServerHello一起发送到客户端。客户端可以写入约定的参数到此Session ID，并给定到期时间，客户端将在ClientHello中包含该ID。如果客户端再次连接到该服务器，服务器可以检查与Session ID对应的缓存参数，并重用他们而无需再次握手。这可以节省大量计算成本。&lt;/li&gt;
-&lt;li&gt;但在谷歌等大流量应用程序中这种方法存在缺点，每天有数百万人连接到服务器，服务器必须使用Session ID保留所有Session参数的TLS缓存，这是一笔巨大的开销。为解决该问题，在扩展包中加入&lt;strong&gt;Session Tickets&lt;/strong&gt;，在这里客户端可以在ClientHello中指定它是否支持Session Tickets，然后服务器将创建一个新的Session Tickets，并使用只有服务器知道的经过私钥加密的Session参数，该参数存储在客户端中，因此所有Session数据仅存储在客户端计算机上，但Ticket仍然是安全的，因为该密钥只有服务器知道。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;扩展包&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;服务器证书&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;当服务器需要确认客户端身份时，就会再包含一个请求，要求客户端提供”客户端证书“。例如金融机构只允许认证客户连入自己的网络，会向正式用户提供USB密钥（U盾），里面包含一张客户端证书。&lt;/p&gt;
-&lt;h4 id=&#34;3-客户端回应&#34;&gt;3. 客户端回应&lt;/h4&gt;
-&lt;p&gt;客户端收到服务器回应后首先验证服务器的证书，如果证书存在问题，如证书过期、由非可信机构颁布、或证书域名与实际域名不一致，会向客户端访问者发出警告，询问是否继续通信。&lt;/p&gt;
-&lt;p&gt;证书没有问题则客户端会从中取出公钥然后发送以下信息：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一个&lt;strong&gt;随机数（pre-master-key)&lt;/strong&gt;；该随机数用服务器&lt;strong&gt;公钥加密&lt;/strong&gt;，防止被窃听。&lt;/li&gt;
-&lt;li&gt;**编码改变通知，**表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
-&lt;li&gt;客户端&lt;strong&gt;结束握手通知&lt;/strong&gt;，该项同时也是前面发送所有内容的哈希值，用来供服务器验证。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;上面第一项的随机数是握手阶段出现的第三个随机数，称“pre-master-key”，之后客户端和服务器就同时有了3个随机数，接着用双方事先商定的加密方法&lt;strong&gt;各自生成本次会话用的同一把“会话密钥”&lt;/strong&gt;。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;pre-master-key与前面服务器和客户端在Hello阶段产生的两个随机数结合在一起生成了Master Secret。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4 id=&#34;4-服务器的最后回应&#34;&gt;4. 服务器的最后回应&lt;/h4&gt;
-&lt;p&gt;服务器收到客户端第三个随机数pre-master-key后，计算生成&lt;strong&gt;本次会话使用的“会话密钥”&lt;/strong&gt;，然后向客户端发送以下信息：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;编码改变通知，表示随后的信息都将用双方商定的加密方法和密钥发送。&lt;/li&gt;
-&lt;li&gt;服务器握手结束通知，该项同时也是前面发送的所有内容的哈希值，用来供客户端验证。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;至此整个握手阶段就结束了，接下来客户端与服务器进入加密通信，就是完全使用普通的HTTP协议，只是使用了“会话密钥”加密内容。&lt;/p&gt;
-&lt;h3 id=&#34;ssl协议的结构体系&#34;&gt;SSL协议的结构体系&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SSL%E5%8D%8F%E8%AE%AE%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;SSL体系结构包含两个协议子层，底层为&lt;strong&gt;SSL记录协议层&lt;/strong&gt;；高层为&lt;strong&gt;SSL握手协议层&lt;/strong&gt;。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;SSL记录协议层&lt;/strong&gt;：记录协议为高层协议提供基本的安全服务，如数据封装、压缩、加密等基本功能。所以我们可以知道，所有的传输数据都被封装在记录中。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;SSL握手协议层&lt;/strong&gt;包括：
-&lt;ul&gt;
-&lt;li&gt;SSL握手协议：协调客户和服务器的状态，是双方能达到状态的同步&lt;/li&gt;
-&lt;li&gt;SSL密码参数修改协议：更新用于当前连接的密码组。&lt;/li&gt;
-&lt;li&gt;SSL告警协议：发现异常时为对等方传递警告&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://cshihong.github.io/2019/05/09/SSL%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3/&#34;&gt;SSL/TLS协议详解|曹世宏的博客&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html&#34;&gt;SSL/TLS协议运行机制的概述|阮一峰&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://eternityqjl.top/posts/tls/ - 2019-2021 By Jialong</description>
         </item>
     
     
