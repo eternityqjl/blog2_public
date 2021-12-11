@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>算法——桶排序&amp;计数排序&amp;基数排序</title>
+<title>算法——B树和B&#43;树</title>
 
 
 
@@ -16,19 +16,30 @@
 
 
 
-<meta property="og:title" content="算法——桶排序&amp;计数排序&amp;基数排序" />
-<meta property="og:description" content="桶排序（Bucket Sort）  将待排元素划分到不同的桶中。先扫描一遍序列，找出最大值max和最小值min，设桶的个数为k，则把区间[min, max]划分为k个区间，每个区间就是一个桶。将序列中的元素分配到各自的桶。 对每个桶内的元素进行排序。一般使用快速排序。 将各桶中的元素合并为一个大的有序序列。  当k接近于n时，桶排序的时间复杂度为O(n)，即桶越多，时间效率就越高。
-计数排序（Counting Sort） 新建一个大小为maxValue-minValue&#43;1的数组nums，然后：
- 分配。扫描一遍原始数组，以扫描到的当前值val减去1作为下标，将下标对应位置数组加1，即nums[val]&#43;&#43; 收集。顺序扫描一遍数组nums。数组的每个元素代表了按当前下标&#43;1对应值的个数，将这些值收集起来放入新的数组就得到最终排序结果。  例如：nums=[2,1,3,1,5]，首先扫描一遍取最大值maxValue=5和最小值minValue=1，新建一个长度为5-1&#43;1=5的数组nums：
- 分配：得到nums=[2,1,1,0,1]，例如nums[0]表示值为0&#43;minValue=1出现了两次。 收集：得到结果，[1,1,2,3,5]  本质上是一种特殊的桶排序。当桶的个数等于元素个数时就是计数排序。
-基数排序 基于关键字各位的大小进行排序。是一种借助多关键字排序的思想对单逻辑关键字进行排序的方法。
-共有最高位优先MSD和最低位优先LSD两种。
- 将所有待排序整数（注意，必须是非负整数）统一为位数相同的整数，位数较少的前面补零。一般用10进制，也可以用16进制甚至2进制。所以前提是能够找到最大值，得到最长的位数，设k进制下最长为位数为d。 从最低位开始，依次进行一次稳定排序。这样从最低位一直到最高位排序完成以后，整个序列就变成了一个有序序列。  基数排序可以看作是多轮桶排序，每个数位上都进行一次桶排序。
-当使用2进制时， k=2 最小，位数 d 最大，时间复杂度 O(nd) 会变大，空间复杂度 O(n&#43;k) 会变小。当用最大值作为基数时， k=maxV 最大， d=1 最小，此时时间复杂度 O(nd) 变小，但是空间复杂度 O(n&#43;k) 会急剧增大，此时基数排序退化成了计数排序。" />
+<meta property="og:title" content="算法——B树和B&#43;树" />
+<meta property="og:description" content="B树 平衡树算法的扩展，支持对保存在磁盘或网络上的符号表进行外部查找。
+概念 又称多路平衡查找树，B树中所有结点的孩子个数的最大值称为B数的阶，通常用m表示。
+具有以下特性：
+  树中每个结点至多有m棵子树，即至多含有m-1个关键字
+  若根结点不是终端结点，则至少有两颗子树。
+  所有非叶子结点的结构：（见书上所示）
+  所有叶子结点都出现在同一层次上，并且不带信息。（可视为类似于折半查找判定树的查找失败结点，实际上这些结点不存在）
+  B树是所有结点的平衡因子均等于0的多路平衡查找树。
+B树的高度（磁盘存取次数） 一般只讲B树的前两层放入内存中，剩余层级全部放在磁盘中，因此B树的高度就约为每次进行查找的磁盘存取次数。
+首先明确B树的高度不包含最后的不带任何信息的叶结点所处的那一层。
+假设$n\ge 1$，则对于任意一棵包含n个关键字，高度为h、阶数为m的B树：
+ 根据树中关键字个数计算高度满足的范围 若让每个结点中的关键字个数达到最少，则容纳同样多关键字的B树高度达到最大。  B树的查找 每个结点具有多路分支。
+与二叉树的查找很相似，只是每个结点都是多个关键字的有序表，要在每个结点上根据该结点的子树做多路分支决定。
+包含两个基本操作：
+ 在B树中找结点 在结点内找关键字  B树常存储在磁盘中，因此前一个查找操作是在磁盘上进行的，后一个查找操作是在内存中进行的，即在找到目标结点后，将其读入内存，然后在结点内采用顺序或折半查找方法查找。
+B树的插入 将关键字插入B树的过程如下：
+ 定位：利用前述的B树查找算法，找出插入该关键字的最低层中的某个非叶结点。 插入：每个非失败结点的关键字个数都在区间$[\lceil m/2\rceil-1,m-1]$内，插入后的结点关键字个数小于m，则可以直接插入；插入后的结点关键字大于m-1时，必须对结点进行分裂。  分裂的方法：取一个新结点，在插入key后的原结点，从中间位置（$\lceil m/2\rceil$）将其中的关键字分为两部分，左半部分包含的关键字放入原结点中，右半部分包含的关键字放入新结点中，中间位置（$\lceil m/2\rceil$）的结点插入原结点的父结点中；如果父结点关键字个数也超过了上限，则继续进行这种分裂操作，知道这个过程传到根结点为止，进而使得B树的高度增1。
+B树的删除 与插入的操作类似，即要使得删除后结点中关键字的个数$\ge \lceil m/2\rceil-1$，将会涉及结点的合并问题。
+ 当被删除关键字k不在终端结点：可以用k的前驱和后继替代k，然后在相应结点中删除该前驱或后继。该前驱或后继必定落在某个终端结点中，则转换成了被删关键字在终端结点中的情形。 当被删除结点在终端结点中时，有以下三种情况：  直接删除关键字。即被删除关键字所在结点的关键字个数$\ge \lceil m/2\rceil$，表明删除后仍满足B树定义。 兄弟够接。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$\ge \lceil m/2\rceil$，需要通过父子换位法进行调整，达到新的平衡。 兄弟不够借。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$= \lceil m/2\rceil -1$，则要将关键字删除后与左右兄弟结点及双亲结点中的关键字进行合并。合并过程中双亲结点中关键字会-1，若其双亲结点是根结点且关键字个数减少为0，则直接将根结点删除，合并后的新结点成为根结点。    详细例子见书上。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E6%A1%B6%E6%8E%92%E5%BA%8F_%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F_%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-12-09T10:55:47+08:00" />
-<meta property="article:modified_time" content="2021-12-09T10:55:47+08:00" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:url" content="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-10T18:03:30+08:00" />
+<meta property="article:modified_time" content="2021-12-10T18:03:30+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -36,15 +47,26 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="算法——桶排序&amp;计数排序&amp;基数排序"/>
-<meta name="twitter:description" content="桶排序（Bucket Sort）  将待排元素划分到不同的桶中。先扫描一遍序列，找出最大值max和最小值min，设桶的个数为k，则把区间[min, max]划分为k个区间，每个区间就是一个桶。将序列中的元素分配到各自的桶。 对每个桶内的元素进行排序。一般使用快速排序。 将各桶中的元素合并为一个大的有序序列。  当k接近于n时，桶排序的时间复杂度为O(n)，即桶越多，时间效率就越高。
-计数排序（Counting Sort） 新建一个大小为maxValue-minValue&#43;1的数组nums，然后：
- 分配。扫描一遍原始数组，以扫描到的当前值val减去1作为下标，将下标对应位置数组加1，即nums[val]&#43;&#43; 收集。顺序扫描一遍数组nums。数组的每个元素代表了按当前下标&#43;1对应值的个数，将这些值收集起来放入新的数组就得到最终排序结果。  例如：nums=[2,1,3,1,5]，首先扫描一遍取最大值maxValue=5和最小值minValue=1，新建一个长度为5-1&#43;1=5的数组nums：
- 分配：得到nums=[2,1,1,0,1]，例如nums[0]表示值为0&#43;minValue=1出现了两次。 收集：得到结果，[1,1,2,3,5]  本质上是一种特殊的桶排序。当桶的个数等于元素个数时就是计数排序。
-基数排序 基于关键字各位的大小进行排序。是一种借助多关键字排序的思想对单逻辑关键字进行排序的方法。
-共有最高位优先MSD和最低位优先LSD两种。
- 将所有待排序整数（注意，必须是非负整数）统一为位数相同的整数，位数较少的前面补零。一般用10进制，也可以用16进制甚至2进制。所以前提是能够找到最大值，得到最长的位数，设k进制下最长为位数为d。 从最低位开始，依次进行一次稳定排序。这样从最低位一直到最高位排序完成以后，整个序列就变成了一个有序序列。  基数排序可以看作是多轮桶排序，每个数位上都进行一次桶排序。
-当使用2进制时， k=2 最小，位数 d 最大，时间复杂度 O(nd) 会变大，空间复杂度 O(n&#43;k) 会变小。当用最大值作为基数时， k=maxV 最大， d=1 最小，此时时间复杂度 O(nd) 变小，但是空间复杂度 O(n&#43;k) 会急剧增大，此时基数排序退化成了计数排序。"/>
+<meta name="twitter:title" content="算法——B树和B&#43;树"/>
+<meta name="twitter:description" content="B树 平衡树算法的扩展，支持对保存在磁盘或网络上的符号表进行外部查找。
+概念 又称多路平衡查找树，B树中所有结点的孩子个数的最大值称为B数的阶，通常用m表示。
+具有以下特性：
+  树中每个结点至多有m棵子树，即至多含有m-1个关键字
+  若根结点不是终端结点，则至少有两颗子树。
+  所有非叶子结点的结构：（见书上所示）
+  所有叶子结点都出现在同一层次上，并且不带信息。（可视为类似于折半查找判定树的查找失败结点，实际上这些结点不存在）
+  B树是所有结点的平衡因子均等于0的多路平衡查找树。
+B树的高度（磁盘存取次数） 一般只讲B树的前两层放入内存中，剩余层级全部放在磁盘中，因此B树的高度就约为每次进行查找的磁盘存取次数。
+首先明确B树的高度不包含最后的不带任何信息的叶结点所处的那一层。
+假设$n\ge 1$，则对于任意一棵包含n个关键字，高度为h、阶数为m的B树：
+ 根据树中关键字个数计算高度满足的范围 若让每个结点中的关键字个数达到最少，则容纳同样多关键字的B树高度达到最大。  B树的查找 每个结点具有多路分支。
+与二叉树的查找很相似，只是每个结点都是多个关键字的有序表，要在每个结点上根据该结点的子树做多路分支决定。
+包含两个基本操作：
+ 在B树中找结点 在结点内找关键字  B树常存储在磁盘中，因此前一个查找操作是在磁盘上进行的，后一个查找操作是在内存中进行的，即在找到目标结点后，将其读入内存，然后在结点内采用顺序或折半查找方法查找。
+B树的插入 将关键字插入B树的过程如下：
+ 定位：利用前述的B树查找算法，找出插入该关键字的最低层中的某个非叶结点。 插入：每个非失败结点的关键字个数都在区间$[\lceil m/2\rceil-1,m-1]$内，插入后的结点关键字个数小于m，则可以直接插入；插入后的结点关键字大于m-1时，必须对结点进行分裂。  分裂的方法：取一个新结点，在插入key后的原结点，从中间位置（$\lceil m/2\rceil$）将其中的关键字分为两部分，左半部分包含的关键字放入原结点中，右半部分包含的关键字放入新结点中，中间位置（$\lceil m/2\rceil$）的结点插入原结点的父结点中；如果父结点关键字个数也超过了上限，则继续进行这种分裂操作，知道这个过程传到根结点为止，进而使得B树的高度增1。
+B树的删除 与插入的操作类似，即要使得删除后结点中关键字的个数$\ge \lceil m/2\rceil-1$，将会涉及结点的合并问题。
+ 当被删除关键字k不在终端结点：可以用k的前驱和后继替代k，然后在相应结点中删除该前驱或后继。该前驱或后继必定落在某个终端结点中，则转换成了被删关键字在终端结点中的情形。 当被删除结点在终端结点中时，有以下三种情况：  直接删除关键字。即被删除关键字所在结点的关键字个数$\ge \lceil m/2\rceil$，表明删除后仍满足B树定义。 兄弟够接。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$\ge \lceil m/2\rceil$，需要通过父子换位法进行调整，达到新的平衡。 兄弟不够借。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$= \lceil m/2\rceil -1$，则要将关键字删除后与左右兄弟结点及双亲结点中的关键字进行合并。合并过程中双亲结点中关键字会-1，若其双亲结点是根结点且关键字个数减少为0，则直接将根结点删除，合并后的新结点成为根结点。    详细例子见书上。"/>
 
 
 
@@ -237,8 +259,32 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e6%a1%b6%e6%8e%92%e5%ba%8fbucket-sort" onclick="onNavClick(`#桶排序bucket-sort-nav`)" id="桶排序bucket-sort-nav">
-									桶排序（Bucket Sort）
+								<a href="#b%e6%a0%91" onclick="onNavClick(`#b树-nav`)" id="b树-nav">
+									B树
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#概念-nav`)" id="概念-nav">
+									概念
 								</a>
 							</li>
 						
@@ -255,8 +301,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e8%ae%a1%e6%95%b0%e6%8e%92%e5%ba%8fcounting-sort" onclick="onNavClick(`#计数排序counting-sort-nav`)" id="计数排序counting-sort-nav">
-									计数排序（Counting Sort）
+								<a href="#b%e6%a0%91%e7%9a%84%e9%ab%98%e5%ba%a6%e7%a3%81%e7%9b%98%e5%ad%98%e5%8f%96%e6%ac%a1%e6%95%b0" onclick="onNavClick(`#b树的高度磁盘存取次数-nav`)" id="b树的高度磁盘存取次数-nav">
+									B树的高度（磁盘存取次数）
 								</a>
 							</li>
 						
@@ -273,8 +319,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%9f%ba%e6%95%b0%e6%8e%92%e5%ba%8f" onclick="onNavClick(`#基数排序-nav`)" id="基数排序-nav">
-									基数排序
+								<a href="#b%e6%a0%91%e7%9a%84%e6%9f%a5%e6%89%be" onclick="onNavClick(`#b树的查找-nav`)" id="b树的查找-nav">
+									B树的查找
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#b%e6%a0%91%e7%9a%84%e6%8f%92%e5%85%a5" onclick="onNavClick(`#b树的插入-nav`)" id="b树的插入-nav">
+									B树的插入
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#b%e6%a0%91%e7%9a%84%e5%88%a0%e9%99%a4" onclick="onNavClick(`#b树的删除-nav`)" id="b树的删除-nav">
+									B树的删除
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%80%a7%e8%83%bd" onclick="onNavClick(`#性能-nav`)" id="性能-nav">
+									性能
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#b%e6%a0%91-1" onclick="onNavClick(`#b树-1-nav`)" id="b树-1-nav">
+									B&#43;树
 								</a>
 							</li>
 						
@@ -394,8 +516,32 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e6%a1%b6%e6%8e%92%e5%ba%8fbucket-sort" onclick="onNavClick(`#桶排序bucket-sort-nav`)" id="桶排序bucket-sort-nav">
-									桶排序（Bucket Sort）
+								<a href="#b%e6%a0%91" onclick="onNavClick(`#b树-nav`)" id="b树-nav">
+									B树
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#概念-nav`)" id="概念-nav">
+									概念
 								</a>
 							</li>
 						
@@ -412,8 +558,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e8%ae%a1%e6%95%b0%e6%8e%92%e5%ba%8fcounting-sort" onclick="onNavClick(`#计数排序counting-sort-nav`)" id="计数排序counting-sort-nav">
-									计数排序（Counting Sort）
+								<a href="#b%e6%a0%91%e7%9a%84%e9%ab%98%e5%ba%a6%e7%a3%81%e7%9b%98%e5%ad%98%e5%8f%96%e6%ac%a1%e6%95%b0" onclick="onNavClick(`#b树的高度磁盘存取次数-nav`)" id="b树的高度磁盘存取次数-nav">
+									B树的高度（磁盘存取次数）
 								</a>
 							</li>
 						
@@ -430,8 +576,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#%e5%9f%ba%e6%95%b0%e6%8e%92%e5%ba%8f" onclick="onNavClick(`#基数排序-nav`)" id="基数排序-nav">
-									基数排序
+								<a href="#b%e6%a0%91%e7%9a%84%e6%9f%a5%e6%89%be" onclick="onNavClick(`#b树的查找-nav`)" id="b树的查找-nav">
+									B树的查找
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#b%e6%a0%91%e7%9a%84%e6%8f%92%e5%85%a5" onclick="onNavClick(`#b树的插入-nav`)" id="b树的插入-nav">
+									B树的插入
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#b%e6%a0%91%e7%9a%84%e5%88%a0%e9%99%a4" onclick="onNavClick(`#b树的删除-nav`)" id="b树的删除-nav">
+									B树的删除
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%80%a7%e8%83%bd" onclick="onNavClick(`#性能-nav`)" id="性能-nav">
+									性能
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#b%e6%a0%91-1" onclick="onNavClick(`#b树-1-nav`)" id="b树-1-nav">
+									B&#43;树
 								</a>
 							</li>
 						
@@ -496,12 +718,12 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             >
                 <div class="post-title">
-                    算法——桶排序&amp;计数排序&amp;基数排序
+                    算法——B树和B&#43;树
                     
                     <div class="post-meta">
                         
                         <time itemprop="datePublished">
-                            2021-12-09 10:55
+                            2021-12-10 18:03
                         </time>
                         
 
@@ -514,13 +736,10 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                         
                             <i class="material-icons" style="">label</i>
                             
-                                <a href="/tags/%E6%A1%B6%E6%8E%92%E5%BA%8F">桶排序</a>
+                                <a href="/tags/b%E6%A0%91">B树</a>
                                 &nbsp;
                             
-                                <a href="/tags/%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F">计数排序</a>
-                                &nbsp;
-                            
-                                <a href="/tags/%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F">基数排序</a>
+                                <a href="/tags/b&#43;%E6%A0%91">B&#43;树</a>
                                 &nbsp;
                             
                         
@@ -533,38 +752,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 <div class="post-body" v-pre>
                 
-                    <h2 id="桶排序bucket-sort">桶排序（Bucket Sort）</h2>
+                    <h2 id="b树">B树</h2>
+<p>平衡树算法的扩展，支持对保存在磁盘或网络上的符号表进行外部查找。</p>
+<h3 id="概念">概念</h3>
+<p>又称<strong>多路平衡查找树</strong>，B树中<strong>所有结点的孩子个数的最大值</strong>称为<strong>B数的阶</strong>，通常用<strong>m</strong>表示。</p>
+<p>具有以下特性：</p>
 <ul>
-<li>将待排元素划分到不同的桶中。先扫描一遍序列，找出最大值max和最小值min，设桶的个数为k，则把区间[min, max]划分为k个区间，每个区间就是一个桶。将序列中的元素分配到各自的桶。</li>
-<li>对每个桶内的元素进行排序。一般使用快速排序。</li>
-<li>将各桶中的元素合并为一个大的有序序列。</li>
+<li>
+<p>树中每个结点至多有<strong>m棵子树</strong>，即至多含有<strong>m-1个关键字</strong></p>
+</li>
+<li>
+<p>若根结点不是终端结点，则至少有<strong>两颗</strong>子树。</p>
+</li>
+<li>
+<p>所有非叶子结点的结构：（见书上所示）</p>
+</li>
+<li>
+<p>所有叶子结点都出现在同一层次上，并且不带信息。（可视为类似于折半查找判定树的查找失败结点，实际上这些结点不存在）</p>
+</li>
 </ul>
-<p>当k接近于n时，桶排序的时间复杂度为O(n)，即桶越多，时间效率就越高。</p>
-<h2 id="计数排序counting-sort">计数排序（Counting Sort）</h2>
-<p>新建一个大小为maxValue-minValue+1的数组nums，然后：</p>
+<p>B树是所有结点的<strong>平衡因子均等于0</strong>的<strong>多路平衡查找树</strong>。</p>
+<h3 id="b树的高度磁盘存取次数">B树的高度（磁盘存取次数）</h3>
+<p>一般只讲B树的前两层放入内存中，剩余层级全部放在磁盘中，因此B树的高度就约为每次进行查找的磁盘存取次数。</p>
+<p>首先明确B树的高度不包含最后的不带任何信息的叶结点所处的那一层。</p>
+<p>假设$n\ge 1$，则对于任意一棵包含n个关键字，高度为h、阶数为m的B树：</p>
 <ul>
-<li>分配。扫描一遍原始数组，以扫描到的当前值val减去1作为下标，将下标对应位置数组加1，即nums[val]++</li>
-<li>收集。顺序扫描一遍数组nums。数组的每个元素代表了按当前下标+1对应值的个数，将这些值收集起来放入新的数组就得到最终排序结果。</li>
+<li>根据树中关键字个数计算高度满足的范围</li>
+<li>若让每个结点中的关键字个数达到最少，则容纳同样多关键字的B树高度达到最大。</li>
 </ul>
-<p>例如：nums=[2,1,3,1,5]，首先扫描一遍取最大值maxValue=5和最小值minValue=1，新建一个长度为5-1+1=5的数组nums：</p>
+<h3 id="b树的查找">B树的查找</h3>
+<p>每个结点具有多路分支。</p>
+<p>与二叉树的查找很相似，只是每个结点都是多个关键字的有序表，要在每个结点上根据该结点的子树做多路分支决定。</p>
+<p>包含两个基本操作：</p>
 <ul>
-<li>分配：得到nums=[2,1,1,0,1]，例如nums[0]表示值为0+minValue=1出现了两次。</li>
-<li>收集：得到结果，[1,1,2,3,5]</li>
+<li>在B树中找结点</li>
+<li>在结点内找关键字</li>
 </ul>
-<p>本质上是一种<strong>特殊的桶排序</strong>。当桶的个数等于元素个数时就是计数排序。</p>
-<h2 id="基数排序">基数排序</h2>
-<p>基于关键字各位的大小进行排序。是一种借助多关键字排序的思想对单逻辑关键字进行排序的方法。</p>
-<p>共有<strong>最高位优先MSD</strong>和<strong>最低位优先LSD</strong>两种。</p>
+<p>B树常<strong>存储在磁盘中</strong>，因此前一个查找操作是在<strong>磁盘</strong>上进行的，后一个查找操作是在<strong>内存</strong>中进行的，即在找到目标结点后，将其读入内存，然后在结点内采用<strong>顺序或折半</strong>查找方法查找。</p>
+<h3 id="b树的插入">B树的插入</h3>
+<p>将关键字插入B树的过程如下：</p>
 <ul>
-<li>将所有待排序整数（注意，必须是非负整数）统一为位数相同的整数，位数较少的前面补零。一般用10进制，也可以用16进制甚至2进制。所以前提是能够找到最大值，得到最长的位数，设k进制下最长为位数为d。</li>
-<li>从最低位开始，依次进行一次稳定排序。这样从最低位一直到最高位排序完成以后，整个序列就变成了一个有序序列。</li>
+<li><strong>定位</strong>：利用前述的B树查找算法，找出插入该关键字的最低层中的某个非叶结点。</li>
+<li><strong>插入</strong>：每个非失败结点的关键字个数都在区间$[\lceil m/2\rceil-1,m-1]$内，插入后的结点关键字个数小于m，则可以直接插入；插入后的结点关键字大于m-1时，必须对结点进行<strong>分裂</strong>。</li>
 </ul>
-<p>基数排序可以看作是多轮桶排序，每个数位上都进行一次桶排序。</p>
-<p>当使用2进制时， k=2 最小，位数 d 最大，时间复杂度 O(nd) 会变大，空间复杂度 O(n+k) 会变小。当用最大值作为基数时， k=maxV 最大， d=1 最小，此时时间复杂度 O(nd) 变小，但是空间复杂度 O(n+k) 会急剧增大，此时基数排序退化成了计数排序。</p>
+<p>分裂的方法：取一个新结点，在插入key后的原结点，从中间位置（$\lceil m/2\rceil$）将其中的关键字分为两部分，左半部分包含的关键字放入<strong>原结点</strong>中，右半部分包含的关键字放入<strong>新结点</strong>中，中间位置（$\lceil m/2\rceil$）的结点插入<strong>原结点的父结点</strong>中；如果父结点关键字个数也超过了上限，则继续<strong>进行这种分裂操作</strong>，知道这个过程传到根结点为止，进而使得<strong>B树的高度增1</strong>。</p>
+<h3 id="b树的删除">B树的删除</h3>
+<p>与插入的操作类似，即要使得删除后结点中关键字的个数$\ge \lceil m/2\rceil-1$，将会涉及<strong>结点的合并</strong>问题。</p>
+<ul>
+<li>当被删除关键字k<strong>不在终端结点</strong>：可以用k的前驱和后继替代k，然后在相应结点中删除该前驱或后继。该前驱或后继必定落在某个终端结点中，则转换成了被删关键字在终端结点中的情形。</li>
+<li>当被删除结点<strong>在终端结点</strong>中时，有以下三种情况：
+<ul>
+<li><strong>直接删除关键字</strong>。即被删除关键字所在结点的关键字个数$\ge \lceil m/2\rceil$，表明删除后仍满足B树定义。</li>
+<li><strong>兄弟够接</strong>。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$\ge \lceil m/2\rceil$，需要通过父子换位法进行调整，达到新的平衡。</li>
+<li><strong>兄弟不够借</strong>。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$= \lceil m/2\rceil -1$，则要将关键字删除后与左右兄弟结点及双亲结点中的关键字进行合并。合并过程中双亲结点中关键字会-1，若其双亲结点是根结点且关键字个数减少为0，则直接将根结点删除，合并后的新结点成为根结点。</li>
+</ul>
+</li>
+</ul>
+<p>详细例子见书上。</p>
+<h3 id="性能">性能</h3>
+<p>在实际应用中对于适当的阶数M，查找的成本是常数级别的。</p>
+<h2 id="b树-1">B+树</h2>
+<p>是B树的一种变形。一个<strong>m阶B+树</strong>要满足以下条件：</p>
+<ul>
+<li>每个分支结点<strong>最多有m棵子树</strong>（孩子结点）</li>
+<li>非叶根节点至少有两棵子树，其他每个分支结点至少有$ \lceil m/2\rceil$棵子树。</li>
+<li>结点的<strong>子树个数与关键字个数相等</strong></li>
+<li>所有<strong>叶结点</strong>包含<strong>全部关键字</strong>及<strong>指向相应记录的指针</strong>，叶结点中将关键字按大小顺序排序，并且相邻叶结点按大小顺序相互链接起来。</li>
+<li>所有分支结点只包含它的<strong>子结点中关键字的最大值</strong>以及<strong>指向其子结点的指针</strong>。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/B%2B%E6%A0%91.jpg" alt="B+树"></p>
+<p>通常B+树有两个头指针：一个<strong>指向根结点</strong>，另一个<strong>指向关键字最小的叶结点</strong>。因此对B+树进行两种查找运算：</p>
+<ul>
+<li>从最小关键字开始的<strong>顺序查找</strong></li>
+<li>从根结点开始的<strong>多路查找</strong></li>
+</ul>
 
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">最后修改于 2021-12-09</p>
+		    <p style="color:#777;">最后修改于 2021-12-10</p>
                     
                 </div>
             </div>
@@ -573,14 +838,14 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/">
-			下回<br>算法——B树和B&#43;树
+                <a class="newer-posts">
+			下回<br>已经到头啦。
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/">
-			上回<br>TCP三次握手四次挥手详解
+                <a class="older-posts" href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E6%A1%B6%E6%8E%92%E5%BA%8F_%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F_%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/">
+			上回<br>算法——桶排序&amp;计数排序&amp;基数排序
                 </a>
                 
             </nav>
