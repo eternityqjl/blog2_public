@@ -6,9 +6,208 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 11 Dec 2021 09:49:24 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Dec 2021 10:18:53 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>计算机网络学习日志（五）——链路层</title>
+        <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</link>
+        <pubDate>Sun, 01 Aug 2021 20:20:52 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/ -&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;p&gt;将运行链路层协议的设备称为&lt;strong&gt;节点&lt;/strong&gt;，把沿通信链路连接相邻节点的通信信道称为&lt;strong&gt;链路&lt;/strong&gt;。经过特定链路时，节点将数据包封装在&lt;strong&gt;链路层帧&lt;/strong&gt;中，将该帧传送到链路中。&lt;/p&gt;
+&lt;p&gt;链路层提供的服务：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;成帧&lt;/strong&gt;：将网络层数据报用链路层帧封装起来，帧结构由链路层协议决定。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;链路接入&lt;/strong&gt;：**媒体访问控制协议(MAC)**规定了帧在链路上的传输规则。MAC协议还用于协调多个节点的帧传输。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;可靠交付&lt;/strong&gt;：链路层通过&lt;em&gt;确认和重传&lt;/em&gt;提供可靠交付服务。无线链路容易产生较高的差错率，一般在本地（差错发生的链路上）纠正一个错误，而非通过应用层或传输层来纠错。如光纤、双绞铜线等有线链路的差错率较低，可靠交付被认为是不必要的开销，所以许多有线链路层协议不提供可靠交付。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;差错检验和纠正&lt;/strong&gt;：比特差错由信号衰减和电磁干扰产生，链路层差错纠正一般使用硬件实现。通过让发送节点在帧中包括差错检测比特，让接收节点进行差错检查来实现。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;链路层协议的实现位置：&lt;strong&gt;网络适配器&lt;/strong&gt;（也成为网卡）来实现。&lt;/p&gt;
+&lt;h2 id=&#34;差错检测和纠正技术&#34;&gt;差错检测和纠正技术&lt;/h2&gt;
+&lt;p&gt;差错检验要保护的内容包括网络层传来的数据报、链路层级的寻址信号、序号和其他字段。&lt;/p&gt;
+&lt;p&gt;这里研究在传输数据中检测差错的3种技术：奇偶校验、检验和方法、循环冗余检测。&lt;/p&gt;
+&lt;h3 id=&#34;奇偶校验&#34;&gt;奇偶校验&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;单个奇偶校验位&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/oneByteEvenParity.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;假设共要发送d比特数据，发送方只要附加一个比特，设置其值，使得这d+1个比特中1的总是是偶数，这即为偶数校验。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;接收方只要数一数接受的d+1比特中1的个数即可，如果在偶数校验中发现奇数个1，则发生了1个奇数的比特差错。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;但如果发生偶数个比特差错，则无法判断。但这种概率是极小的，使用单个比特奇偶校验保护的一帧中未检测出差错的概率大约为&lt;strong&gt;50%&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;二维奇偶校验&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/twoDEvenParity.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;将d个比特划分为i行j列，计算每行每列的奇偶值，共产生i+j+1个奇偶差错比特，用来进行差错检验。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;出现单个比特差错时，比特值改变的行和列都能检测到错误，同时还能定位并纠正错误。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;接收方&lt;/strong&gt;检测和纠正差错的能力被称为&lt;strong&gt;前向纠错（Forward Error Correction，FEC）&lt;/strong&gt;。FEC能够减少发送方重发的次数，同时允许在接收方立即纠正差错，避免了不得不等待的往返时延。&lt;/p&gt;
+&lt;h3 id=&#34;检验和&#34;&gt;检验和&lt;/h3&gt;
+&lt;p&gt;将d比特数据当作一个k比特的整数序列处理。&lt;strong&gt;因特网检验和&lt;/strong&gt;是将数据的字节作为16比特整数对待并求和，将和的反码作为检验和携带在报文首部，接收方通过对接受的数据（包括检验和）的和取反码，检测其结果&lt;em&gt;是否全为1比特&lt;/em&gt;来检验。如果这些比特中存在0比特，则出现差错。&lt;/p&gt;
+&lt;p&gt;检验和需要较小的分组开支，提供相对弱的差错保护，常用于运输层的检验。而链路层使用CRC，运输层通常是在主机中作为用户操作系统的一部分用软件实现的，用软件实现中较为重要的是使用简单而快速的方案；而链路层的差错检测在适配器中用专用的硬件实现，能够快速执行复杂的CRC操作。&lt;/p&gt;
+&lt;h3 id=&#34;循环冗余检测crc&#34;&gt;循环冗余检测（CRC）&lt;/h3&gt;
+&lt;p&gt;冗余检测编码也称多项式编码，该编码能将要发送的比特串看作系数为0和1的一个多项式。&lt;/p&gt;
+&lt;p&gt;考虑d比特的数据D，发送节点要将它发送给接收节点，发送方和接收方要协商一个r+1比特模式，称为生成多项式，将其表示为&lt;strong&gt;G&lt;/strong&gt;。我们要求G的最高位有效比特为1.&lt;/p&gt;
+&lt;p&gt;对于一个给定的数据段D，发送方要选择r个附加比特R，并将他们附加到D上，得到d+r比特模式用模r算术恰好能被G整除。&lt;/p&gt;
+&lt;p&gt;用CRC进行差错检测的过程：接收方用G去除接收到的d+r比特。如果余数非零，接收方知道出现了差错，否则认为数据正确。&lt;/p&gt;
+&lt;h2 id=&#34;多路访问链路和协议&#34;&gt;多路访问链路和协议&lt;/h2&gt;
+&lt;p&gt;网络链路的分类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;点对点链路：由链路一端的单个发送方和链路另一端的单个接收方组成。&lt;/li&gt;
+&lt;li&gt;广播链路：多个发送和接收节点都连接到相同的、单一的、共享的广播信道上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;多路访问协议：协调多个发送和接收节点对一个共享广播信道的访问。&lt;/p&gt;
+&lt;p&gt;因为所有节点都能传输帧，所以多个节点可能同时传输帧，传输的帧在接收方可能会碰撞，碰撞的信号纠缠在一起，所有帧都会丢失。&lt;/p&gt;
+&lt;p&gt;我们能够将任何多路访问协议划分为三种类型：信道划分协议、随机接入协议、轮流协议。&lt;/p&gt;
+&lt;h3 id=&#34;信道划分协议&#34;&gt;信道划分协议&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;时分多路复用（TDM）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;假设一个支持N个节点的信道传输速率为R bps。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/TDM.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;TDM将时间划分为&lt;strong&gt;时间帧（Frame）&lt;/strong&gt;，并进一步把每个时间帧划分为N个&lt;strong&gt;时隙（slot）&lt;/strong&gt;，把每个时隙分配给N个节点中的一个。&lt;/li&gt;
+&lt;li&gt;无论何时某个节点有分组要发送时，它在循环的TDM帧中指派给它的时隙内传输分组比特。&lt;/li&gt;
+&lt;li&gt;TDM消除了碰撞且非常公平，但存在以下缺点：
+&lt;ul&gt;
+&lt;li&gt;节点被限制在R/N bps的平均速率，即使只有它一个分组要发送时。&lt;/li&gt;
+&lt;li&gt;节点必须总是等待它所在的传输序列的轮次，即使它是唯一一个有帧要发送的节点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;频分多路复用（FDM）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/FDM.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;FDM将R bps信道划分为不同频段，每个频段有R/N带宽，并把每个频率分配给N个节点中的一个。&lt;/li&gt;
+&lt;li&gt;与TDM有相同的优点和缺点：
+&lt;ul&gt;
+&lt;li&gt;避免了碰撞，公平划分了带宽，但每个节点只能使用R/N的带宽，即使它是唯一一个有分组发送的节点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;码分多址（CDMA）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;码分多址（Code Division Multiple Access）对每个节点分配一种不同的&lt;strong&gt;编码&lt;/strong&gt;，每个节点用其&lt;strong&gt;唯一的编码&lt;/strong&gt;来对发送的数据进行编码，CMDA有一种特性，即不同的节点能同时传输，并且各自的接收方仍能正确接受发送方编码的数据比特，而不在乎其他节点的干扰传输。&lt;/p&gt;
+&lt;h3 id=&#34;随机接入协议&#34;&gt;随机接入协议&lt;/h3&gt;
+&lt;p&gt;随机接入协议中，每个传输节点总以&lt;strong&gt;信道的全部速率&lt;/strong&gt;发送，当有碰撞时，涉及碰撞的每个节点重复发送它的帧，直到该帧无碰撞地通过。当一个节点经历一次碰撞时，不必重发该帧，在重发前等待一个&lt;strong&gt;随机时延&lt;/strong&gt;，涉及碰撞的每个节点独立地选择随机时延。&lt;/p&gt;
+&lt;p&gt;以下为一些最常用的随机接入协议：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;时隙ALOHA&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;假设条件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;所有帧由L比特组成。&lt;/li&gt;
+&lt;li&gt;时间被划分为L/R秒的时隙。&lt;/li&gt;
+&lt;li&gt;节点只在时隙起点开始传输帧。&lt;/li&gt;
+&lt;li&gt;节点是同步的，每个节点都知道时隙何时开始。&lt;/li&gt;
+&lt;li&gt;如果一个时隙中有两个或多个帧碰撞，则所有节点在该时隙结束前检测到该碰撞事件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;另p为一个概率，即一个在0和1之间的数，在每个节点中，时隙ALOHA的操作如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当节点有一个新帧要发送时，它等到下一个时隙开始并在该时隙传送它。&lt;/li&gt;
+&lt;li&gt;若没有碰撞，则节点成功传送帧，无需重传。&lt;/li&gt;
+&lt;li&gt;若有碰撞，则该节点在时隙结束前检测到该碰撞，以概率p在后续的每个时隙中重传它的帧，直到该帧被无碰撞地传输出去。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当具有多个活跃节点时，经计算，该协议的&lt;strong&gt;最大效率仅为37%&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;具有碰撞检测的载波侦听多路访问（CSMA/CD）&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;载波侦听：一个节点在传输前先听信道；如果来自另一个节点的帧正向信道上发送，节点则等待直到检测到一小段时间没有传输，然后开始传输。&lt;/li&gt;
+&lt;li&gt;碰撞检测：当一个传输节点传输时一直在侦听此信道，如果它检测到另一个节点正在传输干扰帧，它就停止传输。在重复“侦听-当空闲时传输”循环之前等待一段随机时间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;轮流协议&#34;&gt;轮流协议&lt;/h3&gt;
+&lt;p&gt;轮流协议能够实现当有M个节点活跃时，每个活跃节点的吞吐量接近R/M bps。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;轮询协议&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;把所有节点之一指定为&lt;strong&gt;主节点&lt;/strong&gt;，主节点以循环的方式&lt;strong&gt;轮询&lt;/strong&gt;每个节点。例如，主节点向节点1发送一个报文，告诉它能够传输的帧的最多数量，在节点1传输了一些帧后，主节点告诉节点2它能传输的帧的最多数量。以此循环的方式轮询每个节点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;令牌传递协议&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;该协议中没有主节点，有一个称为**令牌(token)**的小的特殊帧在节点间以某种固定次序进行交换。当一个节点收到令牌时，仅当它有一些帧要发送时才持有这个令牌，否则它立即向下一个节点转发该令牌。令牌传递是分散的，有很高的效率。&lt;/p&gt;
+&lt;h2 id=&#34;交换局域网&#34;&gt;交换局域网&lt;/h2&gt;
+&lt;h3 id=&#34;链路层寻址和地址解析协议arp&#34;&gt;链路层寻址和地址解析协议（ARP）&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;MAC地址&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;链路层地址在主机或路由器的**适配器(网络接口)**中，所以具有多个网络接口的主机和路由器将有与之相关联的多个链路层地址。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;链路层交换机&lt;/strong&gt;并不具有与他们的接口相关联的链路层地址，因为链路层交换机的任务是在&lt;strong&gt;主机与路由器之间承载数据报&lt;/strong&gt;，主机或路由器不必将帧寻址到其之间的交换机，交换机透明地执行该项任务。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所有的适配器都有不同的MAC地址，这由IEEE来分配管理。&lt;/p&gt;
+&lt;p&gt;某适配器要向目的适配器发送一个帧时，发送适配器将目的适配器的MAC地址插入帧中，将该帧发送到局域网中；当适配器接收到一个MAC地址时将其与自己的MAC地址进行比较，检查是否匹配，如果匹配则提取出封装的数据包并沿协议栈向上传送，如果不匹配则丢弃该帧。&lt;/p&gt;
+&lt;p&gt;有时发送适配器要让局域网中&lt;strong&gt;所有其他适配器&lt;/strong&gt;接受并处理他发送的帧，发送适配器在该帧的目的地址字段插入一个特殊MAC&lt;strong&gt;广播地址&lt;/strong&gt;，对于使用6字节地址的局域网来说，广播地址为48个1组成的字符串，即以16进制表示为&lt;strong&gt;FF-FF-FF-FF-FF-FF&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;地址解析协议（ARP）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ARP是用来转换网络层&lt;strong&gt;IP地址&lt;/strong&gt;和链路层&lt;strong&gt;MAC地址&lt;/strong&gt;的。&lt;/p&gt;
+&lt;p&gt;假设发送主机要向目的主机发送IP数据报，源要向其适配器提供数据报和目的主机的MAC地址，此后源适配器才构造一个包含目的MAC地址的帧发送到局域网中。&lt;/p&gt;
+&lt;p&gt;发送主机使用ARP确定目的主机IP地址对应的MAC地址。发送主机向其ARP模块发送目的主机的IP，ARP将IP解析为一个MAC地址。&lt;/p&gt;
+&lt;p&gt;每台主机或路由器的内存中有一个&lt;strong&gt;ARP表&lt;/strong&gt;，该表包含了IP地址到MAC地址的映射关系。
+&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/ARP%E8%A1%A8.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如果发送方ARP表中&lt;strong&gt;没有目的主机的表项&lt;/strong&gt;，则发送方构造一个&lt;strong&gt;ARP分组&lt;/strong&gt;（分组包括发送和接收IP地址以及MAC地址），并指示适配器用&lt;strong&gt;MAC广播地址&lt;/strong&gt;来发送这个分组，适配器在链路层帧中封装这个ARP分组，用广播地址作为帧的目的地址，并将帧传送进入子网，包含该ARP查询的帧能够被子网中的&lt;strong&gt;所有其他适配器&lt;/strong&gt;接收到，每个适配器都把该分组向上传递给ARP模块，ARP模块检查其IP地址是否与ARP分组中的目的IP匹配，若匹配则给查询主机发送回一个带有所希望映射的响应ARP分组，然后查询主机更新它的ARP表，然后发送它的IP数据报。&lt;/p&gt;
+&lt;p&gt;查询ARP报文是在&lt;strong&gt;广播帧&lt;/strong&gt;中发送的，响应ARP报文是在一个&lt;strong&gt;标准帧&lt;/strong&gt;中发送的。&lt;/p&gt;
+&lt;p&gt;最好把ARP看成跨越链路层和网络层边界两边的协议，因为其既包含IP地址又包含MAC地址。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;发送数据报到子网以外&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;先从一个子网将数据包发送到路由器，在从路由器发送到下一个子网的目的适配器，中间需要经过路由器的两个适配器，其中查询MAC地址的过程都是通过ARP来实现的。&lt;/p&gt;
+&lt;h3 id=&#34;以太网&#34;&gt;以太网&lt;/h3&gt;
+&lt;p&gt;一种广泛部署的有线局域网。&lt;/p&gt;
+&lt;p&gt;以太网的安装使用星形拓扑结构，位于中心的是交换机。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以太网帧结构&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Ethernet_frame_structure.PNG&#34; alt=&#34;以太网帧结构&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Data(数据字段)&lt;/strong&gt;：46-1500字节，这个字段承载了IP数据报。以太网的最大传输单元（MTU）是1500字节，如果IP数据报超过1500字节，主机就要将该数据报分片。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dest. address(目的地址)&lt;/strong&gt;：6字节，包含了目的适配器的MAC地址。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Source address(源地址)&lt;/strong&gt;：6字节，包含了传输该帧到局域网上的适配器的MAC地址。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tyep(类型字段)&lt;/strong&gt;：2字节，类型字段允许以太网复用多种网络协议。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CRC&lt;/strong&gt;：4字节，使接收适配器检测帧中是否引入了差错。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Preamble(前同步码)&lt;/strong&gt;：8字节，前7字节的值都是10101010；最后一个字节是10101011。前同步码的前7字节用于唤醒接收适配器，将它们的时钟和发送方的时钟同步。前同步码的第8个字节的最后两个比特（第一个出现的两个连续的1）警告接收适配器，重要的内容就要来了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以太网技术都向网络层提供&lt;strong&gt;无连接&lt;/strong&gt;服务。当适配器A向适配器B发送一个数据报时，适配器A在一个以太网帧中封装该数据报，并把帧发送到局域网上，没有先与适配器B握手。&lt;/p&gt;
+&lt;p&gt;以太网技术都向网络层提供&lt;strong&gt;不可靠&lt;/strong&gt;服务。当适配器B收到来自适配器A的一个帧时，对该帧执行CRC校验，但当该帧通过CRC校验时不发送确认帧，当该帧没有通过CRC校验时也不发送否定确认帧。当某帧没有通过CRC校验时适配器B只是丢弃该帧，A并不知道它传输的帧是否到达B且通过校验，意味着传递到网络层的数据报流有间隙。&lt;/p&gt;
+&lt;p&gt;丢弃以太网帧后存在了间隙，主机B上的应用可以通过运输层看到这个间隙。当使用UDP协议时，B中的应用会看到这个间隙；当使用TCP协议时，B中的TCP将不会确认包含在丢弃帧中的数据，从而引起主机A的TCP重传。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以太网技术的发展&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;不同速率的以太网：10BASE-T、10BASE-2、100BASE-T、1000BASE-LX和10GBASE-T；第一部分数字代表该标准的速率：10、100、1000、10G；BASE指基带以太网，意味着物理媒体仅承载以太网流量；最后一部分指代物理媒介本身，T指双绞铜线。这些技术指标已经被IEEE 802.3 CSMA/CD标准化。&lt;/p&gt;
+&lt;h3 id=&#34;链路层交换机&#34;&gt;链路层交换机&lt;/h3&gt;
+&lt;p&gt;交换机的任务是接收入链路层帧并将它们转发到出链路。交换机对子网的主机和路由器是&lt;strong&gt;透明&lt;/strong&gt;的，某主机/路由器向另一个主机/路由器寻址一个帧，顺利地将该帧发送进局域网，并不知道交换机将会接收帧并将它转发到另一个节点。交换机的输出接口设有&lt;strong&gt;缓存&lt;/strong&gt;，防止输入输出链路速率存在差别。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;交换机转发和过滤&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;过滤：决定一个帧应该转发到某个接口还是应当将其丢弃。&lt;/li&gt;
+&lt;li&gt;转发：决定一个帧应该被导向哪个接口，并把该帧移动到那些接口。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;交换机的过滤和转发借助于&lt;strong&gt;交换机表&lt;/strong&gt;完成。交换机表包含某局域网上某些主机和路由器的表项。&lt;/p&gt;
+&lt;p&gt;一个表项包含：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个MAC地址&lt;/li&gt;
+&lt;li&gt;通向该MAC地址的交换机接口&lt;/li&gt;
+&lt;li&gt;表项放置在表中的时间&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;当交换机的表是完整的时，无需任何广播就向着目的地转发帧。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自学习&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;交换机的表是自动、动态和自治地建立的，这种能力通过以下方式实现：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;交换机表初始为空&lt;/li&gt;
+&lt;li&gt;对于在接口接收到的每个入帧，该交换机在其表中存储：该帧源地址字段的MAC地址，该帧的到达接口，当前时间。&lt;/li&gt;
+&lt;li&gt;如果在一段时间（称为老化期）后，交换机没有接收到以该地址作为源地址的帧，就在表中删除这个地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;交换机是&lt;strong&gt;即插即用设备&lt;/strong&gt;，它们不需要网络管理员或用户的干预，也是双工的，可以同时发送和接收。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;链路层交换机的性质&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;消除碰撞：交换机缓存帧并且不会在网段上同时传输多余一个帧。&lt;/li&gt;
+&lt;li&gt;异质的链路：交换机将链路彼此隔离，因此局域网中的不同链路能够以不同速率运行并且能够在不同媒体上运行。&lt;/li&gt;
+&lt;li&gt;管理：易于进行网络管理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;虚拟局域网vlan&#34;&gt;虚拟局域网（VLAN）&lt;/h3&gt;
+&lt;p&gt;能够限制局域网广播流量；可以将交换机拆分，提高使用效率；能够更加方便地管理用户。&lt;/p&gt;
+&lt;p&gt;不同VLAN之间需要通过路由器进行通信，因为VLAN将不同VLAN相互阻隔，一个VLAN中的设备无法直接通过目的MAC地址直接找到目的主机，而是需要通过路由器通过上层的IP进行查找。&lt;/p&gt;
+&lt;h2 id=&#34;数据中心网络&#34;&gt;数据中心网络&lt;/h2&gt;
+- https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%BA%94%E9%93%BE%E8%B7%AF%E5%B1%82/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1252,119 +1451,6 @@ linux&amp;gt;
 &lt;h3 id=&#34;计算机系统中抽象的重要性&#34;&gt;计算机系统中抽象的重要性&lt;/h3&gt;
 &lt;p&gt;文件是对I/O设备的抽象，虚拟内存是对程序存储器的抽象，进程是对正在运行程序的抽象，虚拟机提供对整个计算机的抽象。&lt;/p&gt;
 - https://eternityqjl.top/posts/csapp-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>cs231n——1.Nearest Neighbor Classifier</title>
-        <link>https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</link>
-        <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ -&lt;p&gt;图像分类规范化步骤：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;输入：输入带有不同标签的图像作为训练集&lt;/li&gt;
-&lt;li&gt;学习：使用训练集学习每种类别的抽象特征&lt;/li&gt;
-&lt;li&gt;评估：通过测试集评估分类器的质量。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;nearest-neighbor-classifier&#34;&gt;Nearest Neighbor Classifier&lt;/h2&gt;
-&lt;p&gt;CIFAR-10 dataset:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;10 classes (airplane, automobile, bird, etc)&lt;/li&gt;
-&lt;li&gt;60,000 tiny images that are 32 pixels high and wide&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。&lt;/p&gt;
-&lt;h3 id=&#34;l1-distance&#34;&gt;L1 distance:&lt;/h3&gt;
-&lt;p&gt;$$
-d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right|
-$$&lt;/p&gt;
-&lt;p&gt;将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。&lt;/p&gt;
-&lt;p&gt;通常使用准确率来评估分类器&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;Xtr, Ytr, Xte, Yte &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; load_CIFAR10(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;data/cifar10/&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# a magic function we provide&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# flatten out all images to be one-dimensional&lt;/span&gt;
-Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xtr_rows becomes 50000 x 3072&lt;/span&gt;
-Xte_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xte_rows becomes 10000 x 3072&lt;/span&gt;
-
-nn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; NearestNeighbor() &lt;span style=&#34;color:#888&#34;&gt;# create a Nearest Neighbor classifier class&lt;/span&gt;
-nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr) &lt;span style=&#34;color:#888&#34;&gt;# train the classifier on the training images and labels&lt;/span&gt;
-Yte_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(Xte_rows) &lt;span style=&#34;color:#888&#34;&gt;# predict labels on the test images&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# and now print the classification accuracy, which is the average number&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# of examples that are correctly predicted (i.e. label matches)&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; ( np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yte_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yte) )
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
-
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;NearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
-  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;pass&lt;/span&gt;
-
-  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;train&lt;/span&gt;(self, X, y):
-    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example. Y is 1-dimension of size N &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    &lt;span style=&#34;color:#888&#34;&gt;# the nearest neighbor classifier simply remembers all the training data&lt;/span&gt;
-    self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X
-    self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y
-
-  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;predict&lt;/span&gt;(self, X):
-    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example we wish to predict label for &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
-    num_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]	&lt;span style=&#34;color:#888&#34;&gt;#训练样本数量&lt;/span&gt;
-    &lt;span style=&#34;color:#888&#34;&gt;# lets make sure that the output type matches the input type&lt;/span&gt;
-    Ypred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros(num_test, dtype &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype)
-
-    &lt;span style=&#34;color:#888&#34;&gt;# loop over all test rows&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(num_test):
-      &lt;span style=&#34;color:#888&#34;&gt;# find the nearest training image to the i&amp;#39;th test image&lt;/span&gt;
-      &lt;span style=&#34;color:#888&#34;&gt;# using the L1 distance (sum of absolute value differences)&lt;/span&gt;
-      distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;abs(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
-      min_index &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argmin(distances) &lt;span style=&#34;color:#888&#34;&gt;# get the index with smallest distance&lt;/span&gt;
-      Ypred[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr[min_index] &lt;span style=&#34;color:#888&#34;&gt;# predict the label of the nearest example&lt;/span&gt;
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; Ypred
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用L1距离测试的准确率只有38.6%.&lt;/p&gt;
-&lt;h3 id=&#34;l2-distance&#34;&gt;L2 distance&lt;/h3&gt;
-&lt;p&gt;$$
-d_{2}\left(I_{1}, I_{2}\right)=\sqrt{\sum_{p}\left(I_{1}^{p}-I_{2}^{p}\right)^{2}}
-$$&lt;/p&gt;
-&lt;p&gt;only replace a single line of code above:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;k---nearest-neighbor-classifier&#34;&gt;k - Nearest Neighbor Classifier&lt;/h2&gt;
-&lt;p&gt;找到距离最近的k个图片，k个图片中数量最多的一个标签即为测试图片所分的类别。&lt;/p&gt;
-&lt;h2 id=&#34;validation-sets-for-hyperparameter-tuning&#34;&gt;Validation sets for Hyperparameter tuning&lt;/h2&gt;
-&lt;p&gt;有很多我们可以选择的距离函数，例如L1 norm, L2 norm等，这些选择称为&lt;/p&gt;
-&lt;p&gt;Hyperparameter 。通常不能使用test set来调整Hyperparameter。Evaluate on the test set only a single time, at the very end.&lt;/p&gt;
-&lt;p&gt;将训练集划分为一个小一些的训练集和一个验证集(validation set)。例如使用CIFAR-10数据集时将训练集分为49,000个训练集和1,000个验证集。&lt;/p&gt;
-&lt;p&gt;验证集本质上是一个假的测试集，是用来调整Hyperparameter的。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# assume we have Xtr_rows, Ytr, Xte_rows, Yte as before&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# recall Xtr_rows is 50,000 x 3072 matrix&lt;/span&gt;
-Xval_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;, :] &lt;span style=&#34;color:#888&#34;&gt;# take first 1000 for validation&lt;/span&gt;
-Yval &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;]
-Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;:, :] &lt;span style=&#34;color:#888&#34;&gt;# keep last 49,000 for train&lt;/span&gt;
-Ytr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;:]
-
-&lt;span style=&#34;color:#888&#34;&gt;# find hyperparameters that work best on the validation set&lt;/span&gt;
-validation_accuracies &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;]:
-
-  &lt;span style=&#34;color:#888&#34;&gt;# use a particular value of k and evaluation on validation data&lt;/span&gt;
-  nn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; NearestNeighbor()
-  nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr)
-  &lt;span style=&#34;color:#888&#34;&gt;# here we assume a modified NearestNeighbor class that can take a k as input&lt;/span&gt;
-  Yval_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(Xval_rows, k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k)
-  acc &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yval_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yval)
-  &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; (acc,)
-
-  &lt;span style=&#34;color:#888&#34;&gt;# keep track of what works on the validation set&lt;/span&gt;
-  validation_accuracies&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;append((k, acc))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;cross-validation&#34;&gt;Cross-validation&lt;/h3&gt;
-&lt;p&gt;当训练集数量较少时，使用更为复杂的交叉验证来调整hyperparameter。我们通过迭代不同的验证集并平均计算这些验证集的结果来确定k。例如在5次迭代的交叉验证中，将训练集分为5份，使用4份训练，1份验证，然后改变验证集，迭代5次，最终使用5次的平均结果确定k。&lt;/p&gt;
-&lt;h2 id=&#34;nearest-neighbor-classifier的优缺点&#34;&gt;Nearest Neighbor classifier的优缺点&lt;/h2&gt;
-&lt;p&gt;验证时的时间成本较高，每个验证样本都要与每一个测试集样本进行比较，效率较低。&lt;/p&gt;
-&lt;p&gt;Nearest Neighbor classifier在低维度训练中较为常用，但在图像分类中很少用，因为图像是高维对象，高维对象之间的距离计算式违反直觉的。&lt;/p&gt;
-&lt;h2 id=&#34;summery&#34;&gt;Summery&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;如果数据的维数很高，可以使用降维技术，例如PCA(主成分分析), NCA(邻域成分分析) or Random Projections(随机投影).&lt;/li&gt;
-&lt;/ol&gt;
-- https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ - 2019-2021 By Jialong</description>
         </item>
     
     

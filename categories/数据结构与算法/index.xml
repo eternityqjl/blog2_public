@@ -7,7 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 11 Dec 2021 09:49:24 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 11 Dec 2021 10:18:53 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>算法——TopK问题总结</title>
+      <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95topk%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 11 Dec 2021 10:18:53 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95topk%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+      <description>从具有n个数的数组中，找出最大的k数。
+排序 将整个数组排序，取出前k大个数。
+时间复杂度：$O(n\log_2 n)$
+优化方法：只排序最大的k个数
+局部排序 进行k次冒泡排序，得到最大的k个数
+时间复杂度：$O(n\cdot k)$
+优化方法：只找出最大的k个数，不对它们进行排序
+堆 先用前k个元素生成一个小根堆，接着从第k+1个元素开始扫描，与堆顶元素进行比较，若被扫描元素大于堆顶，则将其替换，然后调整堆。
+时间复杂度：$O(n\log_2 k)$
+随机选择 减治法，使用快速排序中的partition找到第k大元素，递归时当前半部分小于k时就求后半部分第k-i大元素，当前半部分大于k时就求前半部分第k大元素。
+时间复杂度为$O(n)$
+参考 拜托，面试别再问我TopK了！！！</description>
+    </item>
+    
     <item>
       <title>算法——基础查找算法实现</title>
       <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/</link>
