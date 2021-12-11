@@ -6,9 +6,80 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 10 Dec 2021 18:03:30 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Dec 2021 09:49:24 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>算法——基础查找算法实现</title>
+        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/</link>
+        <pubDate>Sat, 11 Dec 2021 09:49:24 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/ -&lt;h2 id=&#34;二分查找&#34;&gt;二分查找&lt;/h2&gt;
+&lt;p&gt;只能在有序数组中进行二分查找。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;binarySearch&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; low, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; high) {\
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (low &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; high) {
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (low &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; high) &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (nums[mid] &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; k)
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;true&lt;/span&gt;;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; {
+			binarySearch(nums, k, low, mid &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);
+            binarySearch(nums, k, mid &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, high);
+        }
+    }
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;false&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;二叉查找树&#34;&gt;二叉查找树&lt;/h2&gt;
+&lt;p&gt;查找、插入都非常简单。&lt;/p&gt;
+&lt;h2 id=&#34;平衡查找树&#34;&gt;平衡查找树&lt;/h2&gt;
+&lt;p&gt;2-3树和红黑树，详见&lt;a href=&#34;https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/&#34;&gt;算法——红黑树&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;散列表&#34;&gt;散列表&lt;/h2&gt;
+&lt;h3 id=&#34;散列函数的构造方法&#34;&gt;散列函数的构造方法&lt;/h3&gt;
+&lt;p&gt;构造散列函数时的注意事项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;散列函数的定义域要包含&lt;strong&gt;全部的关键字&lt;/strong&gt;，而值域范围则依赖于散列表大小或地址范围。&lt;/li&gt;
+&lt;li&gt;散列函数计算出的地址应该能&lt;strong&gt;等概率、均匀地&lt;/strong&gt;分布在整个地址空间中&lt;/li&gt;
+&lt;li&gt;散列函数应&lt;strong&gt;尽量简单&lt;/strong&gt;，能在&lt;strong&gt;较短时间内计算出&lt;/strong&gt;任一关键字对应的散列地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;直接定址法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;直接取关键字的某个线性函数值为散列地址，散列函数为：
+$$
+H(key)=key或H(key)=a\times key +b
+$$
+这种方法较为简单且不会产生冲突，适合关键字分布基本连续的情况。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;除留余数法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一种最简单、最常用的方法。假定散列表表厂为m，取一个不大于m但最接近或等于m的质数p，利用以下公式把关键字转换成散列地址：
+$$
+\text{H(key)=key%p}
+$$
+该方法的关键是选好p。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;数字分析法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;平方取中法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;取关键字的平方值的中间几位作为散列地址。这种方法得到的散列地址与关键字的每位都有关系，因此使得散列地址分布比较均匀，适用于关键字的每位取值都不够均匀或均小于散列地址所需的位数。&lt;/p&gt;
+&lt;h3 id=&#34;处理冲突的方法&#34;&gt;处理冲突的方法&lt;/h3&gt;
+&lt;p&gt;发生冲突时的处理方法，即为产生冲突的关键字寻找&lt;strong&gt;下一个空的Hash地址&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;开放定址法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;开放定址法指的是&lt;strong&gt;可存放新表项的空闲地址&lt;/strong&gt;既向它的&lt;strong&gt;同义&lt;/strong&gt;表项开放，又向它的&lt;strong&gt;非同义&lt;/strong&gt;词表项开放。数学递推公式为：
+$$
+H_i=(H(key)+d_i)%m
+$$
+$H(key)$为散列函数；i=0,1,2,&amp;hellip;,k；$m$表示散列表表长；$d_i$为增量序列。&lt;/p&gt;
+&lt;p&gt;取定某一增量序列后，对应处理方法就确定了，通常有以下四种取法：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;线性探测法&lt;/strong&gt;：$d_i=0,1,2,&amp;hellip;,m-1$。冲突发生时，顺序查看表中&lt;strong&gt;下一个单元&lt;/strong&gt;，直到找出一个空闲地址或查遍全表。这种方法可能会造成大量元素在&lt;strong&gt;相邻散列地址上的聚集&lt;/strong&gt;，大大降低了查找效率。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;平方探测法&lt;/strong&gt;：$d_i=0^2,1^2,-1^2,2^2,-2^2,&amp;hellip;,k^2,-k^2$。其中$k\leq m/2$，散列表m的长度m必须是一个可以表示成4k+3的素数。平方探测法可以&lt;strong&gt;避免堆积&lt;/strong&gt;，但是不能探测到散列表上的所有单元。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;再散列法&lt;/strong&gt;：$d_i=Hash_2(key)$。需要使用&lt;strong&gt;两个散列函数&lt;/strong&gt;。利用第二个散列函数计算该关键字的地址增量。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;伪随机序列法&lt;/strong&gt;：$d_i=伪随机序列$。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;拉链法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;把所有的同义词存储在&lt;strong&gt;一个线性链表&lt;/strong&gt;中，这个线性链表由其散列地址唯一标识。这种方法适用于&lt;strong&gt;经常进行插入和删除&lt;/strong&gt;的情况。&lt;/p&gt;
+&lt;h3 id=&#34;性能分析&#34;&gt;性能分析&lt;/h3&gt;
+&lt;p&gt;查找的时间为$O(1)$.&lt;/p&gt;
+- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -792,164 +863,6 @@ basket.push_back(make_shared&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/
 &lt;h2 id=&#34;new与malloc的区别&#34;&gt;new与malloc的区别&lt;/h2&gt;
 &lt;p&gt;malloc是面向&lt;strong&gt;内存&lt;/strong&gt;的，想要多大内存就分配多大。而new是面向&lt;strong&gt;对象&lt;/strong&gt;的，根据执行的对象类型来申请空间，并能够内部调用构造函数生成对象。&lt;/p&gt;
 - https://eternityqjl.top/posts/cpp%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>typedef和define宏详解</title>
-        <link>https://eternityqjl.top/posts/cpp_typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/</link>
-        <pubDate>Wed, 01 Dec 2021 19:43:11 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cpp_typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp_typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/ -&lt;p&gt;typedef是定义了一种类型的新别名，不同于宏，它不是简单的字符串替换。&lt;/p&gt;
-&lt;p&gt;当const和typedef一起出现时，typedef不会是简单的字符串替换就行。&lt;/p&gt;
-&lt;p&gt;typedef常用来定义一个标识符及关键字的别名，它是语言&lt;strong&gt;编译过程&lt;/strong&gt;的一部分，但它并不实际分配内存空间&lt;/p&gt;
-&lt;p&gt;#define为一宏定义语句，通常用它来定义常量(包括无参量与带参量)，以及用来实现那些“表面似和善、背后一长串”的宏，它本身并不在编译过程中进行，而是在这之前(&lt;strong&gt;预处理过程&lt;/strong&gt;)就已经完成了，但也因此难以发现潜在的错误及其它代码维护问题&lt;/p&gt;
-&lt;h2 id=&#34;define用法详解&#34;&gt;#define用法详解&lt;/h2&gt;
-&lt;h3 id=&#34;无参宏定义&#34;&gt;无参宏定义&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#define 标识符 字符串
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;预处理命令。&lt;/p&gt;
-&lt;h3 id=&#34;有参宏定义&#34;&gt;有参宏定义&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#define 宏名(形参表) 字符串
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;宏定义中称为形参，宏调用中称为实参。带参数的宏，在调用中，不仅要宏展开，而且要用实参去代换形参。&lt;/p&gt;
-&lt;h3 id=&#34;宏定义中的特殊操作符&#34;&gt;宏定义中的特殊操作符&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;（1）#&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;希望在字符串中包含宏参数时使用，#作为一个预处理运算符，可以把语言符号转换为字符串，例如：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#define NUM(x) printf(&amp;#34;the number is #x.\n&amp;#34;, x)
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;（2）##&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;##可以把两个字符串转换成单个字符串。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#define XNAME(n) x##n
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;XNAME&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;) &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//相当于int x1 = 12;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;（3）可变宏 &amp;hellip;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;若要使用可变参数宏，可以在宏定义中将省略号指定为&lt;strong&gt;最后一个形参&lt;/strong&gt;，并且替换标识符可以在定义中用于插入 &lt;code&gt;__VA_ARGS__&lt;/code&gt; 额外的参数。 &lt;code&gt;__VA_ARGS__&lt;/code&gt; 替换为与省略号匹配的所有参数，包括它们之间的逗号。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;// variadic_macros.cpp
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define EMPTY
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#579&#34;&gt;#define CHECK1(x, ...) if (!(x)) { printf(__VA_ARGS__); }
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define CHECK2(x, ...) if ((x)) { printf(__VA_ARGS__); }
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define CHECK3(...) { printf(__VA_ARGS__); }
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define MACRO(s, ...) printf(s, __VA_ARGS__)
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() {
-    CHECK1(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;here %s %s %s&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;are&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;some&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;varargs1(1)&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
-    CHECK1(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;here %s %s %s&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;are&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;some&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;varargs1(2)&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);   &lt;span style=&#34;color:#888&#34;&gt;// won&amp;#39;t print
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;
-    CHECK2(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;here %s %s %s&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;are&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;some&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;varargs2(3)&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);   &lt;span style=&#34;color:#888&#34;&gt;// won&amp;#39;t print
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    CHECK2(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;here %s %s %s&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;are&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;some&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;varargs2(4)&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
-
-    &lt;span style=&#34;color:#888&#34;&gt;// always invokes printf in the macro
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    CHECK3(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;here %s %s %s&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;are&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;some&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;varargs3(5)&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
-
-    MACRO(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hello, world&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
-
-    MACRO(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;error&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, EMPTY); &lt;span style=&#34;color:#888&#34;&gt;// would cause error C2059, except VC++
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;                             &lt;span style=&#34;color:#888&#34;&gt;// suppresses the trailing comma
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出结果为：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;here are some varargs1(1)
-here are some varargs2(4)
-here are some varargs3(5)
-hello, world
-error
-&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;宏定义中的多行定义&#34;&gt;宏定义中的多行定义&lt;/h3&gt;
-&lt;p&gt;在每一个换行的地方加上一个&lt;code&gt;/&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;简单函数指针&#34;&gt;简单函数指针&lt;/h2&gt;
-&lt;h3 id=&#34;形式1返回类型函数名参数表&#34;&gt;形式1：返回类型(*函数名)(参数表)&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pFun)(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;); 
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;glFun&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a){ &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;;} 
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() 
-{ 
-    pFun &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; glFun; 
-    (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pFun)(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;); 
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第一行定义了一个指针变量pFun，它是一种指向某种函数的指针，这种函数是一个int型，返回值是char型。&lt;/p&gt;
-&lt;p&gt;第二行定义了一个函数glFun()。该函数正好是一个以int为参数返回char的函数。我们要从指针的层次上理解函数——函数的函数名实际上就是一个指针，函数名指向该函数的代码在内存中的首地址。&lt;/p&gt;
-&lt;p&gt;main()函数中将函数glFun的地址赋值给变量pFun。main()函数的第二句中“*pFun”显然是取pFun所指向地址的内容，当然也就是取出了函数glFun()的内容，然后给定参数为2。&lt;/p&gt;
-&lt;h2 id=&#34;typedef函数指针&#34;&gt;typedef函数指针&lt;/h2&gt;
-&lt;h3 id=&#34;形式2typedef--返回类型新类型参数表&#34;&gt;形式2：typedef  返回类型(*新类型)(参数表)&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;char&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;PTRFUN)(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;); 
-PTRFUN pFun; 
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;glFun&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a){ &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;;} 
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() 
-{ 
-    pFun &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; glFun; 
-    (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pFun)(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;); 
-} 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;typedef的功能是&lt;strong&gt;定义新的类型&lt;/strong&gt;。第一句就是定义了一种PTRFUN的类型，并定义这种类型为&lt;strong&gt;指向某种函数的指针&lt;/strong&gt;，这种函数以一个int为参数并返回char类型。后面就可以像使用int,char一样使用PTRFUN了。&lt;/p&gt;
-&lt;p&gt;第二行的代码便使用这个新类型定义了变量pFun，此时就可以像使用形式1一样使用这个变量了。&lt;/p&gt;
-&lt;h2 id=&#34;举例说明&#34;&gt;举例说明&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;assert.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt; 
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;FP_CALC)(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;,&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;);&lt;span style=&#34;color:#888&#34;&gt;//定义一个函数指针类型
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt; 
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;add&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; b) {
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; a &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; b;
-}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sub&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; b) {
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; a &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; b;
-}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mul&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; b) {
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; a &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; b;
-}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;div&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; b) {
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; b &lt;span style=&#34;color:#333&#34;&gt;?&lt;/span&gt; a&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;b&lt;/span&gt; : &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
-}
-
-&lt;span style=&#34;color:#888&#34;&gt;//定义一个函数，参数为op，返回一个指针,该指针类型为拥有两个int参数、
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//返回类型为int的函数指针。它的作用是根据操作符返回相应函数的地址
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;FP_CALC &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;calc_func&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; op)
-{	&lt;span style=&#34;color:#888&#34;&gt;//函数名即为对应函数指针
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;switch&lt;/span&gt;( op )
-	{
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;+&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; add;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;-&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; sub;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;*&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; mul;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; div;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt;;
-	}
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt;;
-}
- 
-&lt;span style=&#34;color:#888&#34;&gt;//s_calc_func为函数，它的参数是 op，   
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//返回值为一个拥有两个int参数、返回类型为int的函数指针  
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;s_calc_func(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; op)) (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; , &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;)
-{
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;calc_func&lt;/span&gt;(op);
-}
- 
-&lt;span style=&#34;color:#888&#34;&gt;//最终用户直接调用的函数，该函数接收两个int整数，
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//和一个算术运算符，返回两数的运算结果
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;calc&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; b, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; op)
-{
-	FP_CALC fp &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; calc_func(op);
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;s_fp)(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;,&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; s_calc_func(op);&lt;span style=&#34;color:#888&#34;&gt;//用于测试
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt; 
-	assert(fp &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; s_fp);&lt;span style=&#34;color:#888&#34;&gt;// 可以断言这两个是相等的
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt; 
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt;(fp)
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; fp(a,b);
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
-}
- 
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;()
-{
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;, b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;;
- 
-	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;calc(%d, %d, %c) = %d&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;+&amp;#39;&lt;/span&gt;, calc(a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;+&amp;#39;&lt;/span&gt;));
-	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;calc(%d, %d, %c) = %d&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;-&amp;#39;&lt;/span&gt;, calc(a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;-&amp;#39;&lt;/span&gt;));   
-    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;calc(%d, %d, %c) = %d&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;*&amp;#39;&lt;/span&gt;, calc(a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;*&amp;#39;&lt;/span&gt;));   
-    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;calc(%d, %d, %c) = %d&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;, calc(a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;)); 
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/cpp_typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/ - 2019-2021 By Jialong</description>
         </item>
     
     

@@ -7,7 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 10 Dec 2021 18:03:30 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 11 Dec 2021 09:49:24 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>算法——基础查找算法实现</title>
+      <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Sat, 11 Dec 2021 09:49:24 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/</guid>
+      <description>二分查找 只能在有序数组中进行二分查找。
+bool binarySearch(vector&amp;lt;int&amp;gt;&amp;amp; nums, int k, int low, int high) {\ if (low &amp;lt;= high) { int mid = (low + high) / 2; if (nums[mid] == k) return true; else { binarySearch(nums, k, low, mid - 1); binarySearch(nums, k, mid + 1, high); } } return false; } 二叉查找树 查找、插入都非常简单。
+平衡查找树 2-3树和红黑树，详见算法——红黑树
+散列表 散列函数的构造方法 构造散列函数时的注意事项：
+ 散列函数的定义域要包含全部的关键字，而值域范围则依赖于散列表大小或地址范围。 散列函数计算出的地址应该能等概率、均匀地分布在整个地址空间中 散列函数应尽量简单，能在较短时间内计算出任一关键字对应的散列地址。  直接定址法
+直接取关键字的某个线性函数值为散列地址，散列函数为： $$ H(key)=key或H(key)=a\times key +b $$ 这种方法较为简单且不会产生冲突，适合关键字分布基本连续的情况。</description>
+    </item>
+    
     <item>
       <title>算法——B树和B&#43;树</title>
       <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/</link>
