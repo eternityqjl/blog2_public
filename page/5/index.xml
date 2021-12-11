@@ -6,9 +6,120 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 11 Dec 2021 10:18:53 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Dec 2021 21:38:11 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>机器学习——线性回归和梯度下降</title>
+        <link>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</link>
+        <pubDate>Fri, 23 Apr 2021 18:10:29 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ -&lt;h2 id=&#34;线性回归linear-regression&#34;&gt;线性回归Linear Regression&lt;/h2&gt;
+&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
+&lt;p&gt;线性回归属于监督学习，先给定一个训练集根据训练集学习出一个线性函数，然后测试这个函数训练的好不好，挑选出最好的函数（cost function最小）即可。&lt;/p&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;因为是线性回归，所以学习到的函数为线性函数，即一次直线函数；&lt;/li&gt;
+&lt;li&gt;因为是单变量，所以只有一个x；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以能够给出&lt;strong&gt;单变量线性回归&lt;/strong&gt;的模型：
+$$
+h(x)=b+mx
+$$
+我们称$x$为feature，$h(x)$为hypothesis。&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;代价函数cost-function&#34;&gt;代价函数Cost Function&lt;/h3&gt;
+&lt;p&gt;我们需要根据代价函数来确定线性回归拟合的好不好。Cost Function越小，说明线性回归地越好，最小为0，完全拟合。
+$$
+J(b,m)=\frac{1}{2n}(h(x^{(i)})-y^{(i)})^2
+$$
+如上所示为代价函数的构造，其中，$x^{(i)}$表示向量x的第i个元素，$y^{(i)}$表示向量y的第i个元素，即表示所有输入的训练集的点。$h(x)$表示已知的假设函数，n为训练集的个数。&lt;/p&gt;
+&lt;h2 id=&#34;梯度下降&#34;&gt;梯度下降&lt;/h2&gt;
+&lt;p&gt;梯度下降能够找出代价函数Cost Function的最小值，梯度下降的方法步骤如下所示：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;先确定向下一步的步伐大小，我们称为Learning Rate；&lt;/li&gt;
+&lt;li&gt;任意给定初始值b, m；&lt;/li&gt;
+&lt;li&gt;确定一个向下的方向，按预定步骤向下走，并且更新b, m；&lt;/li&gt;
+&lt;li&gt;当下降高度(循环次数)小于某个定义的值时，停止下降。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;循环下面的式子直到满足终止条件：
+$$
+b = b - \alpha\frac{\partial}{\partial b}J(b,m) \
+m = m - \alpha\frac{\partial}{\partial m}J(b,m)
+$$
+上式中的$\alpha$为Learning rate，决定了下降的步伐大小；偏导数决定了下降的方向。&lt;/p&gt;
+&lt;h3 id=&#34;对cost-function运用梯度下降&#34;&gt;对Cost Function运用梯度下降&lt;/h3&gt;
+&lt;p&gt;$$
+\mathrm{repeat \ until \ convergence}{ \
+b:=b-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)}) \
+m:=m-\alpha \frac{1}{n}\sum_{i=1}^{n}(h(x^{(i)})-y^{(i)})x^{(i)} \
+\ }
+$$&lt;/p&gt;
+&lt;p&gt;设定好初始值、循环次数、Learning Rate后即可开始拟合，最终得到结果b,m；得到拟合的线性函数。&lt;/p&gt;
+&lt;h2 id=&#34;代码实现&#34;&gt;代码实现&lt;/h2&gt;
+&lt;h3 id=&#34;使用sklearn库中的make_regression函数生成训练数据&#34;&gt;使用&lt;code&gt;sklearn&lt;/code&gt;库中的&lt;code&gt;make_regression&lt;/code&gt;函数生成训练数据&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;#generate the train data&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;geneData&lt;/span&gt;():
+    points &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
+    xSet, ySet &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_regression(n_samples&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;, n_features&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, n_targets&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, noise&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;)
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; x,y &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;zip&lt;/span&gt;(xSet,ySet):
+        x&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;x[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
+        point &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [x,y]
+        points&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;append(point)
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; points
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;定义代价函数&#34;&gt;定义代价函数&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;costFunction&lt;/span&gt;(b, m, points):
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:
+        ErrorTotal &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; ((b &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]) &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]) &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; ErrorTotal &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;float&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;len&lt;/span&gt;(points)))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;定义梯度下降函数&#34;&gt;定义梯度下降函数&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;stepGradient&lt;/span&gt;(b_current, m_current, b_gradient, m_gradient, points, learningRate):
+    N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;float&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;len&lt;/span&gt;(points))
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:
+        x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
+        y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]
+        b_gradient &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;N) &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; ((b_current &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m_current &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; x) &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; y)
+        m_gradient &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;N) &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; x &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; ((b_current &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m_current &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; x) &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; y)
+    new_b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; b_current &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; (learningRate &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; b_gradient)
+    new_m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; m_current &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; (learningRate &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; m_gradient)
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; [new_b, new_m, b_gradient, m_gradient]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;设置初始化参数并循环迭代最后画出结果&#34;&gt;设置初始化参数并循环迭代，最后画出结果&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;:
+    iterations &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;    &lt;span style=&#34;color:#888&#34;&gt;#迭代次数&lt;/span&gt;
+    learningRate &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.0001&lt;/span&gt;   &lt;span style=&#34;color:#888&#34;&gt;#学习率，决定了下降的步伐大小&lt;/span&gt;
+    points &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; geneData() &lt;span style=&#34;color:#888&#34;&gt;#生成训练集&lt;/span&gt;
+    b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;   &lt;span style=&#34;color:#888&#34;&gt;#线性方程参数b,m的初始值&lt;/span&gt;
+    m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;   
+    b_gradient &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;  &lt;span style=&#34;color:#888&#34;&gt;#代价函数梯度下降结果的初始值&lt;/span&gt;
+    m_gradient &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;list&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, iterations&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)):  &lt;span style=&#34;color:#888&#34;&gt;#循环进行梯度下降，求得结果&lt;/span&gt;
+        b,m,b_gradient,m_gradient &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; stepGradient(b,m,b_gradient,m_gradient,points,learningRate)
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; point &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; points:    &lt;span style=&#34;color:#888&#34;&gt;#画出样本点&lt;/span&gt;
+        plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;scatter(point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], point[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
+
+    &lt;span style=&#34;color:#888&#34;&gt;#画出得到的直线&lt;/span&gt;
+    t &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.01&lt;/span&gt;)
+    s &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; b &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; t
+    plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;scatter(t,s,linewidths&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.5&lt;/span&gt;)
+    plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
+
+    &lt;span style=&#34;color:#888&#34;&gt;#输出结果&lt;/span&gt;
+    &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;b=&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;b)
+    &lt;span style=&#34;color:#888&#34;&gt;#print(b)&lt;/span&gt;
+    &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;m=&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;m)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;结果展示&#34;&gt;结果展示&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/Gradient_figure1.png&#34; alt=&#34;Gradient_figure1&#34;&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;b&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;4.824787&lt;/span&gt;
+m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;46.528725&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;哲学思考&#34;&gt;哲学思考&lt;/h2&gt;
+&lt;p&gt;梯度下降是一个一阶最优化算法，通常也称为最陡下降法，要使用梯度下降法找到一个函数的局部极小值，必须向函数上当前点对应梯度的反方向规定的步长距离点进行迭代搜索。&lt;/p&gt;
+- https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1361,22 +1472,6 @@ $$
 &lt;p&gt;&lt;a href=&#34;https://www.jianshu.com/p/9db57e761255&#34;&gt;什么是数字签名和证书?&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/question/20820286&#34;&gt;什么是哈希算法？&lt;/a&gt;&lt;/p&gt;
 - https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>写在2019年的最后一个月的开始</title>
-        <link>https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</link>
-        <pubDate>Sun, 01 Dec 2019 22:06:08 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/ -&lt;p&gt;转眼间2019年就要结束了，依稀记得2019年的刚开始我还在发空间动态说自己又买了一本日历，然而&amp;hellip;明年就不买了吧，我并没有记得经常去看日历，更别说去每天一张一张地撕它。这一年里经历了非常多的事情，从学习、生活、关于未来的各方各面，我都发生了极大的改变，这源于我不断变化的想法，目标总是飘忽不定，我思考过，也经常迷茫，现在也是。&lt;/p&gt;
-&lt;p&gt;在写下这些话的时间里，我其实是非常难过和害怕的，这一个周末似乎没干什么事情就又要浑浑噩噩地结束了，直到现在还有一个DDL等着我，明早截止，我还没做完，间歇性拖延症晚期这件事情，一直发生在我身上，毫不夸张地说，我可以不间歇地拖延整整24小时，这过程中总想着做些什么、改变些什么，但除了睡觉，大部分时间眼睛都盯在手机屏幕上，尽管我知道这样做一点儿也不好，但结果还是发生了。我知道学习的重要性，也会去为了一个想要实现的东西不断地思考并找到解决方法，就比如搭建网站这件事情，前前后后花了很多的时间也学习了很多相关知识，基本掌握了中间的原理，结果在我预想的时间之前很久就做出来了，结果还是超乎预期的好。说实话，完成一件能看的到结果的事情能给人的心理带来很大的快感的愉悦，但愉悦过后，又只剩下了迷茫和拖延，并且在为了找到下一个实践目标而苦苦挣扎着。有时候大脑盯着手机屏幕看一些信息的时候，知道这是自己不想接收和浪费时间的，但就是控制不住自己去点开看，这样的人性的弱点也造就了很多的商机，造就了很多企业和公司的成功。&lt;/p&gt;
-&lt;p&gt;说点儿别的。在关于情感和人际交往方面，我可能是一个与绝大多数人都不一样的人，在情感上，我很少与他人或者是在公开场合表露（包括我的社交媒体，我发现，自己现在很少在社交媒体上表露自己的情感，更多的是分享一些自己的兴趣爱好，比如我热爱的摄影，因而，我也就把自己的空间对所有人开放了，微信这个东西另当别论，说实话，我挺讨厌这个软件的），但我还是知道自己想要的是什么，纵然我在过去的一年里总是带着一些自卑的情感，很久没有与他人进行深入内心的交谈，KY的与陌生人打电话活动也错过了很多次，每次都是在想和别人深入交流的时候才想起来，结果肯定是已经结束了，今后还是要多多关注，想想能与一同关注KY的人打电话是一件挺幸福的事情，也希望自己能早日找到灵魂伴侣。在人际交往方面，我尝试过学校的很多社团和活动，最终无一例外全都放弃了，我觉得也挺好，这也证明了我确实不喜欢过多的浮于表面和拉帮结派建造复杂人际关系的事情，做好自己就最好了，能认识几个朋友还是随缘了，人也并不需要那么多看上去像是朋友的朋友。&lt;/p&gt;
-&lt;p&gt;扯了这么多，还是回到最重要的学习和事业上吧。12月希望自己能好好学习学校的课程知识，好好地应对一下考试。明年下半年就要大三了，这学期结束以后要为成为一个前端工程师立一些目标，毕竟就快要毕业了，还是希望自己能去做自己喜欢的工作，上研究生这件事就暂时不考虑了，我在经历了一些事情以后对于读研这件事一点儿也不感兴趣了，做好自己就好了。&lt;/p&gt;
-&lt;p&gt;以上。&lt;/p&gt;
-- https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/ - 2019-2021 By Jialong</description>
         </item>
     
     

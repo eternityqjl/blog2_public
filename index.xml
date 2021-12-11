@@ -6,9 +6,114 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 11 Dec 2021 10:18:53 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Dec 2021 21:38:11 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Csapp：7.链接</title>
+        <link>https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/</link>
+        <pubDate>Sat, 11 Dec 2021 21:38:11 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/ -&lt;h2 id=&#34;编译器驱动程序&#34;&gt;编译器驱动程序&lt;/h2&gt;
+&lt;p&gt;编译器驱动程序代表用户在需要时调用语言预处理器、编译器、汇编器和链接器。&lt;/p&gt;
+&lt;p&gt;main.c$\rightarrow$main.i$\rightarrow$main.s$\rightarrow$main.o$\rightarrow$prog&lt;/p&gt;
+&lt;p&gt;源程序$\rightarrow$中间文件$\rightarrow$汇编语言文件$\rightarrow$&lt;strong&gt;可重定位目标文件&lt;/strong&gt;$\rightarrow$&lt;strong&gt;可执行目标文件&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;依次使用了：预处理器、编译器、汇编器 、链接器&lt;/p&gt;
+&lt;p&gt;shell执行可执行文件时调用操作系统中的加载器函数，将prog中的代码和数据复制到内存中，然后将控制转移到这个程序的开头。&lt;/p&gt;
+&lt;h2 id=&#34;静态链接&#34;&gt;静态链接&lt;/h2&gt;
+&lt;p&gt;静态链接器以一组&lt;strong&gt;可重定位目标文件和命令行参数&lt;/strong&gt;作为输入，生成一个&lt;strong&gt;完全链接的、可以加载和运行的可执行目标文件&lt;/strong&gt;作为输出。&lt;/p&gt;
+&lt;p&gt;为了构造可执行文件，链接器必须完成连个任务：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;符号解析&lt;/strong&gt;：目标文件定义和引用符号，每个符号对应一个函数、一个全局变量或一个静态变量。将每个符号引用正好和一个符号定义关联起来。（每个符号对应于一个函数、一个全局变量或一个静态变量）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;重定位&lt;/strong&gt;。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使它们指向这个内存位置。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;目标文件&#34;&gt;目标文件&lt;/h2&gt;
+&lt;p&gt;共有三种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可重定位目标文件：二进制代码和数据，可在编译时与其他可重定位目标文件合并起来，创建一个可执行目标文件。&lt;/li&gt;
+&lt;li&gt;可执行目标文件：二进制代码和数据，其形式可以直接被复制到内存中并执行。&lt;/li&gt;
+&lt;li&gt;共享目标文件：特殊类型的可重定位目标文件，可以在加载或运行时被&lt;strong&gt;动态地加载进内存并链接&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;目标文件是按照特定目标文件格式来组织的，各个系统的目标文件格式都不相同。&lt;/p&gt;
+&lt;h2 id=&#34;可重定位目标文件&#34;&gt;可重定位目标文件&lt;/h2&gt;
+&lt;p&gt;一个典型的ELF可重定位目标文件：&lt;/p&gt;
+&lt;p&gt;首先是16B的ELF头，描述了生成该文件的系统的字的大小和字节顺序。&lt;/p&gt;
+&lt;p&gt;然后是节：一个典型的ELF可重定位目标文件包含以下几个节：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;.text：已编译程序的机器代码&lt;/li&gt;
+&lt;li&gt;.rodata：只读数据&lt;/li&gt;
+&lt;li&gt;.data：已初始化的全局和静态C变量&lt;/li&gt;
+&lt;li&gt;.bss：未初始化的全局和静态C变量，以及所有被初始化为0的全局或静态变量&lt;/li&gt;
+&lt;li&gt;.symtab：一个符号表，存放在程序中定义和引用的函数和全局变量的信息&lt;/li&gt;
+&lt;li&gt;.debug：调试符号表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;符号和符号表&#34;&gt;符号和符号表&lt;/h2&gt;
+&lt;p&gt;每个可重定位目标模块都有一个符号表，它包含m定义和引用的符号的信息。在链接器的上下文，有三种不同符号：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;由模块m定义并能被其他模块引用的全局符号：对应非静态的C函数和全局变量。&lt;/li&gt;
+&lt;li&gt;由其他模块定义并被m引用的全局符号，称为外部符号：对应其他模块中定义的非静态的C函数和全局变量&lt;/li&gt;
+&lt;li&gt;只被模块m定义和引用的局部符号：对应于带static属性的C函数和全局变量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本地非静态程序变量的符号在运行时在栈中被管理，不在符号表.symtab中。&lt;/p&gt;
+&lt;p&gt;C中源文件扮演模块的角色，static属性就像C++使用的public和private一样。&lt;/p&gt;
+&lt;p&gt;尽可能用static属性来保护变量和函数。&lt;/p&gt;
+&lt;h2 id=&#34;符号解析&#34;&gt;符号解析&lt;/h2&gt;
+&lt;p&gt;链接器解析符号引用的方法是将&lt;strong&gt;每个引用&lt;/strong&gt;与它输入的可重定位目标文件的符号表中的一个确定的&lt;strong&gt;符号定义&lt;/strong&gt;关联起来。&lt;/p&gt;
+&lt;p&gt;对于引用和定义在相同模块中的局部符号（即对应static变量）的引用，符号解析非常简洁明了。编译器只允许每个局部符号有一个定义。&lt;/p&gt;
+&lt;p&gt;对于全局符号的引用较为复杂，当编译器遇到一个不是在当前模块中定义的符号时，会假设该符号是在其他某个模块中定义的，生成一个链接器符号表，交给链接器处理。如果链接器在其他任何模块中都找不到这个被引用的符号，就输出一条错误信息并终止。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;编译器通过重整的编码方式来区分重载的函数&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;链接器解析多重定义的全局符号&#34;&gt;链接器解析多重定义的全局符号&lt;/h3&gt;
+&lt;p&gt;编译器向汇编器输出每个全局符号，或是强或是弱的，而汇编器把这些信息隐含地编码在可重定位目标文件的符号表里。&lt;strong&gt;函数和已初始化的全局变量&lt;/strong&gt;是强符号，&lt;strong&gt;未初始化的全局变量&lt;/strong&gt;是弱符号。&lt;/p&gt;
+&lt;p&gt;Linux使用以下规则处理多重定义的符号名：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不允许由多个同名强符号&lt;/li&gt;
+&lt;li&gt;如果一个强符号和多个弱符号同名，选择强符号&lt;/li&gt;
+&lt;li&gt;如果有多个弱符号同名，从这些弱符号中任意选一个&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;与静态库链接&#34;&gt;与静态库链接&lt;/h3&gt;
+&lt;p&gt;所有编译器都有一种机制，将所有相关的目标模块打包成一个单独的文件，称为静态库，它可以用作链接器的输入。链接器构造一个输出的可执行文件时，只复制静态库里被应用程序引用的目标模块。&lt;/p&gt;
+&lt;p&gt;Linux中，静态库以一种称为存档的特殊文件格式存放在磁盘中，存档文件是一组连接起来的可重定位目标文件的集合，有一个头部用来描述每个成员目标文件的大小，存档文件名由后缀&lt;code&gt;.a&lt;/code&gt;标识。&lt;/p&gt;
+&lt;h3 id=&#34;链接器如何使用静态库来解析引用&#34;&gt;链接器如何使用静态库来解析引用&lt;/h3&gt;
+&lt;p&gt;链接器从左到右按照在命令行上出现的顺序来扫描可重定位目标文件和存档文件。（编译器驱动程序自动将&lt;code&gt;.c&lt;/code&gt;文件翻译为&lt;code&gt;.0&lt;/code&gt;文件。在扫描中，链接器维护一个可重定位目标文件的集合E，一个未解析的符号集合U，以及一个在前面输入文件中已定义的符号集合D。初始时，E、U、D均为空。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于命令行上的每个输入文件f，链接器会判断f是一个目标文件还是一个存档文件。如果时目标文件则将其添加到E中，修改U和D来反映f中的符号引用和定义&lt;/li&gt;
+&lt;li&gt;如果f是存档文件，链接器就尝试匹配U中未解析的符号和由存档文件成员定义的符号。如果某个存档文件成员m定义了一个符号来解析U中的一个引用，那么就把m加到E中，并修改U和D来反映m中的符号定义和引用。对存档文件依次重复这个过程直到U和D不发生变化。&lt;/li&gt;
+&lt;li&gt;如果链接器完成对命令行输入文件的扫描后，U是非空的，则链接器输出错误并终止。否则，合并然后重定位E中的文件，构建可执行文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;重定位&#34;&gt;重定位&lt;/h2&gt;
+&lt;p&gt;链接器完成符号解析这一步后，就把代码中的每个符号引用和一个符号定义关联起来，此时链接器就知道它的输入目标模块中的代码和数据节的确切大小。然后就可以开始重定位步骤了，该步骤将&lt;strong&gt;合并输入模块&lt;/strong&gt;，并为每个符号分配&lt;strong&gt;运行时地址&lt;/strong&gt;。共分为两步：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;重定位节和符号定义&lt;/li&gt;
+&lt;li&gt;重定位节中的符号引用&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;重定位条目&#34;&gt;重定位条目&lt;/h3&gt;
+&lt;h3 id=&#34;重定位符号引用&#34;&gt;重定位符号引用&lt;/h3&gt;
+&lt;h2 id=&#34;可执行目标文件&#34;&gt;可执行目标文件&lt;/h2&gt;
+&lt;p&gt;转化后的二进制的可执行目标文件包含加载程序到内存并运行它所需的所有信息。&lt;/p&gt;
+&lt;p&gt;可执行目标文件格式类似于可重定位目标文件，ELF头描述文件的总体格式，还包括程序的入口点，即程序要运行时执行的第一条指令的地址。&lt;code&gt;.init&lt;/code&gt;节定义了一个小函数&lt;code&gt;_init&lt;/code&gt;，程序初始化代码会调用它。&lt;/p&gt;
+&lt;p&gt;可执行文件是完全链接的，所以它不需要rel节。&lt;/p&gt;
+&lt;h2 id=&#34;加载可执行目标文件&#34;&gt;加载可执行目标文件&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ./prog
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;shell认为prog是一个可执行目标文件，通过调用驻留在存储器中的加载器的系统代码来运行它。加载器将可执行目标文件中的代码和数据从磁盘复制到内存，然后通过跳转到程序的入口点运行该程序。&lt;/p&gt;
+&lt;p&gt;加载与之后章节的进程、虚拟内存和内存映射有关。之后章节还会介绍。&lt;/p&gt;
+&lt;h2 id=&#34;动态链接共享库&#34;&gt;动态链接共享库&lt;/h2&gt;
+&lt;p&gt;静态库有一个缺点，需要定期维护和更新，如果应用程序需要一个新版本，必须以某种方式了解到该库的变化情况，然后显式地将其程序与更新了的库重新连接。&lt;/p&gt;
+&lt;p&gt;另一个问题是几乎每个C程序都使用标准I/O函数。运行时这些代码会被复制到每个运行进程的文本中，在一个上百个进程的系统上，这是对内存资源的极大浪费。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;共享库&lt;/strong&gt;用来解决静态库的缺陷，共享库是一个目标模块，在&lt;strong&gt;运行或加载时&lt;/strong&gt;，可以加载到任意内存地址，并与一个在内存中的程序链接起来。这个过程称为&lt;strong&gt;动态链接&lt;/strong&gt;，由叫做动态链接器的程序执行。Linux中用&lt;code&gt;.so&lt;/code&gt;后缀的文件来表示共享库，Windows中使用&lt;code&gt;.dll&lt;/code&gt;表示。&lt;/p&gt;
+&lt;p&gt;任何给定文件系统中，对于一个库文件只有一个&lt;code&gt;.so&lt;/code&gt;文件。所有引用该库的可执行目标文件共享这个&lt;code&gt;.so&lt;/code&gt;文件中的数据和代码，不需要都复制和嵌入到引用它们的可执行文件中。&lt;/p&gt;
+&lt;h2 id=&#34;位置无关代码&#34;&gt;位置无关代码&lt;/h2&gt;
+&lt;p&gt;可以加载而无需重定位的代码称为位置无关代码（PIC）。使用这种方法，无限多个进程可以共享一个共享模块的代码段的单一副本。&lt;/p&gt;
+&lt;h3 id=&#34;pic数据引用&#34;&gt;PIC数据引用&lt;/h3&gt;
+&lt;h3 id=&#34;pic函数调用&#34;&gt;PIC函数调用&lt;/h3&gt;
+&lt;h2 id=&#34;库打桩机制&#34;&gt;库打桩机制&lt;/h2&gt;
+- https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -709,161 +814,6 @@ $H(key)$为散列函数；i=0,1,2,&amp;hellip;,k；$m$表示散列表表长；$d
 &lt;p&gt;using指示一次性注入某个命名空间的所有名字，这种用法充满了风险，将命名空间中的所有成员的名字变得可见。使用多个库时，可能导致全局命名空间污染。&lt;/p&gt;
 &lt;/blockquote&gt;
 - https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE9%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>C&#43;&#43; Primer——CH15 面向对象程序设计</title>
-        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</link>
-        <pubDate>Fri, 03 Dec 2021 11:10:28 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/ -&lt;p&gt;面向对象程序设计基于三个基本概念：数据抽象、继承和动态绑定。&lt;/p&gt;
-&lt;p&gt;本章介绍剩余的&lt;strong&gt;继承和动态绑定&lt;/strong&gt;。通过这两种特性我们可以更容易地定义与其他类&lt;strong&gt;相似但不完全相同的新类&lt;/strong&gt;；另外在使用这些彼此相似的类编写函数时。我们可以在一定程度上忽略掉它们的区别。&lt;/p&gt;
-&lt;h2 id=&#34;oop概述&#34;&gt;OOP：概述&lt;/h2&gt;
-&lt;h3 id=&#34;继承&#34;&gt;继承&lt;/h3&gt;
-&lt;p&gt;通过继承联系在一起的类构成了一种层次关系。通常在层次关系的根部有一个&lt;strong&gt;基类&lt;/strong&gt;，其他类别从基类继承而来，这些继承而来的类称为&lt;strong&gt;派生类&lt;/strong&gt;。基类负责定义所有类&lt;strong&gt;共同拥有的成员&lt;/strong&gt;，而每个派生类定义&lt;strong&gt;各自特有的成员&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;对于某些函数，基类希望它的派生类各自定义适合自己的版本，此时基类就将这些函数声明成&lt;strong&gt;虚函数&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quote&lt;/span&gt; {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string isbn() &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt;;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;virtual&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;net_price&lt;/span&gt;(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;size_t n)	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt;;
-};
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;派生类必须通过使用&lt;strong&gt;类派生列表&lt;/strong&gt;明确指出它是从哪个基类继承而来的。&lt;/p&gt;
-&lt;p&gt;类派生列表的形式：首先是一个冒号，后面紧跟以逗号分隔的基类列表，每个基类列表前面可以有访问说明符：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Bulk_quote&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; Quote {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; net_price(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;size_t n)	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;override&lt;/span&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;完全可以把Bulk_quote的对象当作Quote的对象来使用。&lt;/p&gt;
-&lt;p&gt;派生类必须在其内部对所有重新定义的虚函数进行&lt;strong&gt;声明&lt;/strong&gt;。C++11 允许派生类&lt;strong&gt;显式地注明&lt;/strong&gt;它将使用哪个成员函数改写基类的虚函数，方法是在该函数的形参列表之后增加一个&lt;strong&gt;override关键字&lt;/strong&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;动态绑定&#34;&gt;动态绑定&lt;/h3&gt;
-&lt;p&gt;又称为运行时绑定，根据运行时传入的实参选择函数的版本。通过动态绑定，我们可以用同一段代码分别处理Quote和Bulk_quote的对象。&lt;/p&gt;
-&lt;h2 id=&#34;定义基类和派生类&#34;&gt;定义基类和派生类&lt;/h2&gt;
-&lt;h3 id=&#34;定义基类&#34;&gt;定义基类&lt;/h3&gt;
-&lt;p&gt;继承关系中的根节点的类通常会定义一个&lt;strong&gt;虚析构函数&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;对于一些操作，派生类需要提供自己的新定义以覆盖（override）从基类继承而来的就定义。需要&lt;strong&gt;覆盖&lt;/strong&gt;的函数，&lt;strong&gt;基类&lt;/strong&gt;通常将其定义为&lt;strong&gt;虚函数&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;成员函数如果没有被声明为虚函数，则其解析过程发生在编译时而非运行时。&lt;/p&gt;
-&lt;p&gt;任何构造函数之外的非静态函数都可以是虚函数。virtual只能出现在&lt;strong&gt;类内部的声明语句&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;访问控制与继承&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;一般情况下派生类可以继承定义在基类中的成员，但派生类的成员函数没有权限访问从基类继承而来的成员，派生类只能访问公有成员，不能访问私有成员。而有一种成员，基类希望它的&lt;strong&gt;派生类有权限访问&lt;/strong&gt;该成员，同时&lt;strong&gt;禁止其他用户访问&lt;/strong&gt;，我们使用&lt;strong&gt;受保护的（protected）访问运算符&lt;/strong&gt;说明该成员。&lt;/p&gt;
-&lt;h3 id=&#34;定义派生类&#34;&gt;定义派生类&lt;/h3&gt;
-&lt;p&gt;派生类必须通过使用&lt;strong&gt;类派生列表&lt;/strong&gt;明确指出从哪个（哪些）基类继承而来的。&lt;/p&gt;
-&lt;p&gt;类派生列表的形式：冒号后紧跟以逗号分隔的基类列表，每个基类前面可以有三个&lt;strong&gt;访问说明符&lt;/strong&gt;中的一个：public、protected或private。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Bulk_quote&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt; Quote {	&lt;span style=&#34;color:#888&#34;&gt;//Bulk_quote继承自Quote
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;
-};
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;访问说明符的作用是控制派生类从基类继承而来的成员是否对派生类的用户可见。&lt;/p&gt;
-&lt;p&gt;如果一个派生是&lt;strong&gt;公有&lt;/strong&gt;的，则&lt;strong&gt;基类的公有成员&lt;/strong&gt;也是派生类接口的组成部分；此外还能将公有派生类型的对象&lt;strong&gt;绑定到基类的引用或指针&lt;/strong&gt;上。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;Quote item;		&lt;span style=&#34;color:#888&#34;&gt;//基类对象
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;Bulk_quote bulk;	&lt;span style=&#34;color:#888&#34;&gt;//派生类对象
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;Quote &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;p &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;item;	&lt;span style=&#34;color:#888&#34;&gt;//p指向Quote对象
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;p &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;bulk;		&lt;span style=&#34;color:#888&#34;&gt;//p指向bulk的Quote部分
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;Quote &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; bulk;	&lt;span style=&#34;color:#888&#34;&gt;//r绑定到bulk的Quote部分
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;派生类可以在它覆盖的函数前使用virtual关键字，但不是非得这样做。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;派生类构造函数&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;派生类不能直接初始化从基类继承而来的成员。派生类必须使用基类的构造函数来初始化它的基类部分。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;每个类控制它自己的成员初始化过程&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;派生类构造函数同样是通过构造函数的初始化列表来将实参传递给基类构造函数的。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;派生类使用基类成员&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;派生类可以使用基类的公有成员和受保护的成员。&lt;/p&gt;
-&lt;p&gt;派生类的作用域嵌套在基类的作用域之内。对于派生类的一个成员来说，它使用派生类成员的方式和使用基类成员的方式没有差别。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;继承与静态成员&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果基类定义了一个静态成员，则在整个继承体系中只存在该成员的唯一定义。对于每个静态成员来说，只存在唯一的实例。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;派生类的声明&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;声明中包含类名但不包含其派生列表。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;防止继承发生&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;有时候我们不希望一个类被其它类继承，C++11 提供了防止继承的方法，在类名后赶一个关键字final：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;NoDerived&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;final&lt;/span&gt; {&lt;span style=&#34;color:#888&#34;&gt;/* */&lt;/span&gt;};	&lt;span style=&#34;color:#888&#34;&gt;//NoDerived不能作为基类
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Bad&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; NoDerived {}	&lt;span style=&#34;color:#888&#34;&gt;//错误
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;类型转换与继承&#34;&gt;类型转换与继承&lt;/h3&gt;
-&lt;p&gt;通常我们把引用或指针绑定到一个对象上，则引用或指针的类型应该与对象的类型一致。但在继承关系中是一个例外，我们可以将&lt;strong&gt;基类的指针或引用&lt;/strong&gt;绑定到&lt;strong&gt;派生类的对象&lt;/strong&gt;上。&lt;/p&gt;
-&lt;p&gt;这隐含了：使用基类的指针或引用时，我们不知道其所绑定对象的真实类型。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;静态类型和动态类型&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;使用存在继承关系的类型时，必须将一个变量或其他表达式的静态类型与该表达式表示对象的动态类型区分开来。表达式的静态类型在编译时总是已知的，动态类型则是变量或表达式表示的内存中的对象的类型。动态类型直到运行时才可知。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;不存在&lt;/strong&gt;从基类向派生类的&lt;strong&gt;隐式类型转换&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;同样的，在对象之间不存在类型转换。&lt;/p&gt;
-&lt;p&gt;派生类向基类的类型转换也可能由于访问受限而变得不可行。&lt;/p&gt;
-&lt;h2 id=&#34;虚函数&#34;&gt;虚函数&lt;/h2&gt;
-&lt;h3 id=&#34;基本概念&#34;&gt;基本概念&lt;/h3&gt;
-&lt;p&gt;对虚函数的调用可能在&lt;strong&gt;运行时&lt;/strong&gt;才被解析。&lt;/p&gt;
-&lt;p&gt;动态绑定只有当我们&lt;strong&gt;通过指针或引用调用虚函数&lt;/strong&gt;时才会发生。当我们通过一个具有普通类型（非引用指针）的表达式调用虚函数时，在编译时就会将调用的版本确定下来。&lt;/p&gt;
-&lt;p&gt;一旦某个函数被声明成虚函数。则在所有派生类中它都是虚函数。所以派生类中的虚函数可以不加virtual关键字。&lt;/p&gt;
-&lt;p&gt;派生类中的虚函数的返回类型也必须与基类函数匹配，但存在一个例外，当类的虚函数返回类型是&lt;strong&gt;类本身的指针或引用&lt;/strong&gt;时，上述规则无效。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;final和override说明符&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;派生类如果定义了一个函数与基类中的虚函数的&lt;strong&gt;名字相同但形参列表不同&lt;/strong&gt;，这仍然是正确的，编译器将认为新定义的这个函数与基类中原有的函数是&lt;strong&gt;相互独立&lt;/strong&gt;的，此时派生类的函数没有覆盖掉基类中的版本。&lt;/p&gt;
-&lt;p&gt;C++11 中可以使用override关键字来说明派生类中的虚函数，降低错误发生的可能。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;B&lt;/span&gt; {
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;virtual&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;f1&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt;;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;virtual&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;f2&lt;/span&gt;();
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;f3&lt;/span&gt;();
-};
-sturct &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;D1&lt;/span&gt; : B {
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;f1&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;override&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//正确
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;f2&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;override&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//错误，B中没有f(int)函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;f3&lt;/span&gt;() &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;override&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//错误，f3不是虚函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另外还能把某个函数指定为final，这是之后任何尝试覆盖该函数的操作都会引发错误。&lt;/p&gt;
-&lt;p&gt;和其他函数一样，虚函数也有默认实参。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;回避虚函数机制&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;某些情况下我们希望对虚函数的调用不要进行动态绑定而是强迫其执行虚函数的某个特定版本。使用作用域运算符&lt;code&gt;-&amp;gt;&lt;/code&gt;可以实现这一目的。&lt;/p&gt;
-&lt;h3 id=&#34;不能声明为虚函数的函数&#34;&gt;不能声明为虚函数的函数&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;构造函数&lt;/li&gt;
-&lt;li&gt;内联成员函数。inline函数在编译时杯展开，而虚函数在运行时才能动态地绑定函数&lt;/li&gt;
-&lt;li&gt;静态成员函数。静态成员只属于该类，没有绑定的必要，不能被继承。&lt;/li&gt;
-&lt;li&gt;友元函数。C++不支持友元函数的继承。另外友元函数不属于类的成员函数，不能被继承。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;抽象基类&#34;&gt;抽象基类&lt;/h2&gt;
-&lt;p&gt;当我们希望继承类不使用某一个虚函数时，可以将其定义为&lt;strong&gt;纯虚函数&lt;/strong&gt;，这样可以清晰明了地告诉用户当前这个函数没有实际意义。方式是：&lt;/p&gt;
-&lt;p&gt;通过在函数体的位置（在声明语句的分号之前）书写&lt;code&gt;=0&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;另外我们也可以为纯虚函数提供定义，不过函数体必须定义在类的外部。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;含有纯虚函数的类是抽象基类&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;抽象基类负责定义接口，而后续其他类可以覆盖该接口。我们不能直接创建一个抽象基类的对象。但我们可以定义抽象基类的派生类对象，前提是这些类覆盖了纯虚函数。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;派生类构造函数只初始化它的直接基类&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;访问控制与继承&#34;&gt;访问控制与继承&lt;/h2&gt;
-&lt;p&gt;每个类还分别控制着其成员对于派生类来说是否&lt;strong&gt;可访问&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;受保护的成员&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;protected说明符可看作是public和private中和后的产物：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;和私有成员类似，受保护的成员对于类的用户来说是不可访问的&lt;/li&gt;
-&lt;li&gt;和公有成员类似，受保护的成员对于派生类的成员和友元来说是可以访问的&lt;/li&gt;
-&lt;li&gt;派生类的成员或友元只能通过&lt;strong&gt;派生类对象&lt;/strong&gt;来访问基类的受保护成员（private成员）。&lt;strong&gt;派生类&lt;/strong&gt;对于一个基类对象中的受保护成员没有任何访问特权。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;派生类的成员和友元只能访问派生类对象中的基类部分的受保护成员，对于普通的基类对象中的成员不具有特殊的访问权限。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;友元与继承&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;友元关系&lt;strong&gt;既不能传递，也不能继承&lt;/strong&gt;。基类的成员在访问派生类成员时不具有特殊性，类似的，派生类的友元也不能随意访问基类的成员。&lt;/p&gt;
-&lt;h2 id=&#34;继承中的类作用域&#34;&gt;继承中的类作用域&lt;/h2&gt;
-&lt;p&gt;当存在继承关系时，派生类的作用域&lt;strong&gt;嵌套在其基类的作用域之内&lt;/strong&gt;。如果一个名字在派生类的作用域内无法正确解析，那么编译器将继续在&lt;strong&gt;外层的基类作用域中&lt;/strong&gt;寻找该名字的定义。&lt;/p&gt;
-&lt;p&gt;正因为有这种继承嵌套的关系，所以派生类才能像使用自己的成员一样使用基类的成员。&lt;/p&gt;
-&lt;p&gt;派生类的成员将&lt;strong&gt;隐藏同名的基类成员&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;另外可以通过作用域运算符覆盖原有的查找规则。&lt;/p&gt;
-&lt;h2 id=&#34;构造函数与拷贝控制&#34;&gt;构造函数与拷贝控制&lt;/h2&gt;
-&lt;p&gt;如果一个类（基类或派生类）没有定义拷贝控制操作，则编译器将为它合成一个版本。&lt;/p&gt;
-&lt;h3 id=&#34;虚析构函数&#34;&gt;虚析构函数&lt;/h3&gt;
-&lt;p&gt;基类通常应该定义一个虚析构函数，这样我们就能&lt;strong&gt;动态分配&lt;/strong&gt;继承体系中的对象了。&lt;/p&gt;
-&lt;p&gt;当我们delete一个动态分配的对象的指针时将执行析构函数。如果该指针指向继承体系中的某个类型，则可能出现指针的静态类型与被删除对象的动态类型不符的情况。所以编译器必须清楚它应该执行的是哪个类的析构函数。所以与其他函数一样，通过在基类中将析构函数定义为虚函数确保执行正确的析构函数版本：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Quote&lt;/span&gt; {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;virtual&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;~&lt;/span&gt;Quote() &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;default&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//动态绑定析构函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;虚析构函数将阻止合成移动操作。&lt;/p&gt;
-&lt;h3 id=&#34;合成拷贝控制与继承&#34;&gt;合成拷贝控制与继承&lt;/h3&gt;
-&lt;h3 id=&#34;派生类的拷贝控制成员&#34;&gt;派生类的拷贝控制成员&lt;/h3&gt;
-&lt;h3 id=&#34;继承的构造函数&#34;&gt;继承的构造函数&lt;/h3&gt;
-&lt;h2 id=&#34;容器与继承&#34;&gt;容器与继承&lt;/h2&gt;
-&lt;p&gt;当我们使用容器存放&lt;strong&gt;继承体系中的对象&lt;/strong&gt;时，通常必须采用&lt;strong&gt;间接存储&lt;/strong&gt;的方式，因为不允许在容器中保存不同类型的元素。&lt;/p&gt;
-&lt;p&gt;当派生类对象被赋值给基类对象时，其中的派生类部分将被切掉，因此容器和存在继承关系的类型无法兼容。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;在容器中放置（智能）指针而非对象&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;在容器中存放具有继承关系的对象时，我们实际上存放的是基类的指针（智能指针更好）。这些指针所指的对象的动态类型可能是&lt;strong&gt;基类类型也可能是派生类类型&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Quote&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; basket;
-basket.push_back(make_shared&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;Bulk_quote&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;0-121&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;));
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;派生类的智能指针和基类的智能指针可以相互转换。&lt;/p&gt;
-- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/ - 2019-2021 By Jialong</description>
         </item>
     
     
