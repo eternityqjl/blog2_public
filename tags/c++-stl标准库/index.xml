@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C&#43;&#43; STL标准库 on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.top/tags/c&#43;&#43;-stl%E6%A0%87%E5%87%86%E5%BA%93/</link>
+    <description>Recent content in C&#43;&#43; STL标准库 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Thu, 16 Dec 2021 15:34:43 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/c++-stl%E6%A0%87%E5%87%86%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cpp容器库和相关操作总结</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 16 Dec 2021 15:34:43 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</guid>
+      <description>顺序容器 vector member functions：
+constructor、destructor、operator=、assign、get_allocator
+Element access  at operator front back data  Iterators  begin/cbegin end/cend rbegin/c rbegin rend/c rend  Capacity  empty size max_size reserve capacity shrink_to_fit  Modifiers  clear insert emplace：相较于insert，不需要产生一个临时变量。 erase push_back resize swap  non-member functions
+ operator== swap erase  deque 双端队列
+list 双向链表
+forward_list 单向链表
+array array 容器的大小是固定的，无法动态的扩展或收缩，这也就意味着，在使用该容器的过程无法借由增加或移除元素而改变其大小，它只允许访问或者替换存储的元素。
+string Iterators  begin/cbegin end/cend rbegin/c rbegin rend/c rend  Capacity  empty size length max_size reserve capacity clear shrink_to_fit  Element access  at operator front back  Modifiers  += append push_back assign insert erase replace swap pop_back  关联容器 set Iterators  begin / cbegin end / cend rbegin / c rbegin rend / c rend  Capacity  empty size max_size  Modifiers  clear insert emplace emplace_hint erase swap extract merge  Lookup  count find contains equal_range lower_bound upper_bound  map Element accress  at operator   Iterators  begin / cbegin end / cend rbegin / c rbegin rend / c rend  Capacity  empty size max_size  Modifiers  clear insert insert_or_assign emplace emplace_hint try_emplace erase swap extract merge  Lookup  count find contains equal_range lower_bound upper_bound  multimap 允许多个多个元素具有相同的关键词。主要应用有：例如词典中一个单词可以有多个意思。</description>
+    </item>
+    
+  </channel>
+</rss>

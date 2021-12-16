@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>字节对齐方式 on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.top/tags/%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/</link>
+    <description>Recent content in 字节对齐方式 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Tue, 14 Dec 2021 16:38:12 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C程序字节对齐方式</title>
+      <link>https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Tue, 14 Dec 2021 16:38:12 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/</guid>
+      <description>默认字节对齐 int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。
+结构体的对其满足以下原则：
+ 结构体变量的首地址能够被其最宽基本类型成员的大小所整除。 结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。 结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。  #pragma pack()命令 改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。
+改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。</description>
+    </item>
+    
+  </channel>
+</rss>

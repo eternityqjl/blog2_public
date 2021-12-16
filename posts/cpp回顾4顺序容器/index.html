@@ -1734,11 +1734,19 @@ lst.insert_after(p,il)	<span style="color:#888">//il是一个花括号列表
 string s(s2, pos2)	//s是string s2从下标pos2开始的字符的拷贝。
 string s(s2, pos2, len2)	//s是string s2从下标pos2开始len2个字符的拷贝
 </code></pre><p>这些构造函数接受一个string或一个const char*参数，还接受指定拷贝多少个字符的参数。当传递给他一个string时，还可指定一个下标指出从哪里开始拷贝。</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">s.substr(pos, n)	<span style="color:#888">//返回一个string，包含s中从pos开始的n个字符的拷贝。pos的默认值为0.
-</span></code></pre></div><h4 id="改变string的其他方法">改变string的其他方法</h4>
+<p>substr操作返回一个string，它是原始string的一部分或全部的拷贝。可以传递给substr一个可选的开始位置和计数值：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">s.substr(pos, n)	<span style="color:#888">//返回一个string，包含s中从pos位置开始的n个字符的拷贝。pos的默认值为0.
+</span></code></pre></div><p>如果开始位置超出了string的大小，则substr抛出一个<code>out_of_range</code>异常。若开始位置加上计数值大于string的大小，则substr只会拷贝到string的末尾。</p>
+<h4 id="改变string的其他方法">改变string的其他方法</h4>
 <p>定义了额外的insert和erase版本，还定义了两个额外的成员函数append和replace。</p>
-<p>append操作是在string末尾进行插入操作的一种简写。</p>
-<p>replace操作是调用erase和insert的一种简写形式。</p>
+<p>除了接受迭代器的insert和erase版本外，string还提供了接受下标的版本。下标指出了开始删除的位置，或是insert到指定值之前的位置：</p>
+<pre tabindex="0"><code>s.insert(s.size(), 5, '!');		//在s末尾插入5个!
+s.erase(s.size() - 5, 5);		//删除s的最后5个元素
+</code></pre><p>append操作是在string末尾进行插入操作的一种简写。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">stirng <span style="color:#06b;font-weight:bold">s</span>(<span style="background-color:#fff0f0">&#34;C++ Primer&#34;</span>), s2 <span style="color:#333">=</span> s;
+s.insert(s.size(), <span style="background-color:#fff0f0">&#34; 4th Ed.&#34;</span>);
+s2.append(<span style="background-color:#fff0f0">&#34; 4th Ed.&#34;</span>);	<span style="color:#888">//两种写法等价
+</span></code></pre></div><p>replace操作是调用erase和insert的一种简写形式。</p>
 <h4 id="string搜索">string搜索</h4>
 <p>string类提供了6个不同的搜索函数。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">s.find(args)				<span style="color:#888">//查找s中args第一次出现的位置
@@ -1748,11 +1756,25 @@ string s(s2, pos2, len2)	//s是string s2从下标pos2开始len2个字符的拷�
 s.find_first_not_of(args)
 s.find_last_not_of(args)
 </code></pre></div><h4 id="compare函数">compare函数</h4>
-<p>标准库string还提供了一组compare函数，根据s是等于、大于还是小于参数指定的字符串，<code>s.compare</code>返回0、整数或负数。</p>
-<p>s.compare有6个版本的参数形式。</p>
-<h4 id="数值转换">数值转换</h4>
+<p>标准库string还提供了一组compare函数，根据s是等于、大于还是小于参数指定的字符串，<code>s.compare</code>返回0、整数或负数。类似于C标准库的strcmp函数。</p>
+<p>s.compare有6个版本的参数形式：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">s.compare(s2)						<span style="color:#888">//比较s和s2
+</span><span style="color:#888"></span>s.compare(pos1, n1, s2)				<span style="color:#888">//将s中从pos1开始的n1个字符与s2作比较
+</span><span style="color:#888"></span>s.compare(pos1, n1, s2, pos2, n2)
+s.compare(cp)						<span style="color:#888">//比较s与cp指向的以空字符结尾的字符数组
+</span><span style="color:#888"></span>s.compare(pos1, n1, cp)
+s.compare(pos1, n1, cp, n2)
+</code></pre></div><h4 id="数值转换">数值转换</h4>
 <p>string和数值之间的转换</p>
-<h2 id="容器适配器">容器适配器</h2>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">to_string(val)
+<span style="color:#888">//b表示转换用的基数，默认为10；p保存s中第一个非数值字符的下标，默认为0，即不保存下标
+</span><span style="color:#888"></span>stoi(s, p, b)	<span style="color:#888">//string to int
+</span><span style="color:#888"></span>stol(s, p, b)	<span style="color:#888">//string to long
+</span><span style="color:#888"></span>stoll(s, p, b)	<span style="color:#888">//stirng to long long
+</span><span style="color:#888"></span>stof(s, p)		<span style="color:#888">//string to float
+</span><span style="color:#888"></span>stod(s, p)		<span style="color:#888">//string to double
+</span><span style="color:#888"></span>stold(s, p)		<span style="color:#888">//string to long double
+</span></code></pre></div><h2 id="容器适配器">容器适配器</h2>
 <p>除顺序容器外，标准库还定义了三个顺序容器适配器：stack、queue、priority_queue</p>
 <p>一个适配器是一种机制，能使某种事物看起来像另一种事物。</p>
 <p>一个容器适配器接受一种已有的容器类型，使其行为看起来像一种不同的类型。</p>
@@ -1779,7 +1801,7 @@ s.push(item)	<span style="color:#888">//创建一个新元素压入栈顶，该�
 s.top()			<span style="color:#888">//返回栈顶元素，但不讲栈弹出
 </span></code></pre></div><h4 id="队列适配器">队列适配器</h4>
 <p>queue和priority_queue适配器定义在queue头文件。</p>
-<p>标准库queue是一种FIFO的策略。</p>
+<p>标准库queue是一种FIFO的策略。底层是基于deque的。只是限制其不能进行随机访问。</p>
 
                     
                     <HR width="100%" id="EOF">

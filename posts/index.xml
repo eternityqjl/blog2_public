@@ -7,7 +7,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 11 Dec 2021 21:38:11 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 16 Dec 2021 15:34:43 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cpp容器库和相关操作总结</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 16 Dec 2021 15:34:43 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</guid>
+      <description>顺序容器 vector member functions：
+constructor、destructor、operator=、assign、get_allocator
+Element access  at operator front back data  Iterators  begin/cbegin end/cend rbegin/c rbegin rend/c rend  Capacity  empty size max_size reserve capacity shrink_to_fit  Modifiers  clear insert emplace：相较于insert，不需要产生一个临时变量。 erase push_back resize swap  non-member functions
+ operator== swap erase  deque 双端队列
+list 双向链表
+forward_list 单向链表
+array array 容器的大小是固定的，无法动态的扩展或收缩，这也就意味着，在使用该容器的过程无法借由增加或移除元素而改变其大小，它只允许访问或者替换存储的元素。
+string Iterators  begin/cbegin end/cend rbegin/c rbegin rend/c rend  Capacity  empty size length max_size reserve capacity clear shrink_to_fit  Element access  at operator front back  Modifiers  += append push_back assign insert erase replace swap pop_back  关联容器 set Iterators  begin / cbegin end / cend rbegin / c rbegin rend / c rend  Capacity  empty size max_size  Modifiers  clear insert emplace emplace_hint erase swap extract merge  Lookup  count find contains equal_range lower_bound upper_bound  map Element accress  at operator   Iterators  begin / cbegin end / cend rbegin / c rbegin rend / c rend  Capacity  empty size max_size  Modifiers  clear insert insert_or_assign emplace emplace_hint try_emplace erase swap extract merge  Lookup  count find contains equal_range lower_bound upper_bound  multimap 允许多个多个元素具有相同的关键词。主要应用有：例如词典中一个单词可以有多个意思。</description>
+    </item>
+    
+    <item>
+      <title>C程序字节对齐方式</title>
+      <link>https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/</link>
+      <pubDate>Tue, 14 Dec 2021 16:38:12 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/</guid>
+      <description>默认字节对齐 int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。
+结构体的对其满足以下原则：
+ 结构体变量的首地址能够被其最宽基本类型成员的大小所整除。 结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。 结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。  #pragma pack()命令 改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。
+改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。</description>
+    </item>
+    
     <item>
       <title>Csapp：7.链接</title>
       <link>https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/</link>

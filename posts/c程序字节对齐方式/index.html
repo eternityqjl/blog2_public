@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html><head>
-	<meta name="generator" content="Hugo 0.89.2" />
-<title>Jialong&#39;s Blog</title>
+<title>C程序字节对齐方式</title>
 
 
-
-  
 
 
 <meta charset="utf-8">
@@ -13,16 +10,21 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="My HomePage Description">
+<meta name="description" content="">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
 
 
-<meta property="og:title" content="Jialong&#39;s Blog" />
-<meta property="og:description" content="My HomePage Description" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://eternityqjl.top/" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="C程序字节对齐方式" />
+<meta property="og:description" content="默认字节对齐 int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。
+结构体的对其满足以下原则：
+ 结构体变量的首地址能够被其最宽基本类型成员的大小所整除。 结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。 结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。  #pragma pack()命令 改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。
+改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-14T16:38:12+08:00" />
+<meta property="article:modified_time" content="2021-12-14T16:38:12+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -30,8 +32,11 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Jialong&#39;s Blog"/>
-<meta name="twitter:description" content="My HomePage Description"/>
+<meta name="twitter:title" content="C程序字节对齐方式"/>
+<meta name="twitter:description" content="默认字节对齐 int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。
+结构体的对其满足以下原则：
+ 结构体变量的首地址能够被其最宽基本类型成员的大小所整除。 结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。 结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。  #pragma pack()命令 改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。
+改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。"/>
 
 
 
@@ -67,7 +72,29 @@
 
 
 
+  
+    <script src="/js/toc.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -86,7 +113,7 @@
 <body>
     	<div id="app"><div ref="sideContainer" class="side-container">
     
-    <a class="a-block nav-head active" href="https://eternityqjl.top">
+    <a class="a-block nav-head false" href="https://eternityqjl.top">
     
         <div class="nav-title">
             Jialong&#39;s Blog
@@ -104,9 +131,11 @@
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="/posts">
+            
+            <a class="a-block nav-link-item active" href="/posts">
                 网志
             </a>
             
@@ -172,6 +201,66 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e9%bb%98%e8%ae%a4%e5%ad%97%e8%8a%82%e5%af%b9%e9%bd%90" onclick="onNavClick(`#默认字节对齐-nav`)" id="默认字节对齐-nav">
+									默认字节对齐
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#pragma-pack%e5%91%bd%e4%bb%a4" onclick="onNavClick(`#pragma-pack命令-nav`)" id="pragma-pack命令-nav">
+									#pragma pack()命令
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -189,24 +278,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
         </a>
         
         
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    1<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>7
-                </span>
-            </div>
-            
-            
-
-            
-            <a class="pagination-action" href="/page/2/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
-        
-        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -219,9 +290,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="/posts">
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
                     网志
                 </a>
                 
@@ -267,6 +340,66 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             
             
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e9%bb%98%e8%ae%a4%e5%ad%97%e8%8a%82%e5%af%b9%e9%bd%90" onclick="onNavClick(`#默认字节对齐-nav`)" id="默认字节对齐-nav">
+									默认字节对齐
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#pragma-pack%e5%91%bd%e4%bb%a4" onclick="onNavClick(`#pragma-pack命令-nav`)" id="pragma-pack命令-nav">
+									#pragma pack()命令
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
         </div>
     </div>
 </div>
@@ -308,339 +441,98 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div>
 
             <div id="content">
-
 <div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-no-background">
-        
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
             
-            <a href="https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                Cpp容器库和相关操作总结
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-16
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            
 
-                        </div>
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    C程序字节对齐方式
+                    
+                    <div class="post-meta">
                         
+                        <time itemprop="datePublished">
+                            2021-12-14 16:38
+                        </time>
                         
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                C程序字节对齐方式
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-14
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
                         
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                Csapp：7.链接
-                            </div>
-                            <div class="post-item-summary">
-                                书籍《深入理解计算机系统》阅读学习笔记
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-11
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
                         
-                        
+                            <i class="material-icons" style="">label</i>
                             
-                            <div class="post-item-image-wrapper">
-                            <div class="post-item-image"
+                                <a href="/tags/%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F">字节对齐方式</a>
+                                &nbsp;
                             
-                                 style="background-image: url('https://github.com/eternityqjl/blogGallery/blob/master/blog/csapp.jpg?raw=true')"
-                            
-                            ></div>
-                            </div>
+                        
                         
                     </div>
                 </div>
+            </div>
             
-        
-            
-            <a href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95topk%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——TopK问题总结
-                            </div>
-                            <div class="post-item-summary">
-                                目前只有思路，还无代码。
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-11
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h2 id="默认字节对齐">默认字节对齐</h2>
+<p>int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。</p>
+<p>结构体的对其满足以下原则：</p>
+<ul>
+<li>结构体变量的首地址能够被其最宽基本类型成员的大小所整除。</li>
+<li>结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。</li>
+<li>结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。</li>
+</ul>
+<h2 id="pragma-pack命令">#pragma pack()命令</h2>
+<p>改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。</p>
+<p>改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。</p>
 
-                        </div>
-                        
-                        
-                    </div>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-12-14</p>
+                    
                 </div>
+            </div>
             
-        
             
-            <a href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——基础查找算法实现
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-11
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <nav class="post-pagination">
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——B树和B&#43;树
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-10
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                
+                <a class="newer-posts" href="https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">
+			下回<br>Cpp容器库和相关操作总结
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/">
+			上回<br>Csapp：7.链接
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E6%A1%B6%E6%8E%92%E5%BA%8F_%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F_%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——桶排序&amp;计数排序&amp;基数排序
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-09
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                TCP三次握手四次挥手详解
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-09
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+<div id="gitalk-container"></div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                现代操作系统学习日志——进程与线程
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-07
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                            
-                            <div class="post-item-image-wrapper">
-                            <div class="post-item-image"
-                            
-                                 style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/modernOS.jpg')"
-                            
-                            ></div>
-                            </div>
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——基础排序算法的实现
-                            </div>
-                            <div class="post-item-summary">
-                                选择、插入、希尔、冒泡、快速、归并排序
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-06
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-        </a>
+
+
+
+
+
+
+            </div>
+        </div>
     </div>
 </div>
 
-            </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" style="opacity:0">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>1/7</span>
-        </div>
-
-        
-        <a class="pagination-action" href="/page/2/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-</div>
-
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -907,6 +799,9 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },
