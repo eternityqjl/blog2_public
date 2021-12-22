@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>Posts</title>
+<title>测试机器大小端的方法</title>
 
 
 
@@ -16,10 +16,18 @@
 
 
 
-<meta property="og:title" content="Posts" />
-<meta property="og:description" content="My HomePage Description" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://eternityqjl.top/posts/" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="测试机器大小端的方法" />
+<meta property="og:description" content="小端法：低位字节存放在低地址，高位字节存放在高地址 大端法：低位字节存放在高地址，高位字节存放在低地址  判断电脑大小端模式的方法：
+方法一  C语言中的char和int：
+在C语言中并没有char类型的常量，其实是用int类型表示char。举个例子：
+char ch = &#39;a&#39;; //分别输出ch的字符和对应的ascii码。即打印出的是字符或整数 printf(&#34;%c, %d&#34;, ch, ch); 输出结果为：a, 97
+ 将int 48存起来，然后取得其地址，再将这个地址转为char* 这时候，如果是小端存储，那么char*指针就指向48；48对应的ASCII码为字符‘0’；
+void judge1() { int i = 48; int* p = &amp;i; char c = 0; c = *((char*)p); if (c == &#39;0&#39;) cout &lt;&lt; &#34;小端&#34; &lt;&lt; endl; else cout &lt;&lt; &#34;大端&#34; &lt;&lt; endl; } 方法二 定义变量int i=1；将 i 的地址拿到，强转成char*型，这时候就取到了 i 的低地址，这时候如果是1就是小端存储，如果是0就是大端存储。
+void judge2() { int i = 1; char c = (*(char*)&amp;i); if (c) cout &lt;&lt; &#34;小端&#34; &lt;&lt; endl; else cout &lt;&lt; &#34;大端&#34; &lt;&lt; endl; } 方法三  联合体union是一种特殊数据类型，允许在相同的内存位置存储不同的数据类型。可以定义一个带有多成员的共同体，但任何时候只能有一个成员带有值。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-22T15:49:36+08:00" />
+<meta property="article:modified_time" content="2021-12-22T15:49:36+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -27,8 +35,14 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Posts"/>
-<meta name="twitter:description" content="My HomePage Description"/>
+<meta name="twitter:title" content="测试机器大小端的方法"/>
+<meta name="twitter:description" content="小端法：低位字节存放在低地址，高位字节存放在高地址 大端法：低位字节存放在高地址，高位字节存放在低地址  判断电脑大小端模式的方法：
+方法一  C语言中的char和int：
+在C语言中并没有char类型的常量，其实是用int类型表示char。举个例子：
+char ch = &#39;a&#39;; //分别输出ch的字符和对应的ascii码。即打印出的是字符或整数 printf(&#34;%c, %d&#34;, ch, ch); 输出结果为：a, 97
+ 将int 48存起来，然后取得其地址，再将这个地址转为char* 这时候，如果是小端存储，那么char*指针就指向48；48对应的ASCII码为字符‘0’；
+void judge1() { int i = 48; int* p = &amp;i; char c = 0; c = *((char*)p); if (c == &#39;0&#39;) cout &lt;&lt; &#34;小端&#34; &lt;&lt; endl; else cout &lt;&lt; &#34;大端&#34; &lt;&lt; endl; } 方法二 定义变量int i=1；将 i 的地址拿到，强转成char*型，这时候就取到了 i 的低地址，这时候如果是1就是小端存储，如果是0就是大端存储。
+void judge2() { int i = 1; char c = (*(char*)&amp;i); if (c) cout &lt;&lt; &#34;小端&#34; &lt;&lt; endl; else cout &lt;&lt; &#34;大端&#34; &lt;&lt; endl; } 方法三  联合体union是一种特殊数据类型，允许在相同的内存位置存储不同的数据类型。可以定义一个带有多成员的共同体，但任何时候只能有一个成员带有值。"/>
 
 
 
@@ -64,7 +78,29 @@
 
 
 
+  
+    <script src="/js/toc.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -171,6 +207,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e6%b3%95%e4%b8%80" onclick="onNavClick(`#方法一-nav`)" id="方法一-nav">
+									方法一
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e6%b3%95%e4%ba%8c" onclick="onNavClick(`#方法二-nav`)" id="方法二-nav">
+									方法二
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e6%b3%95%e4%b8%89" onclick="onNavClick(`#方法三-nav`)" id="方法三-nav">
+									方法三
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -186,24 +300,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 brightness_7
             </i>
         </a>
-        
-        
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    1<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>7
-                </span>
-            </div>
-            
-            
-
-            
-            <a class="pagination-action" href="/posts/page/2/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
         
         
     </div>
@@ -268,6 +364,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             
             
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e6%b3%95%e4%b8%80" onclick="onNavClick(`#方法一-nav`)" id="方法一-nav">
+									方法一
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e6%b3%95%e4%ba%8c" onclick="onNavClick(`#方法二-nav`)" id="方法二-nav">
+									方法二
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e6%b3%95%e4%b8%89" onclick="onNavClick(`#方法三-nav`)" id="方法三-nav">
+									方法三
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
         </div>
     </div>
 </div>
@@ -311,271 +485,144 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        
-            <a class="a-block">
-                <div class="post-item-wrapper post-item-wrapper-no-hover">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title post-item-title-small year">
-                                2021
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
+        <div class="post">
             
-            <a href="/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                测试机器大小端的方法
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-22
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                Cpp容器库和相关操作总结
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-16
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    测试机器大小端的方法
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2021-12-22 15:49
+                        </time>
+                        
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                C程序字节对齐方式
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-14
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算机基础</a>
+                                &nbsp;
+                        
 
-                        </div>
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/%E5%A4%A7%E5%B0%8F%E7%AB%AF">大小端</a>
+                                &nbsp;
+                            
+                        
+                        
                     </div>
                 </div>
-            </a>
+            </div>
             
-            <a href="/posts/csapp-7-%E9%93%BE%E6%8E%A5/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                Csapp：7.链接
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-11
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <ul>
+<li>小端法：低位字节存放在低地址，高位字节存放在高地址</li>
+<li>大端法：低位字节存放在高地址，高位字节存放在低地址</li>
+</ul>
+<p>判断电脑大小端模式的方法：</p>
+<h2 id="方法一">方法一</h2>
+<blockquote>
+<p>C语言中的char和int：</p>
+<p>在C语言中并没有char类型的常量，其实是用int类型表示char。举个例子：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">char</span> ch <span style="color:#333">=</span> <span style="color:#04d;background-color:#fff0f0">&#39;a&#39;</span>;
+<span style="color:#888">//分别输出ch的字符和对应的ascii码。即打印出的是字符或整数
+</span><span style="color:#888"></span>printf(<span style="background-color:#fff0f0">&#34;%c, %d&#34;</span>, ch, ch);
+</code></pre></div><p>输出结果为：a, 97</p>
+</blockquote>
+<p>将int 48存起来，然后取得其地址，再将这个地址转为char* 这时候，如果是小端存储，那么char*指针就指向48；48对应的ASCII码为字符‘0’；</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">judge1</span>() {
+    <span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">48</span>;
+    <span style="color:#339;font-weight:bold">int</span><span style="color:#333">*</span> p <span style="color:#333">=</span> <span style="color:#333">&amp;</span>i;
+    <span style="color:#339;font-weight:bold">char</span> c <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>;
+    c <span style="color:#333">=</span> <span style="color:#333">*</span>((<span style="color:#339;font-weight:bold">char</span><span style="color:#333">*</span>)p);
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E7%AE%97%E6%B3%95topk%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——TopK问题总结
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-11
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+    <span style="color:#080;font-weight:bold">if</span> (c <span style="color:#333">==</span> <span style="color:#04d;background-color:#fff0f0">&#39;0&#39;</span>)
+        cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;小端&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;
+    <span style="color:#080;font-weight:bold">else</span>
+        cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;大端&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;
+}
+</code></pre></div><h2 id="方法二">方法二</h2>
+<p>定义变量int i=1；将 i 的地址拿到，强转成char*型，这时候就取到了 i 的低地址，这时候如果是1就是小端存储，如果是0就是大端存储。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">judge2</span>() {
+    <span style="color:#339;font-weight:bold">int</span> i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
+    <span style="color:#339;font-weight:bold">char</span> c <span style="color:#333">=</span> (<span style="color:#333">*</span>(<span style="color:#339;font-weight:bold">char</span><span style="color:#333">*</span>)<span style="color:#333">&amp;</span>i);
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——基础查找算法实现
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-11
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+    <span style="color:#080;font-weight:bold">if</span> (c)
+        cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;小端&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;
+    <span style="color:#080;font-weight:bold">else</span>
+        cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;大端&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;
+}
+</code></pre></div><h2 id="方法三">方法三</h2>
+<blockquote>
+<p>联合体union是一种特殊数据类型，允许在相同的内存位置存储不同的数据类型。可以定义一个带有多成员的共同体，但任何时候只能有一个成员带有值。</p>
+</blockquote>
+<p>定义联合体，一个成员是多字节，一个是单字节，给多字节的成员赋一个最低一个字节不为0，其他字节为0 的值，再用第二个成员来判断，如果第二个字节不为0，就是小端，若为0，就是大端。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">judge3</span>() {
+    <span style="color:#080;font-weight:bold">union</span>
+    {
+        <span style="color:#339;font-weight:bold">int</span> i;
+        <span style="color:#339;font-weight:bold">char</span> c;
+    } un;
+    un.i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">1</span>;
 
-                        </div>
-                    </div>
+    <span style="color:#080;font-weight:bold">if</span> (un.c <span style="color:#333">==</span> <span style="color:#00d;font-weight:bold">1</span>)
+        cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;小端&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;
+    <span style="color:#080;font-weight:bold">else</span>
+        cout <span style="color:#333">&lt;&lt;</span> <span style="background-color:#fff0f0">&#34;大端&#34;</span> <span style="color:#333">&lt;&lt;</span> endl;
+}
+</code></pre></div>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-12-22</p>
+                    
                 </div>
-            </a>
+            </div>
             
-            <a href="/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——B树和B&#43;树
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-10
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            <nav class="post-pagination">
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E7%AE%97%E6%B3%95%E6%A1%B6%E6%8E%92%E5%BA%8F_%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F_%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                算法——桶排序&amp;计数排序&amp;基数排序
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-09
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">
+			上回<br>Cpp容器库和相关操作总结
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                TCP三次握手四次挥手详解
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-09
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-            <a href="/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-gaps">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                现代操作系统学习日志——进程与线程
-                            </div>
-                            <div class="post-item-meta">
-    2021-12-07
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+<div id="gitalk-container"></div>
 
-                        </div>
-                    </div>
-                </div>
-            </a>
-            
-        
-    </div>
-</div>
+
+
+
+
+
+
 
 
             </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" style="opacity:0">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>1/7</span>
         </div>
-
-        
-        <a class="pagination-action" href="/posts/page/2/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
+    </div>
 </div>
 
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -842,6 +889,9 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },
