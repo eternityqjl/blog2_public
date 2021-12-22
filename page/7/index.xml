@@ -6,9 +6,252 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 22 Dec 2021 15:49:36 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 22 Dec 2021 16:10:44 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>字符串输入、输出和字符串函数</title>
+        <link>https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</link>
+        <pubDate>Sat, 28 Sep 2019 12:15:42 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/ -&lt;h2 id=&#34;字符串输入&#34;&gt;字符串输入&lt;/h2&gt;
+&lt;p&gt;1.&lt;code&gt;gets()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用方法：读取整行输入，直到遇到&lt;strong&gt;换行符&lt;/strong&gt;，然后&lt;strong&gt;丢弃换行符&lt;/strong&gt;，储存其余的字符，并在字符末尾添加一个&lt;strong&gt;空字符&lt;/strong&gt;使之成为一个C字符串。&lt;/li&gt;
+&lt;li&gt;使用中存在的问题：&lt;code&gt;gets(words)&lt;/code&gt;（char words[STLEN]）的唯一参数为words，该函数无法检查数组是否装得下输入行。数组名会被转化成该数组首元素的地址，该函数只知道数组的开始处，并不知道数组在何处结束。&lt;/li&gt;
+&lt;li&gt;如果输入过长，会导致&lt;strong&gt;缓存区溢出&lt;/strong&gt;，详情见书上内容。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;2.&lt;code&gt;gets()&lt;/code&gt;的替代品：&lt;code&gt;fgets()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fgets()&lt;/code&gt;函数通过第二个参数来限制读入的&lt;strong&gt;字符数&lt;/strong&gt;来解决溢出问题。&lt;/li&gt;
+&lt;li&gt;相较于&lt;code&gt;gets()&lt;/code&gt;的区别：
+&lt;ul&gt;
+&lt;li&gt;第二个参数指明了读入字符的最大数量，若该值为n，那么将读入n-1个字符，或遇到第一个&lt;strong&gt;换行符&lt;/strong&gt;为止。&lt;/li&gt;
+&lt;li&gt;第三个参数指明了要读入的文件，如果要从键盘输入，则参数设置为stdin标识符。&lt;/li&gt;
+&lt;li&gt;如果读到一个换行符，&lt;code&gt;fgets()&lt;/code&gt;会将其&lt;strong&gt;储存在数组中&lt;/strong&gt;，而不是将其丢弃。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;3.&lt;code&gt;gets_s()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;于&lt;code&gt;fgets()&lt;/code&gt;的区别&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;该函数只从标准输入中读取，所以无需第三个参数。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;读到&lt;strong&gt;换行符会将其丢弃&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;如果读到最大字符数都没有读到换行符，会进行以下操作：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;首先设置目标数组的首字符为空字符&lt;/p&gt;
+&lt;p&gt;读取并丢弃随后的输入直至读到换行符或文件结尾&lt;/p&gt;
+&lt;p&gt;返回空指针&lt;/p&gt;
+&lt;p&gt;然后调用依赖实现的“处理函数”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;4.&lt;code&gt;s_gets()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;读取整行输入并&lt;strong&gt;用空字符替代换行符&lt;/strong&gt;，或者(在字符串未结束就遇到了空字符)读取一部分输入，并丢弃其余的部分。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;该函数的代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;s_gets&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; st, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n)
+{
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ret_val;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+
+    ret_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fgets(st, n, stdin);
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (ret_val)
+    {
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (st[i] &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; st[i] &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\0&amp;#39;&lt;/span&gt;)
+            i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (st[i] &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;)
+            st[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\0&amp;#39;&lt;/span&gt;;
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; 
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (getchar() &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;\n&amp;#39;&lt;/span&gt;)
+                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;continue&lt;/span&gt;;
+    }
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; ret_val;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;5.&lt;code&gt;scanf()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;以第一个非空白字符座位读取的开始，以第一个空白字符(空行、空格、制表符、换行符)座位字符串的结束。&lt;/li&gt;
+&lt;li&gt;其他内容略。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;字符串输出&#34;&gt;字符串输出&lt;/h2&gt;
+&lt;p&gt;1.&lt;code&gt;puts()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;该函数显示字符串时会在末尾添加一个&lt;strong&gt;换行符&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;该函数的参数为地址，且用双引号括起来的字符串常量作为参数时，参数被视为该字符串的地址。&lt;/li&gt;
+&lt;li&gt;当参数为数组中某个项的地址时，如&lt;code&gt;str[5]&lt;/code&gt;,会从这个位置开始依次输出。&lt;/li&gt;
+&lt;li&gt;结束条件为&lt;strong&gt;空字符&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;2.&lt;code&gt;fputs()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第二个参数要指明写入数据的文件，若要打印在显示器上，则用stdout作为参数。&lt;/li&gt;
+&lt;li&gt;该函数&lt;strong&gt;不会在字符串末尾添加换行符&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;3.&lt;code&gt;printf()&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;省略&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;字符串函数&#34;&gt;字符串函数&lt;/h2&gt;
+&lt;p&gt;0.这里只写出书上详细介绍的5组字符串函数：&lt;code&gt;strlen()&lt;/code&gt; | &lt;code&gt;strcat()/strncat()&lt;/code&gt; | &lt;code&gt;strcmp()/strncmp()&lt;/code&gt; | &lt;code&gt;strcpy()/strncpy()&lt;/code&gt; | &lt;code&gt;sprintf()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;1.&lt;code&gt;strlen&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;该函数用于统计字符串的长度，函数返回值为字符串的长度。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;2.&lt;code&gt;strcat()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;基本定义
+&lt;ul&gt;
+&lt;li&gt;该函数用于&lt;strong&gt;拼接字符串&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;接受两个字符串作为参数&lt;/li&gt;
+&lt;li&gt;把第二个字符串的备份附在第一个字符串的末尾，并把拼接后形成的新字符串作为第一个字符串，第二个字符串不变。&lt;/li&gt;
+&lt;li&gt;该函数的函数类型是&lt;code&gt;char *&lt;/code&gt;,即指向&lt;code&gt;char&lt;/code&gt;的指针。&lt;/li&gt;
+&lt;li&gt;所以该函数返回第一个参数，即拼接第二个字符串后的第一个字符串的&lt;strong&gt;地址&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;存在的问题
+&lt;ul&gt;
+&lt;li&gt;无法检查第一个数组是否能容纳第二个字符串。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;3.&lt;code&gt;strncat()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;该函数的第三个参数指定了最大添加字符数&lt;/li&gt;
+&lt;li&gt;例如&lt;code&gt;strncat(bugs, addon, 13)&lt;/code&gt;会把addon字符串的聂荣附加给bugs，加到第13个字符或者遇到空字符的时候停止&lt;/li&gt;
+&lt;li&gt;所以，算上空字符(必须要添加空字符，否则就不是字符串了)，bugs数组应该足够大，以容纳原始字符串(不包含空字符)、添加在后面的13个字符、末尾的空字符。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;4.&lt;code&gt;strcmp()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用来把用户的响应于已储存的字符串作比较(比较&lt;strong&gt;两个字符串的内容&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;比较的是字符串的内容而不是字符串的地址，例如
+&lt;ul&gt;
+&lt;li&gt;定义：
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;#define ANSWER &amp;quot;Grant&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;#define SIZE 40&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;char try[SIZE]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;s_gets(try, SIZE)&lt;/code&gt;\\输入Grant&lt;/li&gt;
+&lt;li&gt;如果使用&lt;code&gt;while (try == ANSWER)&lt;/code&gt;,则永远得不到两者相等的结果，因为while比较的是指针，即地址，二者的地址肯定不相同&lt;/li&gt;
+&lt;li&gt;但使用&lt;code&gt;strcmp(try, ANSWER)&lt;/code&gt;则能够得到两者内容相等的结果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;注：该函数只会比较try中第一个空字符前面的部分，所以该函数可以比较储存在不同大小数组中的字符串。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;该函数的返回值：
+&lt;ul&gt;
+&lt;li&gt;返回实例：
+&lt;ul&gt;
+&lt;li&gt;比较“A&amp;quot;和本身，返回0&lt;/li&gt;
+&lt;li&gt;比较”A&amp;quot;和&amp;quot;B&amp;quot;，返回-1&lt;/li&gt;
+&lt;li&gt;比较“B&amp;quot;和”A“，返回1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;结论：
+&lt;ul&gt;
+&lt;li&gt;二者相等返回0&lt;/li&gt;
+&lt;li&gt;第一个的ASCII码比第二个大就返回负数，比第二个大就返回整数&lt;/li&gt;
+&lt;li&gt;返回的整数和负数即为二者的ASCII码之差&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;注：
+&lt;ul&gt;
+&lt;li&gt;返回值的具体数值并不重要，重要的是它是0还是非0&lt;/li&gt;
+&lt;li&gt;该函数比较的是&lt;strong&gt;字符串而不是字符&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;局限：
+&lt;ul&gt;
+&lt;li&gt;该函数比较字符串中的字符，直到发现不同的字符为止，这个过程可能会持续到字符串末尾。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;5.&lt;code&gt;strncmp()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;该函数可以比较字符不同的地方，也可以只比较第三个参数指定的字符数&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;例如书中的实例：可以限定函数只查找这几个字符。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;6.&lt;code&gt;strcpy()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;该函数是用来拷贝整个字符串的内容，即相当于字符串赋值运算符
+&lt;ul&gt;
+&lt;li&gt;例如：
+&lt;ul&gt;
+&lt;li&gt;str1和str2都是指向字符串的指针&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;str2 = str1;&lt;/code&gt;这个语句拷贝的指针的地址而不是具体内容&lt;/li&gt;
+&lt;li&gt;所以要想拷贝整个字符串就要用到该函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;注意：
+&lt;ul&gt;
+&lt;li&gt;接受两个字符串指针作为参数，可以把第二个指针声明为指针、数组或者字符串常量&lt;/li&gt;
+&lt;li&gt;第一个指针应该指向一个数据对象如数组，且该字符串有足够的空间存储源字符串的副本。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;其他属性：
+&lt;ul&gt;
+&lt;li&gt;该函数的返回类型是&lt;code&gt;char *&lt;/code&gt;,返回的是第一个参数的值，即一个字符的地址。&lt;/li&gt;
+&lt;li&gt;第一个参数不必指向数组的开始，该属性可用于拷贝数组的一部分，详情见书上的程序。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;局限：
+&lt;ul&gt;
+&lt;li&gt;与&lt;code&gt;strcat()&lt;/code&gt;一样，不能检查目标空间是否能容纳的下源字符串的副本。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;7.&lt;code&gt;strncpy()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;该函数的第三个参数指明了可拷贝的最大字符数
+&lt;ul&gt;
+&lt;li&gt;如果要拷贝的字符超过了指定的参数n，当拷贝了n个字符后就会停止，并且也不会在后面添加空字符，容易出现错误，所以要非常注意。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;8.&lt;code&gt;sprintf()&lt;/code&gt;函数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;该函数与&lt;code&gt;printf()&lt;/code&gt;函数类似，但这个是把数据写入字符串，而不是打印在显示器上。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;该函数的第一个参数是目标字符串的地址，其余的与&lt;code&gt;printf()&lt;/code&gt;类似。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;示例：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; first[MAX];
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; last[MAX];
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; formal[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; MAX &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;];
+&lt;span style=&#34;color:#888&#34;&gt;//给以上前面两个数组赋值后就可以进行如下的操作
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;sprintf(formal, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%s, %-19s&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, last, first);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>内存对齐 on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.top/tags/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</link>
+    <description>Recent content in 内存对齐 on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Wed, 22 Dec 2021 16:10:44 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cpp内存对齐</title>
+      <link>https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</link>
+      <pubDate>Wed, 22 Dec 2021 16:10:44 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</guid>
+      <description>内存对齐 看下面的小程序，理论上，32位系统下，int占4byte，char占一个byte，那么将它们放到一个结构体中应该占4+1=5byte；但是实际上，通过运行程序得到的结果是8 byte，这就是内存对齐所导致的。
+//32位系统 #include&amp;lt;stdio.h&amp;gt;struct{ int x; char y; }s; int main() { printf(&amp;#34;%d\n&amp;#34;,sizeof(s); // 输出8  return 0; } 现代计算机中内存空间都是按照 byte 划分的，从理论上讲似乎对任何类型的变量的访问可以从任何地址开始，但是实际的计算机系统对基本类型数据在内存中存放的位置有限制，它们会要求这些数据的首地址的值是某个数k（通常它为4或8）的倍数，这就是所谓的内存对齐。
+进行内存对齐的原因 尽管内存是以字节为单位，但是大部分处理器并不是按字节块来存取内存的.它一般会以双字节,四字节,8字节,16字节甚至32字节为单位来存取内存，我们将上述这些存取单位称为内存存取粒度.
+现在考虑4字节存取粒度的处理器取int类型变量（32位系统），该处理器只能从地址为4的倍数的内存开始读取数据。
+默认内存对齐 int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。
+结构体的对齐满足以下原则：
+ 结构体变量的首地址能够被其最宽基本类型成员的大小所整除。 结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。 结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。  #pragma pack()命令 改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。
+改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。</description>
+    </item>
+    
+  </channel>
+</rss>

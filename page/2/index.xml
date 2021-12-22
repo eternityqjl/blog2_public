@@ -6,9 +6,191 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 22 Dec 2021 15:49:36 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 22 Dec 2021 16:10:44 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>现代操作系统学习日志——进程与线程</title>
+        <link>https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</link>
+        <pubDate>Tue, 07 Dec 2021 17:14:52 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/ -&lt;h2 id=&#34;0-操作系统概念&#34;&gt;0. 操作系统概念&lt;/h2&gt;
+&lt;h3 id=&#34;进程&#34;&gt;进程&lt;/h3&gt;
+&lt;h3 id=&#34;地址空间&#34;&gt;地址空间&lt;/h3&gt;
+&lt;h3 id=&#34;文件&#34;&gt;文件&lt;/h3&gt;
+&lt;h3 id=&#34;输入输出&#34;&gt;输入输出&lt;/h3&gt;
+&lt;h3 id=&#34;保护&#34;&gt;保护&lt;/h3&gt;
+&lt;h3 id=&#34;shell&#34;&gt;shell&lt;/h3&gt;
+&lt;p&gt;进程是操作系统中的最核心的概念，它是对正在运行程序的一个抽象。&lt;/p&gt;
+&lt;h2 id=&#34;进程-1&#34;&gt;进程&lt;/h2&gt;
+&lt;p&gt;在任何多道程序设计系统中，CPU由一个进程快速切换至另一个进程，使得每个进程各运行几十至几百毫秒。在某一瞬间，CPU只运行一个进程，但在1秒内CPU可能运行多个进程。&lt;/p&gt;
+&lt;h3 id=&#34;进程模型&#34;&gt;进程模型&lt;/h3&gt;
+&lt;p&gt;计算机上所有可运行的软件，通常也包括操作系统，被组织成若干顺序进程。一个进程就是一个正在执行程序的实例。&lt;/p&gt;
+&lt;h3 id=&#34;进程的创建&#34;&gt;进程的创建&lt;/h3&gt;
+&lt;h3 id=&#34;进程的终止&#34;&gt;进程的终止&lt;/h3&gt;
+&lt;h3 id=&#34;进程的层次结构&#34;&gt;进程的层次结构&lt;/h3&gt;
+&lt;p&gt;UNIX中进程和它的所有子进程及后裔共同组成一个&lt;strong&gt;进程组&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;UNIX启动时初始化自己的方式：一个称为&lt;code&gt;init&lt;/code&gt;的特殊进程出现在启动映像中，开始运行时读入一个说明终端数量的文件，接着为每个终端创建一个新进程，这些进程等待用户登陆，如果有一个用户登录成功，该登录进程就执行一个shell准备接受命令，所接受的这些命令会启动更多进程。以此类推，在整个系统中，所有进程都是属于以init为根的一棵树。&lt;/p&gt;
+&lt;p&gt;Windows中没有进程层次的概念，所有进程都是&lt;strong&gt;低位相等&lt;/strong&gt;的。&lt;/p&gt;
+&lt;h3 id=&#34;进程的状态&#34;&gt;进程的状态&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;运行态：该时刻进程实际占用CPU&lt;/li&gt;
+&lt;li&gt;就绪态：可运行，但因为其他进程正在运行而暂时停止&lt;/li&gt;
+&lt;li&gt;阻塞态：除非某种外部事件发生，否则进程不能运行&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;进程的实现&#34;&gt;进程的实现&lt;/h3&gt;
+&lt;h2 id=&#34;线程&#34;&gt;线程&lt;/h2&gt;
+&lt;p&gt;每个进程有一个地址空间和一个控制线程；但是，经常存在同一个地址空间中&lt;strong&gt;准并行运行&lt;/strong&gt;多个控制线程的情况，这些线程就像是分离的进程（除共享地址空间外）。&lt;/p&gt;
+&lt;h3 id=&#34;线程的使用&#34;&gt;线程的使用&lt;/h3&gt;
+&lt;p&gt;并行实体拥有&lt;strong&gt;共享同一个地址空间和所有可用数据&lt;/strong&gt;的能力，而多进程模型的地址空间不同。&lt;/p&gt;
+&lt;p&gt;线程比进程更轻量级，更容易创建、也更容易撤销。&lt;/p&gt;
+&lt;p&gt;另外如果存在大量计算和I/O处理，多个线程允许这些活动彼此重叠进行，加快执行速度。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;字处理软件：
+&lt;ul&gt;
+&lt;li&gt;与用户交互线程&lt;/li&gt;
+&lt;li&gt;格式处理线程&lt;/li&gt;
+&lt;li&gt;处理磁盘备份线程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;经典的线程模型&#34;&gt;经典的线程模型&lt;/h3&gt;
+&lt;p&gt;在同一个进程中并行运行多个线程，是对在同一台计算机上并行运行多个进程的模拟。前一种情形下，多个线程共享共享&lt;strong&gt;同一地址空间和其他资源&lt;/strong&gt;，后一种情形中，多个进程共享物理内存、磁盘、打印机和其他资源。因此由于线程具有进程的某些性质，所以有时被称为轻量级进程。&lt;/p&gt;
+&lt;p&gt;多线程用来描述在同一个进程中允许多个线程的情形，一些CPU已经有直接硬件支持多线程，允许线程切换在纳秒级完成。&lt;/p&gt;
+&lt;p&gt;所有线程共享同一地址空间，意味着它们也共享同样的全局变量。各个线程可以访问进程地址空间中的每一个内存地址，所以一个线程可以读、写或清除另一个线程的堆栈。&lt;strong&gt;线程之间是没有保护的&lt;/strong&gt;，因为同一个进程的多个线程是为了相互合作的。除了共享地址空间，所有线程还共享同一个打开文件、子进程、定时器及相关信号。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;每个进程中的内容：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;地址空间&lt;/li&gt;
+&lt;li&gt;全局变量&lt;/li&gt;
+&lt;li&gt;打开文件&lt;/li&gt;
+&lt;li&gt;子进程&lt;/li&gt;
+&lt;li&gt;定时器&lt;/li&gt;
+&lt;li&gt;信号与信号处理程序&lt;/li&gt;
+&lt;li&gt;账户信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;每个线程中的内容：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;程序计数器&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;寄存器&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;堆栈&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;状态&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;和传统进程一样，线程可以处于若干种状态的任何一个：&lt;strong&gt;运行、阻塞、就绪或终止&lt;/strong&gt;。正在运行的线程&lt;strong&gt;拥有CPU并且是活跃的&lt;/strong&gt;，被阻塞线程正在等待某个释放它的事件。&lt;/p&gt;
+&lt;p&gt;认识到&lt;strong&gt;每个线程有其自己的堆栈&lt;/strong&gt;很重要。每个线程的堆栈有一个帧，供各个被调用但还没有从中返回的过程使用。在该栈帧中存放了响应过程的局部变量以及过程调用完后使用的返回地址。通常每个线程会调用不同的过程，从而有一个各自不同的执行历史，因此每个线程需要有自己的堆栈。&lt;/p&gt;
+&lt;p&gt;一个常见的系统调用：&lt;strong&gt;thread_yield&lt;/strong&gt;，允许线程自动放弃CPU而让另一个线程运行。这样的调用很重要，因为不同于进程，线程库无法利用时钟中断强制线程让出CPU。所以设法使线程随着事件推移自动交出CPU，并让其他线程有机会使用，就非常重要。&lt;/p&gt;
+&lt;h3 id=&#34;posix线程&#34;&gt;POSIX线程&lt;/h3&gt;
+&lt;p&gt;为实现可移植的线程程序，IEEE定义了线程的标准。它定义的线程包叫做&lt;strong&gt;pthread&lt;/strong&gt;。大部分UNIX系统都支持该标准，这个标准定义了超过60个函数调用。所有pthread线程都有某些特性，每一个都含有一个标识符、一组寄存器和一个存储在结构中的属性。这些属性包括堆栈大小、调度参数以及其他线程需要的项目。&lt;/p&gt;
+&lt;p&gt;以下是一些线程调用举例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;pthread_create：创建新线程并返回标识符，线程标识符为了让其他线程引用该线程&lt;/li&gt;
+&lt;li&gt;pthread_exit：结束调用的线程&lt;/li&gt;
+&lt;li&gt;pthread_join：等待一个特定线程的推出&lt;/li&gt;
+&lt;li&gt;pthread_yield：释放CPU来运行另一个线程&lt;/li&gt;
+&lt;li&gt;pthread_attr_init：创建并初始化一个线程的属性结构&lt;/li&gt;
+&lt;li&gt;pthread_attr_destroy：删除一个线程的属性结构&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;在用户空间中实现线程&#34;&gt;在用户空间中实现线程&lt;/h3&gt;
+&lt;p&gt;有两种主要的方法实现线程包：在用户空间中和在内核中。&lt;/p&gt;
+&lt;p&gt;把整个线程包放在用户空间时，内核对线程包一无所知。从内核的角度看就相当于单线程进程。&lt;/p&gt;
+&lt;p&gt;第一个优点是用户级线程包可以在不支持线程的操作系统上实现。可以用函数库实现线程。&lt;/p&gt;
+&lt;p&gt;线程是在一个&lt;strong&gt;运行时系统&lt;/strong&gt;的上层运行，该运行时系统是一个管理线程的过程的集合。前面已经介绍过pthread_create、pthread_exit等过程。&lt;/p&gt;
+&lt;p&gt;用户空间管理线程时，每个进程需要有其专用的&lt;strong&gt;线程表&lt;/strong&gt;，用来跟踪该进程中的线程。线程表与内核中的进程表类似，不过只记录每个线程的属性。该线程表由运行时系统管理。&lt;/p&gt;
+&lt;p&gt;用户线程的优点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;线程切换要比陷入内核快一个数量级，保存线程状态的过程和调度程序都是本地过程，启动它们比进行内核调用效率高&lt;/li&gt;
+&lt;li&gt;允许每个进程有自己的调度算法。同时用户级i安城具有较好的可扩展性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;缺点：&lt;/p&gt;
+&lt;p&gt;如何实现阻塞系统的问题。使用线程的一个主要目的：要允许每个线程使用阻塞调用，还要避免被阻塞的线程影响其他线程。发生缺页的故障时，在对所需的指令进行定位和读入时，相关进程就被阻塞。一个线程引起页面故障时，内核由于不知道有线程存在，通常会把整个进程阻塞直到磁盘I/O完成为止，尽管其他线程可以正常运行。&lt;/p&gt;
+&lt;p&gt;另一个问题是单独的一个进程内部没有时钟中断，只能等一个线程自动放弃CPU时其他线程才能使用。&lt;/p&gt;
+&lt;h3 id=&#34;在内核中实现线程&#34;&gt;在内核中实现线程&lt;/h3&gt;
+&lt;p&gt;此时无需运行时系统，并且每个进程中也没有线程表。在&lt;strong&gt;内核中&lt;/strong&gt;有用来记录系统中所有线程的&lt;strong&gt;线程表&lt;/strong&gt;。当某个线程希望&lt;strong&gt;创建一个新线程或撤销一个已有线程&lt;/strong&gt;时，它进行一个&lt;strong&gt;系统调用&lt;/strong&gt;，这个系统调用通过对线程表的更新完成线程创建或撤销工作。&lt;/p&gt;
+&lt;p&gt;所有能阻塞线程的调用都以&lt;strong&gt;系统调用&lt;/strong&gt;的形式实现，这与运行时系统相比，&lt;strong&gt;代价十分可观&lt;/strong&gt;。当一个线程阻塞时，内核根据其选择，可以运行同一个进程中另一个线程（若有一个就绪线程）或运行另一个进程中的线程。而在用户级线程中，运行时系统始终运行自己进程中的线程，直到内核剥夺其CPU。&lt;/p&gt;
+&lt;p&gt;内核线程不需要任何新的、非阻塞系统调用。如果某个进程中的线程引起了页面故障，内核可以方便地检查该进程是否有其他就绪的线程，如果有就将其运行。这样做的缺点是&lt;strong&gt;系统调用的代价较大&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;混合实现&#34;&gt;混合实现&lt;/h3&gt;
+&lt;p&gt;多个内核级线程和用户级线程多路复用。一些内核级线程被多个用户级线程多路复用，如同进程的用户级线程一样。每个内核级线程有一个可以轮流使用的用户级线程的集合。&lt;/p&gt;
+&lt;h3 id=&#34;调度程序激活机制&#34;&gt;调度程序激活机制&lt;/h3&gt;
+&lt;p&gt;内核级线程在一些关键点上优于用户级线程，但速度远慢于用户级线程。人们设计了调度程序激活，来模拟内核线程的功能&lt;/p&gt;
+&lt;h3 id=&#34;弹出式线程&#34;&gt;弹出式线程&lt;/h3&gt;
+&lt;p&gt;用来处理到来的消息，例如服务请求。&lt;/p&gt;
+&lt;h3 id=&#34;使单线程代码多线程化&#34;&gt;使单线程代码多线程化&lt;/h3&gt;
+&lt;h2 id=&#34;进程间通信&#34;&gt;进程间通信&lt;/h2&gt;
+&lt;h3 id=&#34;0-基本概念&#34;&gt;0. 基本概念&lt;/h3&gt;
+&lt;p&gt;消息传递小节以前介绍的内容都是&lt;strong&gt;共享存储&lt;/strong&gt;相关的内容，主要是来实现同步和互斥机制。&lt;strong&gt;消息传递&lt;/strong&gt;是第二种通信方式，使用send和receive原语进行传递，它们是系统调用，需要进入内核态。&lt;/p&gt;
+&lt;p&gt;IPC（Inter Process Communication）。以下有一些进程间通信有关的问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个进程如何把&lt;strong&gt;信息传递&lt;/strong&gt;给另一个（共享存储、消息传递）&lt;/li&gt;
+&lt;li&gt;确保两个或更多的进程在关键活动中&lt;strong&gt;不会出现交叉（互斥）&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;正确的顺序（同步）&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;第一个问题对线程比较容易，因为它们共享同一个地址空间。另外两个问题同样适用于线程。&lt;/p&gt;
+&lt;h3 id=&#34;竞争条件&#34;&gt;竞争条件&lt;/h3&gt;
+&lt;p&gt;竞争条件是指两个或多个进程读写某些&lt;strong&gt;共享数据&lt;/strong&gt;，最后的结果取决于进程运行的&lt;strong&gt;精确时序&lt;/strong&gt;。多核增长带来的并行使得使得竞争条件越来越普遍。&lt;/p&gt;
+&lt;h3 id=&#34;临界区&#34;&gt;临界区&lt;/h3&gt;
+&lt;p&gt;涉及共享内存、共享文件及共享任何资源的情况都会引发与前面（竞争条件）类似的错误，我们要通过某种途径来阻止多个进程同时读写共享的数据，即我们需要的是&lt;strong&gt;互斥&lt;/strong&gt;。用一种手段确保当一个进程在使用共享变量或文件时，其他进程不能做同样的操作。&lt;/p&gt;
+&lt;p&gt;我们把对共享内存进行访问的程序片段称为&lt;strong&gt;临界区&lt;/strong&gt;，通过适当安排，使两个进程不可能同时处于临界区中，就能避免竞争条件。&lt;/p&gt;
+&lt;p&gt;这样的要求避免了竞争条件，但它不能保证使用共享数据的并发进程能够&lt;strong&gt;正确和高效地进行协作&lt;/strong&gt;。一个好的解决方案需要满足：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;任何两个进程不能同时处于临界区&lt;/li&gt;
+&lt;li&gt;不应对CPU的速度和数量作任何假设&lt;/li&gt;
+&lt;li&gt;临界区外运行的进程不得阻碍其他进程&lt;/li&gt;
+&lt;li&gt;不得使进程无限期等待进入临界区&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;忙等待的互斥&#34;&gt;忙等待的互斥&lt;/h3&gt;
+&lt;p&gt;这里将会讨论&lt;strong&gt;几种互斥方案&lt;/strong&gt;。当一个进程在临界区中更新共享内存时，其他进程将不会进入其临界区。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;屏蔽中断&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;最简单的方法是每个进程刚刚进入临界区后立即屏蔽所有中断，并在离开前打开中断。&lt;/p&gt;
+&lt;p&gt;这个方案并不好，把屏蔽中断的权力&lt;strong&gt;交给用户&lt;/strong&gt;是不明智的。若一个进程屏蔽中断后不再打开，系统可能终止。&lt;/p&gt;
+&lt;p&gt;另一方面，对内核来说，当其在更新变量或列表的几条指令期间将中断屏蔽很方便。&lt;/p&gt;
+&lt;p&gt;在多核系统中，屏蔽一个CPU中断不会阻止其他CPU干预第一个CPU所做的操作，因此我们需要更加复杂的计划。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;锁变量&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;即408中学习的单标志法。是一种软件实现方法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;严格轮换法（自旋锁）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;进程连续测试一个变量直到出现某个值为止，称为&lt;strong&gt;忙等待&lt;/strong&gt;，这种方式&lt;strong&gt;浪费CPU时间&lt;/strong&gt;，通常应该避免。用于忙等待的锁，称为&lt;strong&gt;自旋锁&lt;/strong&gt;。该方案要求两个进程严格地轮流进入他们的临界区，任何一个进程都不可能在一轮中打印两个文件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Peterson解法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;防止两个进程进行无限等待，又设置了一个变量turn，每个变量在先设置自己的标志flag后再置turn标志。这时再同时检测另一个进程状态标志和允许进入标志，保证两个进程同时要求进入临界时只允许一个进程进入。该算法解决了饥饿现象。该算法是1和3的结合，利用flag实现临界资源的互斥访问，利用turn解决饥饿现象。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;TSL指令&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;该指令需要硬件支持。&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-assembly&#34; data-lang=&#34;assembly&#34;&gt;TSL RX, LOCK
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;称为&lt;strong&gt;测试并加锁&lt;/strong&gt;，将一个&lt;strong&gt;内存字lock&lt;/strong&gt;读到寄存器RX中，然后再在内存地址上存一个&lt;strong&gt;非零值&lt;/strong&gt;。读字和写字操作保证是不可分割的，该指令结束之前其他处理器均不允许访问该内存字。执行TSL指令的CPU将&lt;strong&gt;锁住内存总线&lt;/strong&gt;，以禁止其他CPU再本指令结束之前访问内存。&lt;/p&gt;
+&lt;p&gt;为了使用TSL指令，要使用已给共享变量lock协调对共享内存的访问。当lock为0时任何进程都可以使用TSL指令将其设置为1，并读写共享内存。操作结束时，进程用一条普通move指令将lock的值重新设置为0.&lt;/p&gt;
+&lt;h3 id=&#34;睡眠与唤醒&#34;&gt;睡眠与唤醒&lt;/h3&gt;
+&lt;p&gt;Peterson和TSL或XCHG方法都正确，但有忙等待的缺点。&lt;/p&gt;
+&lt;p&gt;现在来考虑几条&lt;strong&gt;进程间通信原语&lt;/strong&gt;，他们在无法进入临界区时将&lt;strong&gt;阻塞&lt;/strong&gt;，而不是忙等待。最简单的时sleep和wakeup。&lt;/p&gt;
+&lt;h3 id=&#34;信号量&#34;&gt;信号量&lt;/h3&gt;
+&lt;p&gt;semaphore。P操作和V操作。对于信号量的操作都是单一的、不可分割的&lt;strong&gt;原子操作&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;用信号量问题解决生产者、消费者问题。&lt;/p&gt;
+&lt;p&gt;信号量可以用来实现同步、互斥操作。详见408笔记内容。&lt;/p&gt;
+&lt;h3 id=&#34;互斥量mutex锁&#34;&gt;互斥量(mutex锁)&lt;/h3&gt;
+&lt;p&gt;mutex。信号量的简化版本。互斥量是一个可以处于两态之一的变量：解锁和加锁。只需要一个二进制位表示。实际上常用一个整型量，0表示解锁，其他所有制表示枷锁。&lt;/p&gt;
+&lt;p&gt;互斥量使用两个过程。当一个进程或线程需要访问临界区时，调用mutex_lock，如果该互斥量当前是解锁的（临界区可用），则此调用成功，调用线程可以自由进入该区域。另外如果该互斥量已经加锁，则调用线程被阻塞，直到在临界区中的线程完成并调用mutex_unlock。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;条件变量与互斥量&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;管程&#34;&gt;管程&lt;/h3&gt;
+&lt;p&gt;一种高级同步原语。一个管程是一个由过程、变量即数据结构组成的一个集合，共同组成一个特殊的模块或软件包。进程可以任何需要的时候调用管程中的过程，但它们不能再管程之外声明的过程中直接访问管程内的数据结构。&lt;/p&gt;
+&lt;p&gt;任一时刻管程中只能有一个活跃的进程，这一特性使得管程能有效地完成互斥。&lt;/p&gt;
+&lt;h3 id=&#34;消息传递&#34;&gt;消息传递&lt;/h3&gt;
+&lt;p&gt;这种方法使用两条原语send和receive，它们是系统调用。&lt;/p&gt;
+&lt;h2 id=&#34;调度&#34;&gt;调度&lt;/h2&gt;
+&lt;p&gt;其他进程调度算法详见408相关内容。&lt;/p&gt;
+&lt;h3 id=&#34;线程调度&#34;&gt;线程调度&lt;/h3&gt;
+&lt;p&gt;线程调度中考虑支持的是用户级线程还是内核级线程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;用户级线程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;用户级线程的调度&lt;strong&gt;由运行时系统决定&lt;/strong&gt;，一般使用轮转调度和优先级调度。局限是缺乏一个时钟中断运行过长的线程，但由于线程间的合作关系，也不算是问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;内核级线程&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;用户级线程的切换只需要少量的机器指令，而内核级线程需要完整的上下文切换，修改内存映射，使高速缓存失效，导致了若干数量级的延迟。&lt;/p&gt;
+&lt;p&gt;另一方面使用内核级线程时，一旦线程阻塞在I/O上就不需要像在用户级线程中那样将整个进程挂起。&lt;/p&gt;
+&lt;p&gt;从进程A的一个线程切换到进程B的一个线程的代价高于运行进程A的第二个线程（必须修改内存映像，修改高速缓存的内容），内核对此是了解的，可以运用这些信息做出决定。&lt;/p&gt;
+&lt;p&gt;另一个因素是用户级线程可以使用&lt;strong&gt;专为应用程序定制的线程调度程序&lt;/strong&gt;，内核线程不了解每个线程的作用，一般而言，应用定制的线程调度程序能够比内核更好地满足应用的需要。&lt;/p&gt;
+&lt;h2 id=&#34;经典ipc问题&#34;&gt;经典IPC问题&lt;/h2&gt;
+&lt;h3 id=&#34;哲学家就餐问题&#34;&gt;哲学家就餐问题&lt;/h3&gt;
+&lt;h3 id=&#34;读者-写者问题&#34;&gt;读者-写者问题&lt;/h3&gt;
+- https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -973,104 +1155,6 @@ p2.reset(p3.release());	&lt;span style=&#34;color:#888&#34;&gt;//reset释放了p
 &lt;p&gt;这个例子作为标准库相关内容学习的总结。&lt;/p&gt;
 &lt;p&gt;现代C++程序应该尽可能使用智能指针。&lt;/p&gt;
 - https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>C&#43;&#43; Primer——CH11 关联容器</title>
-        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</link>
-        <pubDate>Mon, 15 Nov 2021 15:32:41 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/ -&lt;p&gt;键值对。&lt;/p&gt;
-&lt;p&gt;set和map&lt;/p&gt;
-&lt;h2 id=&#34;使用关联容器&#34;&gt;使用关联容器&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;map： 关联数组，关键字——值。&lt;/li&gt;
-&lt;li&gt;set：关键字的简单集合&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;可以进行列表初始化&lt;/p&gt;
-&lt;h2 id=&#34;关联容器概述&#34;&gt;关联容器概述&lt;/h2&gt;
-&lt;p&gt;关联容器不支持顺序容器的位置相关的操作，例如&lt;code&gt;push_front&lt;/code&gt;，原因是关联容器中的值是按照关键字存储的，这些操作没有意义。&lt;/p&gt;
-&lt;p&gt;另外无序容器还提供调整哈希性能的操作。&lt;/p&gt;
-&lt;h3 id=&#34;定义关联容器&#34;&gt;定义关联容器&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, size_t&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; word_count;	&lt;span style=&#34;color:#888&#34;&gt;//空容器
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;set&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; exclude &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;the&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;but&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;and&amp;#34;&lt;/span&gt;};
-map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, size_t&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; authors &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {{&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Joyce&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;James&amp;#34;&lt;/span&gt;},
-                               {&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Austen&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Jane&amp;#34;&lt;/span&gt;}};
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;初始化一个map时必须提供关键字类型和值类型。&lt;/p&gt;
-&lt;h3 id=&#34;关键字类型的要求&#34;&gt;关键字类型的要求&lt;/h3&gt;
-&lt;p&gt;对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。所提供的操作必须在关键字类型上定义一个严格弱序。&lt;/p&gt;
-&lt;h3 id=&#34;pair类型&#34;&gt;pair类型&lt;/h3&gt;
-&lt;p&gt;定义在头文件utility中。&lt;/p&gt;
-&lt;p&gt;pair的默认构造函数对数据成员进行值初始化。也可以为每个成员提供初始化器。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;pair&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; anon;
-pair&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; author{&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;James&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Joyce&amp;#34;&lt;/span&gt;};
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;pair的数据成员是public的，两个成员分别命名为first和second，可以用普通的成员访问符号来访问它们。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; w.first &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; w.second &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;关联容器操作&#34;&gt;关联容器操作&lt;/h2&gt;
-&lt;p&gt;除了之前在顺序容器P295页列出的类型，关联容器还定义了以下类型：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;key_type&lt;/code&gt;：此容器类型的关键字类型&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;mapped_type&lt;/code&gt;：每个关键字关联的类型，只适用于map&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;value_type&lt;/code&gt;
-&lt;ul&gt;
-&lt;li&gt;对于set而言，与&lt;code&gt;key_type&lt;/code&gt;相同&lt;/li&gt;
-&lt;li&gt;对于map而言，为&lt;code&gt;pair&amp;lt;const key_type, mapped_type&amp;gt;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;我们使用作用域运算符来提取一个类型的成员，例如：&lt;code&gt;map&amp;lt;string, int&amp;gt;::key_value&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;只有map类型才定义了&lt;code&gt;mapped_type&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;关联容器迭代器&#34;&gt;关联容器迭代器&lt;/h3&gt;
-&lt;p&gt;解引用一个关联容器迭代器时，就能得到一个类型为容器的value_type的值的引用。对于&lt;strong&gt;map&lt;/strong&gt;而言，&lt;strong&gt;value_type是一个pair类型&lt;/strong&gt;，其first成员保存&lt;strong&gt;const的关键字&lt;/strong&gt;，second成员保存值。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; map_it &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; word_count.begin();
-&lt;span style=&#34;color:#888&#34;&gt;//*map_it是指向一个pair&amp;lt;const string, size_t&amp;gt;对象的引用
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; map_it&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;first;	&lt;span style=&#34;color:#888&#34;&gt;//打印此元素的关键字
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;map_it&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;first &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;new key&amp;#34;&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//错误，关键字是const的
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;切记，一个map的value_type是一个pair，可以改变pair的值但不能改变关键字成员的值。&lt;/p&gt;
-&lt;p&gt;我们通常不对关联容器使用泛型算法，&lt;strong&gt;关键字是const&lt;/strong&gt;这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法需要向元素写入值，而set类型中的元素是count的，map中元素是pair，其第一个成员是const的。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;遍历关联容器&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;map和set都支持begin和end操作，我们可以用这些函数获取迭代器，然后用迭代器来遍历容器。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; map_it &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; word_count.cbegin();
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (map_it &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; word_count.cend()) {
-    cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; map_it&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;first &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;occurs &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; map_it&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;second &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;times&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-    &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;map_it;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另外我们通常不对关联容器使用泛型算法，关键字是const这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法要写入值。&lt;/p&gt;
-&lt;h3 id=&#34;添加元素&#34;&gt;添加元素&lt;/h3&gt;
-&lt;p&gt;关联容器的&lt;strong&gt;insert成员&lt;/strong&gt;向容器中添加一个元素或一个元素范围，map和set不包含重复关键字，因此插入一个已存在的元素对容器没有任何影响。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;向map添加元素&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;记住元素类型是pair。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;word_count.insert({word, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;});
-word_count.insert(make_pair(word, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;));
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;c.emplace(args)&lt;/code&gt;：对于map和set，只有当元素的关键字不在c中时才插入（或构造）元素。&lt;/p&gt;
-&lt;p&gt;insert返回的值依赖于容器类型和参数，对于不包含重复关键字的容器，添加单一元素的insert和emplace版本返回一个pair，告诉我们插入操作是否成功，pair的first成员是一个&lt;strong&gt;迭代器&lt;/strong&gt;，指向具有给定关键字的元素；second成员是一个&lt;strong&gt;bool值&lt;/strong&gt;，指出元素时插入成功还是已经存在于容器中。&lt;/p&gt;
-&lt;h3 id=&#34;删除元素&#34;&gt;删除元素&lt;/h3&gt;
-&lt;p&gt;关联容器定义了三个版本的erase，与顺序容器一样，我们可以通过传递给erase一个&lt;strong&gt;迭代器&lt;/strong&gt;或一个&lt;strong&gt;迭代器对&lt;/strong&gt;来删除一个元素或一个元素范围。&lt;/p&gt;
-&lt;p&gt;关联容器额外提供一个erase操作，接受一个key_type参数，此版本删除所有匹配给定关键字的元素，返回实际删除的元素的数量。&lt;/p&gt;
-&lt;h3 id=&#34;map的下标操作&#34;&gt;map的下标操作&lt;/h3&gt;
-&lt;p&gt;map和unordered_map容器提供了下标运算符和一个对应的at函数，set类型不支持下标。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, size_t&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; word_count;
-word_count[&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Anna&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c[k]	&lt;span style=&#34;color:#888&#34;&gt;//返回关键字为k的元素；如果k不在c中，添加一个关键字为k的元素，对其进行值初始化
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.at(k)	&lt;span style=&#34;color:#888&#34;&gt;//访问关键字为k的元素，带参数检查；若k不在c中，抛出一个out_of_range异常。
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;访问元素&#34;&gt;访问元素&lt;/h3&gt;
-&lt;p&gt;对于不允许重复关键字的容器，使用find和count没什么区别，但对于重复关键字的容器，count还会做更多的工作：如果元素在容器中，能够统计有多少个元素有相同的关键字。如果不需要技术，虽好使用find。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;set&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; iset &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;};
-iset.find(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//返回一个迭代器，指向key == 1的元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;iset.count(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//返回1
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;iset.count(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//返回0
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;无序容器&#34;&gt;无序容器&lt;/h2&gt;
-&lt;p&gt;C++11 新定义了4个无序关联容器。这些容器不是使用比较运算符来组织元素，而是使用一个&lt;strong&gt;哈希函数&lt;/strong&gt;和关键字类型的**==运算符**。在关键字类型的元素没有明显的序关系的情况下，无序容器是非常有用的。&lt;/p&gt;
-&lt;p&gt;虽然理论上哈希技术能获得更好的平均性能，但在实际中想要达到更好的效果还要进行一些性能测试和调优。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unordered_map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, size_t&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; word_count;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;管理桶&#34;&gt;管理桶&lt;/h3&gt;
-&lt;p&gt;无序容器在存储上组织为&lt;strong&gt;一组桶&lt;/strong&gt;，每个桶保存&lt;strong&gt;零个或多个元素&lt;/strong&gt;。无序容器使用一个&lt;strong&gt;哈希函数&lt;/strong&gt;将元素映射到桶。为了访问一个元素，容器首先计算元素的哈希值，它指出应该搜索哪个桶。容器将具有一个&lt;strong&gt;特定哈希值&lt;/strong&gt;的所有元素都保存在相同的桶中（有点像散列表处理冲突时使用的拉链法）。无需容器的性能依赖于哈希函数的质量和桶的数量。&lt;/p&gt;
-&lt;h3 id=&#34;无需容器对关键字类型的要求&#34;&gt;无需容器对关键字类型的要求&lt;/h3&gt;
-&lt;p&gt;默认情况下，无需容器使用关键字类型的==运算符来比较元素，它们还是用一个&lt;strong&gt;hash&amp;lt;key_type&amp;gt;类型&lt;/strong&gt;的对象来生成每个元素的哈希值。标准库为内置类型（包括指针）提供了hash模板。&lt;/p&gt;
-- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/ - 2019-2021 By Jialong</description>
         </item>
     
     

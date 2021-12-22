@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html><head>
-	<meta name="generator" content="Hugo 0.89.2" />
-<title>Jialong&#39;s Blog</title>
+<title>Cpp内存对齐</title>
 
 
-
-  
 
 
 <meta charset="utf-8">
@@ -13,16 +10,25 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="My HomePage Description">
+<meta name="description" content="">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
 
 
-<meta property="og:title" content="Jialong&#39;s Blog" />
-<meta property="og:description" content="My HomePage Description" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://eternityqjl.top/" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="Cpp内存对齐" />
+<meta property="og:description" content="内存对齐 看下面的小程序，理论上，32位系统下，int占4byte，char占一个byte，那么将它们放到一个结构体中应该占4&#43;1=5byte；但是实际上，通过运行程序得到的结果是8 byte，这就是内存对齐所导致的。
+//32位系统 #include&lt;stdio.h&gt;struct{ int x; char y; }s; int main() { printf(&#34;%d\n&#34;,sizeof(s); // 输出8  return 0; } 现代计算机中内存空间都是按照 byte 划分的，从理论上讲似乎对任何类型的变量的访问可以从任何地址开始，但是实际的计算机系统对基本类型数据在内存中存放的位置有限制，它们会要求这些数据的首地址的值是某个数k（通常它为4或8）的倍数，这就是所谓的内存对齐。
+进行内存对齐的原因 尽管内存是以字节为单位，但是大部分处理器并不是按字节块来存取内存的.它一般会以双字节,四字节,8字节,16字节甚至32字节为单位来存取内存，我们将上述这些存取单位称为内存存取粒度.
+现在考虑4字节存取粒度的处理器取int类型变量（32位系统），该处理器只能从地址为4的倍数的内存开始读取数据。
+默认内存对齐 int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。
+结构体的对齐满足以下原则：
+ 结构体变量的首地址能够被其最宽基本类型成员的大小所整除。 结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。 结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。  #pragma pack()命令 改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。
+改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-22T16:10:44+08:00" />
+<meta property="article:modified_time" content="2021-12-22T16:10:44+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -30,8 +36,15 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Jialong&#39;s Blog"/>
-<meta name="twitter:description" content="My HomePage Description"/>
+<meta name="twitter:title" content="Cpp内存对齐"/>
+<meta name="twitter:description" content="内存对齐 看下面的小程序，理论上，32位系统下，int占4byte，char占一个byte，那么将它们放到一个结构体中应该占4&#43;1=5byte；但是实际上，通过运行程序得到的结果是8 byte，这就是内存对齐所导致的。
+//32位系统 #include&lt;stdio.h&gt;struct{ int x; char y; }s; int main() { printf(&#34;%d\n&#34;,sizeof(s); // 输出8  return 0; } 现代计算机中内存空间都是按照 byte 划分的，从理论上讲似乎对任何类型的变量的访问可以从任何地址开始，但是实际的计算机系统对基本类型数据在内存中存放的位置有限制，它们会要求这些数据的首地址的值是某个数k（通常它为4或8）的倍数，这就是所谓的内存对齐。
+进行内存对齐的原因 尽管内存是以字节为单位，但是大部分处理器并不是按字节块来存取内存的.它一般会以双字节,四字节,8字节,16字节甚至32字节为单位来存取内存，我们将上述这些存取单位称为内存存取粒度.
+现在考虑4字节存取粒度的处理器取int类型变量（32位系统），该处理器只能从地址为4的倍数的内存开始读取数据。
+默认内存对齐 int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。
+结构体的对齐满足以下原则：
+ 结构体变量的首地址能够被其最宽基本类型成员的大小所整除。 结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。 结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。  #pragma pack()命令 改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。
+改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。"/>
 
 
 
@@ -67,7 +80,29 @@
 
 
 
+  
+    <script src="/js/toc.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -86,7 +121,7 @@
 <body>
     	<div id="app"><div ref="sideContainer" class="side-container">
     
-    <a class="a-block nav-head active" href="https://eternityqjl.top">
+    <a class="a-block nav-head false" href="https://eternityqjl.top">
     
         <div class="nav-title">
             Jialong&#39;s Blog
@@ -104,9 +139,11 @@
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="/posts">
+            
+            <a class="a-block nav-link-item active" href="/posts">
                 网志
             </a>
             
@@ -172,6 +209,102 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%86%85%e5%ad%98%e5%af%b9%e9%bd%90" onclick="onNavClick(`#内存对齐-nav`)" id="内存对齐-nav">
+									内存对齐
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%bf%9b%e8%a1%8c%e5%86%85%e5%ad%98%e5%af%b9%e9%bd%90%e7%9a%84%e5%8e%9f%e5%9b%a0" onclick="onNavClick(`#进行内存对齐的原因-nav`)" id="进行内存对齐的原因-nav">
+									进行内存对齐的原因
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%bb%98%e8%ae%a4%e5%86%85%e5%ad%98%e5%af%b9%e9%bd%90" onclick="onNavClick(`#默认内存对齐-nav`)" id="默认内存对齐-nav">
+									默认内存对齐
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#pragma-pack%e5%91%bd%e4%bb%a4" onclick="onNavClick(`#pragma-pack命令-nav`)" id="pragma-pack命令-nav">
+									#pragma pack()命令
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -189,30 +322,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
         </a>
         
         
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    6<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>7
-                </span>
-            </div>
-            
-            
-            <a class="pagination-action" href="/page/5/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_left
-                </i>
-            </a>
-            
-
-            
-            <a class="pagination-action" href="/page/7/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
-        
-        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -225,9 +334,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="/posts">
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
                     网志
                 </a>
                 
@@ -273,6 +384,102 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             
             
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%86%85%e5%ad%98%e5%af%b9%e9%bd%90" onclick="onNavClick(`#内存对齐-nav`)" id="内存对齐-nav">
+									内存对齐
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%bf%9b%e8%a1%8c%e5%86%85%e5%ad%98%e5%af%b9%e9%bd%90%e7%9a%84%e5%8e%9f%e5%9b%a0" onclick="onNavClick(`#进行内存对齐的原因-nav`)" id="进行内存对齐的原因-nav">
+									进行内存对齐的原因
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%bb%98%e8%ae%a4%e5%86%85%e5%ad%98%e5%af%b9%e9%bd%90" onclick="onNavClick(`#默认内存对齐-nav`)" id="默认内存对齐-nav">
+									默认内存对齐
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#pragma-pack%e5%91%bd%e4%bb%a4" onclick="onNavClick(`#pragma-pack命令-nav`)" id="pragma-pack命令-nav">
+									#pragma pack()命令
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
         </div>
     </div>
 </div>
@@ -314,339 +521,120 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div>
 
             <div id="content">
-
 <div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-no-background">
-        
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
             
-            <a href="https://eternityqjl.top/posts/convertpdftosvg/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                PDF转换为SVG
-                            </div>
-                            <div class="post-item-summary">
-                                使用Adobe Acrobat和inscape软件将PDF文档中的矢量图导出为SVG格式的图片
-                            </div>
-                            <div class="post-item-meta">
-    2020-04-08
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            
 
-                        </div>
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    Cpp内存对齐
+                    
+                    <div class="post-meta">
                         
+                        <time itemprop="datePublished">
+                            2021-12-22 16:10
+                        </time>
                         
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/latex-problems1/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                第一次使用LaTex——问题整理
-                            </div>
-                            <div class="post-item-summary">
-                                首次使用LaTex排版实验报告过程中遇到的问题总结
-                            </div>
-                            <div class="post-item-meta">
-    2020-03-29
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
                         
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算机基础</a>
+                                &nbsp;
                         
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/signalsystem-ch01/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                信号与系统学习笔记——Chapter01 信号与系统
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2020-03-14
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
                         
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                数字签名和数字证书
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-12-06
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
-
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                写在2019年的最后一个月的开始
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-12-01
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
-
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                计算机网络学习日志（一）——应用层
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-11-28
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
-
-                        </div>
-                        
-                        
+                            <i class="material-icons" style="">label</i>
                             
-                            <div class="post-item-image-wrapper">
-                            <div class="post-item-image"
+                                <a href="/tags/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90">内存对齐</a>
+                                &nbsp;
                             
-                                 style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/computer_network_ATop-down_Approach_logo.PNG')"
-                            
-                            ></div>
-                            </div>
+                        
                         
                     </div>
                 </div>
+            </div>
             
-        
-            
-            <a href="https://eternityqjl.top/about/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                关于
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-11-28
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h2 id="内存对齐">内存对齐</h2>
+<p>看下面的小程序，理论上，32位系统下，int占4byte，char占一个byte，那么将它们放到一个结构体中应该占4+1=5byte；但是实际上，通过运行程序得到的结果是8 byte，这就是内存对齐所导致的。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#888">//32位系统
+</span><span style="color:#888"></span><span style="color:#579">#include</span><span style="color:#579">&lt;stdio.h&gt;</span><span style="color:#579">
+</span><span style="color:#579"></span><span style="color:#080;font-weight:bold">struct</span>{
+    <span style="color:#339;font-weight:bold">int</span> x;
+    <span style="color:#339;font-weight:bold">char</span> y;
+}s;
 
-                        </div>
-                        
-                        
-                            
-                            <div class="post-item-image-wrapper">
-                            <div class="post-item-image"
-                            
-                                 style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/about_background_1_scuLibrary.jpg')"
-                            
-                            ></div>
-                            </div>
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                GitBook自动发布脚本
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-10-18
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+<span style="color:#339;font-weight:bold">int</span> <span style="color:#06b;font-weight:bold">main</span>()
+{
+    printf(<span style="background-color:#fff0f0">&#34;%d</span><span style="color:#666;background-color:#fff0f0;font-weight:bold">\n</span><span style="background-color:#fff0f0">&#34;</span>,<span style="color:#080;font-weight:bold">sizeof</span>(s);  <span style="color:#888">// 输出8
+</span><span style="color:#888"></span>    <span style="color:#080;font-weight:bold">return</span> <span style="color:#00d;font-weight:bold">0</span>;
+}
+</code></pre></div><p>现代计算机中内存空间都是按照 byte 划分的，从理论上讲似乎对任何类型的变量的访问可以从任何地址开始，但是实际的计算机系统对基本类型数据在内存中存放的位置有限制，它们会要求这些数据的首地址的值是某个数k（通常它为4或8）的倍数，这就是所谓的内存对齐。</p>
+<h2 id="进行内存对齐的原因">进行内存对齐的原因</h2>
+<p>尽管内存是以字节为单位，但是大部分处理器并不是按字节块来存取内存的.它一般会以双字节,四字节,8字节,16字节甚至32字节为单位来存取内存，我们将上述这些存取单位称为<strong>内存存取粒度</strong>.</p>
+<p>现在考虑4字节存取粒度的处理器取int类型变量（32位系统），该处理器只能从地址为4的倍数的内存开始读取数据。</p>
+<h2 id="默认内存对齐">默认内存对齐</h2>
+<p>int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。</p>
+<p>结构体的对齐满足以下原则：</p>
+<ul>
+<li>结构体变量的首地址能够被其<strong>最宽基本类型成员的大小</strong>所整除。</li>
+<li>结构体每个成员相对于结构体首地址的偏移量都是<strong>成员大小的整数倍</strong>，如有需要编译器会在成员之间填充字节。</li>
+<li>结构体的总大小为结构体<strong>最宽基本类型成员大小的整数倍</strong>，如有需要编译器会在最末一个成员后填充字节。</li>
+</ul>
+<h2 id="pragma-pack命令">#pragma pack()命令</h2>
+<p>改命令强制规定了成员的对齐方式，括号内为<strong>对齐的字节数</strong>。若括号内的内容为空，则为默认对齐。</p>
+<p>改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。</p>
 
-                        </div>
-                        
-                        
-                    </div>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-12-22</p>
+                    
                 </div>
+            </div>
             
-        
             
-            <a href="https://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                储存类别、链接和内存管理
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-10-18
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <nav class="post-pagination">
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                C语言结构
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-10-15
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/">
+			上回<br>测试机器大小端的方法
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-        </a>
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
     </div>
 </div>
 
-            </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" href="/page/5/" style="opacity:1">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>6/7</span>
-        </div>
-
-        
-        <a class="pagination-action" href="/page/7/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-</div>
-
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -913,6 +901,9 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },
