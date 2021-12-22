@@ -596,6 +596,102 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 					
 				
 			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e6%9c%ac%e6%9f%a5%e8%af%a2%e7%a8%8b%e5%ba%8f%e5%86%8d%e6%8e%a2" onclick="onNavClick(`#文本查询程序再探-nav`)" id="文本查询程序再探-nav">
+									文本查询程序再探
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e9%9d%a2%e5%90%91%e5%af%b9%e8%b1%a1%e7%9a%84%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88" onclick="onNavClick(`#面向对象的解决方案-nav`)" id="面向对象的解决方案-nav">
+									面向对象的解决方案
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#query_base%e7%b1%bb%e5%92%8cquery%e7%b1%bb" onclick="onNavClick(`#query_base类和query类-nav`)" id="query_base类和query类-nav">
+									Query_base类和Query类
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%b4%be%e7%94%9f%e7%b1%bb" onclick="onNavClick(`#派生类-nav`)" id="派生类-nav">
+									派生类
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#eval%e5%87%bd%e6%95%b0" onclick="onNavClick(`#eval函数-nav`)" id="eval函数-nav">
+									eval函数
+								</a>
+							</li>
+						
+						
+					
+				
+			
 		</ul>
 	</div>
 
@@ -1081,6 +1177,102 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 					
 				
 			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%87%e6%9c%ac%e6%9f%a5%e8%af%a2%e7%a8%8b%e5%ba%8f%e5%86%8d%e6%8e%a2" onclick="onNavClick(`#文本查询程序再探-nav`)" id="文本查询程序再探-nav">
+									文本查询程序再探
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e9%9d%a2%e5%90%91%e5%af%b9%e8%b1%a1%e7%9a%84%e8%a7%a3%e5%86%b3%e6%96%b9%e6%a1%88" onclick="onNavClick(`#面向对象的解决方案-nav`)" id="面向对象的解决方案-nav">
+									面向对象的解决方案
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#query_base%e7%b1%bb%e5%92%8cquery%e7%b1%bb" onclick="onNavClick(`#query_base类和query类-nav`)" id="query_base类和query类-nav">
+									Query_base类和Query类
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%b4%be%e7%94%9f%e7%b1%bb" onclick="onNavClick(`#派生类-nav`)" id="派生类-nav">
+									派生类
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#eval%e5%87%bd%e6%95%b0" onclick="onNavClick(`#eval函数-nav`)" id="eval函数-nav">
+									eval函数
+								</a>
+							</li>
+						
+						
+					
+				
+			
 		</ul>
 	</div>
 
@@ -1219,6 +1411,10 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </span><span style="color:#888"></span>
 };
 </code></pre></div><p>访问说明符的作用是控制派生类从基类继承而来的成员是否对派生类的用户可见。</p>
+<ul>
+<li><code>protected</code>：基类和其派生类，还有友元可以访问</li>
+<li><code>private</code>：只有基类本身和友元可以访问</li>
+</ul>
 <p>如果一个派生是<strong>公有</strong>的，则<strong>基类的公有成员</strong>也是派生类接口的组成部分；此外还能将公有派生类型的对象<strong>绑定到基类的引用或指针</strong>上。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Quote item;		<span style="color:#888">//基类对象
 </span><span style="color:#888"></span>Bulk_quote bulk;	<span style="color:#888">//派生类对象
@@ -1240,7 +1436,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p><strong>派生类的声明</strong></p>
 <p>声明中包含类名但不包含其派生列表。</p>
 <p><strong>防止继承发生</strong></p>
-<p>有时候我们不希望一个类被其它类继承，C++11 提供了防止继承的方法，在类名后赶一个关键字final：</p>
+<p>有时候我们不希望一个类被其它类继承，C++11 提供了防止继承的方法，在类名后加一个关键字final：</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">NoDerived</span> <span style="color:#080;font-weight:bold">final</span> {<span style="color:#888">/* */</span>};	<span style="color:#888">//NoDerived不能作为基类
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Bad</span> <span style="color:#333">:</span> NoDerived {}	<span style="color:#888">//错误
 </span></code></pre></div><h3 id="类型转换与继承">类型转换与继承</h3>
@@ -1254,7 +1450,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h2 id="虚函数">虚函数</h2>
 <h3 id="基本概念">基本概念</h3>
 <p>对虚函数的调用可能在<strong>运行时</strong>才被解析。</p>
-<p>动态绑定只有当我们<strong>通过指针或引用调用虚函数</strong>时才会发生。当我们通过一个具有普通类型（非引用指针）的表达式调用虚函数时，在编译时就会将调用的版本确定下来。</p>
+<p><strong>动态绑定</strong>只有当我们<strong>通过指针或引用调用虚函数</strong>时才会发生。当我们通过一个具有普通类型（非引用指针）的表达式调用虚函数时，在编译时就会将调用的版本确定下来。</p>
 <p>一旦某个函数被声明成虚函数。则在所有派生类中它都是虚函数。所以派生类中的虚函数可以不加virtual关键字。</p>
 <p>派生类中的虚函数的返回类型也必须与基类函数匹配，但存在一个例外，当类的虚函数返回类型是<strong>类本身的指针或引用</strong>时，上述规则无效。</p>
 <p><strong>final和override说明符</strong></p>
@@ -1274,7 +1470,10 @@ sturct <span style="color:#970;font-weight:bold">D1</span> : B {
 </code></pre></div><p>另外还能把某个函数指定为final，这是之后任何尝试覆盖该函数的操作都会引发错误。</p>
 <p>和其他函数一样，虚函数也有默认实参。</p>
 <p><strong>回避虚函数机制</strong></p>
-<p>某些情况下我们希望对虚函数的调用不要进行动态绑定而是强迫其执行虚函数的某个特定版本。使用作用域运算符<code>-&gt;</code>可以实现这一目的。</p>
+<p>某些情况下我们希望对虚函数的调用不要进行动态绑定而是强迫其执行虚函数的某个特定版本。使用作用域运算符<code>::</code>可以实现这一目的。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#888">//强行调用基类中定义的函数版本而不管baseP的动态类型到底是什么
+</span><span style="color:#888"></span><span style="color:#339;font-weight:bold">double</span> undiscounted <span style="color:#333">=</span> baseP<span style="color:#333">-&gt;</span>Quote<span style="color:#333">::</span>net_price(<span style="color:#00d;font-weight:bold">42</span>);
+</code></pre></div><p>通常情况下只有成员函数或友元中的代码才需要使用作用域运算符来回避虚函数机制。</p>
 <h3 id="不能声明为虚函数的函数">不能声明为虚函数的函数</h3>
 <ul>
 <li>构造函数</li>
@@ -1283,20 +1482,22 @@ sturct <span style="color:#970;font-weight:bold">D1</span> : B {
 <li>友元函数。C++不支持友元函数的继承。另外友元函数不属于类的成员函数，不能被继承。</li>
 </ul>
 <h2 id="抽象基类">抽象基类</h2>
-<p>当我们希望继承类不使用某一个虚函数时，可以将其定义为<strong>纯虚函数</strong>，这样可以清晰明了地告诉用户当前这个函数没有实际意义。方式是：</p>
-<p>通过在函数体的位置（在声明语句的分号之前）书写<code>=0</code>。</p>
+<p>当我们希望<strong>派生类不使用某一个虚函数</strong>时，可以将其定义为<strong>纯虚函数</strong>，这样可以清晰明了地告诉用户当前这个函数没有实际意义。方式是：</p>
+<p>通过在派生类虚函数函数体的位置（在声明语句的分号之前）书写<code>=0</code>。</p>
 <p>另外我们也可以为纯虚函数提供定义，不过函数体必须定义在类的外部。</p>
 <p><strong>含有纯虚函数的类是抽象基类</strong></p>
 <p>抽象基类负责定义接口，而后续其他类可以覆盖该接口。我们不能直接创建一个抽象基类的对象。但我们可以定义抽象基类的派生类对象，前提是这些类覆盖了纯虚函数。</p>
 <p><strong>派生类构造函数只初始化它的直接基类</strong></p>
+<p>直接基类通过派生类构造函数传递的参数调用间接基类的构造函数。</p>
+<p>每个类各自控制其对象的初始化过程。</p>
 <h2 id="访问控制与继承">访问控制与继承</h2>
 <p>每个类还分别控制着其成员对于派生类来说是否<strong>可访问</strong>。</p>
 <p><strong>受保护的成员</strong></p>
 <p>protected说明符可看作是public和private中和后的产物：</p>
 <ul>
-<li>和私有成员类似，受保护的成员对于类的用户来说是不可访问的</li>
-<li>和公有成员类似，受保护的成员对于派生类的成员和友元来说是可以访问的</li>
-<li>派生类的成员或友元只能通过<strong>派生类对象</strong>来访问基类的受保护成员（private成员）。<strong>派生类</strong>对于一个基类对象中的受保护成员没有任何访问特权。</li>
+<li>和私有成员类似，受保护的成员对于<strong>类的用户</strong>来说是不可访问的</li>
+<li>和公有成员类似，受保护的成员对于<strong>派生类的成员和友元</strong>来说是可以访问的</li>
+<li>派生类的成员或友元只能通过<strong>派生类对象</strong>来访问基类的受保护成员。<strong>派生类</strong>对于一个基类对象中的受保护成员没有任何访问特权。</li>
 </ul>
 <p>派生类的成员和友元只能访问派生类对象中的基类部分的受保护成员，对于普通的基类对象中的成员不具有特殊的访问权限。</p>
 <p><strong>友元与继承</strong></p>
@@ -1310,15 +1511,24 @@ sturct <span style="color:#970;font-weight:bold">D1</span> : B {
 <p>如果一个类（基类或派生类）没有定义拷贝控制操作，则编译器将为它合成一个版本。</p>
 <h3 id="虚析构函数">虚析构函数</h3>
 <p>基类通常应该定义一个虚析构函数，这样我们就能<strong>动态分配</strong>继承体系中的对象了。</p>
-<p>当我们delete一个动态分配的对象的指针时将执行析构函数。如果该指针指向继承体系中的某个类型，则可能出现指针的静态类型与被删除对象的动态类型不符的情况。所以编译器必须清楚它应该执行的是哪个类的析构函数。所以与其他函数一样，通过在基类中将析构函数定义为虚函数确保执行正确的析构函数版本：</p>
+<p>当我们delete一个动态分配的对象的指针时将执行析构函数。如果该指针指向继承体系中的某个类型，则可能出现指针的静态类型与被删除对象的动态类型不符的情况。所以编译器必须清楚它应该执行的是<strong>哪个类的析构函数</strong>。所以与其他函数一样，通过在基类中将析构函数定义为虚函数确保执行正确的析构函数版本：</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Quote</span> {
 <span style="color:#080;font-weight:bold">public</span><span style="color:#333">:</span>
 	<span style="color:#080;font-weight:bold">virtual</span> <span style="color:#333">~</span>Quote() <span style="color:#333">=</span> <span style="color:#080;font-weight:bold">default</span>;	<span style="color:#888">//动态绑定析构函数
 </span><span style="color:#888"></span>}
 </code></pre></div><p>虚析构函数将阻止合成移动操作。</p>
 <h3 id="合成拷贝控制与继承">合成拷贝控制与继承</h3>
+<p>基类或派生类的合成拷贝控制成员的行为和其他合成的构造函数、赋值运算符或析构函数类似：他们对类本身的成员依次进行初始化、赋值或销毁的操作。</p>
 <h3 id="派生类的拷贝控制成员">派生类的拷贝控制成员</h3>
+<ul>
+<li>当派生类定义了拷贝或移动操作时，该操作负责拷贝或移动包括基类部分成员在内的整个对象。</li>
+<li>派生类析构函数：派生类析构函数先执行，然后执行基类的析构函数。</li>
+</ul>
 <h3 id="继承的构造函数">继承的构造函数</h3>
+<ul>
+<li>C++11新标准中，派生类可以重用其直接基类定义的构造函数。</li>
+<li>如<code>using Disc_quote::Disc_quote;</code>，注明了要继承<code>Disc_quote</code>的构造函数。</li>
+</ul>
 <h2 id="容器与继承">容器与继承</h2>
 <p>当我们使用容器存放<strong>继承体系中的对象</strong>时，通常必须采用<strong>间接存储</strong>的方式，因为不允许在容器中保存不同类型的元素。</p>
 <p>当派生类对象被赋值给基类对象时，其中的派生类部分将被切掉，因此容器和存在继承关系的类型无法兼容。</p>
@@ -1327,6 +1537,33 @@ sturct <span style="color:#970;font-weight:bold">D1</span> : B {
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">vector<span style="color:#333">&lt;</span>shared_ptr<span style="color:#333">&lt;</span>Quote<span style="color:#333">&gt;&gt;</span> basket;
 basket.push_back(make_shared<span style="color:#333">&lt;</span>Bulk_quote<span style="color:#333">&gt;</span>(<span style="background-color:#fff0f0">&#34;0-121&#34;</span>, <span style="color:#00d;font-weight:bold">50</span>));
 </code></pre></div><p>派生类的智能指针和基类的智能指针可以相互转换。</p>
+<h2 id="文本查询程序再探">文本查询程序再探</h2>
+<p>这个程序系统将支持如下查询形式：</p>
+<ul>
+<li>单词查询</li>
+<li>逻辑非查询</li>
+<li>逻辑或查询</li>
+<li>逻辑与查询</li>
+</ul>
+<p>另外还希望能够混合使用这些运算符。</p>
+<h3 id="面向对象的解决方案">面向对象的解决方案</h3>
+<p>将集中不同的查询建模成相互独立的类，这些类共享一个公共基类：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">WordQuery
+NotQuery
+OrQuery
+AndQuery
+</code></pre></div><p>这些类将只包含两个操作：</p>
+<ul>
+<li>eval</li>
+<li>rep</li>
+</ul>
+<p><strong>抽象基类</strong></p>
+<p>定义一个名为<code>Query_base</code>的抽象基类。我们将从<code>Query_base</code>直接派生出<code>WordQuery</code>和<code>NotQuery</code>。<code>AndQuery</code>和<code>OrQuery</code>具有系统中其他类所不具备的特殊属性：它们各自包含两个运算对象。我们另外定义一个名为<code>BinaryQuery</code>的抽象基类，该抽象基类用于表示含有两个运算对象的查询。<code>AndQuery</code>和<code>OrQuery</code>继承自<code>BinaryQuery</code>，<code>BinaryQuery</code>继承自<code>Query_base</code>。</p>
+<p><strong>将层次关系隐藏于接口中</strong></p>
+<p>我们定义一个名为Query的接口类，由其负责隐藏整个继承体系。</p>
+<h3 id="query_base类和query类">Query_base类和Query类</h3>
+<h3 id="派生类">派生类</h3>
+<h3 id="eval函数">eval函数</h3>
 
                     
                     <HR width="100%" id="EOF">

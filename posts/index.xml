@@ -265,7 +265,7 @@ class Bulk_quote : public Quote { public: double net_price(std::size_t n)	const 
 定义派生类 派生类必须通过使用类派生列表明确指出从哪个（哪些）基类继承而来的。
 类派生列表的形式：冒号后紧跟以逗号分隔的基类列表，每个基类前面可以有三个访问说明符中的一个：public、protected或private。
 class Bulk_quote : public Quote {	//Bulk_quote继承自Quote  }; 访问说明符的作用是控制派生类从基类继承而来的成员是否对派生类的用户可见。
-如果一个派生是公有的，则基类的公有成员也是派生类接口的组成部分；此外还能将公有派生类型的对象绑定到基类的引用或指针上。
+ protected：基类和其派生类，还有友元可以访问 private：只有基类本身和友元可以访问  如果一个派生是公有的，则基类的公有成员也是派生类接口的组成部分；此外还能将公有派生类型的对象绑定到基类的引用或指针上。
 Quote item;	//基类对象 Bulk_quote bulk;	//派生类对象 Quote *p = &amp;amp;item;	//p指向Quote对象 p = &amp;amp;bulk;	//p指向bulk的Quote部分 Quote &amp;amp;r = bulk;	//r绑定到bulk的Quote部分 派生类可以在它覆盖的函数前使用virtual关键字，但不是非得这样做。</description>
     </item>
     
