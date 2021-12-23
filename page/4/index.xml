@@ -6,9 +6,103 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 22 Dec 2021 16:10:44 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 23 Dec 2021 15:30:08 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>C&#43;&#43; Primer——CH10 泛型算法</title>
+        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE6%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/</link>
+        <pubDate>Sun, 18 Jul 2021 09:16:32 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE6%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE6%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/ -&lt;p&gt;用来&lt;strong&gt;操纵容器&lt;/strong&gt;。泛型算法独立于任何特定容器，可用于不同类型的容器和不同类型的元素。这些算法是一些&lt;strong&gt;经典算法的公共接口&lt;/strong&gt;，例如排序和搜索。&lt;/p&gt;
+&lt;h2 id=&#34;概述&#34;&gt;概述&lt;/h2&gt;
+&lt;p&gt;大多数算法定义在&lt;code&gt;algorithm&lt;/code&gt;头文件中，标准库还在&lt;code&gt;numeric&lt;/code&gt;中定义了一组数值泛型算法。&lt;/p&gt;
+&lt;p&gt;一般这些算法并不直接操作容器，而是遍历由&lt;strong&gt;两个迭代器指定的一个元素范围&lt;/strong&gt;来进行操作。&lt;/p&gt;
+&lt;p&gt;算法不依赖于容器，但依赖于元素类型的操作。&lt;/p&gt;
+&lt;h2 id=&#34;基本算法&#34;&gt;基本算法&lt;/h2&gt;
+&lt;h3 id=&#34;只读算法&#34;&gt;只读算法&lt;/h3&gt;
+&lt;p&gt;只读取输入范围的元素，&lt;strong&gt;不改变元素&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;accumulate&lt;/code&gt;算法：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;其定义在头文件numeric中，接受三个参数，前两个指出了需要求和元素的范围，第三个参数是和的初值。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sum &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; accumulate(vec.cbegin(), vec.cend(), &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//对vec中元素求和，和的初值设为0
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第三个参数的类型决定了函数中使用哪个&lt;strong&gt;加法运算符&lt;/strong&gt;以及&lt;strong&gt;返回值的类型&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;即序列中的元素必须与第三个参数&lt;strong&gt;匹配&lt;/strong&gt;或&lt;strong&gt;能够转换为第三个参数的类型&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;equal&lt;/code&gt;算法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;确定两个序列的值是否保存相同的值，将第一个序列的每个元素与第二个序列的对应元素比较。该算法接受三个迭代器，前两个表示第一个序列的范围，第三个表示第二个序列的首元素。&lt;/p&gt;
+&lt;p&gt;equal利用迭代器完成操作，因此我们可以调用equal来比较两个不同类型容器中的元素，并且元素类型也可以不同。&lt;/p&gt;
+&lt;h3 id=&#34;写容器元素算法&#34;&gt;写容器元素算法&lt;/h3&gt;
+&lt;p&gt;使用这类算法要保证序列原大小&lt;strong&gt;不小于&lt;/strong&gt;算法写入的元素数目。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;fill&lt;/code&gt;算法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;fill接受&lt;strong&gt;一对迭代器&lt;/strong&gt;和&lt;strong&gt;一个值&lt;/strong&gt;，将这个值赋予输入序列中的每个元素。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;fill(vec.begin(), vec.end(), &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;不能在空容器上调用fill_n.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;back_inserter插入迭代器&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;接受一个&lt;strong&gt;指向容器的引用&lt;/strong&gt;，返回一个与该容器绑定的插入迭代器。通过此迭代器赋值时，赋值运算符会调用push_back将一个具有给定值的元素添加到容器中。&lt;/p&gt;
+&lt;p&gt;back_inserter是一个定义在头文件iterator中的函数。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; vec;	&lt;span style=&#34;color:#888&#34;&gt;//空vector
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; it &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; back_inserter(vec);	&lt;span style=&#34;color:#888&#34;&gt;//通过其赋值将元素添加到vec中
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;it &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;拷贝算法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;copy是另一个向目的位置迭代器指向的输出序列中的元素写入数据的算法。&lt;/p&gt;
+&lt;p&gt;该算法接受三个迭代器，前两个表示一个输入范围，第三个表示目的序列的起始位置。&lt;/p&gt;
+&lt;h3 id=&#34;重排容器元素算法&#34;&gt;重排容器元素算法&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;&lt;code&gt;sort&lt;/code&gt;、&lt;code&gt;unique&lt;/code&gt;函数&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;elimDups&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;words)
+{
+	&lt;span style=&#34;color:#888&#34;&gt;//按字典排序words, 以便查找重复单词
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	sort(words.begin(), words.end());
+	&lt;span style=&#34;color:#888&#34;&gt;//unique重排输入范围，使每个单词只出现一次
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; end_unique &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; unique(words.begin(), words.end());
+	&lt;span style=&#34;color:#888&#34;&gt;//使用erase操作删除重复单词
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	words.erase(end_unique, words.end());
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;sort算法接受两个迭代器，表示要排序的元素范围。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;使用unique&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;unique算法重排输入元素，将相邻的重复项消除，并返回一个指向不重复值范围末尾的迭代器。&lt;/p&gt;
+&lt;h2 id=&#34;定制操作&#34;&gt;定制操作&lt;/h2&gt;
+&lt;p&gt;很多算法会比较输入序列中的元素。默认情况下，这类算法使用&amp;lt;或==运算符完成比较。标准库还定义了额外的版本，允许我们提供自己定义的操作来代替默认运算符。&lt;/p&gt;
+&lt;h3 id=&#34;向算法传递函数&#34;&gt;向算法传递函数&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;谓词&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;谓词是一个可调用的&lt;strong&gt;表达式&lt;/strong&gt;，其返回结果是一个能&lt;strong&gt;用作条件的值&lt;/strong&gt;。标准库算法使用的谓词分为：一元谓词和二元谓词。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;isShorter&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s1, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s2) {
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; s1.size() &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; s2.size();
+}
+sort(words.begin(), words.end(), isShorter);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;stable_sort&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;该排序算法可以保持等长元素间的字典序。&lt;/p&gt;
+&lt;h3 id=&#34;lambda表达式&#34;&gt;lambda表达式&lt;/h3&gt;
+&lt;h3 id=&#34;lambda捕获和返回&#34;&gt;lambda捕获和返回&lt;/h3&gt;
+&lt;h3 id=&#34;参数绑定&#34;&gt;参数绑定&lt;/h3&gt;
+&lt;h2 id=&#34;再探迭代器&#34;&gt;再探迭代器&lt;/h2&gt;
+&lt;p&gt;除了为每个容器定义的迭代器之外，标准库还在头文件iterator中定义了额外几种迭代器，包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;插入迭代器：这些迭代器被绑定到一个容器上，可以用来向容器插入元素。&lt;/li&gt;
+&lt;li&gt;流迭代器：这些迭代器被绑定到输入输出流上，可用来遍历所关联的IO流&lt;/li&gt;
+&lt;li&gt;反向迭代器：这些迭代器向后移动而不是向前移动&lt;/li&gt;
+&lt;li&gt;移动迭代器：（13.6.2节介绍）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;插入迭代器&#34;&gt;插入迭代器&lt;/h3&gt;
+&lt;h3 id=&#34;iostream迭代器&#34;&gt;iostream迭代器&lt;/h3&gt;
+&lt;h3 id=&#34;反向迭代器&#34;&gt;反向迭代器&lt;/h3&gt;
+&lt;h2 id=&#34;泛型算法结构&#34;&gt;泛型算法结构&lt;/h2&gt;
+&lt;p&gt;任何算法最基本的特征是其要求迭代器提供哪些操作。算法所要求的迭代器操作可以分为5个迭代器类别：&lt;/p&gt;
+&lt;p&gt;输入、输出、前向、双向、随机访问迭代器&lt;/p&gt;
+&lt;h2 id=&#34;特定容器算法&#34;&gt;特定容器算法&lt;/h2&gt;
+&lt;p&gt;链表类型list和forward_list定义了几个成员函数形式的算法。他们定义了几个成员函数形式的算法。它们定义了独有的sort、merge、remove、reverse和unique。将以成员函数的形式使用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;splice成员&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;链表类型还定义了splice算法，该算法是链表数据结构所独有的，因此不需要通用版本。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;lst.splice(args)
+flst.splice_after(args)
+(p, lst2)	&lt;span style=&#34;color:#888&#34;&gt;//p是一个指向lst中元素的迭代器或一个指向flst首前位置的迭代器。函数将lst2所有元素移动到lst中p之前的位置或flst中p之后的位置。将元素从lst2中删除。lst2的类型必须与lst或lst相同，且不能是同一个链表。
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;(p, lst2, p2)
+(p, lst2, b, e)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;链表特有的操作会改变容器&lt;/strong&gt;&lt;/p&gt;
+- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE6%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1866,144 +1960,6 @@ plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
 &lt;li&gt;其他极少使用的Unicode辅助平面的字符使用四字节编码。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;UTF-8是ASCII的一个超集。因为一个纯ASCII字符串也是一个合法的UTF-8字符串，所以现存的ASCII文本不需要转换。为传统的扩展ASCII字符集设计的软件通常可以不经修改或很少修改就能与UTF-8一起使用。&lt;/p&gt;- https://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>机器学习——k近邻(k-NN)算法</title>
-        <link>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</link>
-        <pubDate>Wed, 12 May 2021 14:57:17 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ -&lt;h2 id=&#34;基本概念及原理&#34;&gt;基本概念及原理&lt;/h2&gt;
-&lt;p&gt;k近邻(k-nearest neighbors)算法是一种基本分类和回归方法。&lt;/p&gt;
-&lt;p&gt;该算法是给定一个&lt;strong&gt;训练数据集&lt;/strong&gt;，对新的&lt;strong&gt;输入测试集&lt;/strong&gt;，在训练集中找到与该测试实例&lt;strong&gt;最邻近&lt;/strong&gt;的k个实例，这k个实例的多数属于某个类，就把该输入实例分类到这个类中。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/220px-KnnClassification.svg.png&#34; alt=&#34;220px-KnnClassification.svg&#34;&gt;&lt;/p&gt;
-&lt;p&gt;有两类不同样本分别用红色三角形和蓝色正方形表示，途中绿色圆形为待分类的数据。这时我们根据k-近邻的思想进行分类。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;当k=3时，判定样本属于红色三角形这一类；&lt;/li&gt;
-&lt;li&gt;当k=5时，判定样本属于蓝色正方形这一类。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;k的选取及特征归一化&#34;&gt;k的选取及特征归一化&lt;/h2&gt;
-&lt;h3 id=&#34;选取k值及其影响&#34;&gt;选取k值及其影响&lt;/h3&gt;
-&lt;p&gt;选取较小的k值，整体模型会变得更加复杂，容易发生&lt;strong&gt;过拟合&lt;/strong&gt;。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;过拟合就是在训练集上准确率非常高，而在测试集上准确率低。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;k太小会导致过拟合，容易将一些噪声学习到模型中。&lt;/p&gt;
-&lt;p&gt;选取较大的k值，整体模型变得简单，因为当k等于训练样本个数时，无论输入什么测试实例，都将简单地预测它属于&lt;strong&gt;在训练实例中最多的类&lt;/strong&gt;，相当于没有训练模型。&lt;/p&gt;
-&lt;p&gt;所以，模型即不能过大也不能过小，一般选取一个较小的数值，通过采取&lt;strong&gt;交叉验证法&lt;/strong&gt;来选取最优的k值，即通过实验调参选取。&lt;/p&gt;
-&lt;h3 id=&#34;距离的度量&#34;&gt;距离的度量&lt;/h3&gt;
-&lt;p&gt;我们通常使用常见的&lt;strong&gt;欧氏距离&lt;/strong&gt;来衡量高维空间中两个点的距离，即：
-$$
-L_2(x_i,x_j)=(\sum_{l=1}^{n}| x_i^{(l)}-x_j^{(l)} |)^{\frac{1}{2}}
-$$
-其中，$x_i=(x_i^{(1)}, x_i^{(2)},&amp;hellip;,x_i^{(n)})$，同理$x_j$。&lt;/p&gt;
-&lt;h3 id=&#34;特征归一化的必要性&#34;&gt;特征归一化的必要性&lt;/h3&gt;
-&lt;p&gt;如果不进行归一化，让每个特征都同等重要，就会偏向于第一维度的特征，导致多个特征并不是等价重要的，会导致距离计算错误，最终导致预测结果错误。&lt;/p&gt;
-&lt;p&gt;进行KNN分类使用的样本特征是${ (x_{i1}, x_{i2},&amp;hellip;,x_{in}) }&lt;em&gt;{i=1}^m$，取每个轴上的最大值减去最小值得：
-$$
-M_j=\max&lt;/em&gt;{i=1,&amp;hellip;,m}x_{ij}-\min_{i=1,&amp;hellip;,m}x_{ij}
-$$
-并在计算距离时将每一个坐标轴除以相应的$M_j$进行归一化，即：
-$$
-d((y_1,&amp;hellip;,y_n),(z_1,&amp;hellip;,z_n))=\sqrt{\sum_{j=1}^{n}(\frac{y_j}{M_j}-\frac{z_j}{M_j})^2}
-$$&lt;/p&gt;
-&lt;h2 id=&#34;k-nn实现iris鸢尾花数据集聚类&#34;&gt;k-NN实现Iris鸢尾花数据集聚类&lt;/h2&gt;
-&lt;h3 id=&#34;k-means聚类算法的实现步骤&#34;&gt;K-Means聚类算法的实现步骤：&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;为待聚类的点随机寻找几个聚类中心(类别个数)；&lt;/li&gt;
-&lt;li&gt;计算每个点到聚类中心的距离，将各个点归类到离该点最近的聚类中去；&lt;/li&gt;
-&lt;li&gt;计算每个聚类中所有点的坐标平均值，并将这个平均值作为新的聚类中心，反复执行上一步和该步，直到聚类中心不再进行大范围移动或聚类迭代次数达到要求位置。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;代码实现&#34;&gt;代码实现&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pandas&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;pd&lt;/span&gt;
-
-data &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pd&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;read_csv(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data&amp;#39;&lt;/span&gt;, header&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;None&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# 下载iris数据集&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;#data = pd.read_csv(&amp;#39;./data/iris.data.csv&amp;#39;, header=None)&lt;/span&gt;
-data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;columns &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;sepal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;sepal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;petal length&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;petal width&amp;#39;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;species&amp;#39;&lt;/span&gt;]    &lt;span style=&#34;color:#888&#34;&gt;# 特征及类别名称&lt;/span&gt;
-
-X &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;values
-y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; data&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;iloc[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;values
-y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-setosa&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;                                 &lt;span style=&#34;color:#888&#34;&gt;# Iris-setosa 输出label用0表示&lt;/span&gt;
-y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-versicolor&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;                             &lt;span style=&#34;color:#888&#34;&gt;# Iris-versicolor 输出label用1表示&lt;/span&gt;
-y[y &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Iris-virginica&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;                              &lt;span style=&#34;color:#888&#34;&gt;# Iris-virginica 输出label用2表示&lt;/span&gt;
-X_setosa, y_setosa &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]                     &lt;span style=&#34;color:#888&#34;&gt;# Iris-setosa 4个特征&lt;/span&gt;
-X_versicolor, y_versicolor &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;]         &lt;span style=&#34;color:#888&#34;&gt;# Iris-versicolor 4个特征&lt;/span&gt;
-X_virginica, y_virginica &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;], y[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;150&lt;/span&gt;]         &lt;span style=&#34;color:#888&#34;&gt;# Iris-virginica 4个特征&lt;/span&gt;
-
-
-&lt;span style=&#34;color:#888&#34;&gt;# training set&lt;/span&gt;
-X_setosa_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
-y_setosa_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
-X_versicolor_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
-y_versicolor_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
-X_virginica_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;, :]
-y_virginica_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;]
-X_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_train, X_versicolor_train, X_virginica_train])
-y_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_train, y_versicolor_train, y_virginica_train])
-
-&lt;span style=&#34;color:#888&#34;&gt;# validation set&lt;/span&gt;
-X_setosa_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
-y_setosa_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
-X_versicolor_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
-y_versicolor_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
-X_virginica_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;, :]
-y_virginica_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;30&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;]
-X_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_val, X_versicolor_val, X_virginica_val])
-y_val &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_val, y_versicolor_val, y_virginica_val])
-
-&lt;span style=&#34;color:#888&#34;&gt;# test set&lt;/span&gt;
-X_setosa_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
-y_setosa_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_setosa[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
-X_versicolor_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
-y_versicolor_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_versicolor[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
-X_virginica_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, :]
-y_virginica_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y_virginica[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;40&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;]
-X_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;vstack([X_setosa_test, X_versicolor_test, X_virginica_test])
-y_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;hstack([y_setosa_test, y_versicolor_test, y_virginica_test])
-
-
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;KNearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
-   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
-       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;pass&lt;/span&gt;
-
-   &lt;span style=&#34;color:#888&#34;&gt;# 训练函数&lt;/span&gt;
-   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;train&lt;/span&gt;(self, X, y):
-       self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X
-       self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;y_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y
-
-   &lt;span style=&#34;color:#888&#34;&gt;# 预测函数&lt;/span&gt;
-   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;predict&lt;/span&gt;(self, X, k&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;):
-       &lt;span style=&#34;color:#888&#34;&gt;# 计算L2距离&lt;/span&gt;
-       num_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
-       num_train &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]
-       dists &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros((num_test, num_train))    &lt;span style=&#34;color:#888&#34;&gt;# 初始化距离函数&lt;/span&gt;
-       &lt;span style=&#34;color:#888&#34;&gt;# because(X - X_train)*(X - X_train) = -2X*X_train + X*X + X_train*X_train, so&lt;/span&gt;
-       d1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(X, self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)    &lt;span style=&#34;color:#888&#34;&gt;# shape (num_test, num_train)&lt;/span&gt;
-       d2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(X), axis&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, keepdims&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;True&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# shape (num_test, 1)&lt;/span&gt;
-       d3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;X_train), axis&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)    &lt;span style=&#34;color:#888&#34;&gt;# shape (1, num_train)&lt;/span&gt;
-       dist &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(d1 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; d2 &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; d3)
-       &lt;span style=&#34;color:#888&#34;&gt;# 根据K值，选择最可能属于的类别&lt;/span&gt;
-       y_pred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros(num_test)
-       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(num_test):
-           dist_k_min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argsort(dist[i])[:k]    &lt;span style=&#34;color:#888&#34;&gt;# 最近邻k个实例位置&lt;/span&gt;
-           y_kclose &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;y_train[dist_k_min]     &lt;span style=&#34;color:#888&#34;&gt;# 最近邻k个实例对应的标签&lt;/span&gt;
-           y_pred[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argmax(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;bincount(y_kclose&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;tolist()))    &lt;span style=&#34;color:#888&#34;&gt;# 找出k个标签中从属类别最多的作为预测类别&lt;/span&gt;
-
-       &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; y_pred
-
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; __name__ &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
-    KNN &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; KNearestNeighbor()
-    KNN&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(X_train, y_train)
-    y_pred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; KNN&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(X_test, k&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;)
-    accuracy &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(y_pred &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; y_test)
-    &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;测试集预测准确率：&lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; accuracy)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;结果如下：&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;测试集预测准确率：1.000000
-&lt;/code&gt;&lt;/pre&gt;- https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0k%E8%BF%91%E9%82%BB-k-nn-%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
         </item>
     
     

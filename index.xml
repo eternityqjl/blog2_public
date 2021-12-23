@@ -6,9 +6,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 22 Dec 2021 16:10:44 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 23 Dec 2021 15:30:08 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>AVL树及与红黑树、B/B&#43;树的对比</title>
+        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/</link>
+        <pubDate>Thu, 23 Dec 2021 15:30:08 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/ -&lt;p&gt;&lt;a href=&#34;https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/&#34;&gt;红黑树&lt;/a&gt;和&lt;a href=&#34;https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb+%E6%A0%91/&#34;&gt;B/B+树&lt;/a&gt;详见这两篇博客。&lt;/p&gt;
+&lt;h2 id=&#34;avl树&#34;&gt;AVL树&lt;/h2&gt;
+&lt;p&gt;AVL树为平衡二叉树，是以其发明者的名字命名的。任一结点对应的两棵子树的最大高度差为1。查找、插入和删除在平均和最坏的情况下的时间复杂度都为$O(\log n)$。&lt;/p&gt;
+&lt;p&gt;增加和删除元素操作可能需要借由一次或多次树旋转，以实现树的重新平衡。&lt;/p&gt;
+&lt;p&gt;与红黑树相比，AVL树是严格的平衡二叉树。&lt;/p&gt;
+&lt;p&gt;局限性：由于维护这种高度平衡所付出的代价比从中获得的效率收益还大。故而实际的应用不多，更多的地方是用追求局部而不是非常严格整体平衡的红黑树。当然，如果应用场景中对插入删除不频繁，只是对查找要求较高，那么AVL还是较优于红黑树。&lt;/p&gt;
+&lt;h2 id=&#34;红黑树&#34;&gt;红黑树&lt;/h2&gt;
+&lt;p&gt;一种二叉查找树，确保没有一条路径会比其他路径长出两倍。是一种弱平衡树。在插入和删除的操作中的旋转次数相对于AVL树来说较少。&lt;/p&gt;
+&lt;h2 id=&#34;bb树&#34;&gt;B/B+树&lt;/h2&gt;
+&lt;p&gt;B/B+树是为了磁盘或其他存储设备设计的平衡多路查找树，与红黑树相比，在相同结点的情况下，一颗B/B+树的高度远远小于红黑树。B树的操作效率主要取决于访问磁盘的次数，关键字数相同的情况下，B树高度越小，磁盘I/O所花的时间越少。&lt;/p&gt;
+&lt;p&gt;B+树是应文件系统所需而产生的一种B树的变形树，非叶子结点只保存索引，不保存实际的数据，数据都保存在叶子结点中。相当于是文件系统的查找。&lt;/p&gt;
+&lt;p&gt;另外B+树支持顺序查找而B树不支持，数据库中经常需要遍历一定范围内的数据，因此采用B+树比采用B树的效率更高。&lt;/p&gt;
+- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -688,35 +711,6 @@ $H(key)$为散列函数；i=0,1,2,&amp;hellip;,k；$m$表示散列表表长；$d
 &lt;p&gt;基数排序可以看作是多轮桶排序，每个数位上都进行一次桶排序。&lt;/p&gt;
 &lt;p&gt;当使用2进制时， k=2 最小，位数 d 最大，时间复杂度 O(nd) 会变大，空间复杂度 O(n+k) 会变小。当用最大值作为基数时， k=maxV 最大， d=1 最小，此时时间复杂度 O(nd) 变小，但是空间复杂度 O(n+k) 会急剧增大，此时基数排序退化成了计数排序。&lt;/p&gt;
 - https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E6%A1%B6%E6%8E%92%E5%BA%8F_%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F_%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>TCP三次握手四次挥手详解</title>
-        <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/</link>
-        <pubDate>Thu, 09 Dec 2021 09:31:30 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/ -&lt;h2 id=&#34;三次握手建立连接&#34;&gt;三次握手建立连接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;第一步：客户机的TCP向服务器的TCP发送连接请求报文段。该报文段的同步位&lt;strong&gt;SYN置为1&lt;/strong&gt;，同时选择一个初始序号&lt;strong&gt;seq=x&lt;/strong&gt;。SYN报文段&lt;strong&gt;不能携带数据&lt;/strong&gt;，但要&lt;strong&gt;消耗掉一个序号&lt;/strong&gt;。这是客户机进入&lt;strong&gt;SYN-SENT同步已发送&lt;/strong&gt;状态。&lt;/li&gt;
-&lt;li&gt;第二步：服务器的TCP收到连接请求后，如果同意建立连接，则向客户机发回确认，并为该TCP分配缓存和变量。在确认报文段中，&lt;strong&gt;SYN和ACK都置为1&lt;/strong&gt;，确认号是&lt;strong&gt;ack=x+1&lt;/strong&gt;，同时为自己选择一个初始序号&lt;strong&gt;seq=y&lt;/strong&gt;。确认报文&lt;strong&gt;不能携带数据&lt;/strong&gt;，但也要&lt;strong&gt;消耗一个序号&lt;/strong&gt;。此时服务器进入&lt;strong&gt;SYN-RCVD同步收到&lt;/strong&gt;状态。&lt;/li&gt;
-&lt;li&gt;第三步：客户机收到确认报文后，还要向服务器给出确认，并为该TCP连接&lt;strong&gt;分配缓存和变量&lt;/strong&gt;。确认报文段的&lt;strong&gt;ACK置为1&lt;/strong&gt;，确认号&lt;strong&gt;ack=y+1&lt;/strong&gt;，序号&lt;strong&gt;seq=x+1&lt;/strong&gt;.该报文段&lt;strong&gt;可以携带数据&lt;/strong&gt;，若&lt;strong&gt;不携带则不消耗序号&lt;/strong&gt;。此时TCP客户进程进入&lt;strong&gt;ESTABLISH已建立连接&lt;/strong&gt;状态。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;三次握手的原因&#34;&gt;三次握手的原因&lt;/h3&gt;
-&lt;p&gt;第一次客户端发送SYN-SENT后可能在网络中被阻塞，导致超时，客户端重新传输该报文，并与服务器建立连接，之后传输数据然后关闭连接。当被阻塞的连接到达服务器时，服务器认为这个一条新建立的连接，并向客户端发送ACK确认，但客户端将其丢弃，服务器接收不到回复，空等待，造成了资源的浪费。&lt;/p&gt;
-&lt;p&gt;另一种说法：tcp三次握手只要是为了确认线路的连通，第一次客户端发送到服务端，那么服务端就可以知道客户端的发送没有问题，但客户端不知道服务器的情况，第二次服务器发送ACK给客户端，客户端收到了证明服务端的收发都没有问题的，但服务端不知道客户端的接收情况，所以第三次是客户端再回给服务器一个ACK，服务器收到后就可以确保客户端的收发没有问题。&lt;/p&gt;
-&lt;h2 id=&#34;四次挥手关闭连接&#34;&gt;四次挥手关闭连接&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;第一步：客户端TCP发送连接释放报文段，并&lt;strong&gt;停止发送数据&lt;/strong&gt;，终止位&lt;strong&gt;FIN置为1&lt;/strong&gt;，序号&lt;strong&gt;seq=u&lt;/strong&gt;，等于之前&lt;strong&gt;已经传送的数据的最后一个字节的序号加1&lt;/strong&gt;，FIN报文段即使&lt;strong&gt;不携带数据也要消耗一个序号&lt;/strong&gt;。此时TCP客户机进入&lt;strong&gt;FIN-WAIT-1状态&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;第二步：服务器收到连接释放报文后即发出确认，确认号&lt;strong&gt;ack=u+1&lt;/strong&gt;，序号&lt;strong&gt;seq=v&lt;/strong&gt;，等于前面&lt;strong&gt;已经传输过的数据的最后一个字节的序号加1&lt;/strong&gt;。然后服务器进入&lt;strong&gt;CLOSE-WAIT状态&lt;/strong&gt;。此时从客户机到服务器的连接就释放了，TCP连接处于&lt;strong&gt;半关闭&lt;/strong&gt;状态。&lt;/li&gt;
-&lt;li&gt;第三步：若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时其发出&lt;strong&gt;FIN=1&lt;/strong&gt;的&lt;strong&gt;连接释放报文段&lt;/strong&gt;，该报文段的序号&lt;strong&gt;seq=w&lt;/strong&gt;（在半关闭的时候可能又传输了一些数据），还需重复上次已经发送的确认号&lt;strong&gt;ack=u+1&lt;/strong&gt;.此时服务器进入&lt;strong&gt;LAST-ACK状态&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;第四步：客户机收到连接释放报文段后，要发送确认。把确认报文中的&lt;strong&gt;确认位ACK置为1&lt;/strong&gt;，确认号&lt;strong&gt;ack=w+1&lt;/strong&gt;，序号&lt;strong&gt;seq=u+1&lt;/strong&gt;。此时连接还未释放，要等到计时器的设置时间**2MSL（最长报文寿命）**后客户机才进入CLOSED状态。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;粘包&#34;&gt;粘包&lt;/h2&gt;
-&lt;p&gt;应用层一次recv接收了多个send。原因是TCP协议是面向字节流的，无法区分边界，需要应用层协议去解决。可以通过在应用层为数据流加上特定标志开头。还有就是关闭Nagle协议。&lt;/p&gt;
-- https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/ - 2019-2021 By Jialong</description>
         </item>
     
     

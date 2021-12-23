@@ -7,7 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 11 Dec 2021 10:18:53 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Dec 2021 15:30:08 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AVL树及与红黑树、B/B&#43;树的对比</title>
+      <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/</link>
+      <pubDate>Thu, 23 Dec 2021 15:30:08 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/</guid>
+      <description>红黑树和B/B+树详见这两篇博客。
+AVL树 AVL树为平衡二叉树，是以其发明者的名字命名的。任一结点对应的两棵子树的最大高度差为1。查找、插入和删除在平均和最坏的情况下的时间复杂度都为$O(\log n)$。
+增加和删除元素操作可能需要借由一次或多次树旋转，以实现树的重新平衡。
+与红黑树相比，AVL树是严格的平衡二叉树。
+局限性：由于维护这种高度平衡所付出的代价比从中获得的效率收益还大。故而实际的应用不多，更多的地方是用追求局部而不是非常严格整体平衡的红黑树。当然，如果应用场景中对插入删除不频繁，只是对查找要求较高，那么AVL还是较优于红黑树。
+红黑树 一种二叉查找树，确保没有一条路径会比其他路径长出两倍。是一种弱平衡树。在插入和删除的操作中的旋转次数相对于AVL树来说较少。
+B/B+树 B/B+树是为了磁盘或其他存储设备设计的平衡多路查找树，与红黑树相比，在相同结点的情况下，一颗B/B+树的高度远远小于红黑树。B树的操作效率主要取决于访问磁盘的次数，关键字数相同的情况下，B树高度越小，磁盘I/O所花的时间越少。
+B+树是应文件系统所需而产生的一种B树的变形树，非叶子结点只保存索引，不保存实际的数据，数据都保存在叶子结点中。相当于是文件系统的查找。
+另外B+树支持顺序查找而B树不支持，数据库中经常需要遍历一定范围内的数据，因此采用B+树比采用B树的效率更高。</description>
+    </item>
+    
     <item>
       <title>算法——TopK问题总结</title>
       <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95topk%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</link>

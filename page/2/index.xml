@@ -6,9 +6,38 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 22 Dec 2021 16:10:44 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 23 Dec 2021 15:30:08 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>TCP三次握手四次挥手详解</title>
+        <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/</link>
+        <pubDate>Thu, 09 Dec 2021 09:31:30 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/ -&lt;h2 id=&#34;三次握手建立连接&#34;&gt;三次握手建立连接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;第一步：客户机的TCP向服务器的TCP发送连接请求报文段。该报文段的同步位&lt;strong&gt;SYN置为1&lt;/strong&gt;，同时选择一个初始序号&lt;strong&gt;seq=x&lt;/strong&gt;。SYN报文段&lt;strong&gt;不能携带数据&lt;/strong&gt;，但要&lt;strong&gt;消耗掉一个序号&lt;/strong&gt;。这是客户机进入&lt;strong&gt;SYN-SENT同步已发送&lt;/strong&gt;状态。&lt;/li&gt;
+&lt;li&gt;第二步：服务器的TCP收到连接请求后，如果同意建立连接，则向客户机发回确认，并为该TCP分配缓存和变量。在确认报文段中，&lt;strong&gt;SYN和ACK都置为1&lt;/strong&gt;，确认号是&lt;strong&gt;ack=x+1&lt;/strong&gt;，同时为自己选择一个初始序号&lt;strong&gt;seq=y&lt;/strong&gt;。确认报文&lt;strong&gt;不能携带数据&lt;/strong&gt;，但也要&lt;strong&gt;消耗一个序号&lt;/strong&gt;。此时服务器进入&lt;strong&gt;SYN-RCVD同步收到&lt;/strong&gt;状态。&lt;/li&gt;
+&lt;li&gt;第三步：客户机收到确认报文后，还要向服务器给出确认，并为该TCP连接&lt;strong&gt;分配缓存和变量&lt;/strong&gt;。确认报文段的&lt;strong&gt;ACK置为1&lt;/strong&gt;，确认号&lt;strong&gt;ack=y+1&lt;/strong&gt;，序号&lt;strong&gt;seq=x+1&lt;/strong&gt;.该报文段&lt;strong&gt;可以携带数据&lt;/strong&gt;，若&lt;strong&gt;不携带则不消耗序号&lt;/strong&gt;。此时TCP客户进程进入&lt;strong&gt;ESTABLISH已建立连接&lt;/strong&gt;状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;三次握手的原因&#34;&gt;三次握手的原因&lt;/h3&gt;
+&lt;p&gt;第一次客户端发送SYN-SENT后可能在网络中被阻塞，导致超时，客户端重新传输该报文，并与服务器建立连接，之后传输数据然后关闭连接。当被阻塞的连接到达服务器时，服务器认为这个一条新建立的连接，并向客户端发送ACK确认，但客户端将其丢弃，服务器接收不到回复，空等待，造成了资源的浪费。&lt;/p&gt;
+&lt;p&gt;另一种说法：tcp三次握手只要是为了确认线路的连通，第一次客户端发送到服务端，那么服务端就可以知道客户端的发送没有问题，但客户端不知道服务器的情况，第二次服务器发送ACK给客户端，客户端收到了证明服务端的收发都没有问题的，但服务端不知道客户端的接收情况，所以第三次是客户端再回给服务器一个ACK，服务器收到后就可以确保客户端的收发没有问题。&lt;/p&gt;
+&lt;h2 id=&#34;四次挥手关闭连接&#34;&gt;四次挥手关闭连接&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;第一步：客户端TCP发送连接释放报文段，并&lt;strong&gt;停止发送数据&lt;/strong&gt;，终止位&lt;strong&gt;FIN置为1&lt;/strong&gt;，序号&lt;strong&gt;seq=u&lt;/strong&gt;，等于之前&lt;strong&gt;已经传送的数据的最后一个字节的序号加1&lt;/strong&gt;，FIN报文段即使&lt;strong&gt;不携带数据也要消耗一个序号&lt;/strong&gt;。此时TCP客户机进入&lt;strong&gt;FIN-WAIT-1状态&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;第二步：服务器收到连接释放报文后即发出确认，确认号&lt;strong&gt;ack=u+1&lt;/strong&gt;，序号&lt;strong&gt;seq=v&lt;/strong&gt;，等于前面&lt;strong&gt;已经传输过的数据的最后一个字节的序号加1&lt;/strong&gt;。然后服务器进入&lt;strong&gt;CLOSE-WAIT状态&lt;/strong&gt;。此时从客户机到服务器的连接就释放了，TCP连接处于&lt;strong&gt;半关闭&lt;/strong&gt;状态。&lt;/li&gt;
+&lt;li&gt;第三步：若服务器已经没有要向客户机发送的数据，就通知TCP释放连接，此时其发出&lt;strong&gt;FIN=1&lt;/strong&gt;的&lt;strong&gt;连接释放报文段&lt;/strong&gt;，该报文段的序号&lt;strong&gt;seq=w&lt;/strong&gt;（在半关闭的时候可能又传输了一些数据），还需重复上次已经发送的确认号&lt;strong&gt;ack=u+1&lt;/strong&gt;.此时服务器进入&lt;strong&gt;LAST-ACK状态&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;第四步：客户机收到连接释放报文段后，要发送确认。把确认报文中的&lt;strong&gt;确认位ACK置为1&lt;/strong&gt;，确认号&lt;strong&gt;ack=w+1&lt;/strong&gt;，序号&lt;strong&gt;seq=u+1&lt;/strong&gt;。此时连接还未释放，要等到计时器的设置时间**2MSL（最长报文寿命）**后客户机才进入CLOSED状态。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;粘包&#34;&gt;粘包&lt;/h2&gt;
+&lt;p&gt;应用层一次recv接收了多个send。原因是TCP协议是面向字节流的，无法区分边界，需要应用层协议去解决。可以通过在应用层为数据流加上特定标志开头。还有就是关闭Nagle协议。&lt;/p&gt;
+- https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1039,122 +1068,6 @@ Bode &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;rotateRight&lt;/spa
 &lt;p&gt;一颗大小为N的红黑树中，根结点到任意结点的平均路径为$\lg N$。&lt;/p&gt;
 &lt;p&gt;红黑树的实现中最复杂的代码仅限于插入和删除方法，其他的二叉查找树中的查找最大最小键不做任何变动即可继续使用。&lt;/p&gt;
 - https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>C&#43;&#43; Primer——CH12 动态内存</title>
-        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</link>
-        <pubDate>Thu, 18 Nov 2021 09:20:28 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/ -&lt;p&gt;C++支持动态分配对象，动态分配的对象的生存期与它们在哪里创建无关，只有当显示地被释放时，这些对象才会销毁。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;静态内存&lt;/strong&gt;用来保存局部static对象、类static数据成员以及定义在任何函数之外的变量。&lt;strong&gt;栈内存&lt;/strong&gt;用来保存定义在函数内的非static对象。分配在静态或栈内存中的对象由编译器自动创建和销毁。&lt;/p&gt;
-&lt;p&gt;除了静态内存和栈内存，每个程序还拥有一个&lt;strong&gt;内存池&lt;/strong&gt;，这部分内存被称为&lt;strong&gt;堆&lt;/strong&gt;，程序用堆来存储&lt;strong&gt;动态分配&lt;/strong&gt;的对象，即那些在程序运行时分配的对象。动态对象的&lt;strong&gt;生存期由程序来控制&lt;/strong&gt;，即动态对象不再使用时，我们的代码必须显示销毁它们。&lt;/p&gt;
-&lt;h2 id=&#34;动态内存与智能指针&#34;&gt;动态内存与智能指针&lt;/h2&gt;
-&lt;p&gt;动态内存的管理是通过&lt;code&gt;new&lt;/code&gt;和&lt;code&gt;delete&lt;/code&gt;完成的。new为对象分配空间并返回一个指向该对象的指针，delete接受一个动态对象的指针，销毁该对象，并释放与之关联的内存。&lt;/p&gt;
-&lt;p&gt;新的标准库提供了两种&lt;strong&gt;智能指针&lt;/strong&gt;类型来管理动态对象，这两种智能指针的区别在于管理底层指针的方式：&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;shared_ptr&lt;/code&gt;允许&lt;strong&gt;多个指针指向同一个对象&lt;/strong&gt;；&lt;code&gt;unique_ptr&lt;/code&gt;独占所指向的对象。标准库还顶一个名为&lt;code&gt;weak_ptr&lt;/code&gt;的伴随类，是一种弱引用，指向&lt;code&gt;shared_ptr&lt;/code&gt;所管理的对象。&lt;/p&gt;
-&lt;h3 id=&#34;shared_ptr类&#34;&gt;shared_ptr类&lt;/h3&gt;
-&lt;p&gt;类似于vector，&lt;strong&gt;智能指针&lt;/strong&gt;也是模板，当我们创建一个智能指针时，必须提供额外信息——指针&lt;strong&gt;可以指向的类型&lt;/strong&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p1;		&lt;span style=&#34;color:#888&#34;&gt;//可以指向string
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;list&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; p2;	&lt;span style=&#34;color:#888&#34;&gt;//可以指向int的list
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;默认初始化的智能指针中保存着一个空指针。使用方法与普通指针类似，解引用一个智能指针返回它指向的对象。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;make_shared函数&lt;/strong&gt;
-是最安全的用来分配和使用动态内存的标准库函数。&lt;/p&gt;
-&lt;p&gt;此函数在动态内存中分配一个对象并初始化它，返回指向此对象的&lt;code&gt;shared_ptr&lt;/code&gt;。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_shared&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;); &lt;span style=&#34;color:#888&#34;&gt;//指向一个值为42的int的shared_ptr
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用make_shared时要指定创建对象的类型，方法与定义模板类相同，在函数名后跟一个尖括号，在其中给出类型，如上所示。另外，make_shared用其参数来构造给定类型的对象。例如调用&lt;code&gt;make_shared&amp;lt;string&amp;gt;&lt;/code&gt;时传递参数必须与string的某个构造函数匹配。&lt;/p&gt;
-&lt;p&gt;一般使用auto来定义一个对象来保存make_shared的结果：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; p6 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_shared&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt;();
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;shared_ptr的拷贝和赋值&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;每个shared_ptr都会记录&lt;strong&gt;指向相同对象&lt;/strong&gt;的其他shared_ptr的数量。&lt;/p&gt;
-&lt;p&gt;每个shared_ptr都有一个关联的计数器，称其为&lt;strong&gt;引用计数&lt;/strong&gt;。无论何时拷贝一个shared_ptr，计数器都会递增。&lt;/p&gt;
-&lt;p&gt;当我们给shared_ptr赋予一个新值或shared_ptr被销毁时，计数器就会递减。&lt;/p&gt;
-&lt;p&gt;一旦一个shared_ptr的计数器变为0，它就会释放自己所管理的对象：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; make_shared&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;);
-r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; q;	&lt;span style=&#34;color:#888&#34;&gt;//给r赋值，令它指向另一个地址；递增q指向的对象的引用次数；递减r原来指向对象的引用次数；r原来指向的对象已经没有引用者，会自动释放
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;shared_ptr自动销毁所管理的对象&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;当指向一个对象的最后一个shared_ptr被销毁时，shared_ptr类会自动销毁此对象。这是通过另一个特殊成员函数——&lt;strong&gt;析构函数&lt;/strong&gt;完成的。析构函数一般用来释放对象多分配的资源。&lt;/p&gt;
-&lt;p&gt;shared_ptr的析构函数会&lt;strong&gt;递减&lt;/strong&gt;它所指向对象的引用次数，引用次数变为0后shared_ptr的析构函数就会自动销毁对象并释放内存。&lt;/p&gt;
-&lt;p&gt;由于最后一个shared_ptr销毁前内存都不会释放，保证shared_ptr在无用之后不再保留就非常重用，否则程序虽然会正常执行，但会浪费内存。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;使用动态内存的原因&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;程序不知道自己需要使用多少对象（容器类就是出于这种原因从而使用动态内存）&lt;/li&gt;
-&lt;li&gt;程序不知道对象的准确类型&lt;/li&gt;
-&lt;li&gt;程序需要在多个对象间共享数据&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;直接管理内存&#34;&gt;直接管理内存&lt;/h3&gt;
-&lt;p&gt;使用运算符&lt;code&gt;new&lt;/code&gt;分配内存，&lt;code&gt;delete&lt;/code&gt;释放new分配的内存&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;使用new动态分配和初始化对象&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;在自由空间分配的&lt;strong&gt;内存是无名的&lt;/strong&gt;，因此new无法为其分配的对象命名，而是返回一个&lt;strong&gt;指向该对象的指针&lt;/strong&gt;：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pi &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//pi指向一个动态分配的、未初始化的无名对象
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;默认情况下动态分配的对象是默认初始化的，这意味着内置类型或组合类型的对象的值将是未定义的。类类型对象将用默认构造函数进行初始化：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;string &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ps &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; string;	&lt;span style=&#34;color:#888&#34;&gt;//初始化为空string
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pi &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//pi指向一个未初始化的int
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; p1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt;(obj);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以通过括号包围的初始化器判断我们想到分配的对象类型，然后使用auto。但只有括号内仅有单一初始化器时才能使用auto。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;动态分配的const对象&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pci &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1024&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一个动态分配的const必须进行初始化，对于一个定义了默认构造函数的类类型，其const动态对象可以隐式初始化，其他类型的对象必须显式初始化。上面new返回的是一个指向const的指针。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;内存耗尽&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;程序内存耗尽后new表达式就会失败，然后抛出一个类型为&lt;code&gt;std::bad_alloc&lt;/code&gt;的异常。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;释放动态内存&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;delete&lt;/span&gt; p;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;delete接受一个指针，销毁其指向的对象，释放对应内存。&lt;/p&gt;
-&lt;p&gt;向delete传递的指针值必须指向动态分配的内存或是一个空指针。释放一块非new分配的内存，其行为未定义。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;动态对象的生存周期直到被释放为止&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;返回指向动态内存的指针（而不是智能指针）的函数给其调用者增加了额外负担，调用者必须记得释放内存。&lt;/p&gt;
-&lt;h3 id=&#34;shared_ptr和new结合使用&#34;&gt;shared_ptr和new结合使用&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p2(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;));
-shared_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//错误，必须使用直接初始化
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接受指针参数的智能指针的构造函数时explicit的，我们不能将一个内置指针隐式转换为一个智能指针，必须使用直接初始化形式来初始化一个智能指针.&lt;/p&gt;
-&lt;p&gt;不要混用内置指针和智能指针。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;其他shared_ptr操作&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;p.reset(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1024&lt;/span&gt;));
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用reset将一个新的指针赋予一个shared_ptr.上面的例子中p指向了一个新对象。&lt;/p&gt;
-&lt;h3 id=&#34;智能指针和异常&#34;&gt;智能指针和异常&lt;/h3&gt;
-&lt;p&gt;使用智能指针时，即使程序块过早结束（发生异常），智能指针也能确保在内存不再需要时将其释放。&lt;/p&gt;
-&lt;p&gt;与之相对的，当发生异常时，我们直接管理的内存不会自动释放。如果使用内置指针管理内存，且在new之后再对应的delete之前发生异常，内存不会被释放。&lt;/p&gt;
-&lt;h3 id=&#34;unique_ptr&#34;&gt;unique_ptr&lt;/h3&gt;
-&lt;p&gt;一个unique_ptr&lt;strong&gt;拥有&lt;/strong&gt;它所指向的对象，某个时刻只能有&lt;strong&gt;一个unique_ptr指向一个给定对象&lt;/strong&gt;，因此其&lt;strong&gt;不支持普通的拷贝或赋值&lt;/strong&gt;操作；当unique_ptr被销毁时，它所指向的对象也被销毁。&lt;/p&gt;
-&lt;p&gt;unique_ptr没有类似于make_shared的标准库函数返回一个shared_ptr；我们定义一个unique_ptr时，需要将其绑定到一个&lt;strong&gt;new返回的指针&lt;/strong&gt;上；初始化unique_ptr必须采用&lt;strong&gt;直接初始化&lt;/strong&gt;形式，即使用括号直接初始化。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p2(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;42&lt;/span&gt;));	&lt;span style=&#34;color:#888&#34;&gt;//p2指向一个值为42的int
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;unique_ptr的操作：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;T, D&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; u(d)	&lt;span style=&#34;color:#888&#34;&gt;//空unique_ptr，指向类型为T的对象，用类型为D的对象d代替delete
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;u &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;nullptr&lt;/span&gt;	&lt;span style=&#34;color:#888&#34;&gt;//释放u指向的对象，将u置为空
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;u.release()	&lt;span style=&#34;color:#888&#34;&gt;//u放弃对指针的控制权，返回指针，并将u置为空
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;u.reset()	&lt;span style=&#34;color:#888&#34;&gt;//释放u指向的对象
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;u.reset(q)	&lt;span style=&#34;color:#888&#34;&gt;//q为内置指针，另u指向这个对象
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;虽然我们不能拷贝或赋值unique_ptr，但可以通过调用&lt;strong&gt;release或reset&lt;/strong&gt;将指针的所有权从一个unique_ptr转移给另一个unique：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p2(p1.release());&lt;span style=&#34;color:#888&#34;&gt;//release将p1置为空
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; p3(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; string(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Trex&amp;#34;&lt;/span&gt;));
-p2.reset(p3.release());	&lt;span style=&#34;color:#888&#34;&gt;//reset释放了p2原来指向的内存
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;weak_ptr&#34;&gt;weak_ptr&lt;/h3&gt;
-&lt;p&gt;weak_ptr是一种&lt;strong&gt;不控制所指向对象生存期&lt;/strong&gt;的智能指针，它指向一个&lt;strong&gt;shared_ptr管理的对象&lt;/strong&gt;。将一个weak_ptr绑定到shared_ptr&lt;strong&gt;不会改变对象的引用计数&lt;/strong&gt;。一旦最后一只指向对象的shared_ptr被销毁，对象就会被释放，即使有weak_ptr指向对象，对象还是会被释放。weak_ptr的名字抓住了这种指针弱共享的特点。&lt;/p&gt;
-&lt;h2 id=&#34;动态数组&#34;&gt;动态数组&lt;/h2&gt;
-&lt;p&gt;可以一次为很多对象分配动态内存。C++语言和标准库提供了两种一次分配一个对象数组的方法。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;使用new表达式语法&lt;/li&gt;
-&lt;li&gt;标准库中allocator的类，允许我们将分配和初始化分离&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;大多数应用应该使用标准库容器而不是动态分配的数组。使用容器更为简单，更不容易出现内存管理错误并可能有更好的性能。&lt;/p&gt;
-&lt;h3 id=&#34;new和数组&#34;&gt;new和数组&lt;/h3&gt;
-&lt;p&gt;为了让new分配一个对象数组，要在类型名之后跟一对&lt;strong&gt;方括号&lt;/strong&gt;，在其中要指明分配对象的数目。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pia &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt;];	&lt;span style=&#34;color:#888&#34;&gt;//pia指向第一个int
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面的例子中，new分配32个int对象并返回指向第一个int对象的指针。&lt;/p&gt;
-&lt;p&gt;也可以用一个表示数组类型的&lt;strong&gt;类型别名&lt;/strong&gt;来分配一个数组，这样new表达式就不需要方括号了。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;智能指针和动态数组&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;标准库提供了一个可以管理new分配的数组的unique_ptr版本。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unique_ptr&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[]&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; up(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;]);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;为了用一个unique_ptr管理动态数组，必须在一个动态类型后面跟一对方括号。&lt;/p&gt;
-&lt;h3 id=&#34;allocator类&#34;&gt;allocator类&lt;/h3&gt;
-&lt;p&gt;标准库allocator类定义在头文件memory中，其帮助我们将内存分配和对象构造分离开来。它提供了一种类型感知的内存分配方法。&lt;/p&gt;
-&lt;h2 id=&#34;使用标准库文本查询程序&#34;&gt;使用标准库：文本查询程序&lt;/h2&gt;
-&lt;p&gt;这个例子作为标准库相关内容学习的总结。&lt;/p&gt;
-&lt;p&gt;现代C++程序应该尽可能使用智能指针。&lt;/p&gt;
-- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE7%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/ - 2019-2021 By Jialong</description>
         </item>
     
     

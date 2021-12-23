@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html><head>
-	<meta name="generator" content="Hugo 0.89.2" />
-<title>Jialong&#39;s Blog</title>
+<title>AVL树及与红黑树、B/B&#43;树的对比</title>
 
 
-
-  
 
 
 <meta charset="utf-8">
@@ -13,16 +10,26 @@
 <meta name="google-site-verification" content="">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 <meta content="telephone=no" name="format-detection">
-<meta name="description" content="My HomePage Description">
+<meta name="description" content="">
 <meta name="renderer" content="webkit">
 <meta name="theme-color" content="#ffffff">
 
 
 
-<meta property="og:title" content="Jialong&#39;s Blog" />
-<meta property="og:description" content="My HomePage Description" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://eternityqjl.top/" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="AVL树及与红黑树、B/B&#43;树的对比" />
+<meta property="og:description" content="红黑树和B/B&#43;树详见这两篇博客。
+AVL树 AVL树为平衡二叉树，是以其发明者的名字命名的。任一结点对应的两棵子树的最大高度差为1。查找、插入和删除在平均和最坏的情况下的时间复杂度都为$O(\log n)$。
+增加和删除元素操作可能需要借由一次或多次树旋转，以实现树的重新平衡。
+与红黑树相比，AVL树是严格的平衡二叉树。
+局限性：由于维护这种高度平衡所付出的代价比从中获得的效率收益还大。故而实际的应用不多，更多的地方是用追求局部而不是非常严格整体平衡的红黑树。当然，如果应用场景中对插入删除不频繁，只是对查找要求较高，那么AVL还是较优于红黑树。
+红黑树 一种二叉查找树，确保没有一条路径会比其他路径长出两倍。是一种弱平衡树。在插入和删除的操作中的旋转次数相对于AVL树来说较少。
+B/B&#43;树 B/B&#43;树是为了磁盘或其他存储设备设计的平衡多路查找树，与红黑树相比，在相同结点的情况下，一颗B/B&#43;树的高度远远小于红黑树。B树的操作效率主要取决于访问磁盘的次数，关键字数相同的情况下，B树高度越小，磁盘I/O所花的时间越少。
+B&#43;树是应文件系统所需而产生的一种B树的变形树，非叶子结点只保存索引，不保存实际的数据，数据都保存在叶子结点中。相当于是文件系统的查找。
+另外B&#43;树支持顺序查找而B树不支持，数据库中经常需要遍历一定范围内的数据，因此采用B&#43;树比采用B树的效率更高。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-23T15:30:08+08:00" />
+<meta property="article:modified_time" content="2021-12-23T15:30:08+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -30,8 +37,16 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Jialong&#39;s Blog"/>
-<meta name="twitter:description" content="My HomePage Description"/>
+<meta name="twitter:title" content="AVL树及与红黑树、B/B&#43;树的对比"/>
+<meta name="twitter:description" content="红黑树和B/B&#43;树详见这两篇博客。
+AVL树 AVL树为平衡二叉树，是以其发明者的名字命名的。任一结点对应的两棵子树的最大高度差为1。查找、插入和删除在平均和最坏的情况下的时间复杂度都为$O(\log n)$。
+增加和删除元素操作可能需要借由一次或多次树旋转，以实现树的重新平衡。
+与红黑树相比，AVL树是严格的平衡二叉树。
+局限性：由于维护这种高度平衡所付出的代价比从中获得的效率收益还大。故而实际的应用不多，更多的地方是用追求局部而不是非常严格整体平衡的红黑树。当然，如果应用场景中对插入删除不频繁，只是对查找要求较高，那么AVL还是较优于红黑树。
+红黑树 一种二叉查找树，确保没有一条路径会比其他路径长出两倍。是一种弱平衡树。在插入和删除的操作中的旋转次数相对于AVL树来说较少。
+B/B&#43;树 B/B&#43;树是为了磁盘或其他存储设备设计的平衡多路查找树，与红黑树相比，在相同结点的情况下，一颗B/B&#43;树的高度远远小于红黑树。B树的操作效率主要取决于访问磁盘的次数，关键字数相同的情况下，B树高度越小，磁盘I/O所花的时间越少。
+B&#43;树是应文件系统所需而产生的一种B树的变形树，非叶子结点只保存索引，不保存实际的数据，数据都保存在叶子结点中。相当于是文件系统的查找。
+另外B&#43;树支持顺序查找而B树不支持，数据库中经常需要遍历一定范围内的数据，因此采用B&#43;树比采用B树的效率更高。"/>
 
 
 
@@ -65,9 +80,69 @@
 </script>
 
 
+  
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script"
+async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+MathJax.Hub.Queue(function() {
 
 
 
+var all = MathJax.Hub.getAllJax(), i;
+for(i = 0; i < all.length; i += 1) {
+all[i].SourceElement().parentNode.className += ' has-jax';
+}
+});
+</script>
+
+<style>
+code.has-jax {
+font: inherit;
+font-size: 100%;
+background: inherit;
+border: inherit;
+color: #515151;
+}
+</style>
+
+
+
+
+
+  
+    <script src="/js/toc.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -86,7 +161,7 @@
 <body>
     	<div id="app"><div ref="sideContainer" class="side-container">
     
-    <a class="a-block nav-head active" href="https://eternityqjl.top">
+    <a class="a-block nav-head false" href="https://eternityqjl.top">
     
         <div class="nav-title">
             Jialong&#39;s Blog
@@ -104,9 +179,11 @@
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="/posts">
+            
+            <a class="a-block nav-link-item active" href="/posts">
                 网志
             </a>
             
@@ -172,6 +249,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#avl%e6%a0%91" onclick="onNavClick(`#avl树-nav`)" id="avl树-nav">
+									AVL树
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ba%a2%e9%bb%91%e6%a0%91" onclick="onNavClick(`#红黑树-nav`)" id="红黑树-nav">
+									红黑树
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#bb%e6%a0%91" onclick="onNavClick(`#bb树-nav`)" id="bb树-nav">
+									B/B&#43;树
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -189,30 +344,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
         </a>
         
         
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    6<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>7
-                </span>
-            </div>
-            
-            
-            <a class="pagination-action" href="/page/5/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_left
-                </i>
-            </a>
-            
-
-            
-            <a class="pagination-action" href="/page/7/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
-        
-        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -225,9 +356,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="/posts">
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
                     网志
                 </a>
                 
@@ -273,6 +406,84 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             
             
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#avl%e6%a0%91" onclick="onNavClick(`#avl树-nav`)" id="avl树-nav">
+									AVL树
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ba%a2%e9%bb%91%e6%a0%91" onclick="onNavClick(`#红黑树-nav`)" id="红黑树-nav">
+									红黑树
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#bb%e6%a0%91" onclick="onNavClick(`#bb树-nav`)" id="bb树-nav">
+									B/B&#43;树
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
         </div>
     </div>
 </div>
@@ -314,339 +525,109 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div>
 
             <div id="content">
-
 <div ref="streamContainer" class="stream-container">
-    <div class="post-list-container post-list-container-no-background">
-        
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
             
-            <a href="https://eternityqjl.top/posts/tls/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                TLS（HTTPS）协议
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2020-04-19
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            
+            
 
-                        </div>
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    AVL树及与红黑树、B/B&#43;树的对比
+                    
+                    <div class="post-meta">
                         
+                        <time itemprop="datePublished">
+                            2021-12-23 15:30
+                        </time>
                         
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/convertpdftosvg/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                PDF转换为SVG
-                            </div>
-                            <div class="post-item-summary">
-                                使用Adobe Acrobat和inscape软件将PDF文档中的矢量图导出为SVG格式的图片
-                            </div>
-                            <div class="post-item-meta">
-    2020-04-08
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
                         
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95">数据结构与算法</a>
+                                &nbsp;
                         
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/latex-problems1/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                第一次使用LaTex——问题整理
-                            </div>
-                            <div class="post-item-summary">
-                                首次使用LaTex排版实验报告过程中遇到的问题总结
-                            </div>
-                            <div class="post-item-meta">
-    2020-03-29
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
 
-                        </div>
                         
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/signalsystem-ch01/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                信号与系统学习笔记——Chapter01 信号与系统
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2020-03-14
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
-
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E5%92%8C%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                数字签名和数字证书
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-12-06
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
-
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E5%86%99%E5%9C%A82019%E5%B9%B4%E7%9A%84%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%9C%88%E7%9A%84%E5%BC%80%E5%A7%8B/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                写在2019年的最后一个月的开始
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-12-01
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
-
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E4%B8%80%E5%BA%94%E7%94%A8%E5%B1%82/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                计算机网络学习日志（一）——应用层
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-11-28
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
-
-                        </div>
-                        
-                        
+                            <i class="material-icons" style="">label</i>
                             
-                            <div class="post-item-image-wrapper">
-                            <div class="post-item-image"
+                                <a href="/tags/avl%E6%A0%91">AVL树</a>
+                                &nbsp;
                             
-                                 style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/computer_network_ATop-down_Approach_logo.PNG')"
+                                <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91">红黑树</a>
+                                &nbsp;
                             
-                            ></div>
-                            </div>
+                                <a href="/tags/b%E6%A0%91">B树</a>
+                                &nbsp;
+                            
+                        
                         
                     </div>
                 </div>
+            </div>
             
-        
-            
-            <a href="https://eternityqjl.top/about/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                关于
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-11-28
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p><a href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/">红黑树</a>和<a href="https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb+%E6%A0%91/">B/B+树</a>详见这两篇博客。</p>
+<h2 id="avl树">AVL树</h2>
+<p>AVL树为平衡二叉树，是以其发明者的名字命名的。任一结点对应的两棵子树的最大高度差为1。查找、插入和删除在平均和最坏的情况下的时间复杂度都为$O(\log n)$。</p>
+<p>增加和删除元素操作可能需要借由一次或多次树旋转，以实现树的重新平衡。</p>
+<p>与红黑树相比，AVL树是严格的平衡二叉树。</p>
+<p>局限性：由于维护这种高度平衡所付出的代价比从中获得的效率收益还大。故而实际的应用不多，更多的地方是用追求局部而不是非常严格整体平衡的红黑树。当然，如果应用场景中对插入删除不频繁，只是对查找要求较高，那么AVL还是较优于红黑树。</p>
+<h2 id="红黑树">红黑树</h2>
+<p>一种二叉查找树，确保没有一条路径会比其他路径长出两倍。是一种弱平衡树。在插入和删除的操作中的旋转次数相对于AVL树来说较少。</p>
+<h2 id="bb树">B/B+树</h2>
+<p>B/B+树是为了磁盘或其他存储设备设计的平衡多路查找树，与红黑树相比，在相同结点的情况下，一颗B/B+树的高度远远小于红黑树。B树的操作效率主要取决于访问磁盘的次数，关键字数相同的情况下，B树高度越小，磁盘I/O所花的时间越少。</p>
+<p>B+树是应文件系统所需而产生的一种B树的变形树，非叶子结点只保存索引，不保存实际的数据，数据都保存在叶子结点中。相当于是文件系统的查找。</p>
+<p>另外B+树支持顺序查找而B树不支持，数据库中经常需要遍历一定范围内的数据，因此采用B+树比采用B树的效率更高。</p>
 
-                        </div>
-                        
-                        
-                            
-                            <div class="post-item-image-wrapper">
-                            <div class="post-item-image"
-                            
-                                 style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/about_background_1_scuLibrary.jpg')"
-                            
-                            ></div>
-                            </div>
-                        
-                    </div>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2021-12-23</p>
+                    
                 </div>
+            </div>
             
-        
             
-            <a href="https://eternityqjl.top/posts/gitbook%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                GitBook自动发布脚本
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-10-18
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+            <nav class="post-pagination">
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-            
-            <a href="https://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="a-block">
-                <div class="post-item-wrapper">
-                    <div class="post-item post-item-no-divider">
-                        <div class="post-item-info-wrapper">
-                            <div class="post-item-title">
-                                储存类别、链接和内存管理
-                            </div>
-                            <div class="post-item-summary">
-                                
-                            </div>
-                            <div class="post-item-meta">
-    2019-10-18
-    &emsp;
-    
-    
-    
-    &emsp;
-    
-</div>
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">
+			上回<br>Cpp内存对齐
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
 
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            
-        
-        </a>
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
     </div>
 </div>
 
-            </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" href="/page/5/" style="opacity:1">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>6/7</span>
-        </div>
-
-        
-        <a class="pagination-action" href="/page/7/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-</div>
-
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -913,6 +894,9 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },

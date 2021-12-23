@@ -6,9 +6,72 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 22 Dec 2021 16:10:44 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 23 Dec 2021 15:30:08 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>C语言结构</title>
+        <link>https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/</link>
+        <pubDate>Tue, 15 Oct 2019 20:03:54 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/ -&lt;p&gt;1.建立结构变量&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;该结构描述了由两个字符数组和一个float类型变量组成的结构。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;2.定义结构变量&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;struct book library;&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;把library声明为一个使用book结构类型的结构变量。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;所以struct book 相当于过去的int、double等类型。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; book {
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
+} library;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该程序为上面声明的完整版。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; { &lt;span style=&#34;color:#888&#34;&gt;//无结构标记
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; title[MAXTITL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; author[MAXAUTL];
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; value;
+} library;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;声明结构和定义结构可以一步完成，如上所示。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;3.初始化结构&lt;/p&gt;
+&lt;p&gt;4.访问结构成员(点运算符)&lt;/p&gt;
+&lt;p&gt;5.结构初始化器&lt;/p&gt;
+&lt;p&gt;6.结构数组&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;struct book library[MAXBKS];&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;7.指向结构的指针&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;struct guy * him;&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指针可以指向任何现有的guy类型如barney、fellow[0]（一个结构数组的一项即为一个结构变量）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;him = &amp;amp;barney&lt;/code&gt; or &lt;code&gt;him = &amp;amp;fellow[0];&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;8.用指针访问成员&lt;/p&gt;
+&lt;p&gt;若&lt;code&gt;him == &amp;amp;barney&lt;/code&gt;，那么&lt;code&gt;him-&amp;gt;income&lt;/code&gt;即是&lt;code&gt;barney.income&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;同时，&lt;code&gt;*him&lt;/code&gt;即为指针指向的结构类型。所以，&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;barney.income == (*him).income == him-&amp;gt;income&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;9.向函数传递结构的成员、地址、结构本身&lt;/p&gt;
+&lt;p&gt;10.其他特性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用指针传递信息(作为函数参数)：是使用原始结构进行计算的。&lt;/li&gt;
+&lt;li&gt;使用结构作为函数参数：是使用副本进行计算。&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/%E7%BB%93%E6%9E%84/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
