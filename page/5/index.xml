@@ -1634,7 +1634,7 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;li&gt;响应定时器中断(采取适当动作)。&lt;/li&gt;
 &lt;li&gt;终止定时器。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231559002.JPG&#34; alt=&#34;rdt3&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231611774.svg%252Bxml&#34; alt=&#34;rdt3&#34;&gt;&lt;/p&gt;
 &lt;p&gt;分组序号在0和1之间交替，所以rdt3.0又被称为比特交替协议。&lt;/p&gt;
 &lt;h3 id=&#34;流水线可靠数据传输&#34;&gt;流水线可靠数据传输&lt;/h3&gt;
 &lt;p&gt;rdt3.0是一个功能正确的协议，但它的性能并不高，这里的核心问题在于它的停等协议。&lt;/p&gt;
