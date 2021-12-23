@@ -1387,7 +1387,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>分组首部占用空间小。每个TCP报文段有20个字节的首部开销，UDP仅有8个字节。</li>
 </ul>
 <h3 id="udp报文段结构">UDP报文段结构</h3>
-<p><img src="http://blog.eternityqjl.top/UDP.svg" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231604495.svg" alt="UDP"></p>
 <h3 id="udp检验和">UDP检验和</h3>
 <p>检验和用于确定当UDP报文段从源到达目的地移动时，其中的比特是否发生变化。</p>
 <p>提供差错检验的原因是不能保证源和目的之间的所有链路都提供了差错检测。</p>
@@ -1397,7 +1397,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h3 id="构造可靠数据传输协议">构造可靠数据传输协议</h3>
 <p><strong>rdt1.0：经完全可靠信道的可靠数据传输</strong></p>
 <p>此时的底层信道完全可靠，接收端不需要提供任何反馈信息给发送方。</p>
-<p><img src="http://blog.eternityqjl.top/rdt1.svg" alt="rdt1"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231604704.svg" alt="rdt1"></p>
 <ul>
 <li><strong>有限状态机(Finite-State Machine, FSM)</strong>：表示有限个状态以及在这些状态之间的转移和动作等行为的数学模型。
 <ul>
@@ -1418,7 +1418,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>接收方反馈：接收方向发送方回送**ACK(肯定确认)<strong>或是</strong>NAK(否定确认)**分组，理论上只需要1比特。</li>
 <li>重传：接收方接收到有差错分组，发送方将重传该分组</li>
 </ul>
-<p><img src="http://blog.eternityqjl.top/rdt2.svg" alt="rdt2"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231604712.svg" alt="rdt2"></p>
 <p>rdt2.0的发送端由两个状态，左边的状态中，发送端协议正在等待来自上层传递的数据，当事件<code>rdt_send(data)</code>出现时，发送方将产生一个带有检验和的分组(sndpkt)，然后发送该分组。右边的状态中，发送方协议等待来自接收方的ACK或NAK分组。如果收到ACK分组，则知道已经正确发送，协议返回到右侧的等待上层数据的状态；如果收到NAK分组，则协议重新上传一个分组并继续等待会送的ACK或NAK。</p>
 <p>当发送方处于右侧的等待状态时，不能从上层获得更多的数据，只有收到ACK分组并离开该状态时才能开始获得上层的数据，所以，rdt2.0这样的协议又被称为<strong>停等</strong>协议。</p>
 <hr>
@@ -1426,8 +1426,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>一种解决方法是，当发送方收到含糊不清的ACK或NAK分组时，只需<strong>重传</strong>当前数据分组即可。这种方法在发送方到接收方的信道中引入了<strong>冗余分组</strong>，但问题在于接收方不知道它上次所发送的ACK或NAK分组是否被正确收到，因此它不知道当前接收到的分组是新的还是一个重传。</p>
 <p>解决该问题的方法是在数据分组中添加一新字段，让发送方对其数据分组进行<strong>编号</strong>，即将发送数据分组的<strong>序号</strong>放在该字段，此时接收方只需要检查序号即可确定收到的分组是否一次重传。这里只需要使用1比特的序号就够了，如果当前是正在重传一个分组，则接收到的分组序号与最近的收到的分组序号相同；如果是一个新的分组，则序号与前一个相比发生了变化。</p>
 <p><strong>rtd2.1</strong></p>
-<p><img src="http://blog.eternityqjl.top/rdt2_1_send.svg" alt="rdt2_1_send"></p>
-<p><img src="http://blog.eternityqjl.top/rdt2_1_rcv.svg" alt="rdt2_1_rcv"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231604157.svg" alt="rdt2_1_send"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231604880.svg" alt="rdt2_1_rcv"></p>
 <p>rdt2.1是解决了上述rdt2.0问题后的新的协议，发送方和接收方的状态数都是之前的两倍，因为协议状态必须反映出此时发送方正在发送的分组或是接收方希望收到的分组的序号是0还是1。</p>
 <p><strong>rdt3.0：经具有比特差错的丢包信道的可靠数据传输</strong></p>
 <p>现在假定除了比特受损外，底层信道还会丢包，比特受损已经可以通过前面rdt2中的重传解决，而解决丢包需要增加一种新的协议机制。</p>
@@ -1438,14 +1438,14 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>响应定时器中断(采取适当动作)。</li>
 <li>终止定时器。</li>
 </ul>
-<p><img src="http://blog.eternityqjl.top/rdt3.svg" alt="rdt3"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231559002.JPG" alt="rdt3"></p>
 <p>分组序号在0和1之间交替，所以rdt3.0又被称为比特交替协议。</p>
 <h3 id="流水线可靠数据传输">流水线可靠数据传输</h3>
 <p>rdt3.0是一个功能正确的协议，但它的性能并不高，这里的核心问题在于它的停等协议。</p>
 <p>在停等协议下，信道的利用率非常低，具体过程见书。</p>
 <p>解决这个问题的方法是：<strong>不以停等方式运行</strong>，</p>
 <p>(RTT: Round-Trip Time)</p>
-<p><img src="http://blog.eternityqjl.top/%E6%B5%81%E6%B0%B4%E7%BA%BF.svg" alt="流水线"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231605453.svg" alt="流水线"></p>
 <p>允许发送方方多个分组而无需等待确认，这种技术被称为<strong>流水线</strong>，流水线对可靠数据传输协议回带来以下影响：</p>
 <ul>
 <li>必须增加序号的范围</li>
@@ -1454,7 +1454,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </ul>
 <h3 id="回退n步go-back-n-gbn">回退N步(Go-Back-N, GBN)</h3>
 <p>GBN协议中，允许发送方发送多个分组不需等待确认的原则受限于在流水线中未确认的分组数不能超过某个最大允许数N。</p>
-<p><img src="http://blog.eternityqjl.top/GBN.svg" alt="GBN"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231605736.svg" alt="GBN"></p>
 <ul>
 <li>基序号(base)：最早未确认分组的序号</li>
 <li>下一个序号(nextseqnum)：最小未使用序号(下一个待发分组序号)</li>
@@ -1469,7 +1469,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>所以，N常被称为<strong>窗口长度</strong>，GBN也常被称为<strong>滑动窗口协议(sliding-window protocol)</strong></p>
 <p><strong>扩展FSM</strong>：基于ACK、无NAK的GBN协议的发送方和接收方描述。</p>
 <p>(FSM: Finite-State Machine, 有限状态机)</p>
-<p><img src="http://blog.eternityqjl.top/ExtendedFSM.svg" alt="ExtendedFSM"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231605644.svg" alt="ExtendedFSM"></p>
 <p>GBN发送方必须响应三种类型事件：</p>
 <ul>
 <li><em>上层的调用</em>。当上层调用rdt_send()时，发送方首先检查发送窗口是否已满。如果未满，则产生一个分组并更新变量；如果已满，则发送方将数据返回给上层，隐式地指示窗口已满，过一会儿再试。实际中发送方更可能缓存这些数据或使用同步机制(仅当窗口不满时才允许上层调用rdt_send())。</li>
@@ -1480,7 +1480,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h3 id="选择重传sr">选择重传(SR)</h3>
 <p>GBN解决了停等协议中的信道利用率的问题但GBN本身也存在着一些性能问题，当窗口长度和带宽时延都很大时，单个分组的差错就能引起GBN重传大量分组，但许多分组没有必要重传。</p>
 <p>选择重传(SR)协议通过让发送方仅重传那些它怀疑在接收方出错的分组而避免了不必要的重传。这种方式要求接收方逐个地确认正确接收地分组</p>
-<p><img src="http://blog.eternityqjl.top/SR%E6%93%8D%E4%BD%9C.svg" alt="SR操作"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231605936.svg" alt="SR操作"></p>
 <p>?对于SR协议而言，窗口长度必须小于或等于序号空间大小的一半</p>
 <h2 id="面向连接的运输tcp">面向连接的运输：TCP</h2>
 <h3 id="tcp连接">TCP连接</h3>
@@ -1490,7 +1490,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p><strong>TCP建立连接的过程</strong>：</p>
 <p>客户首先发送一个特殊TCP报文段，服务器用另一个特殊报文段响应，最后客户再用第三个特殊报文段作为响应，这种建立连接的过程通常被称为<strong>三次握手</strong>。第三个报文段可以承载有效荷载(可以包含应用层数据)，前两个不行。</p>
 <p>建立连接后，两个应用程序进程之间就可以相互方数据了。</p>
-<p><img src="http://blog.eternityqjl.top/TCP%E7%BC%93%E5%AD%98.svg" alt="TCP缓存"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231606951.svg" alt="TCP缓存"></p>
 <p>客户进程通过套接字传递数据流，数据一旦通过套接字，就由客户中运行的TCP控制，TCP将这些数据引入<strong>发送缓存</strong>，并不时地从发送缓存中取出一块数据并将数据传递到网络层。TCP从缓存中取出并放入报文段中的数据数量受到**最大报文段长度(Maximum Segment Size, MSS)**的限制，MSS的典型值为1460字节。</p>
 <h3 id="tcp报文段结构">TCP报文段结构</h3>
 <p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/TCPsegmentStructure.svg" alt=""></p>
@@ -1601,7 +1601,7 @@ $$
 <li>第三步：收到SYNACK报文段后，客户也要为该连接分配缓存和变量，然后客户主机向服务器发送另一个报文段，该报文段对连接进行确认（通过将TCP报文段首部的确认字段置为server_isn + 1来完成），因为连接已经建立，所以SYN比特被置为0，这个报文可以携带应用层数据。</li>
 </ul>
 <p><strong>4次挥手终止TCP连接的过程</strong>：</p>
-<p><img src="http://blog.eternityqjl.top/TCP%E7%BB%88%E6%AD%A2%E8%BF%9E%E6%8E%A5.svg" alt="TCP终止连接"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112231602185.svg" alt="TCP终止连接"></p>
 <p>如图，客户进程发出一个关闭连接的命令，这会引起客户TCP向服务器TCP发送一个特殊TCP报文段，该报文让其首部中的<code>FIN比特</code>标志位置为1.</p>
 <p>服务器接收该报文段后，向发送方返回一个确认报文段。</p>
 <p>然后，服务器发送自己的终止报文段，其中<code>FIN比特</code>被置为1.</p>
