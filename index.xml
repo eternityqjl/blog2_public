@@ -569,7 +569,7 @@
 &lt;li&gt;如果链接器完成对命令行输入文件的扫描后，U是非空的，则链接器输出错误并终止。否则，合并然后重定位E中的文件，构建可执行文件。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;重定位&#34;&gt;重定位&lt;/h2&gt;
-&lt;p&gt;链接器完成符号解析这一步后，就把代码中的每个符号引用和一个符号定义关联起来，此时链接器就知道它的输入目标模块中的代码和数据节的确切大小。然后就可以开始重定位步骤了，该步骤将&lt;strong&gt;合并输入模块&lt;/strong&gt;，并为每个符号分配&lt;strong&gt;运行时地址&lt;/strong&gt;。共分为两步：&lt;/p&gt;
+&lt;p&gt;链接器完成符号解析这一步后，就把代码中的每个符号引用和一个符号定义关联起来了，此时链接器就知道它的输入目标模块中的代码和数据节的确切大小。然后就可以开始重定位步骤了，该步骤将&lt;strong&gt;合并输入模块&lt;/strong&gt;，并为每个符号分配&lt;strong&gt;运行时地址&lt;/strong&gt;。共分为两步：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;重定位节和符号定义&lt;/li&gt;
 &lt;li&gt;重定位节中的符号引用&lt;/li&gt;
@@ -577,23 +577,78 @@
 &lt;h3 id=&#34;重定位条目&#34;&gt;重定位条目&lt;/h3&gt;
 &lt;h3 id=&#34;重定位符号引用&#34;&gt;重定位符号引用&lt;/h3&gt;
 &lt;h2 id=&#34;可执行目标文件&#34;&gt;可执行目标文件&lt;/h2&gt;
-&lt;p&gt;转化后的二进制的可执行目标文件包含加载程序到内存并运行它所需的所有信息。&lt;/p&gt;
+&lt;p&gt;转化后的&lt;strong&gt;二进制&lt;/strong&gt;的可执行目标文件包含加载程序到内存并运行它所需的所有信息。&lt;/p&gt;
 &lt;p&gt;可执行目标文件格式类似于可重定位目标文件，ELF头描述文件的总体格式，还包括程序的入口点，即程序要运行时执行的第一条指令的地址。&lt;code&gt;.init&lt;/code&gt;节定义了一个小函数&lt;code&gt;_init&lt;/code&gt;，程序初始化代码会调用它。&lt;/p&gt;
-&lt;p&gt;可执行文件是完全链接的，所以它不需要rel节。&lt;/p&gt;
+&lt;p&gt;可执行文件是完全链接的（已经被重定位），所以它不需要rel节。&lt;/p&gt;
+&lt;p&gt;ELF可执行文件被设计得很容易加载到内存，可执行文件的连续的片被映射到连续的内存段，程序头部表描述了这种映射关系&lt;/p&gt;
 &lt;h2 id=&#34;加载可执行目标文件&#34;&gt;加载可执行目标文件&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ./prog
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;shell认为prog是一个可执行目标文件，通过调用驻留在存储器中的加载器的系统代码来运行它。加载器将可执行目标文件中的代码和数据从磁盘复制到内存，然后通过跳转到程序的入口点运行该程序。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;shell认为prog是一个可执行目标文件，通过调用驻留在存储器中的&lt;strong&gt;加载器&lt;/strong&gt;的系统代码来运行它。加载器将可执行目标文件中的代码和数据从磁盘复制到内存，然后通过跳转到程序的入口点运行该程序。这整个过程叫做加载。&lt;/p&gt;
+&lt;p&gt;每个Linux程序都有一个运行时内存映像。在Linux x86-64中，代码段总是从地址0x400000开始，后面是数据段。运行时堆在数据段之后，通过调用&lt;code&gt;malloc&lt;/code&gt;库向上增长。&lt;strong&gt;堆&lt;/strong&gt;后面的区域是为&lt;strong&gt;共享模块&lt;/strong&gt;保留的。用户&lt;strong&gt;栈&lt;/strong&gt;总是从最大合法地址($2^{48}-1$)开始，向较小内存地址增长。栈上的区域，从地址$2^{48}$开始，是为内核中的代码和数据保留的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112242026815.png&#34; alt=&#34;image-20211224202617709&#34;&gt;&lt;/p&gt;
 &lt;p&gt;加载与之后章节的进程、虚拟内存和内存映射有关。之后章节还会介绍。&lt;/p&gt;
 &lt;h2 id=&#34;动态链接共享库&#34;&gt;动态链接共享库&lt;/h2&gt;
 &lt;p&gt;静态库有一个缺点，需要定期维护和更新，如果应用程序需要一个新版本，必须以某种方式了解到该库的变化情况，然后显式地将其程序与更新了的库重新连接。&lt;/p&gt;
 &lt;p&gt;另一个问题是几乎每个C程序都使用标准I/O函数。运行时这些代码会被复制到每个运行进程的文本中，在一个上百个进程的系统上，这是对内存资源的极大浪费。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;共享库&lt;/strong&gt;用来解决静态库的缺陷，共享库是一个目标模块，在&lt;strong&gt;运行或加载时&lt;/strong&gt;，可以加载到任意内存地址，并与一个在内存中的程序链接起来。这个过程称为&lt;strong&gt;动态链接&lt;/strong&gt;，由叫做动态链接器的程序执行。Linux中用&lt;code&gt;.so&lt;/code&gt;后缀的文件来表示共享库，Windows中使用&lt;code&gt;.dll&lt;/code&gt;表示。&lt;/p&gt;
 &lt;p&gt;任何给定文件系统中，对于一个库文件只有一个&lt;code&gt;.so&lt;/code&gt;文件。所有引用该库的可执行目标文件共享这个&lt;code&gt;.so&lt;/code&gt;文件中的数据和代码，不需要都复制和嵌入到引用它们的可执行文件中。&lt;/p&gt;
+&lt;p&gt;在内存中，一个共享库的&lt;code&gt;.text&lt;/code&gt;节的一个副本可以被不同的正在运行的进程共享。第9章虚拟内存的内容中将更加详细地描述。&lt;/p&gt;
 &lt;h2 id=&#34;位置无关代码&#34;&gt;位置无关代码&lt;/h2&gt;
-&lt;p&gt;可以加载而无需重定位的代码称为位置无关代码（PIC）。使用这种方法，无限多个进程可以共享一个共享模块的代码段的单一副本。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;可以加载而无需重定位&lt;/strong&gt;的代码称为位置无关代码（Position Independent Code, PIC）。使用这种方法，无限多个进程可以共享一个共享模块的代码段的单一副本。用户对GCC使用-fpic选项指示GNU编译系统生成PIC代码。共享库的编译必须总是使用该选项。&lt;/p&gt;
 &lt;h3 id=&#34;pic数据引用&#34;&gt;PIC数据引用&lt;/h3&gt;
 &lt;h3 id=&#34;pic函数调用&#34;&gt;PIC函数调用&lt;/h3&gt;
 &lt;h2 id=&#34;库打桩机制&#34;&gt;库打桩机制&lt;/h2&gt;
+&lt;p&gt;库打桩允许我们截获对共享库函数的调用，取而代之执行自己的代码。使用该机制可以追踪对某个特殊库函数的调用次数，验证和追踪其输入输出值，或将其替换为一个完全不同的实现。&lt;/p&gt;
+&lt;p&gt;给定一个需要打桩的目标函数，创建一个包装函数，其原型与目标函数完全相同，使用某种特殊打桩机制，就可以欺骗系统调用包装函数而不是目标函数。&lt;/p&gt;
+&lt;p&gt;打桩可以发生在编译时、链接时或当程序被加载和执行的运行时。&lt;/p&gt;
+&lt;h3 id=&#34;编译时打桩&#34;&gt;编译时打桩&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//int.c
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;malloc.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() {
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;p &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; malloc(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt;);
+    free(p);
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//malloc.h
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#579&#34;&gt;#define malloc(size) mymalloc(size)
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define free(ptr) myfree(ptr)
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mymalloc&lt;/span&gt;(size_t size);
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;myfree&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//mymalloc.c
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//#define COMPILETIME
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#ifdef COMPILETIME
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;malloc.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mymalloc&lt;/span&gt;(size_t size) {
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; malloc(size);
+    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;malloc(%d)=%p&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;)size, ptr);
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; ptr;
+}
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;myfree&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr) {
+    free(ptr);
+    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;free(%p)&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, ptr);
+}
+&lt;span style=&#34;color:#579&#34;&gt;#endif
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行以下命令：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ gcc -DCOMPILETIME -c mymalloc.c
+$ gcc -I. -o intc int.c mymalloc.o
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行程序&lt;code&gt;intc&lt;/code&gt;得到结果：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ ./intc
+malloc&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;32&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;0x561e0ca432a0
+free&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;0x561e0ca432a0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;链接时打桩&#34;&gt;链接时打桩&lt;/h3&gt;
+&lt;p&gt;Linux静态链接器支持用&lt;code&gt;--wrap f&lt;/code&gt;标志进行链接时打桩。&lt;/p&gt;
+&lt;h3 id=&#34;运行时打桩&#34;&gt;运行时打桩&lt;/h3&gt;
+&lt;p&gt;编译时打桩需要访问源程序，链接时打桩需要访问程序的可重定位目标文件。有一种机制能够在运行时打桩，它只需要能够访问可执行目标文件。这个机制基于动态链接器的LD_PRELOAD环境变量。&lt;/p&gt;
 - https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/ - 2019-2021 By Jialong</description>
         </item>
     
