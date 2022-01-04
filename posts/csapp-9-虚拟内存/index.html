@@ -1,0 +1,3001 @@
+<!DOCTYPE html>
+<html><head>
+<title>Csapp：9.虚拟内存</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="书籍《深入理解计算机系统》阅读学习笔记">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="Csapp：9.虚拟内存" />
+<meta property="og:description" content="书籍《深入理解计算机系统》阅读学习笔记" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-04T14:59:16+08:00" />
+<meta property="article:modified_time" content="2022-01-04T14:59:16+08:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Csapp：9.虚拟内存"/>
+<meta name="twitter:description" content="书籍《深入理解计算机系统》阅读学习笔记"/>
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+  
+
+
+
+
+<link rel="icon" href="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/faviconJ.ico">
+
+
+
+<link rel="stylesheet" href="https://eternityqjl.top/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://eternityqjl.top/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+
+
+<script src="/js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
+</script>
+
+
+  
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script"
+async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+MathJax.Hub.Queue(function() {
+
+
+
+var all = MathJax.Hub.getAllJax(), i;
+for(i = 0; i < all.length; i += 1) {
+all[i].SourceElement().parentNode.className += ' has-jax';
+}
+});
+</script>
+
+<style>
+code.has-jax {
+font: inherit;
+font-size: 100%;
+background: inherit;
+border: inherit;
+color: #515151;
+}
+</style>
+
+
+
+
+
+  
+    <script src="/js/toc.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://eternityqjl.top">
+    
+        <div class="nav-title">
+            Jialong&#39;s Blog
+        </div>
+        
+        <div class="nav-subtitle">
+            沉潜 自由 追寻幸福
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/posts">
+                网志
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%89%a9%e7%90%86%e5%92%8c%e8%99%9a%e6%8b%9f%e5%af%bb%e5%9d%80" onclick="onNavClick(`#物理和虚拟寻址-nav`)" id="物理和虚拟寻址-nav">
+									物理和虚拟寻址
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9c%b0%e5%9d%80%e7%a9%ba%e9%97%b4" onclick="onNavClick(`#地址空间-nav`)" id="地址空间-nav">
+									地址空间
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e4%bd%9c%e4%b8%ba%e7%bc%93%e5%ad%98%e7%9a%84%e5%b7%a5%e5%85%b7" onclick="onNavClick(`#虚拟内存作为缓存的工具-nav`)" id="虚拟内存作为缓存的工具-nav">
+									虚拟内存作为缓存的工具
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#dram%e7%bc%93%e5%ad%98%e7%9a%84%e7%bb%84%e7%bb%87%e7%bb%93%e6%9e%84" onclick="onNavClick(`#dram缓存的组织结构-nav`)" id="dram缓存的组织结构-nav">
+									DRAM缓存的组织结构
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%a1%b5%e8%a1%a8" onclick="onNavClick(`#页表-nav`)" id="页表-nav">
+									页表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%a1%b5%e5%91%bd%e4%b8%ad" onclick="onNavClick(`#页命中-nav`)" id="页命中-nav">
+									页命中
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%bc%ba%e9%a1%b5" onclick="onNavClick(`#缺页-nav`)" id="缺页-nav">
+									缺页
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%86%e9%85%8d%e9%a1%b5%e9%9d%a2" onclick="onNavClick(`#分配页面-nav`)" id="分配页面-nav">
+									分配页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e4%bd%9c%e4%b8%ba%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e7%9a%84%e5%b7%a5%e5%85%b7" onclick="onNavClick(`#虚拟内存作为内存管理的工具-nav`)" id="虚拟内存作为内存管理的工具-nav">
+									虚拟内存作为内存管理的工具
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%ae%80%e5%8c%96%e9%93%be%e6%8e%a5" onclick="onNavClick(`#简化链接-nav`)" id="简化链接-nav">
+									简化链接
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ae%80%e5%8c%96%e5%8a%a0%e8%bd%bd" onclick="onNavClick(`#简化加载-nav`)" id="简化加载-nav">
+									简化加载
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ae%80%e5%8c%96%e5%85%b1%e4%ba%ab" onclick="onNavClick(`#简化共享-nav`)" id="简化共享-nav">
+									简化共享
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ae%80%e5%8c%96%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d" onclick="onNavClick(`#简化内存分配-nav`)" id="简化内存分配-nav">
+									简化内存分配
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e4%bd%9c%e4%b8%ba%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e7%9a%84%e5%b7%a5%e5%85%b7-1" onclick="onNavClick(`#虚拟内存作为内存管理的工具-1-nav`)" id="虚拟内存作为内存管理的工具-1-nav">
+									虚拟内存作为内存管理的工具
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9c%b0%e5%9d%80%e7%bf%bb%e8%af%91" onclick="onNavClick(`#地址翻译-nav`)" id="地址翻译-nav">
+									地址翻译
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%bb%93%e5%90%88%e9%ab%98%e9%80%9f%e7%bc%93%e5%ad%98%e5%92%8c%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98" onclick="onNavClick(`#结合高速缓存和虚拟内存-nav`)" id="结合高速缓存和虚拟内存-nav">
+									结合高速缓存和虚拟内存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%a9%e7%94%a8tlb%e5%8a%a0%e9%80%9f%e5%9c%b0%e5%9d%80%e7%bf%bb%e8%af%91" onclick="onNavClick(`#利用tlb加速地址翻译-nav`)" id="利用tlb加速地址翻译-nav">
+									利用TLB加速地址翻译
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a4%9a%e7%ba%a7%e9%a1%b5%e8%a1%a8" onclick="onNavClick(`#多级页表-nav`)" id="多级页表-nav">
+									多级页表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%a1%88%e4%be%8b%e7%a0%94%e7%a9%b6linux%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#案例研究linux虚拟内存系统-nav`)" id="案例研究linux虚拟内存系统-nav">
+									案例研究：Linux虚拟内存系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#linux%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%8c%ba%e5%9f%9f" onclick="onNavClick(`#linux虚拟内存区域-nav`)" id="linux虚拟内存区域-nav">
+									Linux虚拟内存区域
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#linux%e7%bc%ba%e9%a1%b5%e5%bc%82%e5%b8%b8%e5%a4%84%e7%90%86" onclick="onNavClick(`#linux缺页异常处理-nav`)" id="linux缺页异常处理-nav">
+									Linux缺页异常处理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%86%85%e5%ad%98%e6%98%a0%e5%b0%84" onclick="onNavClick(`#内存映射-nav`)" id="内存映射-nav">
+									内存映射
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%85%b1%e4%ba%ab%e5%af%b9%e8%b1%a1" onclick="onNavClick(`#共享对象-nav`)" id="共享对象-nav">
+									共享对象
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#fork%e5%87%bd%e6%95%b0" onclick="onNavClick(`#fork函数-nav`)" id="fork函数-nav">
+									fork函数
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#execve%e5%87%bd%e6%95%b0" onclick="onNavClick(`#execve函数-nav`)" id="execve函数-nav">
+									execve函数
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%bd%bf%e7%94%a8mmap%e5%87%bd%e6%95%b0%e7%9a%84%e7%94%a8%e6%88%b7%e7%ba%a7%e5%86%85%e5%ad%98%e6%98%a0%e5%b0%84" onclick="onNavClick(`#使用mmap函数的用户级内存映射-nav`)" id="使用mmap函数的用户级内存映射-nav">
+									使用mmap函数的用户级内存映射
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%8a%a8%e6%80%81%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d" onclick="onNavClick(`#动态内存分配-nav`)" id="动态内存分配-nav">
+									动态内存分配
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#malloc%e5%92%8cfree%e5%87%bd%e6%95%b0" onclick="onNavClick(`#malloc和free函数-nav`)" id="malloc和free函数-nav">
+									malloc和free函数
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%bd%bf%e7%94%a8%e5%8a%a8%e6%80%81%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d%e7%9a%84%e5%8e%9f%e5%9b%a0" onclick="onNavClick(`#使用动态内存分配的原因-nav`)" id="使用动态内存分配的原因-nav">
+									使用动态内存分配的原因
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%86%e9%85%8d%e5%99%a8%e7%9a%84%e8%a6%81%e6%b1%82%e5%92%8c%e7%9b%ae%e6%a0%87" onclick="onNavClick(`#分配器的要求和目标-nav`)" id="分配器的要求和目标-nav">
+									分配器的要求和目标
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%a2%8e%e7%89%87" onclick="onNavClick(`#碎片-nav`)" id="碎片-nav">
+									碎片
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%ae%9e%e7%8e%b0%e9%97%ae%e9%a2%98" onclick="onNavClick(`#实现问题-nav`)" id="实现问题-nav">
+									实现问题
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%9a%90%e5%bc%8f%e7%a9%ba%e9%97%b2%e9%93%be%e8%a1%a8" onclick="onNavClick(`#隐式空闲链表-nav`)" id="隐式空闲链表-nav">
+									隐式空闲链表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%94%be%e7%bd%ae%e5%b7%b2%e5%88%86%e9%85%8d%e7%9a%84%e5%9d%97" onclick="onNavClick(`#放置已分配的块-nav`)" id="放置已分配的块-nav">
+									放置已分配的块
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%86%e9%9a%94%e7%a9%ba%e9%97%b2%e5%9d%97" onclick="onNavClick(`#分隔空闲块-nav`)" id="分隔空闲块-nav">
+									分隔空闲块
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%8e%b7%e5%8f%96%e9%a2%9d%e5%a4%96%e7%9a%84%e5%a0%86%e5%86%85%e5%ad%98" onclick="onNavClick(`#获取额外的堆内存-nav`)" id="获取额外的堆内存-nav">
+									获取额外的堆内存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%90%88%e5%b9%b6%e7%a9%ba%e9%97%b2%e5%9d%97" onclick="onNavClick(`#合并空闲块-nav`)" id="合并空闲块-nav">
+									合并空闲块
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%b8%a6%e8%be%b9%e7%95%8c%e6%a0%87%e8%ae%b0%e7%9a%84%e5%90%88%e5%b9%b6" onclick="onNavClick(`#带边界标记的合并-nav`)" id="带边界标记的合并-nav">
+									带边界标记的合并
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%98%be%e5%bc%8f%e7%a9%ba%e9%97%b2%e9%93%be%e8%a1%a8" onclick="onNavClick(`#显式空闲链表-nav`)" id="显式空闲链表-nav">
+									显式空闲链表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%86%e7%a6%bb%e7%9a%84%e7%a9%ba%e9%97%b2%e9%93%be%e8%a1%a8" onclick="onNavClick(`#分离的空闲链表-nav`)" id="分离的空闲链表-nav">
+									分离的空闲链表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%9e%83%e5%9c%be%e6%94%b6%e9%9b%86" onclick="onNavClick(`#垃圾收集-nav`)" id="垃圾收集-nav">
+									垃圾收集
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#c%e8%af%ad%e8%a8%80%e5%b8%b8%e8%a7%81%e7%9a%84%e4%b8%8e%e5%86%85%e5%ad%98%e6%9c%89%e5%85%b3%e7%9a%84%e9%94%99%e8%af%af" onclick="onNavClick(`#c语言常见的与内存有关的错误-nav`)" id="c语言常见的与内存有关的错误-nav">
+									C语言常见的与内存有关的错误
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e9%97%b4%e6%8e%a5%e5%bc%95%e7%94%a8%e5%9d%8f%e6%8c%87%e9%92%88" onclick="onNavClick(`#间接引用坏指针-nav`)" id="间接引用坏指针-nav">
+									间接引用坏指针
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%af%bb%e6%9c%aa%e5%88%9d%e5%a7%8b%e5%8c%96%e7%9a%84%e5%86%85%e5%ad%98" onclick="onNavClick(`#读未初始化的内存-nav`)" id="读未初始化的内存-nav">
+									读未初始化的内存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%81%e8%ae%b8%e6%a0%88%e7%bc%93%e5%86%b2%e5%8c%ba%e6%ba%a2%e5%87%ba" onclick="onNavClick(`#允许栈缓冲区溢出-nav`)" id="允许栈缓冲区溢出-nav">
+									允许栈缓冲区溢出
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%81%87%e8%ae%be%e6%8c%87%e9%92%88%e5%92%8c%e5%ae%83%e4%bb%ac%e6%8c%87%e5%90%91%e7%9a%84%e5%af%b9%e8%b1%a1%e6%98%af%e7%9b%b8%e5%90%8c%e5%a4%a7%e5%b0%8f%e7%9a%84" onclick="onNavClick(`#假设指针和它们指向的对象是相同大小的-nav`)" id="假设指针和它们指向的对象是相同大小的-nav">
+									假设指针和它们指向的对象是相同大小的
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%bc%95%e7%94%a8%e6%8c%87%e9%92%88%e8%80%8c%e4%b8%8d%e6%98%af%e5%ae%83%e6%89%80%e6%8c%87%e5%90%91%e7%9a%84%e5%af%b9%e8%b1%a1" onclick="onNavClick(`#引用指针而不是它所指向的对象-nav`)" id="引用指针而不是它所指向的对象-nav">
+									引用指针，而不是它所指向的对象
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%af%af%e8%a7%a3%e6%8c%87%e9%92%88%e7%9a%84%e8%bf%90%e7%ae%97" onclick="onNavClick(`#误解指针的运算-nav`)" id="误解指针的运算-nav">
+									误解指针的运算
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%bc%95%e7%94%a8%e4%b8%8d%e5%ad%98%e5%9c%a8%e7%9a%84%e5%8f%98%e9%87%8f" onclick="onNavClick(`#引用不存在的变量-nav`)" id="引用不存在的变量-nav">
+									引用不存在的变量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%bc%95%e7%94%a8%e7%a9%ba%e9%97%b2%e5%a0%86%e5%9d%97%e4%b8%ad%e7%9a%84%e6%95%b0%e6%8d%ae" onclick="onNavClick(`#引用空闲堆块中的数据-nav`)" id="引用空闲堆块中的数据-nav">
+									引用空闲堆块中的数据
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%bc%95%e8%b5%b7%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f" onclick="onNavClick(`#引起内存泄漏-nav`)" id="引起内存泄漏-nav">
+									引起内存泄漏
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
+                    网志
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%89%a9%e7%90%86%e5%92%8c%e8%99%9a%e6%8b%9f%e5%af%bb%e5%9d%80" onclick="onNavClick(`#物理和虚拟寻址-nav`)" id="物理和虚拟寻址-nav">
+									物理和虚拟寻址
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9c%b0%e5%9d%80%e7%a9%ba%e9%97%b4" onclick="onNavClick(`#地址空间-nav`)" id="地址空间-nav">
+									地址空间
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e4%bd%9c%e4%b8%ba%e7%bc%93%e5%ad%98%e7%9a%84%e5%b7%a5%e5%85%b7" onclick="onNavClick(`#虚拟内存作为缓存的工具-nav`)" id="虚拟内存作为缓存的工具-nav">
+									虚拟内存作为缓存的工具
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#dram%e7%bc%93%e5%ad%98%e7%9a%84%e7%bb%84%e7%bb%87%e7%bb%93%e6%9e%84" onclick="onNavClick(`#dram缓存的组织结构-nav`)" id="dram缓存的组织结构-nav">
+									DRAM缓存的组织结构
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%a1%b5%e8%a1%a8" onclick="onNavClick(`#页表-nav`)" id="页表-nav">
+									页表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%a1%b5%e5%91%bd%e4%b8%ad" onclick="onNavClick(`#页命中-nav`)" id="页命中-nav">
+									页命中
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%bc%ba%e9%a1%b5" onclick="onNavClick(`#缺页-nav`)" id="缺页-nav">
+									缺页
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%86%e9%85%8d%e9%a1%b5%e9%9d%a2" onclick="onNavClick(`#分配页面-nav`)" id="分配页面-nav">
+									分配页面
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e4%bd%9c%e4%b8%ba%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e7%9a%84%e5%b7%a5%e5%85%b7" onclick="onNavClick(`#虚拟内存作为内存管理的工具-nav`)" id="虚拟内存作为内存管理的工具-nav">
+									虚拟内存作为内存管理的工具
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%ae%80%e5%8c%96%e9%93%be%e6%8e%a5" onclick="onNavClick(`#简化链接-nav`)" id="简化链接-nav">
+									简化链接
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ae%80%e5%8c%96%e5%8a%a0%e8%bd%bd" onclick="onNavClick(`#简化加载-nav`)" id="简化加载-nav">
+									简化加载
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ae%80%e5%8c%96%e5%85%b1%e4%ba%ab" onclick="onNavClick(`#简化共享-nav`)" id="简化共享-nav">
+									简化共享
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%ae%80%e5%8c%96%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d" onclick="onNavClick(`#简化内存分配-nav`)" id="简化内存分配-nav">
+									简化内存分配
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e4%bd%9c%e4%b8%ba%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e7%9a%84%e5%b7%a5%e5%85%b7-1" onclick="onNavClick(`#虚拟内存作为内存管理的工具-1-nav`)" id="虚拟内存作为内存管理的工具-1-nav">
+									虚拟内存作为内存管理的工具
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%9c%b0%e5%9d%80%e7%bf%bb%e8%af%91" onclick="onNavClick(`#地址翻译-nav`)" id="地址翻译-nav">
+									地址翻译
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%bb%93%e5%90%88%e9%ab%98%e9%80%9f%e7%bc%93%e5%ad%98%e5%92%8c%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98" onclick="onNavClick(`#结合高速缓存和虚拟内存-nav`)" id="结合高速缓存和虚拟内存-nav">
+									结合高速缓存和虚拟内存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%a9%e7%94%a8tlb%e5%8a%a0%e9%80%9f%e5%9c%b0%e5%9d%80%e7%bf%bb%e8%af%91" onclick="onNavClick(`#利用tlb加速地址翻译-nav`)" id="利用tlb加速地址翻译-nav">
+									利用TLB加速地址翻译
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%a4%9a%e7%ba%a7%e9%a1%b5%e8%a1%a8" onclick="onNavClick(`#多级页表-nav`)" id="多级页表-nav">
+									多级页表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%a1%88%e4%be%8b%e7%a0%94%e7%a9%b6linux%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e7%b3%bb%e7%bb%9f" onclick="onNavClick(`#案例研究linux虚拟内存系统-nav`)" id="案例研究linux虚拟内存系统-nav">
+									案例研究：Linux虚拟内存系统
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#linux%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%8c%ba%e5%9f%9f" onclick="onNavClick(`#linux虚拟内存区域-nav`)" id="linux虚拟内存区域-nav">
+									Linux虚拟内存区域
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#linux%e7%bc%ba%e9%a1%b5%e5%bc%82%e5%b8%b8%e5%a4%84%e7%90%86" onclick="onNavClick(`#linux缺页异常处理-nav`)" id="linux缺页异常处理-nav">
+									Linux缺页异常处理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%86%85%e5%ad%98%e6%98%a0%e5%b0%84" onclick="onNavClick(`#内存映射-nav`)" id="内存映射-nav">
+									内存映射
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%85%b1%e4%ba%ab%e5%af%b9%e8%b1%a1" onclick="onNavClick(`#共享对象-nav`)" id="共享对象-nav">
+									共享对象
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#fork%e5%87%bd%e6%95%b0" onclick="onNavClick(`#fork函数-nav`)" id="fork函数-nav">
+									fork函数
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#execve%e5%87%bd%e6%95%b0" onclick="onNavClick(`#execve函数-nav`)" id="execve函数-nav">
+									execve函数
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%bd%bf%e7%94%a8mmap%e5%87%bd%e6%95%b0%e7%9a%84%e7%94%a8%e6%88%b7%e7%ba%a7%e5%86%85%e5%ad%98%e6%98%a0%e5%b0%84" onclick="onNavClick(`#使用mmap函数的用户级内存映射-nav`)" id="使用mmap函数的用户级内存映射-nav">
+									使用mmap函数的用户级内存映射
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%8a%a8%e6%80%81%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d" onclick="onNavClick(`#动态内存分配-nav`)" id="动态内存分配-nav">
+									动态内存分配
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#malloc%e5%92%8cfree%e5%87%bd%e6%95%b0" onclick="onNavClick(`#malloc和free函数-nav`)" id="malloc和free函数-nav">
+									malloc和free函数
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%bd%bf%e7%94%a8%e5%8a%a8%e6%80%81%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d%e7%9a%84%e5%8e%9f%e5%9b%a0" onclick="onNavClick(`#使用动态内存分配的原因-nav`)" id="使用动态内存分配的原因-nav">
+									使用动态内存分配的原因
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%86%e9%85%8d%e5%99%a8%e7%9a%84%e8%a6%81%e6%b1%82%e5%92%8c%e7%9b%ae%e6%a0%87" onclick="onNavClick(`#分配器的要求和目标-nav`)" id="分配器的要求和目标-nav">
+									分配器的要求和目标
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%a2%8e%e7%89%87" onclick="onNavClick(`#碎片-nav`)" id="碎片-nav">
+									碎片
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%ae%9e%e7%8e%b0%e9%97%ae%e9%a2%98" onclick="onNavClick(`#实现问题-nav`)" id="实现问题-nav">
+									实现问题
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e9%9a%90%e5%bc%8f%e7%a9%ba%e9%97%b2%e9%93%be%e8%a1%a8" onclick="onNavClick(`#隐式空闲链表-nav`)" id="隐式空闲链表-nav">
+									隐式空闲链表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%94%be%e7%bd%ae%e5%b7%b2%e5%88%86%e9%85%8d%e7%9a%84%e5%9d%97" onclick="onNavClick(`#放置已分配的块-nav`)" id="放置已分配的块-nav">
+									放置已分配的块
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%86%e9%9a%94%e7%a9%ba%e9%97%b2%e5%9d%97" onclick="onNavClick(`#分隔空闲块-nav`)" id="分隔空闲块-nav">
+									分隔空闲块
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%8e%b7%e5%8f%96%e9%a2%9d%e5%a4%96%e7%9a%84%e5%a0%86%e5%86%85%e5%ad%98" onclick="onNavClick(`#获取额外的堆内存-nav`)" id="获取额外的堆内存-nav">
+									获取额外的堆内存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%90%88%e5%b9%b6%e7%a9%ba%e9%97%b2%e5%9d%97" onclick="onNavClick(`#合并空闲块-nav`)" id="合并空闲块-nav">
+									合并空闲块
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%b8%a6%e8%be%b9%e7%95%8c%e6%a0%87%e8%ae%b0%e7%9a%84%e5%90%88%e5%b9%b6" onclick="onNavClick(`#带边界标记的合并-nav`)" id="带边界标记的合并-nav">
+									带边界标记的合并
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%98%be%e5%bc%8f%e7%a9%ba%e9%97%b2%e9%93%be%e8%a1%a8" onclick="onNavClick(`#显式空闲链表-nav`)" id="显式空闲链表-nav">
+									显式空闲链表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%88%86%e7%a6%bb%e7%9a%84%e7%a9%ba%e9%97%b2%e9%93%be%e8%a1%a8" onclick="onNavClick(`#分离的空闲链表-nav`)" id="分离的空闲链表-nav">
+									分离的空闲链表
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e5%9e%83%e5%9c%be%e6%94%b6%e9%9b%86" onclick="onNavClick(`#垃圾收集-nav`)" id="垃圾收集-nav">
+									垃圾收集
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#c%e8%af%ad%e8%a8%80%e5%b8%b8%e8%a7%81%e7%9a%84%e4%b8%8e%e5%86%85%e5%ad%98%e6%9c%89%e5%85%b3%e7%9a%84%e9%94%99%e8%af%af" onclick="onNavClick(`#c语言常见的与内存有关的错误-nav`)" id="c语言常见的与内存有关的错误-nav">
+									C语言常见的与内存有关的错误
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e9%97%b4%e6%8e%a5%e5%bc%95%e7%94%a8%e5%9d%8f%e6%8c%87%e9%92%88" onclick="onNavClick(`#间接引用坏指针-nav`)" id="间接引用坏指针-nav">
+									间接引用坏指针
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%af%bb%e6%9c%aa%e5%88%9d%e5%a7%8b%e5%8c%96%e7%9a%84%e5%86%85%e5%ad%98" onclick="onNavClick(`#读未初始化的内存-nav`)" id="读未初始化的内存-nav">
+									读未初始化的内存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%85%81%e8%ae%b8%e6%a0%88%e7%bc%93%e5%86%b2%e5%8c%ba%e6%ba%a2%e5%87%ba" onclick="onNavClick(`#允许栈缓冲区溢出-nav`)" id="允许栈缓冲区溢出-nav">
+									允许栈缓冲区溢出
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%81%87%e8%ae%be%e6%8c%87%e9%92%88%e5%92%8c%e5%ae%83%e4%bb%ac%e6%8c%87%e5%90%91%e7%9a%84%e5%af%b9%e8%b1%a1%e6%98%af%e7%9b%b8%e5%90%8c%e5%a4%a7%e5%b0%8f%e7%9a%84" onclick="onNavClick(`#假设指针和它们指向的对象是相同大小的-nav`)" id="假设指针和它们指向的对象是相同大小的-nav">
+									假设指针和它们指向的对象是相同大小的
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%bc%95%e7%94%a8%e6%8c%87%e9%92%88%e8%80%8c%e4%b8%8d%e6%98%af%e5%ae%83%e6%89%80%e6%8c%87%e5%90%91%e7%9a%84%e5%af%b9%e8%b1%a1" onclick="onNavClick(`#引用指针而不是它所指向的对象-nav`)" id="引用指针而不是它所指向的对象-nav">
+									引用指针，而不是它所指向的对象
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%af%af%e8%a7%a3%e6%8c%87%e9%92%88%e7%9a%84%e8%bf%90%e7%ae%97" onclick="onNavClick(`#误解指针的运算-nav`)" id="误解指针的运算-nav">
+									误解指针的运算
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%bc%95%e7%94%a8%e4%b8%8d%e5%ad%98%e5%9c%a8%e7%9a%84%e5%8f%98%e9%87%8f" onclick="onNavClick(`#引用不存在的变量-nav`)" id="引用不存在的变量-nav">
+									引用不存在的变量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%bc%95%e7%94%a8%e7%a9%ba%e9%97%b2%e5%a0%86%e5%9d%97%e4%b8%ad%e7%9a%84%e6%95%b0%e6%8d%ae" onclick="onNavClick(`#引用空闲堆块中的数据-nav`)" id="引用空闲堆块中的数据-nav">
+									引用空闲堆块中的数据
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%bc%95%e8%b5%b7%e5%86%85%e5%ad%98%e6%b3%84%e6%bc%8f" onclick="onNavClick(`#引起内存泄漏-nav`)" id="引起内存泄漏-nav">
+									引起内存泄漏
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.top">
+            Jialong&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://eternityqjl.top">
+        <div class="single-column-header-title">Jialong&#39;s Blog</div>
+        
+        <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://github.com/eternityqjl/blogGallery/blob/master/blog/csapp.jpg?raw=true')"
+                    
+                
+            >
+                <div class="post-title">
+                    Csapp：9.虚拟内存
+                    
+                    <div class="post-subtitle">
+                        书籍《深入理解计算机系统》阅读学习笔记
+                    </div>
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2022-01-04 14:59
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97">深入理解计算机系统学习日志</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84">计算机体系结构</a>
+                                &nbsp;
+                            
+                                <a href="/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98">虚拟内存</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <h2 id="物理和虚拟寻址">物理和虚拟寻址</h2>
+<p>物理地址PA、虚拟地址VA、内存管理单元MMU（利用存放在主存中的查询表来动态地翻译虚拟地址，该表的内容由操作系统管理）。</p>
+<h2 id="地址空间">地址空间</h2>
+<p>非负整数地址的有序集合。</p>
+<p>目前x86使用39位物理地址空间、49位虚拟地址空间。</p>
+<h2 id="虚拟内存作为缓存的工具">虚拟内存作为缓存的工具</h2>
+<p>VM系统通过将虚拟内存分割为大小为$P=2^p$字节的虚拟页来处理，同样地，物理内存也被分割为大小为P的物理页（页帧）。</p>
+<p>任意时刻，虚拟页面的集合都分为三个不相交的子集：</p>
+<ul>
+<li>未分配的</li>
+<li>缓存的</li>
+<li>未缓存的</li>
+</ul>
+<h3 id="dram缓存的组织结构">DRAM缓存的组织结构</h3>
+<p>使用术语<code>SRAM缓存</code>来表示位于CPU和主存之间的L1、L2和L3高速缓存；用术语<code>DRAM缓存</code>表示虚拟内存系统的缓存，它在主存中缓存虚拟页。</p>
+<p>在存储层次结构中，DRAM缓存的位置对它的组织结构有很大的影响。DRAM比SRAM慢大约10倍，磁盘比DRAM慢大约100000倍。DRAM缓存的不命中（缺页）比SRAM缓存的不命中要昂贵的多。</p>
+<p>与硬件对SRAM缓存相比，操作系统对DRAM缓存使用了更复杂精密的替换算法。对磁盘的访问时间很长，DRAM缓存总是使用写回，而不是直写。</p>
+<h3 id="页表">页表</h3>
+<p>虚拟内存系统必须有方法判断一个虚拟页是否缓存在DRAM中的某个地方。如果是，系统还必须确定这个虚拟页存放在哪个物理页中。如果不命中，系统必须判断这个虚拟页存放在磁盘的哪个位置，在物理内存中选择一个牺牲页，并将虚拟页从磁盘复制到DRAM中，替换这个牺牲页。</p>
+<p>页表就是一个页表条目（PET）的数组。虚拟地址空间中的每个页在页表中一个固定偏移量处都有一个PTE。假设每个PTE由一个有效位和一个n位地址字段组成的。有效位表明该虚拟页当前是否被缓存在DRAM中。</p>
+<h3 id="页命中">页命中</h3>
+<h3 id="缺页">缺页</h3>
+<h3 id="分配页面">分配页面</h3>
+<h2 id="虚拟内存作为内存管理的工具">虚拟内存作为内存管理的工具</h2>
+<p>虚拟内存大大简化了内存管理，并提供了一种自然的保护内存的方法。</p>
+<p>操作系统实际上为每个进程提供了一个独立的页表，因而也就是一个独立的虚拟地址空间。</p>
+<p>多个虚拟页面可以映射到同一个共享的物理页面上。</p>
+<p>VM简化了链接和加载、代码和数据共享，以及应用程序的内存分配。</p>
+<h3 id="简化链接">简化链接</h3>
+<p>独立的地址空间允许每个进程的内存映射使用相同的基本格式，而不管代码和数据实际存放在物理内存的何处。</p>
+<p>一个给定的Linux系统上的每个进程都使用类似的内存格式。对于64位地址空间，代码段总是从虚拟地址0x400000开始。数据段跟在代码段后，中间有一段符号要求的对齐空白。栈占用用户地址空间最高的部分，并向下生长。</p>
+<p>这样的一致性简化了链接器的设计和实现。允许链接器生成完全链接的可执行文件，这些可执行文件是独立于物理内存中代码和数据的最终位置的。</p>
+<h3 id="简化加载">简化加载</h3>
+<p>虚拟内存使得很容易向内存中加载可执行文件和共享对象文件。要把目标文件中.text和.data节加载到一个新创建的进程中，Linux加载器位代码和数据段分配虚拟页，把它们标记为无效的（即未被缓存的），将页表条目指向目标文件中适当的位置。加载器从不从磁盘到内存实际复制任何数据。在每个页被初次引用时，要么是CPU取指令时引用的，要么是一条正在执行的指令引用一个内存位置时引用的，虚拟内存系统会按照需要自动地调入数据页。</p>
+<p>将一组连续的虚拟页映射到任意一个文件中的任意位置的表示法称为内存映射。Linux提供一个称为mmap的系统调用，允许应用程序自己做内存映射。详见后面小节。</p>
+<h3 id="简化共享">简化共享</h3>
+<p>一般情况下，每个进程都有自己私有的代码、数据、堆以及栈区域，是不和其他进程进行共享的。但在另一些情况下，需要进程来共享数据和代码。例如，每个进程必须调用相同的操作系统内核代码，操作系统通过将不同进程中适当的虚拟页面映射到相同的物理页面，从而安排多个进程共享这部分代码的一个副本。</p>
+<h3 id="简化内存分配">简化内存分配</h3>
+<p>虚拟内存为用户进程提供了一个简单的分配额外内存的机制。当一个运行在用户进程的程序要求额外的堆空间时（调用malloc），操作系统分配一个适当数字大小的连续的虚拟内存页面，并将其映射到物理内存中任意位置的k个任意的物理页面。</p>
+<h2 id="虚拟内存作为内存管理的工具-1">虚拟内存作为内存管理的工具</h2>
+<p>提供独立的地址空间使得区分不同进程的私有内存变得容易。但时地址翻译机制可以以一种自然的方式扩展到提供更好的访问控制。因为每个CPU生成一个地址时，地址翻译硬件都会读一个PTE，通过在PTE上添加一些<strong>额外的许可位</strong>开控制对一个虚拟页面内容的访问十分简单。</p>
+<p>例如：</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201041455041.png" alt="虚拟内存提供的页面级内存保护"></p>
+<p>每个PTE添加了三个许可位：</p>
+<ul>
+<li>SUP位：进程是否必须运行在内核（超级用户）模式下才能访问该页</li>
+<li>READ位和WRITE位控制对页面的读和写访问</li>
+</ul>
+<p>如果一条指令违反了这些许可条件，那么CPU就触发一个一般保护故障，将控制传递给一个内核中的异常处理程序。</p>
+<h2 id="地址翻译">地址翻译</h2>
+<p>页面命中时CPU<strong>硬件</strong>执行的步骤：</p>
+<ul>
+<li>处理器生成一个虚拟地址，将其传送给MMU</li>
+<li>MMU生成PTE（Page Table Entry）地址，并从高速缓存/主存请求得到它</li>
+<li>高速缓存/主存向MMU返回PTE</li>
+<li>MMU构造物理地址，并把它传送给高速缓存/主存</li>
+<li>高速缓存/主存返回所请求的数据字给处理器</li>
+</ul>
+<p>页面命中完全由硬件来处理，与之不同的是，处理缺页要求<strong>硬件和操作系统内核</strong>协作完成。步骤如下：</p>
+<ul>
+<li>第1-3步：与页面命中时的前三步相同</li>
+<li>PTE中的有效位为0，所以MMU触发了一次异常，传递CPU中的控制到<strong>操作系统内核中的缺页异常处理程序</strong>。</li>
+<li>缺页处理程序确定出物理内存中的牺牲页，如果该页面已经被修改，则把它换出到磁盘。</li>
+<li>缺页处理程序页面调入新的页面，并更新内存中的PTE。</li>
+<li>缺页处理程序返回到原来的进程，再次执行导致缺页的指令。CPU将引起缺页的虚拟地址重新发送给MMU。虚拟页面现在缓存在物理内存中，所以就会命中。</li>
+</ul>
+<h3 id="结合高速缓存和虚拟内存">结合高速缓存和虚拟内存</h3>
+<p>在任何既使用高速缓存SRAM又使用虚拟内存的系统中，一般使用物理内存来访问高速缓存。</p>
+<p>使用物理内存，多个进程同时在高速缓存中由存储块和共享来自相同虚拟页面的块非常简单。并且高速缓存无需处理保护问题，因为访问权限的检查是地址翻译过程的一部分。</p>
+<h3 id="利用tlb加速地址翻译">利用TLB加速地址翻译</h3>
+<h3 id="多级页表">多级页表</h3>
+<p>用来压缩页表的常用方法是使用层次结构的页表。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201032140608.png" alt="两级页表结构"></p>
+<h2 id="案例研究linux虚拟内存系统">案例研究：Linux虚拟内存系统</h2>
+<p>Linux为<strong>每个进程</strong>维护了一个单独的虚拟地址空间。内核虚拟内存位于<strong>用户栈之上</strong>。</p>
+<p>下图中为一个Linux进程的虚拟内存。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011847831.png" alt="一个Linux进程的虚拟内存"></p>
+<p>内核虚拟内存包含内核中的代码和数据结构。内核虚拟内存的某些区域被映射到所有进程共享的物理页面。例如，每个进程共享内核的代码和全局数据结构。内核虚拟内存的其他区域包含每个进程都不相同的数据，比如，页表、内核在进程的上下文执行代码时使用的栈，以及记录虚拟地址空间当前组织的各种数据结构。</p>
+<h3 id="linux虚拟内存区域">Linux虚拟内存区域</h3>
+<p>Linux将虚拟内存组织成一些区域（又称段）的集合。一个区域就是已存在的虚拟内存的连续片。代码段、数据段、堆、共享库以及用户栈都是不同的区域。每个虚拟页面都保存在某个区域中，而不属于某个区域的虚拟页是不存在的，并且不能被进程引用。区域很重要，因为其允许虚拟地址空间有间隙。</p>
+<p>下图强调了记录<strong>一个进程中虚拟内存区域的内核数据结构</strong>。内核为系统中的每个进程维护一个单独的<strong>任务结构<code>task_struct</code></strong>。任务结构中的元素包含或指向内核<strong>运行该进程所需要的所有信息</strong>（如PID、指向用户栈的指针、可执行目标文件的名字以及程序计数器）。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011858154.png" alt="Linux一个进程中虚拟内存区域的内核数据结构"></p>
+<p>任务结构中的一个条目指向<code>mm_struct</code>，它描述了虚拟内存的当前状态。我们想了解的是pgd和mmap两个字段。pgd指向第一级页表的基址，mmap指向一个<code>vm_area_structs</code>的链表，其中每个<code>vm_area_structs</code>都描述了当前虚拟地址空间的一个区域。当内核运行这个进程时，就把pgd存放在CR3控制寄存器中。</p>
+<p>一个<strong>具体区域</strong>的区域结构包含以下字段：</p>
+<ul>
+<li><code>vm_start</code>：指向该区域的起始</li>
+<li><code>vm_end</code>：指向该区域的结尾</li>
+<li><code>vm_port</code>：描述这个区域内包含的所有页的读写许可权限</li>
+<li><code>vm_flags</code>：描述这个区域内的页面是与其他进程共享的还是这个进程私有的</li>
+<li><code>vm_next</code>：指向链表中下一个区域的结构</li>
+</ul>
+<h3 id="linux缺页异常处理">Linux缺页异常处理</h3>
+<p>假设MMU在试图翻译某个虚拟地址A时，触发了一个缺页。这个异常导致控制转移到内核的缺页处理程序，处理程序执行以下步骤：</p>
+<ul>
+<li>判断<strong>虚拟地址A</strong>是否合法？即A是否在某个区域结构定义的区域内。为了找到答案，缺页处理程序搜索区域结构的链表，把A和每个区域结构中的<code>vm_start</code>和<code>vm_end</code>作比较。如果该指令不合法，则触发一个段错误，从而终止该进程。由于一个进程可以创建任意数量的新虚拟内存，因此顺序搜索链表的开销可能很大，Linux在链表中构建一棵树，并在这棵树上查找。</li>
+<li>试图进行的<strong>内存访问</strong>是否合法？即进程是否有读、写或执行这个区域内页面的权限。如果试图进行的访问是不合法的，缺页处理程序就会触发一个保护异常，从而终止这个进程。</li>
+<li>此时内核知道这个缺页是由于<strong>对合法的虚拟内存进行合法的操作</strong>造成的。这样进行处理：选择一个<strong>牺牲页面</strong>，如果该页面被修改过，则将其交换出去，换入新的页面并更新页表。当缺页处理程序返回时，CPU重新启动引起缺页的指令，这条指令再次发送A到MMU。此时MMU就能正常翻译A，不会再产生缺页中断。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011920465.png" alt="Linux缺页处理"></p>
+<h2 id="内存映射">内存映射</h2>
+<p>内存映射：Linux通过一个<strong>虚拟内存区域</strong>与一个<strong>磁盘上的对象</strong>关联起来，以初始化这个虚拟内存区域的内容。虚拟内存区域可以映射到两种类型的对象中的一种：</p>
+<ul>
+<li>Linux文件系统中的普通文件</li>
+<li>匿名文件</li>
+</ul>
+<p>一旦一个虚拟页面被初始化了，它就在一个由内核维护的专门的**交换文件(swap file)**之间换来换去。交换文件也叫做交换空间或交换区域。</p>
+<h3 id="共享对象">共享对象</h3>
+<p>许多程序要访问只读运行时库代码的相同副本，例如每个C程序都需要来自标准C库的诸如printf这样的函数。如果每个进程都在物理内存中保存这些常用代码的副本，就是极端的浪费。</p>
+<p>内存映射为我们提供了一种清晰的机制，用来控制多个进程如何共享对象。</p>
+<p>一个对象可以被映射到虚拟内存的一个区域，要么作为<strong>共享对象</strong>，要么作为<strong>私有对象</strong>。</p>
+<p>若一个进程将一个共享对象映射到它的虚拟地址空间的一个区域内，那么该进程对这个地址区域的任何写操作，对于那些同样将该共享对象映射到自己的虚拟内存的进程也是可见的。这些变化会反映在磁盘的原始对象上。另一方面，对于一个映射到私有对象的区域做的改变，对于其他进程来说是不可见的，并且进程对这个区域的任何写操作都不会反映在磁盘的对象中。</p>
+<p>私有对象使用一种称为<strong>写时复制</strong>的技术被映射到虚拟内存中。私有对象来时生命周期的方式基本与共享对象相同，在物理内存中只保存私有对象的一份副本。两个进程将一个私有对象映射到它们的虚拟内存的不同区域，但共享这个对象的同一物理副本。对于每个映射私有对象的进程，响应私有区域的页表条目都被标记为只读，并且区域结构被标记为私有的写时复制。只要没有进程试图写它自己的私有区域，它们就可以继续共享物理内存中对象的一个单独副本。</p>
+<p>通过这种延迟私有对象中的副本直到最后可能的时刻，写时复制最充分地使用了稀有的物理内存。</p>
+<h3 id="fork函数">fork函数</h3>
+<p>fork函数创建一个带有自己独立虚拟地址空间的新进程。</p>
+<p>当fork函数被当前进程调用时，内核为新进程创建各种数据结构，并分配给它一个唯一的PID。为了给这个新进程创建虚拟内存，它创建了当前进程的<code>mm_struct</code>、区域结构和页表的原样<strong>副本</strong>。它将两个进程中的每个页面都标记为只读，并将两个进程中的每个区域结构都标记为私有的<strong>写时复制</strong>。</p>
+<p>当fork函数在新进程中返回时，新进程现在的虚拟内存刚好和调用fork时存在的虚拟内存相同。当这两个进程中的一个后来进程写操作时，写时复制就会创建新页面，因此为每个进程保持了私有地址空间的概念。</p>
+<h3 id="execve函数">execve函数</h3>
+<p>虚拟内存和内存映射在将程序加载到内存的过程中也扮演着关键的角色。</p>
+<p>假设在当前进程中的程序执行了如下的execve调用：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">execve(<span style="background-color:#fff0f0">&#34;a.out&#34;</span>, <span style="color:#007020">NULL</span>, <span style="color:#007020">NULL</span>);
+</code></pre></div><p>execve函数在当前进程中加载并运行包含在可执行目标文件a.out中的程序，用a.out程序有效地替代了当前程序。加载该程序需要以下几个步骤：</p>
+<ul>
+<li>删除已存在的用户区域。</li>
+<li>映射私有区域。为新程序的代码、数据、bss和栈区域创建新的区域结构，所有这些新区域都是私有的、写时复制的。代码和数据区域被映射为a.out文件中的.text和.data区。bss区域时请求二进制零的，映射到匿名文件，其大小包含在a.out中。栈和堆区域也是请求二进制零的，初始长度为零。</li>
+<li>映射共享区域。如果a.out程序与共享对象或目标链接（比如标准C库libc.so），那么这些对象都是动态连接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。</li>
+<li>设置程序计数器PC。设置当前进程上下文中的程序计数器，使之指向代码区域的入口点。下一次调度这个进程时，它将从这个入口点开始执行。Linux将根据需要换入代码和数据页面。</li>
+</ul>
+<p>下图显示了加载器如何映射用户地址空间区域。</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201022200703.png" alt="加载器映射用户地址空间区域"></p>
+<h3 id="使用mmap函数的用户级内存映射">使用mmap函数的用户级内存映射</h3>
+<h2 id="动态内存分配">动态内存分配</h2>
+<p>动态内存分配器维护着一个进程的虚拟内存区域，称为堆。对于每个进程，内核维护着一个变量brk，指向堆的顶部。</p>
+<p>分配器将堆视为一组不同大小的块的集合，每个块就是一个连续的虚拟内存片，要么是已分配的，要么是空闲的。</p>
+<p>分配器有两种基本风格：</p>
+<ul>
+<li><strong>显式</strong>分配器：要求应用显式地释放任何已有的块。C标准库提供称为malloc程序包的显式分配器，C程序通过调用malloc分配内存，通过调用free释放一个块。C++通过new和delete分配和释放。</li>
+<li><strong>隐式</strong>分配器：又称为垃圾收集器。自动释放未使用的已分配的块的过程称为垃圾收集。</li>
+</ul>
+<p>接下来主要讨论显式分配器的设计与实现。</p>
+<h3 id="malloc和free函数">malloc和free函数</h3>
+<p>C标准库提供成为malloc的显示分配器，程序通过调用malloc函数来从堆中分配块。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;stdlib.h&gt;</span><span style="color:#579">
+</span><span style="color:#579"></span><span style="color:#339;font-weight:bold">void</span> <span style="color:#333">*</span><span style="color:#06b;font-weight:bold">malloc</span>(size_t size);
+</code></pre></div><p>malloc函数返回一个指针，指向大小至少为size字节的额内存块。</p>
+<p>如果malloc遇到问题（例如程序要求的内存块比可用的虚拟内存还要大），那么它就返回NULL，并设置errno。</p>
+<p>动态分配器还可以使用sbrk函数：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;unistd.h&gt;</span><span style="color:#579">
+</span><span style="color:#579"></span><span style="color:#339;font-weight:bold">void</span> <span style="color:#333">*</span><span style="color:#06b;font-weight:bold">sbrk</span>(intptr_t incr);
+</code></pre></div><p>sbrk函数通过将内核的brk指针增加incr来扩展和收缩堆。如果成功则返回brk的旧值，否则返回-1，并将errno设置为ENOMEM。如果incr为零，那么sbrk就返回brk的当前值。</p>
+<p>程序通过调用free函数来释放已分配的堆块。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;stdlib.h&gt;</span><span style="color:#579">
+</span><span style="color:#579"></span><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">free</span>(<span style="color:#339;font-weight:bold">void</span><span style="color:#333">*</span> ptr);
+</code></pre></div><h3 id="使用动态内存分配的原因">使用动态内存分配的原因</h3>
+<p>经常直到程序实际运行时，才知道某些数据结构的大小。</p>
+<h3 id="分配器的要求和目标">分配器的要求和目标</h3>
+<ul>
+<li>处理任意请求序列</li>
+<li>立即响应请求</li>
+<li>只使用堆</li>
+<li>对齐块</li>
+<li>不修改已分配的块</li>
+</ul>
+<h3 id="碎片">碎片</h3>
+<p>造成堆利用率很低的主要原因是一种称为碎片的现象，当虽然有未使用的内存但不能用来满足分配请求时，就会发发生这种现象。由以下两种碎片：</p>
+<ul>
+<li>内部碎片：已分配块的大小和它们的有效荷载大小之差的和。内部碎片的数量取决于以前请求的模式和分配器的实现方式。比如分配器可能增加块大小以满足对齐约束条件。</li>
+<li>外部碎片：当空闲内存合计起来足够满足一个分配请求，但没有一个单独的空闲块足够大可以来处理这个请求。如果不向内核请求额外的虚拟内存就无法满足这个请求。</li>
+</ul>
+<p>外部碎片难以量化且不可能预测，所以分配器通常采用启发式策略来试图维持少量的大空闲块。</p>
+<h3 id="实现问题">实现问题</h3>
+<p>要实现一个在吞吐率和利用率之间把握好平衡的分配器，要考虑以下问题：</p>
+<ul>
+<li>空闲块组织</li>
+<li>放置</li>
+<li>分割</li>
+<li>合并</li>
+</ul>
+<h3 id="隐式空闲链表">隐式空闲链表</h3>
+<p>分配器需要一些数据结构，允许它来区分块边界，以及区别已分配和空闲块。大都数分配器将这些信息嵌入块本身。</p>
+<p>一个块由一个字（4B）的头部、有效荷载以及可能的一些额外的填充组成。头部编码了这个快的大小以及这个快是已分配的还是空闲的。</p>
+<h3 id="放置已分配的块">放置已分配的块</h3>
+<p>应用请求一个k字节的块时，分配器搜索空闲链表，查找一个足够大可以放置所请求快的空闲块。这种搜索方式是由放置策略确定的。常见的策略有首次适配、下一次适配和最佳适配。</p>
+<h3 id="分隔空闲块">分隔空闲块</h3>
+<h3 id="获取额外的堆内存">获取额外的堆内存</h3>
+<h3 id="合并空闲块">合并空闲块</h3>
+<h3 id="带边界标记的合并">带边界标记的合并</h3>
+<h3 id="显式空闲链表">显式空闲链表</h3>
+<h3 id="分离的空闲链表">分离的空闲链表</h3>
+<h2 id="垃圾收集">垃圾收集</h2>
+<p>未能释放已分配的块是一种常见的编程错误。</p>
+<p>垃圾收集器是一种动态内存分配器，它自动释放不再需要的已分配块。这些块被称为垃圾。在一个支持垃圾收集的系统中，应用显式地分配块，但从不显式地释放它们。</p>
+<p>这里讨论McCarthy独创的标记、清除算法，这个算法可以建立在已存在的malloc包的基础之上，为C/C++提供垃圾收集。</p>
+<h2 id="c语言常见的与内存有关的错误">C语言常见的与内存有关的错误</h2>
+<h3 id="间接引用坏指针">间接引用坏指针</h3>
+<p>常见的是经典的scanf错误。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">scanf(<span style="background-color:#fff0f0">&#34;%d&#34;</span>, <span style="color:#333">&amp;</span>val);
+</code></pre></div><p>使用scanf从stdin读取一个整数到一个变量。很容易错误地传递val的内容而不是它的地址：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">scanf(<span style="background-color:#fff0f0">&#34;%d&#34;</span>, val);
+</code></pre></div><p>scanf将把val的内容解释为一个地址，并试图将一个字写到这个位置。在最糟糕的情况下，val的内容对应于虚拟内存的合法读/写区域，于是我们就覆盖了这块内存，这在相当长一段时间后会造成灾难性后果。</p>
+<h3 id="读未初始化的内存">读未初始化的内存</h3>
+<p>虽然bss内存位置总是被加载器初始化为零，但对于堆内存并不是这样。一个常见的错误就是假设堆内存被初始化为零。我们在使用堆内存的变量是要先将其初始化。</p>
+<h3 id="允许栈缓冲区溢出">允许栈缓冲区溢出</h3>
+<p>如果一个程序不检查输入串的大小就写入栈中的目标缓冲区，那么这个程序就会有缓冲区溢出错误。例如：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">bufferflow</span>() {
+	<span style="color:#339;font-weight:bold">char</span> buf[<span style="color:#00d;font-weight:bold">64</span>];
+	gets(buf);
+	
+	<span style="color:#080;font-weight:bold">return</span>;
+}
+</code></pre></div><p>该函数就有缓冲区溢出错误，因为gets函数复制一个任意长度的串到缓冲区。为了纠正这个错误，必须使用fgets函数，该函数限制了输入串的大小。</p>
+<h3 id="假设指针和它们指向的对象是相同大小的">假设指针和它们指向的对象是相同大小的</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">**</span><span style="color:#06b;font-weight:bold">makeArray1</span>(<span style="color:#339;font-weight:bold">int</span> n, <span style="color:#339;font-weight:bold">int</span> m) {
+	<span style="color:#339;font-weight:bold">int</span> i;
+	<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">**</span>A <span style="color:#333">=</span> (<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">**</span>)Malloc(n <span style="color:#333">*</span> <span style="color:#080;font-weight:bold">sizeof</span>(<span style="color:#339;font-weight:bold">int</span>));
+	
+	<span style="color:#080;font-weight:bold">for</span> (i <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>; i <span style="color:#333">&lt;</span> n; i<span style="color:#333">++</span>) {
+		A[i] <span style="color:#333">=</span> (<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>)Malloc(m <span style="color:#333">*</span> <span style="color:#080;font-weight:bold">sizeof</span>(<span style="color:#339;font-weight:bold">int</span>));
+	}
+	
+	<span style="color:#080;font-weight:bold">return</span> A;
+}
+</code></pre></div><p>该函数的目的是创建一个由n个指针组成的数据，每个指针都指向包含m个int的数组。然后创建A时错误地将<code>sizeof(int *)</code>写成了<code>sizeof(int)</code>，代码实际上创建的是一个int数组。</p>
+<h3 id="引用指针而不是它所指向的对象">引用指针，而不是它所指向的对象</h3>
+<p>下面的函数，其目的是删除一个有<code>size</code>项的二叉堆里的第一项，然后对剩下的*size-1项重新建堆：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span><span style="color:#06b;font-weight:bold">binheapDelete</span>(<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">**</span>binheap, <span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>size) {
+	<span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span>packet <span style="color:#333">=</span> binheap[<span style="color:#00d;font-weight:bold">0</span>];
+	binheap[<span style="color:#00d;font-weight:bold">0</span>] <span style="color:#333">=</span> binheap[<span style="color:#333">*</span>size <span style="color:#333">-</span> <span style="color:#00d;font-weight:bold">1</span>];
+	<span style="color:#333">*</span>size<span style="color:#333">--</span>;
+	heapify(binheap, <span style="color:#333">*</span>size, <span style="color:#00d;font-weight:bold">0</span>);
+	<span style="color:#080;font-weight:bold">return</span>(packet);
+}
+</code></pre></div><p>该函数错误地将<code>(*size)--</code>写作了<code>*size--</code>导致代码实际上减少的是指针自己的值，而不是它所指向整数的值。程序运行后很有可能发生的是，当程序在执行过程后很久才出现一个错误的结果。</p>
+<h3 id="误解指针的运算">误解指针的运算</h3>
+<p>指针的算数操作是以它们指向对象的大小为单位来进行的，这种大小单位不一定是字节。</p>
+<h3 id="引用不存在的变量">引用不存在的变量</h3>
+<p>有时候不理解栈的规则的程序员可能会引用不合法的本地变量，例如：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">int</span> <span style="color:#333">*</span><span style="color:#06b;font-weight:bold">stackref</span>()
+{
+	<span style="color:#339;font-weight:bold">int</span> val;
+	
+	<span style="color:#080;font-weight:bold">return</span> <span style="color:#333">&amp;</span>val;
+}
+</code></pre></div><p>该函数返回一个指针，指向栈中的一个局部变量，然后弹出它的栈帧，尽管&amp;val仍然指向一个合法地址，但它已经不再指向一个合法的变量了。当以后在程序中调用其他函数时，内存将重用它们的栈帧。再后来，如果程序分配某个值给*p，那么其可能在修改另一个函数的栈帧中的一个条目，带来潜在的灾难性后果。</p>
+<h3 id="引用空闲堆块中的数据">引用空闲堆块中的数据</h3>
+<p>一个相似的错误是引用已经被释放了的堆块中的数据。</p>
+<h3 id="引起内存泄漏">引起内存泄漏</h3>
+<p>忘记释放已经分配的块，而在堆里创建了垃圾。</p>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2022-01-04</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/cpp%E6%8C%87%E5%90%91%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E6%8C%87%E9%92%88/">
+			上回<br>Cpp指向类成员的指针
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            },
+            debounce(func, wait, options) {
+                let lastArgs,
+                    lastThis,
+                    maxWait,
+                    result,
+                    timerId,
+                    lastCallTime
+
+                let lastInvokeTime = 0
+                let leading = false
+                let maxing = false
+                let trailing = true
+
+                
+                const useRAF = (!wait && wait !== 0 && typeof root.requestAnimationFrame === 'function')
+
+                if (typeof func !== 'function') {
+                    throw new TypeError('Expected a function')
+                }
+                function isObject(value) {
+                    const type = typeof value
+                    return value != null && (type === 'object' || type === 'function')
+                }
+
+                wait = +wait || 0
+                if (isObject(options)) {
+                    leading = !!options.leading
+                    maxing = 'maxWait' in options
+                    maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait
+                    trailing = 'trailing' in options ? !!options.trailing : trailing
+                }
+
+                function invokeFunc(time) {
+                    const args = lastArgs
+                    const thisArg = lastThis
+
+                    lastArgs = lastThis = undefined
+                    lastInvokeTime = time
+                    result = func.apply(thisArg, args)
+                    return result
+                }
+
+                function startTimer(pendingFunc, wait) {
+                    if (useRAF) {
+                    root.cancelAnimationFrame(timerId)
+                    return root.requestAnimationFrame(pendingFunc)
+                    }
+                    return setTimeout(pendingFunc, wait)
+                }
+
+                function cancelTimer(id) {
+                    if (useRAF) {
+                    return root.cancelAnimationFrame(id)
+                    }
+                    clearTimeout(id)
+                }
+
+                function leadingEdge(time) {
+                    
+                    lastInvokeTime = time
+                    
+                    timerId = startTimer(timerExpired, wait)
+                    
+                    return leading ? invokeFunc(time) : result
+                }
+
+                function remainingWait(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+                    const timeWaiting = wait - timeSinceLastCall
+
+                    return maxing
+                    ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+                    : timeWaiting
+                }
+
+                function shouldInvoke(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+
+                    
+                    
+                    
+                    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+                    (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait))
+                }
+
+                function timerExpired() {
+                    const time = Date.now()
+                    if (shouldInvoke(time)) {
+                    return trailingEdge(time)
+                    }
+                    
+                    timerId = startTimer(timerExpired, remainingWait(time))
+                }
+
+                function trailingEdge(time) {
+                    timerId = undefined
+
+                    
+                    
+                    if (trailing && lastArgs) {
+                    return invokeFunc(time)
+                    }
+                    lastArgs = lastThis = undefined
+                    return result
+                }
+
+                function cancel() {
+                    if (timerId !== undefined) {
+                    cancelTimer(timerId)
+                    }
+                    lastInvokeTime = 0
+                    lastArgs = lastCallTime = lastThis = timerId = undefined
+                }
+
+                function flush() {
+                    return timerId === undefined ? result : trailingEdge(Date.now())
+                }
+
+                function pending() {
+                    return timerId !== undefined
+                }
+
+                function debounced(...args) {
+                    const time = Date.now()
+                    const isInvoking = shouldInvoke(time)
+
+                    lastArgs = args
+                    lastThis = this
+                    lastCallTime = time
+
+                    if (isInvoking) {
+                    if (timerId === undefined) {
+                        return leadingEdge(lastCallTime)
+                    }
+                    if (maxing) {
+                        
+                        timerId = startTimer(timerExpired, wait)
+                        return invokeFunc(lastCallTime)
+                    }
+                    }
+                    if (timerId === undefined) {
+                    timerId = startTimer(timerExpired, wait)
+                    }
+                    return result
+                }
+                debounced.cancel = cancel
+                debounced.flush = flush
+                debounced.pending = pending
+                return debounced
+                }
+
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+        
+        
+
+        document.querySelectorAll("table").forEach(function(elem){
+            elem.classList.add("table-striped");
+            elem.classList.add("table");
+            elem.classList.add("table-responsive");
+            elem.classList.add("table-hover");
+        })
+
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
+        
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+
+
+
+</script>
+    </body>
+</html>

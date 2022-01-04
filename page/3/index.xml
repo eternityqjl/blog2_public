@@ -6,9 +6,64 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 28 Dec 2021 21:53:28 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 04 Jan 2022 14:59:16 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>基础算法总结</title>
+        <link>https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</link>
+        <pubDate>Tue, 30 Nov 2021 22:16:50 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/ -&lt;p&gt;希望未来一段时间能够手动实现一下这些算法。&lt;/p&gt;
+&lt;h2 id=&#34;线性表&#34;&gt;线性表&lt;/h2&gt;
+&lt;h3 id=&#34;顺序表&#34;&gt;顺序表&lt;/h3&gt;
+&lt;h3 id=&#34;链表&#34;&gt;链表&lt;/h3&gt;
+&lt;h2 id=&#34;栈和队列&#34;&gt;栈和队列&lt;/h2&gt;
+&lt;p&gt;栈的顺序、链式存储&lt;/p&gt;
+&lt;p&gt;队列的顺序、链式存储&lt;/p&gt;
+&lt;p&gt;双端队列&lt;/p&gt;
+&lt;p&gt;优先队列（堆排序）&lt;/p&gt;
+&lt;h2 id=&#34;字符串&#34;&gt;字符串&lt;/h2&gt;
+&lt;p&gt;KMP模式匹配&lt;/p&gt;
+&lt;h2 id=&#34;树与二叉树&#34;&gt;树与二叉树&lt;/h2&gt;
+&lt;h3 id=&#34;二叉树的遍历&#34;&gt;二叉树的遍历&lt;/h3&gt;
+&lt;p&gt;前序、中序、后序&lt;/p&gt;
+&lt;h3 id=&#34;二叉排序树&#34;&gt;二叉排序树&lt;/h3&gt;
+&lt;h3 id=&#34;平衡二叉树&#34;&gt;平衡二叉树&lt;/h3&gt;
+&lt;h3 id=&#34;哈夫曼树&#34;&gt;哈夫曼树&lt;/h3&gt;
+&lt;h3 id=&#34;2-3树和红黑树&#34;&gt;2-3树和红黑树&lt;/h3&gt;
+&lt;h2 id=&#34;图&#34;&gt;图&lt;/h2&gt;
+&lt;h3 id=&#34;图的遍历&#34;&gt;图的遍历&lt;/h3&gt;
+&lt;p&gt;广度优先搜索和深度优先搜索&lt;/p&gt;
+&lt;h3 id=&#34;最小生成树&#34;&gt;最小生成树&lt;/h3&gt;
+&lt;p&gt;Prim、Kruskal&lt;/p&gt;
+&lt;h3 id=&#34;最短路径&#34;&gt;最短路径&lt;/h3&gt;
+&lt;p&gt;Dijkstra、Floyd&lt;/p&gt;
+&lt;h3 id=&#34;拓扑排序&#34;&gt;拓扑排序&lt;/h3&gt;
+&lt;p&gt;活动的先后顺序&lt;/p&gt;
+&lt;h3 id=&#34;关键路径&#34;&gt;关键路径&lt;/h3&gt;
+&lt;h2 id=&#34;查找&#34;&gt;查找&lt;/h2&gt;
+&lt;h3 id=&#34;顺序查找&#34;&gt;顺序查找&lt;/h3&gt;
+&lt;h3 id=&#34;折半查找&#34;&gt;折半查找&lt;/h3&gt;
+&lt;h3 id=&#34;b树&#34;&gt;B树&lt;/h3&gt;
+&lt;h3 id=&#34;散列表&#34;&gt;散列表&lt;/h3&gt;
+&lt;h2 id=&#34;排序&#34;&gt;排序&lt;/h2&gt;
+&lt;h3 id=&#34;插入排序&#34;&gt;插入排序&lt;/h3&gt;
+&lt;h3 id=&#34;希尔排序&#34;&gt;希尔排序&lt;/h3&gt;
+&lt;h3 id=&#34;冒泡排序&#34;&gt;冒泡排序&lt;/h3&gt;
+&lt;h3 id=&#34;快速排序&#34;&gt;快速排序&lt;/h3&gt;
+&lt;h3 id=&#34;选择排序&#34;&gt;选择排序&lt;/h3&gt;
+&lt;h3 id=&#34;堆排序优先队列&#34;&gt;堆排序（优先队列）&lt;/h3&gt;
+&lt;p&gt;删除最大元素、插入元素&lt;/p&gt;
+&lt;p&gt;构造大根堆、小根堆&lt;/p&gt;
+&lt;h3 id=&#34;归并排序&#34;&gt;归并排序&lt;/h3&gt;
+&lt;h3 id=&#34;基数排序&#34;&gt;基数排序&lt;/h3&gt;
+- https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -2135,41 +2190,6 @@ mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#
 &lt;h3 id=&#34;python&#34;&gt;Python&lt;/h3&gt;
 &lt;p&gt;使用脚本安装Anaconda&lt;/p&gt;
 - https://eternityqjl.top/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>计算机网络各层级理解</title>
-        <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</link>
-        <pubDate>Fri, 23 Jul 2021 12:59:05 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/ -&lt;p&gt;一年多前按照层级详细学习了计算机网络的有关内容，包括从应用层、传输层、网络层、数据链路层到物理层的详细信息，并且也学习了一些其他硬件通信协议，比如CAN控制器局域网、SPI等等。在之后的应用和实践中经常对不同层级的网络和网络设备产生疑惑，例如路由器和交换机到底是什么关系？为什么要通过IP地址和MAC地址划分网络层和数据链路层？这里将会详细说明各层网络的具体作用来加深理解和体会。&lt;/p&gt;
-&lt;h2 id=&#34;应用层&#34;&gt;应用层&lt;/h2&gt;
-&lt;p&gt;应用层是计算机网络体系结构中最高层，意味着这是&lt;strong&gt;和人进行交互&lt;/strong&gt;的层次。&lt;/p&gt;
-&lt;p&gt;应用层是计算机网络与用户进行交互的&lt;strong&gt;接口&lt;/strong&gt;或界面，直接向用户提供服务；包括Web、E-mail、DNS、DHCP、FTP等等。&lt;/p&gt;
-&lt;p&gt;应用层要解决的主要问题就是如何为用户提供&lt;strong&gt;高效、可靠、满意&lt;/strong&gt;的服务，工程师要根据不同业务场景使用不同技术方法解决这些问题，比如使用多线程、高并发的Web框架，分布式处理等等。&lt;/p&gt;
-&lt;h2 id=&#34;传输层&#34;&gt;传输层&lt;/h2&gt;
-&lt;p&gt;负责&lt;strong&gt;端到端（进程之间）&lt;strong&gt;的通信。位于两台网络主机间的真正数据通信主体不是这两台主机，而是两台主机中的各种&lt;/strong&gt;网络应用进程&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;端到端的传输分为两个步骤：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;虚拟传输连接的建立&lt;/li&gt;
-&lt;li&gt;源端用户数据沿着传输连接传送到目的端&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;整个数据传输过程中传输层需要完成以下基本功能：传输层寻址、传输连接建立、数据传输、传输连接释放、流量控制、拥塞控制、多路复用和多路分解、崩溃恢复。&lt;/p&gt;
-&lt;h2 id=&#34;网络层&#34;&gt;网络层&lt;/h2&gt;
-&lt;p&gt;也被称为中转层。他很重要也很复杂，既要解决不同网络的节点通信的路由和协议识别问题，又要通过路由选择策略解决网络拥塞问题。&lt;/p&gt;
-&lt;p&gt;网络层主要是为了解决不同网络之间&lt;strong&gt;数据传输和转发&lt;/strong&gt;问题。&lt;/p&gt;
-&lt;h2 id=&#34;数据链路层&#34;&gt;数据链路层&lt;/h2&gt;
-&lt;p&gt;在原始的、有差错的物理传输线路的基础上，采用差错检测、差错控制和流量控制等方法，将有差错的物理线路改成逻辑上无差错的数据链路，为上一层（网络层）提供高质量服务。&lt;/p&gt;
-&lt;p&gt;数据链路层主要是为了&lt;strong&gt;控制数据传输&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;物理层&#34;&gt;物理层&lt;/h2&gt;
-&lt;p&gt;位于体系结构最底层，负责在物理介质上位数据链路层提供&lt;strong&gt;原始比特流&lt;/strong&gt;传输的&lt;strong&gt;物理链接&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;物理层解决的问题就是&lt;strong&gt;数据传输&lt;/strong&gt;，所有数据到达物理层都会变成二进制的载波信号。&lt;/p&gt;
-&lt;h2 id=&#34;交换机和路由器&#34;&gt;交换机和路由器&lt;/h2&gt;
-&lt;p&gt;见&lt;a href=&#34;http://eternityqjl.top/posts/wlan%E5%9F%BA%E6%9C%AC%E5%86%85%E5%AE%B9%E5%92%8C802-11ax/#wlan%e5%9f%ba%e7%a1%80%e5%86%85%e5%ae%b9&#34;&gt;WLAN基本内容和802.11ax&lt;/a&gt;中的内容。&lt;/p&gt;
-- https://eternityqjl.top/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%90%84%E5%B1%82%E7%BA%A7%E7%90%86%E8%A7%A3/ - 2019-2021 By Jialong</description>
         </item>
     
     

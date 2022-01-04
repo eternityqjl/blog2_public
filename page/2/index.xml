@@ -6,9 +6,94 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 28 Dec 2021 21:53:28 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 04 Jan 2022 14:59:16 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>算法——B树和B&#43;树</title>
+        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/</link>
+        <pubDate>Fri, 10 Dec 2021 18:03:30 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/ -&lt;h2 id=&#34;b树&#34;&gt;B树&lt;/h2&gt;
+&lt;p&gt;平衡树算法的扩展，支持对保存在磁盘或网络上的符号表进行外部查找。&lt;/p&gt;
+&lt;h3 id=&#34;概念&#34;&gt;概念&lt;/h3&gt;
+&lt;p&gt;又称&lt;strong&gt;多路平衡查找树&lt;/strong&gt;，B树中&lt;strong&gt;所有结点的孩子个数的最大值&lt;/strong&gt;称为&lt;strong&gt;B数的阶&lt;/strong&gt;，通常用&lt;strong&gt;m&lt;/strong&gt;表示。&lt;/p&gt;
+&lt;p&gt;具有以下特性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;树中每个结点至多有&lt;strong&gt;m棵子树&lt;/strong&gt;，即至多含有&lt;strong&gt;m-1个关键字&lt;/strong&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;若根结点不是终端结点，则至少有&lt;strong&gt;两颗&lt;/strong&gt;子树。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;所有非叶子结点的结构：（见书上所示）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;所有叶子结点都出现在同一层次上，并且不带信息。（可视为类似于折半查找判定树的查找失败结点，实际上这些结点不存在）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;B树是所有结点的&lt;strong&gt;平衡因子均等于0&lt;/strong&gt;的&lt;strong&gt;多路平衡查找树&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;b树的高度磁盘存取次数&#34;&gt;B树的高度（磁盘存取次数）&lt;/h3&gt;
+&lt;p&gt;一般只讲B树的前两层放入内存中，剩余层级全部放在磁盘中，因此B树的高度就约为每次进行查找的磁盘存取次数。&lt;/p&gt;
+&lt;p&gt;首先明确B树的高度不包含最后的不带任何信息的叶结点所处的那一层。&lt;/p&gt;
+&lt;p&gt;假设$n\ge 1$，则对于任意一棵包含n个关键字，高度为h、阶数为m的B树：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;根据树中关键字个数计算高度满足的范围&lt;/li&gt;
+&lt;li&gt;若让每个结点中的关键字个数达到最少，则容纳同样多关键字的B树高度达到最大。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;b树的查找&#34;&gt;B树的查找&lt;/h3&gt;
+&lt;p&gt;每个结点具有多路分支。&lt;/p&gt;
+&lt;p&gt;与二叉树的查找很相似，只是每个结点都是多个关键字的有序表，要在每个结点上根据该结点的子树做多路分支决定。&lt;/p&gt;
+&lt;p&gt;包含两个基本操作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在B树中找结点&lt;/li&gt;
+&lt;li&gt;在结点内找关键字&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;B树常&lt;strong&gt;存储在磁盘中&lt;/strong&gt;，因此前一个查找操作是在&lt;strong&gt;磁盘&lt;/strong&gt;上进行的，后一个查找操作是在&lt;strong&gt;内存&lt;/strong&gt;中进行的，即在找到目标结点后，将其读入内存，然后在结点内采用&lt;strong&gt;顺序或折半&lt;/strong&gt;查找方法查找。&lt;/p&gt;
+&lt;h3 id=&#34;b树的插入&#34;&gt;B树的插入&lt;/h3&gt;
+&lt;p&gt;将关键字插入B树的过程如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;定位&lt;/strong&gt;：利用前述的B树查找算法，找出插入该关键字的最低层中的某个非叶结点。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;插入&lt;/strong&gt;：每个非失败结点的关键字个数都在区间$[\lceil m/2\rceil-1,m-1]$内，插入后的结点关键字个数小于m，则可以直接插入；插入后的结点关键字大于m-1时，必须对结点进行&lt;strong&gt;分裂&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;分裂的方法：取一个新结点，在插入key后的原结点，从中间位置（$\lceil m/2\rceil$）将其中的关键字分为两部分，左半部分包含的关键字放入&lt;strong&gt;原结点&lt;/strong&gt;中，右半部分包含的关键字放入&lt;strong&gt;新结点&lt;/strong&gt;中，中间位置（$\lceil m/2\rceil$）的结点插入&lt;strong&gt;原结点的父结点&lt;/strong&gt;中；如果父结点关键字个数也超过了上限，则继续&lt;strong&gt;进行这种分裂操作&lt;/strong&gt;，知道这个过程传到根结点为止，进而使得&lt;strong&gt;B树的高度增1&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;b树的删除&#34;&gt;B树的删除&lt;/h3&gt;
+&lt;p&gt;与插入的操作类似，即要使得删除后结点中关键字的个数$\ge \lceil m/2\rceil-1$，将会涉及&lt;strong&gt;结点的合并&lt;/strong&gt;问题。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当被删除关键字k&lt;strong&gt;不在终端结点&lt;/strong&gt;：可以用k的前驱和后继替代k，然后在相应结点中删除该前驱或后继。该前驱或后继必定落在某个终端结点中，则转换成了被删关键字在终端结点中的情形。&lt;/li&gt;
+&lt;li&gt;当被删除结点&lt;strong&gt;在终端结点&lt;/strong&gt;中时，有以下三种情况：
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;直接删除关键字&lt;/strong&gt;。即被删除关键字所在结点的关键字个数$\ge \lceil m/2\rceil$，表明删除后仍满足B树定义。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;兄弟够接&lt;/strong&gt;。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$\ge \lceil m/2\rceil$，需要通过父子换位法进行调整，达到新的平衡。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;兄弟不够借&lt;/strong&gt;。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$= \lceil m/2\rceil -1$，则要将关键字删除后与左右兄弟结点及双亲结点中的关键字进行合并。合并过程中双亲结点中关键字会-1，若其双亲结点是根结点且关键字个数减少为0，则直接将根结点删除，合并后的新结点成为根结点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;详细例子见书上。&lt;/p&gt;
+&lt;h3 id=&#34;性能&#34;&gt;性能&lt;/h3&gt;
+&lt;p&gt;在实际应用中对于适当的阶数M，查找的成本是常数级别的。&lt;/p&gt;
+&lt;h2 id=&#34;b树-1&#34;&gt;B+树&lt;/h2&gt;
+&lt;p&gt;是B树的一种变形。一个&lt;strong&gt;m阶B+树&lt;/strong&gt;要满足以下条件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;每个分支结点&lt;strong&gt;最多有m棵子树&lt;/strong&gt;（孩子结点）&lt;/li&gt;
+&lt;li&gt;非叶根节点至少有两棵子树，其他每个分支结点至少有$ \lceil m/2\rceil$棵子树。&lt;/li&gt;
+&lt;li&gt;结点的&lt;strong&gt;子树个数与关键字个数相等&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;所有&lt;strong&gt;叶结点&lt;/strong&gt;包含&lt;strong&gt;全部关键字&lt;/strong&gt;及&lt;strong&gt;指向相应记录的指针&lt;/strong&gt;，叶结点中将关键字按大小顺序排序，并且相邻叶结点按大小顺序相互链接起来。&lt;/li&gt;
+&lt;li&gt;所有分支结点只包含它的&lt;strong&gt;子结点中关键字的最大值&lt;/strong&gt;以及&lt;strong&gt;指向其子结点的指针&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/B%2B%E6%A0%91.jpg&#34; alt=&#34;B+树&#34;&gt;&lt;/p&gt;
+&lt;p&gt;通常B+树有两个头指针：一个&lt;strong&gt;指向根结点&lt;/strong&gt;，另一个&lt;strong&gt;指向关键字最小的叶结点&lt;/strong&gt;。因此对B+树进行两种查找运算：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从最小关键字开始的&lt;strong&gt;顺序查找&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;从根结点开始的&lt;strong&gt;多路查找&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -910,61 +995,6 @@ PTRFUN pFun;
     printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;calc(%d, %d, %c) = %d&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;, calc(a, b, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;)); 
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/cpp_typedef%E5%92%8Cdefine%E5%AE%8F%E8%AF%A6%E8%A7%A3/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>基础算法总结</title>
-        <link>https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</link>
-        <pubDate>Tue, 30 Nov 2021 22:16:50 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/ -&lt;p&gt;希望未来一段时间能够手动实现一下这些算法。&lt;/p&gt;
-&lt;h2 id=&#34;线性表&#34;&gt;线性表&lt;/h2&gt;
-&lt;h3 id=&#34;顺序表&#34;&gt;顺序表&lt;/h3&gt;
-&lt;h3 id=&#34;链表&#34;&gt;链表&lt;/h3&gt;
-&lt;h2 id=&#34;栈和队列&#34;&gt;栈和队列&lt;/h2&gt;
-&lt;p&gt;栈的顺序、链式存储&lt;/p&gt;
-&lt;p&gt;队列的顺序、链式存储&lt;/p&gt;
-&lt;p&gt;双端队列&lt;/p&gt;
-&lt;p&gt;优先队列（堆排序）&lt;/p&gt;
-&lt;h2 id=&#34;字符串&#34;&gt;字符串&lt;/h2&gt;
-&lt;p&gt;KMP模式匹配&lt;/p&gt;
-&lt;h2 id=&#34;树与二叉树&#34;&gt;树与二叉树&lt;/h2&gt;
-&lt;h3 id=&#34;二叉树的遍历&#34;&gt;二叉树的遍历&lt;/h3&gt;
-&lt;p&gt;前序、中序、后序&lt;/p&gt;
-&lt;h3 id=&#34;二叉排序树&#34;&gt;二叉排序树&lt;/h3&gt;
-&lt;h3 id=&#34;平衡二叉树&#34;&gt;平衡二叉树&lt;/h3&gt;
-&lt;h3 id=&#34;哈夫曼树&#34;&gt;哈夫曼树&lt;/h3&gt;
-&lt;h3 id=&#34;2-3树和红黑树&#34;&gt;2-3树和红黑树&lt;/h3&gt;
-&lt;h2 id=&#34;图&#34;&gt;图&lt;/h2&gt;
-&lt;h3 id=&#34;图的遍历&#34;&gt;图的遍历&lt;/h3&gt;
-&lt;p&gt;广度优先搜索和深度优先搜索&lt;/p&gt;
-&lt;h3 id=&#34;最小生成树&#34;&gt;最小生成树&lt;/h3&gt;
-&lt;p&gt;Prim、Kruskal&lt;/p&gt;
-&lt;h3 id=&#34;最短路径&#34;&gt;最短路径&lt;/h3&gt;
-&lt;p&gt;Dijkstra、Floyd&lt;/p&gt;
-&lt;h3 id=&#34;拓扑排序&#34;&gt;拓扑排序&lt;/h3&gt;
-&lt;p&gt;活动的先后顺序&lt;/p&gt;
-&lt;h3 id=&#34;关键路径&#34;&gt;关键路径&lt;/h3&gt;
-&lt;h2 id=&#34;查找&#34;&gt;查找&lt;/h2&gt;
-&lt;h3 id=&#34;顺序查找&#34;&gt;顺序查找&lt;/h3&gt;
-&lt;h3 id=&#34;折半查找&#34;&gt;折半查找&lt;/h3&gt;
-&lt;h3 id=&#34;b树&#34;&gt;B树&lt;/h3&gt;
-&lt;h3 id=&#34;散列表&#34;&gt;散列表&lt;/h3&gt;
-&lt;h2 id=&#34;排序&#34;&gt;排序&lt;/h2&gt;
-&lt;h3 id=&#34;插入排序&#34;&gt;插入排序&lt;/h3&gt;
-&lt;h3 id=&#34;希尔排序&#34;&gt;希尔排序&lt;/h3&gt;
-&lt;h3 id=&#34;冒泡排序&#34;&gt;冒泡排序&lt;/h3&gt;
-&lt;h3 id=&#34;快速排序&#34;&gt;快速排序&lt;/h3&gt;
-&lt;h3 id=&#34;选择排序&#34;&gt;选择排序&lt;/h3&gt;
-&lt;h3 id=&#34;堆排序优先队列&#34;&gt;堆排序（优先队列）&lt;/h3&gt;
-&lt;p&gt;删除最大元素、插入元素&lt;/p&gt;
-&lt;p&gt;构造大根堆、小根堆&lt;/p&gt;
-&lt;h3 id=&#34;归并排序&#34;&gt;归并排序&lt;/h3&gt;
-&lt;h3 id=&#34;基数排序&#34;&gt;基数排序&lt;/h3&gt;
-- https://eternityqjl.top/posts/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
         </item>
     
     
