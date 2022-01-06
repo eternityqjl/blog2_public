@@ -7,7 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Wed, 22 Dec 2021 16:10:44 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Jan 2022 15:13:16 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>八股文——Cpp相关</title>
+      <link>https://eternityqjl.top/posts/%E5%85%AB%E8%82%A1%E6%96%87cpp%E7%9B%B8%E5%85%B3/</link>
+      <pubDate>Thu, 06 Jan 2022 15:13:16 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/%E5%85%AB%E8%82%A1%E6%96%87cpp%E7%9B%B8%E5%85%B3/</guid>
+      <description>new/delete和malloc/free的区别  malloc/free是C/C++的库函数，需要stdlib.h；new/delete是C++的关键字； 都可用于申请动态内存和释放内存，new/delete在对象创建的时候自动执行构造函数，对象消亡前自动执行析构函数，底层实现其实也是malloc/free new无需指定内存块的大小，编译器会根据类型信息自行计算；malloc需要显式地支持所需内存的大小 new返回指定类型的指针，无需进行类型转换；malloc默认返回类型为void*，必须强行转换为实际类型的指针 new内存分配失败时会抛出bad_alloc异常；malloc失败时返回NULL  malloc的底层实现 Linux下：
+ 开辟空间小于128K时，通过brk()函数  将数据段.data的最高地址指针**_edata向高地址移动，即增加堆**的有效区域来申请内存空间 brk分配的内存需要等到高地址内存释放以后才能释放，这也是内存碎片产生的原因   开辟空间大于128K时，通过mmap()函数  利用mmap系统调用，在堆和栈之间文件映射区域申请一块虚拟内存 128K限制可由M_MMAP_THRESHOLD选项进行修改 mmap分配的内存可以单独释放   以上只涉及虚拟内存的分配，直到进程第一次访问其地址时，才会通过缺页中断机制分配到物理页中  指针和引用的异同点；如何相互转换  引用是别名，指针是地址 指针变量在符号表上对应的地址值为指针变量的地址；而引用在符号边上的地址值为引用对象的地址；指针可以改变指向的对象，而引用不行；二者都可以改变指向对象的值。 硬件通过地址访问内存位置，因此引用可以理解为一个常量指针，只能绑定到初始化它的对象上  struct、union的异同  struct中每个变量一次存储；union中，每个变量都是从偏移地址零开始存储，同一时刻只有一个成员存储于该地址 struct内存大小遵循结构对齐原则（详见Cpp内存对齐） union内存大小为其最大成员的整数倍  extern C的作用 主要是为了能正确实现C++代码调用C语言代码。
+C++支持函数重载，即不同名字空间namespace的两个函数原型声明可以完全相同，或者两个函数同名但参数列表不同；g++编译器会对此进行name mangling，生成全局唯一的符号名称，使链接器可以准确识别。
+C语言不支持函数重载，即不允许同名符号，所以不需要这些工作，因此在C++代码中加入extern C，是为了链接规范。
+memcpy()函数注意的问题 函数原型声明void *memcpy(void *dest, void *src, unsigned int count); 
+memcpy函数用于把资源内存（src所指向的内存区域）中连续的count个字节数据拷贝到目标内存（dest所指向的内存区域）
+ 数据长度count的单位是字节，1byte = 8bit 数据类型为char，则数据长度就等于元素的个数；其他数据类型则要注意数据长度的值 n * sizeof(type_name)的写法  memmove()函数与memcpy()函数的功能相同，区别是前者处理空间重叠问题，后者不处理。
+memset()函数 函数原型声明void *memset(void *buffer,int c,int count);</description>
+    </item>
+    
     <item>
       <title>Cpp内存对齐</title>
       <link>https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</link>

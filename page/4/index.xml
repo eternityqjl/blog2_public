@@ -6,9 +6,189 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 04 Jan 2022 14:59:16 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jan 2022 15:13:16 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Linux基础知识</title>
+        <link>https://eternityqjl.top/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+        <pubDate>Thu, 29 Jul 2021 08:44:21 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ -&lt;h2 id=&#34;系统启动过程&#34;&gt;系统启动过程&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;内核的引导：BIOS开机自检，然后读入/boot目录的内核文件&lt;/li&gt;
+&lt;li&gt;运行init：init进程是所有进程的起点，运行级别确定&lt;/li&gt;
+&lt;li&gt;系统初始化：&lt;code&gt;rc.sysinit&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;建立终端&lt;/li&gt;
+&lt;li&gt;用户登录系统&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;系统目录结构&#34;&gt;系统目录结构&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/bin&lt;/code&gt;：bin是二进制文件的缩写，存放着最常用的命令&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/boot&lt;/code&gt;：存放启动时的核心文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/dev&lt;/code&gt;：dev是Device的缩写，存放Linux的外部设备&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/etc&lt;/code&gt;：Etcetera的缩写，用来存放所有系统管理所需的配置文件和子目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/home&lt;/code&gt;：主目录，Linux中，每个用户都有一个自己的目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/lib&lt;/code&gt;：Library的缩写，存放着系统最基本的动态连接共享库&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/media&lt;/code&gt;：自动识别一些设备，将其挂载到这个目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/mnt&lt;/code&gt;：该目录为了让用户临时挂载别的文件系统&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/opt&lt;/code&gt;：optional的缩写，给主机额外安装软件所设置的目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/proc&lt;/code&gt;：Processes进程的缩写，是一种虚拟文件系统，存放着当前内核运行状态的一系列特殊文件。该目录不再硬盘上，而是在内存中。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/root&lt;/code&gt;：系统管理员主目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/tmp&lt;/code&gt;：temporary的缩写，用来存放临时目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr&lt;/code&gt;：unix shared resources共享资源的缩写，用户的很多应用程序和文件存放于此，类似于windows下的program files&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/bin&lt;/code&gt;：系统用户使用的应用程序&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/usr/src&lt;/code&gt;：内核源代码默认的存放目录&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/var&lt;/code&gt;：variable的缩写，存放着不断扩充着的东西，将经常被修改的目录放在这个目录下，包括各种日志文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;文件基本属性&#34;&gt;文件基本属性&lt;/h2&gt;
+&lt;p&gt;Linux系统是一种多用户系统，不同用户有不同权限。&lt;/p&gt;
+&lt;p&gt;通常使用以下命令来修文件和目录的权限：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;chown(change ownerp)：修改所属用户与组&lt;/li&gt;
+&lt;li&gt;chmod(change mode)：修改用户的权限&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;在Linux中使用&lt;code&gt;ll&lt;/code&gt;或&lt;code&gt;ls -l&lt;/code&gt;来显示一个文件的属性以及文件所属的用户和组。&lt;/p&gt;
+&lt;p&gt;第一个字符代表这个文件的类型，是目录、文件或连接文件等等：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;d&lt;/code&gt;为目录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;-&lt;/code&gt;为文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;l&lt;/code&gt;为链接文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;b&lt;/code&gt;为可存储的接口设备&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;c&lt;/code&gt;为串行端口设备&lt;/p&gt;
+&lt;p&gt;接下来的字符以三个为一组，为&lt;code&gt;rwx&lt;/code&gt;三个参数的组合，&lt;code&gt;r&lt;/code&gt;代表可读，&lt;code&gt;w&lt;/code&gt;代表可写，&lt;code&gt;x&lt;/code&gt;代表可执行，从前到后分别代表user、group、everyone的权限，如果没有权限，则用&lt;code&gt;-&lt;/code&gt;表示。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于root用户，文件权限不起作用。&lt;/p&gt;
+&lt;h3 id=&#34;chgrp改变文件属组&#34;&gt;chgrp：改变文件属组&lt;/h3&gt;
+&lt;p&gt;用法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;chgrp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-R&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 属组名 文件名
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;-R&lt;/code&gt;：recursion，递归，改变目录下所有文件的属性&lt;/p&gt;
+&lt;h3 id=&#34;chown更改文件属主也可以同时更改文件属组&#34;&gt;chown：更改文件属主，也可以同时更改文件属组&lt;/h3&gt;
+&lt;p&gt;用法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;chown &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-R&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 属主名 文件名
+chown &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-r&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 属主名:属组名 文件名
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;chmod更改文件的9个属性&#34;&gt;chmod：更改文件的9个属性&lt;/h3&gt;
+&lt;p&gt;9个权限分别为&lt;strong&gt;owner/group/others(拥有者/组/其他)&lt;/strong&gt; 三种身份各有自己的 &lt;strong&gt;read/write/execute&lt;/strong&gt; 权限。&lt;/p&gt;
+&lt;p&gt;第一种方法使用数字来表示，各权限的分数如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;r：4&lt;/li&gt;
+&lt;li&gt;w：2&lt;/li&gt;
+&lt;li&gt;x：1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;每种身份(owner/group/others)各自的三个权限(r/w/x)分数是需要累加的，例如当权限为： &lt;strong&gt;-rwxrwx&amp;mdash;&lt;/strong&gt; 分数则是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;owner = rwx = 4+2+1 = 7&lt;/li&gt;
+&lt;li&gt;group = rwx = 4+2+1 = 7&lt;/li&gt;
+&lt;li&gt;others= &amp;mdash; = 0+0+0 = 0&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所以等一下我们设定权限的变更时，该文件的权限数字就是 &lt;strong&gt;770&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;第二种方法是使用符号类型改变权限，这里不详细介绍。&lt;/p&gt;
+&lt;h2 id=&#34;文件与目录管理&#34;&gt;文件与目录管理&lt;/h2&gt;
+&lt;h3 id=&#34;处理目录常用命令&#34;&gt;处理目录常用命令：&lt;/h3&gt;
+&lt;p&gt;ls（list files）：列出目录和文件名&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-a：全部文件，联通隐藏文件&lt;/li&gt;
+&lt;li&gt;-d：仅列出目录本身&lt;/li&gt;
+&lt;li&gt;-l：长数据串列出，包含文件属性与权限&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;cd（change directory）：切换目录&lt;/p&gt;
+&lt;p&gt;pwd（print work directory）：显示当前目录&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-P：显示出实际的路径，而不是连结（link）路径&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;mkdir（make directory）：创建一个新目录&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-m：配置文件的权限&lt;/li&gt;
+&lt;li&gt;-p：可以递归创建多级目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;rmdir（remove directory）：删除一个空目录&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-p：连同上一级的空目录一起删除&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;cp（copy file）：复制文件或目录&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;cp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-adfilprsu&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 来源档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;source&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; 目标档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;destination&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+cp &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; source1 source2 ... directory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;-a：相当于-pdr&lt;/li&gt;
+&lt;li&gt;-d：若来源档为连结档的属性(link file)，则复制连结档属性而非文件本身&lt;/li&gt;
+&lt;li&gt;-f：force，若目标文件已存在且无法开启，则移除后再尝试一次&lt;/li&gt;
+&lt;li&gt;-i：若目标档已存在时，在覆盖时会先询问&lt;/li&gt;
+&lt;li&gt;-p：连同文件属性一起复制过去&lt;/li&gt;
+&lt;li&gt;-f：递归持续复制，用于目录的复制&lt;/li&gt;
+&lt;li&gt;-s：复制成为符号连结档(symbolic link)&lt;/li&gt;
+&lt;li&gt;-u：若destination比source旧才升级destination&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;rm（remove）：删除文件或目录&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;-f：force&lt;/li&gt;
+&lt;li&gt;-r：递归删除，常用在目录的删除&lt;/li&gt;
+&lt;li&gt;-i：互动模式，删除前会询问&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;mv（move file）：移动文件与目录，或修改文件、目录名称&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-fiu&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 来源档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;source&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt; 目标档&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;destination&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+mv &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;options&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; source1 source2 ... directory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;-f：force&lt;/li&gt;
+&lt;li&gt;-i：若目标文件 (destination) 已经存在时，就会询问是否覆盖&lt;/li&gt;
+&lt;li&gt;-u：目标文件已经存在，且 source 比较新，才会升级 (update)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;文件内容查看&#34;&gt;文件内容查看&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;cat：从第一行开始显示文件内容&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tac：从最后一行开始显示文件内容&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;nl：显示行号并列出文件内容&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;more：一页一页显示和翻动文件&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;空白键 (space)：代表向下翻一页；&lt;/li&gt;
+&lt;li&gt;Enter     ：代表向下翻『一行』；&lt;/li&gt;
+&lt;li&gt;/字串     ：代表在这个显示的内容当中，向下搜寻『字串』这个关键字；&lt;/li&gt;
+&lt;li&gt;:f      ：立刻显示出档名以及目前显示的行数；&lt;/li&gt;
+&lt;li&gt;q       ：代表立刻离开 more ，不再显示该文件内容。&lt;/li&gt;
+&lt;li&gt;b 或 [ctrl]-b ：代表往回翻页，不过这动作只对文件有用，对管线无用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;head：取出文件前面几行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;head &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-n number&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 文件
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tail：取出文件后面几行&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;tail &lt;span style=&#34;color:#333&#34;&gt;[&lt;/span&gt;-n number&lt;span style=&#34;color:#333&#34;&gt;]&lt;/span&gt; 文件
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;磁盘管理&#34;&gt;磁盘管理&lt;/h2&gt;
+&lt;p&gt;常用的三个命令：df、du、fdisk&lt;/p&gt;
+&lt;p&gt;df：列出文件系统的整体磁盘使用量&lt;/p&gt;
+&lt;p&gt;du：检查磁盘空间使用量&lt;/p&gt;
+&lt;p&gt;fdisk：用于磁盘分区&lt;/p&gt;
+&lt;h2 id=&#34;配置wsl2开发环境&#34;&gt;配置WSL2开发环境&lt;/h2&gt;
+&lt;h3 id=&#34;cc&#34;&gt;C/C++&lt;/h3&gt;
+&lt;p&gt;见&lt;a href=&#34;https://code.visualstudio.com/docs/cpp/config-wsl&#34;&gt;Using C++ and WSL in VS Code&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;python&#34;&gt;Python&lt;/h3&gt;
+&lt;p&gt;使用脚本安装Anaconda&lt;/p&gt;
+- https://eternityqjl.top/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1207,227 +1387,6 @@ validation_accuracies &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
 &lt;li&gt;如果数据的维数很高，可以使用降维技术，例如PCA(主成分分析), NCA(邻域成分分析) or Random Projections(随机投影).&lt;/li&gt;
 &lt;/ol&gt;
 - https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Python基础和numpy</title>
-        <link>https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</link>
-        <pubDate>Sun, 06 Jun 2021 13:04:49 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ -&lt;h2 id=&#34;basic-of-python&#34;&gt;Basic of Python&lt;/h2&gt;
-&lt;h3 id=&#34;basic-data-types&#34;&gt;Basic data types&lt;/h3&gt;
-&lt;h4 id=&#34;numbers&#34;&gt;Numbers&lt;/h4&gt;
-&lt;h4 id=&#34;bolleans&#34;&gt;Bolleans&lt;/h4&gt;
-&lt;h4 id=&#34;strings&#34;&gt;Strings&lt;/h4&gt;
-&lt;h3 id=&#34;containers&#34;&gt;Containers&lt;/h3&gt;
-&lt;h4 id=&#34;lists&#34;&gt;Lists&lt;/h4&gt;
-&lt;h4 id=&#34;slicing&#34;&gt;Slicing&lt;/h4&gt;
-&lt;h4 id=&#34;loops&#34;&gt;Loops&lt;/h4&gt;
-&lt;h4 id=&#34;dictionaries&#34;&gt;Dictionaries&lt;/h4&gt;
-&lt;p&gt;key-value&lt;/p&gt;
-&lt;h4 id=&#34;sets&#34;&gt;Sets&lt;/h4&gt;
-&lt;p&gt;unordered&lt;/p&gt;
-&lt;h4 id=&#34;tuples&#34;&gt;Tuples&lt;/h4&gt;
-&lt;p&gt;A tuple is in many ways similar to a list; one of the most important differences is that tuples can be used as keys in dictionaries and as elements of sets, while lists cannot.&lt;/p&gt;
-&lt;h3 id=&#34;functions&#34;&gt;Functions&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;def&lt;/code&gt; keyword&lt;/p&gt;
-&lt;h3 id=&#34;classes&#34;&gt;Classes&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Greeter&lt;/span&gt;:
-
-    &lt;span style=&#34;color:#888&#34;&gt;# Constructor&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self, name):
-        self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; name  &lt;span style=&#34;color:#888&#34;&gt;# Create an instance variable&lt;/span&gt;
-
-    &lt;span style=&#34;color:#888&#34;&gt;# Instance method&lt;/span&gt;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;greet&lt;/span&gt;(self, loud&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;False&lt;/span&gt;):
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; loud:
-          &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;HELLO, &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;format(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;upper()))
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;:
-          &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Hello, &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;{}&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;!&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;format(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;name))
-
-g &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Greeter(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Fred&amp;#39;&lt;/span&gt;)  &lt;span style=&#34;color:#888&#34;&gt;# Construct an instance of the Greeter class&lt;/span&gt;
-g&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;greet()            &lt;span style=&#34;color:#888&#34;&gt;# Call an instance method; prints &amp;#34;Hello, Fred&amp;#34;&lt;/span&gt;
-g&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;greet(loud&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;True&lt;/span&gt;)   &lt;span style=&#34;color:#888&#34;&gt;# Call an instance method; prints &amp;#34;HELLO, FRED!&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;numpy&#34;&gt;Numpy&lt;/h2&gt;
-&lt;p&gt;Numpy is the core library for scientific computing in Python. It provides a high-performance multidimensional array object, and tools for working with these arrays.&lt;/p&gt;
-&lt;h3 id=&#34;arrays&#34;&gt;Arrays&lt;/h3&gt;
-&lt;p&gt;A numpy array is &lt;strong&gt;a grid of values&lt;/strong&gt;, all of the &lt;strong&gt;same type&lt;/strong&gt;, and is indexed by a tuple of nonnegative integers. The number of dimensions is the rank of the array; the shape of an array is a tuple of integers giving the size of the array along each dimension.&lt;/p&gt;
-&lt;h3 id=&#34;array-indexing&#34;&gt;Array indexing&lt;/h3&gt;
-&lt;h4 id=&#34;slicing-1&#34;&gt;Slicing&lt;/h4&gt;
-&lt;p&gt;example&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
-
-&lt;span style=&#34;color:#888&#34;&gt;# Create the following rank 2 array with shape (3, 4)&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# [[ 1  2  3  4]&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;#  [ 5  6  7  8]&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;#  [ 9 10 11 12]]&lt;/span&gt;
-a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
-
-&lt;span style=&#34;color:#888&#34;&gt;# Use slicing to pull out the subarray consisting of the first 2 rows&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# and columns 1 and 2; b is the following array of shape (2, 2):&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# [[2 3]&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;#  [6 7]]&lt;/span&gt;
-b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;]
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(b)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Two ways of accessing the data in the middle row of the array. Mixing integer indexing with slices yields an array of lower rank, while using only slices yields an array of the same rank as the original array:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;row_r1 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, :]    &lt;span style=&#34;color:#888&#34;&gt;# Rank 1 view of the second row of a  &lt;/span&gt;
-row_r2 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, :]  &lt;span style=&#34;color:#888&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
-row_r3 &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], :]  &lt;span style=&#34;color:#888&#34;&gt;# Rank 2 view of the second row of a&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r1, row_r1&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r2, row_r2&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(row_r3, row_r3&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;integer-array-indexing&#34;&gt;Integer array indexing&lt;/h4&gt;
-&lt;p&gt;Integer array indexing allows you to construct arbitrary arrays using the data from another array.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
-
-&lt;span style=&#34;color:#888&#34;&gt;# An example of integer array indexing.&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# The returned array will have shape (3,) and &lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]])
-
-&lt;span style=&#34;color:#888&#34;&gt;# The above example of integer array indexing is equivalent to this:&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]]))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;result:&lt;/p&gt;
-&lt;p&gt;[1 4 5]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# When using integer array indexing, you can reuse the same&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# element from the source array:&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]])
-
-&lt;span style=&#34;color:#888&#34;&gt;# Equivalent to the previous integer array indexing example&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;], a[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]]))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;One useful trick with integer array indexing is selecting or mutating one element from each row of a matrix:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create a new array from which we will select elements&lt;/span&gt;
-a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Create an array of indices&lt;/span&gt;
-b &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
-
-&lt;span style=&#34;color:#888&#34;&gt;# Select one element from each row of a using the indices in b&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;), b])  &lt;span style=&#34;color:#888&#34;&gt;# Prints &amp;#34;[ 1  6  7 11]&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[1 6 7 11]&lt;/p&gt;
-&lt;h4 id=&#34;boolean-array-indexing&#34;&gt;Boolean array indexing&lt;/h4&gt;
-&lt;p&gt;Frequently this type of indexing is used to select the elements of an array that &lt;strong&gt;satisfy some condition&lt;/strong&gt;.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
-
-a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;]])
-
-bool_idx &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (a &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;)  &lt;span style=&#34;color:#888&#34;&gt;# Find the elements of a that are bigger than 2;&lt;/span&gt;
-                    &lt;span style=&#34;color:#888&#34;&gt;# this returns a numpy array of Booleans of the same&lt;/span&gt;
-                    &lt;span style=&#34;color:#888&#34;&gt;# shape as a, where each slot of bool_idx tells&lt;/span&gt;
-                    &lt;span style=&#34;color:#888&#34;&gt;# whether that element of a is &amp;gt; 2.&lt;/span&gt;
-
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(bool_idx)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[False False]
-[ True  True]
-[ True  True]]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We use boolean array indexing to construct a rank 1 array&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# consisting of the elements of a corresponding to the True values&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# of bool_idx&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[bool_idx])
-
-&lt;span style=&#34;color:#888&#34;&gt;# We can do all of the above in a single concise statement:&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(a[a &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;])
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[3 4 5 6]
-[3 4 5 6]&lt;/p&gt;
-&lt;h3 id=&#34;datatypes&#34;&gt;Datatypes&lt;/h3&gt;
-&lt;p&gt;Every numpy array is a grid of elements of the same type. Numpy provides a large set of numeric datatypes that you can use to construct arrays. Numpy tries to guess a datatype when you create an array, but functions that construct arrays usually also include an optional argument to explicitly specify the datatype. Here is an example:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
-y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.0&lt;/span&gt;, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2.0&lt;/span&gt;])  &lt;span style=&#34;color:#888&#34;&gt;# Let numpy choose the datatype&lt;/span&gt;
-z &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;int64)  &lt;span style=&#34;color:#888&#34;&gt;# Force a particular datatype&lt;/span&gt;
-
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype, y&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype, z&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;array-math&#34;&gt;Array math&lt;/h3&gt;
-&lt;p&gt;Note that unlike MATLAB, &lt;code&gt;*&lt;/code&gt; is elementwise multiplication, not matrix multiplication. We instead use the dot function to compute inner products of vectors, to multiply a vector by a matrix, and to multiply matrices. dot is available both as a function in the numpy module and as an instance method of array objects:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
-y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;]], dtype&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;float64)
-
-&lt;span style=&#34;color:#888&#34;&gt;# Elementwise product; both produce the array&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(x &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; y)
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;multiply(x, y))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[ 5. 12.]
-[21. 32.]]
-[[ 5. 12.]
-[21. 32.]]&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;]])
-y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;],[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;]])
-
-v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;])
-w &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;])
-
-&lt;span style=&#34;color:#888&#34;&gt;# Inner product of vectors; both produce 219&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(v&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(w))
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dot(v, w))
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;219
-219&lt;/p&gt;
-&lt;p&gt;You can also use the &lt;code&gt;@&lt;/code&gt; operator which is equivalent to numpy&amp;rsquo;s &lt;code&gt;dot&lt;/code&gt; operator.&lt;/p&gt;
-&lt;p&gt;to transpose a matrix, simply use the T attribute of an array object:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;transpose&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, x&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;T)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;transpose
-[[1 3]
-[2 4]]&lt;/p&gt;
-&lt;h3 id=&#34;broadcasting&#34;&gt;Broadcasting&lt;/h3&gt;
-&lt;p&gt;Broadcasting is a powerful mechanism that allows numpy to work with arrays of different shapes when performing arithmetic operations.&lt;/p&gt;
-&lt;p&gt;For example, suppose that we want to add a constant vector to each row of a matrix. We could do it like this:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
-x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
-v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
-y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;empty_like(x)   &lt;span style=&#34;color:#888&#34;&gt;# Create an empty matrix with the same shape as x&lt;/span&gt;
-
-&lt;span style=&#34;color:#888&#34;&gt;# Add the vector v to each row of the matrix x with an explicit loop&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;):
-    y[i, :] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x[i, :] &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; v
-
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(y)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;[[ 2  2  4]
-[ 5  5  7]
-[ 8  8 10]
-[11 11 13]]&lt;/p&gt;
-&lt;p&gt;Numpy broadcasting allows us to perform this computation without actually creating multiple copies of v. Consider this version, using broadcasting:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
-
-&lt;span style=&#34;color:#888&#34;&gt;# We will add the vector v to each row of the matrix x,&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# storing the result in the matrix y&lt;/span&gt;
-x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;6&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;7&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;8&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;9&lt;/span&gt;], [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;12&lt;/span&gt;]])
-v &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;array([&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])
-y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; x &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; v  &lt;span style=&#34;color:#888&#34;&gt;# Add v to each row of x using broadcasting&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt;(y)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The line &lt;code&gt;y = x + v&lt;/code&gt; works even though &lt;code&gt;x&lt;/code&gt; has shape &lt;code&gt;(4, 3)&lt;/code&gt; and &lt;code&gt;v&lt;/code&gt; has shape &lt;code&gt;(3,)&lt;/code&gt; due to broadcasting; this line works as if v actually had shape &lt;code&gt;(4, 3)&lt;/code&gt;, where each row was a copy of &lt;code&gt;v&lt;/code&gt;, and the sum was performed elementwise.&lt;/p&gt;
-&lt;h2 id=&#34;matplotlib&#34;&gt;Matplotlib&lt;/h2&gt;
-&lt;p&gt;Matplotlib is a plotting library. In this section give a brief introduction to the &lt;code&gt;matplotlib.pyplot&lt;/code&gt; module, which provides a plotting system similar to that of MATLAB.&lt;/p&gt;
-&lt;h3 id=&#34;plotting&#34;&gt;Plotting&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;plt&lt;/span&gt;
-&lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt;matplotlib inline
-&lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on a sine curve&lt;/span&gt;
-x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.1&lt;/span&gt;)
-y &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sin(x)
-
-&lt;span style=&#34;color:#888&#34;&gt;# Plot the points using matplotlib&lt;/span&gt;
-plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;subplots&#34;&gt;Subplots&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# Compute the x and y coordinates for points on sine and cosine curves&lt;/span&gt;
-x &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;arange(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;pi, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.1&lt;/span&gt;)
-y_sin &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sin(x)
-y_cos &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;cos(x)
-
-&lt;span style=&#34;color:#888&#34;&gt;# Set up a subplot grid that has height 2 and width 1,&lt;/span&gt;
-&lt;span style=&#34;color:#888&#34;&gt;# and set the first such subplot as active.&lt;/span&gt;
-plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;subplot(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
-
-&lt;span style=&#34;color:#888&#34;&gt;# Make the first plot&lt;/span&gt;
-plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y_sin)
-plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Sine&amp;#39;&lt;/span&gt;)
-
-&lt;span style=&#34;color:#888&#34;&gt;# Set the second subplot as active, and make the second plot.&lt;/span&gt;
-plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;subplot(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;)
-plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;plot(x, y_cos)
-plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;title(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;Cosine&amp;#39;&lt;/span&gt;)
-
-&lt;span style=&#34;color:#888&#34;&gt;# Show the figure.&lt;/span&gt;
-plt&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;show()
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/python%E5%9F%BA%E7%A1%80%E5%92%8Cnumpy/ - 2019-2021 By Jialong</description>
         </item>
     
     
