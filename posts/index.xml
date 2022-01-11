@@ -240,7 +240,7 @@ linux&amp;gt; ./prog 静态链接 可重定位目标文件由不同的代码和�
 C中源文件扮演模块的角色，static属性就像C++使用的public和private一样。
 尽可能用static属性来保护变量和函数。
 符号表由汇编器构造，使用编译器输出到汇编语言.s文件中的符号。.symtab节中包含ELF符号表。以下为符号表中每个符号条目的格式：
-typedef struct { int name; char type:4, binding:4; char reserved; short section; long value; long size; } Elf64_Symbol; name是字符串表中的字节偏移，指向符号的以null结尾的字符串名字。value是符号的地址。对于可重定位目标文件来说，value是距定义目标的节的起始位置的偏移。对于可执行目标文件来说，该值是一个绝对运行时的地址。size是目标的大小。type通常代表数据或函数。符号表还可以包含各个节的条目。binging字段表示符号是本地还是全局。</description>
+typedef struct { int name; char type:4, binding:4; char reserved; short section; long value; long size; } Elf64_Symbol; name是字符串表中的字节偏移，指向符号的以null结尾的字符串名字。value是符号的地址。对于可重定位目标文件来说，value是距定义目标的节的起始位置的偏移。对于可执行目标文件来说，该值是一个绝对运行时的地址。size是目标的大小。type通常代表数据或函数。符号表还可以包含各个节的条目。binding字段表示符号是本地还是全局。</description>
     </item>
     
     <item>
