@@ -6,9 +6,375 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 08 Jan 2022 22:13:05 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 11 Jan 2022 15:33:44 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Csapp 8 异常控制流</title>
+        <link>https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/</link>
+        <pubDate>Tue, 11 Jan 2022 15:33:44 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/ -&lt;p&gt;系统要对系统状态的变化作出反应，这些系统状态不是被内部程序变量捕获的，而且也不一定要和程序的执行相关。比如，一个硬件定时器定期产生信号，这个时间必须得到处理。包到达网络适配器后，必须存放在内存中。&lt;/p&gt;
+&lt;p&gt;现代系统通过使用&lt;strong&gt;控制流发生突变&lt;/strong&gt;来对这些情况作出反应，一般把这些突变称为&lt;strong&gt;异常控制流ECF&lt;/strong&gt;。ECF发生在&lt;strong&gt;计算机系统的各个层次&lt;/strong&gt;。例如，在&lt;strong&gt;硬件层&lt;/strong&gt;，硬件检测到的事件会触发控制突然转移到异常处理程序。在&lt;strong&gt;操作系统层&lt;/strong&gt;，内核通过上下文切换将控制从一个用户进程转移到另一个用户进程。&lt;/p&gt;
+&lt;p&gt;理解ECP有很多用处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;帮助理解重要的&lt;strong&gt;系统概念&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;理解应用程序如何&lt;strong&gt;与操作系统交互&lt;/strong&gt;。应用程序通过使用称为陷阱或系统调用的ECF形式，向操作系统请求服务。例如，向磁盘写数据、从网络读取数据、创建一个新进程，都是通过应用程序调用系统调用实现的。&lt;/li&gt;
+&lt;li&gt;帮助理解&lt;strong&gt;并发&lt;/strong&gt;。ECF是计算机系统中实现并发的基本机制。&lt;/li&gt;
+&lt;li&gt;帮助理解&lt;strong&gt;软件异常&lt;/strong&gt;如何工作。例如C++使用try、catch以及throw语句来提供软件异常机制。软件异常允许程序进行非本地跳转（即违反通常的调用/返回栈规则的跳转）来响应错误情况。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;异常&#34;&gt;异常&lt;/h2&gt;
+&lt;p&gt;异常是异常控制流的一种形式，一部分由硬件实现，一部分由操作系统实现。&lt;/p&gt;
+&lt;p&gt;异常就是控制流中的突变，用来响应处理器状态中的某些变化。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;事件&lt;/strong&gt;（event）：状态的变化。事件可能和当前指令的执行直接相关，比如发生虚拟内存缺页、算术溢出等。&lt;/p&gt;
+&lt;p&gt;处理器检测到有事件发生时，就通过异常表的跳转表，进行一个间接过程调用，到一个异常处理程序进行处理。处理完后，根据引起异常的事件类型，会发生以下三种情况的一种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;处理程序将控制返回给当前指令&lt;/li&gt;
+&lt;li&gt;处理程序将控制返回给下一条指令&lt;/li&gt;
+&lt;li&gt;处理程序终止被中断的程序&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;异常处理&#34;&gt;异常处理&lt;/h3&gt;
+&lt;p&gt;系统中可能为每种类型的异常都分配一个唯一的非负整数的&lt;strong&gt;异常号&lt;/strong&gt;。其中一些号码由&lt;strong&gt;处理器设计者&lt;/strong&gt;提供，另一些由&lt;strong&gt;操作系统内核的设计者&lt;/strong&gt;分配。前者的例子包括：缺页、内存访问违规、被零除及算术运算溢出。后者的例子包括：系统调用和来自外部I/O设备的信号。&lt;/p&gt;
+&lt;p&gt;系统启动时，操作系统分配和初始化异常称为异常表的跳转表。使得表目k包含异常k的处理程序的地址。&lt;/p&gt;
+&lt;p&gt;运行时（系统执行某个程序）处理器检测到发生了一个事件，并确定了响应的异常号k。随后处理器触发异常，执行间接调用过程，通过异常表的表目k，转到相应的处理程序。&lt;/p&gt;
+&lt;p&gt;异常号是&lt;strong&gt;到异常表中的索引&lt;/strong&gt;，异常表的起始地址放在叫做异常表基址寄存器的特殊CPU寄存器中。&lt;/p&gt;
+&lt;p&gt;异常与过程调用的区别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;返回地址不同：过程调用时，跳转到处理程序之前，处理器将返回地址压入栈中。而根据异常的类型，返回地址要么是当前指令，要么是下一条指令。&lt;/li&gt;
+&lt;li&gt;异常处理中处理器也把一些额外的处理器状态压入栈中，在处理程序返回时，重新开始执行被中断的程序会需要这些状态。&lt;/li&gt;
+&lt;li&gt;如果控制从用户程序转移到内核，所有这些项目都被压入内核栈中，而不是压到用户栈中。&lt;/li&gt;
+&lt;li&gt;异常处理程序运行在内核模式下，这意味着其对所有系统资源都有完全的访问权限。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一旦硬件触发了异常，剩下的工作就由&lt;strong&gt;异常处理程序&lt;/strong&gt;在软件中完成。处理完事件后，通过执行一条特殊的从中断返回指令，可选地返回到被中断的程序，该指令将适当的状态弹回到处理器的控制和数据寄存器中。如果异常中断的是一个用户程序，就将状态恢复为用户模式，然后将控制返回给被中断的程序。&lt;/p&gt;
+&lt;h3 id=&#34;异常的类别&#34;&gt;异常的类别&lt;/h3&gt;
+&lt;p&gt;异常分为中断、陷阱、故障、终止。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;中断&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;中断是&lt;strong&gt;异步&lt;/strong&gt;发生的，是来自处理器&lt;strong&gt;外部的I/O设备的信号&lt;/strong&gt;的结果。硬件中断&lt;strong&gt;不是由任何一条专门的指令&lt;/strong&gt;造成的，因此它是异步的。硬件中观的异常处理程序常称为中断处理程序。&lt;/p&gt;
+&lt;p&gt;当前只能怪执行完后，处理器注意到中断引脚的电压变高，就从系统总线读取异常号，然后调用适当的中断处理程序。当处理程序返回时，就将控制返回给下一条指令。结果是程序继续运行，就好像没有发生过中断一样。&lt;/p&gt;
+&lt;p&gt;剩下的异常类型是&lt;strong&gt;同步&lt;/strong&gt;发生的，是执行当前指令的结果，把这类指令称为&lt;strong&gt;故障指令&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;陷阱和系统调用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;陷阱是有意的异常，是执行一条指令的结果。陷阱最重要的用途是在&lt;strong&gt;用户程序和内核之间&lt;/strong&gt;提供一个像过程一样的接口，称为系统调用。&lt;/p&gt;
+&lt;p&gt;用户经常要向内核请求服务，比如读一个文件（read）、创建一个新进程（fork）、加载一个新程序（execve），或终止当前程序（exit）。为了允许对这些内核服务的受控访问，处理器提供了一条特殊的&lt;code&gt;syscall n&lt;/code&gt;的指令，当用户程序想要请求服务n时，可以执行这条指令。执行syscall指令会导致一个到异常处理程序的陷阱，这个程序解析参数，并调用适当的内核程序。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;故障&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;故障是由错误引起的，他可能&lt;strong&gt;被故障处理程序修正&lt;/strong&gt;。故障发生时，处理器将控制转移给故障处理程序。如果故障处理程序能够修正这个错误，他就将控制返回到引起故障的指令，从而重新执行它。否则，处理程序返回到内核中的abort例程，该例程会终止引起故障的应用程序。&lt;/p&gt;
+&lt;p&gt;一个经典的故障示例是缺页异常。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;终止&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;终止是不可恢复的致命错误造成的结果，通常是一些硬件错误，例如DRAM或SRAM位被损坏时发生的奇偶错误。&lt;/p&gt;
+&lt;h3 id=&#34;linuxx86-64中的异常&#34;&gt;Linux/x86-64中的异常&lt;/h3&gt;
+&lt;p&gt;x86-64有256种不同类型的异常，0~31号对应的由Intel架构师定义的异常，对任何x86-64系统都是一样的。32~255号对应的是操作系统定义的中断和陷阱。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Linux/x86-64故障和终止&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;除法错误（异常0）：Unix不会试图从除法错误中恢复，而是选择终止程序。&lt;/li&gt;
+&lt;li&gt;一般保护故障（异常13）：通常因为一个程序引用了一个未定义的虚拟内存区域，或者因为程序试图写一个只读的文本段。Linux不会尝试恢复这些故障。&lt;/li&gt;
+&lt;li&gt;缺页（异常14）：会重新执行产生故障的指令的一个示例。&lt;/li&gt;
+&lt;li&gt;机器检查（异常18）：在导致故障的指令执行中检测到知名的硬件错误时发生的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Linux/x86-64系统调用&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Linux提供几百种系统调用，以下为一些常见的系统调用：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201071509742.png&#34; alt=&#34;Linux常见系统调用&#34;&gt;&lt;/p&gt;
+&lt;p&gt;每个系统调用都有唯一的整数号，对应于一个到内核中跳转表的偏移量。&lt;/p&gt;
+&lt;p&gt;C程序用syscall函数可以直接调用任何系统调用。而实际中没必要这样做，对于大多数系统调用，标准C库提供了一组方便的包装函数。这些包装函数将参数打包到一起，以适当的系统调用指令陷入内核，然后将系统调用的返回状态传递回调用函数。&lt;/p&gt;
+&lt;p&gt;处理器ISA规范通常会区分异步中断和同步异常，但并不提供表述这些非常相似的概念的概括性的术语。为了避免混乱，我们使用异常作为通用术语，只要在必要时才区分异步异常（中断）和同步异常（陷阱、故障和终止）。&lt;/p&gt;
+&lt;h2 id=&#34;进程&#34;&gt;进程&lt;/h2&gt;
+&lt;p&gt;进程的经典定义就是一个执行中的程序的实例。系统中的每个程序都运行在某个进程的上下文（context）中。上下文由程序正确运行所需的状态组成。这个状态包括存放在内存中的程序的代码和数据，它的栈、通用没目的寄存器的内容、程序计数器、环境变量以及打开文件描述符的集合。&lt;/p&gt;
+&lt;p&gt;进程提供给应用程序的关键抽象：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个独立的逻辑控制流：提供我们的程序&lt;strong&gt;独占地使用处理器&lt;/strong&gt;的假象&lt;/li&gt;
+&lt;li&gt;一个私有的地址空间：提供我们的程序&lt;strong&gt;独占地使用内存系统&lt;/strong&gt;的假象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;逻辑控制流&#34;&gt;逻辑控制流&lt;/h3&gt;
+&lt;p&gt;进程为每个程序提供了一种假象，好像程序在独占地使用处理器。&lt;/p&gt;
+&lt;p&gt;进程轮流使用处理器。每个进程执行它的流的一部分，然后被抢占，然后轮到其他进程。&lt;/p&gt;
+&lt;h3 id=&#34;并发流&#34;&gt;并发流&lt;/h3&gt;
+&lt;p&gt;一个逻辑流的执行在时间上与另一个流重叠，称为并发流，这两个流被称为并发地运行。&lt;/p&gt;
+&lt;p&gt;多个流并发地执行的一般现象被称为并发。一个进程和其他进程轮流运行的概念称为多任务。&lt;/p&gt;
+&lt;h3 id=&#34;私有地址空间&#34;&gt;私有地址空间&lt;/h3&gt;
+&lt;p&gt;进程为每个程序提供它自己的私有地址空间。和这个空间中某个地址相关联的哪个内存字节是不能被其他进程读和写的。&lt;/p&gt;
+&lt;p&gt;尽管每个私有地址空间相关联的内存一般是不同的，但每个这样的空间都有相同的通用结构。&lt;/p&gt;
+&lt;h3 id=&#34;用户模式和内核模式&#34;&gt;用户模式和内核模式&lt;/h3&gt;
+&lt;p&gt;处理器提供了一种限制一个应用可以执行的指令以及它可以访问的地址空间范围。&lt;/p&gt;
+&lt;p&gt;处理器通常用某个控制寄存器中的一个模式位来提供这种功能，该寄存器描述了当前享有的特权。设置了模式位后，进程就运行在内核模式中。一个运行在内核模式的进程可以执行指令集中的任何指令，并且可以访问系统中的任何内存位置。&lt;/p&gt;
+&lt;p&gt;未设置模式位时，进程运行在用户模式。用户模式中的进程不允许执行特权指令，例如停止处理器、改变模式位，或者发起一个I/O操作。也不允许用户模式中的进程直接引用地址空间中内核区的代码和数据。&lt;/p&gt;
+&lt;h3 id=&#34;上下文切换&#34;&gt;上下文切换&lt;/h3&gt;
+&lt;p&gt;操作系统内核使用一种称为上下文切换的较高层形式的异常流控制来实现多任务切换。&lt;/p&gt;
+&lt;p&gt;内核为每个进程维持一个上下文。上下文就是内核重启一个被抢占的进程所需的状态。它由一些对象的值组成，包括通用寄存器、浮点寄存器、程序计数器、用户栈、状态寄存器、内核栈和各种内核数据结构，如页表、进程表和文件表。&lt;/p&gt;
+&lt;p&gt;进程执行的某些时刻，内核可以抢占当前当前进程，并重新开始一个先前被抢占的进程，这种决策称为&lt;strong&gt;调度&lt;/strong&gt;。由内核中的调度器的代码处理的。&lt;/p&gt;
+&lt;p&gt;上下文切换：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;保存当前进程的上下文&lt;/li&gt;
+&lt;li&gt;恢复某个先前被抢占的进程被保存的上下文&lt;/li&gt;
+&lt;li&gt;将控制传递给这个新的恢复进程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;中断可以引发上下文切换。例如从磁盘取完数据之后的中断。&lt;/p&gt;
+&lt;h2 id=&#34;系统调用错误处理&#34;&gt;系统调用错误处理&lt;/h2&gt;
+&lt;p&gt;当Unix系统级函数遇到错误时，通常会返回-1，并设置全局整数变量errno来表示出现什么错误。&lt;/p&gt;
+&lt;p&gt;fork函数检查错误的方法：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; ((pid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fork()) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {
+	fprintf(stderr, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;fork error: %s&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, strerror(errno));
+	exit(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;strerror函数返回一个文本串，描述了和某个errno值相关联的错误。通过定义以下函数，来简化代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;unix_error&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;msg) &lt;span style=&#34;color:#888&#34;&gt;/* Unix-style error */&lt;/span&gt;
+{
+    fprintf(stderr, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%s: %s&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, msg, strerror(errno));
+    exit(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此时对fork的调用缩减到2行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; ((pid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; fork()) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;)
+	unix_error(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;fork error&amp;#34;&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用csapp.h定义的处理包装函数可以进一步简化代码。&lt;/p&gt;
+&lt;h2 id=&#34;进程控制&#34;&gt;进程控制&lt;/h2&gt;
+&lt;p&gt;描述Unix提供的大量从C程序中操作进程的系统调用函数。&lt;/p&gt;
+&lt;h3 id=&#34;获取进程id&#34;&gt;获取进程ID&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;pid_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;getpid&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;创建和终止进程&#34;&gt;创建和终止进程&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;exit&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; status);
+pid_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fork&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;exit函数以status退出状态来终止进程。&lt;/p&gt;
+&lt;p&gt;父进程通过调用fork函数创建一个新的运行的子进程。&lt;/p&gt;
+&lt;h3 id=&#34;回收子进程&#34;&gt;回收子进程&lt;/h3&gt;
+&lt;p&gt;当一个进程由于某种原因终止时，内核并不是立即把它从系统中清除。进程被保持在一种已终止的状态，直到被它的父进程回收。当父进程回收已经终止的子进程时，内核将子进程的退出状态传递给父进程，然后抛弃已经终止的进程，从此时开始，该进程就不存在了。一个终止了但还未被会回收的进程称为僵死进程。&lt;/p&gt;
+&lt;h3 id=&#34;让进程休眠&#34;&gt;让进程休眠&lt;/h3&gt;
+&lt;p&gt;sleep函数将一个进程挂起一段指定的时间。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;include &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;unistd.h&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sleep(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; secs);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果请求的时间量已经到了，sleep返回0，否则返回还剩下的要休眠的秒数。&lt;/p&gt;
+&lt;p&gt;还有一个有用的函数pause，该函数让调用函数休眠，直到该进程收到一个信号。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;pause&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;加载并运行程序&#34;&gt;加载并运行程序&lt;/h3&gt;
+&lt;p&gt;execve函数在当前进程的上下文中加载并运行一个新程序。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;execve&lt;/span&gt;(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;filename, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;argv[],
+			&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;envp[]);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数加载并运行&lt;strong&gt;可执行目标文件filename&lt;/strong&gt;，且带&lt;strong&gt;参数列表argv&lt;/strong&gt;和&lt;strong&gt;环境变量列表envp&lt;/strong&gt;。只有出现错误时才返回到调用程序。execve调用一次并从不返回。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201092346534.png&#34; alt=&#34;execve函数参数列表和环境变量列表&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在execve加载了filename后，调用&lt;a href=&#34;https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/#%e5%8a%a0%e8%bd%bd%e5%8f%af%e6%89%a7%e8%a1%8c%e7%9b%ae%e6%a0%87%e6%96%87%e4%bb%b6&#34;&gt;7.9 加载可执行目标文件&lt;/a&gt;中描述的启动代码。启动代码设置栈，并将控制传递给新程序的主函数main，该函数有以下形式：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; argc, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;argv[], &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;envp[]);
+&lt;span style=&#34;color:#888&#34;&gt;//或者等价的
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; argc, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;argv, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;envp);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;main开始执行时，用户栈的组织结构如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201092354435.png&#34; alt=&#34;新程序开始时的用户栈&#34;&gt;&lt;/p&gt;
+&lt;p&gt;从栈底（高地址）到栈顶（低地址）的方向依次有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;以null结尾的指针数组，其中每个指针都指向栈中的一个&lt;strong&gt;环境变量字符串&lt;/strong&gt;。全局变量environ指向这些之阵中的第一个envp[0]&lt;/li&gt;
+&lt;li&gt;以null结尾的argv[]数组，其中每个元素都指向栈中的一个&lt;strong&gt;参数字符串&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;栈顶是系统启动函数libc_start_main的栈帧。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;main函数的三个参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;argc：给出argv[]数组中非空指针的数量&lt;/li&gt;
+&lt;li&gt;argv：指向argv[]数组中的第一个条目&lt;/li&gt;
+&lt;li&gt;envp：指向envp[]数组中的第一个条目&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;利用fork和execve运行程序&#34;&gt;利用fork和execve运行程序&lt;/h3&gt;
+&lt;p&gt;Unix shell这样的程序大量使用了fork和execve函数。shell是一个交互型的应用程序，他代表用户运行其他程序。最早的shell是sh程序，shell执行一系列的&lt;strong&gt;读/求值&lt;/strong&gt;步骤，然后终止。读步骤读取来自用户的一个命令行。求值步骤解析命令行，并代表用户运行程序。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;/* $begin shellmain */&lt;/span&gt;
+&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;#34;csapp.h&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define MAXARGS   128
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;/* Function prototypes */&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;eval&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;cmdline);
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;parseline&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;buf, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;argv);
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;builtin_command&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;argv); 
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() 
+{
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; cmdline[MAXLINE]; &lt;span style=&#34;color:#888&#34;&gt;/* Command line */&lt;/span&gt;
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;) {
+	&lt;span style=&#34;color:#888&#34;&gt;/* Read */&lt;/span&gt;
+	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;gt; &amp;#34;&lt;/span&gt;);                   
+	Fgets(cmdline, MAXLINE, stdin); 
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (feof(stdin))
+	    exit(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
+
+	&lt;span style=&#34;color:#888&#34;&gt;/* Evaluate */&lt;/span&gt;
+	eval(cmdline);
+    } 
+}
+&lt;span style=&#34;color:#888&#34;&gt;/* $end shellmain */&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上为一个简单的shell的main历程。shell打印一个命令行提示符，等待用户在stdin上输入命令，然后对这个命令行求值。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;/* $begin eval */&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;/* eval - Evaluate a command line */&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;eval&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;cmdline) 
+{
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;argv[MAXARGS]; &lt;span style=&#34;color:#888&#34;&gt;/* Argument list execve() */&lt;/span&gt;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; buf[MAXLINE];   &lt;span style=&#34;color:#888&#34;&gt;/* Holds modified command line */&lt;/span&gt;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; bg;              &lt;span style=&#34;color:#888&#34;&gt;/* Should the job run in bg or fg? */&lt;/span&gt;
+    pid_t pid;           &lt;span style=&#34;color:#888&#34;&gt;/* Process id */&lt;/span&gt;
+    
+    strcpy(buf, cmdline);
+    bg &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; parseline(buf, argv); 
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (argv[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt;)  
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;;   &lt;span style=&#34;color:#888&#34;&gt;/* Ignore empty lines */&lt;/span&gt;
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;builtin_command(argv)) { 
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; ((pid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Fork()) &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {   &lt;span style=&#34;color:#888&#34;&gt;/* Child runs user job */&lt;/span&gt;
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (execve(argv[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], argv, environ) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {
+                printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%s: Command not found.&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, argv[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]);
+                exit(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
+            }
+        }
+
+	&lt;span style=&#34;color:#888&#34;&gt;/* Parent waits for foreground job to terminate */&lt;/span&gt;
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;bg) {
+	    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; status;
+	    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (waitpid(pid, &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;status, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;)
+		unix_error(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;waitfg: waitpid error&amp;#34;&lt;/span&gt;);
+	}
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
+	    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%d %s&amp;#34;&lt;/span&gt;, pid, cmdline);
+    }
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;;
+}
+
+&lt;span style=&#34;color:#888&#34;&gt;/* If first arg is a builtin command, run it and return true */&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;builtin_command&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;argv) 
+{
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;strcmp(argv[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;quit&amp;#34;&lt;/span&gt;)) &lt;span style=&#34;color:#888&#34;&gt;/* quit command */&lt;/span&gt;
+	exit(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);  
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;strcmp(argv[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;amp;&amp;#34;&lt;/span&gt;))    &lt;span style=&#34;color:#888&#34;&gt;/* Ignore singleton &amp;amp; */&lt;/span&gt;
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;                     &lt;span style=&#34;color:#888&#34;&gt;/* Not a builtin command */&lt;/span&gt;
+}
+&lt;span style=&#34;color:#888&#34;&gt;/* $end eval */&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上为对命令行求值的代码。首要任务是调用parseline函数，该函数解析了以空格分隔的命令行参数，并构造最终会传递给execve的argv向量。第一个参数被假设为要么是一个内置的shell命令名，马上就会解释这个命令，要么是一个可执行目标文件，会在一个新的子进程的上下文中加载并运行这个文件。&lt;/p&gt;
+&lt;p&gt;如果最后一个参数是&amp;amp;，那么parseline返回1，表示在后台执行该程序。否则返回0，表示在前台执行该程序。&lt;/p&gt;
+&lt;p&gt;解析了命令行后，eval函数调用builtin_command函数，该函数检查第一个命令行参数是否是一个内置的shell命令。如果是，就立即解释这个命令，并返回1，否则返回0。简单的shell只有一个内置命令——quit命令，该命令会终止shell。&lt;/p&gt;
+&lt;p&gt;如果builtin_command返回0，那么shell创建一个子进程，并在子进程中执行所请求的程序。如果用户要求在后台运行该程序，那么shell返回到循环的顶部，等待下一个命令行。否则，shell使用waitpid函数等待作业终止。当作业终止时，shell开始下一轮迭代。&lt;/p&gt;
+&lt;h2 id=&#34;信号&#34;&gt;信号&lt;/h2&gt;
+&lt;p&gt;前面的异常控制流的学习中，我们已经看到了硬件和软件如何合作以提供基本的低层异常机制，以及操作系统如何利用异常来支持进程上下文切换的异常控制流形式。本节中将研究&lt;strong&gt;更高层的软件形式的异常&lt;/strong&gt;，称为Linux信号，其允许进程和内核中断其他进程。&lt;/p&gt;
+&lt;p&gt;一个信号就是一条小消息，他通知进程系统中发生了一个某种类型的事件。&lt;/p&gt;
+&lt;p&gt;每种信号类型都对应于某种系统事件。低层的硬件异常是由内核异常处理程序处理的，正常情况下是对用户进程不可见的。信号提供了一种机制，通知用户进程发生了这些异常。例如如果一个进程试图除以0，那么内核就发送给它一个SIGFPE信号。&lt;/p&gt;
+&lt;h3 id=&#34;信号术语&#34;&gt;信号术语&lt;/h3&gt;
+&lt;p&gt;传送一个信号到目的进程是由两个不同步骤组成的：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;发送信号。内核通过更新目的进程上下文的&lt;strong&gt;某个状态&lt;/strong&gt;，发送（传递）一个信号给目的进程。发送信号可能有以下原因：
+&lt;ul&gt;
+&lt;li&gt;内核检测到一个系统事件，例如除零错误&lt;/li&gt;
+&lt;li&gt;一个进程调用了kill函数，显式地要求内核发送一个信号给目的进程。一个进程可以发送信号给自己&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;接收信号：当目的进程被内核强迫以某种方式对信号的发送做出反应时，它就接受了信号。进程可以忽略这个信号，终止或通过执行一个称为信号处理程序的用户层函数捕获这个信号。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个发出而没有被接收的信号叫作待处理信号。&lt;/p&gt;
+&lt;p&gt;任何时刻，一种类型至多只会有一个待处理信号。如果一个进程有一个类型为k的待处理信号，那么任何接下来发送到这个进程的类型为k的信号都会被直接丢弃。一个进程可以有选择地阻塞接收某种信号。&lt;/p&gt;
+&lt;h3 id=&#34;发送信号&#34;&gt;发送信号&lt;/h3&gt;
+&lt;p&gt;Unix基于进程组提供了大量向进程发送信号的机制。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;进程组&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;每个进程都只属于一个进程组，进程组由一个正整数进程组ID来标识。getpgrp函数返回当前进程的进程组ID：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;pid_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;getpgrp&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一个进程与其子进程属于同一个进程组，一个进程也可以通过使用set-pgid函数来改变自己或其他进程的进程组。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;setpgid&lt;/span&gt;(pid_t pid, pid_t pgid);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;将进程pid的进程组改为pgid。如果pid为0就是用当前进程的PID。如果pgid是0就用pid指定的进程的PID作为进程组ID。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;用/bin/kill程序发送信号&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;/bin/kill可以向另外的进程发送任意信号。例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; /bin/kill -9 &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;15213&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;发送信号9(SIGKILL)给进程15213.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;从键盘发送信号&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Unix shell使用&lt;strong&gt;作业&lt;/strong&gt;这个抽象概念来表示为&lt;strong&gt;对一条命令行求值而创建的进程&lt;/strong&gt;。在任何时刻至多只有&lt;strong&gt;一个前台作业和0个或多个后台作业&lt;/strong&gt;。例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ls | sort
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;会创建一个由两个进程组成的前台作业，这两个进程通过Unix管道连接起来：一个进程运行ls程序，另一个进程运行sort程序。shell为每个作业创建一个独立的进程组。进程组ID通常取自作业中父进程中的一个。&lt;/p&gt;
+&lt;p&gt;在键盘上输入Ctrl+C会导致内核发送一个SIGINT信号到前台进程组中的每个进程。默认情况下是终止前台作业。类似地，输入Ctrl+Z会发送一个SIGTSTP信号到前台中的每个进程。默认情况下是停止（挂起）前台作业。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;用kill函数发送信号&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;进程通过调用kill函数发送信号给其他进程（包括自己）。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;sys/types.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;signal.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;kill&lt;/span&gt;(pid_t pid, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sig);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果pid大于零，那么kill函数发送信号号码sig给进程pid。如果pid等于零，那么kill发送信号sig给调用进程所在进程组中的每个进程，包括调用进程自己。如果pid小于零，kill发送信号sig给进程组|pid|中的每个进程。例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;/* $begin kill */&lt;/span&gt;
+&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;#34;csapp.h&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() 
+{
+    pid_t pid;
+
+    &lt;span style=&#34;color:#888&#34;&gt;/* Child sleeps until SIGKILL signal received, then dies */&lt;/span&gt;   
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; ((pid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Fork()) &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {   
+	Pause();  &lt;span style=&#34;color:#888&#34;&gt;/* Wait for a signal to arrive */&lt;/span&gt;  
+	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;control should never reach here!&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
+	exit(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
+    }
+
+    &lt;span style=&#34;color:#888&#34;&gt;/* Parent sends a SIGKILL signal to a child */&lt;/span&gt;
+    Kill(pid, SIGKILL);
+    exit(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
+}
+&lt;span style=&#34;color:#888&#34;&gt;/* $end kill */&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该示例中，父进程用kill函数发送SIGKILL信号给它的子进程。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;用allarm函数发送信号&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;进程可以通过调用alarm函数向它自己发送SIGALARM信号。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;alarm&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; secs);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;alarm函数安排内核在secs秒后发送一个SIGALARM信号给调用进程。如果secs是零，那么不会调度安排新的闹钟。&lt;/p&gt;
+&lt;p&gt;任何情况下，对alarm的调用都将取消任何待处理的（pending）闹钟，并返回任何待处理的闹钟在被发送前还剩下的秒数。如果没有任何待处理的闹钟就返回零。&lt;/p&gt;
+&lt;h3 id=&#34;接收信号&#34;&gt;接收信号&lt;/h3&gt;
+&lt;p&gt;当内核把进程p从内核模式切换到用户模式（从系统调用返回或完成了一次上下文切换）时，它会检查进程p的未被阻塞的待处理信号的集合。如果这个集合为空，那么内核将控制传递到p的逻辑控制流中的下一条指令。如果集合是非空，那么内核选择集合中的某个信号k，并强制p接收信号k。收到这个信号会触发进程采取某种行为。一旦进程完成这种行为，控制就传递回p的逻辑控制流中的下一条指令。每个信号都有一个预定义的默认行为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;进程终止&lt;/li&gt;
+&lt;li&gt;进程终止并转储内存&lt;/li&gt;
+&lt;li&gt;进程停止（挂起）直到被SIGCONT信号重启&lt;/li&gt;
+&lt;li&gt;进程忽略该信号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;进程可以通过使用signal函数修改和信号相关联的默认行为。例外是SIGSTOP和SIGKILL，他们的默认行为不能更改。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;signal.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;void&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;sighandler_t) (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;);
+sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; signum, sighandler_t handler);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;若成功则返回指向前次处理程序的指针，若出错则为SIG_ERR。&lt;/p&gt;
+&lt;h3 id=&#34;阻塞和解除阻塞信号&#34;&gt;阻塞和解除阻塞信号&lt;/h3&gt;
+&lt;p&gt;Linux提供了阻塞信号的隐式和显式的机制。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;隐式阻塞机制：内核默认阻塞任何当前处理程序正在处理信号类型的待处理的信号。&lt;/li&gt;
+&lt;li&gt;显式阻塞机制：应用程序可以使用sigprocmask函数和它的辅助函数，明确地阻塞和解除阻塞选定的信号。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;编写信号处理程序&#34;&gt;编写信号处理程序&lt;/h3&gt;
+&lt;p&gt;信号处理是Linux系统编程最棘手的一个问题。处理程序有几个属性使其很难推理分析：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;处理程序与主程序并发运行，共享同样的全局变量，可能与主程序和其他处理程序互相干扰&lt;/li&gt;
+&lt;li&gt;如何以及何时接收信号的规则常常有违直觉&lt;/li&gt;
+&lt;li&gt;不同系统有不同的信号处理语义&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以下是信号处理程序的一些基本规则：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;安全的信号处理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;正确的信号处理&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;可移植的信号处理&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;同步流以避免讨厌的并发错误&#34;&gt;同步流以避免讨厌的并发错误&lt;/h3&gt;
+&lt;p&gt;以某种方式同步并发流，从而得到最大的可行的交错的集合，每个可行的交错都能得到正确的结果。&lt;/p&gt;
+&lt;h3 id=&#34;显式地等待信号&#34;&gt;显式地等待信号&lt;/h3&gt;
+&lt;p&gt;有时候主程序需要显式地等待某个信号处理程序运行。例如当Linux shell创建一个前台作业时，在二极受下一条用户命令前，它必须等待作业终止，被SIGCHLD处理程序回收。&lt;/p&gt;
+&lt;h2 id=&#34;非本地跳转&#34;&gt;非本地跳转&lt;/h2&gt;
+&lt;p&gt;C语言提供了一种用户级异常控制流形式，称为非本地跳转，它将控制从一个函数转移到另一个当前正在执行的函数，不需要经过正常的调用-返回序列。非本地跳转通过setjmp和longjmp函数来提供。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;setjmp.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;setjmp&lt;/span&gt;(jmp_buf env);
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sigsetjmp&lt;/span&gt;(sigjmp_buf env, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; savesigs);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;setjmp函数在env缓冲区保存&lt;strong&gt;当前调用环境&lt;/strong&gt;，以供后面的longjmp使用，并返回0.调用环境包括程序计数器、栈指针和通用目的寄存器。&lt;/p&gt;
+&lt;h2 id=&#34;操作进程的工具&#34;&gt;操作进程的工具&lt;/h2&gt;
+&lt;p&gt;Linux系统提供的大量的监控和操作进程的有用工具。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;STRACE：打印一个正在运行的程序和它的子进程调用的每个系统调用的轨迹。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;PS：列出当前系统中的进程&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;TOP：打印出关于当前进程资源使用的信息&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;PMAP：显示进程的内存映射&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;/proc：一个虚拟文件系统，以ASCII文本格式输出大量&lt;strong&gt;内核数据结构的内容&lt;/strong&gt;，用户程序可以读取这些内容。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1044,273 +1410,6 @@
 &lt;p&gt;改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。&lt;/p&gt;
 &lt;p&gt;改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。&lt;/p&gt;
 - https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Csapp：7.链接</title>
-        <link>https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/</link>
-        <pubDate>Sat, 11 Dec 2021 21:38:11 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/ -&lt;p&gt;链接是将各种代码和数据片段收集并组合成一个单一文件的过程，这个文件可以被加载到内存并执行。&lt;/p&gt;
-&lt;p&gt;链接可以执行于编译时、加载时、运行时。&lt;/p&gt;
-&lt;p&gt;链接使得分离编译成为可能。可以将巨大的源文件分解为更小的模块，可以独立地修改和编译这些模块。当我们改变其中的一个模块时，只需简单地将其重新编译并链接，无需重新编译其他文件。&lt;/p&gt;
-&lt;p&gt;理解链接器的作用：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;帮助构造大型程序&lt;/li&gt;
-&lt;li&gt;避免一些危险的编程错误。例如错误地定义多个全局变量的程序将通过链接器，不产生任何警告。&lt;/li&gt;
-&lt;li&gt;理解语言的作用域规则。如：全局和局部变量的区别；static属性的变量和函数的意义。&lt;/li&gt;
-&lt;li&gt;帮助理解其他重要的系统概念。链接器产生的可执行目标文件在重要的系统功能中扮演着关键角色。&lt;/li&gt;
-&lt;li&gt;帮助我们利用共享库。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;编译器驱动程序&#34;&gt;编译器驱动程序&lt;/h2&gt;
-&lt;p&gt;编译器驱动程序代表用户在需要时调用语言预处理器、编译器、汇编器和链接器。例如我们经常使用的gcc驱动程序。&lt;/p&gt;
-&lt;p&gt;main.c$\rightarrow$main.i$\rightarrow$main.s$\rightarrow$main.o$\rightarrow$prog&lt;/p&gt;
-&lt;p&gt;源程序$\rightarrow$中间文件$\rightarrow$汇编语言文件$\rightarrow$&lt;strong&gt;可重定位目标文件&lt;/strong&gt;$\rightarrow$&lt;strong&gt;可执行目标文件&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;依次使用了：预处理器、编译器、汇编器 、链接器&lt;/p&gt;
-&lt;p&gt;shell执行可执行文件时调用操作系统中的加载器函数，将prog中的代码和数据复制到内存中，然后将控制转移到这个程序的开头。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ./prog
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;静态链接&#34;&gt;静态链接&lt;/h2&gt;
-&lt;p&gt;可重定位目标文件由不同的代码和数据节组成，每一节都是一个连续的字节序列。&lt;/p&gt;
-&lt;p&gt;静态链接器以一组&lt;strong&gt;可重定位目标文件和命令行参数&lt;/strong&gt;作为输入，生成一个&lt;strong&gt;完全链接的、可以加载和运行的可执行目标文件&lt;/strong&gt;作为输出。&lt;/p&gt;
-&lt;p&gt;为了构造可执行文件，链接器必须完成连个任务：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;符号解析&lt;/strong&gt;：目标文件定义和引用符号，每个符号对应一个函数、一个全局变量或一个静态变量。将每个符号引用正好和一个符号定义关联起来。（每个符号对应于一个函数、一个全局变量或一个静态变量）&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;重定位&lt;/strong&gt;。编译器和汇编器生成从地址0开始的代码和数据节。链接器通过把每个符号定义与一个内存位置关联起来，从而重定位这些节，然后修改所有对这些符号的引用，使它们指向这个内存位置。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;目标文件&#34;&gt;目标文件&lt;/h2&gt;
-&lt;p&gt;共有三种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;可重定位目标文件：二进制代码和数据，可在编译时与其他可重定位目标文件合并起来，创建一个可执行目标文件。&lt;/li&gt;
-&lt;li&gt;可执行目标文件：二进制代码和数据，其形式可以直接被复制到内存中并执行。&lt;/li&gt;
-&lt;li&gt;共享目标文件：特殊类型的可重定位目标文件，可以在加载或运行时被&lt;strong&gt;动态地加载进内存并链接&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;目标文件是按照特定目标文件格式来组织的，各个系统的目标文件格式都不相同。&lt;/p&gt;
-&lt;h2 id=&#34;可重定位目标文件&#34;&gt;可重定位目标文件&lt;/h2&gt;
-&lt;p&gt;一个典型的ELF可重定位目标文件：&lt;/p&gt;
-&lt;p&gt;首先是16B的ELF头，描述了生成该文件的系统的字的大小和字节顺序。&lt;/p&gt;
-&lt;p&gt;然后是节：一个典型的ELF可重定位目标文件包含以下几个节：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;.text&lt;/code&gt;：已编译程序的机器代码&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.rodata&lt;/code&gt;：只读数据&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.data&lt;/code&gt;：已初始化的全局和静态C变量&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.bss&lt;/code&gt;：未初始化的全局和静态C变量，以及所有被初始化为0的全局或静态变量&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.symtab&lt;/code&gt;：一个符号表，存放在程序中定义和引用的函数和全局变量的信息&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.rel.text&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.rel.data&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.debug&lt;/code&gt;：调试符号表，以-g选项调用编译器驱动程序时才会得到这张表。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.line&lt;/code&gt;：原始C程序的行号和&lt;code&gt;.text&lt;/code&gt;节中的机器指令之间的映射，以-g选项调用编译器驱动程序时才会得到这张表。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.strtab&lt;/code&gt;：一个字符串表，其中内容包括&lt;code&gt;.symtab&lt;/code&gt;和&lt;code&gt;.debug&lt;/code&gt;节中的符号表，以及节头部中的节名称。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;符号和符号表&#34;&gt;符号和符号表&lt;/h2&gt;
-&lt;p&gt;每个可重定位目标模块都有一个符号表&lt;code&gt;.symtab&lt;/code&gt;，它包含m定义和引用的符号的信息。在链接器的上下文，有三种不同符号：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;由模块m定义并能被其他模块引用的全局符号：对应非静态的C函数和全局变量。&lt;/li&gt;
-&lt;li&gt;由其他模块定义并被m引用的全局符号，称为外部符号：对应其他模块中定义的非静态的C函数和全局变量&lt;/li&gt;
-&lt;li&gt;只被模块m定义和引用的局部符号：对应于带static属性的C函数和全局变量。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;本地非静态程序变量的符号在运行时在&lt;strong&gt;栈中&lt;/strong&gt;被管理，不在符号表.symtab中。&lt;/p&gt;
-&lt;p&gt;C中源文件扮演模块的角色，static属性就像C++使用的public和private一样。&lt;/p&gt;
-&lt;p&gt;尽可能用static属性来保护变量和函数。&lt;/p&gt;
-&lt;p&gt;符号表由汇编器构造，使用编译器输出到汇编语言&lt;code&gt;.s&lt;/code&gt;文件中的符号。&lt;code&gt;.symtab&lt;/code&gt;节中包含ELF符号表。以下为符号表中每个符号条目的格式：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt; {
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; name;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;type&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;,
-		 &lt;span style=&#34;color:#970;font-weight:bold&#34;&gt;binding&lt;/span&gt;:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; reserved;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;short&lt;/span&gt; section;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; value;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; size;
-} Elf64_Symbol;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;name是字符串表中的字节偏移，指向符号的以null结尾的字符串名字。value是符号的地址。对于可重定位目标文件来说，value是距定义目标的节的起始位置的偏移。对于可执行目标文件来说，该值是一个绝对运行时的地址。size是目标的大小。type通常代表数据或函数。符号表还可以包含各个节的条目。binging字段表示符号是本地还是全局。&lt;/p&gt;
-&lt;p&gt;每个符号都被分配到目标文件的某个节，由section字段表示，该字段也是一个到节头部表的索引。&lt;/p&gt;
-&lt;p&gt;以下是hello_world.c文件的符号表：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() {
-   printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;);
-   &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Symbol table &#39;.symtab&#39; contains 70 entries:
-   Num:    Value          Size Type    Bind   Vis      Ndx Name
-     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND 
-     1: 0000000000000318     0 SECTION LOCAL  DEFAULT    1 
-     2: 0000000000000338     0 SECTION LOCAL  DEFAULT    2 
-     3: 0000000000000358     0 SECTION LOCAL  DEFAULT    3 
-     4: 000000000000037c     0 SECTION LOCAL  DEFAULT    4 
-     5: 00000000000003a0     0 SECTION LOCAL  DEFAULT    5 
-     6: 00000000000003c8     0 SECTION LOCAL  DEFAULT    6 
-     7: 0000000000000470     0 SECTION LOCAL  DEFAULT    7 
-     8: 00000000000004f4     0 SECTION LOCAL  DEFAULT    8 
-     9: 0000000000000508     0 SECTION LOCAL  DEFAULT    9 
-    10: 0000000000000528     0 SECTION LOCAL  DEFAULT   10 
-    11: 00000000000005e8     0 SECTION LOCAL  DEFAULT   11 
-    12: 0000000000001000     0 SECTION LOCAL  DEFAULT   12 
-    13: 0000000000001020     0 SECTION LOCAL  DEFAULT   13 
-    14: 0000000000001040     0 SECTION LOCAL  DEFAULT   14 
-    15: 0000000000001050     0 SECTION LOCAL  DEFAULT   15 
-    16: 0000000000001060     0 SECTION LOCAL  DEFAULT   16 
-    17: 00000000000011e8     0 SECTION LOCAL  DEFAULT   17 
-    18: 0000000000002000     0 SECTION LOCAL  DEFAULT   18 
-    19: 0000000000002014     0 SECTION LOCAL  DEFAULT   19 
-    20: 0000000000002058     0 SECTION LOCAL  DEFAULT   20 
-    21: 0000000000003db8     0 SECTION LOCAL  DEFAULT   21 
-    22: 0000000000003dc0     0 SECTION LOCAL  DEFAULT   22 
-    23: 0000000000003dc8     0 SECTION LOCAL  DEFAULT   23 
-    24: 0000000000003fb8     0 SECTION LOCAL  DEFAULT   24 
-    25: 0000000000004000     0 SECTION LOCAL  DEFAULT   25 
-    26: 0000000000004010     0 SECTION LOCAL  DEFAULT   26 
-    27: 0000000000000000     0 SECTION LOCAL  DEFAULT   27 
-    28: 0000000000000000     0 SECTION LOCAL  DEFAULT   28 
-    29: 0000000000000000     0 SECTION LOCAL  DEFAULT   29 
-    30: 0000000000000000     0 SECTION LOCAL  DEFAULT   30 
-    31: 0000000000000000     0 SECTION LOCAL  DEFAULT   31 
-    32: 0000000000000000     0 SECTION LOCAL  DEFAULT   32 
-    33: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS crtstuff.c
-    34: 0000000000001090     0 FUNC    LOCAL  DEFAULT   16 deregister_tm_clones
-    35: 00000000000010c0     0 FUNC    LOCAL  DEFAULT   16 register_tm_clones
-    36: 0000000000001100     0 FUNC    LOCAL  DEFAULT   16 __do_global_dtors_aux
-    37: 0000000000004010     1 OBJECT  LOCAL  DEFAULT   26 completed.8061
-    38: 0000000000003dc0     0 OBJECT  LOCAL  DEFAULT   22 __do_global_dtors_aux_fin
-    39: 0000000000001140     0 FUNC    LOCAL  DEFAULT   16 frame_dummy
-    40: 0000000000003db8     0 OBJECT  LOCAL  DEFAULT   21 __frame_dummy_init_array_
-    41: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS hello_world.c
-    42: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS crtstuff.c
-    43: 000000000000215c     0 OBJECT  LOCAL  DEFAULT   20 __FRAME_END__
-    44: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS 
-    45: 0000000000003dc0     0 NOTYPE  LOCAL  DEFAULT   21 __init_array_end
-    46: 0000000000003dc8     0 OBJECT  LOCAL  DEFAULT   23 _DYNAMIC
-    47: 0000000000003db8     0 NOTYPE  LOCAL  DEFAULT   21 __init_array_start
-    48: 0000000000002014     0 NOTYPE  LOCAL  DEFAULT   19 __GNU_EH_FRAME_HDR
-    49: 0000000000003fb8     0 OBJECT  LOCAL  DEFAULT   24 _GLOBAL_OFFSET_TABLE_
-    50: 0000000000001000     0 FUNC    LOCAL  DEFAULT   12 _init
-    51: 00000000000011e0     5 FUNC    GLOBAL DEFAULT   16 __libc_csu_fini
-    52: 0000000000000000     0 NOTYPE  WEAK   DEFAULT  UND _ITM_deregisterTMCloneTab
-    53: 0000000000004000     0 NOTYPE  WEAK   DEFAULT   25 data_start
-    54: 0000000000004010     0 NOTYPE  GLOBAL DEFAULT   25 _edata
-    55: 00000000000011e8     0 FUNC    GLOBAL HIDDEN    17 _fini
-    56: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND printf@@GLIBC_2.2.5
-    57: 0000000000000000     0 FUNC    GLOBAL DEFAULT  UND __libc_start_main@@GLIBC_
-    58: 0000000000004000     0 NOTYPE  GLOBAL DEFAULT   25 __data_start
-    59: 0000000000000000     0 NOTYPE  WEAK   DEFAULT  UND __gmon_start__
-    60: 0000000000004008     0 OBJECT  GLOBAL HIDDEN    25 __dso_handle
-    61: 0000000000002000     4 OBJECT  GLOBAL DEFAULT   18 _IO_stdin_used
-    62: 0000000000001170   101 FUNC    GLOBAL DEFAULT   16 __libc_csu_init
-    63: 0000000000004018     0 NOTYPE  GLOBAL DEFAULT   26 _end
-    64: 0000000000001060    47 FUNC    GLOBAL DEFAULT   16 _start
-    65: 0000000000004010     0 NOTYPE  GLOBAL DEFAULT   26 __bss_start
-    66: 0000000000001149    32 FUNC    GLOBAL DEFAULT   16 main
-    67: 0000000000004010     0 OBJECT  GLOBAL HIDDEN    25 __TMC_END__
-    68: 0000000000000000     0 NOTYPE  WEAK   DEFAULT  UND _ITM_registerTMCloneTable
-    69: 0000000000000000     0 FUNC    WEAK   DEFAULT  UND __cxa_finalize@@GLIBC_2.2
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;符号解析&#34;&gt;符号解析&lt;/h2&gt;
-&lt;p&gt;链接器解析符号引用的方法是将&lt;strong&gt;每个引用&lt;/strong&gt;与它输入的可重定位目标文件的符号表中的一个确定的&lt;strong&gt;符号定义&lt;/strong&gt;关联起来。&lt;/p&gt;
-&lt;p&gt;对于引用和定义在相同模块中的局部符号（即对应static变量）的引用，符号解析非常简洁明了。编译器只允许每个局部符号有一个定义。&lt;/p&gt;
-&lt;p&gt;对于全局符号的引用较为复杂，当编译器遇到一个不是在当前模块中定义的符号时，会假设该符号是在其他某个模块中定义的，生成一个链接器符号表，交给链接器处理。如果链接器在其他任何模块中都找不到这个被引用的符号，就输出一条错误信息并终止。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;编译器通过重整的编码方式来区分重载的函数&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;链接器解析多重定义的全局符号&#34;&gt;链接器解析多重定义的全局符号&lt;/h3&gt;
-&lt;p&gt;编译器向汇编器输出每个全局符号，或是强或是弱的，而汇编器把这些信息隐含地编码在可重定位目标文件的符号表里。&lt;strong&gt;函数和已初始化的全局变量&lt;/strong&gt;是强符号，&lt;strong&gt;未初始化的全局变量&lt;/strong&gt;是弱符号。&lt;/p&gt;
-&lt;p&gt;Linux使用以下规则处理多重定义的符号名：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;不允许由多个同名强符号&lt;/li&gt;
-&lt;li&gt;如果一个强符号和多个弱符号同名，选择强符号&lt;/li&gt;
-&lt;li&gt;如果有多个弱符号同名，从这些弱符号中任意选一个&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;与静态库链接&#34;&gt;与静态库链接&lt;/h3&gt;
-&lt;p&gt;所有编译器都有一种机制，将所有相关的目标模块打包成一个单独的文件，称为静态库，它可以用作链接器的输入。链接器构造一个输出的可执行文件时，只复制静态库里被应用程序引用的目标模块。&lt;/p&gt;
-&lt;p&gt;Linux中，静态库以一种称为存档的特殊文件格式存放在磁盘中，存档文件是一组连接起来的可重定位目标文件的集合，有一个头部用来描述每个成员目标文件的大小，存档文件名由后缀&lt;code&gt;.a&lt;/code&gt;标识。&lt;/p&gt;
-&lt;h3 id=&#34;链接器如何使用静态库来解析引用&#34;&gt;链接器如何使用静态库来解析引用&lt;/h3&gt;
-&lt;p&gt;链接器从左到右按照在命令行上出现的顺序来扫描可重定位目标文件和存档文件。（编译器驱动程序自动将&lt;code&gt;.c&lt;/code&gt;文件翻译为&lt;code&gt;.o&lt;/code&gt;文件。在扫描中，链接器维护一个可重定位目标文件的集合E，一个未解析的符号集合U，以及一个在前面输入文件中已定义的符号集合D。初始时，E、U、D均为空。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;对于命令行上的每个输入文件f，链接器会判断f是一个目标文件还是一个存档文件。如果时目标文件则将其添加到E中，修改U和D来反映f中的符号引用和定义&lt;/li&gt;
-&lt;li&gt;如果f是存档文件，链接器就尝试匹配U中未解析的符号和由存档文件成员定义的符号。如果某个存档文件成员m定义了一个符号来解析U中的一个引用，那么就把m加到E中，并修改U和D来反映m中的符号定义和引用。对存档文件依次重复这个过程直到U和D不发生变化。&lt;/li&gt;
-&lt;li&gt;如果链接器完成对命令行输入文件的扫描后，U是非空的，则链接器输出错误并终止。否则，合并然后重定位E中的文件，构建可执行文件。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;重定位&#34;&gt;重定位&lt;/h2&gt;
-&lt;p&gt;链接器完成符号解析这一步后，就把代码中的每个符号引用和一个符号定义关联起来了，此时链接器就知道它的输入目标模块中的代码和数据节的确切大小。然后就可以开始重定位步骤了，该步骤将&lt;strong&gt;合并输入模块&lt;/strong&gt;，并为每个符号分配&lt;strong&gt;运行时地址&lt;/strong&gt;。共分为两步：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;重定位节和符号定义&lt;/li&gt;
-&lt;li&gt;重定位节中的符号引用&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;重定位条目&#34;&gt;重定位条目&lt;/h3&gt;
-&lt;h3 id=&#34;重定位符号引用&#34;&gt;重定位符号引用&lt;/h3&gt;
-&lt;h2 id=&#34;可执行目标文件&#34;&gt;可执行目标文件&lt;/h2&gt;
-&lt;p&gt;转化后的&lt;strong&gt;二进制&lt;/strong&gt;的可执行目标文件包含加载程序到内存并运行它所需的所有信息。&lt;/p&gt;
-&lt;p&gt;可执行目标文件格式类似于可重定位目标文件，ELF头描述文件的总体格式，还包括程序的入口点，即程序要运行时执行的第一条指令的地址。&lt;code&gt;.init&lt;/code&gt;节定义了一个小函数&lt;code&gt;_init&lt;/code&gt;，程序初始化代码会调用它。&lt;/p&gt;
-&lt;p&gt;可执行文件是完全链接的（已经被重定位），所以它不需要rel节。&lt;/p&gt;
-&lt;p&gt;ELF可执行文件被设计得很容易加载到内存，可执行文件的连续的片被映射到连续的内存段，程序头部表描述了这种映射关系&lt;/p&gt;
-&lt;h2 id=&#34;加载可执行目标文件&#34;&gt;加载可执行目标文件&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ./prog
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;shell认为prog是一个可执行目标文件，通过调用驻留在存储器中的&lt;strong&gt;加载器&lt;/strong&gt;的系统代码来运行它。加载器将可执行目标文件中的代码和数据从磁盘复制到内存，然后通过跳转到程序的入口点运行该程序。这整个过程叫做加载。&lt;/p&gt;
-&lt;p&gt;每个Linux程序都有一个运行时内存映像。在Linux x86-64中，代码段总是从地址0x400000开始，后面是数据段。运行时堆在数据段之后，通过调用&lt;code&gt;malloc&lt;/code&gt;库向上增长。&lt;strong&gt;堆&lt;/strong&gt;后面的区域是为&lt;strong&gt;共享模块&lt;/strong&gt;保留的。用户&lt;strong&gt;栈&lt;/strong&gt;总是从最大合法地址($2^{48}-1$)开始，向较小内存地址增长。栈上的区域，从地址$2^{48}$开始，是为内核中的代码和数据保留的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112242026815.png&#34; alt=&#34;image-20211224202617709&#34;&gt;&lt;/p&gt;
-&lt;p&gt;加载与之后章节的进程、虚拟内存和内存映射有关。之后章节还会介绍。&lt;/p&gt;
-&lt;h2 id=&#34;动态链接共享库&#34;&gt;动态链接共享库&lt;/h2&gt;
-&lt;p&gt;静态库有一个缺点，需要定期维护和更新，如果应用程序需要一个新版本，必须以某种方式了解到该库的变化情况，然后显式地将其程序与更新了的库重新连接。&lt;/p&gt;
-&lt;p&gt;另一个问题是几乎每个C程序都使用标准I/O函数。运行时这些代码会被复制到每个运行进程的文本中，在一个上百个进程的系统上，这是对内存资源的极大浪费。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;共享库&lt;/strong&gt;用来解决静态库的缺陷，共享库是一个目标模块，在&lt;strong&gt;运行或加载时&lt;/strong&gt;，可以加载到任意内存地址，并与一个在内存中的程序链接起来。这个过程称为&lt;strong&gt;动态链接&lt;/strong&gt;，由叫做动态链接器的程序执行。Linux中用&lt;code&gt;.so&lt;/code&gt;后缀的文件来表示共享库，Windows中使用&lt;code&gt;.dll&lt;/code&gt;表示。&lt;/p&gt;
-&lt;p&gt;任何给定文件系统中，对于一个库文件只有一个&lt;code&gt;.so&lt;/code&gt;文件。所有引用该库的可执行目标文件共享这个&lt;code&gt;.so&lt;/code&gt;文件中的数据和代码，不需要都复制和嵌入到引用它们的可执行文件中。&lt;/p&gt;
-&lt;p&gt;在内存中，一个共享库的&lt;code&gt;.text&lt;/code&gt;节的一个副本可以被不同的正在运行的进程共享。第9章虚拟内存的内容中将更加详细地描述。&lt;/p&gt;
-&lt;h2 id=&#34;位置无关代码&#34;&gt;位置无关代码&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;可以加载而无需重定位&lt;/strong&gt;的代码称为位置无关代码（Position Independent Code, PIC）。使用这种方法，无限多个进程可以共享一个共享模块的代码段的单一副本。用户对GCC使用-fpic选项指示GNU编译系统生成PIC代码。共享库的编译必须总是使用该选项。&lt;/p&gt;
-&lt;h3 id=&#34;pic数据引用&#34;&gt;PIC数据引用&lt;/h3&gt;
-&lt;h3 id=&#34;pic函数调用&#34;&gt;PIC函数调用&lt;/h3&gt;
-&lt;h2 id=&#34;库打桩机制&#34;&gt;库打桩机制&lt;/h2&gt;
-&lt;p&gt;库打桩允许我们截获对共享库函数的调用，取而代之执行自己的代码。使用该机制可以追踪对某个特殊库函数的调用次数，验证和追踪其输入输出值，或将其替换为一个完全不同的实现。&lt;/p&gt;
-&lt;p&gt;给定一个需要打桩的目标函数，创建一个包装函数，其原型与目标函数完全相同，使用某种特殊打桩机制，就可以欺骗系统调用包装函数而不是目标函数。&lt;/p&gt;
-&lt;p&gt;打桩可以发生在编译时、链接时或当程序被加载和执行的运行时。&lt;/p&gt;
-&lt;h3 id=&#34;编译时打桩&#34;&gt;编译时打桩&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//int.c
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;malloc.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;p &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; malloc(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt;);
-    free(p);
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//malloc.h
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#579&#34;&gt;#define malloc(size) mymalloc(size)
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define free(ptr) myfree(ptr)
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mymalloc&lt;/span&gt;(size_t size);
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;myfree&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//mymalloc.c
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//#define COMPILETIME
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#ifdef COMPILETIME
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;malloc.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mymalloc&lt;/span&gt;(size_t size) {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; malloc(size);
-    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;malloc(%d)=%p&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;)size, ptr);
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; ptr;
-}
-
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;myfree&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;ptr) {
-    free(ptr);
-    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;free(%p)&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;, ptr);
-}
-&lt;span style=&#34;color:#579&#34;&gt;#endif
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行以下命令：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ gcc -DCOMPILETIME -c mymalloc.c
-$ gcc -I. -o intc int.c mymalloc.o
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;运行程序&lt;code&gt;intc&lt;/code&gt;得到结果：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;$ ./intc
-malloc&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;32&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;0x561e0ca432a0
-free&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;0x561e0ca432a0&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;链接时打桩&#34;&gt;链接时打桩&lt;/h3&gt;
-&lt;p&gt;Linux静态链接器支持用&lt;code&gt;--wrap f&lt;/code&gt;标志进行链接时打桩。&lt;/p&gt;
-&lt;h3 id=&#34;运行时打桩&#34;&gt;运行时打桩&lt;/h3&gt;
-&lt;p&gt;编译时打桩需要访问源程序，链接时打桩需要访问程序的可重定位目标文件。有一种机制能够在运行时打桩，它只需要能够访问可执行目标文件。这个机制基于动态链接器的LD_PRELOAD环境变量。&lt;/p&gt;
-- https://eternityqjl.top/posts/csapp-7-%E9%93%BE%E6%8E%A5/ - 2019-2021 By Jialong</description>
         </item>
     
     
