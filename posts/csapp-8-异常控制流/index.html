@@ -1545,7 +1545,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 <div class="post-body" v-pre>
                 
-                    <p>系统要对系统状态的变化作出反应，这些系统状态不是被内部程序变量捕获的，而且也不一定要和程序的执行相关。比如，一个硬件定时器定期产生信号，这个时间必须得到处理。包到达网络适配器后，必须存放在内存中。</p>
+                    <p>系统要对系统状态的变化作出反应，这些系统状态不是被内部程序变量捕获的，而且也不一定要和程序的执行相关。比如，一个硬件定时器定期产生信号，这个事件必须得到处理。包到达网络适配器后，必须存放在内存中。</p>
 <p>现代系统通过使用<strong>控制流发生突变</strong>来对这些情况作出反应，一般把这些突变称为<strong>异常控制流ECF</strong>。ECF发生在<strong>计算机系统的各个层次</strong>。例如，在<strong>硬件层</strong>，硬件检测到的事件会触发控制突然转移到异常处理程序。在<strong>操作系统层</strong>，内核通过上下文切换将控制从一个用户进程转移到另一个用户进程。</p>
 <p>理解ECP有很多用处：</p>
 <ul>
@@ -1566,7 +1566,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </ul>
 <h3 id="异常处理">异常处理</h3>
 <p>系统中可能为每种类型的异常都分配一个唯一的非负整数的<strong>异常号</strong>。其中一些号码由<strong>处理器设计者</strong>提供，另一些由<strong>操作系统内核的设计者</strong>分配。前者的例子包括：缺页、内存访问违规、被零除及算术运算溢出。后者的例子包括：系统调用和来自外部I/O设备的信号。</p>
-<p>系统启动时，操作系统分配和初始化异常称为异常表的跳转表。使得表目k包含异常k的处理程序的地址。</p>
+<p>系统启动时，操作系统分配和初始化一张称为异常表的跳转表。使得表目k包含异常k的处理程序的地址。</p>
 <p>运行时（系统执行某个程序）处理器检测到发生了一个事件，并确定了响应的异常号k。随后处理器触发异常，执行间接调用过程，通过异常表的表目k，转到相应的处理程序。</p>
 <p>异常号是<strong>到异常表中的索引</strong>，异常表的起始地址放在叫做异常表基址寄存器的特殊CPU寄存器中。</p>
 <p>异常与过程调用的区别：</p>
@@ -1598,7 +1598,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>除法错误（异常0）：Unix不会试图从除法错误中恢复，而是选择终止程序。</li>
 <li>一般保护故障（异常13）：通常因为一个程序引用了一个未定义的虚拟内存区域，或者因为程序试图写一个只读的文本段。Linux不会尝试恢复这些故障。</li>
 <li>缺页（异常14）：会重新执行产生故障的指令的一个示例。</li>
-<li>机器检查（异常18）：在导致故障的指令执行中检测到知名的硬件错误时发生的。</li>
+<li>机器检查（异常18）：在导致故障的指令执行中检测到致命的硬件错误时发生的。</li>
 </ul>
 <p><strong>Linux/x86-64系统调用</strong></p>
 <p>Linux提供几百种系统调用，以下为一些常见的系统调用：</p>
@@ -1607,7 +1607,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>C程序用syscall函数可以直接调用任何系统调用。而实际中没必要这样做，对于大多数系统调用，标准C库提供了一组方便的包装函数。这些包装函数将参数打包到一起，以适当的系统调用指令陷入内核，然后将系统调用的返回状态传递回调用函数。</p>
 <p>处理器ISA规范通常会区分异步中断和同步异常，但并不提供表述这些非常相似的概念的概括性的术语。为了避免混乱，我们使用异常作为通用术语，只要在必要时才区分异步异常（中断）和同步异常（陷阱、故障和终止）。</p>
 <h2 id="进程">进程</h2>
-<p>进程的经典定义就是一个执行中的程序的实例。系统中的每个程序都运行在某个进程的上下文（context）中。上下文由程序正确运行所需的状态组成。这个状态包括存放在内存中的程序的代码和数据，它的栈、通用没目的寄存器的内容、程序计数器、环境变量以及打开文件描述符的集合。</p>
+<p>进程的经典定义就是一个执行中的程序的实例。系统中的每个程序都运行在某个进程的上下文（context）中。上下文由程序正确运行所需的状态组成。这个状态包括存放在内存中的程序的代码和数据，它的栈、通用目的寄存器的内容、程序计数器、环境变量以及打开文件描述符的集合。</p>
 <p>进程提供给应用程序的关键抽象：</p>
 <ul>
 <li>一个独立的逻辑控制流：提供我们的程序<strong>独占地使用处理器</strong>的假象</li>
@@ -1687,7 +1687,7 @@ pid_t <span style="color:#06b;font-weight:bold">fork</span>(<span style="color:#
 <p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201092354435.png" alt="新程序开始时的用户栈"></p>
 <p>从栈底（高地址）到栈顶（低地址）的方向依次有：</p>
 <ul>
-<li>以null结尾的指针数组，其中每个指针都指向栈中的一个<strong>环境变量字符串</strong>。全局变量environ指向这些之阵中的第一个envp[0]</li>
+<li>以null结尾的指针数组，其中每个指针都指向栈中的一个<strong>环境变量字符串</strong>。全局变量environ指向这些指针中的第一个envp[0]</li>
 <li>以null结尾的argv[]数组，其中每个元素都指向栈中的一个<strong>参数字符串</strong>。</li>
 <li>栈顶是系统启动函数libc_start_main的栈帧。</li>
 </ul>
@@ -1724,7 +1724,7 @@ pid_t <span style="color:#06b;font-weight:bold">fork</span>(<span style="color:#
     } 
 }
 <span style="color:#888">/* $end shellmain */</span>
-</code></pre></div><p>以上为一个简单的shell的main历程。shell打印一个命令行提示符，等待用户在stdin上输入命令，然后对这个命令行求值。</p>
+</code></pre></div><p>以上为一个简单的shell的main例程。shell打印一个命令行提示符，等待用户在stdin上输入命令，然后对这个命令行求值。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#888">/* $begin eval */</span>
 <span style="color:#888">/* eval - Evaluate a command line */</span>
 <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">eval</span>(<span style="color:#339;font-weight:bold">char</span> <span style="color:#333">*</span>cmdline) 
@@ -1874,7 +1874,7 @@ sighandler_t <span style="color:#06b;font-weight:bold">signal</span>(<span style
 <h3 id="同步流以避免讨厌的并发错误">同步流以避免讨厌的并发错误</h3>
 <p>以某种方式同步并发流，从而得到最大的可行的交错的集合，每个可行的交错都能得到正确的结果。</p>
 <h3 id="显式地等待信号">显式地等待信号</h3>
-<p>有时候主程序需要显式地等待某个信号处理程序运行。例如当Linux shell创建一个前台作业时，在二极受下一条用户命令前，它必须等待作业终止，被SIGCHLD处理程序回收。</p>
+<p>有时候主程序需要显式地等待某个信号处理程序运行。例如当Linux shell创建一个前台作业时，在接受下一条用户命令前，它必须等待作业终止，被SIGCHLD处理程序回收。</p>
 <h2 id="非本地跳转">非本地跳转</h2>
 <p>C语言提供了一种用户级异常控制流形式，称为非本地跳转，它将控制从一个函数转移到另一个当前正在执行的函数，不需要经过正常的调用-返回序列。非本地跳转通过setjmp和longjmp函数来提供。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#579">#include</span> <span style="color:#579">&lt;setjmp.h&gt;</span><span style="color:#579">

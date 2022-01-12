@@ -18,7 +18,7 @@
         <pubDate>Tue, 11 Jan 2022 15:33:44 +0800</pubDate>
         
         <guid>https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/ -&lt;p&gt;系统要对系统状态的变化作出反应，这些系统状态不是被内部程序变量捕获的，而且也不一定要和程序的执行相关。比如，一个硬件定时器定期产生信号，这个时间必须得到处理。包到达网络适配器后，必须存放在内存中。&lt;/p&gt;
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/ -&lt;p&gt;系统要对系统状态的变化作出反应，这些系统状态不是被内部程序变量捕获的，而且也不一定要和程序的执行相关。比如，一个硬件定时器定期产生信号，这个事件必须得到处理。包到达网络适配器后，必须存放在内存中。&lt;/p&gt;
 &lt;p&gt;现代系统通过使用&lt;strong&gt;控制流发生突变&lt;/strong&gt;来对这些情况作出反应，一般把这些突变称为&lt;strong&gt;异常控制流ECF&lt;/strong&gt;。ECF发生在&lt;strong&gt;计算机系统的各个层次&lt;/strong&gt;。例如，在&lt;strong&gt;硬件层&lt;/strong&gt;，硬件检测到的事件会触发控制突然转移到异常处理程序。在&lt;strong&gt;操作系统层&lt;/strong&gt;，内核通过上下文切换将控制从一个用户进程转移到另一个用户进程。&lt;/p&gt;
 &lt;p&gt;理解ECP有很多用处：&lt;/p&gt;
 &lt;ul&gt;
@@ -39,7 +39,7 @@
 &lt;/ul&gt;
 &lt;h3 id=&#34;异常处理&#34;&gt;异常处理&lt;/h3&gt;
 &lt;p&gt;系统中可能为每种类型的异常都分配一个唯一的非负整数的&lt;strong&gt;异常号&lt;/strong&gt;。其中一些号码由&lt;strong&gt;处理器设计者&lt;/strong&gt;提供，另一些由&lt;strong&gt;操作系统内核的设计者&lt;/strong&gt;分配。前者的例子包括：缺页、内存访问违规、被零除及算术运算溢出。后者的例子包括：系统调用和来自外部I/O设备的信号。&lt;/p&gt;
-&lt;p&gt;系统启动时，操作系统分配和初始化异常称为异常表的跳转表。使得表目k包含异常k的处理程序的地址。&lt;/p&gt;
+&lt;p&gt;系统启动时，操作系统分配和初始化一张称为异常表的跳转表。使得表目k包含异常k的处理程序的地址。&lt;/p&gt;
 &lt;p&gt;运行时（系统执行某个程序）处理器检测到发生了一个事件，并确定了响应的异常号k。随后处理器触发异常，执行间接调用过程，通过异常表的表目k，转到相应的处理程序。&lt;/p&gt;
 &lt;p&gt;异常号是&lt;strong&gt;到异常表中的索引&lt;/strong&gt;，异常表的起始地址放在叫做异常表基址寄存器的特殊CPU寄存器中。&lt;/p&gt;
 &lt;p&gt;异常与过程调用的区别：&lt;/p&gt;
@@ -71,7 +71,7 @@
 &lt;li&gt;除法错误（异常0）：Unix不会试图从除法错误中恢复，而是选择终止程序。&lt;/li&gt;
 &lt;li&gt;一般保护故障（异常13）：通常因为一个程序引用了一个未定义的虚拟内存区域，或者因为程序试图写一个只读的文本段。Linux不会尝试恢复这些故障。&lt;/li&gt;
 &lt;li&gt;缺页（异常14）：会重新执行产生故障的指令的一个示例。&lt;/li&gt;
-&lt;li&gt;机器检查（异常18）：在导致故障的指令执行中检测到知名的硬件错误时发生的。&lt;/li&gt;
+&lt;li&gt;机器检查（异常18）：在导致故障的指令执行中检测到致命的硬件错误时发生的。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;strong&gt;Linux/x86-64系统调用&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Linux提供几百种系统调用，以下为一些常见的系统调用：&lt;/p&gt;
@@ -80,7 +80,7 @@
 &lt;p&gt;C程序用syscall函数可以直接调用任何系统调用。而实际中没必要这样做，对于大多数系统调用，标准C库提供了一组方便的包装函数。这些包装函数将参数打包到一起，以适当的系统调用指令陷入内核，然后将系统调用的返回状态传递回调用函数。&lt;/p&gt;
 &lt;p&gt;处理器ISA规范通常会区分异步中断和同步异常，但并不提供表述这些非常相似的概念的概括性的术语。为了避免混乱，我们使用异常作为通用术语，只要在必要时才区分异步异常（中断）和同步异常（陷阱、故障和终止）。&lt;/p&gt;
 &lt;h2 id=&#34;进程&#34;&gt;进程&lt;/h2&gt;
-&lt;p&gt;进程的经典定义就是一个执行中的程序的实例。系统中的每个程序都运行在某个进程的上下文（context）中。上下文由程序正确运行所需的状态组成。这个状态包括存放在内存中的程序的代码和数据，它的栈、通用没目的寄存器的内容、程序计数器、环境变量以及打开文件描述符的集合。&lt;/p&gt;
+&lt;p&gt;进程的经典定义就是一个执行中的程序的实例。系统中的每个程序都运行在某个进程的上下文（context）中。上下文由程序正确运行所需的状态组成。这个状态包括存放在内存中的程序的代码和数据，它的栈、通用目的寄存器的内容、程序计数器、环境变量以及打开文件描述符的集合。&lt;/p&gt;
 &lt;p&gt;进程提供给应用程序的关键抽象：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;一个独立的逻辑控制流：提供我们的程序&lt;strong&gt;独占地使用处理器&lt;/strong&gt;的假象&lt;/li&gt;
@@ -160,7 +160,7 @@ pid_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fork&lt;/span&gt;(
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201092354435.png&#34; alt=&#34;新程序开始时的用户栈&#34;&gt;&lt;/p&gt;
 &lt;p&gt;从栈底（高地址）到栈顶（低地址）的方向依次有：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;以null结尾的指针数组，其中每个指针都指向栈中的一个&lt;strong&gt;环境变量字符串&lt;/strong&gt;。全局变量environ指向这些之阵中的第一个envp[0]&lt;/li&gt;
+&lt;li&gt;以null结尾的指针数组，其中每个指针都指向栈中的一个&lt;strong&gt;环境变量字符串&lt;/strong&gt;。全局变量environ指向这些指针中的第一个envp[0]&lt;/li&gt;
 &lt;li&gt;以null结尾的argv[]数组，其中每个元素都指向栈中的一个&lt;strong&gt;参数字符串&lt;/strong&gt;。&lt;/li&gt;
 &lt;li&gt;栈顶是系统启动函数libc_start_main的栈帧。&lt;/li&gt;
 &lt;/ul&gt;
@@ -197,7 +197,7 @@ pid_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fork&lt;/span&gt;(
     } 
 }
 &lt;span style=&#34;color:#888&#34;&gt;/* $end shellmain */&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上为一个简单的shell的main历程。shell打印一个命令行提示符，等待用户在stdin上输入命令，然后对这个命令行求值。&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以上为一个简单的shell的main例程。shell打印一个命令行提示符，等待用户在stdin上输入命令，然后对这个命令行求值。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;/* $begin eval */&lt;/span&gt;
 &lt;span style=&#34;color:#888&#34;&gt;/* eval - Evaluate a command line */&lt;/span&gt;
 &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;eval&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;cmdline) 
@@ -347,7 +347,7 @@ sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/
 &lt;h3 id=&#34;同步流以避免讨厌的并发错误&#34;&gt;同步流以避免讨厌的并发错误&lt;/h3&gt;
 &lt;p&gt;以某种方式同步并发流，从而得到最大的可行的交错的集合，每个可行的交错都能得到正确的结果。&lt;/p&gt;
 &lt;h3 id=&#34;显式地等待信号&#34;&gt;显式地等待信号&lt;/h3&gt;
-&lt;p&gt;有时候主程序需要显式地等待某个信号处理程序运行。例如当Linux shell创建一个前台作业时，在二极受下一条用户命令前，它必须等待作业终止，被SIGCHLD处理程序回收。&lt;/p&gt;
+&lt;p&gt;有时候主程序需要显式地等待某个信号处理程序运行。例如当Linux shell创建一个前台作业时，在接受下一条用户命令前，它必须等待作业终止，被SIGCHLD处理程序回收。&lt;/p&gt;
 &lt;h2 id=&#34;非本地跳转&#34;&gt;非本地跳转&lt;/h2&gt;
 &lt;p&gt;C语言提供了一种用户级异常控制流形式，称为非本地跳转，它将控制从一个函数转移到另一个当前正在执行的函数，不需要经过正常的调用-返回序列。非本地跳转通过setjmp和longjmp函数来提供。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;setjmp.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
@@ -764,11 +764,17 @@ sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/
 &lt;p&gt;在存储层次结构中，DRAM缓存的位置对它的组织结构有很大的影响。DRAM比SRAM慢大约10倍，磁盘比DRAM慢大约100000倍。DRAM缓存的不命中（缺页）比SRAM缓存的不命中要昂贵的多。&lt;/p&gt;
 &lt;p&gt;与硬件对SRAM缓存相比，操作系统对DRAM缓存使用了更复杂精密的替换算法。对磁盘的访问时间很长，DRAM缓存总是使用写回，而不是直写。&lt;/p&gt;
 &lt;h3 id=&#34;页表&#34;&gt;页表&lt;/h3&gt;
-&lt;p&gt;虚拟内存系统必须有方法判断一个虚拟页是否缓存在DRAM中的某个地方。如果是，系统还必须确定这个虚拟页存放在哪个物理页中。如果不命中，系统必须判断这个虚拟页存放在磁盘的哪个位置，在物理内存中选择一个牺牲页，并将虚拟页从磁盘复制到DRAM中，替换这个牺牲页。&lt;/p&gt;
+&lt;p&gt;虚拟内存系统必须有方法判断&lt;strong&gt;一个虚拟页是否缓存在DRAM中&lt;/strong&gt;的某个地方。如果是，系统还必须确定这个虚拟页存&lt;strong&gt;放在哪个物理页中&lt;/strong&gt;。如果不命中，系统必须判断这个虚拟页存放在磁盘的哪个位置，在物理内存中选择一个牺牲页，并将虚拟页从磁盘复制到DRAM中，替换这个牺牲页。&lt;/p&gt;
 &lt;p&gt;页表就是一个页表条目（PET）的数组。虚拟地址空间中的每个页在页表中一个固定偏移量处都有一个PTE。假设每个PTE由一个有效位和一个n位地址字段组成的。有效位表明该虚拟页当前是否被缓存在DRAM中。&lt;/p&gt;
 &lt;h3 id=&#34;页命中&#34;&gt;页命中&lt;/h3&gt;
+&lt;p&gt;页面缓存在DRAM缓存中。&lt;/p&gt;
 &lt;h3 id=&#34;缺页&#34;&gt;缺页&lt;/h3&gt;
-&lt;h3 id=&#34;分配页面&#34;&gt;分配页面&lt;/h3&gt;
+&lt;p&gt;DRAM缓存不命中称为缺页。&lt;/p&gt;
+&lt;p&gt;在磁盘和内存之间传送页的活动叫作交换或页面调度。只有当不命中发生时，才换入页面，这种策略称为&lt;strong&gt;按需页面调度&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;所有现代系统都采用按需页面调度的方式。&lt;/p&gt;
+&lt;h3 id=&#34;局部性&#34;&gt;局部性&lt;/h3&gt;
+&lt;p&gt;局部性原理保证了在任意时刻，程序将趋向于在一个较小的活动页面集合上工作，这个集合称为工作集或常驻集。&lt;/p&gt;
+&lt;p&gt;只要程序具有良好的时间局部性，虚拟内存系统就能工作得相当好。如果工作集的大小超出了物理内存的大小，程序将产生一种不幸的&lt;strong&gt;抖动&lt;/strong&gt;状态，这时页面将不断地换进换出。&lt;/p&gt;
 &lt;h2 id=&#34;虚拟内存作为内存管理的工具&#34;&gt;虚拟内存作为内存管理的工具&lt;/h2&gt;
 &lt;p&gt;虚拟内存大大简化了内存管理，并提供了一种自然的保护内存的方法。&lt;/p&gt;
 &lt;p&gt;操作系统实际上为每个进程提供了一个独立的页表，因而也就是一个独立的虚拟地址空间。&lt;/p&gt;
@@ -776,10 +782,10 @@ sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/
 &lt;p&gt;VM简化了链接和加载、代码和数据共享，以及应用程序的内存分配。&lt;/p&gt;
 &lt;h3 id=&#34;简化链接&#34;&gt;简化链接&lt;/h3&gt;
 &lt;p&gt;独立的地址空间允许每个进程的内存映射使用相同的基本格式，而不管代码和数据实际存放在物理内存的何处。&lt;/p&gt;
-&lt;p&gt;一个给定的Linux系统上的每个进程都使用类似的内存格式。对于64位地址空间，代码段总是从虚拟地址0x400000开始。数据段跟在代码段后，中间有一段符号要求的对齐空白。栈占用用户地址空间最高的部分，并向下生长。&lt;/p&gt;
+&lt;p&gt;一个给定的Linux系统上的每个进程都使用类似的内存格式。对于64位地址空间，代码段总是从虚拟地址0x400000开始。数据段跟在代码段后，中间有一段符合要求的对齐空白。栈占用用户地址空间最高的部分，并向下生长。&lt;/p&gt;
 &lt;p&gt;这样的一致性简化了链接器的设计和实现。允许链接器生成完全链接的可执行文件，这些可执行文件是独立于物理内存中代码和数据的最终位置的。&lt;/p&gt;
 &lt;h3 id=&#34;简化加载&#34;&gt;简化加载&lt;/h3&gt;
-&lt;p&gt;虚拟内存使得很容易向内存中加载可执行文件和共享对象文件。要把目标文件中.text和.data节加载到一个新创建的进程中，Linux加载器位代码和数据段分配虚拟页，把它们标记为无效的（即未被缓存的），将页表条目指向目标文件中适当的位置。加载器从不从磁盘到内存实际复制任何数据。在每个页被初次引用时，要么是CPU取指令时引用的，要么是一条正在执行的指令引用一个内存位置时引用的，虚拟内存系统会按照需要自动地调入数据页。&lt;/p&gt;
+&lt;p&gt;虚拟内存使得很容易向内存中加载可执行文件和共享对象文件。要把目标文件中.text和.data节加载到一个新创建的进程中，Linux加载器为代码和数据段分配虚拟页，把它们标记为无效的（即未被缓存的），将页表条目指向目标文件中适当的位置。加载器从不从磁盘到内存实际复制任何数据。在每个页被初次引用时，要么是CPU取指令时引用的，要么是一条正在执行的指令引用一个内存位置时引用的，虚拟内存系统会按照需要自动地调入数据页。&lt;/p&gt;
 &lt;p&gt;将一组连续的虚拟页映射到任意一个文件中的任意位置的表示法称为内存映射。Linux提供一个称为mmap的系统调用，允许应用程序自己做内存映射。详见后面小节。&lt;/p&gt;
 &lt;h3 id=&#34;简化共享&#34;&gt;简化共享&lt;/h3&gt;
 &lt;p&gt;一般情况下，每个进程都有自己私有的代码、数据、堆以及栈区域，是不和其他进程进行共享的。但在另一些情况下，需要进程来共享数据和代码。例如，每个进程必须调用相同的操作系统内核代码，操作系统通过将不同进程中适当的虚拟页面映射到相同的物理页面，从而安排多个进程共享这部分代码的一个副本。&lt;/p&gt;
@@ -828,7 +834,7 @@ sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/
 &lt;p&gt;Linux将虚拟内存组织成一些区域（又称段）的集合。一个区域就是已存在的虚拟内存的连续片。代码段、数据段、堆、共享库以及用户栈都是不同的区域。每个虚拟页面都保存在某个区域中，而不属于某个区域的虚拟页是不存在的，并且不能被进程引用。区域很重要，因为其允许虚拟地址空间有间隙。&lt;/p&gt;
 &lt;p&gt;下图强调了记录&lt;strong&gt;一个进程中虚拟内存区域的内核数据结构&lt;/strong&gt;。内核为系统中的每个进程维护一个单独的&lt;strong&gt;任务结构&lt;code&gt;task_struct&lt;/code&gt;&lt;/strong&gt;。任务结构中的元素包含或指向内核&lt;strong&gt;运行该进程所需要的所有信息&lt;/strong&gt;（如PID、指向用户栈的指针、可执行目标文件的名字以及程序计数器）。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011858154.png&#34; alt=&#34;Linux一个进程中虚拟内存区域的内核数据结构&#34;&gt;&lt;/p&gt;
-&lt;p&gt;任务结构中的一个条目指向&lt;code&gt;mm_struct&lt;/code&gt;，它描述了虚拟内存的当前状态。我们想了解的是pgd和mmap两个字段。pgd指向第一级页表的基址，mmap指向一个&lt;code&gt;vm_area_structs&lt;/code&gt;的链表，其中每个&lt;code&gt;vm_area_structs&lt;/code&gt;都描述了当前虚拟地址空间的一个区域。当内核运行这个进程时，就把pgd存放在CR3控制寄存器中。&lt;/p&gt;
+&lt;p&gt;任务结构中的一个条目指向&lt;code&gt;mm_struct&lt;/code&gt;，它描述了虚拟内存的当前状态。我们想了解的是pgd和mmap两个字段。pgd指向第一级页表的基址，mmap指向一个&lt;code&gt;vm_area_struct&lt;/code&gt;的链表，其中每个&lt;code&gt;vm_area_structs&lt;/code&gt;都描述了当前虚拟地址空间的一个区域。当内核运行这个进程时，就把pgd存放在CR3控制寄存器中。&lt;/p&gt;
 &lt;p&gt;一个&lt;strong&gt;具体区域&lt;/strong&gt;的区域结构包含以下字段：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;vm_start&lt;/code&gt;：指向该区域的起始&lt;/li&gt;
@@ -851,18 +857,19 @@ sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/
 &lt;li&gt;Linux文件系统中的普通文件&lt;/li&gt;
 &lt;li&gt;匿名文件&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;一旦一个虚拟页面被初始化了，它就在一个由内核维护的专门的**交换文件(swap file)**之间换来换去。交换文件也叫做交换空间或交换区域。&lt;/p&gt;
+&lt;p&gt;一旦一个虚拟页面被初始化了，它就在一个由内核维护的专门的&lt;strong&gt;交换文件swap file&lt;/strong&gt;之间换来换去。交换文件也叫做交换空间或交换区域。&lt;/p&gt;
 &lt;h3 id=&#34;共享对象&#34;&gt;共享对象&lt;/h3&gt;
 &lt;p&gt;许多程序要访问只读运行时库代码的相同副本，例如每个C程序都需要来自标准C库的诸如printf这样的函数。如果每个进程都在物理内存中保存这些常用代码的副本，就是极端的浪费。&lt;/p&gt;
 &lt;p&gt;内存映射为我们提供了一种清晰的机制，用来控制多个进程如何共享对象。&lt;/p&gt;
 &lt;p&gt;一个对象可以被映射到虚拟内存的一个区域，要么作为&lt;strong&gt;共享对象&lt;/strong&gt;，要么作为&lt;strong&gt;私有对象&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;若一个进程将一个共享对象映射到它的虚拟地址空间的一个区域内，那么该进程对这个地址区域的任何写操作，对于那些同样将该共享对象映射到自己的虚拟内存的进程也是可见的。这些变化会反映在磁盘的原始对象上。另一方面，对于一个映射到私有对象的区域做的改变，对于其他进程来说是不可见的，并且进程对这个区域的任何写操作都不会反映在磁盘的对象中。&lt;/p&gt;
-&lt;p&gt;私有对象使用一种称为&lt;strong&gt;写时复制&lt;/strong&gt;的技术被映射到虚拟内存中。私有对象来时生命周期的方式基本与共享对象相同，在物理内存中只保存私有对象的一份副本。两个进程将一个私有对象映射到它们的虚拟内存的不同区域，但共享这个对象的同一物理副本。对于每个映射私有对象的进程，响应私有区域的页表条目都被标记为只读，并且区域结构被标记为私有的写时复制。只要没有进程试图写它自己的私有区域，它们就可以继续共享物理内存中对象的一个单独副本。&lt;/p&gt;
+&lt;p&gt;私有对象使用一种称为&lt;strong&gt;写时复制&lt;/strong&gt;的技术被映射到虚拟内存中。私有对象开始生命周期的方式基本与共享对象相同，在物理内存中只保存&lt;strong&gt;私有对象的一份副本&lt;/strong&gt;。两个进程将一个私有对象映射到它们的虚拟内存的不同区域，但共享这个对象的同一物理副本。对于每个映射私有对象的进程，响应私有区域的页表条目都被标记为只读，并且区域结构被标记为私有的写时复制。只要没有进程试图写它自己的私有区域，它们就可以继续共享物理内存中对象的一个单独副本。只要有一个进程试图写私有区域内的某个页面，这个&lt;strong&gt;写操作&lt;/strong&gt;就会触发一个&lt;strong&gt;保护故障&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;故障处理程序注意到保护异常是由于进程试图&lt;strong&gt;写私有的写时复制区域中的一个页面&lt;/strong&gt;而引起的，它就会在物理内存中创建这个页面的一个&lt;strong&gt;新副本&lt;/strong&gt;，更新页表条目指向这个新副本，然后恢复这个页面的可写权限。由此写操作就可以正常执行了。&lt;/p&gt;
 &lt;p&gt;通过这种延迟私有对象中的副本直到最后可能的时刻，写时复制最充分地使用了稀有的物理内存。&lt;/p&gt;
 &lt;h3 id=&#34;fork函数&#34;&gt;fork函数&lt;/h3&gt;
 &lt;p&gt;fork函数创建一个带有自己独立虚拟地址空间的新进程。&lt;/p&gt;
 &lt;p&gt;当fork函数被当前进程调用时，内核为新进程创建各种数据结构，并分配给它一个唯一的PID。为了给这个新进程创建虚拟内存，它创建了当前进程的&lt;code&gt;mm_struct&lt;/code&gt;、区域结构和页表的原样&lt;strong&gt;副本&lt;/strong&gt;。它将两个进程中的每个页面都标记为只读，并将两个进程中的每个区域结构都标记为私有的&lt;strong&gt;写时复制&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;当fork函数在新进程中返回时，新进程现在的虚拟内存刚好和调用fork时存在的虚拟内存相同。当这两个进程中的一个后来进程写操作时，写时复制就会创建新页面，因此为每个进程保持了私有地址空间的概念。&lt;/p&gt;
+&lt;p&gt;当fork函数在新进程中返回时，新进程现在的虚拟内存刚好和调用fork时存在的虚拟内存相同。当这两个进程中的一个后来进行写操作时，写时复制就会创建新页面，因此为每个进程保持了私有地址空间的概念。&lt;/p&gt;
 &lt;h3 id=&#34;execve函数&#34;&gt;execve函数&lt;/h3&gt;
 &lt;p&gt;虚拟内存和内存映射在将程序加载到内存的过程中也扮演着关键的角色。&lt;/p&gt;
 &lt;p&gt;假设在当前进程中的程序执行了如下的execve调用：&lt;/p&gt;
@@ -870,15 +877,36 @@ sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;execve函数在当前进程中加载并运行包含在可执行目标文件a.out中的程序，用a.out程序有效地替代了当前程序。加载该程序需要以下几个步骤：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;删除已存在的用户区域。&lt;/li&gt;
-&lt;li&gt;映射私有区域。为新程序的代码、数据、bss和栈区域创建新的区域结构，所有这些新区域都是私有的、写时复制的。代码和数据区域被映射为a.out文件中的.text和.data区。bss区域时请求二进制零的，映射到匿名文件，其大小包含在a.out中。栈和堆区域也是请求二进制零的，初始长度为零。&lt;/li&gt;
-&lt;li&gt;映射共享区域。如果a.out程序与共享对象或目标链接（比如标准C库libc.so），那么这些对象都是动态连接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。&lt;/li&gt;
+&lt;li&gt;映射私有区域。为新程序的代码、数据、bss和栈区域创建新的区域结构，所有这些新区域都是私有的、写时复制的。代码和数据区域被映射为a.out文件中的.text和.data区。.bss区域是请求二进制零的，映射到匿名文件，其大小包含在a.out中。栈和堆区域也是请求二进制零的，初始长度为零。&lt;/li&gt;
+&lt;li&gt;映射共享区域。如果a.out程序与共享对象或目标链接（比如标准C库libc.so），那么这些对象都是动态链接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。&lt;/li&gt;
 &lt;li&gt;设置程序计数器PC。设置当前进程上下文中的程序计数器，使之指向代码区域的入口点。下一次调度这个进程时，它将从这个入口点开始执行。Linux将根据需要换入代码和数据页面。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;下图显示了加载器如何映射用户地址空间区域。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201022200703.png&#34; alt=&#34;加载器映射用户地址空间区域&#34;&gt;&lt;/p&gt;
 &lt;h3 id=&#34;使用mmap函数的用户级内存映射&#34;&gt;使用mmap函数的用户级内存映射&lt;/h3&gt;
+&lt;p&gt;Linux进程可以使用mmap函数来创建新的虚拟内存区域，并将对象映射到这些区域中。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;sys/mman.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mmap&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;start, size_t length, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; prot, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; flags, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; fd, off_t offset);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;mmap函数要求内核创建一个新的虚拟内存区域，最好从地址start开始的一个区域，并将文件描述符fd指定的对象的一个连续的片映射到这个新的区域。连续对象片大小为length字节，从距文件开始处偏移量为offset字节的地方开始。start地址仅仅是一个暗示，通常被定义为NULL。&lt;/p&gt;
+&lt;p&gt;参数prot包含描述新映射的虚拟内存区域的访问权限位：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PROT_EXEC&lt;/li&gt;
+&lt;li&gt;PROT_READ&lt;/li&gt;
+&lt;li&gt;PROT_WRITE&lt;/li&gt;
+&lt;li&gt;PROT_NONE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参数flag由描述被映射对象类型的位组成。&lt;/p&gt;
+&lt;p&gt;munmap函数删除虚拟内存的区域：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;sys/mman.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;munmap&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;start, size_t length);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;删除从虚拟地址start开始的，由接下来length字节组成的区域。&lt;/p&gt;
 &lt;h2 id=&#34;动态内存分配&#34;&gt;动态内存分配&lt;/h2&gt;
 &lt;p&gt;动态内存分配器维护着一个进程的虚拟内存区域，称为堆。对于每个进程，内核维护着一个变量brk，指向堆的顶部。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201121330003.png&#34; alt=&#34;虚拟内存的堆区域&#34;&gt;&lt;/p&gt;
 &lt;p&gt;分配器将堆视为一组不同大小的块的集合，每个块就是一个连续的虚拟内存片，要么是已分配的，要么是空闲的。&lt;/p&gt;
 &lt;p&gt;分配器有两种基本风格：&lt;/p&gt;
 &lt;ul&gt;
@@ -925,14 +953,20 @@ sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/
 &lt;li&gt;合并&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;隐式空闲链表&#34;&gt;隐式空闲链表&lt;/h3&gt;
-&lt;p&gt;分配器需要一些数据结构，允许它来区分块边界，以及区别已分配和空闲块。大都数分配器将这些信息嵌入块本身。&lt;/p&gt;
-&lt;p&gt;一个块由一个字（4B）的头部、有效荷载以及可能的一些额外的填充组成。头部编码了这个快的大小以及这个快是已分配的还是空闲的。&lt;/p&gt;
+&lt;p&gt;分配器需要一些数据结构，允许它来区分块边界，以及区别已分配和空闲块。大多数分配器将这些信息&lt;strong&gt;嵌入块本身&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;一个块由一个字（4B）的头部、有效荷载以及可能的一些额外的填充组成。头部编码了这个块的大小以及这个块是已分配的还是空闲的。&lt;/p&gt;
 &lt;h3 id=&#34;放置已分配的块&#34;&gt;放置已分配的块&lt;/h3&gt;
 &lt;p&gt;应用请求一个k字节的块时，分配器搜索空闲链表，查找一个足够大可以放置所请求快的空闲块。这种搜索方式是由放置策略确定的。常见的策略有首次适配、下一次适配和最佳适配。&lt;/p&gt;
 &lt;h3 id=&#34;分隔空闲块&#34;&gt;分隔空闲块&lt;/h3&gt;
+&lt;p&gt;分配器找到一个匹配的块后，就必须作出一个决策，就是分配这个空闲块中多少空间。一个选择是分配整个空闲块，但这种方式可能造成内部碎片。&lt;/p&gt;
+&lt;p&gt;如果匹配不太好，分配器通常会选择将这个空闲块分割为两部分，第一部分变成分配块，剩下的变成一个新的空闲块。&lt;/p&gt;
 &lt;h3 id=&#34;获取额外的堆内存&#34;&gt;获取额外的堆内存&lt;/h3&gt;
+&lt;p&gt;如果不能请求到合适的空闲块，一个解决方法是合并那些在物理内存中相邻的空闲块来创建一个更大的块。如果还是不能生成一个足够大的块，那么分配器会调用&lt;strong&gt;sbrk函数&lt;/strong&gt;，向&lt;strong&gt;内核&lt;/strong&gt;请求额外的堆内存。&lt;/p&gt;
 &lt;h3 id=&#34;合并空闲块&#34;&gt;合并空闲块&lt;/h3&gt;
+&lt;p&gt;任何分配器都必须合并相邻的空闲块，这个过程称为合并。分配器可以选择立即合并，就是在每次一个块被释放时，就合并所有相邻块。或者也可以选择推迟合并，直到某个分配请求失败，然后扫描整个堆，合并所有的空闲块。&lt;/p&gt;
+&lt;p&gt;立即合并对于某些请求模式而言，会产生一种形式的抖动，块会反复地合并，然后马上分割。&lt;/p&gt;
 &lt;h3 id=&#34;带边界标记的合并&#34;&gt;带边界标记的合并&lt;/h3&gt;
+&lt;p&gt;边界标记技术允许在常数时间内进行对前面块的合并。这种思想是在每个块的结尾处添加一个脚部（footer，边界标记），其中脚部就是头部的一个副本。如果每个块包含一个脚部，那么分配器就可以通过检查它的脚部，判断前面一个块的起始位置和状态，这个脚部总是在距当前块开始位置一个字的距离。&lt;/p&gt;
 &lt;h3 id=&#34;显式空闲链表&#34;&gt;显式空闲链表&lt;/h3&gt;
 &lt;h3 id=&#34;分离的空闲链表&#34;&gt;分离的空闲链表&lt;/h3&gt;
 &lt;h2 id=&#34;垃圾收集&#34;&gt;垃圾收集&lt;/h2&gt;
