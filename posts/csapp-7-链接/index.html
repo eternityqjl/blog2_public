@@ -1552,8 +1552,29 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>转化后的<strong>二进制</strong>的可执行目标文件包含加载程序到内存并运行它所需的所有信息。</p>
 <p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201111656939.png" alt="ELF可执行目标文件结构"></p>
 <p>可执行目标文件格式类似于可重定位目标文件，ELF头描述文件的总体格式，还包括程序的入口点，即程序要运行时执行的第一条指令的地址。<code>.init</code>节定义了一个小函数<code>_init</code>，程序初始化代码会调用它。</p>
-<p>可执行文件是完全链接的（已经被重定位），所以它不需要rel节。</p>
-<p>ELF可执行文件被设计得很容易加载到内存，可执行文件的连续的片被映射到<strong>连续的内存段</strong>，程序段头部表描述了这种映射关系</p>
+<p>以下为hello_world可执行文件的ELF头描述文件：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">ELF Header:
+  Magic:   7f <span style="color:#60e;font-weight:bold">45</span> 4c <span style="color:#60e;font-weight:bold">46</span> <span style="color:#60e;font-weight:bold">02</span> <span style="color:#60e;font-weight:bold">01</span> <span style="color:#60e;font-weight:bold">01</span> <span style="color:#60e;font-weight:bold">00</span> <span style="color:#60e;font-weight:bold">00</span> <span style="color:#60e;font-weight:bold">00</span> <span style="color:#60e;font-weight:bold">00</span> <span style="color:#60e;font-weight:bold">00</span> <span style="color:#60e;font-weight:bold">00</span> <span style="color:#60e;font-weight:bold">00</span> <span style="color:#60e;font-weight:bold">00</span> <span style="color:#60e;font-weight:bold">00</span> 
+  Class:                             ELF64
+  Data:                              2<span style="color:#f00;background-color:#faa">&#39;</span>s complement, little endian
+  Version:                           <span style="color:#60e;font-weight:bold">1</span> <span style="color:#333">(</span>current<span style="color:#333">)</span>
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       <span style="color:#60e;font-weight:bold">0</span>
+  Type:                              DYN <span style="color:#333">(</span>Shared object file<span style="color:#333">)</span>
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x1060
+  Start of program headers:          <span style="color:#60e;font-weight:bold">64</span> <span style="color:#333">(</span>bytes into file<span style="color:#333">)</span>
+  Start of section headers:          <span style="color:#60e;font-weight:bold">16984</span> <span style="color:#333">(</span>bytes into file<span style="color:#333">)</span>
+  Flags:                             0x0
+  Size of this header:               <span style="color:#60e;font-weight:bold">64</span> <span style="color:#333">(</span>bytes<span style="color:#333">)</span>
+  Size of program headers:           <span style="color:#60e;font-weight:bold">56</span> <span style="color:#333">(</span>bytes<span style="color:#333">)</span>
+  Number of program headers:         <span style="color:#60e;font-weight:bold">13</span>
+  Size of section headers:           <span style="color:#60e;font-weight:bold">64</span> <span style="color:#333">(</span>bytes<span style="color:#333">)</span>
+  Number of section headers:         <span style="color:#60e;font-weight:bold">36</span>
+  Section header string table index: <span style="color:#60e;font-weight:bold">35</span>
+</code></pre></div><p>可执行文件是完全链接的（已经被重定位），所以它不需要rel节。</p>
+<p>ELF可执行文件被设计得很容易加载到内存，可执行文件的连续的片被映射到<strong>连续的内存段</strong>，程序段头部表描述了这种映射关系：</p>
 <h2 id="加载可执行目标文件">加载可执行目标文件</h2>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">linux&gt; ./prog
 </code></pre></div><p>shell认为prog是一个可执行目标文件，通过调用驻留在存储器中的<strong>加载器</strong>的系统代码来运行它。加载器将可执行目标文件中的代码和数据从磁盘复制到内存，然后通过跳转到程序的入口点运行该程序。这整个过程叫做加载。</p>
@@ -1564,6 +1585,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>静态库有一个缺点，需要定期维护和更新，如果应用程序需要一个<strong>新版本</strong>，必须以某种方式了解到该库的变化情况，然后显式地将其程序与更新了的库重新链接。</p>
 <p>另一个问题是几乎每个C程序都使用<strong>标准I/O函数</strong>。运行时这些代码会被复制到每个运行进程的文本中，在一个上百个进程的系统上，这是对内存资源的极大浪费。</p>
 <p><strong>共享库</strong>用来解决静态库的缺陷，共享库是一个目标模块，在<strong>运行或加载时</strong>，可以加载到任意内存地址，并与一个在内存中的程序链接起来。这个过程称为<strong>动态链接</strong>，由叫做动态链接器的程序执行。Linux中用<code>.so</code>后缀的文件来表示共享库，Windows中使用<code>.dll</code>表示。</p>
+<p>下图为动态链接共享库的过程：</p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201261537772.png" alt="动态链接共享库"></p>
 <p>任何给定文件系统中，对于一个库文件只有一个<code>.so</code>文件。所有引用该库的可执行目标文件共享这个<code>.so</code>文件中的数据和代码，不需要都复制和嵌入到引用它们的可执行文件中。</p>
 <p>在内存中，一个共享库的<code>.text</code>节的一个副本可以被不同的正在运行的进程共享。第9章虚拟内存的内容中将更加详细地描述。</p>
 <h2 id="从应用程序中加载和链接共享库">从应用程序中加载和链接共享库</h2>

@@ -213,8 +213,29 @@
 &lt;p&gt;转化后的&lt;strong&gt;二进制&lt;/strong&gt;的可执行目标文件包含加载程序到内存并运行它所需的所有信息。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201111656939.png&#34; alt=&#34;ELF可执行目标文件结构&#34;&gt;&lt;/p&gt;
 &lt;p&gt;可执行目标文件格式类似于可重定位目标文件，ELF头描述文件的总体格式，还包括程序的入口点，即程序要运行时执行的第一条指令的地址。&lt;code&gt;.init&lt;/code&gt;节定义了一个小函数&lt;code&gt;_init&lt;/code&gt;，程序初始化代码会调用它。&lt;/p&gt;
-&lt;p&gt;可执行文件是完全链接的（已经被重定位），所以它不需要rel节。&lt;/p&gt;
-&lt;p&gt;ELF可执行文件被设计得很容易加载到内存，可执行文件的连续的片被映射到&lt;strong&gt;连续的内存段&lt;/strong&gt;，程序段头部表描述了这种映射关系&lt;/p&gt;
+&lt;p&gt;以下为hello_world可执行文件的ELF头描述文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;ELF Header:
+  Magic:   7f &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;45&lt;/span&gt; 4c &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;46&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;02&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;01&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;01&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;00&lt;/span&gt; 
+  Class:                             ELF64
+  Data:                              2&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;&amp;#39;&lt;/span&gt;s complement, little endian
+  Version:                           &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;current&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt;
+  Type:                              DYN &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;Shared object file&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x1060
+  Start of program headers:          &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;64&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;bytes into file&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+  Start of section headers:          &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;16984&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;bytes into file&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+  Flags:                             0x0
+  Size of this header:               &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;64&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;bytes&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+  Size of program headers:           &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;56&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;bytes&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+  Number of program headers:         &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;13&lt;/span&gt;
+  Size of section headers:           &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;64&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;bytes&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;
+  Number of section headers:         &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;36&lt;/span&gt;
+  Section header string table index: &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;35&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可执行文件是完全链接的（已经被重定位），所以它不需要rel节。&lt;/p&gt;
+&lt;p&gt;ELF可执行文件被设计得很容易加载到内存，可执行文件的连续的片被映射到&lt;strong&gt;连续的内存段&lt;/strong&gt;，程序段头部表描述了这种映射关系：&lt;/p&gt;
 &lt;h2 id=&#34;加载可执行目标文件&#34;&gt;加载可执行目标文件&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;linux&amp;gt; ./prog
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;shell认为prog是一个可执行目标文件，通过调用驻留在存储器中的&lt;strong&gt;加载器&lt;/strong&gt;的系统代码来运行它。加载器将可执行目标文件中的代码和数据从磁盘复制到内存，然后通过跳转到程序的入口点运行该程序。这整个过程叫做加载。&lt;/p&gt;
@@ -225,6 +246,8 @@
 &lt;p&gt;静态库有一个缺点，需要定期维护和更新，如果应用程序需要一个&lt;strong&gt;新版本&lt;/strong&gt;，必须以某种方式了解到该库的变化情况，然后显式地将其程序与更新了的库重新链接。&lt;/p&gt;
 &lt;p&gt;另一个问题是几乎每个C程序都使用&lt;strong&gt;标准I/O函数&lt;/strong&gt;。运行时这些代码会被复制到每个运行进程的文本中，在一个上百个进程的系统上，这是对内存资源的极大浪费。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;共享库&lt;/strong&gt;用来解决静态库的缺陷，共享库是一个目标模块，在&lt;strong&gt;运行或加载时&lt;/strong&gt;，可以加载到任意内存地址，并与一个在内存中的程序链接起来。这个过程称为&lt;strong&gt;动态链接&lt;/strong&gt;，由叫做动态链接器的程序执行。Linux中用&lt;code&gt;.so&lt;/code&gt;后缀的文件来表示共享库，Windows中使用&lt;code&gt;.dll&lt;/code&gt;表示。&lt;/p&gt;
+&lt;p&gt;下图为动态链接共享库的过程：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201261537772.png&#34; alt=&#34;动态链接共享库&#34;&gt;&lt;/p&gt;
 &lt;p&gt;任何给定文件系统中，对于一个库文件只有一个&lt;code&gt;.so&lt;/code&gt;文件。所有引用该库的可执行目标文件共享这个&lt;code&gt;.so&lt;/code&gt;文件中的数据和代码，不需要都复制和嵌入到引用它们的可执行文件中。&lt;/p&gt;
 &lt;p&gt;在内存中，一个共享库的&lt;code&gt;.text&lt;/code&gt;节的一个副本可以被不同的正在运行的进程共享。第9章虚拟内存的内容中将更加详细地描述。&lt;/p&gt;
 &lt;h2 id=&#34;从应用程序中加载和链接共享库&#34;&gt;从应用程序中加载和链接共享库&lt;/h2&gt;
