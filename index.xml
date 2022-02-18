@@ -6,9 +6,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 11 Jan 2022 15:33:44 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 18 Feb 2022 19:47:41 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Cpp继承和多态</title>
+        <link>https://eternityqjl.top/posts/cpp%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81/</link>
+        <pubDate>Fri, 18 Feb 2022 19:47:41 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81/ -&lt;p&gt;继承：类与类之间可以&lt;strong&gt;共用代码，实现代码重用&lt;/strong&gt;。（基类和派生类）&lt;/p&gt;
+&lt;p&gt;多态：面向对象过程中，基类与派生类存在&lt;strong&gt;相同的方法&lt;/strong&gt;，但有&lt;strong&gt;不同的方法体&lt;/strong&gt;，调用是根据对象有选择地调用合适的方法。&lt;/p&gt;
+&lt;p&gt;多态的几个条件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;必须是公有继承&lt;/li&gt;
+&lt;li&gt;必须通过基类的指针或引用指向派生类对象来访问呢派生类方法&lt;/li&gt;
+&lt;li&gt;基类的方法必须是虚函数&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;区别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;多态的实现要求必须是共有继承&lt;/li&gt;
+&lt;li&gt;继承关系中，父类更通用，子类更具体。父类具有一般的特征和行为，子类除了具有父类的特征和行为，还有自己特殊的行为和特征。&lt;/li&gt;
+&lt;li&gt;继承关系中，并不要求基类方法一定是虚函数。多态要求基类方法必须是虚函数。&lt;/li&gt;
+&lt;li&gt;多态：子类重写父类的方法，使得子类具有不同的实现。且运行时，根据实际创建的对象动态决定使用哪个方法。&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/cpp%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1422,28 +1448,6 @@ sighandler_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;signal&lt;/
 &lt;/ul&gt;
 &lt;h2 id=&#34;list-1&#34;&gt;list&lt;/h2&gt;
 - https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>C程序字节对齐方式</title>
-        <link>https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/</link>
-        <pubDate>Tue, 14 Dec 2021 16:38:12 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/ -&lt;h2 id=&#34;默认字节对齐&#34;&gt;默认字节对齐&lt;/h2&gt;
-&lt;p&gt;int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。&lt;/p&gt;
-&lt;p&gt;结构体的对其满足以下原则：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;结构体变量的首地址能够被其最宽基本类型成员的大小所整除。&lt;/li&gt;
-&lt;li&gt;结构体每个成员相对于结构体首地址的偏移量都是成员大小的整数倍，如有需要编译器会在成员之间填充字节。&lt;/li&gt;
-&lt;li&gt;结构体的总大小为结构体最宽基本类型成员大小的整数倍，如有需要编译器会在最末一个成员后填充字节。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;pragma-pack命令&#34;&gt;#pragma pack()命令&lt;/h2&gt;
-&lt;p&gt;改命令强制规定了成员的对齐方式，括号内为对齐的字节数。若括号内的内容为空，则为默认对齐。&lt;/p&gt;
-&lt;p&gt;改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。&lt;/p&gt;
-- https://eternityqjl.top/posts/c%E7%A8%8B%E5%BA%8F%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F/ - 2019-2021 By Jialong</description>
         </item>
     
     

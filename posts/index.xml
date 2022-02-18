@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 11 Jan 2022 15:33:44 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Feb 2022 19:47:41 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cpp继承和多态</title>
+      <link>https://eternityqjl.top/posts/cpp%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81/</link>
+      <pubDate>Fri, 18 Feb 2022 19:47:41 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81/</guid>
+      <description>继承：类与类之间可以共用代码，实现代码重用。（基类和派生类）
+多态：面向对象过程中，基类与派生类存在相同的方法，但有不同的方法体，调用是根据对象有选择地调用合适的方法。
+多态的几个条件：
+ 必须是公有继承 必须通过基类的指针或引用指向派生类对象来访问呢派生类方法 基类的方法必须是虚函数  区别：
+ 多态的实现要求必须是共有继承 继承关系中，父类更通用，子类更具体。父类具有一般的特征和行为，子类除了具有父类的特征和行为，还有自己特殊的行为和特征。 继承关系中，并不要求基类方法一定是虚函数。多态要求基类方法必须是虚函数。 多态：子类重写父类的方法，使得子类具有不同的实现。且运行时，根据实际创建的对象动态决定使用哪个方法。  </description>
+    </item>
+    
     <item>
       <title>Csapp 8 异常控制流</title>
       <link>https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/</link>
