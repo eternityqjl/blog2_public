@@ -761,6 +761,42 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
+								<a href="#i%e5%92%8ci%e7%9a%84%e5%8c%ba%e5%88%ab" onclick="onNavClick(`#i和i的区别-nav`)" id="i和i的区别-nav">
+									&#43;&#43;i和i&#43;&#43;的区别
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%bb%a7%e6%89%bf%e5%92%8c%e5%a4%9a%e6%80%81" onclick="onNavClick(`#继承和多态-nav`)" id="继承和多态-nav">
+									继承和多态
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
 								<a href="#%e5%8f%82%e8%80%83" onclick="onNavClick(`#参考-nav`)" id="参考-nav">
 									参考
 								</a>
@@ -1368,6 +1404,42 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
+								<a href="#i%e5%92%8ci%e7%9a%84%e5%8c%ba%e5%88%ab" onclick="onNavClick(`#i和i的区别-nav`)" id="i和i的区别-nav">
+									&#43;&#43;i和i&#43;&#43;的区别
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e7%bb%a7%e6%89%bf%e5%92%8c%e5%a4%9a%e6%80%81" onclick="onNavClick(`#继承和多态-nav`)" id="继承和多态-nav">
+									继承和多态
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
 								<a href="#%e5%8f%82%e8%80%83" onclick="onNavClick(`#参考-nav`)" id="参考-nav">
 									参考
 								</a>
@@ -1639,6 +1711,32 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <p>左值与右值的根本区别在于是否允许取地址运算符&amp;获得对应的内存地址。</p>
 <h2 id="explicit作用">explicit作用</h2>
 <p>用于修饰构造函数，使得其不能用于隐式转换和赋值初始化。被声明为explicit的构造函数通常比其non-explicit兄弟更受欢迎，因为它们禁止编译器执行非预期的类型转换，除非有一个好的理由允许构造函数被用于隐式类型转换，否则会将其声明为explicit。</p>
+<h2 id="i和i的区别">++i和i++的区别</h2>
+<p>一般都用<code>++i</code>，因为其速度较快。</p>
+<p><code>++i</code>相当于：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">i <span style="color:#333">=</span> i <span style="color:#333">+</span> <span style="color:#00d;font-weight:bold">1</span>;
+<span style="color:#080;font-weight:bold">return</span> i;
+</code></pre></div><p>而<code>i++</code>相当于：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">int</span> j <span style="color:#333">=</span> i;
+i <span style="color:#333">=</span> i <span style="color:#333">+</span> <span style="color:#00d;font-weight:bold">1</span>;
+<span style="color:#080;font-weight:bold">return</span> j;
+</code></pre></div><p>由于i++还必须拷贝值给j，所以速度较慢.</p>
+<h2 id="继承和多态">继承和多态</h2>
+<p>继承：类与类之间可以<strong>共用代码，实现代码重用</strong>。（基类和派生类）</p>
+<p>多态：面向对象过程中，基类与派生类存在<strong>相同的方法</strong>，但有<strong>不同的方法体</strong>，调用是根据对象有选择地调用合适的方法。</p>
+<p>多态的几个条件：</p>
+<ul>
+<li>必须是公有继承</li>
+<li>必须通过基类的指针或引用指向派生类对象来访问呢派生类方法</li>
+<li>基类的方法必须是虚函数</li>
+</ul>
+<p>区别：</p>
+<ul>
+<li>多态的实现要求必须是共有继承</li>
+<li>继承关系中，父类更通用，子类更具体。父类具有一般的特征和行为，子类除了具有父类的特征和行为，还有自己特殊的行为和特征。</li>
+<li>继承关系中，并不要求基类方法一定是虚函数。多态要求基类方法必须是虚函数。</li>
+<li>多态：子类重写父类的方法，使得子类具有不同的实现。且运行时，根据实际创建的对象动态决定使用哪个方法。</li>
+</ul>
 <h2 id="参考">参考</h2>
 <p>部分参考自<a href="https://www.nowcoder.com/discuss/789739?channel=-1&amp;source_id=profile_follow_post_nctrack">八股文之C/C++ 高频知识点汇总</a></p>
 
