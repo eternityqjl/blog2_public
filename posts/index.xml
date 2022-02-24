@@ -385,7 +385,10 @@ POSIX线程 为实现可移植的线程程序，IEEE定义了线程的标准。�
       <pubDate>Mon, 06 Dec 2021 20:37:41 +0800</pubDate>
       
       <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
-      <description>选择排序 void selectSort(vector&amp;lt;int&amp;gt;&amp;amp; nums) { int n = nums.size(); for (int i = 0; i &amp;lt; n; i++) { int min = i; for (int j = i+1; j &amp;lt; N; j++) if (a[j] &amp;lt; a[min]) min = j; swap(nums[i], nums[min]); } } 插入排序 void insertSort(vector&amp;lt;int&amp;gt;&amp;amp; nums) { int n = nums.size(); for (int i = 0; i &amp;lt; n; i++) { for (int j = i; j &amp;gt; 0 &amp;amp;&amp;amp; nums[j] &amp;lt; nums[j-1]; j--) swap(nums[j], nums[j-1]); } } 时间复杂度为$O(n^2)$，算法稳定。</description>
+      <description>选择排序 基本思想：每一趟（例如第i趟）在后面n-i+1个待排元素中选取关键字最小的元素，作为有序子序列的第i个元素，直到第n-1趟做完，待排序元素只剩下一个，就不用再选了。
+void selectSort(vector&amp;lt;int&amp;gt;&amp;amp; nums) { int n = nums.size(); for (int i = 0; i &amp;lt; n; i++) { int min = i; for (int j = i+1; j &amp;lt; N; j++) if (a[j] &amp;lt; a[min]) min = j; swap(nums[i], nums[min]); } } 时间复杂度为$O(n^2)$。算法不稳定。空间复杂度为$O(1)$。
+插入排序 将后面的每个元素都插入到前面的有序序列中。
+void insertSort(vector&amp;lt;int&amp;gt;&amp;amp; nums) { int n = nums.size(); for (int i = 0; i &amp;lt; n; i++) { for (int j = i; j &amp;gt; 0 &amp;amp;&amp;amp; nums[j] &amp;lt; nums[j-1]; j--) swap(nums[j], nums[j-1]); } } 时间复杂度为$O(n^2)$，算法稳定。</description>
     </item>
     
     <item>
