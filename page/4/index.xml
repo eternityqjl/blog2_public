@@ -6,9 +6,224 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>现代操作系统学习日志——文件系统</title>
+        <link>https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</link>
+        <pubDate>Sat, 13 Nov 2021 19:54:09 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/ -&lt;p&gt;所有计算机应用程序都需要存储和检索信息。&lt;/p&gt;
+&lt;p&gt;进程运行时可以在自己的地址空间中存储一定量的信息，但存储容量易受到虚拟地址空间大小的限制。另外，进程终止时，它保存的信息也随之丢失，但对于很多应用（例如数据库）而言，有关信息必须能够保存&lt;strong&gt;很长时间甚至永久保留&lt;/strong&gt;。第三个问题是经常需要多个进程同时访问同一信息，解决方法是使得&lt;strong&gt;信息本身独立于任何一个进程&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;所以，长期存储信息有以下基本要求：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;能够存储大量信息&lt;/li&gt;
+&lt;li&gt;使用信息的进程终止时，信息仍旧存在&lt;/li&gt;
+&lt;li&gt;必须能使多个进程并发访问有关信息&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;磁盘能够进行长期存储，我们将其当作一种大小固定的&lt;strong&gt;块&lt;/strong&gt;的线性序列，并且支持读块k和写块k的操作。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;文件&lt;/strong&gt;是进程创建的&lt;strong&gt;信息逻辑单元&lt;/strong&gt;，一块磁盘中可以有很多文件，每个文件是独立于其他文件的，文件是&lt;strong&gt;对磁盘的建模&lt;/strong&gt;，而不是对RAM的建模。&lt;/p&gt;
+&lt;p&gt;进程可以读取已经存在的文件，并在需要时建立新的文件。存储在文件中的信息必须是持久的。&lt;/p&gt;
+&lt;h2 id=&#34;文件&#34;&gt;文件&lt;/h2&gt;
+&lt;h3 id=&#34;文件命名&#34;&gt;文件命名&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;大小写&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;有些区分、有些不区分。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;扩展名&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;UNIX中扩展名只是一张约定，操作系统不强迫采用，是用来提醒文件所有者的。&lt;/p&gt;
+&lt;p&gt;而对于可以处理多种类型文件的程序，这类约定特别有用。例如C编译器可以编译、链接多种文件，这是扩展名就很必要。&lt;/p&gt;
+&lt;p&gt;另外，Windows关注扩展名并且对其赋予了含义，用户或进程可以在操作系统中注册扩展名，并规定哪个程序拥有该扩展名。&lt;/p&gt;
+&lt;h3 id=&#34;文件结构&#34;&gt;文件结构&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;无结构的&lt;strong&gt;字节序列&lt;/strong&gt;（Windows和Unix采用这种方法）&lt;/li&gt;
+&lt;li&gt;具有&lt;strong&gt;固定长度记录的序列&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;由一棵树构成的文件结构，每个记录不必具有相同长度，记录的固定位置上有一个键字段（在一些处理商业数据的大型计算机上广泛应用）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;文件类型&#34;&gt;文件类型&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;普通文件&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;ASCII文件&lt;/strong&gt;。优势是可以显示和打印，可以用任何文本编辑器进行编辑&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;二进制文件&lt;/strong&gt;。有一定的内部结构，使用该文件的程序才了解这种结构，只有文件格式正确，操作系统才会执行。详细例子见书上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;目录&lt;/strong&gt;：管理文件系统结构的系统文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;另外，Unix还具有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;字符特殊文件&lt;/strong&gt;。与&lt;strong&gt;I/O&lt;/strong&gt;有关，用于串行I/O设备。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;块特殊文件&lt;/strong&gt;。用于&lt;strong&gt;磁盘设备&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;两个普通文件的例子：一个可执行文件、一个存档文件。详情见书上。&lt;/p&gt;
+&lt;h3 id=&#34;文件访问&#34;&gt;文件访问&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;顺序访问&lt;/li&gt;
+&lt;li&gt;随机访问文件
+&lt;ul&gt;
+&lt;li&gt;read操作给出开始读文件的位置&lt;/li&gt;
+&lt;li&gt;用seek操作设置当前位置（Windows和UNIX使用这种方式）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;文件属性&#34;&gt;文件属性&lt;/h3&gt;
+&lt;p&gt;除了文件名和数据外的与文件相关的信息，称为文件&lt;strong&gt;属性&lt;/strong&gt;或&lt;strong&gt;元数据&lt;/strong&gt;。这些信息在不同系统中有着很大差异。主要具有以下属性类别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;与&lt;strong&gt;文件保护&lt;/strong&gt;相关的属性。创建者、所有者、口令等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;标志&lt;/strong&gt;。用于控制或启动某些特殊属性。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;用关键字查找记录的文件&lt;/strong&gt;中的属性：&lt;strong&gt;记录长度、键的位置和长度&lt;/strong&gt;等。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;创建时间&lt;/strong&gt;相关属性。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;当前大小&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;文件操作&#34;&gt;文件操作&lt;/h3&gt;
+&lt;p&gt;与文件有关的最常用的一些&lt;strong&gt;系统调用&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;create&lt;/li&gt;
+&lt;li&gt;delete&lt;/li&gt;
+&lt;li&gt;open&lt;/li&gt;
+&lt;li&gt;close&lt;/li&gt;
+&lt;li&gt;read&lt;/li&gt;
+&lt;li&gt;write&lt;/li&gt;
+&lt;li&gt;append。write的限制格式，只能从文件末尾添加数据。&lt;/li&gt;
+&lt;li&gt;seek&lt;/li&gt;
+&lt;li&gt;get attributes&lt;/li&gt;
+&lt;li&gt;set attributes&lt;/li&gt;
+&lt;li&gt;rename&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;一个文件系统调用实现复制的简单程序&#34;&gt;一个文件系统调用实现复制的简单程序&lt;/h3&gt;
+&lt;p&gt;详情见书上。&lt;/p&gt;
+&lt;h2 id=&#34;目录&#34;&gt;目录&lt;/h2&gt;
+&lt;p&gt;文件系统提供&lt;strong&gt;目录或文件夹&lt;/strong&gt;用于记录文件的位置。很多系统中目录本身也是文件。&lt;/p&gt;
+&lt;h3 id=&#34;一级目录&#34;&gt;一级目录&lt;/h3&gt;
+&lt;p&gt;有时也称为根目录。&lt;strong&gt;只有一个目录&lt;/strong&gt;，部分原因是只有一个用户。这种目录系统常用于嵌入式装置中。&lt;/p&gt;
+&lt;h3 id=&#34;层级目录系统&#34;&gt;层级目录系统&lt;/h3&gt;
+&lt;p&gt;使用层次结构（即一个目录树）。可以把文件以自然的方式进行分组，每个而用户可以为自己的目录树拥有自己的私人根目录。用户可以创建任意数量的子目录。&lt;/p&gt;
+&lt;h3 id=&#34;路径名&#34;&gt;路径名&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;绝对路径名&lt;/li&gt;
+&lt;li&gt;相对路径名（又称工作目录）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;支持层次目录结构的大多数操作系统在每个目录中有两个特殊目录项&lt;code&gt;.&lt;/code&gt;和&lt;code&gt;..&lt;/code&gt;，常常读作dot和dotdot。dot指当前目录，dotdot指的是其父目录。使用一些与目录相关的命令时可以使用这两个目录项。&lt;/p&gt;
+&lt;h3 id=&#34;目录操作&#34;&gt;目录操作&lt;/h3&gt;
+&lt;p&gt;这里以UNIX为例。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;create（有时通过mdir完成）&lt;/li&gt;
+&lt;li&gt;delete：删除目录，只有空目录可以删除。&lt;/li&gt;
+&lt;li&gt;opendir&lt;/li&gt;
+&lt;li&gt;closedir&lt;/li&gt;
+&lt;li&gt;readdir&lt;/li&gt;
+&lt;li&gt;rename&lt;/li&gt;
+&lt;li&gt;link。链接技术允许多个目录中出现同一个文件。这种类型的链接增加了文件的&lt;strong&gt;i节点（i-node）计数器的计数&lt;/strong&gt;，有时称为硬链接。&lt;/li&gt;
+&lt;li&gt;unlink。删除目录项。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;文件系统的实现&#34;&gt;文件系统的实现&lt;/h2&gt;
+&lt;h3 id=&#34;文件系统布局&#34;&gt;文件系统布局&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202112071744109.jpg&#34; alt=&#34;文件系统布局&#34;&gt;&lt;/p&gt;
+&lt;p&gt;文件系统存放在&lt;strong&gt;磁盘&lt;/strong&gt;上，多数磁盘划分为&lt;strong&gt;一个或多个分区&lt;/strong&gt;，&lt;strong&gt;每个分区有一个独立的文件系统&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;磁盘的&lt;strong&gt;0号扇区&lt;/strong&gt;称为&lt;strong&gt;主引导记录（Master Boot Record，MBR）&lt;/strong&gt;，用来引导计算机。&lt;/p&gt;
+&lt;p&gt;MBR的结尾是&lt;strong&gt;分区表&lt;/strong&gt;，该表给出了每个分区的起始地址和结束地址。&lt;/p&gt;
+&lt;p&gt;计算机被引导时，BIOS读入并执行MBR，确定活动分区，读入其第一个块，称为&lt;strong&gt;引导块&lt;/strong&gt;，并执行之。引导块中的程序将装载该分区中的&lt;strong&gt;操作系统&lt;/strong&gt;。为了统一，每个分区都从一个引导块开始。&lt;/p&gt;
+&lt;p&gt;除了从引导块开始，磁盘分区的布局随着文件系统的不同而变化。文件系统通常包含：&lt;strong&gt;超级块、空闲空间管理、i节点、根目录、其他文件和目录&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;文件的实现&#34;&gt;文件的实现&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;连续分配&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;把每个文件作为一连串&lt;strong&gt;连续数据块&lt;/strong&gt;存储在磁盘中。&lt;/p&gt;
+&lt;p&gt;优点：记录每个文件的位置较为简单，只要记住&lt;strong&gt;第一块的磁盘地址&lt;/strong&gt;和&lt;strong&gt;文件块数&lt;/strong&gt;；读操作性能好，只需要一次寻找（一个块）。&lt;/p&gt;
+&lt;p&gt;缺点：会产生碎片。&lt;/p&gt;
+&lt;p&gt;CD-ROM和DVD使用的就是这种方法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;链表分配&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;为每个文件构造&lt;strong&gt;磁盘块链表&lt;/strong&gt;，即每个块的第一个字作为指向下一块的指针，块的其他部分存储数据。&lt;/p&gt;
+&lt;p&gt;这一方法可以中分利用每个磁盘块。&lt;/p&gt;
+&lt;p&gt;这种分配方法中，顺序读文件十分方便，但&lt;strong&gt;随机访问相当缓慢&lt;/strong&gt;（例如随机读取一个大文件中的一个具体的块）。另外，指针占去了一些字节，每个磁盘块存储数据的字节数不再是2的整数次幂。这样怪异的大小降低了系统的运行效率。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;采用内存中的表进行链表分配&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;取出&lt;strong&gt;每个磁盘块的指针字&lt;/strong&gt;，把他们放在内存的一个表中，可以解决上述链表的不足。可以从一个块开始，顺着链走到最后，找到一个文件的全部磁盘块。内存中这样的一个表格称为&lt;strong&gt;文件分配表（File Allocation Table，FAT）。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这种方法的缺点是要把整个表都存放在内存中，例如对于一个1TB的磁盘和1KB大小的块，这张表需要有10亿项，每项至少3字节，这张表要占用2.4GB内存，显然并不实用。所以FAT方式不能较好地扩展并应用于大型磁盘中，只是在最初的MS-DOS文件系统比较实用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;i节点（索引）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;给每个文件赋予一个称为i节点的数据结构，其中列出了&lt;strong&gt;文件属性&lt;/strong&gt;和&lt;strong&gt;文件块的磁盘地址&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;只有在对应&lt;strong&gt;文件打开时&lt;/strong&gt;其i节点才在&lt;strong&gt;内存中&lt;/strong&gt;，如果每个i节点占有n个字节，最多K个文件同时打开，那么为了打开文件而保留i节点的数组所占的全部内存仅仅是kn个字节，只需提前保留这么多空间即可。&lt;/p&gt;
+&lt;p&gt;这个数组通常比FAT占据的空间要小。因为保留所有磁盘块的链表的表大小正比于磁盘自身的大小。而i节点在内存中数组的大小正比于要&lt;strong&gt;同时打开文件的数量&lt;/strong&gt;，与磁盘空间无关。&lt;/p&gt;
+&lt;p&gt;i节点的一个问题是如果一个文件所含的磁盘块的数目超出i节点所能容纳的数据怎么办。解决方法为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最后一个磁盘地址&lt;strong&gt;不指向数据块&lt;/strong&gt;，指向一个包含额外磁盘块地址的块的地址&lt;/li&gt;
+&lt;li&gt;可以有两个或更多个包含磁盘地址的块，或者指向其他存放地址的磁盘块的磁盘块。NTFS采用了相似的方法。&lt;/li&gt;
+&lt;li&gt;链接方案：将多个索引块链接起来&lt;/li&gt;
+&lt;li&gt;多层索引：第一层索引块指向第二层的索引块，第二层的索引块再指向文件块。两层索引允许的最大文件为4GB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;混合索引&lt;/strong&gt;：系统既采用直接地址，又采用单级索引或两级索引分配方式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;目录的实现&#34;&gt;目录的实现&lt;/h3&gt;
+&lt;p&gt;读文件前必须先打开文件。操作系统利用用户给出的&lt;strong&gt;路径名&lt;/strong&gt;找到相应的&lt;strong&gt;目录项&lt;/strong&gt;。目录项中提供了查找文件磁盘块所需的信息，因系统而异，可以是&lt;strong&gt;上一节中介绍的几种方法对应的信息&lt;/strong&gt;，如整个文件的磁盘地址（连续分配）、第一个块的编号（两种链表分配方案）、i节点号。（最新的操作系统使用i节点实现文件，每个目录项只引用i节点的目录）&lt;/p&gt;
+&lt;p&gt;目录系统的主要功能就是把&lt;strong&gt;ASCII文件名&lt;/strong&gt;映射成&lt;strong&gt;定位文件数据所需的信息&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;与此相关的问题是在何处&lt;strong&gt;存放文件属性&lt;/strong&gt;，共有两种方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接存放在&lt;strong&gt;目录项&lt;/strong&gt;中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;目录中有一个固定大小的&lt;strong&gt;目录项列表&lt;/strong&gt;，每个文件对应一项，其中包含文件名、文件属性的结构体以及说明磁盘块位置的一个或多个磁盘地址。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;存放在&lt;strong&gt;i节点&lt;/strong&gt;中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;采用i节点系统采用的方式，不存放在目录项中。这种情形下&lt;strong&gt;目录项&lt;/strong&gt;会更短：只有&lt;strong&gt;文件名和i节点号&lt;/strong&gt;，这种方法更好。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;实现可变长的长文件名的方法&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一种方法是放弃所有目录项一样大。每个目录项有一个固定部分，这个固定部分以目录项长度开始，后面是固定格式的数据，包括各种属性，最后才是一个任意长度的实际文件名。为了使每个目录项从字的边界开始，每个文件名被填充成整数个字。这种方法的缺点是一走文件后引入了一个长度可变的空闲，下一个文件不一定适合这个空隙。另外，一个目录项可能分布在多个内存页面，读取文件名时可能发生缺页。&lt;/li&gt;
+&lt;li&gt;另一种方法是使目录项有固定长度，&lt;strong&gt;文件名存放在目录后面的堆中&lt;/strong&gt;。优点是移走一个文件的目录项后，另一个文件的目录项可以适合这个空隙。另外要&lt;strong&gt;对堆进行管理&lt;/strong&gt;，处理文件名时还可能出现缺页。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;加速查找文件名的方法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在每个目录中使用散列表进行查找。一般使用拉链法处理散列表的冲突。&lt;/p&gt;
+&lt;p&gt;另一种加快大型目录查找速度的方法是将查找结果存入高速缓存。&lt;/p&gt;
+&lt;h3 id=&#34;共享文件&#34;&gt;共享文件&lt;/h3&gt;
+&lt;p&gt;通过&lt;strong&gt;链接&lt;/strong&gt;来实现不同目录的用户共享同一个而文件，这样，文件系统本身就是一个&lt;strong&gt;有向无环图DAG&lt;/strong&gt;而不是一棵树，这使得文件系统维护变得复杂，但也是必须付出的代价。&lt;/p&gt;
+&lt;p&gt;共享也带来一些问题。若目录中包含磁盘地址，当链接文件时，必须把A目录中的地址复制到B目录，如果A或B随后又向目录中添加了内容，则新的数据块将只列入进行添加工作的用户目录中，其他用户对此不知情。解决这个问题的方法有两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;磁盘块不列入目录，而是列入一个与文件本身关联的小型数据结构，目录指向这个小型数据结构。UNIX中使用的就是&lt;strong&gt;i节点&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;符号链接法&lt;/strong&gt;，又称软链接法。系统建立一个&lt;strong&gt;类型为LINK的新文件&lt;/strong&gt;，将其存放在A的目录下，使得A与B的一个文件存在链接。新文件中只包含了它所链接的文件的&lt;strong&gt;路径名&lt;/strong&gt;。当A读该链接文件时，操作系统看到要读的文件类型为LINK，则找到该文件所链接的文件的名字，去读那个文件。符号链接法的问题是需要额外的开销，必须读取包含路径的文件，然后要一部分一部分地扫描路径，直到找到i节点。这些操作需要很多次额外的磁盘访问，并且每个符号链接都需要额外的i节点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;日志结构文件系统&#34;&gt;日志结构文件系统&lt;/h3&gt;
+&lt;p&gt;解决磁盘寻道时间没有快速发展但其他部件例如CPU、内存容量快速发展而带来的性能瓶颈。&lt;/p&gt;
+&lt;p&gt;Berkeley设计了一种全新的文件系统来缓解这个问题，就是日志文件系统（Log-Structured File System，LFS）。&lt;/p&gt;
+&lt;p&gt;促使LFS设计的主要原因是，CPU运行速度越来越快，内存容量变得更大，同时磁盘高速缓存也迅速增加，进而，不需要磁盘访问操作，就有可能满足直接来自文件系统高速缓存的很大一部分读请求。因此，未来多数磁盘访问的是写操作。&lt;/p&gt;
+&lt;p&gt;更糟糕的是大多数文件系统中写操作往往都是零碎的，而一个50us的写操作前需要等待10ms的寻道时间和4ms的旋转延迟时间，可见零碎的写操作是没有效率的。根据上面的数据，磁盘的利用率下降到了1%以下。&lt;/p&gt;
+&lt;p&gt;在UNIX文件系统上创建一个新的文件时，为了写这个文件，必须写该文件目录的i节点、目录块、文件的i节点以及文件本身。这些写操作都可能被延迟，那么如果在写操作完成前发生司机，就可能在文件系统中造成严重不一致性。因此i节点的写操作一般是立即完成的。&lt;/p&gt;
+&lt;p&gt;处于这一原因，LFS的设计者决定重新实现一种文件系统，在面对一个大部分由零碎的随机写操作组成的任务时，同样能充分利用磁盘带宽。思想史将整个磁盘结构化为一个日志，每隔一段时间或由=有特殊要求时，被缓冲在内存中的所有未决的写操作都被放到一个单独的段，作为在日志末尾的一个邻接段写入磁盘，该段包含i节点、目录块、数据块等，每段开始都是段的摘要，说明段中包含的内容。&lt;/p&gt;
+&lt;h3 id=&#34;日志文件系统&#34;&gt;日志文件系统&lt;/h3&gt;
+&lt;p&gt;借鉴日志结构文件系统的实际应用，基本思想是保存一个用于&lt;strong&gt;记录系统下一步要做什么&lt;/strong&gt;的日志。这样当系统在完成它们即将完成的任务前崩溃时，重新启动后，可以通过查看日志，获取崩溃前计划完成的任务，并完成它们。&lt;/p&gt;
+&lt;p&gt;微软的NTFS、Linux ext3等文件系统都支持使用日志。&lt;/p&gt;
+&lt;h3 id=&#34;虚拟文件系统&#34;&gt;虚拟文件系统&lt;/h3&gt;
+&lt;p&gt;在同一个操作系统下可能使用很多不同的文件系统。Windows有一个主要的NTFS文件系统，但也包含老的FAT-32或FAT-16驱动器或分区，并且不时需要一个CD-ROM或DVD。Windows通过指定&lt;strong&gt;不同盘符&lt;/strong&gt;来处理这些不同的文件系统。当一个进程打开一个文件，盘符是显式或隐式存在的，所以Windows知道向哪个文件系统传递请求，不需要整合不同类型文件系统。&lt;/p&gt;
+&lt;p&gt;相比之下，现代UNIX系统&lt;strong&gt;将多种文件系统整合到一个统一的结构中&lt;/strong&gt;。从用户的观点看，只有一个文件系统层级，他们事实上是多种不相容的文件系统，对用户和进程不可见。&lt;/p&gt;
+&lt;p&gt;绝大多数UNIX操作系统都使用虚拟文件系统（Virtual File System, VFS）。关键思想就是抽象出所有文件系统共有的部分，并将这部分单独的代码放在单独一层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F.jpg&#34; alt=&#34;虚拟文件系统&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;文件系统管理和优化&#34;&gt;文件系统管理和优化&lt;/h2&gt;
+&lt;h3 id=&#34;磁盘空间管理&#34;&gt;磁盘空间管理&lt;/h3&gt;
+&lt;p&gt;把文件分割成固定大小的块来存储。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;块大小&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;根据文件的大小来确定。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;记录空闲文件块&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;共有两种方法被广泛使用：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;磁盘块链表&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;链表的每个块中包含尽可能多的空闲磁盘块号。通常情况下，采用空闲块存放空闲表，这样不会影响存储器。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;位图&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;n个块的磁盘需要n位位图。位图中，空闲块用1表示，已分配块用0表示。&lt;/p&gt;
+&lt;h3 id=&#34;文件系统备份&#34;&gt;文件系统备份&lt;/h3&gt;
+&lt;h3 id=&#34;文件系统的一致性&#34;&gt;文件系统的一致性&lt;/h3&gt;
+&lt;h3 id=&#34;文件系统性能&#34;&gt;文件系统性能&lt;/h3&gt;
+&lt;p&gt;许多文件系统采用一些措施来改善性能。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;高速缓存&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;把一系列的块存放在内存中。确定块是否在内存中的方法是使用&lt;strong&gt;散列表&lt;/strong&gt;，将设备和磁盘地址进行散列操作，然后在散列表中查找。&lt;/p&gt;
+&lt;p&gt;高速缓存的调入调出原理与Cache一样。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;块提前读取&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;需要用到块以前，试图提前将其写入高速缓存，从而提高命中率。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;减少磁盘臂运动&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&#34;磁盘碎片整理&#34;&gt;磁盘碎片整理&lt;/h3&gt;
+&lt;p&gt;移动文件使它们相邻，并把所有的空闲空间放在一个或多个大的连续区域内。Windows中的defrag程序就是从事这个工作的。&lt;/p&gt;
+&lt;p&gt;固态硬盘不需要这类操作。&lt;/p&gt;
+- https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -2091,124 +2306,6 @@ w位补码所能表示的值的范围是：$[-2^{w-1},2^{w-1}-1]$，例如长度
 &lt;h3 id=&#34;舍入&#34;&gt;舍入&lt;/h3&gt;
 &lt;h3 id=&#34;浮点运算&#34;&gt;浮点运算&lt;/h3&gt;
 - https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>CAN总线</title>
-        <link>https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/</link>
-        <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/ -&lt;h2 id=&#34;概要&#34;&gt;概要&lt;/h2&gt;
-&lt;p&gt;Controller Area Network&lt;/p&gt;
-&lt;p&gt;CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于&lt;strong&gt;消息广播&lt;/strong&gt;模式的串行通信总线。&lt;/p&gt;
-&lt;p&gt;CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;CAN总线标准&lt;/strong&gt;规定了&lt;strong&gt;物理层&lt;/strong&gt;和&lt;strong&gt;数据链路层&lt;/strong&gt;，应用层标准由具体应用决定。&lt;/p&gt;
-&lt;h2 id=&#34;can物理层&#34;&gt;CAN物理层&lt;/h2&gt;
-&lt;p&gt;连接在CAN总线上的设备叫做节点设备（CAN Node），CAN网络的拓扑一般为线型。线束最常用的是双绞线，线上传输为对称的&lt;strong&gt;差分电平信号&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;节点主要包括Host、控制器和收发器。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Host&lt;/strong&gt;常集成有CAN控制器，&lt;strong&gt;CAN控制器&lt;/strong&gt;负责处理协议相关功能，以减轻Host的负担。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;CAN收发器&lt;/strong&gt;将控制器连接到传输媒介。通常控制器和总线收发器通过光耦或磁耦隔离，这样即使总线上过压损坏收发器，控制器和Host设备也可以得到保护。&lt;/p&gt;
-&lt;p&gt;在发送数据时，CAN控制器把要发送的二进制编码通过&lt;strong&gt;CAN_Tx线&lt;/strong&gt;发送到CAN收发器，然后由收发器把这个普通的逻辑电平信号转化成&lt;strong&gt;差分信号&lt;/strong&gt;，通过&lt;strong&gt;差分线CAN_High和CAN_Low&lt;/strong&gt;输出到CAN总线网络。接收数据过程，相反。采用差分信号，可以取得更好的电磁兼容效果。因此，CAN总线物理传输媒介只需要两根线。&lt;/p&gt;
-&lt;p&gt;下图为一CAN收发器应用的例子：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_example.PNG&#34; alt=&#34;CAN总线示例&#34;&gt;&lt;/p&gt;
-&lt;p&gt;高速CAN总线最高信号传输速率为1Mbps，支持最长距离40m。ISO11898-2要求在高速CAN总线两段安装&lt;strong&gt;端接电阻&lt;/strong&gt;RL（端接电阻一般为120Ω，因为电缆的特性阻抗为120 Ω，为了模拟无限远的传输线。）以消除反射。低速CAN最高速度只有125Kbps，所以ISO11898-3没有端接要求。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_bus_Res.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;差分信号&#34;&gt;差分信号&lt;/h3&gt;
-&lt;p&gt;CAN总线采用差分信号传输，通常情况下只需要两根信号线就可以进行正常的通信。在差分信号中，逻辑0和逻辑1是用两根差分信号线的电压差来表示。&lt;/p&gt;
-&lt;p&gt;当处于&lt;strong&gt;逻辑1&lt;/strong&gt;，CAN_High和CAN_Low的电压差小于0.5V时，称为&lt;strong&gt;隐性电平（Recessive）&lt;/strong&gt;；&lt;/p&gt;
-&lt;p&gt;当处于&lt;strong&gt;逻辑0&lt;/strong&gt;，CAN_High和CAN_Low的电压差大于0.9V，称为&lt;strong&gt;显性电平（Dominant）&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;CAN总线遵从“线与”机制：“显性”位可以覆 盖“隐性”位；只有所有节点都发 送“隐性”位， 总线才处于“隐性” 状态。这种“线与”机制使CAN总线呈现显性优先的特性。&lt;/p&gt;
-&lt;h2 id=&#34;can数据链路层&#34;&gt;CAN数据链路层&lt;/h2&gt;
-&lt;p&gt;在SPI通信中，片选、时钟信号、数据输入及数据输出这四个信号都有单独的信号线。而CAN使用的是两条差分信号线，&lt;strong&gt;只能表达一个信号&lt;/strong&gt;。简洁的物理层决定了CAN必然要配上一套更为复杂的协议。如何用一个信号通道实现同样甚至更强大的功能，答案就是对数据或操作命令进行打包。&lt;/p&gt;
-&lt;h3 id=&#34;通信机制&#34;&gt;通信机制&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;多主机(Multi-Master)&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;安全敏感的应用（如汽车动力）对通信系统的&lt;strong&gt;可靠性&lt;/strong&gt;要求很高。将总线能否正常工作归结到单一节点是非常危险的，比较合理的方案是对总线接入的&lt;strong&gt;去中心化&lt;/strong&gt;，即每个节点都有接入总线的能力。这也是CAN总线采用多主控（Multi-Master）线性拓扑结构的原因。&lt;/p&gt;
-&lt;p&gt;在CAN总线上，每个节点都有往总线上发送消息的能力，而消息的发送不必遵从任何预先设定的时序，通信是&lt;strong&gt;事件驱动&lt;/strong&gt;的。只有当有新的信息传递时，CAN总线才处于忙碌的状态，这使得节点接入总线速度非常快。CAN总线理论最高数据传输速率为1Mbps，对于异步事件反应迅速，基本对于ms级别的实时应用没有任何问题。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;寻址机制&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;CAN总线不设定节点的地址，而是通过消息的&lt;strong&gt;标识符（Identifier）&lt;strong&gt;来区别消息。这种机制虽然会增加消息的复杂度（增加标识符），但是节点在此情况下可以无需了解其他节点的状况，而&lt;/strong&gt;相互间独立工作&lt;/strong&gt;。在总线上增加节点时仅需关注消息类型，而非系统上其他节点的状况。这种以消息标识符寻址的方式，让总线上增加节点变得更加灵活。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;总线访问 CSMA/CD+AMP&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;多路载波侦听+基于消息优先级的冲突检测和非破坏性的仲裁机制（CSMA/CD+AMP）&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;CSMA（Carrie Sense Multiple Access）指的是所有节点必须都等到总线处于&lt;strong&gt;空闲状态&lt;/strong&gt;时才能往总线上发送消息；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;CD+AMP（Collision Detection + Arbitration on Message Priority）指的是如果多个节点往总线上发送消息时，具备&lt;strong&gt;最高优先级&lt;/strong&gt;的消息获得总线。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;多路载波侦听：网络上所有节点以多点接入的方式连接在同一根总线上，且发送数据是广播式的。网络上各个节点在发送数据前都要检测总线上是否有数据传输：若网络上有数据，暂时不发送数据，等待网络空闲时再发；若网络上无数据，立即发送已经准备好的数据。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;冲突检测：节点在发送数据时，要不停的检测发送的数据，确定是否与其他节点数据发送冲突，如果有冲突，则保证优先级高的报文先发送。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;非破坏性仲裁机制：通过ID仲裁，ID&lt;strong&gt;数值越小&lt;/strong&gt;，报文&lt;strong&gt;优先级越高&lt;/strong&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_1.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_2.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;发送低优先级报文的节点退出仲裁后，在下次总线空闲时自动重发报文。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_3.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;高优先级的报文&lt;strong&gt;不能中断&lt;/strong&gt;低优先级报文的发送。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;报文接受过滤&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的报文。节点对接收到的报文进行过滤：比较消息ID与选择器（Accepter）中和接受过滤相关位是否相同。如果相同，接收；如果不相同，则过滤。&lt;/p&gt;
-&lt;h3 id=&#34;报文种类及结构&#34;&gt;报文种类及结构&lt;/h3&gt;
-&lt;p&gt;在原始数据段的前面加上&lt;strong&gt;传输起始标签、片选（识别）标签、控制标签&lt;/strong&gt;，在数据的尾段加上&lt;strong&gt;CRC校验标签、应答标签和传输结束标签&lt;/strong&gt;。把这些内容按特定的格式打包好，就可以用一个通道表达各种信号了。&lt;/p&gt;
-&lt;p&gt;各种各样的标签，起到了协同传输的作用。当整个数据包被传输到其他设备时，只要这些设备按格式去解读，就能还原出原始数据。类似这样的数据包就被称为CAN的数据帧。&lt;/p&gt;
-&lt;p&gt;为了更有效的控制通信，CAN一共规定了5中类型的帧，帧也称为报文。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;帧&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;帧用途&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;数据帧&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;用于发送单元向接收单元传输数据的帧&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;远程帧&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;用于接收单元向具有相同ID的发送单元请求数据的帧&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;错误帧&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;用于当检测出错误时，向其他单元通知错误的帧&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;超载帧&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;用于接收单元通知其尚未做好接受准备的帧&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;帧间隔&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;用于将数据帧及遥控帧与前面其他帧分离开的帧&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;数据帧&lt;/strong&gt;：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_dataFrame.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;共分为7个段：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;帧起始（SOF）：标识一个数据帧的开始，固定一个显性位。用于同步，总线空闲期间的任何隐性到线性的跳变都将引起节点进行硬同步&lt;/li&gt;
-&lt;li&gt;仲裁段：内容为本数据帧的ID信息&lt;/li&gt;
-&lt;li&gt;控制段：r1和r0为保留位，默认设置为显性位。DLC（Data Length Code）段用二进制编码表示本报文的数据段包含多少字节，由4位组成，DLC3-DLC0，表示的数字为0-8.&lt;/li&gt;
-&lt;li&gt;数据段：数据帧的核心内容，有0-8个字节长度。&lt;/li&gt;
-&lt;li&gt;CRC段：报文包含了一段15位的CRC校验码，来检验是否出错。&lt;/li&gt;
-&lt;li&gt;ACK段：包含确认位和界定符。在发送节点发送时为隐形位，当接收节点收到正确报文时，将其覆盖为显性。&lt;/li&gt;
-&lt;li&gt;帧结束段（EOF）：由发送端发送7个隐形位表示结束。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;同步&#34;&gt;同步&lt;/h2&gt;
-&lt;p&gt;CAN总线使用&lt;strong&gt;位同步&lt;/strong&gt;的方式来确保通信时序，以及对总线的电平进行正确采样。&lt;/p&gt;
-&lt;h3 id=&#34;位时序&#34;&gt;位时序&lt;/h3&gt;
-&lt;h3 id=&#34;同步-1&#34;&gt;同步&lt;/h3&gt;
-&lt;p&gt;分为硬同步和重新同步。&lt;/p&gt;
-&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
-&lt;p&gt;部分内容转载自：&lt;a href=&#34;https://zhuanlan.zhihu.com/p/32262127&#34;&gt;知乎-Choris-一口气从零读懂CAN总线&lt;/a&gt;&lt;/p&gt;
-- https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/ - 2019-2021 By Jialong</description>
         </item>
     
     

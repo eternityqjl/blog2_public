@@ -7,7 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/c++%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/c++%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cpp11新特性总结</title>
+      <link>https://eternityqjl.top/posts/cpp11%E6%96%B0%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 25 Feb 2022 20:47:16 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/cpp11%E6%96%B0%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/</guid>
+      <description>部分内容参考自知乎 - jameswhale - C++11新特性总结（相比C++98）
+指针空值（0, NULL, nullptr） nullptr与nullptr_t =default 在C++中声明自定义的类，编译器会默认帮助程序员生成一些他们未显示定义的成员函数，包括构造函数、拷贝构造函数、拷贝赋值函数（operator =）、移动构造函数、移动拷贝函数、析构函数。一旦程序员实现了这些函数的自定义版本，则编译器不会再为该类自动生成默认版本。例如，声明了带参数的构造函数版本，则必须声明不带参数的版本以完成无参的变量初始化，而这会导致对应的类不再是POD的（非POD类型，意味着编译器失去了优化这样简单的数据类型的可能），通过=default 可以使其重新成为POD类型，见如下几个例子。
+=delete 在以前，程序员若希望限制一些默认函数的生成，例如，单件类的实现需要阻止其生成拷贝构造函数和拷贝赋值函数，可以将拷贝构造函数和拷贝赋值函数声明为private成员，并且不提供函数实现，C++11 标准给出了非常简洁的方法，即在函数的定义或者声明加上”= delete“。
+左值、右值 右值又称亡值、纯右值。
+ C++11新增了与右值引用相关的表达式。 一般来说，左值引用不能接受一个右值，不过常量的左值引用能接受一个右值，比如函数指针的引用传递，const T&amp;amp;，可以减少临时对象的拷贝。  列表初始化 C++11新增了列表初始化方式，方便了代码编写。声明一个以initializer_list模板类为参数的构造函数，自定义的类可以使用列表初始化方式。
+int b[]{2, 4, 5}; vector&amp;lt;int&amp;gt; c{1, 3, 4}; map&amp;lt;int, float&amp;gt; d = {{1, 1.0f}, {5, 3.2f}}; int a = {3 + 4}; int a{3 + 4}; 扩展了using的使用 using不只是用来声明命名空间了。
+using uint = unsigned int; template&amp;lt;typename T&amp;gt; using MapString = map&amp;lt;T, char*&amp;gt;; MapString&amp;lt;int&amp;gt; numberedString; auto auto作为新的类型指示符，用于自动推导，特别是命名空间、模板等导致类型很长的时候，非常方便。对于指针类型，声明为auto* 或者auto 是一样的，对于引用类型，必须使用auto &amp;amp; 。</description>
+    </item>
+    
     <item>
       <title>Cpp中的RAII机制</title>
       <link>https://eternityqjl.top/posts/cpp%E4%B8%AD%E7%9A%84raii%E6%9C%BA%E5%88%B6/</link>

@@ -6,9 +6,127 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>CAN总线</title>
+        <link>https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/</link>
+        <pubDate>Mon, 12 Jul 2021 18:16:41 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/ -&lt;h2 id=&#34;概要&#34;&gt;概要&lt;/h2&gt;
+&lt;p&gt;Controller Area Network&lt;/p&gt;
+&lt;p&gt;CAN总线由BOSCH公司开发，是一种多主控(Multi-Master)的现场总线系统，CAN网络的消息是广播式的，即同一时刻网络上所有节点侦测的数据是一致的，是一种基于&lt;strong&gt;消息广播&lt;/strong&gt;模式的串行通信总线。&lt;/p&gt;
+&lt;p&gt;CAN总线的很多优点，使得它得到了广泛的应用，如传输速度最高到1Mbps, 通信距离最远到10km，无损位仲裁机制，多主结构。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;CAN总线标准&lt;/strong&gt;规定了&lt;strong&gt;物理层&lt;/strong&gt;和&lt;strong&gt;数据链路层&lt;/strong&gt;，应用层标准由具体应用决定。&lt;/p&gt;
+&lt;h2 id=&#34;can物理层&#34;&gt;CAN物理层&lt;/h2&gt;
+&lt;p&gt;连接在CAN总线上的设备叫做节点设备（CAN Node），CAN网络的拓扑一般为线型。线束最常用的是双绞线，线上传输为对称的&lt;strong&gt;差分电平信号&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;节点主要包括Host、控制器和收发器。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Host&lt;/strong&gt;常集成有CAN控制器，&lt;strong&gt;CAN控制器&lt;/strong&gt;负责处理协议相关功能，以减轻Host的负担。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;CAN收发器&lt;/strong&gt;将控制器连接到传输媒介。通常控制器和总线收发器通过光耦或磁耦隔离，这样即使总线上过压损坏收发器，控制器和Host设备也可以得到保护。&lt;/p&gt;
+&lt;p&gt;在发送数据时，CAN控制器把要发送的二进制编码通过&lt;strong&gt;CAN_Tx线&lt;/strong&gt;发送到CAN收发器，然后由收发器把这个普通的逻辑电平信号转化成&lt;strong&gt;差分信号&lt;/strong&gt;，通过&lt;strong&gt;差分线CAN_High和CAN_Low&lt;/strong&gt;输出到CAN总线网络。接收数据过程，相反。采用差分信号，可以取得更好的电磁兼容效果。因此，CAN总线物理传输媒介只需要两根线。&lt;/p&gt;
+&lt;p&gt;下图为一CAN收发器应用的例子：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_example.PNG&#34; alt=&#34;CAN总线示例&#34;&gt;&lt;/p&gt;
+&lt;p&gt;高速CAN总线最高信号传输速率为1Mbps，支持最长距离40m。ISO11898-2要求在高速CAN总线两段安装&lt;strong&gt;端接电阻&lt;/strong&gt;RL（端接电阻一般为120Ω，因为电缆的特性阻抗为120 Ω，为了模拟无限远的传输线。）以消除反射。低速CAN最高速度只有125Kbps，所以ISO11898-3没有端接要求。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_bus_Res.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;差分信号&#34;&gt;差分信号&lt;/h3&gt;
+&lt;p&gt;CAN总线采用差分信号传输，通常情况下只需要两根信号线就可以进行正常的通信。在差分信号中，逻辑0和逻辑1是用两根差分信号线的电压差来表示。&lt;/p&gt;
+&lt;p&gt;当处于&lt;strong&gt;逻辑1&lt;/strong&gt;，CAN_High和CAN_Low的电压差小于0.5V时，称为&lt;strong&gt;隐性电平（Recessive）&lt;/strong&gt;；&lt;/p&gt;
+&lt;p&gt;当处于&lt;strong&gt;逻辑0&lt;/strong&gt;，CAN_High和CAN_Low的电压差大于0.9V，称为&lt;strong&gt;显性电平（Dominant）&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;CAN总线遵从“线与”机制：“显性”位可以覆 盖“隐性”位；只有所有节点都发 送“隐性”位， 总线才处于“隐性” 状态。这种“线与”机制使CAN总线呈现显性优先的特性。&lt;/p&gt;
+&lt;h2 id=&#34;can数据链路层&#34;&gt;CAN数据链路层&lt;/h2&gt;
+&lt;p&gt;在SPI通信中，片选、时钟信号、数据输入及数据输出这四个信号都有单独的信号线。而CAN使用的是两条差分信号线，&lt;strong&gt;只能表达一个信号&lt;/strong&gt;。简洁的物理层决定了CAN必然要配上一套更为复杂的协议。如何用一个信号通道实现同样甚至更强大的功能，答案就是对数据或操作命令进行打包。&lt;/p&gt;
+&lt;h3 id=&#34;通信机制&#34;&gt;通信机制&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;多主机(Multi-Master)&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;安全敏感的应用（如汽车动力）对通信系统的&lt;strong&gt;可靠性&lt;/strong&gt;要求很高。将总线能否正常工作归结到单一节点是非常危险的，比较合理的方案是对总线接入的&lt;strong&gt;去中心化&lt;/strong&gt;，即每个节点都有接入总线的能力。这也是CAN总线采用多主控（Multi-Master）线性拓扑结构的原因。&lt;/p&gt;
+&lt;p&gt;在CAN总线上，每个节点都有往总线上发送消息的能力，而消息的发送不必遵从任何预先设定的时序，通信是&lt;strong&gt;事件驱动&lt;/strong&gt;的。只有当有新的信息传递时，CAN总线才处于忙碌的状态，这使得节点接入总线速度非常快。CAN总线理论最高数据传输速率为1Mbps，对于异步事件反应迅速，基本对于ms级别的实时应用没有任何问题。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;寻址机制&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;CAN总线不设定节点的地址，而是通过消息的&lt;strong&gt;标识符（Identifier）&lt;strong&gt;来区别消息。这种机制虽然会增加消息的复杂度（增加标识符），但是节点在此情况下可以无需了解其他节点的状况，而&lt;/strong&gt;相互间独立工作&lt;/strong&gt;。在总线上增加节点时仅需关注消息类型，而非系统上其他节点的状况。这种以消息标识符寻址的方式，让总线上增加节点变得更加灵活。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;总线访问 CSMA/CD+AMP&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;多路载波侦听+基于消息优先级的冲突检测和非破坏性的仲裁机制（CSMA/CD+AMP）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;CSMA（Carrie Sense Multiple Access）指的是所有节点必须都等到总线处于&lt;strong&gt;空闲状态&lt;/strong&gt;时才能往总线上发送消息；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;CD+AMP（Collision Detection + Arbitration on Message Priority）指的是如果多个节点往总线上发送消息时，具备&lt;strong&gt;最高优先级&lt;/strong&gt;的消息获得总线。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;多路载波侦听：网络上所有节点以多点接入的方式连接在同一根总线上，且发送数据是广播式的。网络上各个节点在发送数据前都要检测总线上是否有数据传输：若网络上有数据，暂时不发送数据，等待网络空闲时再发；若网络上无数据，立即发送已经准备好的数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;冲突检测：节点在发送数据时，要不停的检测发送的数据，确定是否与其他节点数据发送冲突，如果有冲突，则保证优先级高的报文先发送。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;非破坏性仲裁机制：通过ID仲裁，ID&lt;strong&gt;数值越小&lt;/strong&gt;，报文&lt;strong&gt;优先级越高&lt;/strong&gt;。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_1.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_2.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;发送低优先级报文的节点退出仲裁后，在下次总线空闲时自动重发报文。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_communicate_3.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;高优先级的报文&lt;strong&gt;不能中断&lt;/strong&gt;低优先级报文的发送。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;报文接受过滤&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;CAN控制器大多具有根据ID过滤报文的功能，即只接收某些ID的报文。节点对接收到的报文进行过滤：比较消息ID与选择器（Accepter）中和接受过滤相关位是否相同。如果相同，接收；如果不相同，则过滤。&lt;/p&gt;
+&lt;h3 id=&#34;报文种类及结构&#34;&gt;报文种类及结构&lt;/h3&gt;
+&lt;p&gt;在原始数据段的前面加上&lt;strong&gt;传输起始标签、片选（识别）标签、控制标签&lt;/strong&gt;，在数据的尾段加上&lt;strong&gt;CRC校验标签、应答标签和传输结束标签&lt;/strong&gt;。把这些内容按特定的格式打包好，就可以用一个通道表达各种信号了。&lt;/p&gt;
+&lt;p&gt;各种各样的标签，起到了协同传输的作用。当整个数据包被传输到其他设备时，只要这些设备按格式去解读，就能还原出原始数据。类似这样的数据包就被称为CAN的数据帧。&lt;/p&gt;
+&lt;p&gt;为了更有效的控制通信，CAN一共规定了5中类型的帧，帧也称为报文。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;帧&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;帧用途&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;数据帧&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于发送单元向接收单元传输数据的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;远程帧&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于接收单元向具有相同ID的发送单元请求数据的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;错误帧&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于当检测出错误时，向其他单元通知错误的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;超载帧&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于接收单元通知其尚未做好接受准备的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;帧间隔&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;用于将数据帧及遥控帧与前面其他帧分离开的帧&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;数据帧&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/CAN_dataFrame.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;共分为7个段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;帧起始（SOF）：标识一个数据帧的开始，固定一个显性位。用于同步，总线空闲期间的任何隐性到线性的跳变都将引起节点进行硬同步&lt;/li&gt;
+&lt;li&gt;仲裁段：内容为本数据帧的ID信息&lt;/li&gt;
+&lt;li&gt;控制段：r1和r0为保留位，默认设置为显性位。DLC（Data Length Code）段用二进制编码表示本报文的数据段包含多少字节，由4位组成，DLC3-DLC0，表示的数字为0-8.&lt;/li&gt;
+&lt;li&gt;数据段：数据帧的核心内容，有0-8个字节长度。&lt;/li&gt;
+&lt;li&gt;CRC段：报文包含了一段15位的CRC校验码，来检验是否出错。&lt;/li&gt;
+&lt;li&gt;ACK段：包含确认位和界定符。在发送节点发送时为隐形位，当接收节点收到正确报文时，将其覆盖为显性。&lt;/li&gt;
+&lt;li&gt;帧结束段（EOF）：由发送端发送7个隐形位表示结束。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;同步&#34;&gt;同步&lt;/h2&gt;
+&lt;p&gt;CAN总线使用&lt;strong&gt;位同步&lt;/strong&gt;的方式来确保通信时序，以及对总线的电平进行正确采样。&lt;/p&gt;
+&lt;h3 id=&#34;位时序&#34;&gt;位时序&lt;/h3&gt;
+&lt;h3 id=&#34;同步-1&#34;&gt;同步&lt;/h3&gt;
+&lt;p&gt;分为硬同步和重新同步。&lt;/p&gt;
+&lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
+&lt;p&gt;部分内容转载自：&lt;a href=&#34;https://zhuanlan.zhihu.com/p/32262127&#34;&gt;知乎-Choris-一口气从零读懂CAN总线&lt;/a&gt;&lt;/p&gt;
+- https://eternityqjl.top/posts/can%E6%80%BB%E7%BA%BF/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1810,128 +1928,6 @@ strm::goodbit	//用来指出流位处于错误状态。
 &lt;/table&gt;
 &lt;h4 id=&#34;以out模式打开文件会丢弃已有数据&#34;&gt;以out模式打开文件会丢弃已有数据&lt;/h4&gt;
 &lt;h3 id=&#34;string流&#34;&gt;string流&lt;/h3&gt;- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2io%E5%BA%93/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Altium Designer画图流程记录(简略)</title>
-        <link>https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
-        <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ -&lt;h1 id=&#34;altium-designer画图流程记录简略&#34;&gt;Altium Designer画图流程记录(简略)&lt;/h1&gt;
-&lt;p&gt;之前看过博主&lt;a href=&#34;https://space.bilibili.com/384891&#34;&gt;半夜中暑的羊&lt;/a&gt;的原理图以及PCB绘制&lt;a href=&#34;https://www.bilibili.com/video/BV1JE41127Ks&#34;&gt;教程&lt;/a&gt;，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。&lt;/p&gt;
-&lt;p&gt;共有以下几部分内容：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;原理图库&lt;/li&gt;
-&lt;li&gt;核心模块的原理图&lt;/li&gt;
-&lt;li&gt;为原理图添加封装&lt;/li&gt;
-&lt;li&gt;PCB布局&lt;/li&gt;
-&lt;li&gt;PCB布线&lt;/li&gt;
-&lt;li&gt;PCB敷铜&lt;/li&gt;
-&lt;li&gt;PCB生成BOM及投板&lt;/li&gt;
-&lt;/ol&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;pcb各层简介&#34;&gt;PCB各层简介&lt;/h2&gt;
-&lt;p&gt;参考自：&lt;a href=&#34;https://blog.csdn.net/qq_29373285/article/details/85339076&#34;&gt;PCB各层介绍&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;mechanical-layer机械层&#34;&gt;Mechanical layer(机械层)&lt;/h3&gt;
-&lt;p&gt;Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MechanicalLayer.PNG&#34; alt=&#34;MechanicalLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;keep-out-layer禁止布线层&#34;&gt;Keep out layer(禁止布线层)&lt;/h3&gt;
-&lt;p&gt;用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/KeepOutLayer.PNG&#34; alt=&#34;KeepOutLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;signal-layer信号层&#34;&gt;Signal layer(信号层)&lt;/h3&gt;
-&lt;p&gt;信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SignalLayer.PNG&#34; alt=&#34;SignalLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;internal-plane-layer内部电源接地层&#34;&gt;Internal plane layer(内部电源/接地层)&lt;/h3&gt;
-&lt;p&gt;Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。&lt;/p&gt;
-&lt;h3 id=&#34;silkscreen-layer丝印层&#34;&gt;Silkscreen layer(丝印层)&lt;/h3&gt;
-&lt;p&gt;丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SilkscreenLayer.PNG&#34; alt=&#34;SilkscreenLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;solder-mask-layer阻焊层&#34;&gt;Solder mask layer(阻焊层)&lt;/h3&gt;
-&lt;p&gt;在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中&lt;strong&gt;匹配焊盘&lt;/strong&gt;，是&lt;strong&gt;自动产生&lt;/strong&gt;的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)&lt;strong&gt;和&lt;/strong&gt;Bottom Solder(底层)**两个阻焊层。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SolderMaskLayer.PNG&#34; alt=&#34;SolderMaskLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;paste-mask-layer助焊层smd贴片层&#34;&gt;Paste mask layer(助焊层，SMD贴片层)&lt;/h3&gt;
-&lt;p&gt;它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/PasteMaskLayer.PNG&#34; alt=&#34;PasteMaskLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;multi-layer多层&#34;&gt;Multi layer(多层)&lt;/h3&gt;
-&lt;p&gt;电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MultiLayer.PNG&#34; alt=&#34;MultiLayer&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;drill-layer钻孔层&#34;&gt;Drill layer(钻孔层)&lt;/h3&gt;
-&lt;p&gt;钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。&lt;/p&gt;
-&lt;h2 id=&#34;原理图库器件画法&#34;&gt;原理图库器件画法&lt;/h2&gt;
-&lt;p&gt;放置矩形&lt;/p&gt;
-&lt;p&gt;添加Pin&lt;/p&gt;
-&lt;p&gt;设置器件的Designator（例如P?）&lt;/p&gt;
-&lt;h2 id=&#34;器件的pcb封装画法&#34;&gt;器件的PCB封装画法&lt;/h2&gt;
-&lt;p&gt;确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。&lt;/p&gt;
-&lt;h2 id=&#34;批量添加封装并给各种原件命名&#34;&gt;批量添加封装并给各种原件命名&lt;/h2&gt;
-&lt;h3 id=&#34;添加封装&#34;&gt;添加封装&lt;/h3&gt;
-&lt;p&gt;右键-Find Similar Objects选择相同类型的原件-右键-Properties-修改封装&lt;/p&gt;
-&lt;h3 id=&#34;批量命名&#34;&gt;批量命名&lt;/h3&gt;
-&lt;p&gt;执行&lt;strong&gt;Tools-Annotation-Annotate Schematic&lt;/strong&gt;(或快捷键&lt;strong&gt;T A A&lt;/strong&gt;)命令打开原理图元件命名管理器&lt;/p&gt;
-&lt;p&gt;左上角设置命名顺序&lt;/p&gt;
-&lt;p&gt;设置命名范围&lt;/p&gt;
-&lt;p&gt;然后单击Update&lt;/p&gt;
-&lt;p&gt;可以看到新的命名建议，然后执行有效角的接收更改&lt;/p&gt;
-&lt;p&gt;依次单击Validate和Execute（保证两排绿√）&lt;/p&gt;
-&lt;p&gt;即可完成命名&lt;/p&gt;
-&lt;h2 id=&#34;确定pcb范围并布局&#34;&gt;确定PCB范围并布局&lt;/h2&gt;
-&lt;p&gt;根据需要的形状和经验粗略地确定版图的位置边界，然后布局元件位置。&lt;/p&gt;
-&lt;h2 id=&#34;布线&#34;&gt;布线&lt;/h2&gt;
-&lt;p&gt;注意设置焊盘间的距离，jlc为7mil，以及过孔孔径。&lt;/p&gt;
-&lt;p&gt;过孔打法：&lt;code&gt;Alt+Shift+鼠标滚轮向上&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;铺铜&#34;&gt;铺铜&lt;/h2&gt;
-&lt;p&gt;使用铺铜管理器进行铺铜：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;工具→铺铜→铺铜管理器（快捷键:TGM）&lt;/li&gt;
-&lt;li&gt;选择来自&amp;hellip;..的新多边形（New Polygon from &amp;hellip;）→板外形（Board Outline）&lt;/li&gt;
-&lt;li&gt;设置网络，哪一层？除去死铜&lt;/li&gt;
-&lt;li&gt;最后点击应用，确定，这样顶层的铺地铜就铺好了！&lt;/li&gt;
-&lt;li&gt;其他层同样按照上面的步骤进行&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;设置板子边界&#34;&gt;设置板子边界&lt;/h2&gt;
-&lt;p&gt;首先选中Keep-Out-Layer所定义的边界&lt;/p&gt;
-&lt;p&gt;然后：&lt;/p&gt;
-&lt;p&gt;【Design】|【Board shape】|【Define from selected objects】&lt;/p&gt;
-&lt;p&gt;快捷键为D+S+D+enter&lt;/p&gt;
-&lt;h2 id=&#34;其他一些快捷键&#34;&gt;其他：一些快捷键&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ctrl+D&lt;/code&gt;: View Configuration，用来配置PCB的显示内容&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ctrl+M&lt;/code&gt;：测量长度，使用&lt;code&gt;shift+C&lt;/code&gt;删除测量得到的线&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;批量修改元件&#34;&gt;批量修改元件&lt;/h2&gt;
-&lt;p&gt;以命名所有电阻为例：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;首先使用过滤器选中所有电阻&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;执行&lt;strong&gt;工具——Annotation——注解&lt;/strong&gt;（英文为&lt;strong&gt;Tools——Annotation——Annotate Schematic&lt;/strong&gt;，或者快捷键&lt;strong&gt;T A A&lt;/strong&gt;）命令打开原理图元件命名管理器&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;一些注意事项&#34;&gt;一些注意事项&lt;/h2&gt;
-&lt;h3 id=&#34;天线设计&#34;&gt;天线设计&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;天线有效部分的周围及其下层不应该有元件、布线和铺铜&lt;/li&gt;
-&lt;li&gt;天线放置在PCB版的板边，尽量朝向前面板，避开周围铁结构件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;元器件放置原则&#34;&gt;元器件放置原则&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;晶振要靠近IC摆放&lt;/li&gt;
-&lt;li&gt;IC去耦电容的布局要靠近IC的电源管脚，并使之与电源和地之间形成的回路最短&lt;/li&gt;
-&lt;li&gt;发热元件要均匀分布&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;走线原则&#34;&gt;走线原则&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;高速信号和关键信号走线要尽量短&lt;/li&gt;
-&lt;li&gt;一条走线不要打太多的孔&lt;/li&gt;
-&lt;li&gt;走线拐角要大于90度&lt;/li&gt;
-&lt;li&gt;功放IC下面不能走线&lt;/li&gt;
-&lt;li&gt;双面板中没有地线，晶振电容地线要使用短线连接到器件上离晶振最近的GND引脚，尽量减少过孔。&lt;/li&gt;
-&lt;/ul&gt;
-- https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
         </item>
     
     

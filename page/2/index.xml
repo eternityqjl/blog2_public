@@ -6,9 +6,75 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>测试机器大小端的方法</title>
+        <link>https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/</link>
+        <pubDate>Wed, 22 Dec 2021 15:49:36 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/ -&lt;ul&gt;
+&lt;li&gt;小端法：低位字节存放在低地址，高位字节存放在高地址&lt;/li&gt;
+&lt;li&gt;大端法：低位字节存放在高地址，高位字节存放在低地址&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;判断电脑大小端模式的方法：&lt;/p&gt;
+&lt;h2 id=&#34;方法一&#34;&gt;方法一&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;C语言中的char和int：&lt;/p&gt;
+&lt;p&gt;在C语言中并没有char类型的常量，其实是用int类型表示char。举个例子：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; ch &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;;
+&lt;span style=&#34;color:#888&#34;&gt;//分别输出ch的字符和对应的ascii码。即打印出的是字符或整数
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%c, %d&amp;#34;&lt;/span&gt;, ch, ch);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出结果为：a, 97&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;将int 48存起来，然后取得其地址，再将这个地址转为char* 这时候，如果是小端存储，那么char*指针就指向48；48对应的ASCII码为字符‘0’；&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;judge1&lt;/span&gt;() {
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;48&lt;/span&gt;;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; p &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;i;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; c &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+    c &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;((&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;)p);
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (c &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;0&amp;#39;&lt;/span&gt;)
+        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;小端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
+        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;大端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方法二&#34;&gt;方法二&lt;/h2&gt;
+&lt;p&gt;定义变量int i=1；将 i 的地址拿到，强转成char*型，这时候就取到了 i 的低地址，这时候如果是1就是小端存储，如果是0就是大端存储。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;judge2&lt;/span&gt;() {
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; c &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;)&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;i);
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (c)
+        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;小端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
+        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;大端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方法三&#34;&gt;方法三&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;联合体union是一种特殊数据类型，允许在相同的内存位置存储不同的数据类型。可以定义一个带有多成员的共同体，但任何时候只能有一个成员带有值。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;定义联合体，一个成员是多字节，一个是单字节，给多字节的成员赋一个最低一个字节不为0，其他字节为0 的值，再用第二个成员来判断，如果第二个字节不为0，就是小端，若为0，就是大端。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;judge3&lt;/span&gt;() {
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;union&lt;/span&gt;
+    {
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i;
+        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; c;
+    } un;
+    un.i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (un.c &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
+        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;小端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
+        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;大端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -994,134 +1060,6 @@ $H(key)$为散列函数；i=0,1,2,&amp;hellip;,k；$m$表示散列表表长；$d
 &lt;h3 id=&#34;哲学家就餐问题&#34;&gt;哲学家就餐问题&lt;/h3&gt;
 &lt;h3 id=&#34;读者-写者问题&#34;&gt;读者-写者问题&lt;/h3&gt;
 - https://eternityqjl.top/posts/%E7%8E%B0%E4%BB%A3%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AD%A6%E4%B9%A0%E6%97%A5%E5%BF%97%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>算法——基础排序算法的实现</title>
-        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
-        <pubDate>Mon, 06 Dec 2021 20:37:41 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/ -&lt;h2 id=&#34;选择排序&#34;&gt;选择排序&lt;/h2&gt;
-&lt;p&gt;基本思想：每一趟（例如第i趟）在后面n-i+1个待排元素中选取关键字最小的元素，作为有序子序列的第i个元素，直到第n-1趟做完，待排序元素只剩下一个，就不用再选了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;selectSort&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums) {
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size();
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N; j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (a[j] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; a[min]) min &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; j;
-        swap(nums[i], nums[min]);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;时间复杂度为$O(n^2)$。算法不稳定。空间复杂度为$O(1)$。&lt;/p&gt;
-&lt;h2 id=&#34;插入排序&#34;&gt;插入排序&lt;/h2&gt;
-&lt;p&gt;将后面的每个元素都插入到前面的有序序列中。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;insertSort&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums) {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size();
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i; j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; nums[j] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; nums[j&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]; j&lt;span style=&#34;color:#333&#34;&gt;--&lt;/span&gt;)
-            swap(nums[j], nums[j&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;时间复杂度为$O(n^2)$，算法稳定。&lt;/p&gt;
-&lt;h2 id=&#34;希尔排序&#34;&gt;希尔排序&lt;/h2&gt;
-&lt;p&gt;将待排序列表分割为若干个等长的子表，即把相隔某个增量的所有元素组成一个子表，对各个子表分别进行插入排序，之后整个表的元素已经基本有序，然后对全体列表进行直接插入排序。（局部有序性）&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;shellSort&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums) {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size();
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; n &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
-    
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (h &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;) {
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i; j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; h &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; num[j] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; nums[j&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;h]; j &lt;span style=&#34;color:#333&#34;&gt;-=&lt;/span&gt; h)
-                swap(nums[j], nums[j&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;h]);
-        }
-        h &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; h&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;n在某个特定范围内时，希尔排序的时间复杂度约为$O(n^{1.3})$，最坏时间复杂度为$O(n^2)$。算法不稳定。&lt;/p&gt;
-&lt;h2 id=&#34;冒泡排序&#34;&gt;冒泡排序&lt;/h2&gt;
-&lt;p&gt;从后向前两两比较相邻元素的值。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;BubbleSort&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums) {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size();
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; flag &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;false&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//flag用来判断一趟遍历是否发生交换，如果没有发生交换则说明已经有序
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i; j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; n &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (nums[j] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; nums[j&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]) {
-                swap(nums[j], nums[j&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;]);
-                flag &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;true&lt;/span&gt;;
-            }
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (flag &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;false&lt;/span&gt;)
-                &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;;
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;时间复杂度：$O(n^2)$，算法稳定。&lt;/p&gt;
-&lt;h2 id=&#34;快速排序&#34;&gt;快速排序&lt;/h2&gt;
-&lt;p&gt;是基于&lt;strong&gt;分治&lt;/strong&gt;的思想，在待排序表中任取一个元素pivot作为&lt;strong&gt;轴枢&lt;/strong&gt;元素，通过一趟排序将排序表划分为两个部分$L[1&amp;hellip;.k-1]$和$L[k+1&amp;hellip;.n]$，使得$L[1&amp;hellip;.k-1]$中的所有元素&lt;strong&gt;小于&lt;/strong&gt;pivot，$L[k+1&amp;hellip;.n]$中的所有元素&lt;strong&gt;大于&lt;/strong&gt;pivot，此时pivot放在了其&lt;strong&gt;最终位置L(k)&lt;strong&gt;上，然后分别对&lt;/strong&gt;两个子表重复上述过程&lt;/strong&gt;，直至每部分内&lt;strong&gt;只有一个元素或为空&lt;/strong&gt;，所有元素就都放在了最终位置。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;quickSort&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; low, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; high) {
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (low &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; high) {
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; pivot &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; partition(nums, low, high);
-        quickSort(nums, low, pivot &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);
-        quickSort(nums, pivot &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, high);
-    }
-}
-&lt;span style=&#34;color:#888&#34;&gt;//每趟划分都把当前数组第一个元素作为轴枢，把所有小于轴枢的元素移动到左侧，大于轴枢的元素移动到右侧
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;partition&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; low, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; high) {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; pivot &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums[low];	&lt;span style=&#34;color:#888&#34;&gt;//将第一个元素当作轴枢，low和high作为两个指针
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (low &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; high) {
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (low &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; high &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; nums[high] &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; pivot)	&lt;span style=&#34;color:#333&#34;&gt;--&lt;/span&gt;high;
-        nums[low] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums[high];	&lt;span style=&#34;color:#888&#34;&gt;//将比轴枢小的元素移动到左端
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (low &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; high &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; nums[low] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; pivot)	&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;low;
-        nums[high] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums[low];	&lt;span style=&#34;color:#888&#34;&gt;//将比轴枢大的元素移动到右侧
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    }
-    &lt;span style=&#34;color:#888&#34;&gt;//结束时low==high
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    nums[low] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; pivot;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; low;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;时间复杂度为$O(n\log_2 n)$。算法不稳定。&lt;/p&gt;
-&lt;p&gt;空间复杂度：递归过程需要借助一个&lt;strong&gt;递归工作栈&lt;/strong&gt;，最好的情况为$O(\log_2 n)$；最坏情况下栈的深度为$O(n)$，平均情况下为$O(\log_2 n)$&lt;/p&gt;
-&lt;p&gt;快速排序是所有内部排序算法中平均性能最优的排序算法。&lt;/p&gt;
-&lt;h2 id=&#34;归并排序&#34;&gt;归并排序&lt;/h2&gt;
-&lt;p&gt;2路归并排序。分治的思想。&lt;/p&gt;
-&lt;p&gt;归并排序必须要占用额外的存储空间，空间复杂度为O(N)&lt;/p&gt;
-&lt;h3 id=&#34;自顶向下归并&#34;&gt;自顶向下归并&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; aux;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mergeSort&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; low, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; high) {
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt;(low &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; high) {
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (low &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; high) &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
-        MergeSort(nums, low, mid);
-        MergeSort(nums, mid&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, high);
-        Merge(A, low, mid, high);
-    }
-}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;Merge&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; low, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; mid, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; high) {
-    &lt;span style=&#34;color:#888&#34;&gt;//nums中的两段nums[low, mid]和nums[mid + 1, high]各自有序，将这两个数组合并
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; m &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; low; m &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; high; m&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
-        aux.push_back(nums[m]);
-    }
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; low &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; low; k &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; high; k&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; mid &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; low)					nums[k] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux[j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;];
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (j &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; high &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; low)			nums[k] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux[i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;];
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (aux[j] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;=&lt;/span&gt; aux[i])			nums[k] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux[j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;];
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;								nums[k] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; aux[i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;];
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;自底向上归并&#34;&gt;自底向上归并&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; aux;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mergeSort&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; low, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; high) {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size();
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; sz &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N; sz &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz) {	&lt;span style=&#34;color:#888&#34;&gt;//sz为子数组的大小
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; lo &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; lo &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; N &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; sz; lo &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; sz &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; sz) {	&lt;span style=&#34;color:#888&#34;&gt;//lo为子数组的索引
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;            Merge(nums, lo, lo&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;sz&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, MIN(lo&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;sz&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;sz&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, N&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;));
-        }
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;自底向上归并会多次遍历整个数组，根据子数组的大小进行两两归并。子数组的大小sz的初始值为1，每次加倍。最后一个子数组的大小只有在数组大小是sz的偶数倍时才会等于sz（否则其会比sz小）。&lt;/p&gt;
-&lt;p&gt;归并排序是一种渐进最优的基于比较的排序算法。在最坏的情况下的比较次数为$n\log n$.&lt;/p&gt;
-- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/ - 2019-2021 By Jialong</description>
         </item>
     
     

@@ -6,9 +6,107 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Cpp11新特性总结</title>
+        <link>https://eternityqjl.top/posts/cpp11%E6%96%B0%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/</link>
+        <pubDate>Fri, 25 Feb 2022 20:47:16 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp11%E6%96%B0%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp11%E6%96%B0%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/ -&lt;p&gt;部分内容参考自&lt;a href=&#34;https://zhuanlan.zhihu.com/p/103258069&#34;&gt;知乎 - jameswhale - C++11新特性总结（相比C++98）&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;指针空值0-null-nullptr&#34;&gt;指针空值（0, NULL, nullptr）&lt;/h2&gt;
+&lt;h2 id=&#34;nullptr与nullptr_t&#34;&gt;nullptr与nullptr_t&lt;/h2&gt;
+&lt;h2 id=&#34;default&#34;&gt;=default&lt;/h2&gt;
+&lt;p&gt;在C++中声明自定义的类，编译器会默认帮助程序员生成一些他们未显示定义的成员函数，包括构造函数、拷贝构造函数、拷贝赋值函数（operator =）、移动构造函数、移动拷贝函数、析构函数。一旦程序员实现了这些函数的自定义版本，则编译器不会再为该类自动生成默认版本。例如，声明了带参数的构造函数版本，则必须声明不带参数的版本以完成无参的变量初始化，而这会导致对应的类不再是POD的（非POD类型，意味着编译器失去了优化这样简单的数据类型的可能），通过=default 可以使其重新成为POD类型，见如下几个例子。&lt;/p&gt;
+&lt;h2 id=&#34;delete&#34;&gt;=delete&lt;/h2&gt;
+&lt;p&gt;在以前，程序员若希望限制一些默认函数的生成，例如，单件类的实现需要阻止其生成拷贝构造函数和拷贝赋值函数，可以将拷贝构造函数和拷贝赋值函数声明为private成员，并且不提供函数实现，C++11 标准给出了非常简洁的方法，即在函数的定义或者声明加上”= delete“。&lt;/p&gt;
+&lt;h2 id=&#34;左值右值&#34;&gt;左值、右值&lt;/h2&gt;
+&lt;p&gt;右值又称亡值、纯右值。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;C++11新增了与右值引用相关的表达式。&lt;/li&gt;
+&lt;li&gt;一般来说，左值引用不能接受一个右值，不过常量的左值引用能接受一个右值，比如函数指针的引用传递，const T&amp;amp;，可以减少临时对象的拷贝。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;列表初始化&#34;&gt;列表初始化&lt;/h2&gt;
+&lt;p&gt;C++11新增了列表初始化方式，方便了代码编写。声明一个以initializer_list&lt;!-- raw HTML omitted --&gt; 模板类为参数的构造函数，自定义的类可以使用列表初始化方式。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; b[]{&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;};
+vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; c{&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;};
+map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; d &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {{&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1.0f&lt;/span&gt;}, {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;3.2f&lt;/span&gt;}};
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;};
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; a{&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;4&lt;/span&gt;};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;扩展了using的使用&#34;&gt;扩展了using的使用&lt;/h2&gt;
+&lt;p&gt;using不只是用来声明命名空间了。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; uint &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;template&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typename&lt;/span&gt; T&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; MapString &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;T, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&amp;gt;&lt;/span&gt;;
+MapString&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; numberedString;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;auto&#34;&gt;auto&lt;/h2&gt;
+&lt;p&gt;auto作为新的类型指示符，用于自动推导，特别是命名空间、模板等导致类型很长的时候，非常方便。对于指针类型，声明为auto* 或者auto 是一样的，对于&lt;strong&gt;引用类型&lt;/strong&gt;，必须使用&lt;strong&gt;auto &amp;amp;&lt;/strong&gt; 。&lt;/p&gt;
+&lt;h2 id=&#34;decltype&#34;&gt;decltype&lt;/h2&gt;
+&lt;p&gt;以一个普通的表达式为参数返回该&lt;strong&gt;表达式的类型&lt;/strong&gt;，在编译期进行。&lt;/p&gt;
+&lt;h2 id=&#34;基于范围的for循环&#34;&gt;基于范围的for循环&lt;/h2&gt;
+&lt;p&gt;对于知道范围的数组和stl容器，C++11提供了for迭代访问能力，结合auto，可简化代码。需要满足两个条件：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;迭代的对象实现++和==操作；&lt;/li&gt;
+&lt;li&gt;知道范围&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;多线程编程&#34;&gt;多线程编程&lt;/h2&gt;
+&lt;p&gt;C++11之前，在C/C++中程序中使用线程，主要使用POSIX线程（pthread），POSIX线程是POSIX标准中关于线程的部分，程序员可以通过pthread线程的api完成线程的创建、数据的共享、同步等功能。C++11引入了多线程的支持，使得C/C++语言在进行线程编程时，不必依赖第三方库和标准。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;atomic&amp;gt;		&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;thread&amp;gt;		&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;iostream&amp;gt;		&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;		
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;namespace&lt;/span&gt; std;		
+		
+atomic_llong total{&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;};		
+		
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;func&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ){		
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;long&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100000000LL&lt;/span&gt;;&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i){		
+        total &lt;span style=&#34;color:#333&#34;&gt;+=&lt;/span&gt; i;		
+    }		
+}		
+		
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;(){		
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;thread&lt;/span&gt; t1(func, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);		
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;thread&lt;/span&gt; t2(func ,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);		
+    t1.join();		
+    t2.join();		
+    cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; total &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;		
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;		
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;智能指针&#34;&gt;智能指针&lt;/h2&gt;
+&lt;p&gt;C++11共有以下几种智能指针：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;unique_ptr：拥有内存的所有权，没有拷贝构造函数，只有移动构造函数，不能多个unique_ptr对象共享一段内存，可以自定义delete函数，从而支持delete[]&lt;/li&gt;
+&lt;li&gt;shared_ptr：通过计数方式，多个shared_ptr可以共享一段内存，计数为0时，所管理的内存会被删除，可以自定义delete函数，从而支持delete[]&lt;/li&gt;
+&lt;li&gt;weak_ptr：观察shared_ptr管理的内存对象，只观察但不拥有。成员函数lock返回shared_ptr对象，若对应内存已经删除，则shared_ptr对象==nullptr，weak_ptr对象可以拷贝构造，拷贝构造出来的对象和原对象观察的是同一段内存。成员函数reset可以解除对内存的观察，注意，是解除观察，并不会删除对应内存对象。weak_ptr可以避免因为shared_ptr的循环引用引起的内存泄漏。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;lambda表达式&#34;&gt;lambda表达式&lt;/h2&gt;
+&lt;h2 id=&#34;pragma-once-或-_pragmaonce&#34;&gt;#Pragma once 或 _Pragma(&amp;ldquo;once&amp;rdquo;)&lt;/h2&gt;
+&lt;p&gt;用来保证头文件只会被include一次。_Pragma是一个操作符，可以用在宏定义中，比预处理指令灵活。&lt;/p&gt;
+&lt;h2 id=&#34;变长参数的宏定义&#34;&gt;变长参数的宏定义&lt;/h2&gt;
+&lt;p&gt;变长参数的宏定义指的是在宏定义中参数列表的最后一个参数为省略号，预定义宏&lt;code&gt;__VA_ARGS__&lt;/code&gt;可以在宏定义的实现部分替换省略号代表队的字符串。&lt;/p&gt;
+&lt;h2 id=&#34;cc混用头文件&#34;&gt;C/C++混用头文件&lt;/h2&gt;
+&lt;p&gt;可以让如下头文件被#include到C文件中，也可以被#include到C++文件中，extern &amp;ldquo;C&amp;quot;可以抑制C++对函数名、变量名等符号进行重整，因此编译出的C目标文件和C++目标文件中的变量名和函数名都一样。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#ifdef __cplusplus
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;extern&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;C&amp;#34;&lt;/span&gt; {
+&lt;span style=&#34;color:#579&#34;&gt;#endif
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;    
+    
+&lt;span style=&#34;color:#579&#34;&gt;#ifdef __cplusplus
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;}&amp;#34;&lt;/span&gt;
+&lt;span style=&#34;color:#579&#34;&gt;#endif
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;常量表达式&#34;&gt;常量表达式&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;编译时常量：constexpr&lt;/li&gt;
+&lt;li&gt;运行时常量：const&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/cpp11%E6%96%B0%E7%89%B9%E6%80%A7%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1300,72 +1398,6 @@ i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;co
 &lt;p&gt;改命令强制规定了成员的对齐方式，括号内为&lt;strong&gt;对齐的字节数&lt;/strong&gt;。若括号内的内容为空，则为默认对齐。&lt;/p&gt;
 &lt;p&gt;改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。&lt;/p&gt;
 - https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>测试机器大小端的方法</title>
-        <link>https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/</link>
-        <pubDate>Wed, 22 Dec 2021 15:49:36 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/ -&lt;ul&gt;
-&lt;li&gt;小端法：低位字节存放在低地址，高位字节存放在高地址&lt;/li&gt;
-&lt;li&gt;大端法：低位字节存放在高地址，高位字节存放在低地址&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;判断电脑大小端模式的方法：&lt;/p&gt;
-&lt;h2 id=&#34;方法一&#34;&gt;方法一&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;C语言中的char和int：&lt;/p&gt;
-&lt;p&gt;在C语言中并没有char类型的常量，其实是用int类型表示char。举个例子：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; ch &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;a&amp;#39;&lt;/span&gt;;
-&lt;span style=&#34;color:#888&#34;&gt;//分别输出ch的字符和对应的ascii码。即打印出的是字符或整数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%c, %d&amp;#34;&lt;/span&gt;, ch, ch);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出结果为：a, 97&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;将int 48存起来，然后取得其地址，再将这个地址转为char* 这时候，如果是小端存储，那么char*指针就指向48；48对应的ASCII码为字符‘0’；&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;judge1&lt;/span&gt;() {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;48&lt;/span&gt;;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; p &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;i;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; c &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-    c &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;((&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;)p);
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (c &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39;0&amp;#39;&lt;/span&gt;)
-        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;小端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
-        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;大端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方法二&#34;&gt;方法二&lt;/h2&gt;
-&lt;p&gt;定义变量int i=1；将 i 的地址拿到，强转成char*型，这时候就取到了 i 的低地址，这时候如果是1就是小端存储，如果是0就是大端存储。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;judge2&lt;/span&gt;() {
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; c &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;)&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;i);
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (c)
-        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;小端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
-        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;大端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;方法三&#34;&gt;方法三&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;联合体union是一种特殊数据类型，允许在相同的内存位置存储不同的数据类型。可以定义一个带有多成员的共同体，但任何时候只能有一个成员带有值。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;定义联合体，一个成员是多字节，一个是单字节，给多字节的成员赋一个最低一个字节不为0，其他字节为0 的值，再用第二个成员来判断，如果第二个字节不为0，就是小端，若为0，就是大端。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;judge3&lt;/span&gt;() {
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;union&lt;/span&gt;
-    {
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i;
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; c;
-    } un;
-    un.i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
-
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (un.c &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
-        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;小端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
-        cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;大端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/ - 2019-2021 By Jialong</description>
         </item>
     
     

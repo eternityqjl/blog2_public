@@ -6,9 +6,131 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Altium Designer画图流程记录(简略)</title>
+        <link>https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</link>
+        <pubDate>Fri, 30 Apr 2021 22:47:47 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ -&lt;h1 id=&#34;altium-designer画图流程记录简略&#34;&gt;Altium Designer画图流程记录(简略)&lt;/h1&gt;
+&lt;p&gt;之前看过博主&lt;a href=&#34;https://space.bilibili.com/384891&#34;&gt;半夜中暑的羊&lt;/a&gt;的原理图以及PCB绘制&lt;a href=&#34;https://www.bilibili.com/video/BV1JE41127Ks&#34;&gt;教程&lt;/a&gt;，收获颇丰，但是视频比较长而且分为多集，每次有些地方忘记时要去找到很不方便，因此趁着这次画一个简单转接版的机会，把视频中的内容整理成文字版，方便之后查找和复习。这里面只涉及基本的两层版的基本绘制。&lt;/p&gt;
+&lt;p&gt;共有以下几部分内容：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;原理图库&lt;/li&gt;
+&lt;li&gt;核心模块的原理图&lt;/li&gt;
+&lt;li&gt;为原理图添加封装&lt;/li&gt;
+&lt;li&gt;PCB布局&lt;/li&gt;
+&lt;li&gt;PCB布线&lt;/li&gt;
+&lt;li&gt;PCB敷铜&lt;/li&gt;
+&lt;li&gt;PCB生成BOM及投板&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;pcb各层简介&#34;&gt;PCB各层简介&lt;/h2&gt;
+&lt;p&gt;参考自：&lt;a href=&#34;https://blog.csdn.net/qq_29373285/article/details/85339076&#34;&gt;PCB各层介绍&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;mechanical-layer机械层&#34;&gt;Mechanical layer(机械层)&lt;/h3&gt;
+&lt;p&gt;Altium Designer提供了16个机械层，它一般用于设置电路板的外形尺寸，数据标记，对齐标记，装配说明以及其它的机械信息。这些信息因设计公司或PCB制造厂家的要求而有所不同。另外，机械层可以附加在其它层上一起输出显示。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MechanicalLayer.PNG&#34; alt=&#34;MechanicalLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;keep-out-layer禁止布线层&#34;&gt;Keep out layer(禁止布线层)&lt;/h3&gt;
+&lt;p&gt;用于定义在电路板上能够有效放置元件和布线的区域。在该层绘制一个封闭区域作为布线有效区，在该区域外是不能自动布局和布线的。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/KeepOutLayer.PNG&#34; alt=&#34;KeepOutLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;signal-layer信号层&#34;&gt;Signal layer(信号层)&lt;/h3&gt;
+&lt;p&gt;信号层主要用于布置电路板上的导线。Altium Designer提供了32个信号层，包括Top layer(顶层)，Bottom layer(底层)和32个内电层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SignalLayer.PNG&#34; alt=&#34;SignalLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;internal-plane-layer内部电源接地层&#34;&gt;Internal plane layer(内部电源/接地层)&lt;/h3&gt;
+&lt;p&gt;Altium Designer提供了32个内部电源层/接地层。该类型的层仅用于多层板，主要用于布置电源层和接地层。我们称双层板，四层板，六层板，一般指信号层和内部电源/接地层的数目。&lt;/p&gt;
+&lt;h3 id=&#34;silkscreen-layer丝印层&#34;&gt;Silkscreen layer(丝印层)&lt;/h3&gt;
+&lt;p&gt;丝印层主要用于放置印制信息，如元件的轮廓和标注，各种注释字符等。Altium Designer提供了Top Overlay（顶层丝印层）和Bottom Overlay（底层丝印层）两个丝印层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SilkscreenLayer.PNG&#34; alt=&#34;SilkscreenLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;solder-mask-layer阻焊层&#34;&gt;Solder mask layer(阻焊层)&lt;/h3&gt;
+&lt;p&gt;在焊盘以外的各部位涂覆一层涂料，我们通常用的有绿油、蓝油等，用于阻止这些部位上锡。阻焊层用于在设计过程中&lt;strong&gt;匹配焊盘&lt;/strong&gt;，是&lt;strong&gt;自动产生&lt;/strong&gt;的。阻焊层是负片输出，阻焊层的地方不盖油，其他地方盖油。Altium Designer提供了**Top Solder(顶层)&lt;strong&gt;和&lt;/strong&gt;Bottom Solder(底层)**两个阻焊层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/SolderMaskLayer.PNG&#34; alt=&#34;SolderMaskLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;paste-mask-layer助焊层smd贴片层&#34;&gt;Paste mask layer(助焊层，SMD贴片层)&lt;/h3&gt;
+&lt;p&gt;它和阻焊层的作用相似，不同的是在机器焊接时对应的表面粘贴式元件的焊盘。Altium Designer提供了Top Paste(顶层助焊层)和Bottom Paste(底层助焊层)两个助焊层。主要针对PCB板上的SMD元件。在将SMD元件贴PCB板上以前，必须在每一个SMD焊盘上先涂上锡膏，在涂锡用的钢网就一定需要这个Paste Mask文件,菲林胶片才可以加工出来。Paste Mask层的Gerber输出最重要的一点要清楚，即这个层主要针对SMD元件，同时将这个层与上面介绍的Solder Mask作一比较，弄清两者的不同作用，因为从菲林胶片图中看这两个胶片图很相似。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/PasteMaskLayer.PNG&#34; alt=&#34;PasteMaskLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;multi-layer多层&#34;&gt;Multi layer(多层)&lt;/h3&gt;
+&lt;p&gt;电路板上焊盘和穿透式过孔要穿透整个电路板，与不同的导电图形层建立电气连接关系，因此系统专门设置了一个抽象的层—多层。一般，焊盘与过孔都要设置在多层上，如果关闭此层，焊盘与过孔就无法显示出来。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/blog/MultiLayer.PNG&#34; alt=&#34;MultiLayer&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;drill-layer钻孔层&#34;&gt;Drill layer(钻孔层)&lt;/h3&gt;
+&lt;p&gt;钻孔层提供电路板制造过程中的钻孔信息(如焊盘，过孔就需要钻孔)。Altium Designer提供了Drill gride(钻孔指示)和Drill drawing(钻孔)两个钻孔层。&lt;/p&gt;
+&lt;h2 id=&#34;原理图库器件画法&#34;&gt;原理图库器件画法&lt;/h2&gt;
+&lt;p&gt;放置矩形&lt;/p&gt;
+&lt;p&gt;添加Pin&lt;/p&gt;
+&lt;p&gt;设置器件的Designator（例如P?）&lt;/p&gt;
+&lt;h2 id=&#34;器件的pcb封装画法&#34;&gt;器件的PCB封装画法&lt;/h2&gt;
+&lt;p&gt;确定是过孔还是焊盘，然后根据坐标放置位置，最后画丝印。&lt;/p&gt;
+&lt;h2 id=&#34;批量添加封装并给各种原件命名&#34;&gt;批量添加封装并给各种原件命名&lt;/h2&gt;
+&lt;h3 id=&#34;添加封装&#34;&gt;添加封装&lt;/h3&gt;
+&lt;p&gt;右键-Find Similar Objects选择相同类型的原件-右键-Properties-修改封装&lt;/p&gt;
+&lt;h3 id=&#34;批量命名&#34;&gt;批量命名&lt;/h3&gt;
+&lt;p&gt;执行&lt;strong&gt;Tools-Annotation-Annotate Schematic&lt;/strong&gt;(或快捷键&lt;strong&gt;T A A&lt;/strong&gt;)命令打开原理图元件命名管理器&lt;/p&gt;
+&lt;p&gt;左上角设置命名顺序&lt;/p&gt;
+&lt;p&gt;设置命名范围&lt;/p&gt;
+&lt;p&gt;然后单击Update&lt;/p&gt;
+&lt;p&gt;可以看到新的命名建议，然后执行有效角的接收更改&lt;/p&gt;
+&lt;p&gt;依次单击Validate和Execute（保证两排绿√）&lt;/p&gt;
+&lt;p&gt;即可完成命名&lt;/p&gt;
+&lt;h2 id=&#34;确定pcb范围并布局&#34;&gt;确定PCB范围并布局&lt;/h2&gt;
+&lt;p&gt;根据需要的形状和经验粗略地确定版图的位置边界，然后布局元件位置。&lt;/p&gt;
+&lt;h2 id=&#34;布线&#34;&gt;布线&lt;/h2&gt;
+&lt;p&gt;注意设置焊盘间的距离，jlc为7mil，以及过孔孔径。&lt;/p&gt;
+&lt;p&gt;过孔打法：&lt;code&gt;Alt+Shift+鼠标滚轮向上&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;铺铜&#34;&gt;铺铜&lt;/h2&gt;
+&lt;p&gt;使用铺铜管理器进行铺铜：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;工具→铺铜→铺铜管理器（快捷键:TGM）&lt;/li&gt;
+&lt;li&gt;选择来自&amp;hellip;..的新多边形（New Polygon from &amp;hellip;）→板外形（Board Outline）&lt;/li&gt;
+&lt;li&gt;设置网络，哪一层？除去死铜&lt;/li&gt;
+&lt;li&gt;最后点击应用，确定，这样顶层的铺地铜就铺好了！&lt;/li&gt;
+&lt;li&gt;其他层同样按照上面的步骤进行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;设置板子边界&#34;&gt;设置板子边界&lt;/h2&gt;
+&lt;p&gt;首先选中Keep-Out-Layer所定义的边界&lt;/p&gt;
+&lt;p&gt;然后：&lt;/p&gt;
+&lt;p&gt;【Design】|【Board shape】|【Define from selected objects】&lt;/p&gt;
+&lt;p&gt;快捷键为D+S+D+enter&lt;/p&gt;
+&lt;h2 id=&#34;其他一些快捷键&#34;&gt;其他：一些快捷键&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ctrl+D&lt;/code&gt;: View Configuration，用来配置PCB的显示内容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ctrl+M&lt;/code&gt;：测量长度，使用&lt;code&gt;shift+C&lt;/code&gt;删除测量得到的线&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;批量修改元件&#34;&gt;批量修改元件&lt;/h2&gt;
+&lt;p&gt;以命名所有电阻为例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;首先使用过滤器选中所有电阻&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;执行&lt;strong&gt;工具——Annotation——注解&lt;/strong&gt;（英文为&lt;strong&gt;Tools——Annotation——Annotate Schematic&lt;/strong&gt;，或者快捷键&lt;strong&gt;T A A&lt;/strong&gt;）命令打开原理图元件命名管理器&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;一些注意事项&#34;&gt;一些注意事项&lt;/h2&gt;
+&lt;h3 id=&#34;天线设计&#34;&gt;天线设计&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;天线有效部分的周围及其下层不应该有元件、布线和铺铜&lt;/li&gt;
+&lt;li&gt;天线放置在PCB版的板边，尽量朝向前面板，避开周围铁结构件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;元器件放置原则&#34;&gt;元器件放置原则&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;晶振要靠近IC摆放&lt;/li&gt;
+&lt;li&gt;IC去耦电容的布局要靠近IC的电源管脚，并使之与电源和地之间形成的回路最短&lt;/li&gt;
+&lt;li&gt;发热元件要均匀分布&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;走线原则&#34;&gt;走线原则&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;高速信号和关键信号走线要尽量短&lt;/li&gt;
+&lt;li&gt;一条走线不要打太多的孔&lt;/li&gt;
+&lt;li&gt;走线拐角要大于90度&lt;/li&gt;
+&lt;li&gt;功放IC下面不能走线&lt;/li&gt;
+&lt;li&gt;双面板中没有地线，晶振电容地线要使用短线连接到器件上离晶振最近的GND引脚，尽量减少过孔。&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1612,75 +1734,6 @@ $$
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
 - https://eternityqjl.top/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>第一次使用LaTex——问题整理</title>
-        <link>https://eternityqjl.top/posts/latex-problems1/</link>
-        <pubDate>Sun, 29 Mar 2020 00:14:06 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/latex-problems1/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/latex-problems1/ -&lt;h2 id=&#34;0前言&#34;&gt;0.前言&lt;/h2&gt;
-&lt;p&gt;第一次使用Tex语言完整地完成了一篇实验报告的构建排版，这过程中遇到了各种各样的问题，有些问题虽然解决了，但在原理方面还是一知半解，之后再遇到还希望能多看文档。这篇博客是来记录第一次编写过程中遇到的一些问题。&lt;/p&gt;
-&lt;p&gt;这是第一次实验报告导出的&lt;a href=&#34;http://blog.eternityqjl.top/SS_test1.pdf&#34;&gt;pdf文档&lt;/a&gt;封面展示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1_cover.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;这是&lt;a href=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SS_test1.tex&#34;&gt;tex源代码&lt;/a&gt;。&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;章节标题的特殊符号&#34;&gt;章节标题的特殊符号&lt;/h2&gt;
-&lt;p&gt;当我在章节标题的大括号内输入行内公式时出现了错误，查找后发现pdf书签中不能使用特殊符号，需要用命令&lt;code&gt;\texorpdfstring{}{}&lt;/code&gt;分别定义在TEX文档输出的代码和PDF书签处的纯文本形式，第一个括号&lt;code&gt;{}&lt;/code&gt;中填写tex文档代码，第二个括号&lt;code&gt;{}&lt;/code&gt;填写文本形式的书签，如下所示：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;%1.1
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\subsection&lt;/span&gt;&lt;span style=&#34;color:#00c&#34;&gt;[第3题（1）]&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;第3题（1）求&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;5&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;e^{&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t}u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;x1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;，
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;cos&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)[&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)-&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)]&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;x2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;的卷积积分
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\texorpdfstring&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;y_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)=&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)*&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;x_&lt;/span&gt;&lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;2&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;t&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;$&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;y1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;。 &lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;代码段的设置&#34;&gt;代码段的设置&lt;/h2&gt;
-&lt;p&gt;在文章中添加代码段需要用到&lt;code&gt;listings&lt;/code&gt;宏包，代码段的基本设置参数如下所示：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;a href=&#34;http://texdoc.net/texmf-dist/doc/latex/listings/listings.pdf&#34;&gt;listings宏包文档&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\usepackage&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;listings&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\lstset&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;
-language=Matlab,
-escapeinside=``, 
-numbers=left,
-numberstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\tiny&lt;/span&gt;,
-breaklines=true, 
-backgroundcolor=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;lightgray!40!white&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;,
-frame=single,
-framerule=0pt,
-extendedchars=false, 
-keywordstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;blue!70&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\bfseries&lt;/span&gt;, 
-basicstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily&lt;/span&gt;,
-commentstyle=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ttfamily\color&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;green!40!black&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;, 
-showstringspaces=false&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;同时，设置代码段颜色高亮时需要用到&lt;code&gt;xcolor&lt;/code&gt;宏包。&lt;/p&gt;
-&lt;p&gt;注意以下几点问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;代码段中最好不要出现中文，如果必须要使用中文，需要用逃逸字符` `将中文包括起来，如上面的基本参数中的escapeinside=` ` 所示。&lt;/li&gt;
-&lt;li&gt;如果代码段中出现tex语言的特殊符号，需要使用转义字符&lt;code&gt;\&lt;/code&gt;，如&lt;code&gt;#&lt;/code&gt;就需要转换为&lt;code&gt;\#&lt;/code&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如果想要改变代码段中的字体，需要用到&lt;code&gt;fontspec&lt;/code&gt;宏包，这个宏包需要用&lt;code&gt;XeLaTex&lt;/code&gt;或&lt;code&gt;LuaLaTex&lt;/code&gt;进行编译，由于我的实验报告封面使用的有些元素在使用这两者编译时无法识别，我这次就没使用，下次写实验报告一定仔细研究一下，实现这个功能。&lt;/p&gt;
-&lt;h2 id=&#34;数学公式中的align&#34;&gt;数学公式中的align&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;参考：&lt;a href=&#34;https://tex.stackexchange.com/questions/372384/erroneous-nesting-of-equation-structures-message-i-cant-see-whats-wrong&#34;&gt;“Erroneous nesting of equation structures” message- I can&amp;rsquo;t see what&amp;rsquo;s wrong?&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;数学公式中需要写等号对齐的公式段是不需要写&lt;code&gt;$$...$$&lt;/code&gt;或者&lt;code&gt;begin{equation}...end{equation}&lt;/code&gt;，直接将公式写在&lt;code&gt;begin{align}...end{align}&lt;/code&gt;的中间即可，如下所示：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-tex&#34; data-lang=&#34;tex&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-y&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;2[n]
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=x&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;3[n]*x&lt;span style=&#34;color:#007020&#34;&gt;_&lt;/span&gt;4[n] &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=((-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;n u[n-1])*((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k u[k-1]((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k ((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]) &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-&lt;span style=&#34;color:#007020&#34;&gt;&amp;amp;&lt;/span&gt;=
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\begin&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-	0, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;n&amp;lt;0 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k (-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1], &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;0 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\leq&lt;/span&gt; n &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\leq&lt;/span&gt; 2 &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\\&lt;/span&gt;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\sum&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;_{&lt;/span&gt;k=1&lt;span style=&#34;color:#007020&#34;&gt;}^{&lt;/span&gt;+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\infty&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;(-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\frac&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;2&lt;span style=&#34;color:#007020&#34;&gt;}{&lt;/span&gt;3&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;)&lt;span style=&#34;color:#007020&#34;&gt;^&lt;/span&gt;k ((-1)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k+1&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k+1]-(-2)&lt;span style=&#34;color:#007020&#34;&gt;^{&lt;/span&gt;n-k-2&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;u[n-k-2]),&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\ &lt;/span&gt;n&amp;gt;2
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;cases&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;\end&lt;/span&gt;&lt;span style=&#34;color:#007020&#34;&gt;{&lt;/span&gt;align&lt;span style=&#34;color:#007020&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;http://blog.eternityqjl.top/equationSample.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-- https://eternityqjl.top/posts/latex-problems1/ - 2019-2021 By Jialong</description>
         </item>
     
     
