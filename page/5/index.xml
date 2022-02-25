@@ -6,9 +6,46 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 18 Feb 2022 19:47:41 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>存储器详解</title>
+        <link>https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</link>
+        <pubDate>Sun, 04 Jul 2021 16:09:50 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/ -&lt;p&gt;计算机存储器只要分为内存和外存。内存是CPU直接寻址的存储空间，访问频率快，而外存访问慢。&lt;/p&gt;
+&lt;h2 id=&#34;易失性存储器随机存取存储器ram&#34;&gt;易失性存储器（随机存取存储器，RAM）&lt;/h2&gt;
+&lt;p&gt;Random Access Memory，存储在其中的资料会在电力切断后消失，所以属于易失性存储器。&lt;/p&gt;
+&lt;h3 id=&#34;动态随机存取存储器dram&#34;&gt;动态随机存取存储器（DRAM）&lt;/h3&gt;
+&lt;p&gt;Dynamic Random Access Memory，主要的作用原理是利用电容内&lt;strong&gt;存储电荷的多寡&lt;/strong&gt;来代表一个二进制比特（bit）是1还是0。由于在现实中晶体管会有漏电电流的现象，导致电容上所存储的电荷数量并不足以正确的判别资料，而导致资料毁损。因此对于DRAM来说，周期性地充电是一个不可避免的条件。由于这种需要&lt;strong&gt;定时刷新&lt;/strong&gt;的特性，因此被称为“动态”存储器。&lt;/p&gt;
+&lt;h3 id=&#34;静态随机存取存储器sram&#34;&gt;静态随机存取存储器（SRAM）&lt;/h3&gt;
+&lt;p&gt;Static Random Access Memory，所谓的“静态”，是指这种存储器只要保持通电，里面储存的数据就可以恒常保持。相对之下，动态随机存取存储器（DRAM）里面所储存的数据就需要周期性地更新。然而，当电力供应停止时，SRAM储存的数据还是会消失。&lt;/p&gt;
+&lt;p&gt;SRAM由存储矩阵、地址译码器和读/写控制电路组成，容量的扩展有两个方面：位数的扩展用芯片的并联，字数的扩展可用外加译码器控制芯片的片选输入端[2]。SRAM中的每一bit储存在由4个场效应管（M1, M2, M3, M4）构成两个交叉耦合的反相器中。另外两个场效应管（M5, M6）是储存基本单元到用于读写的位线（Bit Line）的控制开关。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SRAM_Cell_(6_Transistors).svg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;非易失性存储器主要为只读存储器rom&#34;&gt;非易失性存储器（主要为只读存储器，ROM）&lt;/h2&gt;
+&lt;p&gt;Read-Only Memory，一旦存储资料就无法再将之改变或删除，且内容不会因为电源关闭而消失。&lt;/p&gt;
+&lt;h3 id=&#34;可编程式只读存储器prom&#34;&gt;可编程式只读存储器（PROM）&lt;/h3&gt;
+&lt;p&gt;Programmable read-only memory，每个比特都由熔丝或反熔丝的状态决定资料内容。这种存储器用作永久存放程序之用。常用于电子游戏机、电子词典等预存固定资料或程序的各式电子产品之上。PROM与狭义的ROM（Mask ROM）的差别在于前者可在IC制造完成后才依需要写入资料，后者的资料需在制造IC时一并制作在里面。&lt;/p&gt;
+&lt;p&gt;一个典型的PROM一开始时每个比特都会是1，编程中如将该比特的熔丝（fuse）烧断则成为0，这一过程是不可逆的（即刻录后不能再改变），断电后也不会消失记忆，所以这种存储器是一种只读存储器。&lt;/p&gt;
+&lt;h3 id=&#34;可擦除可编程式只读存储器eprom&#34;&gt;可擦除可编程式只读存储器（EPROM）&lt;/h3&gt;
+&lt;p&gt;Erasable Programmable Read Only Memory，它是一组浮栅晶体管，被一个提供比电子电路中常用电压更高电压的电子器件分别编程。一旦编程完成后，EPROM只能用强紫外线照射来擦除。通过封装顶部能看见硅片的透明窗口，很容易识别EPROM，这个窗口同时用来进行紫外线擦除。&lt;/p&gt;
+&lt;h3 id=&#34;电子抹除式可复写只读存储器eeprom&#34;&gt;电子抹除式可复写只读存储器（EEPROM）&lt;/h3&gt;
+&lt;p&gt;Electrically-Erasable Programmable Read-Only Memory，是一种可以通过电子方式多次复写的半导体存储设备。相比EPROM， EEPROM 不需要用紫外线照射，也不需取下，就可以用特定的电压，来抹除芯片上的信息，以便写入新的数据， EEPROM 属于SPD（串行存在检测）技术的一种延伸。&lt;/p&gt;
+&lt;p&gt;在民用的DDR SDRAM及其主流后续产品中，一般 EEPROM 主要用于保存内存的开发者信息、生产时间、内存信息、通信协议、既定内存频率、供电电压、供电电流、物理信息以及内存XMP等信息，并且电脑会在开机自检（Power-On Self-Test；POST）时会读取这些信息以保持电脑的正常开机。&lt;/p&gt;
+&lt;h3 id=&#34;闪存flash-memory&#34;&gt;闪存（Flash Memory）&lt;/h3&gt;
+&lt;p&gt;闪存是一种特殊的、以宏块抹写的EEPROM。&lt;/p&gt;
+&lt;p&gt;NOR和NAND两种类型&lt;/p&gt;
+&lt;h4 id=&#34;nand-flash&#34;&gt;NAND Flash&lt;/h4&gt;
+&lt;p&gt;SLC(单阶存储单元)、MLC(多阶存储单元，一般指2)、TLC(三阶存储单元)、QLC&lt;/p&gt;
+&lt;p&gt;现在消费级产品都是TLC&lt;/p&gt;
+&lt;h4 id=&#34;移动端使用的闪存协议变化&#34;&gt;移动端使用的闪存协议变化&lt;/h4&gt;
+&lt;p&gt;eMMC-UFS&lt;/p&gt;- https://eternityqjl.top/posts/%E5%AD%98%E5%82%A8%E5%99%A8%E8%AF%A6%E8%A7%A3/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1895,129 +1932,6 @@ strm::goodbit	//用来指出流位处于错误状态。
 &lt;li&gt;双面板中没有地线，晶振电容地线要使用短线连接到器件上离晶振最近的GND引脚，尽量减少过孔。&lt;/li&gt;
 &lt;/ul&gt;
 - https://eternityqjl.top/posts/altium-designer%E7%94%BB%E5%9B%BE%E6%B5%81%E7%A8%8B%E8%AE%B0%E5%BD%95-%E7%AE%80%E7%95%A5/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>C&#43;&#43; Primer——CH07 类</title>
-        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/</link>
-        <pubDate>Tue, 27 Apr 2021 10:08:56 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/ -&lt;p&gt;以一个例子来说明类&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;strut Sales_data {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#888&#34;&gt;//构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data() &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;default&lt;/span&gt;;
-	Sales_data(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s) &lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; bookNo(s) {}
-	Sales_data(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; n, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; p)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		bookNo(s), units_sold(n), revenue(p&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;n) {}
-	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istream &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
-	&lt;span style=&#34;color:#888&#34;&gt;//成员函数：
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string isbn()	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; {&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; bookNo; }
-	Sales_data&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt; combine(&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; Sales_data&lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;);
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; avg_price() &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt;;
-	std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string bookNo;
-	&lt;span style=&#34;color:#888&#34;&gt;//类内初始值(数据成员)
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; units_sold &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; revenue &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0.0&lt;/span&gt;;
-};
-&lt;span style=&#34;color:#888&#34;&gt;//在类的外部定义成员函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; Sales_data&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;avg_price() &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; {
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (units_sold)
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; revenue &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; units_sold;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;else&lt;/span&gt;
-		&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-}
-&lt;span style=&#34;color:#888&#34;&gt;//在类的外部定义构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;Sales_data&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istream &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;is)
-{
-    read(is, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//从is中读取一条信息然后存入this对象中
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;成员函数&#34;&gt;成员函数&lt;/h2&gt;
-&lt;p&gt;成员函数的&lt;strong&gt;声明&lt;/strong&gt;必须在&lt;strong&gt;类的内部&lt;/strong&gt;，它的&lt;strong&gt;定义&lt;/strong&gt;既可以在类的内部也可以在类的外部。作为接口的非成员函数，它的定义和声明都在类的外部。&lt;/p&gt;
-&lt;h2 id=&#34;构造函数&#34;&gt;构造函数&lt;/h2&gt;
-&lt;p&gt;构造函数的任务时初始化类对象的数据成员，无论何时只要类被创建就会执行构造函数。&lt;/p&gt;
-&lt;p&gt;构造函数的名字和&lt;strong&gt;类名&lt;/strong&gt;相同，和其他函数不同，构造函数&lt;strong&gt;没有返回类型&lt;/strong&gt;；除此之外的特性类似于其他函数。&lt;/p&gt;
-&lt;p&gt;类可以包含多个构造函数，和其他的&lt;strong&gt;重载函数&lt;/strong&gt;差不多，不同构造函数之间必须在参数数量或参数类型上有所区别。&lt;/p&gt;
-&lt;p&gt;构造函数不能被声明成&lt;strong&gt;const&lt;/strong&gt;的。当我们创建类的一个const对象，直到构造函数完成初始化的过程，对象才能真正获得其常量属性。&lt;/p&gt;
-&lt;p&gt;在类的外部定义构造函数：如上代码所示。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;构造函数初始值列表&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;就对象的数据成员而言，初始化和赋值也有区别。如果没有在构造函数的初始值列表中显示地初始化成员，则该成员将在构造函数体之前执行默认初始化。&lt;/p&gt;
-&lt;p&gt;如果成员是&lt;strong&gt;const&lt;/strong&gt;或&lt;strong&gt;引用&lt;/strong&gt;的话，必须将其初始化。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;ConstRef&lt;/span&gt; {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	ConstRef(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ii);
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ci;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;ri;
-};
-ConstRef&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;ConstRef(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; ii)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; i(ii), ci(ii), ri(i) {}	&lt;span style=&#34;color:#888&#34;&gt;//显示地初始化引用和const成员
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最好避免使用某些成员初始化其他成员。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;委托构造函数&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;一个委托构造函数可以使用它属类的其他构造函数执行它自己的初始化过程。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;Sales_data&lt;/span&gt; {
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-	&lt;span style=&#34;color:#888&#34;&gt;//非委托构造函数使用对应的实参初始化成员
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string s, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; cnt, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; price)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
-		bookNo(s), units_sold(cnt), revenue(cnt&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;price);
-	&lt;span style=&#34;color:#888&#34;&gt;//其余构造函数委托给另一个构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data()&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {}	&lt;span style=&#34;color:#888&#34;&gt;//默认构造函数，委托给了上面输入3个变量的构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	Sales_data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;string s)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data(s, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {}
-	Sales_Data(std&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;istrean &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;is)&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; Sales_data() {read(is, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;this&lt;/span&gt;); }	&lt;span style=&#34;color:#888&#34;&gt;//委托给了默认构造函数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;聚合类&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;聚合类使得用户可以直接访问其成员并且具有特殊的初始化语法形式。&lt;/p&gt;
-&lt;p&gt;定义：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;所有成员都是public的。&lt;/li&gt;
-&lt;li&gt;没有定义任何构造函数。&lt;/li&gt;
-&lt;li&gt;没有类内初始值。&lt;/li&gt;
-&lt;li&gt;没有基类，没有virtual函数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;struct Data {
-	int ival;
-	string s;
-};
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;访问控制与封装&#34;&gt;访问控制与封装&lt;/h2&gt;
-&lt;p&gt;使用**访问说明符(access specifiers)**加强类的封装：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;public&lt;/strong&gt;说明符：定义在其之后的成员在整个程序内可被访问，public成员定义类的接口。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;private&lt;/strong&gt;说明符：定义在其后的成员可以被类的成员函数访问，但不能被使用该类的代码访问，该种封装隐藏了类的实现细节。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;struct&lt;/strong&gt;和&lt;strong&gt;class&lt;/strong&gt;关键词的区别：&lt;/p&gt;
-&lt;p&gt;我们可以用两个关键词中的任意一个定义类，唯一的区别是两者的&lt;strong&gt;默认访问权限&lt;/strong&gt;不太一样。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;使用&lt;code&gt;struct&lt;/code&gt;：定义在第一个访问说明符之前的成员是public的。&lt;/li&gt;
-&lt;li&gt;使用&lt;code&gt;class&lt;/code&gt;：定义在第一个访问说明符之前的成员是private的。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;友元&#34;&gt;友元&lt;/h2&gt;
-&lt;p&gt;类可以允许其他类或函数访问它的&lt;strong&gt;非公有成员&lt;/strong&gt;，方法是令其他类或函数称为它的友元；如果类想把&lt;strong&gt;一个函数&lt;/strong&gt;作为它的友元，只要增加一条以&lt;code&gt;friend&lt;/code&gt;关键词开头的&lt;strong&gt;函数声明语句&lt;/strong&gt;即可。&lt;/p&gt;
-&lt;p&gt;友元声明只能出现在&lt;strong&gt;类定义的内部&lt;/strong&gt;，但在类内出现的具体位置不限。&lt;/p&gt;
-&lt;p&gt;友元的声明仅仅指定了&lt;strong&gt;访问权限&lt;/strong&gt;，并非一个通常意义上的函数声明。如果希望类的用户能够调用某个友元函数，就必须&lt;strong&gt;在友元声明之外再专门对函数进行一次声明&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;类的作用域&#34;&gt;类的作用域&lt;/h2&gt;
-&lt;p&gt;在类的作用域之外，普通的数据和函数成员只能由&lt;strong&gt;对象、引用或指针&lt;/strong&gt;使用**成员访问运算符(&lt;code&gt;. -&amp;gt;&lt;/code&gt;)&lt;strong&gt;来访问；对于类类型成员，则使用&lt;/strong&gt;作用域运算符(&lt;code&gt;::&lt;/code&gt;)**访问。&lt;/p&gt;
-&lt;p&gt;一个类就是一个作用域，所以在类的外部定义成员函数时必须同时提供类名和函数名。在类的外部，成员的名字被隐藏起来了。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; Window_mgr&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;clear(ScreenIndex i)
-{
-	Screen &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;s &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; screens[i];
-	s.contents &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; string(s.height &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; s.width, &lt;span style=&#34;color:#04d;background-color:#fff0f0&#34;&gt;&amp;#39; &amp;#39;&lt;/span&gt;);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;类的静态成员&#34;&gt;类的静态成员&lt;/h2&gt;
-&lt;p&gt;有时候类需要它的一些成员&lt;strong&gt;与类本身直接相关&lt;/strong&gt;，而不是与类的各个对象保持关联。这是我们可以通过声明静态成员，即在成员的声明前加上关键字&lt;strong&gt;static&lt;/strong&gt;，使得其与类关联在一起。&lt;/p&gt;
-&lt;p&gt;静态成员可以是public或private的。&lt;/p&gt;
-&lt;p&gt;类的静态成员存在于任何对象之外，对象中不包含任何与静态数据成员有关的数据。同样，&lt;strong&gt;类静态成员函数&lt;/strong&gt;也不与任何对象绑定在一起，它们不包含this指针。静态成员函数不能声明成const的，也不能在static函数体内使用this指针。&lt;/p&gt;
-&lt;p&gt;使用类的静态成员：&lt;/p&gt;
-&lt;p&gt;使用&lt;strong&gt;作用域运算符&lt;/strong&gt;直接访问静态成员：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;double&lt;/span&gt; r;
-r &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Account&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;rate();	&lt;span style=&#34;color:#888&#34;&gt;//Account为类名
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成员函数不用通过作用域运算符就能直接使用静态成员。&lt;/p&gt;
-&lt;p&gt;定义静态成员：&lt;/p&gt;
-&lt;p&gt;我们既可以在类内部也可以在类外部&lt;strong&gt;定义静态成员函数&lt;/strong&gt;，在类外部定义时不能重复static关键词，该词只出现在类内部的声明中。&lt;/p&gt;
-- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE5%E7%B1%BB/ - 2019-2021 By Jialong</description>
         </item>
     
     

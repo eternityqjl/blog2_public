@@ -6,9 +6,98 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 18 Feb 2022 19:47:41 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>测试GitBook格式</title>
+        <link>https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</link>
+        <pubDate>Fri, 20 Sep 2019 21:43:41 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/ -&lt;h1 id=&#34;flightmuseum-gitbook&#34;&gt;FlightMuseum-GitBook&lt;/h1&gt;
+&lt;h2 id=&#34;目录层级&#34;&gt;目录层级&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Preface&lt;/li&gt;
+&lt;li&gt;Airbus
+&lt;ul&gt;
+&lt;li&gt;A320
+&lt;ul&gt;
+&lt;li&gt;A319&lt;/li&gt;
+&lt;li&gt;A320-200&lt;/li&gt;
+&lt;li&gt;A320-200neo&lt;/li&gt;
+&lt;li&gt;A321&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&amp;hellip;..&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;A330
+&lt;ul&gt;
+&lt;li&gt;A330-200&lt;/li&gt;
+&lt;li&gt;A330-300&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;A350
+&lt;ul&gt;
+&lt;li&gt;A350-900&lt;/li&gt;
+&lt;li&gt;A350-1000&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Boeing
+&lt;ul&gt;
+&lt;li&gt;B737&lt;/li&gt;
+&lt;li&gt;B747&lt;/li&gt;
+&lt;li&gt;B767&lt;/li&gt;
+&lt;li&gt;B777&lt;/li&gt;
+&lt;li&gt;B787
+&lt;ul&gt;
+&lt;li&gt;B787-8 Dreamliner&lt;/li&gt;
+&lt;li&gt;B787-9 Dreamliner&lt;/li&gt;
+&lt;li&gt;B787-10 Dreamliner&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&amp;hellip;&amp;hellip;.&lt;/li&gt;
+&lt;li&gt;Trains
+&lt;ul&gt;
+&lt;li&gt;CR&lt;/li&gt;
+&lt;li&gt;TRA&lt;/li&gt;
+&lt;li&gt;JR&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;一个具体层级的markdown编辑形式&#34;&gt;一个具体层级的Markdown编辑形式&lt;/h2&gt;
+&lt;h3 id=&#34;1cathay-pacific--国泰航空----b-lra&#34;&gt;1.Cathay Pacific | 国泰航空    B-LRA&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://py2kq5jlv.bkt.clouddn.com/DSCF0361.jpg&#34; alt=&#34;国泰航空A350-900&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Serial Number / 生产序列号&lt;/strong&gt;：29&lt;/li&gt;
+&lt;li&gt;**First Flight Date / 首飞日期：**24th. Mar 2016  &lt;strong&gt;/&lt;/strong&gt;  2016年3月24日&lt;/li&gt;
+&lt;li&gt;**Age (Shotted Date) / 机龄(拍摄日期)：**3.3 years as of 27th. Jul 2019  &lt;strong&gt;/&lt;/strong&gt;  3.3年  摄于2019年7月27日&lt;/li&gt;
+&lt;li&gt;**Shotted Place / 拍摄地：**Hong Kong  &lt;strong&gt;/&lt;/strong&gt;  香港&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.cathaypacific.com/cx/sc_CN/travel-information/flying-with-us/aircraft-and-fleet/airbus-a350/900.html&#34;&gt;&lt;strong&gt;Seat Configuration / 座位布局：&lt;/strong&gt;&lt;/a&gt;C38 W28 Y214&lt;/li&gt;
+&lt;li&gt;**Engines / 引擎：**2 x RR Trent XWB&lt;/li&gt;
+&lt;li&gt;Others：-&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;2philippines-airlines--菲律宾航空----rp-c3506&#34;&gt;2.Philippines Airlines | 菲律宾航空    RP-C3506&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&#34;http://py2kq5jlv.bkt.clouddn.com/DSCF4874.jpg&#34; alt=&#34;菲律宾航空A350-900&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Serial Number / 生产序列号&lt;/strong&gt;：243&lt;/li&gt;
+&lt;li&gt;**First Flight Date / 首飞日期：**11st. Sep 2018  &lt;strong&gt;/&lt;/strong&gt;  2018年9月11日&lt;/li&gt;
+&lt;li&gt;**Age (Shotted Date) / 机龄(拍摄日期)：**0.8 years as of 9th. Aug 2019  &lt;strong&gt;/&lt;/strong&gt;  0.8年  摄于2019年8月9日&lt;/li&gt;
+&lt;li&gt;**Shotted Place / 拍摄地：**Hong Kong  &lt;strong&gt;/&lt;/strong&gt;  香港&lt;/li&gt;
+&lt;li&gt;**Seat Configuration / 座位布局：**C30 W24 Y241&lt;/li&gt;
+&lt;li&gt;**Engines / 引擎：**2 x RR Trent XWB&lt;/li&gt;
+&lt;li&gt;Others：-&lt;/li&gt;
+&lt;/ul&gt;
+- https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95gitbook%E6%A0%BC%E5%BC%8F/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     

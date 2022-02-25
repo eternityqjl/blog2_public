@@ -6,9 +6,233 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 18 Feb 2022 19:47:41 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Cpp容器库和相关操作总结</title>
+        <link>https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</link>
+        <pubDate>Thu, 16 Dec 2021 15:34:43 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/ -&lt;h1 id=&#34;顺序容器&#34;&gt;顺序容器&lt;/h1&gt;
+&lt;h2 id=&#34;vector&#34;&gt;vector&lt;/h2&gt;
+&lt;p&gt;member functions：&lt;/p&gt;
+&lt;p&gt;constructor、destructor、operator=、assign、get_allocator&lt;/p&gt;
+&lt;h3 id=&#34;element-access&#34;&gt;Element access&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;at&lt;/li&gt;
+&lt;li&gt;operator&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;
+&lt;li&gt;front&lt;/li&gt;
+&lt;li&gt;back&lt;/li&gt;
+&lt;li&gt;data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;iterators&#34;&gt;Iterators&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;begin/cbegin&lt;/li&gt;
+&lt;li&gt;end/cend&lt;/li&gt;
+&lt;li&gt;rbegin/c rbegin&lt;/li&gt;
+&lt;li&gt;rend/c rend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;capacity&#34;&gt;Capacity&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;empty&lt;/li&gt;
+&lt;li&gt;size&lt;/li&gt;
+&lt;li&gt;max_size&lt;/li&gt;
+&lt;li&gt;reserve&lt;/li&gt;
+&lt;li&gt;capacity&lt;/li&gt;
+&lt;li&gt;shrink_to_fit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;modifiers&#34;&gt;Modifiers&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;clear&lt;/li&gt;
+&lt;li&gt;insert&lt;/li&gt;
+&lt;li&gt;emplace：相较于insert，不需要产生一个临时变量。&lt;/li&gt;
+&lt;li&gt;erase&lt;/li&gt;
+&lt;li&gt;push_back&lt;/li&gt;
+&lt;li&gt;resize&lt;/li&gt;
+&lt;li&gt;swap&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;non-member functions&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;operator==&lt;/li&gt;
+&lt;li&gt;swap&lt;/li&gt;
+&lt;li&gt;erase&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;deque&#34;&gt;deque&lt;/h2&gt;
+&lt;p&gt;双端队列&lt;/p&gt;
+&lt;h2 id=&#34;list&#34;&gt;list&lt;/h2&gt;
+&lt;p&gt;双向链表&lt;/p&gt;
+&lt;h2 id=&#34;forward_list&#34;&gt;forward_list&lt;/h2&gt;
+&lt;p&gt;单向链表&lt;/p&gt;
+&lt;h2 id=&#34;array&#34;&gt;array&lt;/h2&gt;
+&lt;p&gt;array 容器的大小是固定的，无法动态的扩展或收缩，这也就意味着，在使用该容器的过程无法借由增加或移除元素而改变其大小，它只允许访问或者替换存储的元素。&lt;/p&gt;
+&lt;h2 id=&#34;string&#34;&gt;string&lt;/h2&gt;
+&lt;h3 id=&#34;iterators-1&#34;&gt;Iterators&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;begin/cbegin&lt;/li&gt;
+&lt;li&gt;end/cend&lt;/li&gt;
+&lt;li&gt;rbegin/c rbegin&lt;/li&gt;
+&lt;li&gt;rend/c rend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;capacity-1&#34;&gt;Capacity&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;empty&lt;/li&gt;
+&lt;li&gt;size&lt;/li&gt;
+&lt;li&gt;length&lt;/li&gt;
+&lt;li&gt;max_size&lt;/li&gt;
+&lt;li&gt;reserve&lt;/li&gt;
+&lt;li&gt;capacity&lt;/li&gt;
+&lt;li&gt;clear&lt;/li&gt;
+&lt;li&gt;shrink_to_fit&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;element-access-1&#34;&gt;Element access&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;at&lt;/li&gt;
+&lt;li&gt;operator&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;
+&lt;li&gt;front&lt;/li&gt;
+&lt;li&gt;back&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;modifiers-1&#34;&gt;Modifiers&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;+=&lt;/li&gt;
+&lt;li&gt;append&lt;/li&gt;
+&lt;li&gt;push_back&lt;/li&gt;
+&lt;li&gt;assign&lt;/li&gt;
+&lt;li&gt;insert&lt;/li&gt;
+&lt;li&gt;erase&lt;/li&gt;
+&lt;li&gt;replace&lt;/li&gt;
+&lt;li&gt;swap&lt;/li&gt;
+&lt;li&gt;pop_back&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;关联容器&#34;&gt;关联容器&lt;/h1&gt;
+&lt;h2 id=&#34;set&#34;&gt;set&lt;/h2&gt;
+&lt;h3 id=&#34;iterators-2&#34;&gt;Iterators&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;begin / cbegin&lt;/li&gt;
+&lt;li&gt;end / cend&lt;/li&gt;
+&lt;li&gt;rbegin / c rbegin&lt;/li&gt;
+&lt;li&gt;rend / c rend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;capacity-2&#34;&gt;Capacity&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;empty&lt;/li&gt;
+&lt;li&gt;size&lt;/li&gt;
+&lt;li&gt;max_size&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;modifiers-2&#34;&gt;Modifiers&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;clear&lt;/li&gt;
+&lt;li&gt;insert&lt;/li&gt;
+&lt;li&gt;emplace&lt;/li&gt;
+&lt;li&gt;emplace_hint&lt;/li&gt;
+&lt;li&gt;erase&lt;/li&gt;
+&lt;li&gt;swap&lt;/li&gt;
+&lt;li&gt;extract&lt;/li&gt;
+&lt;li&gt;merge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;lookup&#34;&gt;Lookup&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;count&lt;/li&gt;
+&lt;li&gt;find&lt;/li&gt;
+&lt;li&gt;contains&lt;/li&gt;
+&lt;li&gt;equal_range&lt;/li&gt;
+&lt;li&gt;lower_bound&lt;/li&gt;
+&lt;li&gt;upper_bound&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;map&#34;&gt;map&lt;/h2&gt;
+&lt;h3 id=&#34;element-accress&#34;&gt;Element accress&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;at&lt;/li&gt;
+&lt;li&gt;operator &lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;iterators-3&#34;&gt;Iterators&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;begin / cbegin&lt;/li&gt;
+&lt;li&gt;end / cend&lt;/li&gt;
+&lt;li&gt;rbegin / c rbegin&lt;/li&gt;
+&lt;li&gt;rend / c rend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;capacity-3&#34;&gt;Capacity&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;empty&lt;/li&gt;
+&lt;li&gt;size&lt;/li&gt;
+&lt;li&gt;max_size&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;modifiers-3&#34;&gt;Modifiers&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;clear&lt;/li&gt;
+&lt;li&gt;insert&lt;/li&gt;
+&lt;li&gt;insert_or_assign&lt;/li&gt;
+&lt;li&gt;emplace&lt;/li&gt;
+&lt;li&gt;emplace_hint&lt;/li&gt;
+&lt;li&gt;try_emplace&lt;/li&gt;
+&lt;li&gt;erase&lt;/li&gt;
+&lt;li&gt;swap&lt;/li&gt;
+&lt;li&gt;extract&lt;/li&gt;
+&lt;li&gt;merge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;lookup-1&#34;&gt;Lookup&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;count&lt;/li&gt;
+&lt;li&gt;find&lt;/li&gt;
+&lt;li&gt;contains&lt;/li&gt;
+&lt;li&gt;equal_range&lt;/li&gt;
+&lt;li&gt;lower_bound&lt;/li&gt;
+&lt;li&gt;upper_bound&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;multimap&#34;&gt;multimap&lt;/h2&gt;
+&lt;p&gt;允许多个多个元素具有相同的关键词。主要应用有：例如词典中一个单词可以有多个意思。&lt;/p&gt;
+&lt;h2 id=&#34;multiset&#34;&gt;multiset&lt;/h2&gt;
+&lt;h2 id=&#34;unordered_map&#34;&gt;unordered_map&lt;/h2&gt;
+&lt;p&gt;无序容器不使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。在关键字类型的元素没有明显的序关系的情况下，无序容器非常有用。某些应用中维护元素序的代价非常高昂，此时无序容器也很有用。&lt;/p&gt;
+&lt;h2 id=&#34;unordered_set&#34;&gt;unordered_set&lt;/h2&gt;
+&lt;h2 id=&#34;unordered_multimap&#34;&gt;unordered_multimap&lt;/h2&gt;
+&lt;h2 id=&#34;unordered_multimet&#34;&gt;unordered_multimet&lt;/h2&gt;
+&lt;h1 id=&#34;容器适配器&#34;&gt;容器适配器&lt;/h1&gt;
+&lt;h2 id=&#34;priority_queue&#34;&gt;priority_queue&lt;/h2&gt;
+&lt;h3 id=&#34;element-access-2&#34;&gt;Element access&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;top&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;capacity-4&#34;&gt;Capacity&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;empty&lt;/li&gt;
+&lt;li&gt;size&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;modifiers-4&#34;&gt;Modifiers&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;push&lt;/li&gt;
+&lt;li&gt;emplace&lt;/li&gt;
+&lt;li&gt;pop&lt;/li&gt;
+&lt;li&gt;swap&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;stack&#34;&gt;stack&lt;/h2&gt;
+&lt;p&gt;与priority_queue相同。&lt;/p&gt;
+&lt;h2 id=&#34;queue&#34;&gt;queue&lt;/h2&gt;
+&lt;h3 id=&#34;element-access-3&#34;&gt;Element access&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;front&lt;/li&gt;
+&lt;li&gt;back&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;capacity-5&#34;&gt;Capacity&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;empty&lt;/li&gt;
+&lt;li&gt;size&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;modifiers-5&#34;&gt;Modifiers&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;push&lt;/li&gt;
+&lt;li&gt;emplace&lt;/li&gt;
+&lt;li&gt;pop&lt;/li&gt;
+&lt;li&gt;swap&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;list-1&#34;&gt;list&lt;/h2&gt;
+- https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -898,74 +1122,6 @@ $H(key)$为散列函数；i=0,1,2,&amp;hellip;,k；$m$表示散列表表长；$d
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;自底向上归并会多次遍历整个数组，根据子数组的大小进行两两归并。子数组的大小sz的初始值为1，每次加倍。最后一个子数组的大小只有在数组大小是sz的偶数倍时才会等于sz（否则其会比sz小）。&lt;/p&gt;
 &lt;p&gt;归并排序是一种渐进最优的基于比较的排序算法。在最坏的情况下的比较次数为$n\log n$.&lt;/p&gt;
 - https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>算法——堆排序和优先队列</title>
-        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%A0%86%E6%8E%92%E5%BA%8F%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/</link>
-        <pubDate>Mon, 06 Dec 2021 14:26:53 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%A0%86%E6%8E%92%E5%BA%8F%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%A0%86%E6%8E%92%E5%BA%8F%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/ -&lt;h2 id=&#34;优先队列&#34;&gt;优先队列&lt;/h2&gt;
-&lt;p&gt;优先队列如同其字面意思，是一种支持&lt;strong&gt;删除最大元素&lt;/strong&gt;和&lt;strong&gt;插入元素&lt;/strong&gt;的一种数据结构。&lt;/p&gt;
-&lt;p&gt;二叉堆是一棵&lt;strong&gt;有序的完全二叉树&lt;/strong&gt;，可以很好地实现优先队列。使用二叉堆实现优先队列可以保证插入元素和删除最大元素的操作在$\log N$的时间内完成。&lt;/p&gt;
-&lt;p&gt;我们通常使用数组来实现二叉堆。&lt;/p&gt;
-&lt;h2 id=&#34;堆&#34;&gt;堆&lt;/h2&gt;
-&lt;h3 id=&#34;堆的有序化&#34;&gt;堆的有序化&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;sink——自上而下的有序化&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sink&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; heapSize) {	&lt;span style=&#34;color:#888&#34;&gt;//i为数组下标
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; heapSize) {
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;i;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (j &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; heapSize &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; nums[j] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; nums[j&lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;])		j&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;(nums[i] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; nums[j]))	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;;
-        swap(nums[i], nums[j]);
-        i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; j;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;swim——自下而上的有序化&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;swim&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; x) {&lt;span style=&#34;color:#888&#34;&gt;//x为插入末尾的元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    nums.push_back(x);
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size() &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; nums[k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; nums[k]) {
-        swap(nums[k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;], nums[k]);
-        k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;构建大根堆&#34;&gt;构建大根堆&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;buildMaxHeap&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums) {	&lt;span style=&#34;color:#888&#34;&gt;//使用sink从上向下构建大根堆
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; heapSize &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size();
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; heapSize &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;--&lt;/span&gt;) {
-        sink(nums, i, heapSize);
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;删除堆顶元素&#34;&gt;删除堆顶元素&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;deleteK&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k) {	&lt;span style=&#34;color:#888&#34;&gt;//输出大根堆第k大的元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; heapSize &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size();
-    
-    &lt;span style=&#34;color:#888&#34;&gt;//依次交换第0个和第heapSize - 1个元素,...,第k-1个和第heapSize - k + 1个元素
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#888&#34;&gt;//每次交换后使用sink重新构建使堆有序
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size() &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; nums.size() &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;; i&lt;span style=&#34;color:#333&#34;&gt;--&lt;/span&gt;) {
-        swap(nums[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], nums[i]);
-        heapSize&lt;span style=&#34;color:#333&#34;&gt;--&lt;/span&gt;;
-        sink(nums, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;, heapSize);
-    }
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; nums[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;];
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;向堆中插入元素&#34;&gt;向堆中插入元素&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;swim&lt;/span&gt;(vector&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&amp;amp;&lt;/span&gt; nums, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; x) {	&lt;span style=&#34;color:#888&#34;&gt;//向大根堆堆中插入元素x，然后从下向上有序化
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    nums.push_back(x);
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nums.size() &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
-    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (k &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;) {
-        &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k &lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
-        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (nums[j] &lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; nums[k])
-            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;break&lt;/span&gt;;
-        swap(nums[j], nums[k]);
-        k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k&lt;span style=&#34;color:#333&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%A0%86%E6%8E%92%E5%BA%8F%E5%92%8C%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/ - 2019-2021 By Jialong</description>
         </item>
     
     

@@ -6,9 +6,125 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 18 Feb 2022 19:47:41 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 25 Feb 2022 19:17:30 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Cpp中的RAII机制</title>
+        <link>https://eternityqjl.top/posts/cpp%E4%B8%AD%E7%9A%84raii%E6%9C%BA%E5%88%B6/</link>
+        <pubDate>Fri, 25 Feb 2022 19:17:30 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp%E4%B8%AD%E7%9A%84raii%E6%9C%BA%E5%88%B6/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E4%B8%AD%E7%9A%84raii%E6%9C%BA%E5%88%B6/ -&lt;h2 id=&#34;什么是raii&#34;&gt;什么是RAII&lt;/h2&gt;
+&lt;p&gt;RAII即Resource Acquisition Is Initialization（资源获取就是初始化），是C++语言的一种管理资源、避免泄漏的惯用法。利用的就是C++构造的对象最终会被销毁的原则。RAII的做法是使用一个对象，在其构造时获取对应的资源，在对象生命期内控制对资源的访问，使之始终保持有效，最后在对象析构的时候，释放构造时获取的资源。&lt;/p&gt;
+&lt;h2 id=&#34;为什么要使用raii&#34;&gt;为什么要使用RAII&lt;/h2&gt;
+&lt;p&gt;RAII是用来管理资源、避免资源泄露的方法。&lt;strong&gt;系统资源&lt;/strong&gt;有：网络套接字、互斥锁、文件句柄和内存等，是有限的。使用系统资源时要遵守：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;申请资源&lt;/li&gt;
+&lt;li&gt;使用资源&lt;/li&gt;
+&lt;li&gt;释放资源&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;前两部不可或缺，使用完成要要进行释放，否则会造成资源泄漏。&lt;/p&gt;
+&lt;h2 id=&#34;如何使用raii&#34;&gt;如何使用RAII&lt;/h2&gt;
+&lt;p&gt;当我们在一个函数内部使用&lt;strong&gt;局部变量&lt;/strong&gt;，当退出了这个局部变量的作用域时，这个变量也就别销毁了；当这个变量是&lt;strong&gt;类对象&lt;/strong&gt;时，这个时候，就会自动调用这个类的析构函数，而这一切都是自动发生的，不要程序员显示的去调用完成。这个也太好了，RAII就是这样去完成的。&lt;/p&gt;
+&lt;p&gt;由于系统资源不具有自动释放的功能，而C++中的类具有自动调用析构函数的功能。如果把资源用类进行封装，对资源的操作都封装在类的内部，在析构函数中进行释放资源。这样当定义的局部变量的生命结束时，它的析构函数就会自动的被调用，如此，就不用程序员显示的去调用释放资源的操作了。&lt;/p&gt;
+&lt;p&gt;使用RAII机制的代码举例：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;iostream&amp;gt; &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;namespace&lt;/span&gt; std; 
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;ArrayOperation&lt;/span&gt; 
+{
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;public&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt; 
+    ArrayOperation() 
+    {
+        m_Array &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;]; 
+    }
+
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;InitArray&lt;/span&gt;() 
+    { 
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i)
+            &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;(m_Array &lt;span style=&#34;color:#333&#34;&gt;+&lt;/span&gt; i) &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i;
+    }
+
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;ShowArray&lt;/span&gt;() 
+    { 
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;; &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;i) 
+            cout&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;m_Array[i]&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;endl; 
+    }
+
+    &lt;span style=&#34;color:#333&#34;&gt;~&lt;/span&gt;ArrayOperation() 
+    {
+        cout&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;~ArrayOperation is called&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;endl; 
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (m_Array &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt;) {
+            &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;delete&lt;/span&gt;[] m_Array;
+            m_Array &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt; ; 
+        }
+    }
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;private&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;:&lt;/span&gt;
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; m_Array;
+};
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;OperationA&lt;/span&gt;(); 
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;OperationB&lt;/span&gt;(); 
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;() 
+{
+    ArrayOperation arrayOp;
+    arrayOp.InitArray(); 
+    arrayOp.ShowArray(); 
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;以下为该例子不使用RAII机制的代码：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;iostream&amp;gt; &lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;using&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;namespace&lt;/span&gt; std; 
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;OperationA&lt;/span&gt;(); 
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;OperationB&lt;/span&gt;(); 
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;()
+{
+    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;testArray &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;]; 
+
+    &lt;span style=&#34;color:#888&#34;&gt;// Here, you can use the array 
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;OperationA()) 
+    { 
+        &lt;span style=&#34;color:#888&#34;&gt;// If the operation A failed, we should delete the memory 
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;delete&lt;/span&gt; [] testArray; 
+        testArray &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt; ; 
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; 
+    } 
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;if&lt;/span&gt; (&lt;span style=&#34;color:#333&#34;&gt;!&lt;/span&gt;OperationB()) 
+    {
+        &lt;span style=&#34;color:#888&#34;&gt;// If the operation A failed, we should delete the memory 
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;delete&lt;/span&gt; [] testArray; 
+        testArray &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt; ; 
+        &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; 
+    }
+
+    &lt;span style=&#34;color:#888&#34;&gt;// All the operation succeed, delete the memory 
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;delete&lt;/span&gt; [] testArray; 
+    testArray &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt; ; 
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; 
+}
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;OperationA&lt;/span&gt;() 
+{ 
+    &lt;span style=&#34;color:#888&#34;&gt;// Do some operation, if the operate succeed, then return true, else return false 
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;false&lt;/span&gt; ; 
+}
+
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;OperationB&lt;/span&gt;() 
+{ 
+    &lt;span style=&#34;color:#888&#34;&gt;// Do some operation, if the operate succeed, then return true, else return false 
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;true&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/cpp%E4%B8%AD%E7%9A%84raii%E6%9C%BA%E5%88%B6/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1250,230 +1366,6 @@ i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;co
         cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;大端&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/%E6%B5%8B%E8%AF%95%E6%9C%BA%E5%99%A8%E5%A4%A7%E5%B0%8F%E7%AB%AF%E7%9A%84%E6%96%B9%E6%B3%95/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Cpp容器库和相关操作总结</title>
-        <link>https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</link>
-        <pubDate>Thu, 16 Dec 2021 15:34:43 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/ -&lt;h1 id=&#34;顺序容器&#34;&gt;顺序容器&lt;/h1&gt;
-&lt;h2 id=&#34;vector&#34;&gt;vector&lt;/h2&gt;
-&lt;p&gt;member functions：&lt;/p&gt;
-&lt;p&gt;constructor、destructor、operator=、assign、get_allocator&lt;/p&gt;
-&lt;h3 id=&#34;element-access&#34;&gt;Element access&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;at&lt;/li&gt;
-&lt;li&gt;operator&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;
-&lt;li&gt;front&lt;/li&gt;
-&lt;li&gt;back&lt;/li&gt;
-&lt;li&gt;data&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;iterators&#34;&gt;Iterators&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;begin/cbegin&lt;/li&gt;
-&lt;li&gt;end/cend&lt;/li&gt;
-&lt;li&gt;rbegin/c rbegin&lt;/li&gt;
-&lt;li&gt;rend/c rend&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;capacity&#34;&gt;Capacity&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;empty&lt;/li&gt;
-&lt;li&gt;size&lt;/li&gt;
-&lt;li&gt;max_size&lt;/li&gt;
-&lt;li&gt;reserve&lt;/li&gt;
-&lt;li&gt;capacity&lt;/li&gt;
-&lt;li&gt;shrink_to_fit&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;modifiers&#34;&gt;Modifiers&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;clear&lt;/li&gt;
-&lt;li&gt;insert&lt;/li&gt;
-&lt;li&gt;emplace：相较于insert，不需要产生一个临时变量。&lt;/li&gt;
-&lt;li&gt;erase&lt;/li&gt;
-&lt;li&gt;push_back&lt;/li&gt;
-&lt;li&gt;resize&lt;/li&gt;
-&lt;li&gt;swap&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;non-member functions&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;operator==&lt;/li&gt;
-&lt;li&gt;swap&lt;/li&gt;
-&lt;li&gt;erase&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;deque&#34;&gt;deque&lt;/h2&gt;
-&lt;p&gt;双端队列&lt;/p&gt;
-&lt;h2 id=&#34;list&#34;&gt;list&lt;/h2&gt;
-&lt;p&gt;双向链表&lt;/p&gt;
-&lt;h2 id=&#34;forward_list&#34;&gt;forward_list&lt;/h2&gt;
-&lt;p&gt;单向链表&lt;/p&gt;
-&lt;h2 id=&#34;array&#34;&gt;array&lt;/h2&gt;
-&lt;p&gt;array 容器的大小是固定的，无法动态的扩展或收缩，这也就意味着，在使用该容器的过程无法借由增加或移除元素而改变其大小，它只允许访问或者替换存储的元素。&lt;/p&gt;
-&lt;h2 id=&#34;string&#34;&gt;string&lt;/h2&gt;
-&lt;h3 id=&#34;iterators-1&#34;&gt;Iterators&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;begin/cbegin&lt;/li&gt;
-&lt;li&gt;end/cend&lt;/li&gt;
-&lt;li&gt;rbegin/c rbegin&lt;/li&gt;
-&lt;li&gt;rend/c rend&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;capacity-1&#34;&gt;Capacity&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;empty&lt;/li&gt;
-&lt;li&gt;size&lt;/li&gt;
-&lt;li&gt;length&lt;/li&gt;
-&lt;li&gt;max_size&lt;/li&gt;
-&lt;li&gt;reserve&lt;/li&gt;
-&lt;li&gt;capacity&lt;/li&gt;
-&lt;li&gt;clear&lt;/li&gt;
-&lt;li&gt;shrink_to_fit&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;element-access-1&#34;&gt;Element access&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;at&lt;/li&gt;
-&lt;li&gt;operator&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;
-&lt;li&gt;front&lt;/li&gt;
-&lt;li&gt;back&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;modifiers-1&#34;&gt;Modifiers&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;+=&lt;/li&gt;
-&lt;li&gt;append&lt;/li&gt;
-&lt;li&gt;push_back&lt;/li&gt;
-&lt;li&gt;assign&lt;/li&gt;
-&lt;li&gt;insert&lt;/li&gt;
-&lt;li&gt;erase&lt;/li&gt;
-&lt;li&gt;replace&lt;/li&gt;
-&lt;li&gt;swap&lt;/li&gt;
-&lt;li&gt;pop_back&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;关联容器&#34;&gt;关联容器&lt;/h1&gt;
-&lt;h2 id=&#34;set&#34;&gt;set&lt;/h2&gt;
-&lt;h3 id=&#34;iterators-2&#34;&gt;Iterators&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;begin / cbegin&lt;/li&gt;
-&lt;li&gt;end / cend&lt;/li&gt;
-&lt;li&gt;rbegin / c rbegin&lt;/li&gt;
-&lt;li&gt;rend / c rend&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;capacity-2&#34;&gt;Capacity&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;empty&lt;/li&gt;
-&lt;li&gt;size&lt;/li&gt;
-&lt;li&gt;max_size&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;modifiers-2&#34;&gt;Modifiers&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;clear&lt;/li&gt;
-&lt;li&gt;insert&lt;/li&gt;
-&lt;li&gt;emplace&lt;/li&gt;
-&lt;li&gt;emplace_hint&lt;/li&gt;
-&lt;li&gt;erase&lt;/li&gt;
-&lt;li&gt;swap&lt;/li&gt;
-&lt;li&gt;extract&lt;/li&gt;
-&lt;li&gt;merge&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;lookup&#34;&gt;Lookup&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;count&lt;/li&gt;
-&lt;li&gt;find&lt;/li&gt;
-&lt;li&gt;contains&lt;/li&gt;
-&lt;li&gt;equal_range&lt;/li&gt;
-&lt;li&gt;lower_bound&lt;/li&gt;
-&lt;li&gt;upper_bound&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;map&#34;&gt;map&lt;/h2&gt;
-&lt;h3 id=&#34;element-accress&#34;&gt;Element accress&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;at&lt;/li&gt;
-&lt;li&gt;operator &lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;iterators-3&#34;&gt;Iterators&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;begin / cbegin&lt;/li&gt;
-&lt;li&gt;end / cend&lt;/li&gt;
-&lt;li&gt;rbegin / c rbegin&lt;/li&gt;
-&lt;li&gt;rend / c rend&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;capacity-3&#34;&gt;Capacity&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;empty&lt;/li&gt;
-&lt;li&gt;size&lt;/li&gt;
-&lt;li&gt;max_size&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;modifiers-3&#34;&gt;Modifiers&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;clear&lt;/li&gt;
-&lt;li&gt;insert&lt;/li&gt;
-&lt;li&gt;insert_or_assign&lt;/li&gt;
-&lt;li&gt;emplace&lt;/li&gt;
-&lt;li&gt;emplace_hint&lt;/li&gt;
-&lt;li&gt;try_emplace&lt;/li&gt;
-&lt;li&gt;erase&lt;/li&gt;
-&lt;li&gt;swap&lt;/li&gt;
-&lt;li&gt;extract&lt;/li&gt;
-&lt;li&gt;merge&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;lookup-1&#34;&gt;Lookup&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;count&lt;/li&gt;
-&lt;li&gt;find&lt;/li&gt;
-&lt;li&gt;contains&lt;/li&gt;
-&lt;li&gt;equal_range&lt;/li&gt;
-&lt;li&gt;lower_bound&lt;/li&gt;
-&lt;li&gt;upper_bound&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;multimap&#34;&gt;multimap&lt;/h2&gt;
-&lt;p&gt;允许多个多个元素具有相同的关键词。主要应用有：例如词典中一个单词可以有多个意思。&lt;/p&gt;
-&lt;h2 id=&#34;multiset&#34;&gt;multiset&lt;/h2&gt;
-&lt;h2 id=&#34;unordered_map&#34;&gt;unordered_map&lt;/h2&gt;
-&lt;p&gt;无序容器不使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。在关键字类型的元素没有明显的序关系的情况下，无序容器非常有用。某些应用中维护元素序的代价非常高昂，此时无序容器也很有用。&lt;/p&gt;
-&lt;h2 id=&#34;unordered_set&#34;&gt;unordered_set&lt;/h2&gt;
-&lt;h2 id=&#34;unordered_multimap&#34;&gt;unordered_multimap&lt;/h2&gt;
-&lt;h2 id=&#34;unordered_multimet&#34;&gt;unordered_multimet&lt;/h2&gt;
-&lt;h1 id=&#34;容器适配器&#34;&gt;容器适配器&lt;/h1&gt;
-&lt;h2 id=&#34;priority_queue&#34;&gt;priority_queue&lt;/h2&gt;
-&lt;h3 id=&#34;element-access-2&#34;&gt;Element access&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;top&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;capacity-4&#34;&gt;Capacity&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;empty&lt;/li&gt;
-&lt;li&gt;size&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;modifiers-4&#34;&gt;Modifiers&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;push&lt;/li&gt;
-&lt;li&gt;emplace&lt;/li&gt;
-&lt;li&gt;pop&lt;/li&gt;
-&lt;li&gt;swap&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;stack&#34;&gt;stack&lt;/h2&gt;
-&lt;p&gt;与priority_queue相同。&lt;/p&gt;
-&lt;h2 id=&#34;queue&#34;&gt;queue&lt;/h2&gt;
-&lt;h3 id=&#34;element-access-3&#34;&gt;Element access&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;front&lt;/li&gt;
-&lt;li&gt;back&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;capacity-5&#34;&gt;Capacity&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;empty&lt;/li&gt;
-&lt;li&gt;size&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;modifiers-5&#34;&gt;Modifiers&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;push&lt;/li&gt;
-&lt;li&gt;emplace&lt;/li&gt;
-&lt;li&gt;pop&lt;/li&gt;
-&lt;li&gt;swap&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;list-1&#34;&gt;list&lt;/h2&gt;
-- https://eternityqjl.top/posts/cpp%E5%AE%B9%E5%99%A8%E5%BA%93%E5%92%8C%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
         </item>
     
     
