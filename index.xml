@@ -6,9 +6,100 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 05 Mar 2022 21:18:38 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Csapp 6 存储器层次结构</title>
+        <link>https://eternityqjl.top/posts/csapp-6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/</link>
+        <pubDate>Sat, 05 Mar 2022 21:18:38 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/csapp-6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/ -&lt;p&gt;基本的存储技术：SRAM存储器、DRAM存储器、ROM存储器以及旋转和固态的硬盘。&lt;/p&gt;
+&lt;h2 id=&#34;存储技术&#34;&gt;存储技术&lt;/h2&gt;
+&lt;h3 id=&#34;随机访问存储器&#34;&gt;随机访问存储器&lt;/h3&gt;
+&lt;p&gt;RAM分为动态DRAM和静态SRAM两类。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;传统的DRAM&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;内存模块&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;增强的DRAM&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;非易失性存储器&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;又称只读存储器ROM。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;访问主存&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;数据流通过总线在处理器和DRAM之间来来回回。这一系列步骤又称为总线事务。&lt;/p&gt;
+&lt;p&gt;系统总线、内存总线。&lt;/p&gt;
+&lt;h3 id=&#34;磁盘存储&#34;&gt;磁盘存储&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;磁盘构造&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;磁道、扇区、柱面&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;磁盘容量&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;磁盘操作&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;读、写数据。对扇区的访问时间主要由三个部分组成：寻道时间、旋转时间、传送时间&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;逻辑磁盘块&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;磁盘封装中有一个小的硬件/固件设备，称为磁盘控制器，维护逻辑块号和物理磁盘扇区之间的映射关系。一个（盘面，磁道，扇区）三元组唯一地标识了对应的物理扇区。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;连接I/O设备&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I/O设备，例如显卡、鼠标、键盘、磁盘和网路适配器等，通过I/O总线与连接到CPU和主存。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;访问磁盘&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;DMA技术，设备可以自己执行读或写总线事务而不需要CPU干涉。DMA传送完成，I/O设备通过给CPU发送一个中断信号来通知CPU。&lt;/p&gt;
+&lt;h3 id=&#34;固态硬盘&#34;&gt;固态硬盘&lt;/h3&gt;
+&lt;p&gt;SSD由一个或多个闪存芯片和闪存翻译层组成。&lt;/p&gt;
+&lt;h2 id=&#34;局部性&#34;&gt;局部性&lt;/h2&gt;
+&lt;p&gt;时间局部性：被引用过一次的内存位置可能在不远的将来再被多次引用。&lt;/p&gt;
+&lt;p&gt;空间局部性：一个内存位置被引用了一次，那么程序可能在不远的将来引用附近的一个内存位置&lt;/p&gt;
+&lt;h2 id=&#34;存储器层次结构&#34;&gt;存储器层次结构&lt;/h2&gt;
+&lt;p&gt;L0：寄存器&lt;/p&gt;
+&lt;p&gt;L1、2、3：高速缓存（SRAM）&lt;/p&gt;
+&lt;p&gt;L4：主存（DRAM）&lt;/p&gt;
+&lt;p&gt;L5：本地二级存储（本地磁盘）&lt;/p&gt;
+&lt;p&gt;L6：远程二级存储（分布式文件系统、Web服务器）&lt;/p&gt;
+&lt;p&gt;对于缓存的管理：&lt;/p&gt;
+&lt;p&gt;每一层存储设备都是较低一层的缓存。在一个有虚拟内存的系统中，DRAM主存作为存储在磁盘上的数据块的缓存，由操作系统软件和CPU上的地址翻译硬件共同管理。&lt;/p&gt;
+&lt;h2 id=&#34;高速缓存存储器&#34;&gt;高速缓存存储器&lt;/h2&gt;
+&lt;p&gt;L1高速缓存：访问速度几乎和寄存器一样快，大约4个时钟周期。&lt;/p&gt;
+&lt;p&gt;L2高速缓存：大约10个时钟周期。&lt;/p&gt;
+&lt;p&gt;L3高速缓存：大约50个时钟周期。&lt;/p&gt;
+&lt;h3 id=&#34;通用的高速缓冲存储器组织结构&#34;&gt;通用的高速缓冲存储器组织结构&lt;/h3&gt;
+&lt;p&gt;一般来说，通用的高速缓存结构可以用元组（S，E，B，m）来描述。S为高速缓存的组数，E为每组的行数，B为每个高速缓存块的字节数，m为存储器（地址）的位数。&lt;/p&gt;
+&lt;h3 id=&#34;直接映射高速缓存&#34;&gt;直接映射高速缓存&lt;/h3&gt;
+&lt;p&gt;每个组只有一行（E=1）。&lt;/p&gt;
+&lt;p&gt;高速缓存确定一个请求是否命中，然后抽取被请求的字的过程，分为三步：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;组选择&lt;/li&gt;
+&lt;li&gt;行匹配&lt;/li&gt;
+&lt;li&gt;字选择&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;组相联高速缓存&#34;&gt;组相联高速缓存&lt;/h3&gt;
+&lt;p&gt;每个组都保存有多于一个的高速缓存行。&lt;/p&gt;
+&lt;h3 id=&#34;全相联高速缓存&#34;&gt;全相联高速缓存&lt;/h3&gt;
+&lt;p&gt;由一个包含所有高速缓存行的组组成的。&lt;/p&gt;
+&lt;h3 id=&#34;有关写的问题&#34;&gt;有关写的问题&lt;/h3&gt;
+&lt;p&gt;直写、写回；写分配，非写分配。&lt;/p&gt;
+&lt;p&gt;一般建议采用使用写回——写分配的高速缓存的模型。因为存储器层次结构中较低层次的缓存更可能使用写回而不是直写。&lt;/p&gt;
+&lt;h2 id=&#34;编写高速缓存友好的代码&#34;&gt;编写高速缓存友好的代码&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;让最常见的情况运行得块。要把注意力集中在核心函数里的循环上，忽略其他部分。&lt;/li&gt;
+&lt;li&gt;尽量减小每个循环内部的缓存不命中的数量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;高速缓存对存储器性能的影响&#34;&gt;高速缓存对存储器性能的影响&lt;/h2&gt;
+&lt;h3 id=&#34;存储器山&#34;&gt;存储器山&lt;/h3&gt;
+&lt;h3 id=&#34;重新排列循环以提高空间局部性&#34;&gt;重新排列循环以提高空间局部性&lt;/h3&gt;
+- https://eternityqjl.top/posts/csapp-6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1358,46 +1449,6 @@ i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;co
 &lt;p&gt;B+树是应文件系统所需而产生的一种B树的变形树，非叶子结点只保存索引，不保存实际的数据，数据都保存在叶子结点中。相当于是文件系统的查找。&lt;/p&gt;
 &lt;p&gt;另外B+树支持顺序查找而B树不支持，数据库中经常需要遍历一定范围内的数据，因此采用B+树比采用B树的效率更高。&lt;/p&gt;
 - https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Cpp内存对齐</title>
-        <link>https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</link>
-        <pubDate>Wed, 22 Dec 2021 16:10:44 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/ -&lt;h2 id=&#34;内存对齐&#34;&gt;内存对齐&lt;/h2&gt;
-&lt;p&gt;看下面的小程序，理论上，32位系统下，int占4byte，char占一个byte，那么将它们放到一个结构体中应该占4+1=5byte；但是实际上，通过运行程序得到的结果是8 byte，这就是内存对齐所导致的。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;//32位系统
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;struct&lt;/span&gt;{
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; x;
-    &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; y;
-}s;
-
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;main&lt;/span&gt;()
-{
-    printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%d&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;,&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(s);  &lt;span style=&#34;color:#888&#34;&gt;// 输出8
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;现代计算机中内存空间都是按照 byte 划分的，从理论上讲似乎对任何类型的变量的访问可以从任何地址开始，但是实际的计算机系统对基本类型数据在内存中存放的位置有限制，它们会要求这些数据的首地址的值是某个数k（通常它为4或8）的倍数，这就是所谓的内存对齐。&lt;/p&gt;
-&lt;h2 id=&#34;进行内存对齐的原因&#34;&gt;进行内存对齐的原因&lt;/h2&gt;
-&lt;p&gt;尽管内存是以字节为单位，但是大部分处理器并不是按字节块来存取内存的.它一般会以双字节,四字节,8字节,16字节甚至32字节为单位来存取内存，我们将上述这些存取单位称为&lt;strong&gt;内存存取粒度&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;现在考虑4字节存取粒度的处理器取int类型变量（32位系统），该处理器只能从地址为4的倍数的内存开始读取数据。&lt;/p&gt;
-&lt;h2 id=&#34;默认内存对齐&#34;&gt;默认内存对齐&lt;/h2&gt;
-&lt;p&gt;int类型放在地址能被4整除的位置，short类型放在地址能被2整除的位置，char能放在任何位置。&lt;/p&gt;
-&lt;p&gt;结构体的对齐满足以下原则：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;结构体变量的首地址能够被其&lt;strong&gt;最宽基本类型成员的大小&lt;/strong&gt;所整除。&lt;/li&gt;
-&lt;li&gt;结构体每个成员相对于结构体首地址的偏移量都是&lt;strong&gt;成员大小的整数倍&lt;/strong&gt;，如有需要编译器会在成员之间填充字节。&lt;/li&gt;
-&lt;li&gt;结构体的总大小为结构体&lt;strong&gt;最宽基本类型成员大小的整数倍&lt;/strong&gt;，如有需要编译器会在最末一个成员后填充字节。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;pragma-pack命令&#34;&gt;#pragma pack()命令&lt;/h2&gt;
-&lt;p&gt;改命令强制规定了成员的对齐方式，括号内为&lt;strong&gt;对齐的字节数&lt;/strong&gt;。若括号内的内容为空，则为默认对齐。&lt;/p&gt;
-&lt;p&gt;改变默认对齐方式能够更加充分利用存储空间，但降低了计算机的读写速率，是一种以空间换事件的方法。&lt;/p&gt;
-- https://eternityqjl.top/posts/cpp%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/ - 2019-2021 By Jialong</description>
         </item>
     
     

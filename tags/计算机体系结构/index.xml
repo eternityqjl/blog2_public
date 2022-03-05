@@ -7,7 +7,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 11 Jan 2022 15:33:44 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 05 Mar 2022 21:18:38 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Csapp 6 存储器层次结构</title>
+      <link>https://eternityqjl.top/posts/csapp-6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Sat, 05 Mar 2022 21:18:38 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/csapp-6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/</guid>
+      <description>基本的存储技术：SRAM存储器、DRAM存储器、ROM存储器以及旋转和固态的硬盘。
+存储技术 随机访问存储器 RAM分为动态DRAM和静态SRAM两类。
+传统的DRAM
+内存模块
+增强的DRAM
+非易失性存储器
+又称只读存储器ROM。
+访问主存
+数据流通过总线在处理器和DRAM之间来来回回。这一系列步骤又称为总线事务。
+系统总线、内存总线。
+磁盘存储  磁盘构造  磁道、扇区、柱面
+  磁盘容量
+  磁盘操作
+  读、写数据。对扇区的访问时间主要由三个部分组成：寻道时间、旋转时间、传送时间
+ 逻辑磁盘块  磁盘封装中有一个小的硬件/固件设备，称为磁盘控制器，维护逻辑块号和物理磁盘扇区之间的映射关系。一个（盘面，磁道，扇区）三元组唯一地标识了对应的物理扇区。
+ 连接I/O设备  I/O设备，例如显卡、鼠标、键盘、磁盘和网路适配器等，通过I/O总线与连接到CPU和主存。
+ 访问磁盘  DMA技术，设备可以自己执行读或写总线事务而不需要CPU干涉。DMA传送完成，I/O设备通过给CPU发送一个中断信号来通知CPU。
+固态硬盘 SSD由一个或多个闪存芯片和闪存翻译层组成。
+局部性 时间局部性：被引用过一次的内存位置可能在不远的将来再被多次引用。
+空间局部性：一个内存位置被引用了一次，那么程序可能在不远的将来引用附近的一个内存位置
+存储器层次结构 L0：寄存器
+L1、2、3：高速缓存（SRAM）
+L4：主存（DRAM）
+L5：本地二级存储（本地磁盘）
+L6：远程二级存储（分布式文件系统、Web服务器）
+对于缓存的管理：
+每一层存储设备都是较低一层的缓存。在一个有虚拟内存的系统中，DRAM主存作为存储在磁盘上的数据块的缓存，由操作系统软件和CPU上的地址翻译硬件共同管理。
+高速缓存存储器 L1高速缓存：访问速度几乎和寄存器一样快，大约4个时钟周期。
+L2高速缓存：大约10个时钟周期。
+L3高速缓存：大约50个时钟周期。
+通用的高速缓冲存储器组织结构 一般来说，通用的高速缓存结构可以用元组（S，E，B，m）来描述。S为高速缓存的组数，E为每组的行数，B为每个高速缓存块的字节数，m为存储器（地址）的位数。
+直接映射高速缓存 每个组只有一行（E=1）。
+高速缓存确定一个请求是否命中，然后抽取被请求的字的过程，分为三步：
+ 组选择 行匹配 字选择  组相联高速缓存 每个组都保存有多于一个的高速缓存行。
+全相联高速缓存 由一个包含所有高速缓存行的组组成的。
+有关写的问题 直写、写回；写分配，非写分配。</description>
+    </item>
+    
     <item>
       <title>Csapp 8 异常控制流</title>
       <link>https://eternityqjl.top/posts/csapp-8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/</link>

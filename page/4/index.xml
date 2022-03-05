@@ -6,9 +6,107 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 05 Mar 2022 21:18:38 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>C&#43;&#43; Primer——CH11 关联容器</title>
+        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</link>
+        <pubDate>Mon, 15 Nov 2021 15:32:41 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/ -&lt;p&gt;键值对。&lt;/p&gt;
+&lt;p&gt;set和map&lt;/p&gt;
+&lt;h2 id=&#34;使用关联容器&#34;&gt;使用关联容器&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;map： 关联数组，关键字——值。&lt;/li&gt;
+&lt;li&gt;set：关键字的简单集合&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可以进行列表初始化&lt;/p&gt;
+&lt;h2 id=&#34;关联容器概述&#34;&gt;关联容器概述&lt;/h2&gt;
+&lt;p&gt;关联容器不支持顺序容器的位置相关的操作，例如&lt;code&gt;push_front&lt;/code&gt;，原因是关联容器中的值是按照关键字存储的，这些操作没有意义。&lt;/p&gt;
+&lt;p&gt;另外无序容器还提供调整哈希性能的操作。&lt;/p&gt;
+&lt;h3 id=&#34;定义关联容器&#34;&gt;定义关联容器&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, size_t&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; word_count;	&lt;span style=&#34;color:#888&#34;&gt;//空容器
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;set&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; exclude &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;the&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;but&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;and&amp;#34;&lt;/span&gt;};
+map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, size_t&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; authors &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {{&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Joyce&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;James&amp;#34;&lt;/span&gt;},
+                               {&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Austen&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Jane&amp;#34;&lt;/span&gt;}};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;初始化一个map时必须提供关键字类型和值类型。&lt;/p&gt;
+&lt;h3 id=&#34;关键字类型的要求&#34;&gt;关键字类型的要求&lt;/h3&gt;
+&lt;p&gt;对于有序容器map、set、multimap、multiset，关键字类型必须定义元素比较的方法。所提供的操作必须在关键字类型上定义一个严格弱序。&lt;/p&gt;
+&lt;h3 id=&#34;pair类型&#34;&gt;pair类型&lt;/h3&gt;
+&lt;p&gt;定义在头文件utility中。&lt;/p&gt;
+&lt;p&gt;pair的默认构造函数对数据成员进行值初始化。也可以为每个成员提供初始化器。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;pair&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; anon;
+pair&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, string&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; author{&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;James&amp;#34;&lt;/span&gt;, &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Joyce&amp;#34;&lt;/span&gt;};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;pair的数据成员是public的，两个成员分别命名为first和second，可以用普通的成员访问符号来访问它们。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; w.first &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; w.second &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;关联容器操作&#34;&gt;关联容器操作&lt;/h2&gt;
+&lt;p&gt;除了之前在顺序容器P295页列出的类型，关联容器还定义了以下类型：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;key_type&lt;/code&gt;：此容器类型的关键字类型&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mapped_type&lt;/code&gt;：每个关键字关联的类型，只适用于map&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;value_type&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;对于set而言，与&lt;code&gt;key_type&lt;/code&gt;相同&lt;/li&gt;
+&lt;li&gt;对于map而言，为&lt;code&gt;pair&amp;lt;const key_type, mapped_type&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我们使用作用域运算符来提取一个类型的成员，例如：&lt;code&gt;map&amp;lt;string, int&amp;gt;::key_value&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;只有map类型才定义了&lt;code&gt;mapped_type&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;关联容器迭代器&#34;&gt;关联容器迭代器&lt;/h3&gt;
+&lt;p&gt;解引用一个关联容器迭代器时，就能得到一个类型为容器的value_type的值的引用。对于&lt;strong&gt;map&lt;/strong&gt;而言，&lt;strong&gt;value_type是一个pair类型&lt;/strong&gt;，其first成员保存&lt;strong&gt;const的关键字&lt;/strong&gt;，second成员保存值。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; map_it &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; word_count.begin();
+&lt;span style=&#34;color:#888&#34;&gt;//*map_it是指向一个pair&amp;lt;const string, size_t&amp;gt;对象的引用
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; map_it&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;first;	&lt;span style=&#34;color:#888&#34;&gt;//打印此元素的关键字
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;map_it&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;first &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;new key&amp;#34;&lt;/span&gt;;	&lt;span style=&#34;color:#888&#34;&gt;//错误，关键字是const的
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;切记，一个map的value_type是一个pair，可以改变pair的值但不能改变关键字成员的值。&lt;/p&gt;
+&lt;p&gt;我们通常不对关联容器使用泛型算法，&lt;strong&gt;关键字是const&lt;/strong&gt;这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法需要向元素写入值，而set类型中的元素是count的，map中元素是pair，其第一个成员是const的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;遍历关联容器&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;map和set都支持begin和end操作，我们可以用这些函数获取迭代器，然后用迭代器来遍历容器。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;auto&lt;/span&gt; map_it &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; word_count.cbegin();
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;while&lt;/span&gt; (map_it &lt;span style=&#34;color:#333&#34;&gt;!=&lt;/span&gt; word_count.cend()) {
+    cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; map_it&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;first &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;occurs &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; map_it&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;&lt;/span&gt;second &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;times&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;
+    &lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;map_it;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;另外我们通常不对关联容器使用泛型算法，关键字是const这一特性意味着不能将关联容器传递给修改或重排容器元素的算法，因为这类算法要写入值。&lt;/p&gt;
+&lt;h3 id=&#34;添加元素&#34;&gt;添加元素&lt;/h3&gt;
+&lt;p&gt;关联容器的&lt;strong&gt;insert成员&lt;/strong&gt;向容器中添加一个元素或一个元素范围，map和set不包含重复关键字，因此插入一个已存在的元素对容器没有任何影响。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;向map添加元素&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;记住元素类型是pair。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;word_count.insert({word, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;});
+word_count.insert(make_pair(word, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;c.emplace(args)&lt;/code&gt;：对于map和set，只有当元素的关键字不在c中时才插入（或构造）元素。&lt;/p&gt;
+&lt;p&gt;insert返回的值依赖于容器类型和参数，对于不包含重复关键字的容器，添加单一元素的insert和emplace版本返回一个pair，告诉我们插入操作是否成功，pair的first成员是一个&lt;strong&gt;迭代器&lt;/strong&gt;，指向具有给定关键字的元素；second成员是一个&lt;strong&gt;bool值&lt;/strong&gt;，指出元素时插入成功还是已经存在于容器中。&lt;/p&gt;
+&lt;h3 id=&#34;删除元素&#34;&gt;删除元素&lt;/h3&gt;
+&lt;p&gt;关联容器定义了三个版本的erase，与顺序容器一样，我们可以通过传递给erase一个&lt;strong&gt;迭代器&lt;/strong&gt;或一个&lt;strong&gt;迭代器对&lt;/strong&gt;来删除一个元素或一个元素范围。&lt;/p&gt;
+&lt;p&gt;关联容器额外提供一个erase操作，接受一个key_type参数，此版本删除所有匹配给定关键字的元素，返回实际删除的元素的数量。&lt;/p&gt;
+&lt;h3 id=&#34;map的下标操作&#34;&gt;map的下标操作&lt;/h3&gt;
+&lt;p&gt;map和unordered_map容器提供了下标运算符和一个对应的at函数，set类型不支持下标。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, size_t&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; word_count;
+word_count[&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;Anna&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;c[k]	&lt;span style=&#34;color:#888&#34;&gt;//返回关键字为k的元素；如果k不在c中，添加一个关键字为k的元素，对其进行值初始化
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;c.at(k)	&lt;span style=&#34;color:#888&#34;&gt;//访问关键字为k的元素，带参数检查；若k不在c中，抛出一个out_of_range异常。
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;访问元素&#34;&gt;访问元素&lt;/h3&gt;
+&lt;p&gt;对于不允许重复关键字的容器，使用find和count没什么区别，但对于重复关键字的容器，count还会做更多的工作：如果元素在容器中，能够统计有多少个元素有相同的关键字。如果不需要技术，虽好使用find。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;set&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; iset &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;2&lt;/span&gt;,&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;};
+iset.find(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//返回一个迭代器，指向key == 1的元素
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;iset.count(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//返回1
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;iset.count(&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;11&lt;/span&gt;);	&lt;span style=&#34;color:#888&#34;&gt;//返回0
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;无序容器&#34;&gt;无序容器&lt;/h2&gt;
+&lt;p&gt;C++11 新定义了4个无序关联容器。这些容器不是使用比较运算符来组织元素，而是使用一个&lt;strong&gt;哈希函数&lt;/strong&gt;和关键字类型的**==运算符**。在关键字类型的元素没有明显的序关系的情况下，无序容器是非常有用的。&lt;/p&gt;
+&lt;p&gt;虽然理论上哈希技术能获得更好的平均性能，但在实际中想要达到更好的效果还要进行一些性能测试和调优。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;unordered_map&lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt;string, size_t&lt;span style=&#34;color:#333&#34;&gt;&amp;gt;&lt;/span&gt; word_count;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;管理桶&#34;&gt;管理桶&lt;/h3&gt;
+&lt;p&gt;无序容器在存储上组织为&lt;strong&gt;一组桶&lt;/strong&gt;，每个桶保存&lt;strong&gt;零个或多个元素&lt;/strong&gt;。无序容器使用一个&lt;strong&gt;哈希函数&lt;/strong&gt;将元素映射到桶。为了访问一个元素，容器首先计算元素的哈希值，它指出应该搜索哪个桶。容器将具有一个&lt;strong&gt;特定哈希值&lt;/strong&gt;的所有元素都保存在相同的桶中（有点像散列表处理冲突时使用的拉链法）。无需容器的性能依赖于哈希函数的质量和桶的数量。&lt;/p&gt;
+&lt;h3 id=&#34;无需容器对关键字类型的要求&#34;&gt;无需容器对关键字类型的要求&lt;/h3&gt;
+&lt;p&gt;默认情况下，无需容器使用关键字类型的==运算符来比较元素，它们还是用一个&lt;strong&gt;hash&amp;lt;key_type&amp;gt;类型&lt;/strong&gt;的对象来生成每个元素的哈希值。标准库为内置类型（包括指针）提供了hash模板。&lt;/p&gt;
+- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -2123,189 +2221,6 @@ flst.splice_after(args)
 (p, lst2, b, e)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;链表特有的操作会改变容器&lt;/strong&gt;&lt;/p&gt;
 - https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE6%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>csapp: 2.信息的表示和处理（部分完成）</title>
-        <link>https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</link>
-        <pubDate>Mon, 12 Jul 2021 21:26:27 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/ -&lt;p&gt;第一部分内容：程序结构和执行&lt;/p&gt;
-&lt;p&gt;我们需要用方法表示&lt;strong&gt;基本数据类型&lt;/strong&gt;，然后考虑机器级指令如何操作这样的数据，以及编译器如何将C程序翻译成这样的指令。接下来研究集中处理器的方法，使得我们能够更好地了解硬件资源如何被用来执行指令。&lt;/p&gt;
-&lt;h2 id=&#34;信息存储&#34;&gt;信息存储&lt;/h2&gt;
-&lt;h3 id=&#34;十六进制表示法及转换&#34;&gt;十六进制表示法及转换&lt;/h3&gt;
-&lt;p&gt;二进制和十进制对描述&lt;strong&gt;位模式&lt;/strong&gt;来说都不方便，因此采用16进制数(hex)来表示位模式。&lt;/p&gt;
-&lt;p&gt;C语言中16进制数以0X或0x开头，字符‘A’~‘F’既可以是大写也可以是小写。&lt;/p&gt;
-&lt;p&gt;二进制和十六进制之间的转换较为简单，不再赘述。&lt;/p&gt;
-&lt;p&gt;十进制和十六进制数之间的转换要反复利用乘法和除法进行处理：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;从十进制到十六进制：反复用16除十进制数&lt;/li&gt;
-&lt;li&gt;从十六进制到十进制：用相应的16的幂乘以每个十六进制数。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;字数据大小&#34;&gt;字数据大小&lt;/h3&gt;
-&lt;p&gt;字长指明指针数据的标称大小。虚拟地址是以这样一个字来编码的，所以字长决定的最重要的系统参数就是&lt;strong&gt;虚拟地址空间的最大大小&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;对一个字长为w的机器而言，虚拟地址的范围是$0$ ~$2^w-1$，程序最多访问$2^w-1$个字节。&lt;/p&gt;
-&lt;p&gt;近年，很多机器都从32位字长迁移到了64位字长。大多64位字长机器可以运行32位字长机器编译的程序。32位程序和64位程序的区别在于程序是&lt;strong&gt;如何编译&lt;/strong&gt;成的，而不是运行的机器类型。&lt;/p&gt;
-&lt;h3 id=&#34;寻址和字节顺序&#34;&gt;寻址和字节顺序&lt;/h3&gt;
-&lt;p&gt;小端法、大端法&lt;/p&gt;
-&lt;p&gt;对于跨越多个字节的程序对象，我们必须明确：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;这个对象的地址是什么&lt;/li&gt;
-&lt;li&gt;如何在内存中排列这些字节&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;一般来说，多字节对象被存储为&lt;strong&gt;连续的字节序列&lt;/strong&gt;，对象的地址为所使用字节中&lt;strong&gt;最小的地址&lt;/strong&gt;。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;小端法：将&lt;strong&gt;最低有效字节&lt;/strong&gt;放在最前面(最小地址)存储。（例如一个二进制数最右边的8位是最低有效字节）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;大端法：将&lt;strong&gt;最高有效字节&lt;/strong&gt;放在最前面(最小地址)存储。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;大多Intel兼容机使用小端模式。&lt;/p&gt;
-&lt;p&gt;以下代码使用强制类型转换来访问和打印不同程序对象的字节表示。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;unsigned&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;byte_pointer;	&lt;span style=&#34;color:#888&#34;&gt;//将byte_pointer定义为一个指向类型为unsigned char对象的指针
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;//指针被强制类型转换为unsigned char *, 这告诉编译器程序应该把这个指针看成指向一个字节序列，而不是指向一个原始数据类型的对象。
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_bytes&lt;/span&gt;(byte_pointer start, size_t len)
-{&lt;span style=&#34;color:#888&#34;&gt;//按顺序显示出指针指向对象的每个字节内容，可以判断出系统使用的小端法还是大端法
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	size_t i;
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; len; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;)
-		printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%.2x&amp;#34;&lt;/span&gt;, start[i]);
-	printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#666;background-color:#fff0f0;font-weight:bold&#34;&gt;\n&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&lt;/span&gt;);
-}
-
-&lt;span style=&#34;color:#888&#34;&gt;//使用sizeof确定对象使用的字节数
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_int&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; x)
-{&lt;span style=&#34;color:#888&#34;&gt;//显示int对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;));
-}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_float&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt; x)
-{&lt;span style=&#34;color:#888&#34;&gt;//显示float对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;float&lt;/span&gt;));
-}
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;show_pointer&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;x)
-{&lt;span style=&#34;color:#888&#34;&gt;//显示void *对象的字节内容
-&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;	show_bytes((byte_pointer) &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;x, &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;));
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;表示字符串&#34;&gt;表示字符串&lt;/h3&gt;
-&lt;p&gt;对文本进行编码。&lt;/p&gt;
-&lt;p&gt;ASCII编码、Unicode编码&lt;/p&gt;
-&lt;p&gt;之前写过一篇相关博客：&lt;a href=&#34;http://eternityqjl.top/posts/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81unicode-utf-8/&#34;&gt;字符编码：Unicode, UTF-8&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&#34;布尔代数&#34;&gt;布尔代数&lt;/h3&gt;
-&lt;p&gt;四种布尔运算：&lt;/p&gt;
-&lt;p&gt;与、或、非、异或&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;异或：当P或Q为真但不同时为真时，异或成立；即当p=1且q=0或p=1且q=1时，p^q=1&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;位向量的布尔运算&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;按位进行布尔运算。&lt;/p&gt;
-&lt;h3 id=&#34;c语言中的位级运算&#34;&gt;C语言中的位级运算&lt;/h3&gt;
-&lt;p&gt;按照对应位进行布尔运算。&lt;/p&gt;
-&lt;h3 id=&#34;c语言中的逻辑运算&#34;&gt;C语言中的逻辑运算&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;||&lt;/code&gt;、&lt;code&gt;&amp;amp;&amp;amp;&lt;/code&gt;、&lt;code&gt;!&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;逻辑运算和位级运算完全不同，逻辑运算认为所有非零的参数都表示TRUE，参数0表示FALSE。以下是一些表达式求值举例：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;表达式&lt;/th&gt;
-&lt;th&gt;结果&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;!0x41&lt;/td&gt;
-&lt;td&gt;0x00&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;!0x00&lt;/td&gt;
-&lt;td&gt;0x01&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;!!0x41&lt;/td&gt;
-&lt;td&gt;0x01&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;c语言中的移位运算&#34;&gt;C语言中的移位运算&lt;/h3&gt;
-&lt;p&gt;左移k位：将操作数向左移动k位，丢弃掉最高的k位并在右端补k个0&lt;/p&gt;
-&lt;p&gt;逻辑右移：在左端补k个0&lt;/p&gt;
-&lt;p&gt;算数右移：在左端补k个最高有效位的值&lt;/p&gt;
-&lt;p&gt;几乎所有编译器都对&lt;strong&gt;有符号数&lt;/strong&gt;使用&lt;strong&gt;算术右移&lt;/strong&gt;，对&lt;strong&gt;无符号数&lt;/strong&gt;使用逻辑右移。&lt;/p&gt;
-&lt;h2 id=&#34;整数表示&#34;&gt;整数表示&lt;/h2&gt;
-&lt;p&gt;用&lt;strong&gt;位&lt;/strong&gt;来编码整数的两种不同方式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一种只能表示&lt;strong&gt;非负数&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;另一种能表示&lt;strong&gt;负数、零和正数&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;整型数据类型&#34;&gt;整型数据类型&lt;/h3&gt;
-&lt;p&gt;C语言通过&lt;strong&gt;关键字&lt;/strong&gt;来表示多种整型数据类型，这些关键字包括char、short、long，同时还能指示被表示的数字是非负数（声明为unsigned）。&lt;/p&gt;
-&lt;p&gt;为不同大小分配的字节数根据程序编译为32位还是64位有所不同；根据字节分配，不同大小所能表示的值的范围是不同的。&lt;/p&gt;
-&lt;p&gt;取值范围是不对称的，负数的范围比正数大1.&lt;/p&gt;
-&lt;h3 id=&#34;无符号数的编码&#34;&gt;无符号数的编码&lt;/h3&gt;
-&lt;p&gt;直接按照二进制进行编码即可。B2U：将二进制编码映射到一个非负整数&lt;/p&gt;
-&lt;p&gt;无符号数的编码具有唯一性&lt;/p&gt;
-&lt;h3 id=&#34;补码编码&#34;&gt;补码编码&lt;/h3&gt;
-&lt;p&gt;(two&amp;rsquo;s-complement)。用来表示有符号数，将字的最高有效位解释为&lt;strong&gt;负权&lt;/strong&gt;，用$B2T_w$表示：
-$$
-B2T_w(\vec x)=-x_{w-1}2^{w-1}+\sum_{i=0}^{w-2}x_i2_i
-$$
-最高有效位$x_{w-1}$称为符号位，它的权重为$-2^{w-1}$，是无符号表示中权重的负数。&lt;/p&gt;
-&lt;p&gt;从维向量到整数映射的举例：
-$$
-B2T_4([0001])=1 \
-B2T_4([0101])=5 \
-B2T_4([1011])=5 \
-B2T_4([1111])=-1
-$$
-w位补码所能表示的值的范围是：$[-2^{w-1},2^{w-1}-1]$，例如长度为4的补码可以表示的范围是$[-8,7]$。与无符号数一样，在可表示的取值范围内，每个数字都唯一的w位补码。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;用补码来编码负数（有符号数）&lt;/strong&gt;。几乎所有现代机器目前都采用补码编码。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;反码：最高有效位的权是$-(2^{w-1}-1)$，其他和补码一样。&lt;/p&gt;
-&lt;p&gt;原码：最高有效位是符号位，用来确定剩下的位应该取负权还是正权。&lt;/p&gt;
-&lt;p&gt;这两种表示方式对于数字0都有两种不同的编码方式。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;有符号数和无符号数之间的转换&#34;&gt;有符号数和无符号数之间的转换&lt;/h3&gt;
-&lt;p&gt;对于多数C语言的实现来说，这个问题都是从&lt;strong&gt;位级&lt;/strong&gt;角度来看的，而不是&lt;strong&gt;数&lt;/strong&gt;的角度。&lt;/p&gt;
-&lt;p&gt;处理同样字长的有符号和无符号数之间相互转换的规则为：数值可能会改变，但&lt;strong&gt;位模式&lt;/strong&gt;不变。&lt;/p&gt;
-&lt;p&gt;补码转换为无符号数$T2U_w(x)$，当x&amp;lt;0时值改变，计算结果为$x+2^w$，当x&amp;gt;0时值不变。&lt;/p&gt;
-&lt;h3 id=&#34;c语言中的有符号数和无符号数&#34;&gt;C语言中的有符号数和无符号数&lt;/h3&gt;
-&lt;p&gt;C语言支持所有整型数据类型的有符号和无符号计算，几乎所有机器都采用&lt;strong&gt;补码&lt;/strong&gt;表示有符号数。通常大多数数字都默认是有符号的。&lt;/p&gt;
-&lt;h3 id=&#34;扩展一个数字的位表示&#34;&gt;扩展一个数字的位表示&lt;/h3&gt;
-&lt;p&gt;将无符号数扩展为一个更大的数据类型：只需在表示的开头添加0即可。&lt;/p&gt;
-&lt;p&gt;将一个补码扩展为一个更大的数据类型：执行一个&lt;strong&gt;符号扩展&lt;/strong&gt;，即在开头添加最高有效位数字。&lt;/p&gt;
-&lt;p&gt;符号扩展不改变补码表示的数字。&lt;/p&gt;
-&lt;h3 id=&#34;截断数字&#34;&gt;截断数字&lt;/h3&gt;
-&lt;h3 id=&#34;总结&#34;&gt;总结&lt;/h3&gt;
-&lt;p&gt;为了避免出现错误或漏洞，我们&lt;strong&gt;绝不使用无符号数&lt;/strong&gt;。&lt;/p&gt;
-&lt;h2 id=&#34;整数运算&#34;&gt;整数运算&lt;/h2&gt;
-&lt;h3 id=&#34;无符号加法&#34;&gt;无符号加法&lt;/h3&gt;
-&lt;p&gt;两个无符号数相加，如果完整的整数结果不能放到数据类型的字长限制中去，那么就会发生溢出，当无符号数加法发生溢出时，结果为丢弃溢出的最高位后的结果，即减去$2^w$。&lt;/p&gt;
-&lt;h3 id=&#34;补码加法&#34;&gt;补码加法&lt;/h3&gt;
-&lt;p&gt;分为正溢出、正常、负溢出三种情况。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;正溢出：和减去$2^w$&lt;/li&gt;
-&lt;li&gt;负溢出：和加上$2^w$&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;补码的非&#34;&gt;补码的非&lt;/h3&gt;
-&lt;p&gt;当$x=\text{TMin}_w$时，补码的非的结果为：$\text{TMin}_w$，否则结果为$-x$&lt;/p&gt;
-&lt;h3 id=&#34;无符号乘法&#34;&gt;无符号乘法&lt;/h3&gt;
-&lt;p&gt;乘积可能需要$2w$位来表示，C语言中无符号被定义为产生w位值，即2w乘积结果的低2w位。将一个无符号数截断为w位等价于计算该值模$2^w$&lt;/p&gt;
-&lt;h3 id=&#34;补码乘法&#34;&gt;补码乘法&lt;/h3&gt;
-&lt;h3 id=&#34;总结-1&#34;&gt;总结&lt;/h3&gt;
-&lt;p&gt;计算机的整数运算实际上是一种模运算，表示数字时的有限字长限制了可能的值的取值范围，结果运算溢出。&lt;/p&gt;
-&lt;p&gt;补码提供了一种既能表示整数也能表示负数的灵活方法，同时使用了与执行无符号算术相同的位级实现。&lt;/p&gt;
-&lt;h2 id=&#34;浮点数&#34;&gt;浮点数&lt;/h2&gt;
-&lt;h3 id=&#34;二进制小数&#34;&gt;二进制小数&lt;/h3&gt;
-&lt;h3 id=&#34;ieee浮点数表示&#34;&gt;IEEE浮点数表示&lt;/h3&gt;
-&lt;h3 id=&#34;舍入&#34;&gt;舍入&lt;/h3&gt;
-&lt;h3 id=&#34;浮点运算&#34;&gt;浮点运算&lt;/h3&gt;
-- https://eternityqjl.top/posts/csapp-2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/ - 2019-2021 By Jialong</description>
         </item>
     
     

@@ -6,9 +6,116 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 25 Feb 2022 20:47:16 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 05 Mar 2022 21:18:38 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>C&#43;&#43; Primer——CH08 IO库</title>
+        <link>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2io%E5%BA%93/</link>
+        <pubDate>Mon, 10 May 2021 21:04:06 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2io%E5%BA%93/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2io%E5%BA%93/ -&lt;h2 id=&#34;io库&#34;&gt;IO库&lt;/h2&gt;
+&lt;h3 id=&#34;io类&#34;&gt;IO类&lt;/h3&gt;
+&lt;p&gt;为了支持不同类型的IO操作，除了iostream外，标准库还定义了其他一些IO类型：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;头文件iostream：
+&lt;ul&gt;
+&lt;li&gt;istream, wistream类型，从流读取数据&lt;/li&gt;
+&lt;li&gt;ostream, wostream类型，向流写入数据&lt;/li&gt;
+&lt;li&gt;iostream, wiostream类型，读写流&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;头文件fstream：
+&lt;ul&gt;
+&lt;li&gt;ifstream类型，从文件读取数据&lt;/li&gt;
+&lt;li&gt;ofstream类型，向文件写入数据&lt;/li&gt;
+&lt;li&gt;fstream类型，读写文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;头文件sstream
+&lt;ul&gt;
+&lt;li&gt;istringstream类型：从string读取数据&lt;/li&gt;
+&lt;li&gt;ostringstream类型：向string写入数据&lt;/li&gt;
+&lt;li&gt;stringstream类型：读写string&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;类型前加一个w的类型是为了支持宽字符，用来操纵wchart_t类型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;IO类型之间的关系&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;类型ifstream和istringstream都继承自istream，我们可以向使用istream对象一样来使用ifstream和istringstream。&lt;/p&gt;
+&lt;h4 id=&#34;io对象无拷贝或赋值&#34;&gt;IO对象无拷贝或赋值&lt;/h4&gt;
+&lt;p&gt;由于不能拷贝IO对象，因此我们也不能将形参或范围类型设置为流类型，进行IO操作额函数通常以&lt;strong&gt;引用&lt;/strong&gt;的方式传递和范围流。读写一个IO对象会改变其状态，因此传递和范围的引用不能是const的。&lt;/p&gt;
+&lt;h4 id=&#34;条件状态&#34;&gt;条件状态&lt;/h4&gt;
+&lt;p&gt;IO类定义了一些函数和标志，帮助我们访问和操纵流的条件状态：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;//strm为一种IO类型，即上一节给出的各个类型
+strm::iostate	//提供了表达条件状态的完整功能
+strm::badbit	//用来指出流已崩溃
+strm::failbit	//用来指出一个IO操作失败
+strm::eofbit	//用来指出流到达了文件结束
+strm::goodbit	//用来指出流位处于错误状态。
+//其余见书
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;管理输出缓冲&#34;&gt;管理输出缓冲&lt;/h4&gt;
+&lt;p&gt;每个输出流都管理一个缓冲区。&lt;/p&gt;
+&lt;p&gt;导致缓冲刷新的原因：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;程序正常结束，作为return的一部分操作。&lt;/li&gt;
+&lt;li&gt;缓冲区满时，需要刷新。&lt;/li&gt;
+&lt;li&gt;使用操纵符如endl显示刷新缓冲区。&lt;/li&gt;
+&lt;li&gt;每个输出操作后可以用操纵夫unitbuf设置流的内部状态来清空缓冲区。&lt;/li&gt;
+&lt;li&gt;一个输出流可能被关联到另一个输出流。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;刷新输出缓冲区：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; endl;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空格，然后刷新缓冲区
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; flush;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi，然后刷新缓冲区，不附加额外字符
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;cout &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;hi&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; ends;	&lt;span style=&#34;color:#888&#34;&gt;//输出hi和一个空字符，然后刷新缓冲区
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;文件输入输出&#34;&gt;文件输入输出&lt;/h3&gt;
+&lt;p&gt;头文件定义了如上所示的三个类型来住处文件IO。&lt;/p&gt;
+&lt;p&gt;除了继承自iostream类型的行为外，fstream中的定义还增加了新的成员来管理与流关联的文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;fstream fstrm;	&lt;span style=&#34;color:#888&#34;&gt;//创建一个未绑定的流文件fstrm; fstream是头文件fstream中定义的一个类型
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s);	&lt;span style=&#34;color:#888&#34;&gt;//创建一个fstream并打开名为s的文件
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstream &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;fstrm&lt;/span&gt;(s,mode);	&lt;span style=&#34;color:#888&#34;&gt;//与上一个相同，但按指定mode打开
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.open(s)	&lt;span style=&#34;color:#888&#34;&gt;//打开名为s的文件并将文件与fstrm绑定
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.close()	&lt;span style=&#34;color:#888&#34;&gt;//关闭与fstrm绑定的文件，返回void
+&lt;/span&gt;&lt;span style=&#34;color:#888&#34;&gt;&lt;/span&gt;fstrm.is_open()	&lt;span style=&#34;color:#888&#34;&gt;//返回一个bool, 指出关联的文件是否成功打开尚未关闭
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h4 id=&#34;使用文件流对象&#34;&gt;使用文件流对象&lt;/h4&gt;
+&lt;h4 id=&#34;文件模式&#34;&gt;文件模式&lt;/h4&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;mode&lt;/th&gt;
+&lt;th style=&#34;text-align:center&#34;&gt;功能&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;in&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;以读方式打开&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;out&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;以写方式打开&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;app&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;每次写操作前均定位到文件末尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;ate&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;打开文件后立即定位到末尾&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;trunc&lt;/td&gt;
+&lt;td style=&#34;text-align:center&#34;&gt;截断文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;以out模式打开文件会丢弃已有数据&#34;&gt;以out模式打开文件会丢弃已有数据&lt;/h4&gt;
+&lt;h3 id=&#34;string流&#34;&gt;string流&lt;/h3&gt;- https://eternityqjl.top/posts/cpp%E5%9B%9E%E9%A1%BE2io%E5%BA%93/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1695,45 +1802,6 @@ $$
 &lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2014/02/ssl_tls.html&#34;&gt;SSL/TLS协议运行机制的概述|阮一峰&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 - https://eternityqjl.top/posts/tls/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>PDF转换为SVG</title>
-        <link>https://eternityqjl.top/posts/convertpdftosvg/</link>
-        <pubDate>Wed, 08 Apr 2020 00:15:48 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/convertpdftosvg/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/convertpdftosvg/ -&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
-&lt;p&gt;最近在写笔记文档和实验报告的时候遇到一些处理资料图片的问题，PDF电子书或文档中的插图一般为矢量图，自己写笔记如果需要引用这些插图时，一般会直接截图，截图为JEPG或PNG格式，并非矢量图，会在新的文档中出现失真。所以为了解决这个问题，我使用&lt;strong&gt;Adobe Acrobat&lt;/strong&gt;和&lt;strong&gt;inkscape&lt;/strong&gt;两个软件将PDF中的矢量图导出为&lt;strong&gt;SVG&lt;/strong&gt;格式的矢量图。以下为具体步骤：&lt;/p&gt;
-&lt;h2 id=&#34;在adobe-acrobat中选择编辑pdf选项&#34;&gt;在&lt;code&gt;Adobe Acrobat&lt;/code&gt;中选择&lt;code&gt;编辑PDF&lt;/code&gt;选项&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_1.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;选择裁剪页面&#34;&gt;选择&lt;code&gt;裁剪页面&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_2.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;框选所需图片的区域&#34;&gt;框选所需图片的区域&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_3.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;双击框选的区域按如下所示设置&#34;&gt;双击框选的区域，按如下所示设置&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_4.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;选择组织页面&#34;&gt;选择&lt;code&gt;组织页面&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_5.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;选定裁切后的页面&#34;&gt;选定裁切后的页面&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_6.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;右击后选择打印页面&#34;&gt;右击后选择&lt;code&gt;打印页面&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_7.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;设置页面按照pdf页面大小选择纸张来源这样选择后最终导出的图片范围才是裁切时所选范围然后打印&#34;&gt;设置页面：按照PDF页面大小选择纸张来源，这样选择后最终导出的图片范围才是裁切时所选范围。然后打印。&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_8.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;用inkscape打开刚才打印的pdf文件注意导入时设置为第一项从popplercairo导入类似于ps中的栅格化这样才能保证图中的字体不发生改变&#34;&gt;用&lt;code&gt;inkscape&lt;/code&gt;打开刚才打印的PDF文件，注意，导入时设置为第一项&lt;code&gt;从Poppler/Cairo导入&lt;/code&gt;，类似于PS中的栅格化，这样才能保证图中的字体不发生改变&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_9.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;选择文件rightarrow文档属性设置自定义尺寸为缩放页面到内容rightarrow缩放页面到绘图或选区&#34;&gt;选择&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;文档属性&lt;/code&gt;，设置自定义尺寸为&lt;code&gt;缩放页面到内容&lt;/code&gt;$\rightarrow$&lt;code&gt;缩放页面到绘图或选区&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_10_0.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_10.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_11.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;文件rightarrow另存为选择自己所需的格式我一般选svg&#34;&gt;&lt;code&gt;文件&lt;/code&gt;$\rightarrow$&lt;code&gt;另存为&lt;/code&gt;，选择自己所需的格式，我一般选&lt;code&gt;SVG&lt;/code&gt;&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_12.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/convertingPDFtoSVG_13.JPG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-- https://eternityqjl.top/posts/convertpdftosvg/ - 2019-2021 By Jialong</description>
         </item>
     
     
