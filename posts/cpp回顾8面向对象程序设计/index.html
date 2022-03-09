@@ -1395,12 +1395,19 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </code></pre></div><p>完全可以把Bulk_quote的对象当作Quote的对象来使用。</p>
 <p>派生类必须在其内部对所有重新定义的虚函数进行<strong>声明</strong>。C++11 允许派生类<strong>显式地注明</strong>它将使用哪个成员函数改写基类的虚函数，方法是在该函数的形参列表之后增加一个<strong>override关键字</strong>。</p>
 <h3 id="动态绑定">动态绑定</h3>
-<p>又称为运行时绑定，根据运行时传入的实参选择函数的版本。通过动态绑定，我们可以用同一段代码分别处理Quote和Bulk_quote的对象。</p>
+<p>通过使用动态绑定，可以使用同一段代码分别处理Quote和Bulk_quote的对象。例如：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#339;font-weight:bold">double</span> <span style="color:#06b;font-weight:bold">print_total</span>(ostream <span style="color:#333">&amp;</span>os, <span style="color:#080;font-weight:bold">const</span> Quote <span style="color:#333">&amp;</span>item, size_t n)
+{
+	<span style="color:#339;font-weight:bold">double</span> ret <span style="color:#333">=</span> item.net_price(n);
+	<span style="color:#080;font-weight:bold">return</span> ret;
+}
+</code></pre></div><p>print_total的item形参是基类Quote的一个引用，之后将会解释，我们既能使用基类Quote的对象调用该函数，也能使用派生类Bulk_quote的对象调用它。因此，实际传入print_total的对象类型将决定到底执行net_price的哪个版本。</p>
+<p>又称为<strong>运行时绑定</strong>，根据运行时传入的实参选择函数的版本。通过动态绑定，我们可以用同一段代码分别处理Quote和Bulk_quote的对象。</p>
 <h2 id="定义基类和派生类">定义基类和派生类</h2>
 <h3 id="定义基类">定义基类</h3>
 <p>继承关系中的根节点的类通常会定义一个<strong>虚析构函数</strong>。</p>
-<p>对于一些操作，派生类需要提供自己的新定义以覆盖（override）从基类继承而来的就定义。需要<strong>覆盖</strong>的函数，<strong>基类</strong>通常将其定义为<strong>虚函数</strong>。</p>
-<p>成员函数如果没有被声明为虚函数，则其解析过程发生在编译时而非运行时。</p>
+<p>对于一些操作，派生类需要提供自己的新定义以覆盖（override）从基类继承而来的旧定义。需要<strong>覆盖</strong>的函数，<strong>基类</strong>通常将其定义为<strong>虚函数</strong>。</p>
+<p>成员函数如果没有被声明为虚函数，则其解析过程发生在<strong>编译时</strong>而非运行时。</p>
 <p>任何构造函数之外的非静态函数都可以是虚函数。virtual只能出现在<strong>类内部的声明语句</strong>。</p>
 <p><strong>访问控制与继承</strong></p>
 <p>一般情况下派生类可以继承定义在基类中的成员，但派生类的成员函数没有权限访问从基类继承而来的成员，派生类只能访问公有成员，不能访问私有成员。而有一种成员，基类希望它的<strong>派生类有权限访问</strong>该成员，同时<strong>禁止其他用户访问</strong>，我们使用<strong>受保护的（protected）访问运算符</strong>说明该成员。</p>
@@ -1416,27 +1423,44 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li><code>private</code>：只有基类本身和友元可以访问</li>
 </ul>
 <p>如果一个派生是<strong>公有</strong>的，则<strong>基类的公有成员</strong>也是派生类接口的组成部分；此外还能将公有派生类型的对象<strong>绑定到基类的引用或指针</strong>上。</p>
+<p>派生类可以在它覆盖的函数前使用virtual关键字，但不是非得这样做。</p>
+<p><strong>派生类对象</strong></p>
+<p>一个派生类对象包含以下组成部分：</p>
+<ul>
+<li>派生类自己定义的非静态成员的子对象</li>
+<li>与该派生类继承的基类对应的子对象</li>
+</ul>
+<p>派生类对象中含有与其基类对应的组成部分，所以我们能把派生类的对象当成基类对象使用，也能将基类的指针或引用绑定到<strong>派生类对象中的基类部分上</strong>。</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Quote item;		<span style="color:#888">//基类对象
 </span><span style="color:#888"></span>Bulk_quote bulk;	<span style="color:#888">//派生类对象
 </span><span style="color:#888"></span>Quote <span style="color:#333">*</span>p <span style="color:#333">=</span> <span style="color:#333">&amp;</span>item;	<span style="color:#888">//p指向Quote对象
 </span><span style="color:#888"></span>p <span style="color:#333">=</span> <span style="color:#333">&amp;</span>bulk;		<span style="color:#888">//p指向bulk的Quote部分
 </span><span style="color:#888"></span>Quote <span style="color:#333">&amp;</span>r <span style="color:#333">=</span> bulk;	<span style="color:#888">//r绑定到bulk的Quote部分
-</span></code></pre></div><p>派生类可以在它覆盖的函数前使用virtual关键字，但不是非得这样做。</p>
-<p><strong>派生类构造函数</strong></p>
-<p>派生类不能直接初始化从基类继承而来的成员。派生类必须使用基类的构造函数来初始化它的基类部分。</p>
+</span></code></pre></div><p><strong>派生类构造函数</strong></p>
+<p>派生类不能直接初始化从基类继承而来的成员。派生类必须使用<strong>基类的构造函数</strong>来初始化它的<strong>基类部分</strong>。</p>
 <blockquote>
 <p>每个类控制它自己的成员初始化过程</p>
 </blockquote>
-<p>派生类构造函数同样是通过构造函数的初始化列表来将实参传递给基类构造函数的。</p>
+<p>派生类对象的基类部分与派生类对象自己的数据成员都是在构造函数初始化阶段执行初始化操作的。派生类构造函数同样是通过构造函数的初始化列表来将实参传递给基类构造函数的。例如，接受四个参数的Bulk_quote构造函数如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Bulk_quote(<span style="color:#080;font-weight:bold">const</span> std<span style="color:#333">::</span>string<span style="color:#333">&amp;</span> book, <span style="color:#339;font-weight:bold">double</span> p, std<span style="color:#333">::</span>size_t qty, <span style="color:#339;font-weight:bold">double</span> disc) <span style="color:#333">:</span> 
+	Quote(book, p), min_qty(qty), discount(disc) { }
+</code></pre></div><p>该函数将它的前两个参数book和p传递给基类的构造函数，由Quote的构造函数负责初始化Bulk_Quote的基类部分。当空的Quote构造函数体结束后，构建对象的基类部分就初始化完成了。接下来初始化由派生类直接定义的min_qty成员和discount成员，最后运行Bulk_quote构造函数的空函数体。</p>
 <p><strong>派生类使用基类成员</strong></p>
-<p>派生类可以使用基类的公有成员和受保护的成员。</p>
-<p>派生类的作用域嵌套在基类的作用域之内。对于派生类的一个成员来说，它使用派生类成员的方式和使用基类成员的方式没有差别。</p>
+<p>派生类可以使用基类的<strong>公有成员</strong>和<strong>受保护的成员</strong>。</p>
+<p>派生类的作用<strong>域嵌套在基类的作用域之内</strong>。对于派生类的一个成员来说，它使用派生类成员的方式和使用基类成员的方式没有差别。</p>
 <p><strong>继承与静态成员</strong></p>
-<p>如果基类定义了一个静态成员，则在整个继承体系中只存在该成员的唯一定义。对于每个静态成员来说，只存在唯一的实例。</p>
+<p>如果基类定义了一个静态成员，则在整个继承体系中只存在该成员的<strong>唯一定义</strong>。对于每个静态成员来说，只存在唯一的实例。静态成员遵循通用的访问控制规则。如果基类中的成员是private的，则派生类无权访问它。</p>
 <p><strong>派生类的声明</strong></p>
 <p>声明中包含类名但不包含其派生列表。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Bulk_quote</span> <span style="color:#333">:</span> <span style="color:#080;font-weight:bold">public</span> Quote; <span style="color:#888">//错误，派生列表不能出现在声明中
+</span><span style="color:#888"></span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Bulk_quote</span>;	<span style="color:#888">//正确
+</span></code></pre></div><p>派生类列表以及与定义有关的其他细节必须与类的主体一起出现。</p>
+<p><strong>被用作基类的类</strong></p>
+<p>用作基类的类必须已经定义而非仅仅声明。</p>
+<p>一个类不能派生它本身。</p>
+<p>一个类可以是基类，也可以是一个派生类。</p>
 <p><strong>防止继承发生</strong></p>
-<p>有时候我们不希望一个类被其它类继承，C++11 提供了防止继承的方法，在类名后加一个关键字final：</p>
+<p>有时候我们不希望一个类被其它类继承，C++11 提供了防止继承的方法，在类名后加一个<strong>关键字final</strong>：</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">NoDerived</span> <span style="color:#080;font-weight:bold">final</span> {<span style="color:#888">/* */</span>};	<span style="color:#888">//NoDerived不能作为基类
 </span><span style="color:#888"></span><span style="color:#080;font-weight:bold">class</span> <span style="color:#b06;font-weight:bold">Bad</span> <span style="color:#333">:</span> NoDerived {}	<span style="color:#888">//错误
 </span></code></pre></div><h3 id="类型转换与继承">类型转换与继承</h3>
@@ -1477,7 +1501,7 @@ sturct <span style="color:#970;font-weight:bold">D1</span> : B {
 <h3 id="不能声明为虚函数的函数">不能声明为虚函数的函数</h3>
 <ul>
 <li>构造函数</li>
-<li>内联成员函数。inline函数在编译时杯展开，而虚函数在运行时才能动态地绑定函数</li>
+<li>内联成员函数。inline函数在编译时被展开，而虚函数在运行时才能动态地绑定函数</li>
 <li>静态成员函数。静态成员只属于该类，没有绑定的必要，不能被继承。</li>
 <li>友元函数。C++不支持友元函数的继承。另外友元函数不属于类的成员函数，不能被继承。</li>
 </ul>
@@ -1485,8 +1509,22 @@ sturct <span style="color:#970;font-weight:bold">D1</span> : B {
 <p>当我们希望<strong>派生类不使用某一个虚函数</strong>时，可以将其定义为<strong>纯虚函数</strong>，这样可以清晰明了地告诉用户当前这个函数没有实际意义。方式是：</p>
 <p>通过在派生类虚函数函数体的位置（在声明语句的分号之前）书写<code>=0</code>。</p>
 <p>另外我们也可以为纯虚函数提供定义，不过函数体必须定义在类的外部。</p>
-<p><strong>含有纯虚函数的类是抽象基类</strong></p>
-<p>抽象基类负责定义接口，而后续其他类可以覆盖该接口。我们不能直接创建一个抽象基类的对象。但我们可以定义抽象基类的派生类对象，前提是这些类覆盖了纯虚函数。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#080;font-weight:bold">struct</span> <span style="color:#b06;font-weight:bold">B</span> {
+	<span style="color:#080;font-weight:bold">virtual</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">f1</span>(<span style="color:#339;font-weight:bold">int</span>) <span style="color:#080;font-weight:bold">const</span>;
+	<span style="color:#080;font-weight:bold">virtual</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">f2</span>();
+	<span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">f3</span>();
+};
+sturct <span style="color:#970;font-weight:bold">D1</span> : B {
+	<span style="color:#080;font-weight:bold">virtual</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">f1</span>(<span style="color:#339;font-weight:bold">int</span>) <span style="color:#080;font-weight:bold">const</span> <span style="color:#080;font-weight:bold">override</span>;	<span style="color:#888">//正确
+</span><span style="color:#888"></span>	<span style="color:#080;font-weight:bold">virtual</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">f2</span>(<span style="color:#339;font-weight:bold">int</span>) <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>;	<span style="color:#888">//纯虚函数
+</span><span style="color:#888"></span>}
+<span style="color:#888">//在类的外部为纯虚函数提供定义
+</span><span style="color:#888"></span>D2<span style="color:#333">::</span>f2(<span style="color:#339;font-weight:bold">int</span> x)
+{
+    cout <span style="color:#333">&lt;&lt;</span> x <span style="color:#333">&lt;&lt;</span> endl;
+}
+</code></pre></div><p><strong>含有纯虚函数的类是抽象基类</strong></p>
+<p>抽象基类负责定义<strong>接口</strong>，而后续其他类可以覆盖该接口。我们<strong>不能</strong>直接创建一个<strong>抽象基类的对象</strong>。但我们可以定义抽象基类的派生类对象，前提是这些类覆盖了纯虚函数。</p>
 <p><strong>派生类构造函数只初始化它的直接基类</strong></p>
 <p>直接基类通过派生类构造函数传递的参数调用间接基类的构造函数。</p>
 <p>每个类各自控制其对象的初始化过程。</p>
