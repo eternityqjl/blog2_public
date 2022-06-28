@@ -6,9 +6,49 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Sat, 05 Mar 2022 21:18:38 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jun 2022 21:59:47 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>C标准库总结</title>
+        <link>https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/</link>
+        <pubDate>Tue, 28 Jun 2022 21:59:47 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/ -&lt;p&gt;C标准库又称ISO C库，是用于完成输入/输出处理、字符串处理、内存管理、数学计算和许多其他操作系统服务等任务的宏、类型和函数的集合。不同的内容分布在不同的头文件中。&lt;/p&gt;
+&lt;h2 id=&#34;asserth&#34;&gt;assert.h&lt;/h2&gt;
+&lt;p&gt;定义了一个可以作为标准调试工具的宏函数：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;assert&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; expression);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果参数&lt;code&gt;expression&lt;/code&gt;所代表的表达式的结果为0，则一条消息会被写入标准error输出，&lt;code&gt;abort&lt;/code&gt;函数会被调用，终止程序的执行。&lt;/p&gt;
+&lt;h2 id=&#34;ctypeh&#34;&gt;ctype.h&lt;/h2&gt;
+&lt;p&gt;这个头文件定义了一组用来对单独字母进行比较和大小写转换的函数。&lt;/p&gt;
+&lt;p&gt;例如&lt;code&gt;isalpha&lt;/code&gt;和&lt;code&gt;tolower&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;floath&#34;&gt;float.h&lt;/h2&gt;
+&lt;p&gt;此头文件描述了特定系统和编译器使用的浮点类型的字符。&lt;/p&gt;
+&lt;h2 id=&#34;inttypesh&#34;&gt;inttypes.h&lt;/h2&gt;
+&lt;h2 id=&#34;mathh&#34;&gt;math.h&lt;/h2&gt;
+&lt;p&gt;定义了一组用于进行常规数学计算的函数。&lt;/p&gt;
+&lt;h2 id=&#34;setjmph&#34;&gt;setjmp.h&lt;/h2&gt;
+&lt;p&gt;定义了宏&lt;code&gt;setjmp()&lt;/code&gt;、函数&lt;code&gt;longjmp()&lt;/code&gt;和变量类型&lt;code&gt;jmp_buf&lt;/code&gt;，该变量类型会绕过正常的函数调用和返回规则。&lt;/p&gt;
+&lt;h2 id=&#34;signalh&#34;&gt;signal.h&lt;/h2&gt;
+&lt;h2 id=&#34;stdboolh&#34;&gt;stdbool.h&lt;/h2&gt;
+&lt;h2 id=&#34;stdioh&#34;&gt;stdio.h&lt;/h2&gt;
+&lt;p&gt;用来进行输入输出操作。&lt;/p&gt;
+&lt;h2 id=&#34;stdlibh&#34;&gt;stdlib.h&lt;/h2&gt;
+&lt;p&gt;这个头文件定义了几个通用目的的函数，包括动态内存管理，随机数生成，环境进程相关（例如abort等），整数算数，搜索，排序，字符串转换。&lt;/p&gt;
+&lt;h2 id=&#34;stringh&#34;&gt;string.h&lt;/h2&gt;
+&lt;p&gt;这个头文件定义了几个函数，用来操作C中的字符串和数组。&lt;/p&gt;
+&lt;h2 id=&#34;timeh&#34;&gt;time.h&lt;/h2&gt;
+&lt;p&gt;这个头文件定义了一些用于获取和操作日期和时间信息的函数。&lt;/p&gt;
+&lt;h2 id=&#34;ucharh&#34;&gt;uchar.h&lt;/h2&gt;
+&lt;h2 id=&#34;posix&#34;&gt;POSIX&lt;/h2&gt;
+&lt;p&gt;POSIX是Portable Operating System Interface的缩写，X表示Unix，它是ISO C的延伸，定义了一个可移植的操作系统所应该具备的各种条件，范围不只有系统函数库。为了OS之间的可移植性，POSIX规定了一些标准的接口，这些接口就是POSIX库。&lt;/p&gt;
+&lt;p&gt;GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc是Linux下的C标准库的实现。&lt;/p&gt;
+- https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1426,29 +1466,6 @@ i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;co
 &lt;p&gt;所以，指向类的静态成员的指针就是&lt;strong&gt;普通的指针&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;要使用&lt;code&gt;(&amp;amp;类名::成员名)&lt;/code&gt;获取指向成员的指针，首先这个成员必须是对外可见的，即&lt;code&gt;public&lt;/code&gt;的。&lt;/p&gt;
 - https://eternityqjl.top/posts/cpp%E6%8C%87%E5%90%91%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E6%8C%87%E9%92%88/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>AVL树及与红黑树、B/B&#43;树的对比</title>
-        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/</link>
-        <pubDate>Thu, 23 Dec 2021 15:30:08 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/ -&lt;p&gt;&lt;a href=&#34;https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E7%BA%A2%E9%BB%91%E6%A0%91/&#34;&gt;红黑树&lt;/a&gt;和&lt;a href=&#34;https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb+%E6%A0%91/&#34;&gt;B/B+树&lt;/a&gt;详见这两篇博客。&lt;/p&gt;
-&lt;h2 id=&#34;avl树&#34;&gt;AVL树&lt;/h2&gt;
-&lt;p&gt;AVL树为平衡二叉树，是以其发明者的名字命名的。任一结点对应的两棵子树的最大高度差为1。查找、插入和删除在平均和最坏的情况下的时间复杂度都为$O(\log n)$。&lt;/p&gt;
-&lt;p&gt;增加和删除元素操作可能需要借由一次或多次树旋转，以实现树的重新平衡。&lt;/p&gt;
-&lt;p&gt;与红黑树相比，AVL树是严格的平衡二叉树。&lt;/p&gt;
-&lt;p&gt;局限性：由于维护这种高度平衡所付出的代价比从中获得的效率收益还大。故而实际的应用不多，更多的地方是用追求局部而不是非常严格整体平衡的红黑树。当然，如果应用场景中对插入删除不频繁，只是对查找要求较高，那么AVL还是较优于红黑树。&lt;/p&gt;
-&lt;h2 id=&#34;红黑树&#34;&gt;红黑树&lt;/h2&gt;
-&lt;p&gt;一种二叉查找树，确保没有一条路径会比其他路径长出两倍。是一种弱平衡树。在插入和删除的操作中的旋转次数相对于AVL树来说较少。&lt;/p&gt;
-&lt;h2 id=&#34;bb树&#34;&gt;B/B+树&lt;/h2&gt;
-&lt;p&gt;B/B+树是为了磁盘或其他存储设备设计的平衡多路查找树，与红黑树相比，在相同结点的情况下，一颗B/B+树的高度远远小于红黑树。B树的操作效率主要取决于访问磁盘的次数，关键字数相同的情况下，B树高度越小，磁盘I/O所花的时间越少。&lt;/p&gt;
-&lt;p&gt;B+树是应文件系统所需而产生的一种B树的变形树，非叶子结点只保存索引，不保存实际的数据，数据都保存在叶子结点中。相当于是文件系统的查找。&lt;/p&gt;
-&lt;p&gt;另外B+树支持顺序查找而B树不支持，数据库中经常需要遍历一定范围内的数据，因此采用B+树比采用B树的效率更高。&lt;/p&gt;
-- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95avl%E6%A0%91%E5%8F%8A%E4%B8%8E%E7%BA%A2%E9%BB%91%E6%A0%91_b%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94/ - 2019-2021 By Jialong</description>
         </item>
     
     

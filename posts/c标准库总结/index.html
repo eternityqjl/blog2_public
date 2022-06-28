@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>Tags</title>
+<title>C标准库总结</title>
 
 
 
@@ -16,10 +16,25 @@
 
 
 
-<meta property="og:title" content="Tags" />
-<meta property="og:description" content="My HomePage Description" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://eternityqjl.top/tags/" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="C标准库总结" />
+<meta property="og:description" content="C标准库又称ISO C库，是用于完成输入/输出处理、字符串处理、内存管理、数学计算和许多其他操作系统服务等任务的宏、类型和函数的集合。不同的内容分布在不同的头文件中。
+assert.h 定义了一个可以作为标准调试工具的宏函数：
+void assert(int expression); 如果参数expression所代表的表达式的结果为0，则一条消息会被写入标准error输出，abort函数会被调用，终止程序的执行。
+ctype.h 这个头文件定义了一组用来对单独字母进行比较和大小写转换的函数。
+例如isalpha和tolower。
+float.h 此头文件描述了特定系统和编译器使用的浮点类型的字符。
+inttypes.h math.h 定义了一组用于进行常规数学计算的函数。
+setjmp.h 定义了宏setjmp()、函数longjmp()和变量类型jmp_buf，该变量类型会绕过正常的函数调用和返回规则。
+signal.h stdbool.h stdio.h 用来进行输入输出操作。
+stdlib.h 这个头文件定义了几个通用目的的函数，包括动态内存管理，随机数生成，环境进程相关（例如abort等），整数算数，搜索，排序，字符串转换。
+string.h 这个头文件定义了几个函数，用来操作C中的字符串和数组。
+time.h 这个头文件定义了一些用于获取和操作日期和时间信息的函数。
+uchar.h POSIX POSIX是Portable Operating System Interface的缩写，X表示Unix，它是ISO C的延伸，定义了一个可移植的操作系统所应该具备的各种条件，范围不只有系统函数库。为了OS之间的可移植性，POSIX规定了一些标准的接口，这些接口就是POSIX库。
+GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc是Linux下的C标准库的实现。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-28T21:59:47+08:00" />
+<meta property="article:modified_time" content="2022-06-28T21:59:47+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -27,8 +42,21 @@
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Tags"/>
-<meta name="twitter:description" content="My HomePage Description"/>
+<meta name="twitter:title" content="C标准库总结"/>
+<meta name="twitter:description" content="C标准库又称ISO C库，是用于完成输入/输出处理、字符串处理、内存管理、数学计算和许多其他操作系统服务等任务的宏、类型和函数的集合。不同的内容分布在不同的头文件中。
+assert.h 定义了一个可以作为标准调试工具的宏函数：
+void assert(int expression); 如果参数expression所代表的表达式的结果为0，则一条消息会被写入标准error输出，abort函数会被调用，终止程序的执行。
+ctype.h 这个头文件定义了一组用来对单独字母进行比较和大小写转换的函数。
+例如isalpha和tolower。
+float.h 此头文件描述了特定系统和编译器使用的浮点类型的字符。
+inttypes.h math.h 定义了一组用于进行常规数学计算的函数。
+setjmp.h 定义了宏setjmp()、函数longjmp()和变量类型jmp_buf，该变量类型会绕过正常的函数调用和返回规则。
+signal.h stdbool.h stdio.h 用来进行输入输出操作。
+stdlib.h 这个头文件定义了几个通用目的的函数，包括动态内存管理，随机数生成，环境进程相关（例如abort等），整数算数，搜索，排序，字符串转换。
+string.h 这个头文件定义了几个函数，用来操作C中的字符串和数组。
+time.h 这个头文件定义了一些用于获取和操作日期和时间信息的函数。
+uchar.h POSIX POSIX是Portable Operating System Interface的缩写，X表示Unix，它是ISO C的延伸，定义了一个可移植的操作系统所应该具备的各种条件，范围不只有系统函数库。为了OS之间的可移植性，POSIX规定了一些标准的接口，这些接口就是POSIX库。
+GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc是Linux下的C标准库的实现。"/>
 
 
 
@@ -64,7 +92,29 @@
 
 
 
+  
+    <script src="/js/toc.js"></script>
+  
 
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
 
 
 
@@ -101,9 +151,11 @@
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="/posts">
+            
+            <a class="a-block nav-link-item active" href="/posts">
                 网志
             </a>
             
@@ -121,11 +173,9 @@
             
             
             
-                
             
             
-            
-            <a class="a-block nav-link-item active" href="/tags">
+            <a class="a-block nav-link-item false" href="/tags">
                 标签
             </a>
             
@@ -171,6 +221,282 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#asserth" onclick="onNavClick(`#asserth-nav`)" id="asserth-nav">
+									assert.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#ctypeh" onclick="onNavClick(`#ctypeh-nav`)" id="ctypeh-nav">
+									ctype.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#floath" onclick="onNavClick(`#floath-nav`)" id="floath-nav">
+									float.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#inttypesh" onclick="onNavClick(`#inttypesh-nav`)" id="inttypesh-nav">
+									inttypes.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mathh" onclick="onNavClick(`#mathh-nav`)" id="mathh-nav">
+									math.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#setjmph" onclick="onNavClick(`#setjmph-nav`)" id="setjmph-nav">
+									setjmp.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#signalh" onclick="onNavClick(`#signalh-nav`)" id="signalh-nav">
+									signal.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#stdboolh" onclick="onNavClick(`#stdboolh-nav`)" id="stdboolh-nav">
+									stdbool.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#stdioh" onclick="onNavClick(`#stdioh-nav`)" id="stdioh-nav">
+									stdio.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#stdlibh" onclick="onNavClick(`#stdlibh-nav`)" id="stdlibh-nav">
+									stdlib.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#stringh" onclick="onNavClick(`#stringh-nav`)" id="stringh-nav">
+									string.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#timeh" onclick="onNavClick(`#timeh-nav`)" id="timeh-nav">
+									time.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#ucharh" onclick="onNavClick(`#ucharh-nav`)" id="ucharh-nav">
+									uchar.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#posix" onclick="onNavClick(`#posix-nav`)" id="posix-nav">
+									POSIX
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -188,30 +514,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
         </a>
         
         
-        
-            <div class="pagination-indicator">
-                <span style="text-align: center">
-                    6<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>7
-                </span>
-            </div>
-            
-            
-            <a class="pagination-action" href="/tags/page/5/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_left
-                </i>
-            </a>
-            
-
-            
-            <a class="pagination-action" href="/tags/page/7/">
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
-            
-        
-        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -224,9 +526,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="/posts">
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
                     网志
                 </a>
                 
@@ -244,11 +548,9 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                    
                 
                 
-                
-                <a class="a-block drawer-menu-item active" href="/tags">
+                <a class="a-block drawer-menu-item false" href="/tags">
                     标签
                 </a>
                 
@@ -273,6 +575,282 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 </a>
                 
             
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#asserth" onclick="onNavClick(`#asserth-nav`)" id="asserth-nav">
+									assert.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#ctypeh" onclick="onNavClick(`#ctypeh-nav`)" id="ctypeh-nav">
+									ctype.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#floath" onclick="onNavClick(`#floath-nav`)" id="floath-nav">
+									float.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#inttypesh" onclick="onNavClick(`#inttypesh-nav`)" id="inttypesh-nav">
+									inttypes.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#mathh" onclick="onNavClick(`#mathh-nav`)" id="mathh-nav">
+									math.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#setjmph" onclick="onNavClick(`#setjmph-nav`)" id="setjmph-nav">
+									setjmp.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#signalh" onclick="onNavClick(`#signalh-nav`)" id="signalh-nav">
+									signal.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#stdboolh" onclick="onNavClick(`#stdboolh-nav`)" id="stdboolh-nav">
+									stdbool.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#stdioh" onclick="onNavClick(`#stdioh-nav`)" id="stdioh-nav">
+									stdio.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#stdlibh" onclick="onNavClick(`#stdlibh-nav`)" id="stdlibh-nav">
+									stdlib.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#stringh" onclick="onNavClick(`#stringh-nav`)" id="stringh-nav">
+									string.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#timeh" onclick="onNavClick(`#timeh-nav`)" id="timeh-nav">
+									time.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#ucharh" onclick="onNavClick(`#ucharh-nav`)" id="ucharh-nav">
+									uchar.h
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#posix" onclick="onNavClick(`#posix-nav`)" id="posix-nav">
+									POSIX
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
             
         </div>
     </div>
@@ -317,170 +895,121 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        <a class="a-block">
-            <div class="post-item-wrapper post-item-wrapper-no-hover">
-                <div class="post-item post-item-no-gaps">
-                    <div class="post-item-info-wrapper">
-                        <div class="post-item-title post-item-title-small">
-                            Tags
-                        </div>
+        <div class="post">
+            
+            
+            
+
+            <div class="post-head-wrapper-text-only"
+                
+            >
+                <div class="post-title">
+                    C标准库总结
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2022-06-28 21:59
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/c%E8%AF%AD%E8%A8%80">C语言</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/c%E6%A0%87%E5%87%86%E5%BA%93">C标准库</a>
+                                &nbsp;
+                            
+                                <a href="/tags/c%E8%AF%AD%E8%A8%80">C语言</a>
+                                &nbsp;
+                            
+                        
+                        
                     </div>
                 </div>
             </div>
-        </a>
-        
-        
-                <a href="https://eternityqjl.top/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    线性回归
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p>C标准库又称ISO C库，是用于完成输入/输出处理、字符串处理、内存管理、数学计算和许多其他操作系统服务等任务的宏、类型和函数的集合。不同的内容分布在不同的头文件中。</p>
+<h2 id="asserth">assert.h</h2>
+<p>定义了一个可以作为标准调试工具的宏函数：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">assert</span>(<span style="color:#339;font-weight:bold">int</span> expression);
+</code></pre></div><p>如果参数<code>expression</code>所代表的表达式的结果为0，则一条消息会被写入标准error输出，<code>abort</code>函数会被调用，终止程序的执行。</p>
+<h2 id="ctypeh">ctype.h</h2>
+<p>这个头文件定义了一组用来对单独字母进行比较和大小写转换的函数。</p>
+<p>例如<code>isalpha</code>和<code>tolower</code>。</p>
+<h2 id="floath">float.h</h2>
+<p>此头文件描述了特定系统和编译器使用的浮点类型的字符。</p>
+<h2 id="inttypesh">inttypes.h</h2>
+<h2 id="mathh">math.h</h2>
+<p>定义了一组用于进行常规数学计算的函数。</p>
+<h2 id="setjmph">setjmp.h</h2>
+<p>定义了宏<code>setjmp()</code>、函数<code>longjmp()</code>和变量类型<code>jmp_buf</code>，该变量类型会绕过正常的函数调用和返回规则。</p>
+<h2 id="signalh">signal.h</h2>
+<h2 id="stdboolh">stdbool.h</h2>
+<h2 id="stdioh">stdio.h</h2>
+<p>用来进行输入输出操作。</p>
+<h2 id="stdlibh">stdlib.h</h2>
+<p>这个头文件定义了几个通用目的的函数，包括动态内存管理，随机数生成，环境进程相关（例如abort等），整数算数，搜索，排序，字符串转换。</p>
+<h2 id="stringh">string.h</h2>
+<p>这个头文件定义了几个函数，用来操作C中的字符串和数组。</p>
+<h2 id="timeh">time.h</h2>
+<p>这个头文件定义了一些用于获取和操作日期和时间信息的函数。</p>
+<h2 id="ucharh">uchar.h</h2>
+<h2 id="posix">POSIX</h2>
+<p>POSIX是Portable Operating System Interface的缩写，X表示Unix，它是ISO C的延伸，定义了一个可移植的操作系统所应该具备的各种条件，范围不只有系统函数库。为了OS之间的可移植性，POSIX规定了一些标准的接口，这些接口就是POSIX库。</p>
+<p>GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc是Linux下的C标准库的实现。</p>
+
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2022-06-28</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
                 </a>
-        
-                <a href="https://eternityqjl.top/tags/%E4%B8%B2%E5%8F%A3/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    串口
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/csapp-6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/">
+			上回<br>Csapp 6 存储器层次结构
                 </a>
-        
-                <a href="https://eternityqjl.top/tags/dijkstra%E5%8F%8C%E6%A0%88/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    Dijkstra双栈
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/tags/latex/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    LaTex
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/tags/latex%E4%BD%BF%E7%94%A8%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    LaTex使用中的问题
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/tags/%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    信号与系统
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/tags/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    数字证书
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/tags/%E9%9A%8F%E7%AC%94/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    随笔
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/tags/%E8%AE%A1%E7%BD%91%E5%BA%94%E7%94%A8%E5%B1%82/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    计网——应用层
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-                <a href="https://eternityqjl.top/tags/gitbook/" class="a-block">
-                    <div class="post-item-wrapper">
-                        <div class="post-item post-item-no-gaps">
-                            <div class="post-item-info-wrapper"> 
-                                <div class="post-item-title">
-                                    GitBook
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-        
-    </div>
-</div>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
 
 
             </div>
-
-<div class="pagination">
-    
-    <a class="pagination-action" href="/tags/page/5/" style="opacity:1">
-    
-        <i class="material-icons pagination-action-icon">
-            chevron_left
-        </i>
-    </a>
-
-        <div class="pagination-indicator">
-            <span>6/7</span>
         </div>
-
-        
-        <a class="pagination-action" href="/tags/page/7/"
-           style="opacity:1">
-        
-                <i class="material-icons pagination-action-icon">
-                    chevron_right
-                </i>
-            </a>
+    </div>
 </div>
 
-
-<div id="single-column-footer">
+            </div><div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -747,6 +1276,9 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },

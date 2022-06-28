@@ -7,7 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Fri, 18 Oct 2019 10:59:58 +0000</lastBuildDate><atom:link href="https://eternityqjl.top/categories/c%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Jun 2022 21:59:47 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/c%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C标准库总结</title>
+      <link>https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 28 Jun 2022 21:59:47 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/</guid>
+      <description>C标准库又称ISO C库，是用于完成输入/输出处理、字符串处理、内存管理、数学计算和许多其他操作系统服务等任务的宏、类型和函数的集合。不同的内容分布在不同的头文件中。
+assert.h 定义了一个可以作为标准调试工具的宏函数：
+void assert(int expression); 如果参数expression所代表的表达式的结果为0，则一条消息会被写入标准error输出，abort函数会被调用，终止程序的执行。
+ctype.h 这个头文件定义了一组用来对单独字母进行比较和大小写转换的函数。
+例如isalpha和tolower。
+float.h 此头文件描述了特定系统和编译器使用的浮点类型的字符。
+inttypes.h math.h 定义了一组用于进行常规数学计算的函数。
+setjmp.h 定义了宏setjmp()、函数longjmp()和变量类型jmp_buf，该变量类型会绕过正常的函数调用和返回规则。
+signal.h stdbool.h stdio.h 用来进行输入输出操作。
+stdlib.h 这个头文件定义了几个通用目的的函数，包括动态内存管理，随机数生成，环境进程相关（例如abort等），整数算数，搜索，排序，字符串转换。
+string.h 这个头文件定义了几个函数，用来操作C中的字符串和数组。
+time.h 这个头文件定义了一些用于获取和操作日期和时间信息的函数。
+uchar.h POSIX POSIX是Portable Operating System Interface的缩写，X表示Unix，它是ISO C的延伸，定义了一个可移植的操作系统所应该具备的各种条件，范围不只有系统函数库。为了OS之间的可移植性，POSIX规定了一些标准的接口，这些接口就是POSIX库。
+GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc是Linux下的C标准库的实现。</description>
+    </item>
+    
     <item>
       <title>储存类别、链接和内存管理</title>
       <link>https://eternityqjl.top/posts/%E5%82%A8%E5%AD%98%E7%B1%BB%E5%88%AB%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
