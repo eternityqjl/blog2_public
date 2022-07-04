@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>C标准库总结</title>
+<title>Linux常用工具使用总结</title>
 
 
 
@@ -16,25 +16,30 @@
 
 
 
-<meta property="og:title" content="C标准库总结" />
-<meta property="og:description" content="C标准库又称ISO C库，是用于完成输入/输出处理、字符串处理、内存管理、数学计算和许多其他操作系统服务等任务的宏、类型和函数的集合。不同的内容分布在不同的头文件中。
-assert.h 定义了一个可以作为标准调试工具的宏函数：
-void assert(int expression); 如果参数expression所代表的表达式的结果为0，则一条消息会被写入标准error输出，abort函数会被调用，终止程序的执行。
-ctype.h 这个头文件定义了一组用来对单独字母进行比较和大小写转换的函数。
-例如isalpha和tolower。
-float.h 此头文件描述了特定系统和编译器使用的浮点类型的字符。
-inttypes.h math.h 定义了一组用于进行常规数学计算的函数。
-setjmp.h 定义了宏setjmp()、函数longjmp()和变量类型jmp_buf，该变量类型会绕过正常的函数调用和返回规则。
-signal.h stdbool.h stdio.h 用来进行输入输出操作。
-stdlib.h 这个头文件定义了几个通用目的的函数，包括动态内存管理，随机数生成，环境进程相关（例如abort等），整数算数，搜索，排序，字符串转换。
-string.h 这个头文件定义了几个函数，用来操作C中的字符串和数组。
-time.h 这个头文件定义了一些用于获取和操作日期和时间信息的函数。
-uchar.h POSIX POSIX是Portable Operating System Interface的缩写，X表示Unix，它是ISO C的延伸，定义了一个可移植的操作系统所应该具备的各种条件，范围不只有系统函数库。为了OS之间的可移植性，POSIX规定了一些标准的接口，这些接口就是POSIX库。
-GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc是Linux下的C标准库的实现。" />
+<meta property="og:title" content="Linux常用工具使用总结" />
+<meta property="og:description" content="常用命令 chmod 修改文件夹或文件的权限。
+权限共分为三类：文件所有者（user）、组用户（group）、其他（others）。
+chmod u=rwx,g=rx,o=r myfile chmod 754 myfile 上面两个命令是等价的，可以用字符或者八进制数两种模式来表示。
+权限数字为以下每个数字项目的和：
+ 4：read 2：write 1：execute 0：no permission  man 查看某个命令的手册。
+查看时翻屏：
+ 向后翻一屏：space(空格键) 向前翻一屏：b 向后翻一行：Enter(回车键) 向前翻一行：k  查看时查找：
+ /关键词 向后查找 n：下一个 ?关键词 向前查找 N：前一个  按ESC&#43;u取消搜索
+tmux 部分内容参考自Tmux 使用教程-阮一峰
+启动与退出 tmux 进入Tmux窗口。
+按Ctrl&#43;d或者输入exit命令就可退出Tmux。
+前缀键Ctrl&#43;x 通过前缀键唤出其他快捷键。
+会话管理 新建会话：
+tmux new -s &lt;session-name&gt; 分离会话：
+在Tmux窗口按下Ctrl&#43;x d或者输入tmux detach命令就会将当前会话与窗口分离。
+tmux detach 查看所有会话：
+tmux ls 接入会话（重新从默认中断接入已存在的某个会话）：
+tmux attach -t &lt;session-name&gt; 杀死会话：
+tmux kill-session -t &lt;session-name&gt; 切换会话：" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-06-28T21:59:47+08:00" />
-<meta property="article:modified_time" content="2022-06-28T21:59:47+08:00" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:url" content="https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-05T00:25:07+08:00" />
+<meta property="article:modified_time" content="2022-07-05T00:25:07+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -42,21 +47,26 @@ GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc�
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="C标准库总结"/>
-<meta name="twitter:description" content="C标准库又称ISO C库，是用于完成输入/输出处理、字符串处理、内存管理、数学计算和许多其他操作系统服务等任务的宏、类型和函数的集合。不同的内容分布在不同的头文件中。
-assert.h 定义了一个可以作为标准调试工具的宏函数：
-void assert(int expression); 如果参数expression所代表的表达式的结果为0，则一条消息会被写入标准error输出，abort函数会被调用，终止程序的执行。
-ctype.h 这个头文件定义了一组用来对单独字母进行比较和大小写转换的函数。
-例如isalpha和tolower。
-float.h 此头文件描述了特定系统和编译器使用的浮点类型的字符。
-inttypes.h math.h 定义了一组用于进行常规数学计算的函数。
-setjmp.h 定义了宏setjmp()、函数longjmp()和变量类型jmp_buf，该变量类型会绕过正常的函数调用和返回规则。
-signal.h stdbool.h stdio.h 用来进行输入输出操作。
-stdlib.h 这个头文件定义了几个通用目的的函数，包括动态内存管理，随机数生成，环境进程相关（例如abort等），整数算数，搜索，排序，字符串转换。
-string.h 这个头文件定义了几个函数，用来操作C中的字符串和数组。
-time.h 这个头文件定义了一些用于获取和操作日期和时间信息的函数。
-uchar.h POSIX POSIX是Portable Operating System Interface的缩写，X表示Unix，它是ISO C的延伸，定义了一个可移植的操作系统所应该具备的各种条件，范围不只有系统函数库。为了OS之间的可移植性，POSIX规定了一些标准的接口，这些接口就是POSIX库。
-GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc是Linux下的C标准库的实现。"/>
+<meta name="twitter:title" content="Linux常用工具使用总结"/>
+<meta name="twitter:description" content="常用命令 chmod 修改文件夹或文件的权限。
+权限共分为三类：文件所有者（user）、组用户（group）、其他（others）。
+chmod u=rwx,g=rx,o=r myfile chmod 754 myfile 上面两个命令是等价的，可以用字符或者八进制数两种模式来表示。
+权限数字为以下每个数字项目的和：
+ 4：read 2：write 1：execute 0：no permission  man 查看某个命令的手册。
+查看时翻屏：
+ 向后翻一屏：space(空格键) 向前翻一屏：b 向后翻一行：Enter(回车键) 向前翻一行：k  查看时查找：
+ /关键词 向后查找 n：下一个 ?关键词 向前查找 N：前一个  按ESC&#43;u取消搜索
+tmux 部分内容参考自Tmux 使用教程-阮一峰
+启动与退出 tmux 进入Tmux窗口。
+按Ctrl&#43;d或者输入exit命令就可退出Tmux。
+前缀键Ctrl&#43;x 通过前缀键唤出其他快捷键。
+会话管理 新建会话：
+tmux new -s &lt;session-name&gt; 分离会话：
+在Tmux窗口按下Ctrl&#43;x d或者输入tmux detach命令就会将当前会话与窗口分离。
+tmux detach 查看所有会话：
+tmux ls 接入会话（重新从默认中断接入已存在的某个会话）：
+tmux attach -t &lt;session-name&gt; 杀死会话：
+tmux kill-session -t &lt;session-name&gt; 切换会话："/>
 
 
 
@@ -249,8 +259,32 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#asserth" onclick="onNavClick(`#asserth-nav`)" id="asserth-nav">
-									assert.h
+								<a href="#%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" onclick="onNavClick(`#常用命令-nav`)" id="常用命令-nav">
+									常用命令
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#chmod" onclick="onNavClick(`#chmod-nav`)" id="chmod-nav">
+									chmod
 								</a>
 							</li>
 						
@@ -267,8 +301,54 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#ctypeh" onclick="onNavClick(`#ctypeh-nav`)" id="ctypeh-nav">
-									ctype.h
+								<a href="#man" onclick="onNavClick(`#man-nav`)" id="man-nav">
+									man
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#tmux" onclick="onNavClick(`#tmux-nav`)" id="tmux-nav">
+									tmux
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%90%af%e5%8a%a8%e4%b8%8e%e9%80%80%e5%87%ba" onclick="onNavClick(`#启动与退出-nav`)" id="启动与退出-nav">
+									启动与退出
 								</a>
 							</li>
 						
@@ -285,8 +365,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#floath" onclick="onNavClick(`#floath-nav`)" id="floath-nav">
-									float.h
+								<a href="#%e5%89%8d%e7%bc%80%e9%94%aectrlx" onclick="onNavClick(`#前缀键ctrlx-nav`)" id="前缀键ctrlx-nav">
+									前缀键Ctrl&#43;x
 								</a>
 							</li>
 						
@@ -303,8 +383,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#inttypesh" onclick="onNavClick(`#inttypesh-nav`)" id="inttypesh-nav">
-									inttypes.h
+								<a href="#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86" onclick="onNavClick(`#会话管理-nav`)" id="会话管理-nav">
+									会话管理
 								</a>
 							</li>
 						
@@ -321,8 +401,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#mathh" onclick="onNavClick(`#mathh-nav`)" id="mathh-nav">
-									math.h
+								<a href="#%e7%aa%97%e6%a0%bc%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#窗格操作-nav`)" id="窗格操作-nav">
+									窗格操作
 								</a>
 							</li>
 						
@@ -339,8 +419,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#setjmph" onclick="onNavClick(`#setjmph-nav`)" id="setjmph-nav">
-									setjmp.h
+								<a href="#%e7%aa%97%e5%8f%a3%e7%ae%a1%e7%90%86" onclick="onNavClick(`#窗口管理-nav`)" id="窗口管理-nav">
+									窗口管理
 								</a>
 							</li>
 						
@@ -357,8 +437,54 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#signalh" onclick="onNavClick(`#signalh-nav`)" id="signalh-nav">
-									signal.h
+								<a href="#%e5%85%b6%e4%bb%96" onclick="onNavClick(`#其他-nav`)" id="其他-nav">
+									其他
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#vim" onclick="onNavClick(`#vim-nav`)" id="vim-nav">
+									Vim
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%bc%96%e8%be%91%e6%a8%a1%e5%bc%8f" onclick="onNavClick(`#编辑模式-nav`)" id="编辑模式-nav">
+									编辑模式
 								</a>
 							</li>
 						
@@ -375,8 +501,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#stdboolh" onclick="onNavClick(`#stdboolh-nav`)" id="stdboolh-nav">
-									stdbool.h
+								<a href="#%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#基本操作-nav`)" id="基本操作-nav">
+									基本操作
 								</a>
 							</li>
 						
@@ -393,8 +519,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#stdioh" onclick="onNavClick(`#stdioh-nav`)" id="stdioh-nav">
-									stdio.h
+								<a href="#vim%e7%9a%84%e6%8e%a5%e5%8f%a3%e5%85%b6%e5%ae%9e%e6%98%af%e4%b8%80%e7%a7%8d%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80" onclick="onNavClick(`#vim的接口其实是一种编程语言-nav`)" id="vim的接口其实是一种编程语言-nav">
+									Vim的接口其实是一种编程语言
 								</a>
 							</li>
 						
@@ -408,83 +534,15 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 						
-						
-						
-							<li>
-								<a href="#stdlibh" onclick="onNavClick(`#stdlibh-nav`)" id="stdlibh-nav">
-									stdlib.h
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
+							
+								</ul>
+							
 						
 						
 						
 							<li>
-								<a href="#stringh" onclick="onNavClick(`#stringh-nav`)" id="stringh-nav">
-									string.h
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#timeh" onclick="onNavClick(`#timeh-nav`)" id="timeh-nav">
-									time.h
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#ucharh" onclick="onNavClick(`#ucharh-nav`)" id="ucharh-nav">
-									uchar.h
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#posix" onclick="onNavClick(`#posix-nav`)" id="posix-nav">
-									POSIX
+								<a href="#gdb" onclick="onNavClick(`#gdb-nav`)" id="gdb-nav">
+									gdb
 								</a>
 							</li>
 						
@@ -604,8 +662,32 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#asserth" onclick="onNavClick(`#asserth-nav`)" id="asserth-nav">
-									assert.h
+								<a href="#%e5%b8%b8%e7%94%a8%e5%91%bd%e4%bb%a4" onclick="onNavClick(`#常用命令-nav`)" id="常用命令-nav">
+									常用命令
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#chmod" onclick="onNavClick(`#chmod-nav`)" id="chmod-nav">
+									chmod
 								</a>
 							</li>
 						
@@ -622,8 +704,54 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#ctypeh" onclick="onNavClick(`#ctypeh-nav`)" id="ctypeh-nav">
-									ctype.h
+								<a href="#man" onclick="onNavClick(`#man-nav`)" id="man-nav">
+									man
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#tmux" onclick="onNavClick(`#tmux-nav`)" id="tmux-nav">
+									tmux
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%90%af%e5%8a%a8%e4%b8%8e%e9%80%80%e5%87%ba" onclick="onNavClick(`#启动与退出-nav`)" id="启动与退出-nav">
+									启动与退出
 								</a>
 							</li>
 						
@@ -640,8 +768,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#floath" onclick="onNavClick(`#floath-nav`)" id="floath-nav">
-									float.h
+								<a href="#%e5%89%8d%e7%bc%80%e9%94%aectrlx" onclick="onNavClick(`#前缀键ctrlx-nav`)" id="前缀键ctrlx-nav">
+									前缀键Ctrl&#43;x
 								</a>
 							</li>
 						
@@ -658,8 +786,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#inttypesh" onclick="onNavClick(`#inttypesh-nav`)" id="inttypesh-nav">
-									inttypes.h
+								<a href="#%e4%bc%9a%e8%af%9d%e7%ae%a1%e7%90%86" onclick="onNavClick(`#会话管理-nav`)" id="会话管理-nav">
+									会话管理
 								</a>
 							</li>
 						
@@ -676,8 +804,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#mathh" onclick="onNavClick(`#mathh-nav`)" id="mathh-nav">
-									math.h
+								<a href="#%e7%aa%97%e6%a0%bc%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#窗格操作-nav`)" id="窗格操作-nav">
+									窗格操作
 								</a>
 							</li>
 						
@@ -694,8 +822,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#setjmph" onclick="onNavClick(`#setjmph-nav`)" id="setjmph-nav">
-									setjmp.h
+								<a href="#%e7%aa%97%e5%8f%a3%e7%ae%a1%e7%90%86" onclick="onNavClick(`#窗口管理-nav`)" id="窗口管理-nav">
+									窗口管理
 								</a>
 							</li>
 						
@@ -712,8 +840,54 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#signalh" onclick="onNavClick(`#signalh-nav`)" id="signalh-nav">
-									signal.h
+								<a href="#%e5%85%b6%e4%bb%96" onclick="onNavClick(`#其他-nav`)" id="其他-nav">
+									其他
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#vim" onclick="onNavClick(`#vim-nav`)" id="vim-nav">
+									Vim
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e7%bc%96%e8%be%91%e6%a8%a1%e5%bc%8f" onclick="onNavClick(`#编辑模式-nav`)" id="编辑模式-nav">
+									编辑模式
 								</a>
 							</li>
 						
@@ -730,8 +904,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#stdboolh" onclick="onNavClick(`#stdboolh-nav`)" id="stdboolh-nav">
-									stdbool.h
+								<a href="#%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" onclick="onNavClick(`#基本操作-nav`)" id="基本操作-nav">
+									基本操作
 								</a>
 							</li>
 						
@@ -748,8 +922,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 							<li>
-								<a href="#stdioh" onclick="onNavClick(`#stdioh-nav`)" id="stdioh-nav">
-									stdio.h
+								<a href="#vim%e7%9a%84%e6%8e%a5%e5%8f%a3%e5%85%b6%e5%ae%9e%e6%98%af%e4%b8%80%e7%a7%8d%e7%bc%96%e7%a8%8b%e8%af%ad%e8%a8%80" onclick="onNavClick(`#vim的接口其实是一种编程语言-nav`)" id="vim的接口其实是一种编程语言-nav">
+									Vim的接口其实是一种编程语言
 								</a>
 							</li>
 						
@@ -763,83 +937,15 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 						
 						
 						
-						
-						
-							<li>
-								<a href="#stdlibh" onclick="onNavClick(`#stdlibh-nav`)" id="stdlibh-nav">
-									stdlib.h
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
+							
+								</ul>
+							
 						
 						
 						
 							<li>
-								<a href="#stringh" onclick="onNavClick(`#stringh-nav`)" id="stringh-nav">
-									string.h
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#timeh" onclick="onNavClick(`#timeh-nav`)" id="timeh-nav">
-									time.h
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#ucharh" onclick="onNavClick(`#ucharh-nav`)" id="ucharh-nav">
-									uchar.h
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#posix" onclick="onNavClick(`#posix-nav`)" id="posix-nav">
-									POSIX
+								<a href="#gdb" onclick="onNavClick(`#gdb-nav`)" id="gdb-nav">
+									gdb
 								</a>
 							</li>
 						
@@ -904,28 +1010,25 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
             >
                 <div class="post-title">
-                    C标准库总结
+                    Linux常用工具使用总结
                     
                     <div class="post-meta">
                         
                         <time itemprop="datePublished">
-                            2022-06-28 21:59
+                            2022-07-05 00:25
                         </time>
                         
 
                         
                             <i class="material-icons" style="">folder</i>
-                                <a href="/categories/c%E8%AF%AD%E8%A8%80">C语言</a>
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80">计算机基础</a>
                                 &nbsp;
                         
 
                         
                             <i class="material-icons" style="">label</i>
                             
-                                <a href="/tags/c%E6%A0%87%E5%87%86%E5%BA%93">C标准库</a>
-                                &nbsp;
-                            
-                                <a href="/tags/c%E8%AF%AD%E8%A8%80">C语言</a>
+                                <a href="/tags/linux">Linux</a>
                                 &nbsp;
                             
                         
@@ -938,39 +1041,213 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 <div class="post-body" v-pre>
                 
-                    <p>C标准库又称ISO C库，是用于完成输入/输出处理、字符串处理、内存管理、数学计算和许多其他操作系统服务等任务的宏、类型和函数的集合。不同的内容分布在不同的头文件中。</p>
-<h2 id="asserth">assert.h</h2>
-<p>定义了一个可以作为标准调试工具的宏函数：</p>
-<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">assert</span>(<span style="color:#339;font-weight:bold">int</span> expression);
-</code></pre></div><p>如果参数<code>expression</code>所代表的表达式的结果为0，则一条消息会被写入标准error输出，<code>abort</code>函数会被调用，终止程序的执行。</p>
-<h2 id="ctypeh">ctype.h</h2>
-<p>这个头文件定义了一组用来对单独字母进行比较和大小写转换的函数。</p>
-<p>例如<code>isalpha</code>和<code>tolower</code>。</p>
-<h2 id="floath">float.h</h2>
-<p>此头文件描述了特定系统和编译器使用的浮点类型的字符。</p>
-<h2 id="inttypesh">inttypes.h</h2>
-<h2 id="mathh">math.h</h2>
-<p>定义了一组用于进行常规数学计算的函数。</p>
-<h2 id="setjmph">setjmp.h</h2>
-<p>定义了宏<code>setjmp()</code>、函数<code>longjmp()</code>和变量类型<code>jmp_buf</code>，该变量类型会绕过正常的函数调用和返回规则。</p>
-<h2 id="signalh">signal.h</h2>
-<h2 id="stdboolh">stdbool.h</h2>
-<h2 id="stdioh">stdio.h</h2>
-<p>用来进行输入输出操作。</p>
-<h2 id="stdlibh">stdlib.h</h2>
-<p>这个头文件定义了几个通用目的的函数，包括动态内存管理，随机数生成，环境进程相关（例如abort等），整数算数，搜索，排序，字符串转换。</p>
-<h2 id="stringh">string.h</h2>
-<p>这个头文件定义了几个函数，用来操作C中的字符串和数组。</p>
-<h2 id="timeh">time.h</h2>
-<p>这个头文件定义了一些用于获取和操作日期和时间信息的函数。</p>
-<h2 id="ucharh">uchar.h</h2>
-<h2 id="posix">POSIX</h2>
-<p>POSIX是Portable Operating System Interface的缩写，X表示Unix，它是ISO C的延伸，定义了一个可移植的操作系统所应该具备的各种条件，范围不只有系统函数库。为了OS之间的可移植性，POSIX规定了一些标准的接口，这些接口就是POSIX库。</p>
-<p>GNU C（常简称为glibc），既包含C标准库，也包含POSIX库。glibc是Linux下的C标准库的实现。</p>
-
+                    <h2 id="常用命令">常用命令</h2>
+<h3 id="chmod">chmod</h3>
+<p>修改文件夹或文件的权限。</p>
+<p>权限共分为三类：文件所有者（user）、组用户（group）、其他（others）。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod <span style="color:#963">u</span><span style="color:#333">=</span>rwx,g<span style="color:#333">=</span>rx,o<span style="color:#333">=</span>r myfile
+chmod <span style="color:#60e;font-weight:bold">754</span> myfile
+</code></pre></div><p>上面两个命令是等价的，可以用字符或者八进制数两种模式来表示。</p>
+<p>权限数字为以下每个数字项目的和：</p>
+<ul>
+<li>4：read</li>
+<li>2：write</li>
+<li>1：execute</li>
+<li>0：no permission</li>
+</ul>
+<h3 id="man">man</h3>
+<p>查看某个命令的手册。</p>
+<p>查看时翻屏：</p>
+<ul>
+<li>向后翻一屏：space(空格键)</li>
+<li>向前翻一屏：b</li>
+<li>向后翻一行：Enter(回车键)</li>
+<li>向前翻一行：k</li>
+</ul>
+<p>查看时查找：</p>
+<ul>
+<li>/关键词  向后查找  n：下一个</li>
+<li>?关键词  向前查找  N：前一个</li>
+</ul>
+<p>按<code>ESC+u</code>取消搜索</p>
+<h2 id="tmux">tmux</h2>
+<p>部分内容参考自<a href="https://www.ruanyifeng.com/blog/2019/10/tmux.html">Tmux 使用教程-阮一峰</a></p>
+<h3 id="启动与退出">启动与退出</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">tmux
+</code></pre></div><p>进入Tmux窗口。</p>
+<p>按<code>Ctrl+d</code>或者输入<code>exit</code>命令就可退出Tmux。</p>
+<h3 id="前缀键ctrlx">前缀键<code>Ctrl+x</code></h3>
+<p>通过前缀键唤出其他快捷键。</p>
+<h3 id="会话管理">会话管理</h3>
+<p>新建会话：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux new -s &lt;session-name&gt;
+</code></pre></div><p>分离会话：</p>
+<p>在Tmux窗口按下<code>Ctrl+x d</code>或者输入<code>tmux detach</code>命令就会将当前会话与窗口分离。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux detach
+</code></pre></div><p>查看所有会话：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux ls
+</code></pre></div><p>接入会话（重新从默认中断接入已存在的某个会话）：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux attach -t &lt;session-name&gt;
+</code></pre></div><p>杀死会话：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux kill-session -t &lt;session-name&gt;
+</code></pre></div><p>切换会话：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux switch -t &lt;session-name&gt;
+</code></pre></div><p>重命名会话：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux rename-session -t <span style="color:#60e;font-weight:bold">0</span> &lt;new-name&gt;
+</code></pre></div><h3 id="窗格操作">窗格操作</h3>
+<p>将窗口划分为多个窗格，每个窗格运行不同命令。</p>
+<p>划分窗格：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#888"># 划分上下两个窗格</span>
+$ tmux split-window
+<span style="color:#888"># 划分左右两个窗格</span>
+$ tmux split-window -h
+</code></pre></div><p>移动光标：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#888"># 光标切换到上方窗格</span>
+$ tmux <span style="color:#080;font-weight:bold">select</span>-pane -U
+<span style="color:#888"># 光标切换到下方窗格</span>
+$ tmux <span style="color:#080;font-weight:bold">select</span>-pane -D
+<span style="color:#888"># 光标切换到左边窗格</span>
+$ tmux <span style="color:#080;font-weight:bold">select</span>-pane -L
+<span style="color:#888"># 光标切换到右边窗格</span>
+$ tmux <span style="color:#080;font-weight:bold">select</span>-pane -R
+</code></pre></div><p>交换窗格位置：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#888"># 当前窗格上移</span>
+$ tmux swap-pane -U
+<span style="color:#888"># 当前窗格下移</span>
+$ tmux swap-pane -D
+</code></pre></div><p>窗格相关快捷键：</p>
+<p>（注意：将<code>Ctrl+b</code>更改为自己设置的<code>Ctrl+x</code>即可）</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Ctrl+b %：划分左右两个窗格。
+Ctrl+b <span style="background-color:#fff0f0">&#34;：划分上下两个窗格。
+</span><span style="background-color:#fff0f0">Ctrl+b &lt;arrow key&gt;：光标切换到其他窗格。&lt;arrow key&gt;是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键↓。
+</span><span style="background-color:#fff0f0">Ctrl+b ;：光标切换到上一个窗格。
+</span><span style="background-color:#fff0f0">Ctrl+b o：光标切换到下一个窗格。
+</span><span style="background-color:#fff0f0">Ctrl+b {：当前窗格与上一个窗格交换位置。
+</span><span style="background-color:#fff0f0">Ctrl+b }：当前窗格与下一个窗格交换位置。
+</span><span style="background-color:#fff0f0">Ctrl+b Ctrl+o：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。
+</span><span style="background-color:#fff0f0">Ctrl+b Alt+o：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。
+</span><span style="background-color:#fff0f0">Ctrl+b x：关闭当前窗格。
+</span><span style="background-color:#fff0f0">Ctrl+b !：将当前窗格拆分为一个独立窗口。
+</span><span style="background-color:#fff0f0">Ctrl+b z：当前窗格全屏显示，再使用一次会变回原来大小。
+</span><span style="background-color:#fff0f0">Ctrl+b Ctrl+&lt;arrow key&gt;：按箭头方向调整窗格大小。
+</span><span style="background-color:#fff0f0">Ctrl+b q：显示窗格编号。
+</span></code></pre></div><h3 id="窗口管理">窗口管理</h3>
+<p>除了将一个窗口划分为多个窗格，Tmux还允许新建多个窗口。</p>
+<p>新建窗口：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux new-window -n &lt;window-name&gt;
+</code></pre></div><p>切换窗口：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tmux <span style="color:#080;font-weight:bold">select</span>-window -t &lt;window-name/window-number&gt;
+</code></pre></div><p>一些窗口快捷键：</p>
+<p>（注意：将<code>Ctrl+b</code>更改为自己设置的<code>Ctrl+x</code>即可）</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Ctrl+b c：创建一个新窗口，状态栏会显示多个窗口的信息。
+Ctrl+b p：切换到上一个窗口（按照状态栏上的顺序）。
+Ctrl+b n：切换到下一个窗口。
+Ctrl+b &lt;number&gt;：切换到指定编号的窗口，其中的&lt;number&gt;是状态栏上的窗口编号。
+Ctrl+b w：从列表中选择窗口。
+Ctrl+b ,：窗口重命名。
+</code></pre></div><h3 id="其他">其他</h3>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#888"># 重新加载当前的Tmux配置</span>
+$ tmux source-file ~/.tmux.conf
+</code></pre></div><h2 id="vim">Vim</h2>
+<p>多模态命令行编辑器，避免了使用鼠标和上下左右按键。</p>
+<h3 id="编辑模式">编辑模式</h3>
+<ul>
+<li>正常模式</li>
+<li>插入模式</li>
+<li>替换模式</li>
+<li>可视化模式</li>
+<li>命令模式</li>
+</ul>
+<p>Vim启动时默认为正常模式。可以按下<code>ESC</code>从任何其他模式返回正常模式。在正常模式，键入<code>i</code>进入插入模式，<code>r</code>进入替换模式，<code>v</code>进入可视（行）模式，<code>Ctrl-v</code>进入可视（块）模式，<code>:</code>进入命令模式。</p>
+<h3 id="基本操作">基本操作</h3>
+<p><strong>插入文本</strong>：</p>
+<p>键入<code>i</code>进入插入模式进行编辑。</p>
+<p><strong>命令行</strong>：</p>
+<p>正常模式下键入<code>:</code>进入命令行模式。</p>
+<ul>
+<li><code>:q</code>退出（关闭窗口）</li>
+<li><code>:w</code>保存（写）</li>
+<li><code>:wq</code>保存然后退出</li>
+<li><code>:e {文件名}</code>打开要编辑的文件</li>
+<li><code>:ls</code>显示打开的缓存</li>
+<li><code>:help {标题}</code>打开帮助文档
+<ul>
+<li><code>:help :w</code>打开<code>:w</code>命令的帮助文档</li>
+</ul>
+</li>
+</ul>
+<h3 id="vim的接口其实是一种编程语言">Vim的接口其实是一种编程语言</h3>
+<p>Vim界面本身是一个程序语言。键入操作（以及其助记名）本身是命令，这些命令可以组合使用。</p>
+<p><strong>移动</strong>：</p>
+<ul>
+<li>基本移动：<code>hjkl</code>（左，下，上，右）</li>
+<li>词：<code>w</code>（下一个词）， <code>b</code> （词初）， <code>e</code> （词尾）</li>
+<li>行： <code>0</code> （行初）， <code>^</code> （第一个非空格字符）， <code>$</code> （行尾）</li>
+<li>屏幕： <code>H</code> （屏幕首行）， <code>M</code> （屏幕中间）， <code>L</code> （屏幕底部）</li>
+<li>翻页： <code>Ctrl-u</code> （上翻）， <code>Ctrl-d</code> （下翻）</li>
+<li>文件： <code>gg</code> （文件头）， <code>G</code> （文件尾）</li>
+<li>行数： <code>:{行数}&lt;CR&gt;</code> 或者 <code>{行数}G</code> ({行数}为行数)</li>
+<li>查找： <code>f{字符}</code>， <code>t{字符}</code>， <code>F{字符}</code>， <code>T{字符}</code>
+<ul>
+<li>查找/到 向前/向后 在本行的{字符}</li>
+</ul>
+</li>
+<li>搜索: <code>/{正则表达式}</code>, <code>n</code> / <code>N</code> 用于导航匹配</li>
+</ul>
+<p><strong>选择</strong>：</p>
+<p>可视化模式：</p>
+<ul>
+<li>可视化：<code>v</code></li>
+<li>可视化行：<code>V</code></li>
+<li>可视化块：<code>Ctrl+v</code></li>
+</ul>
+<p>可以使用命令行来选中。</p>
+<p><strong>编辑</strong>：</p>
+<p>采用编辑命令和移动命令的组合完成所有功能。</p>
+<ul>
+<li><code>i</code>进入插入模式</li>
+<li><code>O</code> / <code>o</code> 在之上/之下插入行</li>
+<li><code>d{移动命令}</code> 删除 {移动命令}
+<ul>
+<li>例如， <code>dw</code> 删除词, <code>d$</code> 删除到行尾, <code>d0</code> 删除到行头。</li>
+</ul>
+</li>
+<li><code>c{移动命令}</code> 改变 {移动命令}
+<ul>
+<li>例如， <code>cw</code> 改变词</li>
+</ul>
+</li>
+<li><code>x</code> 删除字符（等同于 <code>dl</code>）</li>
+<li><code>s</code> 替换字符（等同于 <code>xi</code>）</li>
+<li>可视化模式 + 操作
+<ul>
+<li>选中文字, <code>d</code> 删除 或者 <code>c</code> 改变</li>
+</ul>
+</li>
+<li><code>u</code> 撤销, <code>&lt;C-r&gt;</code> 重做</li>
+<li><code>y</code> 复制 / “yank” （其他一些命令比如 <code>d</code> 也会复制）</li>
+<li><code>p</code> 粘贴</li>
+</ul>
+<p><strong>计数</strong>：</p>
+<ul>
+<li><code>3w</code>向前移动三个词</li>
+<li><code>5j</code>向下移动5行</li>
+<li><code>7dw</code>删除7个词</li>
+</ul>
+<p><strong>修饰语</strong>：</p>
+<p>使用修饰语改变名词的意思。修饰语有：<code>i</code>表示在内部和<code>a</code>表示周围。</p>
+<ul>
+<li><code>ci(</code>改变当前括号内的内容</li>
+<li><code>ci[</code>改变当前方括号内的内容</li>
+<li><code>da'</code>删除一个单引号字符串</li>
+</ul>
+<h2 id="gdb">gdb</h2>
+<p>测试一下具体的功能。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">printf(<span style="background-color:#fff0f0">&#34;%d&#34;</span>, a);
+</code></pre></div>
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">最后修改于 2022-06-28</p>
+		    <p style="color:#777;">最后修改于 2022-07-05</p>
                     
                 </div>
             </div>
@@ -979,14 +1256,14 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <nav class="post-pagination">
 
                 
-                <a class="newer-posts" href="https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/">
-			下回<br>Linux常用工具使用总结
+                <a class="newer-posts">
+			下回<br>已经到头啦。
                 </a>
                 
                 
                 
-                <a class="older-posts" href="https://eternityqjl.top/posts/csapp-6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/">
-			上回<br>Csapp 6 存储器层次结构
+                <a class="older-posts" href="https://eternityqjl.top/posts/c%E6%A0%87%E5%87%86%E5%BA%93%E6%80%BB%E7%BB%93/">
+			上回<br>C标准库总结
                 </a>
                 
             </nav>

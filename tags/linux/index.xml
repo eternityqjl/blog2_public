@@ -7,7 +7,34 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 29 Jul 2021 08:44:21 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Jul 2022 00:25:07 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux常用工具使用总结</title>
+      <link>https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 05 Jul 2022 00:25:07 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</guid>
+      <description>常用命令 chmod 修改文件夹或文件的权限。
+权限共分为三类：文件所有者（user）、组用户（group）、其他（others）。
+chmod u=rwx,g=rx,o=r myfile chmod 754 myfile 上面两个命令是等价的，可以用字符或者八进制数两种模式来表示。
+权限数字为以下每个数字项目的和：
+ 4：read 2：write 1：execute 0：no permission  man 查看某个命令的手册。
+查看时翻屏：
+ 向后翻一屏：space(空格键) 向前翻一屏：b 向后翻一行：Enter(回车键) 向前翻一行：k  查看时查找：
+ /关键词 向后查找 n：下一个 ?关键词 向前查找 N：前一个  按ESC+u取消搜索
+tmux 部分内容参考自Tmux 使用教程-阮一峰
+启动与退出 tmux 进入Tmux窗口。
+按Ctrl+d或者输入exit命令就可退出Tmux。
+前缀键Ctrl+x 通过前缀键唤出其他快捷键。
+会话管理 新建会话：
+tmux new -s &amp;lt;session-name&amp;gt; 分离会话：
+在Tmux窗口按下Ctrl+x d或者输入tmux detach命令就会将当前会话与窗口分离。
+tmux detach 查看所有会话：
+tmux ls 接入会话（重新从默认中断接入已存在的某个会话）：
+tmux attach -t &amp;lt;session-name&amp;gt; 杀死会话：
+tmux kill-session -t &amp;lt;session-name&amp;gt; 切换会话：</description>
+    </item>
+    
     <item>
       <title>Linux基础知识</title>
       <link>https://eternityqjl.top/posts/linux%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>

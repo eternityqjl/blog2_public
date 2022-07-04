@@ -6,9 +6,223 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 28 Jun 2022 21:59:47 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 05 Jul 2022 00:25:07 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Linux常用工具使用总结</title>
+        <link>https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</link>
+        <pubDate>Tue, 05 Jul 2022 00:25:07 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/ -&lt;h2 id=&#34;常用命令&#34;&gt;常用命令&lt;/h2&gt;
+&lt;h3 id=&#34;chmod&#34;&gt;chmod&lt;/h3&gt;
+&lt;p&gt;修改文件夹或文件的权限。&lt;/p&gt;
+&lt;p&gt;权限共分为三类：文件所有者（user）、组用户（group）、其他（others）。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;chmod &lt;span style=&#34;color:#963&#34;&gt;u&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;rwx,g&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;rx,o&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;r myfile
+chmod &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;754&lt;/span&gt; myfile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面两个命令是等价的，可以用字符或者八进制数两种模式来表示。&lt;/p&gt;
+&lt;p&gt;权限数字为以下每个数字项目的和：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;4：read&lt;/li&gt;
+&lt;li&gt;2：write&lt;/li&gt;
+&lt;li&gt;1：execute&lt;/li&gt;
+&lt;li&gt;0：no permission&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;man&#34;&gt;man&lt;/h3&gt;
+&lt;p&gt;查看某个命令的手册。&lt;/p&gt;
+&lt;p&gt;查看时翻屏：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;向后翻一屏：space(空格键)&lt;/li&gt;
+&lt;li&gt;向前翻一屏：b&lt;/li&gt;
+&lt;li&gt;向后翻一行：Enter(回车键)&lt;/li&gt;
+&lt;li&gt;向前翻一行：k&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;查看时查找：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;/关键词  向后查找  n：下一个&lt;/li&gt;
+&lt;li&gt;?关键词  向前查找  N：前一个&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;按&lt;code&gt;ESC+u&lt;/code&gt;取消搜索&lt;/p&gt;
+&lt;h2 id=&#34;tmux&#34;&gt;tmux&lt;/h2&gt;
+&lt;p&gt;部分内容参考自&lt;a href=&#34;https://www.ruanyifeng.com/blog/2019/10/tmux.html&#34;&gt;Tmux 使用教程-阮一峰&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;启动与退出&#34;&gt;启动与退出&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;tmux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;进入Tmux窗口。&lt;/p&gt;
+&lt;p&gt;按&lt;code&gt;Ctrl+d&lt;/code&gt;或者输入&lt;code&gt;exit&lt;/code&gt;命令就可退出Tmux。&lt;/p&gt;
+&lt;h3 id=&#34;前缀键ctrlx&#34;&gt;前缀键&lt;code&gt;Ctrl+x&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;通过前缀键唤出其他快捷键。&lt;/p&gt;
+&lt;h3 id=&#34;会话管理&#34;&gt;会话管理&lt;/h3&gt;
+&lt;p&gt;新建会话：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux new -s &amp;lt;session-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;分离会话：&lt;/p&gt;
+&lt;p&gt;在Tmux窗口按下&lt;code&gt;Ctrl+x d&lt;/code&gt;或者输入&lt;code&gt;tmux detach&lt;/code&gt;命令就会将当前会话与窗口分离。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux detach
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;查看所有会话：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux ls
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接入会话（重新从默认中断接入已存在的某个会话）：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux attach -t &amp;lt;session-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;杀死会话：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux kill-session -t &amp;lt;session-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;切换会话：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux switch -t &amp;lt;session-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;重命名会话：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux rename-session -t &lt;span style=&#34;color:#60e;font-weight:bold&#34;&gt;0&lt;/span&gt; &amp;lt;new-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;窗格操作&#34;&gt;窗格操作&lt;/h3&gt;
+&lt;p&gt;将窗口划分为多个窗格，每个窗格运行不同命令。&lt;/p&gt;
+&lt;p&gt;划分窗格：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# 划分上下两个窗格&lt;/span&gt;
+$ tmux split-window
+&lt;span style=&#34;color:#888&#34;&gt;# 划分左右两个窗格&lt;/span&gt;
+$ tmux split-window -h
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;移动光标：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# 光标切换到上方窗格&lt;/span&gt;
+$ tmux &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;select&lt;/span&gt;-pane -U
+&lt;span style=&#34;color:#888&#34;&gt;# 光标切换到下方窗格&lt;/span&gt;
+$ tmux &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;select&lt;/span&gt;-pane -D
+&lt;span style=&#34;color:#888&#34;&gt;# 光标切换到左边窗格&lt;/span&gt;
+$ tmux &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;select&lt;/span&gt;-pane -L
+&lt;span style=&#34;color:#888&#34;&gt;# 光标切换到右边窗格&lt;/span&gt;
+$ tmux &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;select&lt;/span&gt;-pane -R
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;交换窗格位置：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# 当前窗格上移&lt;/span&gt;
+$ tmux swap-pane -U
+&lt;span style=&#34;color:#888&#34;&gt;# 当前窗格下移&lt;/span&gt;
+$ tmux swap-pane -D
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;窗格相关快捷键：&lt;/p&gt;
+&lt;p&gt;（注意：将&lt;code&gt;Ctrl+b&lt;/code&gt;更改为自己设置的&lt;code&gt;Ctrl+x&lt;/code&gt;即可）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;Ctrl+b %：划分左右两个窗格。
+Ctrl+b &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;：划分上下两个窗格。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b &amp;lt;arrow key&amp;gt;：光标切换到其他窗格。&amp;lt;arrow key&amp;gt;是指向要切换到的窗格的方向键，比如切换到下方窗格，就按方向键↓。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b ;：光标切换到上一个窗格。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b o：光标切换到下一个窗格。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b {：当前窗格与上一个窗格交换位置。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b }：当前窗格与下一个窗格交换位置。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b Ctrl+o：所有窗格向前移动一个位置，第一个窗格变成最后一个窗格。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b Alt+o：所有窗格向后移动一个位置，最后一个窗格变成第一个窗格。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b x：关闭当前窗格。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b !：将当前窗格拆分为一个独立窗口。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b z：当前窗格全屏显示，再使用一次会变回原来大小。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b Ctrl+&amp;lt;arrow key&amp;gt;：按箭头方向调整窗格大小。
+&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;Ctrl+b q：显示窗格编号。
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;窗口管理&#34;&gt;窗口管理&lt;/h3&gt;
+&lt;p&gt;除了将一个窗口划分为多个窗格，Tmux还允许新建多个窗口。&lt;/p&gt;
+&lt;p&gt;新建窗口：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux new-window -n &amp;lt;window-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;切换窗口：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;tmux &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;select&lt;/span&gt;-window -t &amp;lt;window-name/window-number&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;一些窗口快捷键：&lt;/p&gt;
+&lt;p&gt;（注意：将&lt;code&gt;Ctrl+b&lt;/code&gt;更改为自己设置的&lt;code&gt;Ctrl+x&lt;/code&gt;即可）&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;Ctrl+b c：创建一个新窗口，状态栏会显示多个窗口的信息。
+Ctrl+b p：切换到上一个窗口（按照状态栏上的顺序）。
+Ctrl+b n：切换到下一个窗口。
+Ctrl+b &amp;lt;number&amp;gt;：切换到指定编号的窗口，其中的&amp;lt;number&amp;gt;是状态栏上的窗口编号。
+Ctrl+b w：从列表中选择窗口。
+Ctrl+b ,：窗口重命名。
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;其他&#34;&gt;其他&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# 重新加载当前的Tmux配置&lt;/span&gt;
+$ tmux source-file ~/.tmux.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;vim&#34;&gt;Vim&lt;/h2&gt;
+&lt;p&gt;多模态命令行编辑器，避免了使用鼠标和上下左右按键。&lt;/p&gt;
+&lt;h3 id=&#34;编辑模式&#34;&gt;编辑模式&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;正常模式&lt;/li&gt;
+&lt;li&gt;插入模式&lt;/li&gt;
+&lt;li&gt;替换模式&lt;/li&gt;
+&lt;li&gt;可视化模式&lt;/li&gt;
+&lt;li&gt;命令模式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Vim启动时默认为正常模式。可以按下&lt;code&gt;ESC&lt;/code&gt;从任何其他模式返回正常模式。在正常模式，键入&lt;code&gt;i&lt;/code&gt;进入插入模式，&lt;code&gt;r&lt;/code&gt;进入替换模式，&lt;code&gt;v&lt;/code&gt;进入可视（行）模式，&lt;code&gt;Ctrl-v&lt;/code&gt;进入可视（块）模式，&lt;code&gt;:&lt;/code&gt;进入命令模式。&lt;/p&gt;
+&lt;h3 id=&#34;基本操作&#34;&gt;基本操作&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;插入文本&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;键入&lt;code&gt;i&lt;/code&gt;进入插入模式进行编辑。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;命令行&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;正常模式下键入&lt;code&gt;:&lt;/code&gt;进入命令行模式。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:q&lt;/code&gt;退出（关闭窗口）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:w&lt;/code&gt;保存（写）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:wq&lt;/code&gt;保存然后退出&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:e {文件名}&lt;/code&gt;打开要编辑的文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:ls&lt;/code&gt;显示打开的缓存&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:help {标题}&lt;/code&gt;打开帮助文档
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;:help :w&lt;/code&gt;打开&lt;code&gt;:w&lt;/code&gt;命令的帮助文档&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;vim的接口其实是一种编程语言&#34;&gt;Vim的接口其实是一种编程语言&lt;/h3&gt;
+&lt;p&gt;Vim界面本身是一个程序语言。键入操作（以及其助记名）本身是命令，这些命令可以组合使用。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;移动&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;基本移动：&lt;code&gt;hjkl&lt;/code&gt;（左，下，上，右）&lt;/li&gt;
+&lt;li&gt;词：&lt;code&gt;w&lt;/code&gt;（下一个词）， &lt;code&gt;b&lt;/code&gt; （词初）， &lt;code&gt;e&lt;/code&gt; （词尾）&lt;/li&gt;
+&lt;li&gt;行： &lt;code&gt;0&lt;/code&gt; （行初）， &lt;code&gt;^&lt;/code&gt; （第一个非空格字符）， &lt;code&gt;$&lt;/code&gt; （行尾）&lt;/li&gt;
+&lt;li&gt;屏幕： &lt;code&gt;H&lt;/code&gt; （屏幕首行）， &lt;code&gt;M&lt;/code&gt; （屏幕中间）， &lt;code&gt;L&lt;/code&gt; （屏幕底部）&lt;/li&gt;
+&lt;li&gt;翻页： &lt;code&gt;Ctrl-u&lt;/code&gt; （上翻）， &lt;code&gt;Ctrl-d&lt;/code&gt; （下翻）&lt;/li&gt;
+&lt;li&gt;文件： &lt;code&gt;gg&lt;/code&gt; （文件头）， &lt;code&gt;G&lt;/code&gt; （文件尾）&lt;/li&gt;
+&lt;li&gt;行数： &lt;code&gt;:{行数}&amp;lt;CR&amp;gt;&lt;/code&gt; 或者 &lt;code&gt;{行数}G&lt;/code&gt; ({行数}为行数)&lt;/li&gt;
+&lt;li&gt;查找： &lt;code&gt;f{字符}&lt;/code&gt;， &lt;code&gt;t{字符}&lt;/code&gt;， &lt;code&gt;F{字符}&lt;/code&gt;， &lt;code&gt;T{字符}&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;查找/到 向前/向后 在本行的{字符}&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;搜索: &lt;code&gt;/{正则表达式}&lt;/code&gt;, &lt;code&gt;n&lt;/code&gt; / &lt;code&gt;N&lt;/code&gt; 用于导航匹配&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;选择&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;可视化模式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可视化：&lt;code&gt;v&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;可视化行：&lt;code&gt;V&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;可视化块：&lt;code&gt;Ctrl+v&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;可以使用命令行来选中。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;编辑&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;采用编辑命令和移动命令的组合完成所有功能。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;i&lt;/code&gt;进入插入模式&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;O&lt;/code&gt; / &lt;code&gt;o&lt;/code&gt; 在之上/之下插入行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;d{移动命令}&lt;/code&gt; 删除 {移动命令}
+&lt;ul&gt;
+&lt;li&gt;例如， &lt;code&gt;dw&lt;/code&gt; 删除词, &lt;code&gt;d$&lt;/code&gt; 删除到行尾, &lt;code&gt;d0&lt;/code&gt; 删除到行头。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;c{移动命令}&lt;/code&gt; 改变 {移动命令}
+&lt;ul&gt;
+&lt;li&gt;例如， &lt;code&gt;cw&lt;/code&gt; 改变词&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;x&lt;/code&gt; 删除字符（等同于 &lt;code&gt;dl&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;s&lt;/code&gt; 替换字符（等同于 &lt;code&gt;xi&lt;/code&gt;）&lt;/li&gt;
+&lt;li&gt;可视化模式 + 操作
+&lt;ul&gt;
+&lt;li&gt;选中文字, &lt;code&gt;d&lt;/code&gt; 删除 或者 &lt;code&gt;c&lt;/code&gt; 改变&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;u&lt;/code&gt; 撤销, &lt;code&gt;&amp;lt;C-r&amp;gt;&lt;/code&gt; 重做&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;y&lt;/code&gt; 复制 / “yank” （其他一些命令比如 &lt;code&gt;d&lt;/code&gt; 也会复制）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;p&lt;/code&gt; 粘贴&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;计数&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;3w&lt;/code&gt;向前移动三个词&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;5j&lt;/code&gt;向下移动5行&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;7dw&lt;/code&gt;删除7个词&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;修饰语&lt;/strong&gt;：&lt;/p&gt;
+&lt;p&gt;使用修饰语改变名词的意思。修饰语有：&lt;code&gt;i&lt;/code&gt;表示在内部和&lt;code&gt;a&lt;/code&gt;表示周围。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ci(&lt;/code&gt;改变当前括号内的内容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ci[&lt;/code&gt;改变当前方括号内的内容&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;da&#39;&lt;/code&gt;删除一个单引号字符串&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;gdb&#34;&gt;gdb&lt;/h2&gt;
+&lt;p&gt;测试一下具体的功能。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;printf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, a);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1426,46 +1640,6 @@ i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;co
 &lt;h3 id=&#34;引起内存泄漏&#34;&gt;引起内存泄漏&lt;/h3&gt;
 &lt;p&gt;忘记释放已经分配的块，而在堆里创建了垃圾。&lt;/p&gt;
 - https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Cpp指向类成员的指针</title>
-        <link>https://eternityqjl.top/posts/cpp%E6%8C%87%E5%90%91%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E6%8C%87%E9%92%88/</link>
-        <pubDate>Tue, 28 Dec 2021 21:53:28 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/cpp%E6%8C%87%E5%90%91%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E6%8C%87%E9%92%88/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cpp%E6%8C%87%E5%90%91%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E6%8C%87%E9%92%88/ -&lt;h2 id=&#34;指向类的普通成员的指针非静态&#34;&gt;指向类的普通成员的指针（非静态）&lt;/h2&gt;
-&lt;h3 id=&#34;指向类成员函数的指针&#34;&gt;指向类成员函数的指针&lt;/h3&gt;
-&lt;p&gt;指向类成员函数的指针不仅要匹配函数的&lt;strong&gt;参数类型和个数&lt;/strong&gt;，以及&lt;strong&gt;返回值类型&lt;/strong&gt;，还要匹配该&lt;strong&gt;函数指针所属的类类型&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;原因是非静态的成员函数必须绑定到一个类的对象或者指针上，才能得到被调用对象的this指针，然后才能调用指针所指的成员函数。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;声明&lt;/strong&gt;：与普通函数作为区分，指向类的成员函数的指针只需要在指针前加上类类型即可：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;返回值&lt;/span&gt; (&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;类名&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;::*&lt;/span&gt;&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;指针类型名&lt;/span&gt;)(&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;参数列表&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;赋值&lt;/strong&gt;：只需使用类的成员函数地址赋值即可：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;指针类型名&lt;/span&gt; &lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;指针名&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;类名&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;成员函数名&lt;/span&gt;;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;调用&lt;/strong&gt;：针对调用的对象是对象还是指针，分别用&lt;code&gt;.*&lt;/code&gt;和&lt;code&gt;-&amp;gt;*&lt;/code&gt;进行调用：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-cpp&#34; data-lang=&#34;cpp&#34;&gt;(&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;类对象&lt;/span&gt;.&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;指针名&lt;/span&gt;)(&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;参数列表&lt;/span&gt;);
-(&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;类对象&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;-&amp;gt;*&lt;/span&gt;&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;指针名&lt;/span&gt;)(&lt;span style=&#34;color:#f00;background-color:#faa&#34;&gt;参数列表&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;指向类数据成员的指针&#34;&gt;指向类数据成员的指针&lt;/h3&gt;
-&lt;p&gt;同理指向类成员函数的指针，只要判断以下两点是否一致即可：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;数据成员的类型&lt;/li&gt;
-&lt;li&gt;所属的类类型&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;指向类的静态成员的指针&#34;&gt;指向类的静态成员的指针&lt;/h2&gt;
-&lt;p&gt;类的静态成员不依赖于具体对象，所有实例化的对象都共享同一个静态成员，即静态成员没有this指针的概念。&lt;/p&gt;
-&lt;p&gt;所以，指向类的静态成员的指针就是&lt;strong&gt;普通的指针&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;要使用&lt;code&gt;(&amp;amp;类名::成员名)&lt;/code&gt;获取指向成员的指针，首先这个成员必须是对外可见的，即&lt;code&gt;public&lt;/code&gt;的。&lt;/p&gt;
-- https://eternityqjl.top/posts/cpp%E6%8C%87%E5%90%91%E7%B1%BB%E6%88%90%E5%91%98%E7%9A%84%E6%8C%87%E9%92%88/ - 2019-2021 By Jialong</description>
         </item>
     
     
