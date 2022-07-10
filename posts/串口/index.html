@@ -17,8 +17,7 @@
 
 
 <meta property="og:title" content="串行通信协议详解：SPI、I2C、UART、JTAG" />
-<meta property="og:description" content="SPI、I2C、UART：串行通信协议
-COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
+<meta property="og:description" content="COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
 TTL、RS-232指的是电平标准
 TTL电平：低电平为0，高电平为1
 RS-232电平：正电平(&#43;15V)为0，负电平(-15V)为1
@@ -37,11 +36,12 @@ SPI协议层 （图片来自SPI通讯协议介绍）
 有效数据的采集 上图中SCK为偶数边沿时数据得到有效采样，此时MISO和MOSI的数据有效，高电平表示1，低电平表示0，其他时刻的数据无效。
 数据传输时高位在先还是低位在先SPI协议并未规定，需要双方自行约定，一般采用高位在先（MSB）方式传输。
  两个概念：
- 时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。  CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平   时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。  CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样     所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。" />
+ 时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。  CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平   时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。  CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样     所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。
+所以，SPI有如下4种工作模式：" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-02-05T18:20:54+00:00" />
-<meta property="article:modified_time" content="2021-02-05T18:20:54+00:00" /><meta property="og:site_name" content="My Blog" />
+<meta property="article:modified_time" content="2022-07-10T21:30:12+08:00" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -50,8 +50,7 @@ SPI协议层 （图片来自SPI通讯协议介绍）
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="串行通信协议详解：SPI、I2C、UART、JTAG"/>
-<meta name="twitter:description" content="SPI、I2C、UART：串行通信协议
-COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
+<meta name="twitter:description" content="COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议
 TTL、RS-232指的是电平标准
 TTL电平：低电平为0，高电平为1
 RS-232电平：正电平(&#43;15V)为0，负电平(-15V)为1
@@ -70,7 +69,8 @@ SPI协议层 （图片来自SPI通讯协议介绍）
 有效数据的采集 上图中SCK为偶数边沿时数据得到有效采样，此时MISO和MOSI的数据有效，高电平表示1，低电平表示0，其他时刻的数据无效。
 数据传输时高位在先还是低位在先SPI协议并未规定，需要双方自行约定，一般采用高位在先（MSB）方式传输。
  两个概念：
- 时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。  CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平   时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。  CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样     所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。"/>
+ 时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。  CPOL = 0：SCK在空闲时为低电平 CPOL = 1：SCK在空闲时为高电平   时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。  CPHA = 0：在SCK的奇数边沿采样 CPHA = 1：在SCK的偶数边沿采样     所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。
+所以，SPI有如下4种工作模式："/>
 
 
 
@@ -606,6 +606,28 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 					
 				
 			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#swd%e6%8e%a5%e5%8f%a3" onclick="onNavClick(`#swd接口-nav`)" id="swd接口-nav">
+									SWD接口
+								</a>
+							</li>
+						
+						
+					
+				
+			
 		</ul>
 	</div>
 
@@ -1023,6 +1045,28 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 					
 				
 			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#swd%e6%8e%a5%e5%8f%a3" onclick="onNavClick(`#swd接口-nav`)" id="swd接口-nav">
+									SWD接口
+								</a>
+							</li>
+						
+						
+					
+				
+			
 		</ul>
 	</div>
 
@@ -1105,8 +1149,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 <div class="post-body" v-pre>
                 
-                    <p>SPI、I2C、UART：串行通信协议</p>
-<p>COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议</p>
+                    <p>COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议</p>
 <p>TTL、RS-232指的是电平标准</p>
 <p>TTL电平：低电平为0，高电平为1</p>
 <p>RS-232电平：正电平(+15V)为0，负电平(-15V)为1</p>
@@ -1129,11 +1172,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>MISO（Master Input, Slave Output）：<strong>从机输出主机输入</strong>信号，数据由<strong>从机</strong>发出。</li>
 <li>nSS（Slave Select）：<strong>片选</strong>信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG" alt="SPI单连接接口示意图"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG" alt="SPI多连接接口示意图"></p>
 <p>（图片来自维基百科<a href="https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2">序列周边接口</a>）</p>
 <h3 id="spi协议层">SPI协议层</h3>
-<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_photo_1.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_photo_1.png" alt="SPI数据位图"></p>
 <p>（图片来自<a href="https://blog.csdn.net/qq_29344757/article/details/76855350">SPI通讯协议介绍</a>）</p>
 <p>如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。</p>
 <h4 id="通信起始结束信号">通信起始/结束信号</h4>
@@ -1208,8 +1251,8 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </table>
 <h2 id="mathrmi2mathrmc协议">$\mathrm{I}^2\mathrm{C}$协议</h2>
 <p>$\mathrm{I}^2\mathrm{C}$（Inter-Integrated Circuit）集成电路总线，是飞利浦设计的一种简单的双向两线<strong>同步串行</strong>总线，为全双工，是为了实现有效的IC之间的控制；是一种串行通信总线，为了让嵌入式设备连接低速设备。</p>
-<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/I2C_trans.PNG" alt=""></p>
-<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/1024px-I2C.svg.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/I2C_trans.PNG" alt="I2C接口示意图"></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/1024px-I2C.svg.png" alt="I2C传输电平图"></p>
 <p>$\mathrm{I}^2\mathrm{C}$只需要两个接口即可通信：</p>
 <ul>
 <li><strong>SDA（Serial Data）</strong>：串行数据接口</li>
@@ -1259,7 +1302,7 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <h2 id="jtag边界扫描">JTAG边界扫描</h2>
 <p>JTAG主要用于验证设计和测试印刷电路板。</p>
 <h3 id="电气特性">电气特性</h3>
-<p>JTAG的接口是将4/5个接口连接到芯片上，电路板上的很多芯片可以将其JTAG接口通过Daisy Chain（菊花链）的方式连在一起，这样我们就可以访问一块印刷电路板上的所有芯片。</p>
+<p>JTAG的接口是将4/5个接口 (标准JTAG是4线) 连接到芯片上，电路板上的很多芯片可以将其JTAG接口通过Daisy Chain（菊花链）的方式连在一起，这样我们就可以访问一块印刷电路板上的所有芯片。</p>
 <p>连接引脚为：</p>
 <ul>
 <li>TDI（Test Data Input）：测试数据输入</li>
@@ -1268,13 +1311,35 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 <li>TMS（Test Model Selection）：测试模式选择</li>
 <li>TRST（测试复位）可选</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Jtag_chain.svg.jpg" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Jtag_chain.svg.jpg" alt="JTAG连接示意图"></p>
 <p>（图片来自维基百科<a href="https://zh.wikipedia.org/wiki/JTAG">JTAG</a>）</p>
 <p>由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。</p>
+<h2 id="swd接口">SWD接口</h2>
+<p>串行调试 (Serial Wire Debug)，与JTAG使用的协议不同。SWD只需要接2个接口 (一般还接一个GND) 就可以进行下载和调试，其引脚为：</p>
+<ul>
+<li>
+<p>SWDIO</p>
+</li>
+<li>
+<p>SWCLK</p>
+</li>
+<li>
+<p>(GND)</p>
+</li>
+</ul>
+<p>相较于传统的JTAG调试，有一些优势：</p>
+<ul>
+<li>
+<p>SWD相较于JTAG在高速模式下更可靠；</p>
+</li>
+<li>
+<p>所需的引脚很少，调试接口所需的PCB空间小，更加方便。</p>
+</li>
+</ul>
 
                     
                     <HR width="100%" id="EOF">
-		    <p style="color:#777;">最后修改于 2021-02-05</p>
+		    <p style="color:#777;">最后修改于 2022-07-10</p>
                     
                 </div>
             </div>

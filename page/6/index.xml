@@ -1400,8 +1400,7 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
         <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
         
         <guid>https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ -&lt;p&gt;SPI、I2C、UART：串行通信协议&lt;/p&gt;
-&lt;p&gt;COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议&lt;/p&gt;
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ -&lt;p&gt;COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议&lt;/p&gt;
 &lt;p&gt;TTL、RS-232指的是电平标准&lt;/p&gt;
 &lt;p&gt;TTL电平：低电平为0，高电平为1&lt;/p&gt;
 &lt;p&gt;RS-232电平：正电平(+15V)为0，负电平(-15V)为1&lt;/p&gt;
@@ -1424,11 +1423,11 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;li&gt;MISO（Master Input, Slave Output）：&lt;strong&gt;从机输出主机输入&lt;/strong&gt;信号，数据由&lt;strong&gt;从机&lt;/strong&gt;发出。&lt;/li&gt;
 &lt;li&gt;nSS（Slave Select）：&lt;strong&gt;片选&lt;/strong&gt;信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG&#34; alt=&#34;SPI单连接接口示意图&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG&#34; alt=&#34;SPI多连接接口示意图&#34;&gt;&lt;/p&gt;
 &lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2&#34;&gt;序列周边接口&lt;/a&gt;）&lt;/p&gt;
 &lt;h3 id=&#34;spi协议层&#34;&gt;SPI协议层&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_photo_1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_photo_1.png&#34; alt=&#34;SPI数据位图&#34;&gt;&lt;/p&gt;
 &lt;p&gt;（图片来自&lt;a href=&#34;https://blog.csdn.net/qq_29344757/article/details/76855350&#34;&gt;SPI通讯协议介绍&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。&lt;/p&gt;
 &lt;h4 id=&#34;通信起始结束信号&#34;&gt;通信起始/结束信号&lt;/h4&gt;
@@ -1503,8 +1502,8 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;/table&gt;
 &lt;h2 id=&#34;mathrmi2mathrmc协议&#34;&gt;$\mathrm{I}^2\mathrm{C}$协议&lt;/h2&gt;
 &lt;p&gt;$\mathrm{I}^2\mathrm{C}$（Inter-Integrated Circuit）集成电路总线，是飞利浦设计的一种简单的双向两线&lt;strong&gt;同步串行&lt;/strong&gt;总线，为全双工，是为了实现有效的IC之间的控制；是一种串行通信总线，为了让嵌入式设备连接低速设备。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/I2C_trans.PNG&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/1024px-I2C.svg.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/I2C_trans.PNG&#34; alt=&#34;I2C接口示意图&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/1024px-I2C.svg.png&#34; alt=&#34;I2C传输电平图&#34;&gt;&lt;/p&gt;
 &lt;p&gt;$\mathrm{I}^2\mathrm{C}$只需要两个接口即可通信：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;SDA（Serial Data）&lt;/strong&gt;：串行数据接口&lt;/li&gt;
@@ -1554,7 +1553,7 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;h2 id=&#34;jtag边界扫描&#34;&gt;JTAG边界扫描&lt;/h2&gt;
 &lt;p&gt;JTAG主要用于验证设计和测试印刷电路板。&lt;/p&gt;
 &lt;h3 id=&#34;电气特性&#34;&gt;电气特性&lt;/h3&gt;
-&lt;p&gt;JTAG的接口是将4/5个接口连接到芯片上，电路板上的很多芯片可以将其JTAG接口通过Daisy Chain（菊花链）的方式连在一起，这样我们就可以访问一块印刷电路板上的所有芯片。&lt;/p&gt;
+&lt;p&gt;JTAG的接口是将4/5个接口 (标准JTAG是4线) 连接到芯片上，电路板上的很多芯片可以将其JTAG接口通过Daisy Chain（菊花链）的方式连在一起，这样我们就可以访问一块印刷电路板上的所有芯片。&lt;/p&gt;
 &lt;p&gt;连接引脚为：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;TDI（Test Data Input）：测试数据输入&lt;/li&gt;
@@ -1563,9 +1562,31 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;li&gt;TMS（Test Model Selection）：测试模式选择&lt;/li&gt;
 &lt;li&gt;TRST（测试复位）可选&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Jtag_chain.svg.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Jtag_chain.svg.jpg&#34; alt=&#34;JTAG连接示意图&#34;&gt;&lt;/p&gt;
 &lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/JTAG&#34;&gt;JTAG&lt;/a&gt;）&lt;/p&gt;
 &lt;p&gt;由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。&lt;/p&gt;
+&lt;h2 id=&#34;swd接口&#34;&gt;SWD接口&lt;/h2&gt;
+&lt;p&gt;串行调试 (Serial Wire Debug)，与JTAG使用的协议不同。SWD只需要接2个接口 (一般还接一个GND) 就可以进行下载和调试，其引脚为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;SWDIO&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;SWCLK&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;(GND)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;相较于传统的JTAG调试，有一些优势：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;SWD相较于JTAG在高速模式下更可靠；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;所需的引脚很少，调试接口所需的PCB空间小，更加方便。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 - https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ - 2019-2021 By Jialong</description>
         </item>
     
