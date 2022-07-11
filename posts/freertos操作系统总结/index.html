@@ -1,0 +1,3170 @@
+<!DOCTYPE html>
+<html><head>
+<title>FreeRTOS操作系统总结</title>
+
+
+
+
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="google-site-verification" content="">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="telephone=no" name="format-detection">
+<meta name="description" content="">
+<meta name="renderer" content="webkit">
+<meta name="theme-color" content="#ffffff">
+
+
+
+<meta property="og:title" content="FreeRTOS操作系统总结" />
+<meta property="og:description" content="本文来总结一些FreeRTOS的基本概念和API的使用，部分内容参考自：
+AN0025 应用笔记FreeRTOS on AT32 MCU - 雅特力
+FreeRTOS中断优先级管理 AT32/STM32中断配置 一般配置NVIC_PriorityGroup_4，只使用中断优先级寄存器的高四位，一共可以表示2^4=16级中断优先级，NVIC_PriorityGroup_4只有16级抢占优先级，没有子优先级。
+FreeRTOS中断配置 一般配置用户可以在抢占优先级为3-15的中断里面调用FreeRTOS的API函数。
+中断优先级和任务优先级 二者没有关系，中断的优先级永远高于任何任务的优先级。
+临界段保护 临界段代码也成为临界区，指哪些必须完整运行不能被打断的代码。例如一些外设的初始化，需要遵循严格的时序要求。FreeRTOS采用的是在进入临界区代码后关闭中断，退出临界区的时候打开中断。FreeRTOS系统很多程序段都加了临界区保护，在写应用程序的时候也有很多地方需要用到临界区保护。
+与临界段代码保护有关的函数有以下4个：
+ taskENTER_CRITICAL()  进入临界区，关中断
+ taskEXIT_CRITICAL()  退出临界区，开中断
+taskENTER_CRITICAL_FROM_ISR()
+进入临界区，关中断（ISR中使用）
+任务管理 裸机与带RTOS的区别  裸机系统  一个大循环顺序执行，每一部分的操作都不是实时性的。为了解决这个问题，引入了中断，紧急事件可以放到中断中执行。
+ RTOS运行流程  调度器使用调度算法来决定当前要执行的任务，从而实现多任务系统。这里所说的多任务系统同一时刻只能有一个任务可以运行，只能通过调度器决策，看起来像所有任务同时运行一样。
+FreeRTOS任务状态  运行态 - Running 就绪态 - Ready 阻塞态 - Blocked 挂起态 - Suspended  阻塞态和挂起态的区别：
+ 阻塞指的是进程由于发生某事件（例如I/O请求、申请缓冲区失败）暂时无法继续执行，引起进程调度，把CPU让给其他就绪进程。挂起是由于系统和用户的需要引入的操作，进程被挂起意味着该进程处于静止状态，如果进程正在执行，它将暂停执行，若原本处于就绪状态，则该进程此时暂不接受调度。 二者的共同点是进程都暂停执行，并且都释放了CPU，即两个过程都涉及上下文切换 不同点是：  对系统资源占用不同 发生时机和恢复时机不同    FreeRTOS空闲任务 空闲任务是系统任务，是必须要执行的，一个RTOS每时每刻都要有一个任务执行，这个空闲任务还可以做一些其他工作，例如进入低功耗等。
+任务调度 FreeRTOS共有三种任务调度方式：合作式、抢占式、时间片式。
+合作式调度 主要用于资源很紧张的设备，现在已经很少使用。不作详细介绍。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://eternityqjl.top/posts/freertos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-07-11T21:39:22+08:00" />
+<meta property="article:modified_time" content="2022-07-11T21:42:50+08:00" /><meta property="og:site_name" content="My Blog" />
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="FreeRTOS操作系统总结"/>
+<meta name="twitter:description" content="本文来总结一些FreeRTOS的基本概念和API的使用，部分内容参考自：
+AN0025 应用笔记FreeRTOS on AT32 MCU - 雅特力
+FreeRTOS中断优先级管理 AT32/STM32中断配置 一般配置NVIC_PriorityGroup_4，只使用中断优先级寄存器的高四位，一共可以表示2^4=16级中断优先级，NVIC_PriorityGroup_4只有16级抢占优先级，没有子优先级。
+FreeRTOS中断配置 一般配置用户可以在抢占优先级为3-15的中断里面调用FreeRTOS的API函数。
+中断优先级和任务优先级 二者没有关系，中断的优先级永远高于任何任务的优先级。
+临界段保护 临界段代码也成为临界区，指哪些必须完整运行不能被打断的代码。例如一些外设的初始化，需要遵循严格的时序要求。FreeRTOS采用的是在进入临界区代码后关闭中断，退出临界区的时候打开中断。FreeRTOS系统很多程序段都加了临界区保护，在写应用程序的时候也有很多地方需要用到临界区保护。
+与临界段代码保护有关的函数有以下4个：
+ taskENTER_CRITICAL()  进入临界区，关中断
+ taskEXIT_CRITICAL()  退出临界区，开中断
+taskENTER_CRITICAL_FROM_ISR()
+进入临界区，关中断（ISR中使用）
+任务管理 裸机与带RTOS的区别  裸机系统  一个大循环顺序执行，每一部分的操作都不是实时性的。为了解决这个问题，引入了中断，紧急事件可以放到中断中执行。
+ RTOS运行流程  调度器使用调度算法来决定当前要执行的任务，从而实现多任务系统。这里所说的多任务系统同一时刻只能有一个任务可以运行，只能通过调度器决策，看起来像所有任务同时运行一样。
+FreeRTOS任务状态  运行态 - Running 就绪态 - Ready 阻塞态 - Blocked 挂起态 - Suspended  阻塞态和挂起态的区别：
+ 阻塞指的是进程由于发生某事件（例如I/O请求、申请缓冲区失败）暂时无法继续执行，引起进程调度，把CPU让给其他就绪进程。挂起是由于系统和用户的需要引入的操作，进程被挂起意味着该进程处于静止状态，如果进程正在执行，它将暂停执行，若原本处于就绪状态，则该进程此时暂不接受调度。 二者的共同点是进程都暂停执行，并且都释放了CPU，即两个过程都涉及上下文切换 不同点是：  对系统资源占用不同 发生时机和恢复时机不同    FreeRTOS空闲任务 空闲任务是系统任务，是必须要执行的，一个RTOS每时每刻都要有一个任务执行，这个空闲任务还可以做一些其他工作，例如进入低功耗等。
+任务调度 FreeRTOS共有三种任务调度方式：合作式、抢占式、时间片式。
+合作式调度 主要用于资源很紧张的设备，现在已经很少使用。不作详细介绍。"/>
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+<script src="/vendor/js/vue.min.js" ></script>
+
+
+  
+
+
+
+
+<link rel="icon" href="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/faviconJ.ico">
+
+
+
+<link rel="stylesheet" href="https://eternityqjl.top/scss/journal.min.3f72a5fc8f5b5dd732a4b476aced0eece2156958d9d414316494ddb10593ddf7.css" integrity="sha256-P3Kl/I9bXdcypLR2rO0O7OIVaVjZ1BQxZJTdsQWT3fc=" media="screen">
+
+
+
+<link rel="stylesheet" href="https://eternityqjl.top/scss/dark-mode.min.c0082f0b082177f6fb3768ff91439a097de49689bd26f4d49f76d94ebb81e02d.css" integrity="sha256-wAgvCwghd/b7N2j/kUOaCX3klom9JvTUn3bZTruB4C0=" media="screen">
+
+
+<script src="/js/loadCSS.js"></script>
+<script>
+  loadCSS("https://fonts.googleapis.com/css?family=Fira+Mono|Material+Icons");
+</script>
+
+
+
+
+  
+    <script src="/js/toc.js"></script>
+  
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="/vendor/js/md5.min.js"></script>
+<script>
+  var gitalk = new Gitalk({
+  clientID: '41f4d7bc98749bddfc28',
+  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
+  repo: 'blog2_public',
+  owner: 'eternityqjl',
+  admin: ['eternityqjl'],
+  id: md5(location.pathname),
+  distractionFreeMode: 'false'
+  });
+  window.onload = function () {
+        gitalk.render('gitalk-container')
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    	<div id="app"><div ref="sideContainer" class="side-container">
+    
+    <a class="a-block nav-head false" href="https://eternityqjl.top">
+    
+        <div class="nav-title">
+            Jialong&#39;s Blog
+        </div>
+        
+        <div class="nav-subtitle">
+            沉潜 自由 追寻幸福
+        </div>
+        
+    </a>
+
+    <div class="nav-link-list">
+        
+        
+            
+            
+            
+                
+            
+            
+            
+            <a class="a-block nav-link-item active" href="/posts">
+                网志
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/categories">
+                分类
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/tags">
+                标签
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/about">
+                关于
+            </a>
+            
+        
+            
+            
+            
+            
+            
+            <a class="a-block nav-link-item false" href="/index.xml">
+                RSS
+            </a>
+            
+        
+    </div>
+
+    
+
+    <div class="nav-footer">
+        
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+
+    </div>
+    
+</div><div ref="extraContainer" class="extra-container">
+    
+    
+    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#freertos%e4%b8%ad%e6%96%ad%e4%bc%98%e5%85%88%e7%ba%a7%e7%ae%a1%e7%90%86" onclick="onNavClick(`#freertos中断优先级管理-nav`)" id="freertos中断优先级管理-nav">
+									FreeRTOS中断优先级管理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#at32stm32%e4%b8%ad%e6%96%ad%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#at32stm32中断配置-nav`)" id="at32stm32中断配置-nav">
+									AT32/STM32中断配置
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e4%b8%ad%e6%96%ad%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#freertos中断配置-nav`)" id="freertos中断配置-nav">
+									FreeRTOS中断配置
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%ad%e6%96%ad%e4%bc%98%e5%85%88%e7%ba%a7%e5%92%8c%e4%bb%bb%e5%8a%a1%e4%bc%98%e5%85%88%e7%ba%a7" onclick="onNavClick(`#中断优先级和任务优先级-nav`)" id="中断优先级和任务优先级-nav">
+									中断优先级和任务优先级
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%b4%e7%95%8c%e6%ae%b5%e4%bf%9d%e6%8a%a4" onclick="onNavClick(`#临界段保护-nav`)" id="临界段保护-nav">
+									临界段保护
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%bb%bb%e5%8a%a1%e7%ae%a1%e7%90%86" onclick="onNavClick(`#任务管理-nav`)" id="任务管理-nav">
+									任务管理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e8%a3%b8%e6%9c%ba%e4%b8%8e%e5%b8%a6rtos%e7%9a%84%e5%8c%ba%e5%88%ab" onclick="onNavClick(`#裸机与带rtos的区别-nav`)" id="裸机与带rtos的区别-nav">
+									裸机与带RTOS的区别
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e4%bb%bb%e5%8a%a1%e7%8a%b6%e6%80%81" onclick="onNavClick(`#freertos任务状态-nav`)" id="freertos任务状态-nav">
+									FreeRTOS任务状态
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e7%a9%ba%e9%97%b2%e4%bb%bb%e5%8a%a1" onclick="onNavClick(`#freertos空闲任务-nav`)" id="freertos空闲任务-nav">
+									FreeRTOS空闲任务
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%bb%bb%e5%8a%a1%e8%b0%83%e5%ba%a6" onclick="onNavClick(`#任务调度-nav`)" id="任务调度-nav">
+									任务调度
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%90%88%e4%bd%9c%e5%bc%8f%e8%b0%83%e5%ba%a6" onclick="onNavClick(`#合作式调度-nav`)" id="合作式调度-nav">
+									合作式调度
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%8a%a2%e5%8d%a0%e5%bc%8f%e8%b0%83%e5%ba%a6" onclick="onNavClick(`#抢占式调度-nav`)" id="抢占式调度-nav">
+									抢占式调度
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%97%b6%e9%97%b4%e7%89%87%e8%b0%83%e5%ba%a6" onclick="onNavClick(`#时间片调度-nav`)" id="时间片调度-nav">
+									时间片调度
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97" onclick="onNavClick(`#消息队列-nav`)" id="消息队列-nav">
+									消息队列
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#消息队列基本概念-nav`)" id="消息队列基本概念-nav">
+									消息队列基本概念
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97%e7%9b%b8%e5%85%b3api" onclick="onNavClick(`#消息队列相关api-nav`)" id="消息队列相关api-nav">
+									消息队列相关API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#信号量-nav`)" id="信号量-nav">
+									信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#freertos%e4%bf%a1%e5%8f%b7%e9%87%8f%e7%9a%84%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#freertos信号量的概念-nav`)" id="freertos信号量的概念-nav">
+									FreeRTOS信号量的概念
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%8c%e5%80%bc%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#二值信号量-nav`)" id="二值信号量-nav">
+									二值信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%ba%8c%e5%80%bc%e4%bf%a1%e5%8f%b7%e9%87%8fapi" onclick="onNavClick(`#二值信号量api-nav`)" id="二值信号量api-nav">
+									二值信号量API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%8c%e5%80%bc%e4%bf%a1%e5%8f%b7%e9%87%8f%e4%be%8b%e7%a8%8b" onclick="onNavClick(`#二值信号量例程-nav`)" id="二值信号量例程-nav">
+									二值信号量例程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e6%95%b0%e5%9e%8b%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#计数型信号量-nav`)" id="计数型信号量-nav">
+									计数型信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e6%95%b0%e5%9e%8b%e4%bf%a1%e5%8f%b7%e9%87%8fapi" onclick="onNavClick(`#计数型信号量api-nav`)" id="计数型信号量api-nav">
+									计数型信号量API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e6%95%b0%e5%9e%8b%e4%bf%a1%e5%8f%b7%e9%87%8f%e4%be%8b%e7%a8%8b" onclick="onNavClick(`#计数型信号量例程-nav`)" id="计数型信号量例程-nav">
+									计数型信号量例程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#互斥信号量-nav`)" id="互斥信号量-nav">
+									互斥信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%bc%98%e5%85%88%e7%ba%a7%e7%bf%bb%e8%bd%ac" onclick="onNavClick(`#优先级翻转-nav`)" id="优先级翻转-nav">
+									优先级翻转
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8f%e4%bb%8b%e7%bb%8d" onclick="onNavClick(`#互斥信号量介绍-nav`)" id="互斥信号量介绍-nav">
+									互斥信号量介绍
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8fapi" onclick="onNavClick(`#互斥信号量api-nav`)" id="互斥信号量api-nav">
+									互斥信号量API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8f%e4%be%8b%e7%a8%8b" onclick="onNavClick(`#互斥信号量例程-nav`)" id="互斥信号量例程-nav">
+									互斥信号量例程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e9%80%92%e5%bd%92%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#递归互斥信号量-nav`)" id="递归互斥信号量-nav">
+									递归互斥信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e9%80%92%e5%bd%92%e4%bf%a1%e5%8f%b7%e9%87%8fapi" onclick="onNavClick(`#互斥递归信号量api-nav`)" id="互斥递归信号量api-nav">
+									互斥递归信号量API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%8b%e4%bb%b6%e6%a0%87%e5%bf%97%e7%bb%84" onclick="onNavClick(`#事件标志组-nav`)" id="事件标志组-nav">
+									事件标志组
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#eventgroup%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#eventgroup概念-nav`)" id="eventgroup概念-nav">
+									EventGroup概念
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#eventgroup-api" onclick="onNavClick(`#eventgroup-api-nav`)" id="eventgroup-api-nav">
+									EventGroup API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%bd%af%e4%bb%b6%e5%ae%9a%e6%97%b6%e5%99%a8%e7%bb%84" onclick="onNavClick(`#软件定时器组-nav`)" id="软件定时器组-nav">
+									软件定时器组
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#freertos%e8%bd%af%e4%bb%b6%e5%ae%9a%e6%97%b6%e5%99%a8%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#freertos软件定时器概念-nav`)" id="freertos软件定时器概念-nav">
+									FreeRTOS软件定时器概念
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%bd%af%e4%bb%b6%e5%ae%9a%e6%97%b6%e5%99%a8%e7%bb%84api" onclick="onNavClick(`#软件定时器组api-nav`)" id="软件定时器组api-nav">
+									软件定时器组API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#freertos%e4%bd%8e%e5%8a%9f%e8%80%97%e6%a8%a1%e5%bc%8f" onclick="onNavClick(`#freertos低功耗模式-nav`)" id="freertos低功耗模式-nav">
+									FreeRTOS低功耗模式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#tickless%e6%9c%ba%e5%88%b6" onclick="onNavClick(`#tickless机制-nav`)" id="tickless机制-nav">
+									Tickless机制
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#freertos%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e6%96%b9%e5%bc%8f" onclick="onNavClick(`#freertos内存管理方式-nav`)" id="freertos内存管理方式-nav">
+									FreeRTOS内存管理方式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e4%b8%80" onclick="onNavClick(`#方式一-nav`)" id="方式一-nav">
+									方式一
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e4%ba%8c" onclick="onNavClick(`#方式二-nav`)" id="方式二-nav">
+									方式二
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e4%b8%89" onclick="onNavClick(`#方式三-nav`)" id="方式三-nav">
+									方式三
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e5%9b%9b" onclick="onNavClick(`#方式四-nav`)" id="方式四-nav">
+									方式四
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e4%ba%94" onclick="onNavClick(`#方式五-nav`)" id="方式五-nav">
+									方式五
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#freertos%e6%b5%81%e7%bc%93%e5%ad%98" onclick="onNavClick(`#freertos流缓存-nav`)" id="freertos流缓存-nav">
+									FreeRTOS流缓存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e6%b6%88%e6%81%af%e7%bc%93%e5%ad%98" onclick="onNavClick(`#freertos消息缓存-nav`)" id="freertos消息缓存-nav">
+									FreeRTOS消息缓存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e4%bb%bb%e5%8a%a1%e9%80%9a%e7%9f%a5" onclick="onNavClick(`#freertos任务通知-nav`)" id="freertos任务通知-nav">
+									FreeRTOS任务通知
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e7%bc%96%e7%a0%81%e9%a3%8e%e6%a0%bc" onclick="onNavClick(`#freertos编码风格-nav`)" id="freertos编码风格-nav">
+									FreeRTOS编码风格
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%87%bd%e6%95%b0%e5%91%bd%e5%90%8d%e9%a3%8e%e6%a0%bc" onclick="onNavClick(`#函数命名风格-nav`)" id="函数命名风格-nav">
+									函数命名风格
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%ae%8f%e5%91%bd%e5%90%8d%e9%a3%8e%e6%a0%bc" onclick="onNavClick(`#宏命名风格-nav`)" id="宏命名风格-nav">
+									宏命名风格
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+    
+    <div class="pagination">
+        <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
+            <i class="material-icons pagination-action-icon">
+                keyboard_arrow_up
+            </i>
+        </a>
+        
+        <a class="pagination-action" v-on:click="toggleDarkMode">
+            <i class="material-icons pagination-action-icon" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons pagination-action-icon" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </a>
+        
+        
+    </div>
+</div>
+<div class="single-column-drawer-container" ref="drawer"
+     v-bind:class="{ 'single-column-drawer-container-active': isDrawerOpen }">
+    <div class="drawer-content">
+        <div class="drawer-menu">
+            
+            
+            
+                
+                
+                
+                    
+                
+                
+                
+                <a class="a-block drawer-menu-item active" href="/posts">
+                    网志
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/categories">
+                    分类
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/tags">
+                    标签
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/about">
+                    关于
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="/index.xml">
+                    RSS
+                </a>
+                
+            
+            
+            <div class="toc">
+
+
+	<div class="toc-content">
+	
+		
+		
+		
+		<center>- 目录 -</center>
+		
+		
+		<ul>
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#freertos%e4%b8%ad%e6%96%ad%e4%bc%98%e5%85%88%e7%ba%a7%e7%ae%a1%e7%90%86" onclick="onNavClick(`#freertos中断优先级管理-nav`)" id="freertos中断优先级管理-nav">
+									FreeRTOS中断优先级管理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#at32stm32%e4%b8%ad%e6%96%ad%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#at32stm32中断配置-nav`)" id="at32stm32中断配置-nav">
+									AT32/STM32中断配置
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e4%b8%ad%e6%96%ad%e9%85%8d%e7%bd%ae" onclick="onNavClick(`#freertos中断配置-nav`)" id="freertos中断配置-nav">
+									FreeRTOS中断配置
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%ad%e6%96%ad%e4%bc%98%e5%85%88%e7%ba%a7%e5%92%8c%e4%bb%bb%e5%8a%a1%e4%bc%98%e5%85%88%e7%ba%a7" onclick="onNavClick(`#中断优先级和任务优先级-nav`)" id="中断优先级和任务优先级-nav">
+									中断优先级和任务优先级
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%b8%b4%e7%95%8c%e6%ae%b5%e4%bf%9d%e6%8a%a4" onclick="onNavClick(`#临界段保护-nav`)" id="临界段保护-nav">
+									临界段保护
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%bb%bb%e5%8a%a1%e7%ae%a1%e7%90%86" onclick="onNavClick(`#任务管理-nav`)" id="任务管理-nav">
+									任务管理
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e8%a3%b8%e6%9c%ba%e4%b8%8e%e5%b8%a6rtos%e7%9a%84%e5%8c%ba%e5%88%ab" onclick="onNavClick(`#裸机与带rtos的区别-nav`)" id="裸机与带rtos的区别-nav">
+									裸机与带RTOS的区别
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e4%bb%bb%e5%8a%a1%e7%8a%b6%e6%80%81" onclick="onNavClick(`#freertos任务状态-nav`)" id="freertos任务状态-nav">
+									FreeRTOS任务状态
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e7%a9%ba%e9%97%b2%e4%bb%bb%e5%8a%a1" onclick="onNavClick(`#freertos空闲任务-nav`)" id="freertos空闲任务-nav">
+									FreeRTOS空闲任务
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%bb%bb%e5%8a%a1%e8%b0%83%e5%ba%a6" onclick="onNavClick(`#任务调度-nav`)" id="任务调度-nav">
+									任务调度
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%90%88%e4%bd%9c%e5%bc%8f%e8%b0%83%e5%ba%a6" onclick="onNavClick(`#合作式调度-nav`)" id="合作式调度-nav">
+									合作式调度
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%8a%a2%e5%8d%a0%e5%bc%8f%e8%b0%83%e5%ba%a6" onclick="onNavClick(`#抢占式调度-nav`)" id="抢占式调度-nav">
+									抢占式调度
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%97%b6%e9%97%b4%e7%89%87%e8%b0%83%e5%ba%a6" onclick="onNavClick(`#时间片调度-nav`)" id="时间片调度-nav">
+									时间片调度
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97" onclick="onNavClick(`#消息队列-nav`)" id="消息队列-nav">
+									消息队列
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97%e5%9f%ba%e6%9c%ac%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#消息队列基本概念-nav`)" id="消息队列基本概念-nav">
+									消息队列基本概念
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97%e7%9b%b8%e5%85%b3api" onclick="onNavClick(`#消息队列相关api-nav`)" id="消息队列相关api-nav">
+									消息队列相关API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#信号量-nav`)" id="信号量-nav">
+									信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#freertos%e4%bf%a1%e5%8f%b7%e9%87%8f%e7%9a%84%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#freertos信号量的概念-nav`)" id="freertos信号量的概念-nav">
+									FreeRTOS信号量的概念
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%8c%e5%80%bc%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#二值信号量-nav`)" id="二值信号量-nav">
+									二值信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%ba%8c%e5%80%bc%e4%bf%a1%e5%8f%b7%e9%87%8fapi" onclick="onNavClick(`#二值信号量api-nav`)" id="二值信号量api-nav">
+									二值信号量API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%8c%e5%80%bc%e4%bf%a1%e5%8f%b7%e9%87%8f%e4%be%8b%e7%a8%8b" onclick="onNavClick(`#二值信号量例程-nav`)" id="二值信号量例程-nav">
+									二值信号量例程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e6%95%b0%e5%9e%8b%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#计数型信号量-nav`)" id="计数型信号量-nav">
+									计数型信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e6%95%b0%e5%9e%8b%e4%bf%a1%e5%8f%b7%e9%87%8fapi" onclick="onNavClick(`#计数型信号量api-nav`)" id="计数型信号量api-nav">
+									计数型信号量API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%ae%a1%e6%95%b0%e5%9e%8b%e4%bf%a1%e5%8f%b7%e9%87%8f%e4%be%8b%e7%a8%8b" onclick="onNavClick(`#计数型信号量例程-nav`)" id="计数型信号量例程-nav">
+									计数型信号量例程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#互斥信号量-nav`)" id="互斥信号量-nav">
+									互斥信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%bc%98%e5%85%88%e7%ba%a7%e7%bf%bb%e8%bd%ac" onclick="onNavClick(`#优先级翻转-nav`)" id="优先级翻转-nav">
+									优先级翻转
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8f%e4%bb%8b%e7%bb%8d" onclick="onNavClick(`#互斥信号量介绍-nav`)" id="互斥信号量介绍-nav">
+									互斥信号量介绍
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8fapi" onclick="onNavClick(`#互斥信号量api-nav`)" id="互斥信号量api-nav">
+									互斥信号量API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8f%e4%be%8b%e7%a8%8b" onclick="onNavClick(`#互斥信号量例程-nav`)" id="互斥信号量例程-nav">
+									互斥信号量例程
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e9%80%92%e5%bd%92%e4%ba%92%e6%96%a5%e4%bf%a1%e5%8f%b7%e9%87%8f" onclick="onNavClick(`#递归互斥信号量-nav`)" id="递归互斥信号量-nav">
+									递归互斥信号量
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e4%ba%92%e6%96%a5%e9%80%92%e5%bd%92%e4%bf%a1%e5%8f%b7%e9%87%8fapi" onclick="onNavClick(`#互斥递归信号量api-nav`)" id="互斥递归信号量api-nav">
+									互斥递归信号量API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e4%ba%8b%e4%bb%b6%e6%a0%87%e5%bf%97%e7%bb%84" onclick="onNavClick(`#事件标志组-nav`)" id="事件标志组-nav">
+									事件标志组
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#eventgroup%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#eventgroup概念-nav`)" id="eventgroup概念-nav">
+									EventGroup概念
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#eventgroup-api" onclick="onNavClick(`#eventgroup-api-nav`)" id="eventgroup-api-nav">
+									EventGroup API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#%e8%bd%af%e4%bb%b6%e5%ae%9a%e6%97%b6%e5%99%a8%e7%bb%84" onclick="onNavClick(`#软件定时器组-nav`)" id="软件定时器组-nav">
+									软件定时器组
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#freertos%e8%bd%af%e4%bb%b6%e5%ae%9a%e6%97%b6%e5%99%a8%e6%a6%82%e5%bf%b5" onclick="onNavClick(`#freertos软件定时器概念-nav`)" id="freertos软件定时器概念-nav">
+									FreeRTOS软件定时器概念
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e8%bd%af%e4%bb%b6%e5%ae%9a%e6%97%b6%e5%99%a8%e7%bb%84api" onclick="onNavClick(`#软件定时器组api-nav`)" id="软件定时器组api-nav">
+									软件定时器组API
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#freertos%e4%bd%8e%e5%8a%9f%e8%80%97%e6%a8%a1%e5%bc%8f" onclick="onNavClick(`#freertos低功耗模式-nav`)" id="freertos低功耗模式-nav">
+									FreeRTOS低功耗模式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#tickless%e6%9c%ba%e5%88%b6" onclick="onNavClick(`#tickless机制-nav`)" id="tickless机制-nav">
+									Tickless机制
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#freertos%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e6%96%b9%e5%bc%8f" onclick="onNavClick(`#freertos内存管理方式-nav`)" id="freertos内存管理方式-nav">
+									FreeRTOS内存管理方式
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e4%b8%80" onclick="onNavClick(`#方式一-nav`)" id="方式一-nav">
+									方式一
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e4%ba%8c" onclick="onNavClick(`#方式二-nav`)" id="方式二-nav">
+									方式二
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e4%b8%89" onclick="onNavClick(`#方式三-nav`)" id="方式三-nav">
+									方式三
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e5%9b%9b" onclick="onNavClick(`#方式四-nav`)" id="方式四-nav">
+									方式四
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e6%96%b9%e5%bc%8f%e4%ba%94" onclick="onNavClick(`#方式五-nav`)" id="方式五-nav">
+									方式五
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+							
+								</ul>
+							
+						
+						
+						
+							<li>
+								<a href="#freertos%e6%b5%81%e7%bc%93%e5%ad%98" onclick="onNavClick(`#freertos流缓存-nav`)" id="freertos流缓存-nav">
+									FreeRTOS流缓存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e6%b6%88%e6%81%af%e7%bc%93%e5%ad%98" onclick="onNavClick(`#freertos消息缓存-nav`)" id="freertos消息缓存-nav">
+									FreeRTOS消息缓存
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e4%bb%bb%e5%8a%a1%e9%80%9a%e7%9f%a5" onclick="onNavClick(`#freertos任务通知-nav`)" id="freertos任务通知-nav">
+									FreeRTOS任务通知
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#freertos%e7%bc%96%e7%a0%81%e9%a3%8e%e6%a0%bc" onclick="onNavClick(`#freertos编码风格-nav`)" id="freertos编码风格-nav">
+									FreeRTOS编码风格
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+							
+								
+									<ul>
+								
+							
+						
+						
+							<li>
+								<a href="#%e5%87%bd%e6%95%b0%e5%91%bd%e5%90%8d%e9%a3%8e%e6%a0%bc" onclick="onNavClick(`#函数命名风格-nav`)" id="函数命名风格-nav">
+									函数命名风格
+								</a>
+							</li>
+						
+						
+					
+				
+			
+				
+				
+					
+						
+						
+						
+						
+						
+							<li>
+								<a href="#%e5%ae%8f%e5%91%bd%e5%90%8d%e9%a3%8e%e6%a0%bc" onclick="onNavClick(`#宏命名风格-nav`)" id="宏命名风格-nav">
+									宏命名风格
+								</a>
+							</li>
+						
+						
+					
+				
+			
+		</ul>
+	</div>
+
+</div>
+            
+        </div>
+    </div>
+</div>
+<transition name="fade">
+    <div v-bind:class="{ 'single-column-drawer-mask': mounted }" v-if="isDrawerOpen" v-on:click="toggleDrawer"></div>
+</transition>
+<nav ref="navBar" class="navbar sticky-top navbar-light single-column-nav-container">
+    <div ref="navBackground" class="nav-background"></div>
+    <div class="container container-narrow nav-content">
+        <button id="nav_dropdown_btn" class="nav-dropdown-toggle" type="button" v-on:click="toggleDrawer">
+            <i class="material-icons">
+                menu
+            </i>
+        </button>
+        <a ref="navTitle" class="navbar-brand" href="https://eternityqjl.top">
+            Jialong&#39;s Blog
+        </a>
+        
+        <button type="button" class="nav-darkmode-toggle" v-on:click="toggleDarkMode">
+            <i class="material-icons" v-if="isDarkMode">
+                brightness_4
+            </i>
+            <i class="material-icons" v-else="isDarkMode">
+                brightness_7
+            </i>
+        </button>
+        
+    </div>
+</nav>
+<div class="single-column-header-container" ref="pageHead"
+     v-bind:style="{ transform: 'translateZ(0px) translateY('+.3*scrollY+'px)', opacity: 1-navOpacity }">
+    <a href="https://eternityqjl.top">
+        <div class="single-column-header-title">Jialong&#39;s Blog</div>
+        
+        <div class="single-column-header-subtitle">沉潜 自由 追寻幸福</div>
+        
+
+    </a>
+</div>
+
+            <div id="content">
+<div ref="streamContainer" class="stream-container">
+    <div class="post-list-container post-list-container-shadow">
+        <div class="post">
+            
+            
+            
+                
+            
+
+            <div class="post-head-wrapper"
+                
+                    
+                    
+                    style="background-image: url('https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202207112142918.png')"
+                    
+                
+            >
+                <div class="post-title">
+                    FreeRTOS操作系统总结
+                    
+                    <div class="post-meta">
+                        
+                        <time itemprop="datePublished">
+                            2022-07-11 21:39
+                        </time>
+                        
+
+                        
+                            <i class="material-icons" style="">folder</i>
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F">计算机操作系统</a>
+                                &nbsp;
+                        
+
+                        
+                            <i class="material-icons" style="">label</i>
+                            
+                                <a href="/tags/freertos">FreeRTOS</a>
+                                &nbsp;
+                            
+                                <a href="/tags/rtos">RTOS</a>
+                                &nbsp;
+                            
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="post-body-wrapper">
+                
+                <div class="post-body" v-pre>
+                
+                    <p>本文来总结一些FreeRTOS的基本概念和API的使用，部分内容参考自：</p>
+<p><a href="https://www.arterytek.com/download/AN0025_FreeRTOS_on_AT32_MCU_ZH_V1.0.0.pdf">AN0025 应用笔记FreeRTOS on AT32 MCU - 雅特力</a></p>
+<h2 id="freertos中断优先级管理">FreeRTOS中断优先级管理</h2>
+<h3 id="at32stm32中断配置">AT32/STM32中断配置</h3>
+<p>一般配置NVIC_PriorityGroup_4，只使用中断优先级寄存器的高四位，一共可以表示2^4=16级中断优先级，NVIC_PriorityGroup_4只有16级抢占优先级，没有子优先级。</p>
+<h3 id="freertos中断配置">FreeRTOS中断配置</h3>
+<p>一般配置用户可以在抢占优先级为3-15的中断里面调用FreeRTOS的API函数。</p>
+<h3 id="中断优先级和任务优先级">中断优先级和任务优先级</h3>
+<p>二者没有关系，中断的优先级永远高于任何任务的优先级。</p>
+<h3 id="临界段保护">临界段保护</h3>
+<p>临界段代码也成为临界区，指哪些必须完整运行不能被打断的代码。例如一些外设的初始化，需要遵循严格的时序要求。FreeRTOS采用的是在进入临界区代码后关闭中断，退出临界区的时候打开中断。FreeRTOS系统很多程序段都加了临界区保护，在写应用程序的时候也有很多地方需要用到临界区保护。</p>
+<p>与临界段代码保护有关的函数有以下4个：</p>
+<ul>
+<li><code>taskENTER_CRITICAL()</code></li>
+</ul>
+<p>进入临界区，关中断</p>
+<ul>
+<li><code>taskEXIT_CRITICAL()</code></li>
+</ul>
+<p>退出临界区，开中断</p>
+<p><code>taskENTER_CRITICAL_FROM_ISR()</code></p>
+<p>进入临界区，关中断（ISR中使用）</p>
+<h2 id="任务管理">任务管理</h2>
+<h3 id="裸机与带rtos的区别">裸机与带RTOS的区别</h3>
+<ul>
+<li>裸机系统</li>
+</ul>
+<p>一个大循环顺序执行，每一部分的操作都不是实时性的。为了解决这个问题，引入了中断，紧急事件可以放到中断中执行。</p>
+<ul>
+<li>RTOS运行流程</li>
+</ul>
+<p>调度器使用调度算法来决定当前要执行的任务，从而实现多任务系统。这里所说的多任务系统同一时刻只能有一个任务可以运行，只能通过调度器决策，看起来像所有任务同时运行一样。</p>
+<h3 id="freertos任务状态">FreeRTOS任务状态</h3>
+<ul>
+<li>运行态 - Running</li>
+<li>就绪态 - Ready</li>
+<li>阻塞态 - Blocked</li>
+<li>挂起态 - Suspended</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202203081633973.png" alt="FreeRTOS任务状态转换关系"></p>
+<p>阻塞态和挂起态的区别：</p>
+<ul>
+<li>阻塞指的是进程由于发生某事件（例如I/O请求、申请缓冲区失败）暂时无法继续执行，引起进程调度，把CPU让给其他就绪进程。挂起是由于系统和用户的需要引入的操作，进程被挂起意味着该进程处于静止状态，如果进程正在执行，它将暂停执行，若原本处于就绪状态，则该进程此时暂不接受调度。</li>
+<li>二者的共同点是进程都暂停执行，并且都释放了CPU，即两个过程都涉及上下文切换</li>
+<li>不同点是：
+<ul>
+<li>对系统资源占用不同</li>
+<li>发生时机和恢复时机不同</li>
+</ul>
+</li>
+</ul>
+<h3 id="freertos空闲任务">FreeRTOS空闲任务</h3>
+<p>空闲任务是系统任务，是必须要执行的，一个RTOS每时每刻都要有一个任务执行，这个空闲任务还可以做一些其他工作，例如进入低功耗等。</p>
+<h2 id="任务调度">任务调度</h2>
+<p>FreeRTOS共有三种任务调度方式：合作式、抢占式、时间片式。</p>
+<h3 id="合作式调度">合作式调度</h3>
+<p>主要用于资源很紧张的设备，现在已经很少使用。不作详细介绍。</p>
+<h3 id="抢占式调度">抢占式调度</h3>
+<p>调度器：使用相关的调度算法决定当前需要执行的任务。</p>
+<p>所有调度器有一个共同的特性：</p>
+<ul>
+<li>调度器可以区分就绪态任务和挂起任务</li>
+<li>调度器可以选择就绪态中的一个任务，然后激活他。</li>
+<li>不同调度器的最大区别就是如何分配就绪态任务的完成时间。</li>
+</ul>
+<p>抢占式调度就是调度器算法的一种。实际应用中，不同的任务需要不同的响应时间。</p>
+<h3 id="时间片调度">时间片调度</h3>
+<p>最常用的时间片调度算法就是Round-robin调度算法。</p>
+<h2 id="消息队列">消息队列</h2>
+<h3 id="消息队列基本概念">消息队列基本概念</h3>
+<p>通过RTOS内核提供的服务，任务或中断服务子程序可以将一个消息放入到队列；同样，一个或多个任务可以通过RTOS内核服务从队列中得到消息。</p>
+<p>在裸机编程中，相比于消息队列，使用全局数组主要有如下问题：</p>
+<ul>
+<li>使用消息队列</li>
+</ul>
+<p>注意在操作系统中实现中断服务程序与裸机是不同的，主要有以下几点要注意：</p>
+<ul>
+<li>如果FreeRTOS工程中的中断函数没有调用FreeRTOS的消息队列API函数，那么就与裸机编程是一样的。</li>
+<li>如果调用了FreeRTOS的消息队列API函数，退出时要检测是否有高优先级任务就绪，如果有则需要在退出中断后进行任务切换。</li>
+<li>在使用AT32芯片时将中断优先级分组设置为组4，即NVIC_PriorityGroup_4</li>
+<li>要在FreeRTOS多任务开启前就设置好优先级分组，一旦设置好就不可修改。</li>
+</ul>
+<h3 id="消息队列相关api">消息队列相关API</h3>
+<p><code>xQueueCreate()</code></p>
+<p>创建一个消息队列，返回该队列的句柄。</p>
+<p><code>xQueueSend()</code></p>
+<p>向指定消息队列发送一个消息，返回值为发送消息成功与否的标志。</p>
+<p><code>xQueueSendFromISR()</code></p>
+<p>在中断处理函数中，发送消息的函数，返回值为发送消息成功与否标志。</p>
+<p><code>xQueueReceive()</code></p>
+<p>从指定消息队列内接受消息，返回值为接受消息成功与否标志。</p>
+<p><code>xQueueReceiveFromISR()</code></p>
+<p>在中断处理函数中从指定消息队列内接受消息。</p>
+<h2 id="信号量">信号量</h2>
+<h3 id="freertos信号量的概念">FreeRTOS信号量的概念</h3>
+<p>给共享资源建立一个标志，该标志表示该共享资源被占用的情况。</p>
+<p>实际中使用信号量主要来实现两个功能：</p>
+<ul>
+<li>两个任务之间或中断函数和任务之间的同步功能，就是共享资源为1的时候</li>
+<li>多个共享资源的管理</li>
+</ul>
+<h3 id="二值信号量">二值信号量</h3>
+<p>常用于互斥访问或同步。</p>
+<p>信号量API函数也允许设置一个阻塞时间，阻塞时间指的是当任务获取信号量的时候由于信号量无效而进入阻塞状态的最大时间节拍数。</p>
+<h4 id="二值信号量api">二值信号量API</h4>
+<p><code>xSemaphoreCreateBinary()</code></p>
+<p>创建一个二值信号量，返回值为创建的二值信号量的句柄SemaphoreHandle_t</p>
+<p><code>xSemaphoreCreateBinaryStatic()</code></p>
+<p>静态创建一个二值信号量</p>
+<p><code>vSemaphoreDelete()</code></p>
+<p>删除一个信号量，无返回值。</p>
+<p><code>xSemaphoreGive()</code></p>
+<p>释放一个信号量，返回值为释放成功与否标志。</p>
+<p><code>xSemaphoreFromISR()</code></p>
+<p>内释放一个信号量（中断级）</p>
+<p><code>xSemaphoreTake()</code></p>
+<p>获取一个信号量，返回值为获取成功与否标志。</p>
+<p><code>xSemaphoreTakeFromISR()</code></p>
+<p>获取一个信号量（中断级）</p>
+<h4 id="二值信号量例程">二值信号量例程</h4>
+<h3 id="计数型信号量">计数型信号量</h3>
+<p>又称为数值信号量，是可以大于1的信号量。信号量的本质就是队列，只是不用关注队列中存放了什么消息，只需关注队列是否满即可。计数型信号量的应用场景：</p>
+<ul>
+<li>事件计数：每次事件发生前就在事件处理函数中释放信号量（增加信号量的计数值），其他任务事件会获取信号值，获取一次就在任务事件处理函数中对信号量减1操作。该场合下创建的计数信号量的初始值为0。</li>
+<li>资源管理：该场景下，信号量代表当前资源的可用数量。任务事件获取一次资源后信号量的值就减1操作，任务事件释放一次资源后信号量加1操作。该场合中信号量的初始值为资源的总数量。</li>
+</ul>
+<h4 id="计数型信号量api">计数型信号量API</h4>
+<p><code>xSemaphoreCreateCounting()</code></p>
+<p>创建一个计数型信号量，返回创建的计数型信号量的句柄。函数的两个参数为该信号量允许的最大值和信号量的初始值。</p>
+<p><code>vSemaphoreDelete()</code></p>
+<p><code>xSemaphoreGive()</code></p>
+<p><code>xSemaphoreTake()</code></p>
+<p><code>uxSemaphoreGetCount()</code></p>
+<h4 id="计数型信号量例程">计数型信号量例程</h4>
+<p>测试一下</p>
+<h3 id="互斥信号量">互斥信号量</h3>
+<h4 id="优先级翻转">优先级翻转</h4>
+<p>使用二值信号量的时候很有可能碰到优先级翻转的问题，这在可剥夺型内核中很常见。但实时系统中不允许出现这样的情况，这回打乱系统的预期执行顺序，导致低优先级的任务先运行，违背了实时性的初衷。</p>
+<h4 id="互斥信号量介绍">互斥信号量介绍</h4>
+<p>为了资源互斥访问而设计。</p>
+<p>互斥信号量采取了措施尽量<strong>回避优先级翻转</strong>的问题。当一个高优先级任务想要获取互斥信号量但该信号量被某低优先级的任务所持有，此时高优先级任务会进入阻塞态，在进入阻塞态之前此高优先级的任务会将持有互斥信号量的低优先级的任务的优先级提高到和高优先级任务相同。</p>
+<p>这样持有互斥信号量的低优先级任务就不会被其他中间等级优先级的任务所抢占CPU的使用权，尽可能地缩短了高优先级任务的响应时间。</p>
+<h4 id="互斥信号量api">互斥信号量API</h4>
+<p><code>xSemaphoreCreateMutex()</code></p>
+<p>创建一个互斥信号量，返回创建的互斥信号量的句柄。</p>
+<p><code>vSemaphoreDelete()</code></p>
+<p><code>xSemaphoreGive()</code></p>
+<p><code>xSemaphoreTake()</code></p>
+<p><code>uxSemaphoreGetCount()</code></p>
+<h4 id="互斥信号量例程">互斥信号量例程</h4>
+<h3 id="递归互斥信号量">递归互斥信号量</h3>
+<p>是一个特殊的互斥信号量，已经获取了互斥信号量的任务就不能再次获取这个互斥信号量了，而递归互斥信号量则不同，在同一个任务中，此任务可以多次获得互斥递归信号量。一旦一个任务获得了递归互斥信号量，那么其他任务便不能获得此信号量，只能本身再次获取此递归互斥信号量。</p>
+<h4 id="互斥递归信号量api">互斥递归信号量API</h4>
+<p><code>xSemaphoreCreateRecursiveMutex()</code></p>
+<p><code>xSemaphoreCreateRecursiveMutexStatic()</code></p>
+<p><code>vSemaphoreDelete()</code></p>
+<p><code>xSemaphoreGiveRecursive()</code></p>
+<p><code>xSemaphoreTakeRecursive()</code></p>
+<h2 id="事件标志组">事件标志组</h2>
+<p>事件标志组与消息队列、信号量一样，都是FreeRTOS内核提供的一种内核服务，在任务绒布中应用非常广泛。</p>
+<h3 id="eventgroup概念">EventGroup概念</h3>
+<p>事件标志组是FreeRTOS内核提供的一种服务，是实现多任务的有效机制之一。Event Group实质上是内核管理的一个变量，任务通过设置这个变量的不同BIT位，达到同步的效果。</p>
+<p>使用全局变量相比于事件标志组主要有以下问题：</p>
+<ul>
+<li>使用Event Group可以让RTOS内核有效地管理任务，而全局变量无法做到，任务的超时等机制需要用户自己实现</li>
+<li>使用了全局变量就要防止多任务的访问冲突，而Event Group就不需要担心该问题</li>
+<li>使用Event Group可以解决中断服务程序和任务之间的同步问题</li>
+</ul>
+<h3 id="eventgroup-api">EventGroup API</h3>
+<p><code>xEventGroupCreate()</code></p>
+<p>返回创建的事件标志组的句柄</p>
+<p><code>xEventGroupSetBits()</code></p>
+<p>设置一个事件标志组对应的BIT位，返回事件标志组的值</p>
+<p><code>xEventGroupWaitBits()</code></p>
+<p>等待事件标志组的对应BIT位，返回事件标志组的值</p>
+<h2 id="软件定时器组">软件定时器组</h2>
+<h3 id="freertos软件定时器概念">FreeRTOS软件定时器概念</h3>
+<p>内核提供的一种服务。FreeRTOS的软件定时器组的时基是基于<strong>系统时钟节拍</strong>实现的，它的实现不需要使用任何硬件定时器，而且可以创建多个。</p>
+<p>在硬件定时器中，我们是在定时器中断中实现需要的功能，而使用软件定时器时，我们是在创建软件定时器时指定软件定时器的回调函数，在回调函数中实现相应的功能。</p>
+<p>FreeRTOS的软件定时器支持单次模式和周期性模式。</p>
+<p>定时事件到后会调用定时器的回调函数，用户可以在回调函数中加入需要执行的工程代码。</p>
+<p>FreeRTOS为软件定时器专门创建了一个任务，称其为软件定时器的守护进程（Daemon Task）。该任务在系统是能了软件定时器组的功能后自动创建。</p>
+<p>用户应用程序和内核管理软件定时器程序之间通过<strong>消息队列</strong>实现通信功能。</p>
+<h3 id="软件定时器组api">软件定时器组API</h3>
+<p><code>xTimerCreate()</code></p>
+<p><code>xTimerStart()</code></p>
+<p><code>xTimerStop()</code></p>
+<p><code>pcTimerGetName()</code></p>
+<p><code>pvTimerGetTimerID()</code></p>
+<p><code>vTimerSetTimerID()</code></p>
+<h2 id="freertos低功耗模式">FreeRTOS低功耗模式</h2>
+<p>FreeRTOS提供了一种Tickless机制来管理低功耗。</p>
+<h3 id="tickless机制">Tickless机制</h3>
+<p>tickless可理解为无滴答时钟，即滴答时钟节拍停止运行的情况。</p>
+<p>FreeRTOS中，当用户任务都被挂起或阻塞时，最低优先级的空闲任务会得到执行，我们就可以把睡眠模式放到空闲任务中。进入空闲模式后，首先要计算而可执行低功耗的最大时间，即求出下一个要执行的高优先级任务的剩余事件。然后把低功耗的唤醒时间设置为这个求出的时间，到时间系统会从低功耗模式被唤醒，继续执行多任务。</p>
+<p>实现tickless模式最麻烦的是低功耗可执行时间的获取，这个问题FreeRTOS已经做好了。</p>
+<p>用户只用在FreeRTOSConfig.h配置文件中配置宏定义configUSE_TICKLESS_IDLE为1即可。另外如果将该参数配置为2，那么用户可以自定义tickless低功耗模式的实现。当该宏定义为1且系统运行满足以下条件时，系统内核会自动调用低功耗宏定义函数portSUPPRESS_TICKS_AND_SLEEP()：</p>
+<ul>
+<li>当前空闲任务正在运行，所有其他任务处于挂起或阻塞状态</li>
+<li>根据用户配置configEXPECTED_IDLE_TIME_BEFORE_SLEEP的大小，只有当系统可运行于低功耗模式的时钟节拍数大于等于这个参数时，系统才可以进入到低功耗模式。用户可以重新定义该宏。</li>
+</ul>
+<h2 id="freertos内存管理方式">FreeRTOS内存管理方式</h2>
+<p>FreeRTOS内核提供了5中内存管理机制，我们可以根据应用具体需求选择合适的内存管理方式，源程序路径为：FreeRTOS/portable/MemMang</p>
+<h3 id="方式一">方式一</h3>
+<p>只能分配内存，不能释放内存。FreeRTOS的内存管理策略还会使用字节对齐。</p>
+<h3 id="方式二">方式二</h3>
+<p>使用最佳匹配算法，允许释放之前已分配的内存，但不会把相邻的内存块合并为一个大的内存块。</p>
+<h3 id="方式三">方式三</h3>
+<p>简单地封装了标准库的malloc()和free()函数，采用的封装策略是操作内存前挂起调度器，完成后再恢复调度器，封装后的malloc()和free()函数具备线程保护机制。</p>
+<h3 id="方式四">方式四</h3>
+<p>与第二种策略比较类型，增加了一个合并算法，将相邻的空闲内存块合并成一个大块。</p>
+<h3 id="方式五">方式五</h3>
+<p>允许内存堆跨越多个连续的内存区，除此之外其他操作都和第四种内存管理方式相似。</p>
+<h2 id="freertos流缓存">FreeRTOS流缓存</h2>
+<h2 id="freertos消息缓存">FreeRTOS消息缓存</h2>
+<h2 id="freertos任务通知">FreeRTOS任务通知</h2>
+<h2 id="freertos编码风格">FreeRTOS编码风格</h2>
+<p>FreeRTOS的核心源代码遵从MISRA编码标准指南。</p>
+<ul>
+<li>uint32_t类型的变量使用前缀ul，表示unsigned long</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">volatile</span> <span style="color:#339;font-weight:bold">uint32_t</span> ulNotifiedValue;
+</code></pre></div><ul>
+<li>uint16_t类型的变量使用前缀us，表示unsigned short</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">uint16_t</span> usStackDepth;
+</code></pre></div><ul>
+<li>uint8_t类型使用前缀uc，表示unsigned char</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">volatile</span> <span style="color:#339;font-weight:bold">uint8_t</span> ucNotifyState;
+</code></pre></div><ul>
+<li>非stdint类型的变量使用前缀x，比如基本的Type_t和TickType_t类型；非stdint类型的无符号变量使用前缀ux，比如UbaseType_t</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">BaseType_t xReturn;
+</code></pre></div><ul>
+<li>size_t类型的变量使用前缀x；枚举类型变量使用前缀e</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">size_t xBlockSize;
+<span style="color:#080;font-weight:bold">typedef</span> <span style="color:#080;font-weight:bold">enum</span> {
+	eAbortSleep <span style="color:#333">=</span> <span style="color:#00d;font-weight:bold">0</span>,
+	eStandardSleep,
+	eNoTasksWaitingTimeout
+} eSleepModeStatus;
+eSleepModeStatus eReturn <span style="color:#333">=</span> eStandardSleep;
+</code></pre></div><p>如上eReturn变量的定义，e开头表示这个变量的类型是enum。</p>
+<ul>
+<li>指针类型的变量在类型基础上附加前缀p，比如指向uint32_t的指针变量的前缀为pul</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">uint32_t</span> <span style="color:#333">*</span>pulTopOfStack, ulTemp;
+</code></pre></div><ul>
+<li>char类型变量仅被允许保存ASCII字符，前缀为c；</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">char</span> cStatus;
+<span style="color:#080;font-weight:bold">volatile</span> <span style="color:#339;font-weight:bold">int8_t</span> cRxLock;
+</code></pre></div><h3 id="函数命名风格">函数命名风格</h3>
+<ul>
+<li>在文件作用域范围的函数前缀位prv</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#080;font-weight:bold">static</span> <span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">prvDeleteTCB</span>(TCB_t <span style="color:#333">*</span>pxTCB)
+{
+	...
+}
+</code></pre></div><p>可以理解为就是static函数。</p>
+<ul>
+<li>API函数的前缀为它们的返回类型，当返回类型为空时，前缀为v</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#339;font-weight:bold">void</span> <span style="color:#06b;font-weight:bold">vTaskDelete</span>(TaskHandle_t xTaskToDelete)
+{
+	...
+}
+</code></pre></div><p>API函数提供给其他模块调用，可以理解为全局函数。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">BaseType_t <span style="color:#06b;font-weight:bold">xTaskResumeAll</span>(<span style="color:#339;font-weight:bold">void</span>)
+{
+    ...
+}
+</code></pre></div><p><code>xTaskResumeAll(void)</code>函数，函数前面的x代表返回值的类型，这里是BaseType_t类型。</p>
+<ul>
+<li>API函数名字起始部分为该函数所在的文件名</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">QueueHandle_t <span style="color:#06b;font-weight:bold">xQueueGenericCreate</span>()
+{
+    ...
+}
+</code></pre></div><p><code>xQueueGenericCreate()</code>函数定义在Queue.c中，x表示函数的返回值是QueueHandle_t类型。</p>
+<h3 id="宏命名风格">宏命名风格</h3>
+<p>宏的名字起始部分为该宏定义所在的文件名的一部分。比如configUSE_PREEMPTION定义在FreeRTOSConfig.h文件中。除了前缀，宏剩下的字母全部为大写，两个单词间用下划线<code>_</code>隔开。</p>
+<p>在FreeRTOS/Source/inclue/queue.h中：</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#888">/* For internal use only. */</span>
+ <span style="color:#579">#define queueSEND_TO_BACK       ( ( BaseType_t ) 0 )
+</span><span style="color:#579">#define queueSEND_TO_FRONT      ( ( BaseType_t ) 1 )
+</span><span style="color:#579">#define  queueOVERWRITE         ( ( BaseType_t ) 2 )
+</span></code></pre></div>
+                    
+                    <HR width="100%" id="EOF">
+		    <p style="color:#777;">最后修改于 2022-07-11</p>
+                    
+                </div>
+            </div>
+            
+            
+            <nav class="post-pagination">
+
+                
+                <a class="newer-posts">
+			下回<br>已经到头啦。
+                </a>
+                
+                
+                
+                <a class="older-posts" href="https://eternityqjl.top/posts/linux%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/">
+			上回<br>Linux常用工具使用总结
+                </a>
+                
+            </nav>
+            <div class="post-comment-wrapper">
+                
+
+
+<div id="gitalk-container"></div>
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+            </div><div id="single-column-footer">
+Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
+<br>
+移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
+<br>
+
+&copy;
+	
+	2019-2021 By Jialong
+	
+</div>
+            </div>
+    <script>
+let app;
+
+app = new Vue({
+    el: '#app',
+    data: {
+        scrollY: 0,
+        navOpacity: 0,
+        isDrawerOpen: false,
+        mounted: false,
+        isDarkMode: false
+    },
+    methods: {
+            sgn(t, x) {
+                let k = 1. / (1. - 2 * t);
+                if (x <= t) return 0;
+                else if (x >= 1 - t) return 1;
+                else {
+                    return k * (x - t);
+                }
+            },
+            handleScroll() {
+                this.scrollY = window.scrollY;
+                this.navOpacity = this.sgn(.0, Math.min(1, Math.max(0, window.scrollY / (this.pageHeadHeight() - this.navBarHeight() * 0.8))));
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+
+                if (this.navOpacity >= 1) {
+                    navBackground.style.opacity = 1;
+                    navTitle.style.opacity = 1;
+                } else {
+                    navBackground.style.opacity = 0;
+                    navTitle.style.opacity = 0;
+                }
+            },
+            handleResize() {
+                const {navBar, navBackground, navTitle, extraContainer, streamContainer} = this.$refs;
+                extraContainer.style.left = (streamContainer.offsetWidth - extraContainer.offsetWidth) + 'px';
+            },
+            navBarHeight() {
+                return this.$refs.navBar.offsetHeight;
+            },
+            pageHeadHeight() {
+                return this.$refs.pageHead.offsetHeight;
+            },
+            toggleDrawer() {
+                this.isDrawerOpen = !this.isDrawerOpen;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            closeDrawer() {
+                this.isDrawerOpen = false;
+                document.getElementsByTagName('html')[0].style.overflow = this.isDrawerOpen ? 'hidden' : 'unset';
+            },
+            toggleDarkMode() {
+                this.isDarkMode = !this.isDarkMode;
+                if (this.isDarkMode==true){
+                    document.cookie = "night=1;path=/";
+                    document.body.classList.add("night");
+                } else {
+                    document.cookie = "night=0;path=/";
+                    document.body.classList.remove("night");
+                }
+            },
+            debounce(func, wait, options) {
+                let lastArgs,
+                    lastThis,
+                    maxWait,
+                    result,
+                    timerId,
+                    lastCallTime
+
+                let lastInvokeTime = 0
+                let leading = false
+                let maxing = false
+                let trailing = true
+
+                
+                const useRAF = (!wait && wait !== 0 && typeof root.requestAnimationFrame === 'function')
+
+                if (typeof func !== 'function') {
+                    throw new TypeError('Expected a function')
+                }
+                function isObject(value) {
+                    const type = typeof value
+                    return value != null && (type === 'object' || type === 'function')
+                }
+
+                wait = +wait || 0
+                if (isObject(options)) {
+                    leading = !!options.leading
+                    maxing = 'maxWait' in options
+                    maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait
+                    trailing = 'trailing' in options ? !!options.trailing : trailing
+                }
+
+                function invokeFunc(time) {
+                    const args = lastArgs
+                    const thisArg = lastThis
+
+                    lastArgs = lastThis = undefined
+                    lastInvokeTime = time
+                    result = func.apply(thisArg, args)
+                    return result
+                }
+
+                function startTimer(pendingFunc, wait) {
+                    if (useRAF) {
+                    root.cancelAnimationFrame(timerId)
+                    return root.requestAnimationFrame(pendingFunc)
+                    }
+                    return setTimeout(pendingFunc, wait)
+                }
+
+                function cancelTimer(id) {
+                    if (useRAF) {
+                    return root.cancelAnimationFrame(id)
+                    }
+                    clearTimeout(id)
+                }
+
+                function leadingEdge(time) {
+                    
+                    lastInvokeTime = time
+                    
+                    timerId = startTimer(timerExpired, wait)
+                    
+                    return leading ? invokeFunc(time) : result
+                }
+
+                function remainingWait(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+                    const timeWaiting = wait - timeSinceLastCall
+
+                    return maxing
+                    ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke)
+                    : timeWaiting
+                }
+
+                function shouldInvoke(time) {
+                    const timeSinceLastCall = time - lastCallTime
+                    const timeSinceLastInvoke = time - lastInvokeTime
+
+                    
+                    
+                    
+                    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+                    (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait))
+                }
+
+                function timerExpired() {
+                    const time = Date.now()
+                    if (shouldInvoke(time)) {
+                    return trailingEdge(time)
+                    }
+                    
+                    timerId = startTimer(timerExpired, remainingWait(time))
+                }
+
+                function trailingEdge(time) {
+                    timerId = undefined
+
+                    
+                    
+                    if (trailing && lastArgs) {
+                    return invokeFunc(time)
+                    }
+                    lastArgs = lastThis = undefined
+                    return result
+                }
+
+                function cancel() {
+                    if (timerId !== undefined) {
+                    cancelTimer(timerId)
+                    }
+                    lastInvokeTime = 0
+                    lastArgs = lastCallTime = lastThis = timerId = undefined
+                }
+
+                function flush() {
+                    return timerId === undefined ? result : trailingEdge(Date.now())
+                }
+
+                function pending() {
+                    return timerId !== undefined
+                }
+
+                function debounced(...args) {
+                    const time = Date.now()
+                    const isInvoking = shouldInvoke(time)
+
+                    lastArgs = args
+                    lastThis = this
+                    lastCallTime = time
+
+                    if (isInvoking) {
+                    if (timerId === undefined) {
+                        return leadingEdge(lastCallTime)
+                    }
+                    if (maxing) {
+                        
+                        timerId = startTimer(timerExpired, wait)
+                        return invokeFunc(lastCallTime)
+                    }
+                    }
+                    if (timerId === undefined) {
+                    timerId = startTimer(timerExpired, wait)
+                    }
+                    return result
+                }
+                debounced.cancel = cancel
+                debounced.flush = flush
+                debounced.pending = pending
+                return debounced
+                }
+
+    },
+    created() {
+        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener('resize', this.handleResize);
+        window._nonDesktop = function () {
+            let check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+        
+        var night = document.cookie.replace(/(?:(?:^|.*;\s*)night\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (night==""){
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                
+            }
+        }else{
+            
+            if (night=="1") {
+                this.toggleDarkMode();
+            }
+        }
+    },
+    mounted() {
+        this.handleScroll();
+        this.handleResize();
+        this.mounted = true;
+
+        
+        
+        
+
+        document.querySelectorAll("table").forEach(function(elem){
+            elem.classList.add("table-striped");
+            elem.classList.add("table");
+            elem.classList.add("table-responsive");
+            elem.classList.add("table-hover");
+        })
+
+        
+        spy();
+        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
+        
+        
+    },
+    destroyed() {
+        window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('resize', this.handleResize);
+    }
+});
+
+
+
+</script>
+    </body>
+</html>

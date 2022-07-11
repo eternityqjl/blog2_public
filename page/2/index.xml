@@ -6,9 +6,302 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 05 Jul 2022 00:25:07 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 11 Jul 2022 21:39:22 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>Csapp：9.虚拟内存</title>
+        <link>https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</link>
+        <pubDate>Tue, 04 Jan 2022 14:59:16 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/ -&lt;h2 id=&#34;物理和虚拟寻址&#34;&gt;物理和虚拟寻址&lt;/h2&gt;
+&lt;p&gt;物理地址PA、虚拟地址VA、内存管理单元MMU（利用存放在主存中的查询表来动态地翻译虚拟地址，该表的内容由操作系统管理）。&lt;/p&gt;
+&lt;h2 id=&#34;地址空间&#34;&gt;地址空间&lt;/h2&gt;
+&lt;p&gt;非负整数地址的有序集合。&lt;/p&gt;
+&lt;p&gt;目前x86使用39位物理地址空间、49位虚拟地址空间。&lt;/p&gt;
+&lt;h2 id=&#34;虚拟内存作为缓存的工具&#34;&gt;虚拟内存作为缓存的工具&lt;/h2&gt;
+&lt;p&gt;VM系统通过将虚拟内存分割为大小为$P=2^p$字节的虚拟页来处理，同样地，物理内存也被分割为大小为P的物理页（页帧）。&lt;/p&gt;
+&lt;p&gt;任意时刻，虚拟页面的集合都分为三个不相交的子集：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;未分配的&lt;/li&gt;
+&lt;li&gt;缓存的&lt;/li&gt;
+&lt;li&gt;未缓存的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;dram缓存的组织结构&#34;&gt;DRAM缓存的组织结构&lt;/h3&gt;
+&lt;p&gt;使用术语&lt;code&gt;SRAM缓存&lt;/code&gt;来表示位于CPU和主存之间的L1、L2和L3高速缓存；用术语&lt;code&gt;DRAM缓存&lt;/code&gt;表示虚拟内存系统的缓存，它在主存中缓存虚拟页。&lt;/p&gt;
+&lt;p&gt;在存储层次结构中，DRAM缓存的位置对它的组织结构有很大的影响。DRAM比SRAM慢大约10倍，磁盘比DRAM慢大约100000倍。DRAM缓存的不命中（缺页）比SRAM缓存的不命中要昂贵的多。&lt;/p&gt;
+&lt;p&gt;与硬件对SRAM缓存相比，操作系统对DRAM缓存使用了更复杂精密的替换算法。对磁盘的访问时间很长，DRAM缓存总是使用写回，而不是直写。&lt;/p&gt;
+&lt;h3 id=&#34;页表&#34;&gt;页表&lt;/h3&gt;
+&lt;p&gt;虚拟内存系统必须有方法判断&lt;strong&gt;一个虚拟页是否缓存在DRAM中&lt;/strong&gt;的某个地方。如果是，系统还必须确定这个虚拟页存&lt;strong&gt;放在哪个物理页中&lt;/strong&gt;。如果不命中，系统必须判断这个虚拟页存放在磁盘的哪个位置，在物理内存中选择一个牺牲页，并将虚拟页从磁盘复制到DRAM中，替换这个牺牲页。&lt;/p&gt;
+&lt;p&gt;页表就是一个页表条目（PET）的数组。虚拟地址空间中的每个页在页表中一个固定偏移量处都有一个PTE。假设每个PTE由一个有效位和一个n位地址字段组成的。有效位表明该虚拟页当前是否被缓存在DRAM中。&lt;/p&gt;
+&lt;h3 id=&#34;页命中&#34;&gt;页命中&lt;/h3&gt;
+&lt;p&gt;页面缓存在DRAM缓存中。&lt;/p&gt;
+&lt;h3 id=&#34;缺页&#34;&gt;缺页&lt;/h3&gt;
+&lt;p&gt;DRAM缓存不命中称为缺页。&lt;/p&gt;
+&lt;p&gt;在磁盘和内存之间传送页的活动叫作交换或页面调度。只有当不命中发生时，才换入页面，这种策略称为&lt;strong&gt;按需页面调度&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;所有现代系统都采用按需页面调度的方式。&lt;/p&gt;
+&lt;h3 id=&#34;局部性&#34;&gt;局部性&lt;/h3&gt;
+&lt;p&gt;局部性原理保证了在任意时刻，程序将趋向于在一个较小的活动页面集合上工作，这个集合称为工作集或常驻集。&lt;/p&gt;
+&lt;p&gt;只要程序具有良好的时间局部性，虚拟内存系统就能工作得相当好。如果工作集的大小超出了物理内存的大小，程序将产生一种不幸的&lt;strong&gt;抖动&lt;/strong&gt;状态，这时页面将不断地换进换出。&lt;/p&gt;
+&lt;h2 id=&#34;虚拟内存作为内存管理的工具&#34;&gt;虚拟内存作为内存管理的工具&lt;/h2&gt;
+&lt;p&gt;虚拟内存大大简化了内存管理，并提供了一种自然的保护内存的方法。&lt;/p&gt;
+&lt;p&gt;操作系统实际上为每个进程提供了一个独立的页表，因而也就是一个独立的虚拟地址空间。&lt;/p&gt;
+&lt;p&gt;多个虚拟页面可以映射到同一个共享的物理页面上。&lt;/p&gt;
+&lt;p&gt;VM简化了链接和加载、代码和数据共享，以及应用程序的内存分配。&lt;/p&gt;
+&lt;h3 id=&#34;简化链接&#34;&gt;简化链接&lt;/h3&gt;
+&lt;p&gt;独立的地址空间允许每个进程的内存映射使用相同的基本格式，而不管代码和数据实际存放在物理内存的何处。&lt;/p&gt;
+&lt;p&gt;一个给定的Linux系统上的每个进程都使用类似的内存格式。对于64位地址空间，代码段总是从虚拟地址0x400000开始。数据段跟在代码段后，中间有一段符合要求的对齐空白。栈占用用户地址空间最高的部分，并向下生长。&lt;/p&gt;
+&lt;p&gt;这样的一致性简化了链接器的设计和实现。允许链接器生成完全链接的可执行文件，这些可执行文件是独立于物理内存中代码和数据的最终位置的。&lt;/p&gt;
+&lt;h3 id=&#34;简化加载&#34;&gt;简化加载&lt;/h3&gt;
+&lt;p&gt;虚拟内存使得很容易向内存中加载可执行文件和共享对象文件。要把目标文件中.text和.data节加载到一个新创建的进程中，Linux加载器为代码和数据段分配虚拟页，把它们标记为无效的（即未被缓存的），将页表条目指向目标文件中适当的位置。加载器从不从磁盘到内存实际复制任何数据。在每个页被初次引用时，要么是CPU取指令时引用的，要么是一条正在执行的指令引用一个内存位置时引用的，虚拟内存系统会按照需要自动地调入数据页。&lt;/p&gt;
+&lt;p&gt;将一组连续的虚拟页映射到任意一个文件中的任意位置的表示法称为内存映射。Linux提供一个称为mmap的系统调用，允许应用程序自己做内存映射。详见后面小节。&lt;/p&gt;
+&lt;h3 id=&#34;简化共享&#34;&gt;简化共享&lt;/h3&gt;
+&lt;p&gt;一般情况下，每个进程都有自己私有的代码、数据、堆以及栈区域，是不和其他进程进行共享的。但在另一些情况下，需要进程来共享数据和代码。例如，每个进程必须调用相同的操作系统内核代码，操作系统通过将不同进程中适当的虚拟页面映射到相同的物理页面，从而安排多个进程共享这部分代码的一个副本。&lt;/p&gt;
+&lt;h3 id=&#34;简化内存分配&#34;&gt;简化内存分配&lt;/h3&gt;
+&lt;p&gt;虚拟内存为用户进程提供了一个简单的分配额外内存的机制。当一个运行在用户进程的程序要求额外的堆空间时（调用malloc），操作系统分配一个适当数字大小的连续的虚拟内存页面，并将其映射到物理内存中任意位置的k个任意的物理页面。&lt;/p&gt;
+&lt;h2 id=&#34;虚拟内存作为内存管理的工具-1&#34;&gt;虚拟内存作为内存管理的工具&lt;/h2&gt;
+&lt;p&gt;提供独立的地址空间使得区分不同进程的私有内存变得容易。但时地址翻译机制可以以一种自然的方式扩展到提供更好的访问控制。因为每个CPU生成一个地址时，地址翻译硬件都会读一个PTE，通过在PTE上添加一些&lt;strong&gt;额外的许可位&lt;/strong&gt;开控制对一个虚拟页面内容的访问十分简单。&lt;/p&gt;
+&lt;p&gt;例如：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201041455041.png&#34; alt=&#34;虚拟内存提供的页面级内存保护&#34;&gt;&lt;/p&gt;
+&lt;p&gt;每个PTE添加了三个许可位：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SUP位：进程是否必须运行在内核（超级用户）模式下才能访问该页&lt;/li&gt;
+&lt;li&gt;READ位和WRITE位控制对页面的读和写访问&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果一条指令违反了这些许可条件，那么CPU就触发一个一般保护故障，将控制传递给一个内核中的异常处理程序。&lt;/p&gt;
+&lt;h2 id=&#34;地址翻译&#34;&gt;地址翻译&lt;/h2&gt;
+&lt;p&gt;页面命中时CPU&lt;strong&gt;硬件&lt;/strong&gt;执行的步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;处理器生成一个虚拟地址，将其传送给MMU&lt;/li&gt;
+&lt;li&gt;MMU生成PTE（Page Table Entry）地址，并从高速缓存/主存请求得到它&lt;/li&gt;
+&lt;li&gt;高速缓存/主存向MMU返回PTE&lt;/li&gt;
+&lt;li&gt;MMU构造物理地址，并把它传送给高速缓存/主存&lt;/li&gt;
+&lt;li&gt;高速缓存/主存返回所请求的数据字给处理器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;页面命中完全由硬件来处理，与之不同的是，处理缺页要求&lt;strong&gt;硬件和操作系统内核&lt;/strong&gt;协作完成。步骤如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第1-3步：与页面命中时的前三步相同&lt;/li&gt;
+&lt;li&gt;PTE中的有效位为0，所以MMU触发了一次异常，传递CPU中的控制到&lt;strong&gt;操作系统内核中的缺页异常处理程序&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;缺页处理程序确定出物理内存中的牺牲页，如果该页面已经被修改，则把它换出到磁盘。&lt;/li&gt;
+&lt;li&gt;缺页处理程序页面调入新的页面，并更新内存中的PTE。&lt;/li&gt;
+&lt;li&gt;缺页处理程序返回到原来的进程，再次执行导致缺页的指令。CPU将引起缺页的虚拟地址重新发送给MMU。虚拟页面现在缓存在物理内存中，所以就会命中。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;结合高速缓存和虚拟内存&#34;&gt;结合高速缓存和虚拟内存&lt;/h3&gt;
+&lt;p&gt;在任何既使用高速缓存SRAM又使用虚拟内存的系统中，一般使用物理内存来访问高速缓存。&lt;/p&gt;
+&lt;p&gt;使用物理内存，多个进程同时在高速缓存中由存储块和共享来自相同虚拟页面的块非常简单。并且高速缓存无需处理保护问题，因为访问权限的检查是地址翻译过程的一部分。&lt;/p&gt;
+&lt;h3 id=&#34;利用tlb加速地址翻译&#34;&gt;利用TLB加速地址翻译&lt;/h3&gt;
+&lt;h3 id=&#34;多级页表&#34;&gt;多级页表&lt;/h3&gt;
+&lt;p&gt;用来压缩页表的常用方法是使用层次结构的页表。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201032140608.png&#34; alt=&#34;两级页表结构&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;案例研究linux虚拟内存系统&#34;&gt;案例研究：Linux虚拟内存系统&lt;/h2&gt;
+&lt;p&gt;Linux为&lt;strong&gt;每个进程&lt;/strong&gt;维护了一个单独的虚拟地址空间。内核虚拟内存位于&lt;strong&gt;用户栈之上&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;下图中为一个Linux进程的虚拟内存。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011847831.png&#34; alt=&#34;一个Linux进程的虚拟内存&#34;&gt;&lt;/p&gt;
+&lt;p&gt;内核虚拟内存包含内核中的代码和数据结构。内核虚拟内存的某些区域被映射到所有进程共享的物理页面。例如，每个进程共享内核的代码和全局数据结构。内核虚拟内存的其他区域包含每个进程都不相同的数据，比如，页表、内核在进程的上下文执行代码时使用的栈，以及记录虚拟地址空间当前组织的各种数据结构。&lt;/p&gt;
+&lt;h3 id=&#34;linux虚拟内存区域&#34;&gt;Linux虚拟内存区域&lt;/h3&gt;
+&lt;p&gt;Linux将虚拟内存组织成一些区域（又称段）的集合。一个区域就是已存在的虚拟内存的连续片。代码段、数据段、堆、共享库以及用户栈都是不同的区域。每个虚拟页面都保存在某个区域中，而不属于某个区域的虚拟页是不存在的，并且不能被进程引用。区域很重要，因为其允许虚拟地址空间有间隙。&lt;/p&gt;
+&lt;p&gt;下图强调了记录&lt;strong&gt;一个进程中虚拟内存区域的内核数据结构&lt;/strong&gt;。内核为系统中的每个进程维护一个单独的&lt;strong&gt;任务结构&lt;code&gt;task_struct&lt;/code&gt;&lt;/strong&gt;。任务结构中的元素包含或指向内核&lt;strong&gt;运行该进程所需要的所有信息&lt;/strong&gt;（如PID、指向用户栈的指针、可执行目标文件的名字以及程序计数器）。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011858154.png&#34; alt=&#34;Linux一个进程中虚拟内存区域的内核数据结构&#34;&gt;&lt;/p&gt;
+&lt;p&gt;任务结构中的一个条目指向&lt;code&gt;mm_struct&lt;/code&gt;，它描述了虚拟内存的当前状态。我们想了解的是pgd和mmap两个字段。pgd指向第一级页表的基址，mmap指向一个&lt;code&gt;vm_area_struct&lt;/code&gt;的链表，其中每个&lt;code&gt;vm_area_structs&lt;/code&gt;都描述了当前虚拟地址空间的一个区域。当内核运行这个进程时，就把pgd存放在CR3控制寄存器中。&lt;/p&gt;
+&lt;p&gt;一个&lt;strong&gt;具体区域&lt;/strong&gt;的区域结构包含以下字段：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;vm_start&lt;/code&gt;：指向该区域的起始&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vm_end&lt;/code&gt;：指向该区域的结尾&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vm_port&lt;/code&gt;：描述这个区域内包含的所有页的读写许可权限&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vm_flags&lt;/code&gt;：描述这个区域内的页面是与其他进程共享的还是这个进程私有的&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vm_next&lt;/code&gt;：指向链表中下一个区域的结构&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;linux缺页异常处理&#34;&gt;Linux缺页异常处理&lt;/h3&gt;
+&lt;p&gt;假设MMU在试图翻译某个虚拟地址A时，触发了一个缺页。这个异常导致控制转移到内核的缺页处理程序，处理程序执行以下步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;判断&lt;strong&gt;虚拟地址A&lt;/strong&gt;是否合法？即A是否在某个区域结构定义的区域内。为了找到答案，缺页处理程序搜索区域结构的链表，把A和每个区域结构中的&lt;code&gt;vm_start&lt;/code&gt;和&lt;code&gt;vm_end&lt;/code&gt;作比较。如果该指令不合法，则触发一个段错误，从而终止该进程。由于一个进程可以创建任意数量的新虚拟内存，因此顺序搜索链表的开销可能很大，Linux在链表中构建一棵树，并在这棵树上查找。&lt;/li&gt;
+&lt;li&gt;试图进行的&lt;strong&gt;内存访问&lt;/strong&gt;是否合法？即进程是否有读、写或执行这个区域内页面的权限。如果试图进行的访问是不合法的，缺页处理程序就会触发一个保护异常，从而终止这个进程。&lt;/li&gt;
+&lt;li&gt;此时内核知道这个缺页是由于&lt;strong&gt;对合法的虚拟内存进行合法的操作&lt;/strong&gt;造成的。这样进行处理：选择一个&lt;strong&gt;牺牲页面&lt;/strong&gt;，如果该页面被修改过，则将其交换出去，换入新的页面并更新页表。当缺页处理程序返回时，CPU重新启动引起缺页的指令，这条指令再次发送A到MMU。此时MMU就能正常翻译A，不会再产生缺页中断。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011920465.png&#34; alt=&#34;Linux缺页处理&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;内存映射&#34;&gt;内存映射&lt;/h2&gt;
+&lt;p&gt;内存映射：Linux通过一个&lt;strong&gt;虚拟内存区域&lt;/strong&gt;与一个&lt;strong&gt;磁盘上的对象&lt;/strong&gt;关联起来，以初始化这个虚拟内存区域的内容。虚拟内存区域可以映射到两种类型的对象中的一种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux文件系统中的普通文件&lt;/li&gt;
+&lt;li&gt;匿名文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一旦一个虚拟页面被初始化了，它就在一个由内核维护的专门的&lt;strong&gt;交换文件swap file&lt;/strong&gt;之间换来换去。交换文件也叫做交换空间或交换区域。&lt;/p&gt;
+&lt;h3 id=&#34;共享对象&#34;&gt;共享对象&lt;/h3&gt;
+&lt;p&gt;许多程序要访问只读运行时库代码的相同副本，例如每个C程序都需要来自标准C库的诸如printf这样的函数。如果每个进程都在物理内存中保存这些常用代码的副本，就是极端的浪费。&lt;/p&gt;
+&lt;p&gt;内存映射为我们提供了一种清晰的机制，用来控制多个进程如何共享对象。&lt;/p&gt;
+&lt;p&gt;一个对象可以被映射到虚拟内存的一个区域，要么作为&lt;strong&gt;共享对象&lt;/strong&gt;，要么作为&lt;strong&gt;私有对象&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;若一个进程将一个共享对象映射到它的虚拟地址空间的一个区域内，那么该进程对这个地址区域的任何写操作，对于那些同样将该共享对象映射到自己的虚拟内存的进程也是可见的。这些变化会反映在磁盘的原始对象上。另一方面，对于一个映射到私有对象的区域做的改变，对于其他进程来说是不可见的，并且进程对这个区域的任何写操作都不会反映在磁盘的对象中。&lt;/p&gt;
+&lt;p&gt;私有对象使用一种称为&lt;strong&gt;写时复制&lt;/strong&gt;的技术被映射到虚拟内存中。私有对象开始生命周期的方式基本与共享对象相同，在物理内存中只保存&lt;strong&gt;私有对象的一份副本&lt;/strong&gt;。两个进程将一个私有对象映射到它们的虚拟内存的不同区域，但共享这个对象的同一物理副本。对于每个映射私有对象的进程，响应私有区域的页表条目都被标记为只读，并且区域结构被标记为私有的写时复制。只要没有进程试图写它自己的私有区域，它们就可以继续共享物理内存中对象的一个单独副本。只要有一个进程试图写私有区域内的某个页面，这个&lt;strong&gt;写操作&lt;/strong&gt;就会触发一个&lt;strong&gt;保护故障&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;故障处理程序注意到保护异常是由于进程试图&lt;strong&gt;写私有的写时复制区域中的一个页面&lt;/strong&gt;而引起的，它就会在物理内存中创建这个页面的一个&lt;strong&gt;新副本&lt;/strong&gt;，更新页表条目指向这个新副本，然后恢复这个页面的可写权限。由此写操作就可以正常执行了。&lt;/p&gt;
+&lt;p&gt;通过这种延迟私有对象中的副本直到最后可能的时刻，写时复制最充分地使用了稀有的物理内存。&lt;/p&gt;
+&lt;h3 id=&#34;fork函数&#34;&gt;fork函数&lt;/h3&gt;
+&lt;p&gt;fork函数创建一个带有自己独立虚拟地址空间的新进程。&lt;/p&gt;
+&lt;p&gt;当fork函数被当前进程调用时，内核为新进程创建各种数据结构，并分配给它一个唯一的PID。为了给这个新进程创建虚拟内存，它创建了当前进程的&lt;code&gt;mm_struct&lt;/code&gt;、区域结构和页表的原样&lt;strong&gt;副本&lt;/strong&gt;。它将两个进程中的每个页面都标记为只读，并将两个进程中的每个区域结构都标记为私有的&lt;strong&gt;写时复制&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;当fork函数在新进程中返回时，新进程现在的虚拟内存刚好和调用fork时存在的虚拟内存相同。当这两个进程中的一个后来进行写操作时，写时复制就会创建新页面，因此为每个进程保持了私有地址空间的概念。&lt;/p&gt;
+&lt;h3 id=&#34;execve函数&#34;&gt;execve函数&lt;/h3&gt;
+&lt;p&gt;虚拟内存和内存映射在将程序加载到内存的过程中也扮演着关键的角色。&lt;/p&gt;
+&lt;p&gt;假设在当前进程中的程序执行了如下的execve调用：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;execve(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;a.out&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt;, &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt;);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;execve函数在当前进程中加载并运行包含在可执行目标文件a.out中的程序，用a.out程序有效地替代了当前程序。加载该程序需要以下几个步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;删除已存在的用户区域。&lt;/li&gt;
+&lt;li&gt;映射私有区域。为新程序的代码、数据、bss和栈区域创建新的区域结构，所有这些新区域都是私有的、写时复制的。代码和数据区域被映射为a.out文件中的.text和.data区。.bss区域是请求二进制零的，映射到匿名文件，其大小包含在a.out中。栈和堆区域也是请求二进制零的，初始长度为零。&lt;/li&gt;
+&lt;li&gt;映射共享区域。如果a.out程序与共享对象或目标链接（比如标准C库libc.so），那么这些对象都是动态链接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。&lt;/li&gt;
+&lt;li&gt;设置程序计数器PC。设置当前进程上下文中的程序计数器，使之指向代码区域的入口点。下一次调度这个进程时，它将从这个入口点开始执行。Linux将根据需要换入代码和数据页面。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下图显示了加载器如何映射用户地址空间区域。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201022200703.png&#34; alt=&#34;加载器映射用户地址空间区域&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;使用mmap函数的用户级内存映射&#34;&gt;使用mmap函数的用户级内存映射&lt;/h3&gt;
+&lt;p&gt;Linux进程可以使用mmap函数来创建新的虚拟内存区域，并将对象映射到这些区域中。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;sys/mman.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mmap&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;start, size_t length, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; prot, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; flags, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; fd, off_t offset);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;mmap函数要求内核创建一个新的虚拟内存区域，最好从地址start开始的一个区域，并将文件描述符fd指定的对象的一个连续的片映射到这个新的区域。连续对象片大小为length字节，从距文件开始处偏移量为offset字节的地方开始。start地址仅仅是一个暗示，通常被定义为NULL。&lt;/p&gt;
+&lt;p&gt;参数prot包含描述新映射的虚拟内存区域的访问权限位：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PROT_EXEC&lt;/li&gt;
+&lt;li&gt;PROT_READ&lt;/li&gt;
+&lt;li&gt;PROT_WRITE&lt;/li&gt;
+&lt;li&gt;PROT_NONE&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参数flag由描述被映射对象类型的位组成。&lt;/p&gt;
+&lt;p&gt;munmap函数删除虚拟内存的区域：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;sys/mman.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;munmap&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;start, size_t length);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;删除从虚拟地址start开始的，由接下来length字节组成的区域。&lt;/p&gt;
+&lt;h2 id=&#34;动态内存分配&#34;&gt;动态内存分配&lt;/h2&gt;
+&lt;p&gt;动态内存分配器维护着一个进程的虚拟内存区域，称为堆。对于每个进程，内核维护着一个变量brk，指向堆的顶部。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201121330003.png&#34; alt=&#34;虚拟内存的堆区域&#34;&gt;&lt;/p&gt;
+&lt;p&gt;分配器将堆视为一组不同大小的块的集合，每个块就是一个连续的虚拟内存片，要么是已分配的，要么是空闲的。&lt;/p&gt;
+&lt;p&gt;分配器有两种基本风格：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;显式&lt;/strong&gt;分配器：要求应用显式地释放任何已有的块。C标准库提供称为malloc程序包的显式分配器，C程序通过调用malloc分配内存，通过调用free释放一个块。C++通过new和delete分配和释放。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;隐式&lt;/strong&gt;分配器：又称为垃圾收集器。自动释放未使用的已分配的块的过程称为垃圾收集。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;接下来主要讨论显式分配器的设计与实现。&lt;/p&gt;
+&lt;h3 id=&#34;malloc和free函数&#34;&gt;malloc和free函数&lt;/h3&gt;
+&lt;p&gt;C标准库提供成为malloc的显示分配器，程序通过调用malloc函数来从堆中分配块。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;malloc&lt;/span&gt;(size_t size);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;malloc函数返回一个指针，指向大小至少为size字节的额内存块。&lt;/p&gt;
+&lt;p&gt;如果malloc遇到问题（例如程序要求的内存块比可用的虚拟内存还要大），那么它就返回NULL，并设置errno。&lt;/p&gt;
+&lt;p&gt;动态分配器还可以使用sbrk函数：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sbrk&lt;/span&gt;(intptr_t incr);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;sbrk函数通过将内核的brk指针增加incr来扩展和收缩堆。如果成功则返回brk的旧值，否则返回-1，并将errno设置为ENOMEM。如果incr为零，那么sbrk就返回brk的当前值。&lt;/p&gt;
+&lt;p&gt;程序通过调用free函数来释放已分配的堆块。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;free&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; ptr);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;使用动态内存分配的原因&#34;&gt;使用动态内存分配的原因&lt;/h3&gt;
+&lt;p&gt;经常直到程序实际运行时，才知道某些数据结构的大小。&lt;/p&gt;
+&lt;h3 id=&#34;分配器的要求和目标&#34;&gt;分配器的要求和目标&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;处理任意请求序列&lt;/li&gt;
+&lt;li&gt;立即响应请求&lt;/li&gt;
+&lt;li&gt;只使用堆&lt;/li&gt;
+&lt;li&gt;对齐块&lt;/li&gt;
+&lt;li&gt;不修改已分配的块&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;碎片&#34;&gt;碎片&lt;/h3&gt;
+&lt;p&gt;造成堆利用率很低的主要原因是一种称为碎片的现象，当虽然有未使用的内存但不能用来满足分配请求时，就会发发生这种现象。由以下两种碎片：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;内部碎片：已分配块的大小和它们的有效荷载大小之差的和。内部碎片的数量取决于以前请求的模式和分配器的实现方式。比如分配器可能增加块大小以满足对齐约束条件。&lt;/li&gt;
+&lt;li&gt;外部碎片：当空闲内存合计起来足够满足一个分配请求，但没有一个单独的空闲块足够大可以来处理这个请求。如果不向内核请求额外的虚拟内存就无法满足这个请求。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;外部碎片难以量化且不可能预测，所以分配器通常采用启发式策略来试图维持少量的大空闲块。&lt;/p&gt;
+&lt;h3 id=&#34;实现问题&#34;&gt;实现问题&lt;/h3&gt;
+&lt;p&gt;要实现一个在吞吐率和利用率之间把握好平衡的分配器，要考虑以下问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;空闲块组织&lt;/li&gt;
+&lt;li&gt;放置&lt;/li&gt;
+&lt;li&gt;分割&lt;/li&gt;
+&lt;li&gt;合并&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;隐式空闲链表&#34;&gt;隐式空闲链表&lt;/h3&gt;
+&lt;p&gt;分配器需要一些数据结构，允许它来区分块边界，以及区别已分配和空闲块。大多数分配器将这些信息&lt;strong&gt;嵌入块本身&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;一个块由一个字（4B）的头部、有效荷载以及可能的一些额外的填充组成。头部编码了这个块的大小以及这个块是已分配的还是空闲的。&lt;/p&gt;
+&lt;h3 id=&#34;放置已分配的块&#34;&gt;放置已分配的块&lt;/h3&gt;
+&lt;p&gt;应用请求一个k字节的块时，分配器搜索空闲链表，查找一个足够大可以放置所请求快的空闲块。这种搜索方式是由放置策略确定的。常见的策略有首次适配、下一次适配和最佳适配。&lt;/p&gt;
+&lt;h3 id=&#34;分隔空闲块&#34;&gt;分隔空闲块&lt;/h3&gt;
+&lt;p&gt;分配器找到一个匹配的块后，就必须作出一个决策，就是分配这个空闲块中多少空间。一个选择是分配整个空闲块，但这种方式可能造成内部碎片。&lt;/p&gt;
+&lt;p&gt;如果匹配不太好，分配器通常会选择将这个空闲块分割为两部分，第一部分变成分配块，剩下的变成一个新的空闲块。&lt;/p&gt;
+&lt;h3 id=&#34;获取额外的堆内存&#34;&gt;获取额外的堆内存&lt;/h3&gt;
+&lt;p&gt;如果不能请求到合适的空闲块，一个解决方法是合并那些在物理内存中相邻的空闲块来创建一个更大的块。如果还是不能生成一个足够大的块，那么分配器会调用&lt;strong&gt;sbrk函数&lt;/strong&gt;，向&lt;strong&gt;内核&lt;/strong&gt;请求额外的堆内存。&lt;/p&gt;
+&lt;h3 id=&#34;合并空闲块&#34;&gt;合并空闲块&lt;/h3&gt;
+&lt;p&gt;任何分配器都必须合并相邻的空闲块，这个过程称为合并。分配器可以选择立即合并，就是在每次一个块被释放时，就合并所有相邻块。或者也可以选择推迟合并，直到某个分配请求失败，然后扫描整个堆，合并所有的空闲块。&lt;/p&gt;
+&lt;p&gt;立即合并对于某些请求模式而言，会产生一种形式的抖动，块会反复地合并，然后马上分割。&lt;/p&gt;
+&lt;h3 id=&#34;带边界标记的合并&#34;&gt;带边界标记的合并&lt;/h3&gt;
+&lt;p&gt;边界标记技术允许在常数时间内进行对前面块的合并。这种思想是在每个块的结尾处添加一个脚部（footer，边界标记），其中脚部就是头部的一个副本。如果每个块包含一个脚部，那么分配器就可以通过检查它的脚部，判断前面一个块的起始位置和状态，这个脚部总是在距当前块开始位置一个字的距离。&lt;/p&gt;
+&lt;h3 id=&#34;显式空闲链表&#34;&gt;显式空闲链表&lt;/h3&gt;
+&lt;h3 id=&#34;分离的空闲链表&#34;&gt;分离的空闲链表&lt;/h3&gt;
+&lt;h2 id=&#34;垃圾收集&#34;&gt;垃圾收集&lt;/h2&gt;
+&lt;p&gt;未能释放已分配的块是一种常见的编程错误。&lt;/p&gt;
+&lt;p&gt;垃圾收集器是一种动态内存分配器，它自动释放不再需要的已分配块。这些块被称为垃圾。在一个支持垃圾收集的系统中，应用显式地分配块，但从不显式地释放它们。&lt;/p&gt;
+&lt;p&gt;这里讨论McCarthy独创的标记、清除算法，这个算法可以建立在已存在的malloc包的基础之上，为C/C++提供垃圾收集。&lt;/p&gt;
+&lt;h2 id=&#34;c语言常见的与内存有关的错误&#34;&gt;C语言常见的与内存有关的错误&lt;/h2&gt;
+&lt;h3 id=&#34;间接引用坏指针&#34;&gt;间接引用坏指针&lt;/h3&gt;
+&lt;p&gt;常见的是经典的scanf错误。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;scanf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;val);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用scanf从stdin读取一个整数到一个变量。很容易错误地传递val的内容而不是它的地址：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;scanf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, val);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;scanf将把val的内容解释为一个地址，并试图将一个字写到这个位置。在最糟糕的情况下，val的内容对应于虚拟内存的合法读/写区域，于是我们就覆盖了这块内存，这在相当长一段时间后会造成灾难性后果。&lt;/p&gt;
+&lt;h3 id=&#34;读未初始化的内存&#34;&gt;读未初始化的内存&lt;/h3&gt;
+&lt;p&gt;虽然bss内存位置总是被加载器初始化为零，但对于堆内存并不是这样。一个常见的错误就是假设堆内存被初始化为零。我们在使用堆内存的变量是要先将其初始化。&lt;/p&gt;
+&lt;h3 id=&#34;允许栈缓冲区溢出&#34;&gt;允许栈缓冲区溢出&lt;/h3&gt;
+&lt;p&gt;如果一个程序不检查输入串的大小就写入栈中的目标缓冲区，那么这个程序就会有缓冲区溢出错误。例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;bufferflow&lt;/span&gt;() {
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; buf[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;64&lt;/span&gt;];
+	gets(buf);
+	
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数就有缓冲区溢出错误，因为gets函数复制一个任意长度的串到缓冲区。为了纠正这个错误，必须使用fgets函数，该函数限制了输入串的大小。&lt;/p&gt;
+&lt;h3 id=&#34;假设指针和它们指向的对象是相同大小的&#34;&gt;假设指针和它们指向的对象是相同大小的&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;makeArray1&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; m) {
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i;
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;A &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;)Malloc(n &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;));
+	
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
+		A[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;)Malloc(m &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;));
+	}
+	
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; A;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数的目的是创建一个由n个指针组成的数据，每个指针都指向包含m个int的数组。然后创建A时错误地将&lt;code&gt;sizeof(int *)&lt;/code&gt;写成了&lt;code&gt;sizeof(int)&lt;/code&gt;，代码实际上创建的是一个int数组。&lt;/p&gt;
+&lt;h3 id=&#34;引用指针而不是它所指向的对象&#34;&gt;引用指针，而不是它所指向的对象&lt;/h3&gt;
+&lt;p&gt;下面的函数，其目的是删除一个有&lt;code&gt;size&lt;/code&gt;项的二叉堆里的第一项，然后对剩下的*size-1项重新建堆：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;binheapDelete&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;binheap, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;size) {
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;packet &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; binheap[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;];
+	binheap[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; binheap[&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;size &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;];
+	&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;size&lt;span style=&#34;color:#333&#34;&gt;--&lt;/span&gt;;
+	heapify(binheap, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;size, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;(packet);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数错误地将&lt;code&gt;(*size)--&lt;/code&gt;写作了&lt;code&gt;*size--&lt;/code&gt;导致代码实际上减少的是指针自己的值，而不是它所指向整数的值。程序运行后很有可能发生的是，当程序在执行过程后很久才出现一个错误的结果。&lt;/p&gt;
+&lt;h3 id=&#34;误解指针的运算&#34;&gt;误解指针的运算&lt;/h3&gt;
+&lt;p&gt;指针的算数操作是以它们指向对象的大小为单位来进行的，这种大小单位不一定是字节。&lt;/p&gt;
+&lt;h3 id=&#34;引用不存在的变量&#34;&gt;引用不存在的变量&lt;/h3&gt;
+&lt;p&gt;有时候不理解栈的规则的程序员可能会引用不合法的本地变量，例如：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;stackref&lt;/span&gt;()
+{
+	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; val;
+	
+	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;val;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数返回一个指针，指向栈中的一个局部变量，然后弹出它的栈帧，尽管&amp;amp;val仍然指向一个合法地址，但它已经不再指向一个合法的变量了。当以后在程序中调用其他函数时，内存将重用它们的栈帧。再后来，如果程序分配某个值给*p，那么其可能在修改另一个函数的栈帧中的一个条目，带来潜在的灾难性后果。&lt;/p&gt;
+&lt;h3 id=&#34;引用空闲堆块中的数据&#34;&gt;引用空闲堆块中的数据&lt;/h3&gt;
+&lt;p&gt;一个相似的错误是引用已经被释放了的堆块中的数据。&lt;/p&gt;
+&lt;h3 id=&#34;引起内存泄漏&#34;&gt;引起内存泄漏&lt;/h3&gt;
+&lt;p&gt;忘记释放已经分配的块，而在堆里创建了垃圾。&lt;/p&gt;
+- https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -828,91 +1121,6 @@ $H(key)$为散列函数；i=0,1,2,&amp;hellip;,k；$m$表示散列表表长；$d
 &lt;h3 id=&#34;性能分析&#34;&gt;性能分析&lt;/h3&gt;
 &lt;p&gt;查找的时间为$O(1)$.&lt;/p&gt;
 - https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>算法——B树和B&#43;树</title>
-        <link>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/</link>
-        <pubDate>Fri, 10 Dec 2021 18:03:30 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/ -&lt;h2 id=&#34;b树&#34;&gt;B树&lt;/h2&gt;
-&lt;p&gt;平衡树算法的扩展，支持对保存在磁盘或网络上的符号表进行外部查找。&lt;/p&gt;
-&lt;h3 id=&#34;概念&#34;&gt;概念&lt;/h3&gt;
-&lt;p&gt;又称&lt;strong&gt;多路平衡查找树&lt;/strong&gt;，B树中&lt;strong&gt;所有结点的孩子个数的最大值&lt;/strong&gt;称为&lt;strong&gt;B数的阶&lt;/strong&gt;，通常用&lt;strong&gt;m&lt;/strong&gt;表示。&lt;/p&gt;
-&lt;p&gt;具有以下特性：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;树中每个结点至多有&lt;strong&gt;m棵子树&lt;/strong&gt;，即至多含有&lt;strong&gt;m-1个关键字&lt;/strong&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;若根结点不是终端结点，则至少有&lt;strong&gt;两颗&lt;/strong&gt;子树。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;所有非叶子结点的结构：（见书上所示）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;所有叶子结点都出现在同一层次上，并且不带信息。（可视为类似于折半查找判定树的查找失败结点，实际上这些结点不存在）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;B树是所有结点的&lt;strong&gt;平衡因子均等于0&lt;/strong&gt;的&lt;strong&gt;多路平衡查找树&lt;/strong&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;b树的高度磁盘存取次数&#34;&gt;B树的高度（磁盘存取次数）&lt;/h3&gt;
-&lt;p&gt;一般只讲B树的前两层放入内存中，剩余层级全部放在磁盘中，因此B树的高度就约为每次进行查找的磁盘存取次数。&lt;/p&gt;
-&lt;p&gt;首先明确B树的高度不包含最后的不带任何信息的叶结点所处的那一层。&lt;/p&gt;
-&lt;p&gt;假设$n\ge 1$，则对于任意一棵包含n个关键字，高度为h、阶数为m的B树：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;根据树中关键字个数计算高度满足的范围&lt;/li&gt;
-&lt;li&gt;若让每个结点中的关键字个数达到最少，则容纳同样多关键字的B树高度达到最大。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;b树的查找&#34;&gt;B树的查找&lt;/h3&gt;
-&lt;p&gt;每个结点具有多路分支。&lt;/p&gt;
-&lt;p&gt;与二叉树的查找很相似，只是每个结点都是多个关键字的有序表，要在每个结点上根据该结点的子树做多路分支决定。&lt;/p&gt;
-&lt;p&gt;包含两个基本操作：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;在B树中找结点&lt;/li&gt;
-&lt;li&gt;在结点内找关键字&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;B树常&lt;strong&gt;存储在磁盘中&lt;/strong&gt;，因此前一个查找操作是在&lt;strong&gt;磁盘&lt;/strong&gt;上进行的，后一个查找操作是在&lt;strong&gt;内存&lt;/strong&gt;中进行的，即在找到目标结点后，将其读入内存，然后在结点内采用&lt;strong&gt;顺序或折半&lt;/strong&gt;查找方法查找。&lt;/p&gt;
-&lt;h3 id=&#34;b树的插入&#34;&gt;B树的插入&lt;/h3&gt;
-&lt;p&gt;将关键字插入B树的过程如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;定位&lt;/strong&gt;：利用前述的B树查找算法，找出插入该关键字的最低层中的某个非叶结点。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;插入&lt;/strong&gt;：每个非失败结点的关键字个数都在区间$[\lceil m/2\rceil-1,m-1]$内，插入后的结点关键字个数小于m，则可以直接插入；插入后的结点关键字大于m-1时，必须对结点进行&lt;strong&gt;分裂&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;分裂的方法：取一个新结点，在插入key后的原结点，从中间位置（$\lceil m/2\rceil$）将其中的关键字分为两部分，左半部分包含的关键字放入&lt;strong&gt;原结点&lt;/strong&gt;中，右半部分包含的关键字放入&lt;strong&gt;新结点&lt;/strong&gt;中，中间位置（$\lceil m/2\rceil$）的结点插入&lt;strong&gt;原结点的父结点&lt;/strong&gt;中；如果父结点关键字个数也超过了上限，则继续&lt;strong&gt;进行这种分裂操作&lt;/strong&gt;，知道这个过程传到根结点为止，进而使得&lt;strong&gt;B树的高度增1&lt;/strong&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;b树的删除&#34;&gt;B树的删除&lt;/h3&gt;
-&lt;p&gt;与插入的操作类似，即要使得删除后结点中关键字的个数$\ge \lceil m/2\rceil-1$，将会涉及&lt;strong&gt;结点的合并&lt;/strong&gt;问题。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;当被删除关键字k&lt;strong&gt;不在终端结点&lt;/strong&gt;：可以用k的前驱和后继替代k，然后在相应结点中删除该前驱或后继。该前驱或后继必定落在某个终端结点中，则转换成了被删关键字在终端结点中的情形。&lt;/li&gt;
-&lt;li&gt;当被删除结点&lt;strong&gt;在终端结点&lt;/strong&gt;中时，有以下三种情况：
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;直接删除关键字&lt;/strong&gt;。即被删除关键字所在结点的关键字个数$\ge \lceil m/2\rceil$，表明删除后仍满足B树定义。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;兄弟够接&lt;/strong&gt;。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$\ge \lceil m/2\rceil$，需要通过父子换位法进行调整，达到新的平衡。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;兄弟不够借&lt;/strong&gt;。被删除前所在结点关键字个数$= \lceil m/2\rceil-1$，且与此结点相邻的兄弟结点的关键字个数$= \lceil m/2\rceil -1$，则要将关键字删除后与左右兄弟结点及双亲结点中的关键字进行合并。合并过程中双亲结点中关键字会-1，若其双亲结点是根结点且关键字个数减少为0，则直接将根结点删除，合并后的新结点成为根结点。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;详细例子见书上。&lt;/p&gt;
-&lt;h3 id=&#34;性能&#34;&gt;性能&lt;/h3&gt;
-&lt;p&gt;在实际应用中对于适当的阶数M，查找的成本是常数级别的。&lt;/p&gt;
-&lt;h2 id=&#34;b树-1&#34;&gt;B+树&lt;/h2&gt;
-&lt;p&gt;是B树的一种变形。一个&lt;strong&gt;m阶B+树&lt;/strong&gt;要满足以下条件：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;每个分支结点&lt;strong&gt;最多有m棵子树&lt;/strong&gt;（孩子结点）&lt;/li&gt;
-&lt;li&gt;非叶根节点至少有两棵子树，其他每个分支结点至少有$ \lceil m/2\rceil$棵子树。&lt;/li&gt;
-&lt;li&gt;结点的&lt;strong&gt;子树个数与关键字个数相等&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;所有&lt;strong&gt;叶结点&lt;/strong&gt;包含&lt;strong&gt;全部关键字&lt;/strong&gt;及&lt;strong&gt;指向相应记录的指针&lt;/strong&gt;，叶结点中将关键字按大小顺序排序，并且相邻叶结点按大小顺序相互链接起来。&lt;/li&gt;
-&lt;li&gt;所有分支结点只包含它的&lt;strong&gt;子结点中关键字的最大值&lt;/strong&gt;以及&lt;strong&gt;指向其子结点的指针&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/B%2B%E6%A0%91.jpg&#34; alt=&#34;B+树&#34;&gt;&lt;/p&gt;
-&lt;p&gt;通常B+树有两个头指针：一个&lt;strong&gt;指向根结点&lt;/strong&gt;，另一个&lt;strong&gt;指向关键字最小的叶结点&lt;/strong&gt;。因此对B+树进行两种查找运算：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;从最小关键字开始的&lt;strong&gt;顺序查找&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;从根结点开始的&lt;strong&gt;多路查找&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-- https://eternityqjl.top/posts/%E7%AE%97%E6%B3%95b%E6%A0%91%E5%92%8Cb&#43;%E6%A0%91/ - 2019-2021 By Jialong</description>
         </item>
     
     

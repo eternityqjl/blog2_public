@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FreeRTOS on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.top/tags/freertos/</link>
+    <description>Recent content in FreeRTOS on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Mon, 11 Jul 2022 21:39:22 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/freertos/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FreeRTOS操作系统总结</title>
+      <link>https://eternityqjl.top/posts/freertos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 11 Jul 2022 21:39:22 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/freertos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/</guid>
+      <description>本文来总结一些FreeRTOS的基本概念和API的使用，部分内容参考自：
+AN0025 应用笔记FreeRTOS on AT32 MCU - 雅特力
+FreeRTOS中断优先级管理 AT32/STM32中断配置 一般配置NVIC_PriorityGroup_4，只使用中断优先级寄存器的高四位，一共可以表示2^4=16级中断优先级，NVIC_PriorityGroup_4只有16级抢占优先级，没有子优先级。
+FreeRTOS中断配置 一般配置用户可以在抢占优先级为3-15的中断里面调用FreeRTOS的API函数。
+中断优先级和任务优先级 二者没有关系，中断的优先级永远高于任何任务的优先级。
+临界段保护 临界段代码也成为临界区，指哪些必须完整运行不能被打断的代码。例如一些外设的初始化，需要遵循严格的时序要求。FreeRTOS采用的是在进入临界区代码后关闭中断，退出临界区的时候打开中断。FreeRTOS系统很多程序段都加了临界区保护，在写应用程序的时候也有很多地方需要用到临界区保护。
+与临界段代码保护有关的函数有以下4个：
+ taskENTER_CRITICAL()  进入临界区，关中断
+ taskEXIT_CRITICAL()  退出临界区，开中断
+taskENTER_CRITICAL_FROM_ISR()
+进入临界区，关中断（ISR中使用）
+任务管理 裸机与带RTOS的区别  裸机系统  一个大循环顺序执行，每一部分的操作都不是实时性的。为了解决这个问题，引入了中断，紧急事件可以放到中断中执行。
+ RTOS运行流程  调度器使用调度算法来决定当前要执行的任务，从而实现多任务系统。这里所说的多任务系统同一时刻只能有一个任务可以运行，只能通过调度器决策，看起来像所有任务同时运行一样。
+FreeRTOS任务状态  运行态 - Running 就绪态 - Ready 阻塞态 - Blocked 挂起态 - Suspended  阻塞态和挂起态的区别：
+ 阻塞指的是进程由于发生某事件（例如I/O请求、申请缓冲区失败）暂时无法继续执行，引起进程调度，把CPU让给其他就绪进程。挂起是由于系统和用户的需要引入的操作，进程被挂起意味着该进程处于静止状态，如果进程正在执行，它将暂停执行，若原本处于就绪状态，则该进程此时暂不接受调度。 二者的共同点是进程都暂停执行，并且都释放了CPU，即两个过程都涉及上下文切换 不同点是：  对系统资源占用不同 发生时机和恢复时机不同    FreeRTOS空闲任务 空闲任务是系统任务，是必须要执行的，一个RTOS每时每刻都要有一个任务执行，这个空闲任务还可以做一些其他工作，例如进入低功耗等。
+任务调度 FreeRTOS共有三种任务调度方式：合作式、抢占式、时间片式。
+合作式调度 主要用于资源很紧张的设备，现在已经很少使用。不作详细介绍。</description>
+    </item>
+    
+  </channel>
+</rss>

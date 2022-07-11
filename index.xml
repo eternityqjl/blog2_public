@@ -6,9 +6,311 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Tue, 05 Jul 2022 00:25:07 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 11 Jul 2022 21:39:22 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>FreeRTOS操作系统总结</title>
+        <link>https://eternityqjl.top/posts/freertos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/</link>
+        <pubDate>Mon, 11 Jul 2022 21:39:22 +0800</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/freertos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/freertos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/ -&lt;p&gt;本文来总结一些FreeRTOS的基本概念和API的使用，部分内容参考自：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.arterytek.com/download/AN0025_FreeRTOS_on_AT32_MCU_ZH_V1.0.0.pdf&#34;&gt;AN0025 应用笔记FreeRTOS on AT32 MCU - 雅特力&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;freertos中断优先级管理&#34;&gt;FreeRTOS中断优先级管理&lt;/h2&gt;
+&lt;h3 id=&#34;at32stm32中断配置&#34;&gt;AT32/STM32中断配置&lt;/h3&gt;
+&lt;p&gt;一般配置NVIC_PriorityGroup_4，只使用中断优先级寄存器的高四位，一共可以表示2^4=16级中断优先级，NVIC_PriorityGroup_4只有16级抢占优先级，没有子优先级。&lt;/p&gt;
+&lt;h3 id=&#34;freertos中断配置&#34;&gt;FreeRTOS中断配置&lt;/h3&gt;
+&lt;p&gt;一般配置用户可以在抢占优先级为3-15的中断里面调用FreeRTOS的API函数。&lt;/p&gt;
+&lt;h3 id=&#34;中断优先级和任务优先级&#34;&gt;中断优先级和任务优先级&lt;/h3&gt;
+&lt;p&gt;二者没有关系，中断的优先级永远高于任何任务的优先级。&lt;/p&gt;
+&lt;h3 id=&#34;临界段保护&#34;&gt;临界段保护&lt;/h3&gt;
+&lt;p&gt;临界段代码也成为临界区，指哪些必须完整运行不能被打断的代码。例如一些外设的初始化，需要遵循严格的时序要求。FreeRTOS采用的是在进入临界区代码后关闭中断，退出临界区的时候打开中断。FreeRTOS系统很多程序段都加了临界区保护，在写应用程序的时候也有很多地方需要用到临界区保护。&lt;/p&gt;
+&lt;p&gt;与临界段代码保护有关的函数有以下4个：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;taskENTER_CRITICAL()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;进入临界区，关中断&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;taskEXIT_CRITICAL()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;退出临界区，开中断&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;taskENTER_CRITICAL_FROM_ISR()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;进入临界区，关中断（ISR中使用）&lt;/p&gt;
+&lt;h2 id=&#34;任务管理&#34;&gt;任务管理&lt;/h2&gt;
+&lt;h3 id=&#34;裸机与带rtos的区别&#34;&gt;裸机与带RTOS的区别&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;裸机系统&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个大循环顺序执行，每一部分的操作都不是实时性的。为了解决这个问题，引入了中断，紧急事件可以放到中断中执行。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;RTOS运行流程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;调度器使用调度算法来决定当前要执行的任务，从而实现多任务系统。这里所说的多任务系统同一时刻只能有一个任务可以运行，只能通过调度器决策，看起来像所有任务同时运行一样。&lt;/p&gt;
+&lt;h3 id=&#34;freertos任务状态&#34;&gt;FreeRTOS任务状态&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;运行态 - Running&lt;/li&gt;
+&lt;li&gt;就绪态 - Ready&lt;/li&gt;
+&lt;li&gt;阻塞态 - Blocked&lt;/li&gt;
+&lt;li&gt;挂起态 - Suspended&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202203081633973.png&#34; alt=&#34;FreeRTOS任务状态转换关系&#34;&gt;&lt;/p&gt;
+&lt;p&gt;阻塞态和挂起态的区别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;阻塞指的是进程由于发生某事件（例如I/O请求、申请缓冲区失败）暂时无法继续执行，引起进程调度，把CPU让给其他就绪进程。挂起是由于系统和用户的需要引入的操作，进程被挂起意味着该进程处于静止状态，如果进程正在执行，它将暂停执行，若原本处于就绪状态，则该进程此时暂不接受调度。&lt;/li&gt;
+&lt;li&gt;二者的共同点是进程都暂停执行，并且都释放了CPU，即两个过程都涉及上下文切换&lt;/li&gt;
+&lt;li&gt;不同点是：
+&lt;ul&gt;
+&lt;li&gt;对系统资源占用不同&lt;/li&gt;
+&lt;li&gt;发生时机和恢复时机不同&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;freertos空闲任务&#34;&gt;FreeRTOS空闲任务&lt;/h3&gt;
+&lt;p&gt;空闲任务是系统任务，是必须要执行的，一个RTOS每时每刻都要有一个任务执行，这个空闲任务还可以做一些其他工作，例如进入低功耗等。&lt;/p&gt;
+&lt;h2 id=&#34;任务调度&#34;&gt;任务调度&lt;/h2&gt;
+&lt;p&gt;FreeRTOS共有三种任务调度方式：合作式、抢占式、时间片式。&lt;/p&gt;
+&lt;h3 id=&#34;合作式调度&#34;&gt;合作式调度&lt;/h3&gt;
+&lt;p&gt;主要用于资源很紧张的设备，现在已经很少使用。不作详细介绍。&lt;/p&gt;
+&lt;h3 id=&#34;抢占式调度&#34;&gt;抢占式调度&lt;/h3&gt;
+&lt;p&gt;调度器：使用相关的调度算法决定当前需要执行的任务。&lt;/p&gt;
+&lt;p&gt;所有调度器有一个共同的特性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;调度器可以区分就绪态任务和挂起任务&lt;/li&gt;
+&lt;li&gt;调度器可以选择就绪态中的一个任务，然后激活他。&lt;/li&gt;
+&lt;li&gt;不同调度器的最大区别就是如何分配就绪态任务的完成时间。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;抢占式调度就是调度器算法的一种。实际应用中，不同的任务需要不同的响应时间。&lt;/p&gt;
+&lt;h3 id=&#34;时间片调度&#34;&gt;时间片调度&lt;/h3&gt;
+&lt;p&gt;最常用的时间片调度算法就是Round-robin调度算法。&lt;/p&gt;
+&lt;h2 id=&#34;消息队列&#34;&gt;消息队列&lt;/h2&gt;
+&lt;h3 id=&#34;消息队列基本概念&#34;&gt;消息队列基本概念&lt;/h3&gt;
+&lt;p&gt;通过RTOS内核提供的服务，任务或中断服务子程序可以将一个消息放入到队列；同样，一个或多个任务可以通过RTOS内核服务从队列中得到消息。&lt;/p&gt;
+&lt;p&gt;在裸机编程中，相比于消息队列，使用全局数组主要有如下问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用消息队列&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注意在操作系统中实现中断服务程序与裸机是不同的，主要有以下几点要注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果FreeRTOS工程中的中断函数没有调用FreeRTOS的消息队列API函数，那么就与裸机编程是一样的。&lt;/li&gt;
+&lt;li&gt;如果调用了FreeRTOS的消息队列API函数，退出时要检测是否有高优先级任务就绪，如果有则需要在退出中断后进行任务切换。&lt;/li&gt;
+&lt;li&gt;在使用AT32芯片时将中断优先级分组设置为组4，即NVIC_PriorityGroup_4&lt;/li&gt;
+&lt;li&gt;要在FreeRTOS多任务开启前就设置好优先级分组，一旦设置好就不可修改。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;消息队列相关api&#34;&gt;消息队列相关API&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;xQueueCreate()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;创建一个消息队列，返回该队列的句柄。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xQueueSend()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;向指定消息队列发送一个消息，返回值为发送消息成功与否的标志。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xQueueSendFromISR()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在中断处理函数中，发送消息的函数，返回值为发送消息成功与否标志。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xQueueReceive()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;从指定消息队列内接受消息，返回值为接受消息成功与否标志。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xQueueReceiveFromISR()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在中断处理函数中从指定消息队列内接受消息。&lt;/p&gt;
+&lt;h2 id=&#34;信号量&#34;&gt;信号量&lt;/h2&gt;
+&lt;h3 id=&#34;freertos信号量的概念&#34;&gt;FreeRTOS信号量的概念&lt;/h3&gt;
+&lt;p&gt;给共享资源建立一个标志，该标志表示该共享资源被占用的情况。&lt;/p&gt;
+&lt;p&gt;实际中使用信号量主要来实现两个功能：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;两个任务之间或中断函数和任务之间的同步功能，就是共享资源为1的时候&lt;/li&gt;
+&lt;li&gt;多个共享资源的管理&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;二值信号量&#34;&gt;二值信号量&lt;/h3&gt;
+&lt;p&gt;常用于互斥访问或同步。&lt;/p&gt;
+&lt;p&gt;信号量API函数也允许设置一个阻塞时间，阻塞时间指的是当任务获取信号量的时候由于信号量无效而进入阻塞状态的最大时间节拍数。&lt;/p&gt;
+&lt;h4 id=&#34;二值信号量api&#34;&gt;二值信号量API&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreCreateBinary()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;创建一个二值信号量，返回值为创建的二值信号量的句柄SemaphoreHandle_t&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreCreateBinaryStatic()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;静态创建一个二值信号量&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vSemaphoreDelete()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;删除一个信号量，无返回值。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreGive()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;释放一个信号量，返回值为释放成功与否标志。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreFromISR()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;内释放一个信号量（中断级）&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreTake()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;获取一个信号量，返回值为获取成功与否标志。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreTakeFromISR()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;获取一个信号量（中断级）&lt;/p&gt;
+&lt;h4 id=&#34;二值信号量例程&#34;&gt;二值信号量例程&lt;/h4&gt;
+&lt;h3 id=&#34;计数型信号量&#34;&gt;计数型信号量&lt;/h3&gt;
+&lt;p&gt;又称为数值信号量，是可以大于1的信号量。信号量的本质就是队列，只是不用关注队列中存放了什么消息，只需关注队列是否满即可。计数型信号量的应用场景：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;事件计数：每次事件发生前就在事件处理函数中释放信号量（增加信号量的计数值），其他任务事件会获取信号值，获取一次就在任务事件处理函数中对信号量减1操作。该场合下创建的计数信号量的初始值为0。&lt;/li&gt;
+&lt;li&gt;资源管理：该场景下，信号量代表当前资源的可用数量。任务事件获取一次资源后信号量的值就减1操作，任务事件释放一次资源后信号量加1操作。该场合中信号量的初始值为资源的总数量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;计数型信号量api&#34;&gt;计数型信号量API&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreCreateCounting()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;创建一个计数型信号量，返回创建的计数型信号量的句柄。函数的两个参数为该信号量允许的最大值和信号量的初始值。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vSemaphoreDelete()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreGive()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreTake()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;uxSemaphoreGetCount()&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&#34;计数型信号量例程&#34;&gt;计数型信号量例程&lt;/h4&gt;
+&lt;p&gt;测试一下&lt;/p&gt;
+&lt;h3 id=&#34;互斥信号量&#34;&gt;互斥信号量&lt;/h3&gt;
+&lt;h4 id=&#34;优先级翻转&#34;&gt;优先级翻转&lt;/h4&gt;
+&lt;p&gt;使用二值信号量的时候很有可能碰到优先级翻转的问题，这在可剥夺型内核中很常见。但实时系统中不允许出现这样的情况，这回打乱系统的预期执行顺序，导致低优先级的任务先运行，违背了实时性的初衷。&lt;/p&gt;
+&lt;h4 id=&#34;互斥信号量介绍&#34;&gt;互斥信号量介绍&lt;/h4&gt;
+&lt;p&gt;为了资源互斥访问而设计。&lt;/p&gt;
+&lt;p&gt;互斥信号量采取了措施尽量&lt;strong&gt;回避优先级翻转&lt;/strong&gt;的问题。当一个高优先级任务想要获取互斥信号量但该信号量被某低优先级的任务所持有，此时高优先级任务会进入阻塞态，在进入阻塞态之前此高优先级的任务会将持有互斥信号量的低优先级的任务的优先级提高到和高优先级任务相同。&lt;/p&gt;
+&lt;p&gt;这样持有互斥信号量的低优先级任务就不会被其他中间等级优先级的任务所抢占CPU的使用权，尽可能地缩短了高优先级任务的响应时间。&lt;/p&gt;
+&lt;h4 id=&#34;互斥信号量api&#34;&gt;互斥信号量API&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreCreateMutex()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;创建一个互斥信号量，返回创建的互斥信号量的句柄。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vSemaphoreDelete()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreGive()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreTake()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;uxSemaphoreGetCount()&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&#34;互斥信号量例程&#34;&gt;互斥信号量例程&lt;/h4&gt;
+&lt;h3 id=&#34;递归互斥信号量&#34;&gt;递归互斥信号量&lt;/h3&gt;
+&lt;p&gt;是一个特殊的互斥信号量，已经获取了互斥信号量的任务就不能再次获取这个互斥信号量了，而递归互斥信号量则不同，在同一个任务中，此任务可以多次获得互斥递归信号量。一旦一个任务获得了递归互斥信号量，那么其他任务便不能获得此信号量，只能本身再次获取此递归互斥信号量。&lt;/p&gt;
+&lt;h4 id=&#34;互斥递归信号量api&#34;&gt;互斥递归信号量API&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreCreateRecursiveMutex()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreCreateRecursiveMutexStatic()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vSemaphoreDelete()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreGiveRecursive()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xSemaphoreTakeRecursive()&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;事件标志组&#34;&gt;事件标志组&lt;/h2&gt;
+&lt;p&gt;事件标志组与消息队列、信号量一样，都是FreeRTOS内核提供的一种内核服务，在任务绒布中应用非常广泛。&lt;/p&gt;
+&lt;h3 id=&#34;eventgroup概念&#34;&gt;EventGroup概念&lt;/h3&gt;
+&lt;p&gt;事件标志组是FreeRTOS内核提供的一种服务，是实现多任务的有效机制之一。Event Group实质上是内核管理的一个变量，任务通过设置这个变量的不同BIT位，达到同步的效果。&lt;/p&gt;
+&lt;p&gt;使用全局变量相比于事件标志组主要有以下问题：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用Event Group可以让RTOS内核有效地管理任务，而全局变量无法做到，任务的超时等机制需要用户自己实现&lt;/li&gt;
+&lt;li&gt;使用了全局变量就要防止多任务的访问冲突，而Event Group就不需要担心该问题&lt;/li&gt;
+&lt;li&gt;使用Event Group可以解决中断服务程序和任务之间的同步问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;eventgroup-api&#34;&gt;EventGroup API&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;xEventGroupCreate()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;返回创建的事件标志组的句柄&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xEventGroupSetBits()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;设置一个事件标志组对应的BIT位，返回事件标志组的值&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xEventGroupWaitBits()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;等待事件标志组的对应BIT位，返回事件标志组的值&lt;/p&gt;
+&lt;h2 id=&#34;软件定时器组&#34;&gt;软件定时器组&lt;/h2&gt;
+&lt;h3 id=&#34;freertos软件定时器概念&#34;&gt;FreeRTOS软件定时器概念&lt;/h3&gt;
+&lt;p&gt;内核提供的一种服务。FreeRTOS的软件定时器组的时基是基于&lt;strong&gt;系统时钟节拍&lt;/strong&gt;实现的，它的实现不需要使用任何硬件定时器，而且可以创建多个。&lt;/p&gt;
+&lt;p&gt;在硬件定时器中，我们是在定时器中断中实现需要的功能，而使用软件定时器时，我们是在创建软件定时器时指定软件定时器的回调函数，在回调函数中实现相应的功能。&lt;/p&gt;
+&lt;p&gt;FreeRTOS的软件定时器支持单次模式和周期性模式。&lt;/p&gt;
+&lt;p&gt;定时事件到后会调用定时器的回调函数，用户可以在回调函数中加入需要执行的工程代码。&lt;/p&gt;
+&lt;p&gt;FreeRTOS为软件定时器专门创建了一个任务，称其为软件定时器的守护进程（Daemon Task）。该任务在系统是能了软件定时器组的功能后自动创建。&lt;/p&gt;
+&lt;p&gt;用户应用程序和内核管理软件定时器程序之间通过&lt;strong&gt;消息队列&lt;/strong&gt;实现通信功能。&lt;/p&gt;
+&lt;h3 id=&#34;软件定时器组api&#34;&gt;软件定时器组API&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;xTimerCreate()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xTimerStart()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;xTimerStop()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pcTimerGetName()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pvTimerGetTimerID()&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;vTimerSetTimerID()&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;freertos低功耗模式&#34;&gt;FreeRTOS低功耗模式&lt;/h2&gt;
+&lt;p&gt;FreeRTOS提供了一种Tickless机制来管理低功耗。&lt;/p&gt;
+&lt;h3 id=&#34;tickless机制&#34;&gt;Tickless机制&lt;/h3&gt;
+&lt;p&gt;tickless可理解为无滴答时钟，即滴答时钟节拍停止运行的情况。&lt;/p&gt;
+&lt;p&gt;FreeRTOS中，当用户任务都被挂起或阻塞时，最低优先级的空闲任务会得到执行，我们就可以把睡眠模式放到空闲任务中。进入空闲模式后，首先要计算而可执行低功耗的最大时间，即求出下一个要执行的高优先级任务的剩余事件。然后把低功耗的唤醒时间设置为这个求出的时间，到时间系统会从低功耗模式被唤醒，继续执行多任务。&lt;/p&gt;
+&lt;p&gt;实现tickless模式最麻烦的是低功耗可执行时间的获取，这个问题FreeRTOS已经做好了。&lt;/p&gt;
+&lt;p&gt;用户只用在FreeRTOSConfig.h配置文件中配置宏定义configUSE_TICKLESS_IDLE为1即可。另外如果将该参数配置为2，那么用户可以自定义tickless低功耗模式的实现。当该宏定义为1且系统运行满足以下条件时，系统内核会自动调用低功耗宏定义函数portSUPPRESS_TICKS_AND_SLEEP()：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当前空闲任务正在运行，所有其他任务处于挂起或阻塞状态&lt;/li&gt;
+&lt;li&gt;根据用户配置configEXPECTED_IDLE_TIME_BEFORE_SLEEP的大小，只有当系统可运行于低功耗模式的时钟节拍数大于等于这个参数时，系统才可以进入到低功耗模式。用户可以重新定义该宏。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;freertos内存管理方式&#34;&gt;FreeRTOS内存管理方式&lt;/h2&gt;
+&lt;p&gt;FreeRTOS内核提供了5中内存管理机制，我们可以根据应用具体需求选择合适的内存管理方式，源程序路径为：FreeRTOS/portable/MemMang&lt;/p&gt;
+&lt;h3 id=&#34;方式一&#34;&gt;方式一&lt;/h3&gt;
+&lt;p&gt;只能分配内存，不能释放内存。FreeRTOS的内存管理策略还会使用字节对齐。&lt;/p&gt;
+&lt;h3 id=&#34;方式二&#34;&gt;方式二&lt;/h3&gt;
+&lt;p&gt;使用最佳匹配算法，允许释放之前已分配的内存，但不会把相邻的内存块合并为一个大的内存块。&lt;/p&gt;
+&lt;h3 id=&#34;方式三&#34;&gt;方式三&lt;/h3&gt;
+&lt;p&gt;简单地封装了标准库的malloc()和free()函数，采用的封装策略是操作内存前挂起调度器，完成后再恢复调度器，封装后的malloc()和free()函数具备线程保护机制。&lt;/p&gt;
+&lt;h3 id=&#34;方式四&#34;&gt;方式四&lt;/h3&gt;
+&lt;p&gt;与第二种策略比较类型，增加了一个合并算法，将相邻的空闲内存块合并成一个大块。&lt;/p&gt;
+&lt;h3 id=&#34;方式五&#34;&gt;方式五&lt;/h3&gt;
+&lt;p&gt;允许内存堆跨越多个连续的内存区，除此之外其他操作都和第四种内存管理方式相似。&lt;/p&gt;
+&lt;h2 id=&#34;freertos流缓存&#34;&gt;FreeRTOS流缓存&lt;/h2&gt;
+&lt;h2 id=&#34;freertos消息缓存&#34;&gt;FreeRTOS消息缓存&lt;/h2&gt;
+&lt;h2 id=&#34;freertos任务通知&#34;&gt;FreeRTOS任务通知&lt;/h2&gt;
+&lt;h2 id=&#34;freertos编码风格&#34;&gt;FreeRTOS编码风格&lt;/h2&gt;
+&lt;p&gt;FreeRTOS的核心源代码遵从MISRA编码标准指南。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;uint32_t类型的变量使用前缀ul，表示unsigned long&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;uint32_t&lt;/span&gt; ulNotifiedValue;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;uint16_t类型的变量使用前缀us，表示unsigned short&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;uint16_t&lt;/span&gt; usStackDepth;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;uint8_t类型使用前缀uc，表示unsigned char&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;uint8_t&lt;/span&gt; ucNotifyState;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;非stdint类型的变量使用前缀x，比如基本的Type_t和TickType_t类型；非stdint类型的无符号变量使用前缀ux，比如UbaseType_t&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;BaseType_t xReturn;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;size_t类型的变量使用前缀x；枚举类型变量使用前缀e&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;size_t xBlockSize;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;typedef&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;enum&lt;/span&gt; {
+	eAbortSleep &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;,
+	eStandardSleep,
+	eNoTasksWaitingTimeout
+} eSleepModeStatus;
+eSleepModeStatus eReturn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; eStandardSleep;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如上eReturn变量的定义，e开头表示这个变量的类型是enum。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指针类型的变量在类型基础上附加前缀p，比如指向uint32_t的指针变量的前缀为pul&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;uint32_t&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pulTopOfStack, ulTemp;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;char类型变量仅被允许保存ASCII字符，前缀为c；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; cStatus;
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;volatile&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int8_t&lt;/span&gt; cRxLock;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;函数命名风格&#34;&gt;函数命名风格&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;在文件作用域范围的函数前缀位prv&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;static&lt;/span&gt; &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;prvDeleteTCB&lt;/span&gt;(TCB_t &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;pxTCB)
+{
+	...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;可以理解为就是static函数。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;API函数的前缀为它们的返回类型，当返回类型为空时，前缀为v&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;vTaskDelete&lt;/span&gt;(TaskHandle_t xTaskToDelete)
+{
+	...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;API函数提供给其他模块调用，可以理解为全局函数。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;BaseType_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;xTaskResumeAll&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt;)
+{
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;xTaskResumeAll(void)&lt;/code&gt;函数，函数前面的x代表返回值的类型，这里是BaseType_t类型。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;API函数名字起始部分为该函数所在的文件名&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;QueueHandle_t &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;xQueueGenericCreate&lt;/span&gt;()
+{
+    ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;xQueueGenericCreate()&lt;/code&gt;函数定义在Queue.c中，x表示函数的返回值是QueueHandle_t类型。&lt;/p&gt;
+&lt;h3 id=&#34;宏命名风格&#34;&gt;宏命名风格&lt;/h3&gt;
+&lt;p&gt;宏的名字起始部分为该宏定义所在的文件名的一部分。比如configUSE_PREEMPTION定义在FreeRTOSConfig.h文件中。除了前缀，宏剩下的字母全部为大写，两个单词间用下划线&lt;code&gt;_&lt;/code&gt;隔开。&lt;/p&gt;
+&lt;p&gt;在FreeRTOS/Source/inclue/queue.h中：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;/* For internal use only. */&lt;/span&gt;
+ &lt;span style=&#34;color:#579&#34;&gt;#define queueSEND_TO_BACK       ( ( BaseType_t ) 0 )
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define queueSEND_TO_FRONT      ( ( BaseType_t ) 1 )
+&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#define  queueOVERWRITE         ( ( BaseType_t ) 2 )
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;- https://eternityqjl.top/posts/freertos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -1347,299 +1649,6 @@ i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; i &lt;span style=&#34;co
 &lt;h2 id=&#34;参考&#34;&gt;参考&lt;/h2&gt;
 &lt;p&gt;部分参考自&lt;a href=&#34;https://www.nowcoder.com/discuss/789739?channel=-1&amp;amp;source_id=profile_follow_post_nctrack&#34;&gt;八股文之C/C++ 高频知识点汇总&lt;/a&gt;&lt;/p&gt;
 - https://eternityqjl.top/posts/%E5%85%AB%E8%82%A1%E6%96%87cpp%E7%9B%B8%E5%85%B3/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>Csapp：9.虚拟内存</title>
-        <link>https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</link>
-        <pubDate>Tue, 04 Jan 2022 14:59:16 +0800</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/ -&lt;h2 id=&#34;物理和虚拟寻址&#34;&gt;物理和虚拟寻址&lt;/h2&gt;
-&lt;p&gt;物理地址PA、虚拟地址VA、内存管理单元MMU（利用存放在主存中的查询表来动态地翻译虚拟地址，该表的内容由操作系统管理）。&lt;/p&gt;
-&lt;h2 id=&#34;地址空间&#34;&gt;地址空间&lt;/h2&gt;
-&lt;p&gt;非负整数地址的有序集合。&lt;/p&gt;
-&lt;p&gt;目前x86使用39位物理地址空间、49位虚拟地址空间。&lt;/p&gt;
-&lt;h2 id=&#34;虚拟内存作为缓存的工具&#34;&gt;虚拟内存作为缓存的工具&lt;/h2&gt;
-&lt;p&gt;VM系统通过将虚拟内存分割为大小为$P=2^p$字节的虚拟页来处理，同样地，物理内存也被分割为大小为P的物理页（页帧）。&lt;/p&gt;
-&lt;p&gt;任意时刻，虚拟页面的集合都分为三个不相交的子集：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;未分配的&lt;/li&gt;
-&lt;li&gt;缓存的&lt;/li&gt;
-&lt;li&gt;未缓存的&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;dram缓存的组织结构&#34;&gt;DRAM缓存的组织结构&lt;/h3&gt;
-&lt;p&gt;使用术语&lt;code&gt;SRAM缓存&lt;/code&gt;来表示位于CPU和主存之间的L1、L2和L3高速缓存；用术语&lt;code&gt;DRAM缓存&lt;/code&gt;表示虚拟内存系统的缓存，它在主存中缓存虚拟页。&lt;/p&gt;
-&lt;p&gt;在存储层次结构中，DRAM缓存的位置对它的组织结构有很大的影响。DRAM比SRAM慢大约10倍，磁盘比DRAM慢大约100000倍。DRAM缓存的不命中（缺页）比SRAM缓存的不命中要昂贵的多。&lt;/p&gt;
-&lt;p&gt;与硬件对SRAM缓存相比，操作系统对DRAM缓存使用了更复杂精密的替换算法。对磁盘的访问时间很长，DRAM缓存总是使用写回，而不是直写。&lt;/p&gt;
-&lt;h3 id=&#34;页表&#34;&gt;页表&lt;/h3&gt;
-&lt;p&gt;虚拟内存系统必须有方法判断&lt;strong&gt;一个虚拟页是否缓存在DRAM中&lt;/strong&gt;的某个地方。如果是，系统还必须确定这个虚拟页存&lt;strong&gt;放在哪个物理页中&lt;/strong&gt;。如果不命中，系统必须判断这个虚拟页存放在磁盘的哪个位置，在物理内存中选择一个牺牲页，并将虚拟页从磁盘复制到DRAM中，替换这个牺牲页。&lt;/p&gt;
-&lt;p&gt;页表就是一个页表条目（PET）的数组。虚拟地址空间中的每个页在页表中一个固定偏移量处都有一个PTE。假设每个PTE由一个有效位和一个n位地址字段组成的。有效位表明该虚拟页当前是否被缓存在DRAM中。&lt;/p&gt;
-&lt;h3 id=&#34;页命中&#34;&gt;页命中&lt;/h3&gt;
-&lt;p&gt;页面缓存在DRAM缓存中。&lt;/p&gt;
-&lt;h3 id=&#34;缺页&#34;&gt;缺页&lt;/h3&gt;
-&lt;p&gt;DRAM缓存不命中称为缺页。&lt;/p&gt;
-&lt;p&gt;在磁盘和内存之间传送页的活动叫作交换或页面调度。只有当不命中发生时，才换入页面，这种策略称为&lt;strong&gt;按需页面调度&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;所有现代系统都采用按需页面调度的方式。&lt;/p&gt;
-&lt;h3 id=&#34;局部性&#34;&gt;局部性&lt;/h3&gt;
-&lt;p&gt;局部性原理保证了在任意时刻，程序将趋向于在一个较小的活动页面集合上工作，这个集合称为工作集或常驻集。&lt;/p&gt;
-&lt;p&gt;只要程序具有良好的时间局部性，虚拟内存系统就能工作得相当好。如果工作集的大小超出了物理内存的大小，程序将产生一种不幸的&lt;strong&gt;抖动&lt;/strong&gt;状态，这时页面将不断地换进换出。&lt;/p&gt;
-&lt;h2 id=&#34;虚拟内存作为内存管理的工具&#34;&gt;虚拟内存作为内存管理的工具&lt;/h2&gt;
-&lt;p&gt;虚拟内存大大简化了内存管理，并提供了一种自然的保护内存的方法。&lt;/p&gt;
-&lt;p&gt;操作系统实际上为每个进程提供了一个独立的页表，因而也就是一个独立的虚拟地址空间。&lt;/p&gt;
-&lt;p&gt;多个虚拟页面可以映射到同一个共享的物理页面上。&lt;/p&gt;
-&lt;p&gt;VM简化了链接和加载、代码和数据共享，以及应用程序的内存分配。&lt;/p&gt;
-&lt;h3 id=&#34;简化链接&#34;&gt;简化链接&lt;/h3&gt;
-&lt;p&gt;独立的地址空间允许每个进程的内存映射使用相同的基本格式，而不管代码和数据实际存放在物理内存的何处。&lt;/p&gt;
-&lt;p&gt;一个给定的Linux系统上的每个进程都使用类似的内存格式。对于64位地址空间，代码段总是从虚拟地址0x400000开始。数据段跟在代码段后，中间有一段符合要求的对齐空白。栈占用用户地址空间最高的部分，并向下生长。&lt;/p&gt;
-&lt;p&gt;这样的一致性简化了链接器的设计和实现。允许链接器生成完全链接的可执行文件，这些可执行文件是独立于物理内存中代码和数据的最终位置的。&lt;/p&gt;
-&lt;h3 id=&#34;简化加载&#34;&gt;简化加载&lt;/h3&gt;
-&lt;p&gt;虚拟内存使得很容易向内存中加载可执行文件和共享对象文件。要把目标文件中.text和.data节加载到一个新创建的进程中，Linux加载器为代码和数据段分配虚拟页，把它们标记为无效的（即未被缓存的），将页表条目指向目标文件中适当的位置。加载器从不从磁盘到内存实际复制任何数据。在每个页被初次引用时，要么是CPU取指令时引用的，要么是一条正在执行的指令引用一个内存位置时引用的，虚拟内存系统会按照需要自动地调入数据页。&lt;/p&gt;
-&lt;p&gt;将一组连续的虚拟页映射到任意一个文件中的任意位置的表示法称为内存映射。Linux提供一个称为mmap的系统调用，允许应用程序自己做内存映射。详见后面小节。&lt;/p&gt;
-&lt;h3 id=&#34;简化共享&#34;&gt;简化共享&lt;/h3&gt;
-&lt;p&gt;一般情况下，每个进程都有自己私有的代码、数据、堆以及栈区域，是不和其他进程进行共享的。但在另一些情况下，需要进程来共享数据和代码。例如，每个进程必须调用相同的操作系统内核代码，操作系统通过将不同进程中适当的虚拟页面映射到相同的物理页面，从而安排多个进程共享这部分代码的一个副本。&lt;/p&gt;
-&lt;h3 id=&#34;简化内存分配&#34;&gt;简化内存分配&lt;/h3&gt;
-&lt;p&gt;虚拟内存为用户进程提供了一个简单的分配额外内存的机制。当一个运行在用户进程的程序要求额外的堆空间时（调用malloc），操作系统分配一个适当数字大小的连续的虚拟内存页面，并将其映射到物理内存中任意位置的k个任意的物理页面。&lt;/p&gt;
-&lt;h2 id=&#34;虚拟内存作为内存管理的工具-1&#34;&gt;虚拟内存作为内存管理的工具&lt;/h2&gt;
-&lt;p&gt;提供独立的地址空间使得区分不同进程的私有内存变得容易。但时地址翻译机制可以以一种自然的方式扩展到提供更好的访问控制。因为每个CPU生成一个地址时，地址翻译硬件都会读一个PTE，通过在PTE上添加一些&lt;strong&gt;额外的许可位&lt;/strong&gt;开控制对一个虚拟页面内容的访问十分简单。&lt;/p&gt;
-&lt;p&gt;例如：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201041455041.png&#34; alt=&#34;虚拟内存提供的页面级内存保护&#34;&gt;&lt;/p&gt;
-&lt;p&gt;每个PTE添加了三个许可位：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SUP位：进程是否必须运行在内核（超级用户）模式下才能访问该页&lt;/li&gt;
-&lt;li&gt;READ位和WRITE位控制对页面的读和写访问&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;如果一条指令违反了这些许可条件，那么CPU就触发一个一般保护故障，将控制传递给一个内核中的异常处理程序。&lt;/p&gt;
-&lt;h2 id=&#34;地址翻译&#34;&gt;地址翻译&lt;/h2&gt;
-&lt;p&gt;页面命中时CPU&lt;strong&gt;硬件&lt;/strong&gt;执行的步骤：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;处理器生成一个虚拟地址，将其传送给MMU&lt;/li&gt;
-&lt;li&gt;MMU生成PTE（Page Table Entry）地址，并从高速缓存/主存请求得到它&lt;/li&gt;
-&lt;li&gt;高速缓存/主存向MMU返回PTE&lt;/li&gt;
-&lt;li&gt;MMU构造物理地址，并把它传送给高速缓存/主存&lt;/li&gt;
-&lt;li&gt;高速缓存/主存返回所请求的数据字给处理器&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;页面命中完全由硬件来处理，与之不同的是，处理缺页要求&lt;strong&gt;硬件和操作系统内核&lt;/strong&gt;协作完成。步骤如下：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第1-3步：与页面命中时的前三步相同&lt;/li&gt;
-&lt;li&gt;PTE中的有效位为0，所以MMU触发了一次异常，传递CPU中的控制到&lt;strong&gt;操作系统内核中的缺页异常处理程序&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;缺页处理程序确定出物理内存中的牺牲页，如果该页面已经被修改，则把它换出到磁盘。&lt;/li&gt;
-&lt;li&gt;缺页处理程序页面调入新的页面，并更新内存中的PTE。&lt;/li&gt;
-&lt;li&gt;缺页处理程序返回到原来的进程，再次执行导致缺页的指令。CPU将引起缺页的虚拟地址重新发送给MMU。虚拟页面现在缓存在物理内存中，所以就会命中。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;结合高速缓存和虚拟内存&#34;&gt;结合高速缓存和虚拟内存&lt;/h3&gt;
-&lt;p&gt;在任何既使用高速缓存SRAM又使用虚拟内存的系统中，一般使用物理内存来访问高速缓存。&lt;/p&gt;
-&lt;p&gt;使用物理内存，多个进程同时在高速缓存中由存储块和共享来自相同虚拟页面的块非常简单。并且高速缓存无需处理保护问题，因为访问权限的检查是地址翻译过程的一部分。&lt;/p&gt;
-&lt;h3 id=&#34;利用tlb加速地址翻译&#34;&gt;利用TLB加速地址翻译&lt;/h3&gt;
-&lt;h3 id=&#34;多级页表&#34;&gt;多级页表&lt;/h3&gt;
-&lt;p&gt;用来压缩页表的常用方法是使用层次结构的页表。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201032140608.png&#34; alt=&#34;两级页表结构&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;案例研究linux虚拟内存系统&#34;&gt;案例研究：Linux虚拟内存系统&lt;/h2&gt;
-&lt;p&gt;Linux为&lt;strong&gt;每个进程&lt;/strong&gt;维护了一个单独的虚拟地址空间。内核虚拟内存位于&lt;strong&gt;用户栈之上&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;下图中为一个Linux进程的虚拟内存。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011847831.png&#34; alt=&#34;一个Linux进程的虚拟内存&#34;&gt;&lt;/p&gt;
-&lt;p&gt;内核虚拟内存包含内核中的代码和数据结构。内核虚拟内存的某些区域被映射到所有进程共享的物理页面。例如，每个进程共享内核的代码和全局数据结构。内核虚拟内存的其他区域包含每个进程都不相同的数据，比如，页表、内核在进程的上下文执行代码时使用的栈，以及记录虚拟地址空间当前组织的各种数据结构。&lt;/p&gt;
-&lt;h3 id=&#34;linux虚拟内存区域&#34;&gt;Linux虚拟内存区域&lt;/h3&gt;
-&lt;p&gt;Linux将虚拟内存组织成一些区域（又称段）的集合。一个区域就是已存在的虚拟内存的连续片。代码段、数据段、堆、共享库以及用户栈都是不同的区域。每个虚拟页面都保存在某个区域中，而不属于某个区域的虚拟页是不存在的，并且不能被进程引用。区域很重要，因为其允许虚拟地址空间有间隙。&lt;/p&gt;
-&lt;p&gt;下图强调了记录&lt;strong&gt;一个进程中虚拟内存区域的内核数据结构&lt;/strong&gt;。内核为系统中的每个进程维护一个单独的&lt;strong&gt;任务结构&lt;code&gt;task_struct&lt;/code&gt;&lt;/strong&gt;。任务结构中的元素包含或指向内核&lt;strong&gt;运行该进程所需要的所有信息&lt;/strong&gt;（如PID、指向用户栈的指针、可执行目标文件的名字以及程序计数器）。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011858154.png&#34; alt=&#34;Linux一个进程中虚拟内存区域的内核数据结构&#34;&gt;&lt;/p&gt;
-&lt;p&gt;任务结构中的一个条目指向&lt;code&gt;mm_struct&lt;/code&gt;，它描述了虚拟内存的当前状态。我们想了解的是pgd和mmap两个字段。pgd指向第一级页表的基址，mmap指向一个&lt;code&gt;vm_area_struct&lt;/code&gt;的链表，其中每个&lt;code&gt;vm_area_structs&lt;/code&gt;都描述了当前虚拟地址空间的一个区域。当内核运行这个进程时，就把pgd存放在CR3控制寄存器中。&lt;/p&gt;
-&lt;p&gt;一个&lt;strong&gt;具体区域&lt;/strong&gt;的区域结构包含以下字段：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;vm_start&lt;/code&gt;：指向该区域的起始&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;vm_end&lt;/code&gt;：指向该区域的结尾&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;vm_port&lt;/code&gt;：描述这个区域内包含的所有页的读写许可权限&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;vm_flags&lt;/code&gt;：描述这个区域内的页面是与其他进程共享的还是这个进程私有的&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;vm_next&lt;/code&gt;：指向链表中下一个区域的结构&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;linux缺页异常处理&#34;&gt;Linux缺页异常处理&lt;/h3&gt;
-&lt;p&gt;假设MMU在试图翻译某个虚拟地址A时，触发了一个缺页。这个异常导致控制转移到内核的缺页处理程序，处理程序执行以下步骤：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;判断&lt;strong&gt;虚拟地址A&lt;/strong&gt;是否合法？即A是否在某个区域结构定义的区域内。为了找到答案，缺页处理程序搜索区域结构的链表，把A和每个区域结构中的&lt;code&gt;vm_start&lt;/code&gt;和&lt;code&gt;vm_end&lt;/code&gt;作比较。如果该指令不合法，则触发一个段错误，从而终止该进程。由于一个进程可以创建任意数量的新虚拟内存，因此顺序搜索链表的开销可能很大，Linux在链表中构建一棵树，并在这棵树上查找。&lt;/li&gt;
-&lt;li&gt;试图进行的&lt;strong&gt;内存访问&lt;/strong&gt;是否合法？即进程是否有读、写或执行这个区域内页面的权限。如果试图进行的访问是不合法的，缺页处理程序就会触发一个保护异常，从而终止这个进程。&lt;/li&gt;
-&lt;li&gt;此时内核知道这个缺页是由于&lt;strong&gt;对合法的虚拟内存进行合法的操作&lt;/strong&gt;造成的。这样进行处理：选择一个&lt;strong&gt;牺牲页面&lt;/strong&gt;，如果该页面被修改过，则将其交换出去，换入新的页面并更新页表。当缺页处理程序返回时，CPU重新启动引起缺页的指令，这条指令再次发送A到MMU。此时MMU就能正常翻译A，不会再产生缺页中断。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201011920465.png&#34; alt=&#34;Linux缺页处理&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;内存映射&#34;&gt;内存映射&lt;/h2&gt;
-&lt;p&gt;内存映射：Linux通过一个&lt;strong&gt;虚拟内存区域&lt;/strong&gt;与一个&lt;strong&gt;磁盘上的对象&lt;/strong&gt;关联起来，以初始化这个虚拟内存区域的内容。虚拟内存区域可以映射到两种类型的对象中的一种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Linux文件系统中的普通文件&lt;/li&gt;
-&lt;li&gt;匿名文件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;一旦一个虚拟页面被初始化了，它就在一个由内核维护的专门的&lt;strong&gt;交换文件swap file&lt;/strong&gt;之间换来换去。交换文件也叫做交换空间或交换区域。&lt;/p&gt;
-&lt;h3 id=&#34;共享对象&#34;&gt;共享对象&lt;/h3&gt;
-&lt;p&gt;许多程序要访问只读运行时库代码的相同副本，例如每个C程序都需要来自标准C库的诸如printf这样的函数。如果每个进程都在物理内存中保存这些常用代码的副本，就是极端的浪费。&lt;/p&gt;
-&lt;p&gt;内存映射为我们提供了一种清晰的机制，用来控制多个进程如何共享对象。&lt;/p&gt;
-&lt;p&gt;一个对象可以被映射到虚拟内存的一个区域，要么作为&lt;strong&gt;共享对象&lt;/strong&gt;，要么作为&lt;strong&gt;私有对象&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;若一个进程将一个共享对象映射到它的虚拟地址空间的一个区域内，那么该进程对这个地址区域的任何写操作，对于那些同样将该共享对象映射到自己的虚拟内存的进程也是可见的。这些变化会反映在磁盘的原始对象上。另一方面，对于一个映射到私有对象的区域做的改变，对于其他进程来说是不可见的，并且进程对这个区域的任何写操作都不会反映在磁盘的对象中。&lt;/p&gt;
-&lt;p&gt;私有对象使用一种称为&lt;strong&gt;写时复制&lt;/strong&gt;的技术被映射到虚拟内存中。私有对象开始生命周期的方式基本与共享对象相同，在物理内存中只保存&lt;strong&gt;私有对象的一份副本&lt;/strong&gt;。两个进程将一个私有对象映射到它们的虚拟内存的不同区域，但共享这个对象的同一物理副本。对于每个映射私有对象的进程，响应私有区域的页表条目都被标记为只读，并且区域结构被标记为私有的写时复制。只要没有进程试图写它自己的私有区域，它们就可以继续共享物理内存中对象的一个单独副本。只要有一个进程试图写私有区域内的某个页面，这个&lt;strong&gt;写操作&lt;/strong&gt;就会触发一个&lt;strong&gt;保护故障&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;故障处理程序注意到保护异常是由于进程试图&lt;strong&gt;写私有的写时复制区域中的一个页面&lt;/strong&gt;而引起的，它就会在物理内存中创建这个页面的一个&lt;strong&gt;新副本&lt;/strong&gt;，更新页表条目指向这个新副本，然后恢复这个页面的可写权限。由此写操作就可以正常执行了。&lt;/p&gt;
-&lt;p&gt;通过这种延迟私有对象中的副本直到最后可能的时刻，写时复制最充分地使用了稀有的物理内存。&lt;/p&gt;
-&lt;h3 id=&#34;fork函数&#34;&gt;fork函数&lt;/h3&gt;
-&lt;p&gt;fork函数创建一个带有自己独立虚拟地址空间的新进程。&lt;/p&gt;
-&lt;p&gt;当fork函数被当前进程调用时，内核为新进程创建各种数据结构，并分配给它一个唯一的PID。为了给这个新进程创建虚拟内存，它创建了当前进程的&lt;code&gt;mm_struct&lt;/code&gt;、区域结构和页表的原样&lt;strong&gt;副本&lt;/strong&gt;。它将两个进程中的每个页面都标记为只读，并将两个进程中的每个区域结构都标记为私有的&lt;strong&gt;写时复制&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;当fork函数在新进程中返回时，新进程现在的虚拟内存刚好和调用fork时存在的虚拟内存相同。当这两个进程中的一个后来进行写操作时，写时复制就会创建新页面，因此为每个进程保持了私有地址空间的概念。&lt;/p&gt;
-&lt;h3 id=&#34;execve函数&#34;&gt;execve函数&lt;/h3&gt;
-&lt;p&gt;虚拟内存和内存映射在将程序加载到内存的过程中也扮演着关键的角色。&lt;/p&gt;
-&lt;p&gt;假设在当前进程中的程序执行了如下的execve调用：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;execve(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;a.out&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt;, &lt;span style=&#34;color:#007020&#34;&gt;NULL&lt;/span&gt;);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;execve函数在当前进程中加载并运行包含在可执行目标文件a.out中的程序，用a.out程序有效地替代了当前程序。加载该程序需要以下几个步骤：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;删除已存在的用户区域。&lt;/li&gt;
-&lt;li&gt;映射私有区域。为新程序的代码、数据、bss和栈区域创建新的区域结构，所有这些新区域都是私有的、写时复制的。代码和数据区域被映射为a.out文件中的.text和.data区。.bss区域是请求二进制零的，映射到匿名文件，其大小包含在a.out中。栈和堆区域也是请求二进制零的，初始长度为零。&lt;/li&gt;
-&lt;li&gt;映射共享区域。如果a.out程序与共享对象或目标链接（比如标准C库libc.so），那么这些对象都是动态链接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。&lt;/li&gt;
-&lt;li&gt;设置程序计数器PC。设置当前进程上下文中的程序计数器，使之指向代码区域的入口点。下一次调度这个进程时，它将从这个入口点开始执行。Linux将根据需要换入代码和数据页面。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;下图显示了加载器如何映射用户地址空间区域。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201022200703.png&#34; alt=&#34;加载器映射用户地址空间区域&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;使用mmap函数的用户级内存映射&#34;&gt;使用mmap函数的用户级内存映射&lt;/h3&gt;
-&lt;p&gt;Linux进程可以使用mmap函数来创建新的虚拟内存区域，并将对象映射到这些区域中。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;sys/mman.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;mmap&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;start, size_t length, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; prot, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; flags, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; fd, off_t offset);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;mmap函数要求内核创建一个新的虚拟内存区域，最好从地址start开始的一个区域，并将文件描述符fd指定的对象的一个连续的片映射到这个新的区域。连续对象片大小为length字节，从距文件开始处偏移量为offset字节的地方开始。start地址仅仅是一个暗示，通常被定义为NULL。&lt;/p&gt;
-&lt;p&gt;参数prot包含描述新映射的虚拟内存区域的访问权限位：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;PROT_EXEC&lt;/li&gt;
-&lt;li&gt;PROT_READ&lt;/li&gt;
-&lt;li&gt;PROT_WRITE&lt;/li&gt;
-&lt;li&gt;PROT_NONE&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;参数flag由描述被映射对象类型的位组成。&lt;/p&gt;
-&lt;p&gt;munmap函数删除虚拟内存的区域：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;sys/mman.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;munmap&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;start, size_t length);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;删除从虚拟地址start开始的，由接下来length字节组成的区域。&lt;/p&gt;
-&lt;h2 id=&#34;动态内存分配&#34;&gt;动态内存分配&lt;/h2&gt;
-&lt;p&gt;动态内存分配器维护着一个进程的虚拟内存区域，称为堆。对于每个进程，内核维护着一个变量brk，指向堆的顶部。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/202201121330003.png&#34; alt=&#34;虚拟内存的堆区域&#34;&gt;&lt;/p&gt;
-&lt;p&gt;分配器将堆视为一组不同大小的块的集合，每个块就是一个连续的虚拟内存片，要么是已分配的，要么是空闲的。&lt;/p&gt;
-&lt;p&gt;分配器有两种基本风格：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;显式&lt;/strong&gt;分配器：要求应用显式地释放任何已有的块。C标准库提供称为malloc程序包的显式分配器，C程序通过调用malloc分配内存，通过调用free释放一个块。C++通过new和delete分配和释放。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;隐式&lt;/strong&gt;分配器：又称为垃圾收集器。自动释放未使用的已分配的块的过程称为垃圾收集。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;接下来主要讨论显式分配器的设计与实现。&lt;/p&gt;
-&lt;h3 id=&#34;malloc和free函数&#34;&gt;malloc和free函数&lt;/h3&gt;
-&lt;p&gt;C标准库提供成为malloc的显示分配器，程序通过调用malloc函数来从堆中分配块。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;malloc&lt;/span&gt;(size_t size);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;malloc函数返回一个指针，指向大小至少为size字节的额内存块。&lt;/p&gt;
-&lt;p&gt;如果malloc遇到问题（例如程序要求的内存块比可用的虚拟内存还要大），那么它就返回NULL，并设置errno。&lt;/p&gt;
-&lt;p&gt;动态分配器还可以使用sbrk函数：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;sbrk&lt;/span&gt;(intptr_t incr);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;sbrk函数通过将内核的brk指针增加incr来扩展和收缩堆。如果成功则返回brk的旧值，否则返回-1，并将errno设置为ENOMEM。如果incr为零，那么sbrk就返回brk的当前值。&lt;/p&gt;
-&lt;p&gt;程序通过调用free函数来释放已分配的堆块。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#579&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#579&#34;&gt;&amp;lt;stdlib.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;
-&lt;/span&gt;&lt;span style=&#34;color:#579&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;free&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt;&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; ptr);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;使用动态内存分配的原因&#34;&gt;使用动态内存分配的原因&lt;/h3&gt;
-&lt;p&gt;经常直到程序实际运行时，才知道某些数据结构的大小。&lt;/p&gt;
-&lt;h3 id=&#34;分配器的要求和目标&#34;&gt;分配器的要求和目标&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;处理任意请求序列&lt;/li&gt;
-&lt;li&gt;立即响应请求&lt;/li&gt;
-&lt;li&gt;只使用堆&lt;/li&gt;
-&lt;li&gt;对齐块&lt;/li&gt;
-&lt;li&gt;不修改已分配的块&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;碎片&#34;&gt;碎片&lt;/h3&gt;
-&lt;p&gt;造成堆利用率很低的主要原因是一种称为碎片的现象，当虽然有未使用的内存但不能用来满足分配请求时，就会发发生这种现象。由以下两种碎片：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;内部碎片：已分配块的大小和它们的有效荷载大小之差的和。内部碎片的数量取决于以前请求的模式和分配器的实现方式。比如分配器可能增加块大小以满足对齐约束条件。&lt;/li&gt;
-&lt;li&gt;外部碎片：当空闲内存合计起来足够满足一个分配请求，但没有一个单独的空闲块足够大可以来处理这个请求。如果不向内核请求额外的虚拟内存就无法满足这个请求。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;外部碎片难以量化且不可能预测，所以分配器通常采用启发式策略来试图维持少量的大空闲块。&lt;/p&gt;
-&lt;h3 id=&#34;实现问题&#34;&gt;实现问题&lt;/h3&gt;
-&lt;p&gt;要实现一个在吞吐率和利用率之间把握好平衡的分配器，要考虑以下问题：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;空闲块组织&lt;/li&gt;
-&lt;li&gt;放置&lt;/li&gt;
-&lt;li&gt;分割&lt;/li&gt;
-&lt;li&gt;合并&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;隐式空闲链表&#34;&gt;隐式空闲链表&lt;/h3&gt;
-&lt;p&gt;分配器需要一些数据结构，允许它来区分块边界，以及区别已分配和空闲块。大多数分配器将这些信息&lt;strong&gt;嵌入块本身&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;一个块由一个字（4B）的头部、有效荷载以及可能的一些额外的填充组成。头部编码了这个块的大小以及这个块是已分配的还是空闲的。&lt;/p&gt;
-&lt;h3 id=&#34;放置已分配的块&#34;&gt;放置已分配的块&lt;/h3&gt;
-&lt;p&gt;应用请求一个k字节的块时，分配器搜索空闲链表，查找一个足够大可以放置所请求快的空闲块。这种搜索方式是由放置策略确定的。常见的策略有首次适配、下一次适配和最佳适配。&lt;/p&gt;
-&lt;h3 id=&#34;分隔空闲块&#34;&gt;分隔空闲块&lt;/h3&gt;
-&lt;p&gt;分配器找到一个匹配的块后，就必须作出一个决策，就是分配这个空闲块中多少空间。一个选择是分配整个空闲块，但这种方式可能造成内部碎片。&lt;/p&gt;
-&lt;p&gt;如果匹配不太好，分配器通常会选择将这个空闲块分割为两部分，第一部分变成分配块，剩下的变成一个新的空闲块。&lt;/p&gt;
-&lt;h3 id=&#34;获取额外的堆内存&#34;&gt;获取额外的堆内存&lt;/h3&gt;
-&lt;p&gt;如果不能请求到合适的空闲块，一个解决方法是合并那些在物理内存中相邻的空闲块来创建一个更大的块。如果还是不能生成一个足够大的块，那么分配器会调用&lt;strong&gt;sbrk函数&lt;/strong&gt;，向&lt;strong&gt;内核&lt;/strong&gt;请求额外的堆内存。&lt;/p&gt;
-&lt;h3 id=&#34;合并空闲块&#34;&gt;合并空闲块&lt;/h3&gt;
-&lt;p&gt;任何分配器都必须合并相邻的空闲块，这个过程称为合并。分配器可以选择立即合并，就是在每次一个块被释放时，就合并所有相邻块。或者也可以选择推迟合并，直到某个分配请求失败，然后扫描整个堆，合并所有的空闲块。&lt;/p&gt;
-&lt;p&gt;立即合并对于某些请求模式而言，会产生一种形式的抖动，块会反复地合并，然后马上分割。&lt;/p&gt;
-&lt;h3 id=&#34;带边界标记的合并&#34;&gt;带边界标记的合并&lt;/h3&gt;
-&lt;p&gt;边界标记技术允许在常数时间内进行对前面块的合并。这种思想是在每个块的结尾处添加一个脚部（footer，边界标记），其中脚部就是头部的一个副本。如果每个块包含一个脚部，那么分配器就可以通过检查它的脚部，判断前面一个块的起始位置和状态，这个脚部总是在距当前块开始位置一个字的距离。&lt;/p&gt;
-&lt;h3 id=&#34;显式空闲链表&#34;&gt;显式空闲链表&lt;/h3&gt;
-&lt;h3 id=&#34;分离的空闲链表&#34;&gt;分离的空闲链表&lt;/h3&gt;
-&lt;h2 id=&#34;垃圾收集&#34;&gt;垃圾收集&lt;/h2&gt;
-&lt;p&gt;未能释放已分配的块是一种常见的编程错误。&lt;/p&gt;
-&lt;p&gt;垃圾收集器是一种动态内存分配器，它自动释放不再需要的已分配块。这些块被称为垃圾。在一个支持垃圾收集的系统中，应用显式地分配块，但从不显式地释放它们。&lt;/p&gt;
-&lt;p&gt;这里讨论McCarthy独创的标记、清除算法，这个算法可以建立在已存在的malloc包的基础之上，为C/C++提供垃圾收集。&lt;/p&gt;
-&lt;h2 id=&#34;c语言常见的与内存有关的错误&#34;&gt;C语言常见的与内存有关的错误&lt;/h2&gt;
-&lt;h3 id=&#34;间接引用坏指针&#34;&gt;间接引用坏指针&lt;/h3&gt;
-&lt;p&gt;常见的是经典的scanf错误。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;scanf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;val);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用scanf从stdin读取一个整数到一个变量。很容易错误地传递val的内容而不是它的地址：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;scanf(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;%d&amp;#34;&lt;/span&gt;, val);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;scanf将把val的内容解释为一个地址，并试图将一个字写到这个位置。在最糟糕的情况下，val的内容对应于虚拟内存的合法读/写区域，于是我们就覆盖了这块内存，这在相当长一段时间后会造成灾难性后果。&lt;/p&gt;
-&lt;h3 id=&#34;读未初始化的内存&#34;&gt;读未初始化的内存&lt;/h3&gt;
-&lt;p&gt;虽然bss内存位置总是被加载器初始化为零，但对于堆内存并不是这样。一个常见的错误就是假设堆内存被初始化为零。我们在使用堆内存的变量是要先将其初始化。&lt;/p&gt;
-&lt;h3 id=&#34;允许栈缓冲区溢出&#34;&gt;允许栈缓冲区溢出&lt;/h3&gt;
-&lt;p&gt;如果一个程序不检查输入串的大小就写入栈中的目标缓冲区，那么这个程序就会有缓冲区溢出错误。例如：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;bufferflow&lt;/span&gt;() {
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;char&lt;/span&gt; buf[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;64&lt;/span&gt;];
-	gets(buf);
-	
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数就有缓冲区溢出错误，因为gets函数复制一个任意长度的串到缓冲区。为了纠正这个错误，必须使用fgets函数，该函数限制了输入串的大小。&lt;/p&gt;
-&lt;h3 id=&#34;假设指针和它们指向的对象是相同大小的&#34;&gt;假设指针和它们指向的对象是相同大小的&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;makeArray1&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; n, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; m) {
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; i;
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;A &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;)Malloc(n &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;));
-	
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#333&#34;&gt;&amp;lt;&lt;/span&gt; n; i&lt;span style=&#34;color:#333&#34;&gt;++&lt;/span&gt;) {
-		A[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; (&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;)Malloc(m &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;sizeof&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt;));
-	}
-	
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; A;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数的目的是创建一个由n个指针组成的数据，每个指针都指向包含m个int的数组。然后创建A时错误地将&lt;code&gt;sizeof(int *)&lt;/code&gt;写成了&lt;code&gt;sizeof(int)&lt;/code&gt;，代码实际上创建的是一个int数组。&lt;/p&gt;
-&lt;h3 id=&#34;引用指针而不是它所指向的对象&#34;&gt;引用指针，而不是它所指向的对象&lt;/h3&gt;
-&lt;p&gt;下面的函数，其目的是删除一个有&lt;code&gt;size&lt;/code&gt;项的二叉堆里的第一项，然后对剩下的*size-1项重新建堆：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;binheapDelete&lt;/span&gt;(&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;**&lt;/span&gt;binheap, &lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;size) {
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;packet &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; binheap[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;];
-	binheap[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; binheap[&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;size &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;];
-	&lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;size&lt;span style=&#34;color:#333&#34;&gt;--&lt;/span&gt;;
-	heapify(binheap, &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;size, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;);
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt;(packet);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数错误地将&lt;code&gt;(*size)--&lt;/code&gt;写作了&lt;code&gt;*size--&lt;/code&gt;导致代码实际上减少的是指针自己的值，而不是它所指向整数的值。程序运行后很有可能发生的是，当程序在执行过程后很久才出现一个错误的结果。&lt;/p&gt;
-&lt;h3 id=&#34;误解指针的运算&#34;&gt;误解指针的运算&lt;/h3&gt;
-&lt;p&gt;指针的算数操作是以它们指向对象的大小为单位来进行的，这种大小单位不一定是字节。&lt;/p&gt;
-&lt;h3 id=&#34;引用不存在的变量&#34;&gt;引用不存在的变量&lt;/h3&gt;
-&lt;p&gt;有时候不理解栈的规则的程序员可能会引用不合法的本地变量，例如：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;stackref&lt;/span&gt;()
-{
-	&lt;span style=&#34;color:#339;font-weight:bold&#34;&gt;int&lt;/span&gt; val;
-	
-	&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;&amp;amp;&lt;/span&gt;val;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该函数返回一个指针，指向栈中的一个局部变量，然后弹出它的栈帧，尽管&amp;amp;val仍然指向一个合法地址，但它已经不再指向一个合法的变量了。当以后在程序中调用其他函数时，内存将重用它们的栈帧。再后来，如果程序分配某个值给*p，那么其可能在修改另一个函数的栈帧中的一个条目，带来潜在的灾难性后果。&lt;/p&gt;
-&lt;h3 id=&#34;引用空闲堆块中的数据&#34;&gt;引用空闲堆块中的数据&lt;/h3&gt;
-&lt;p&gt;一个相似的错误是引用已经被释放了的堆块中的数据。&lt;/p&gt;
-&lt;h3 id=&#34;引起内存泄漏&#34;&gt;引起内存泄漏&lt;/h3&gt;
-&lt;p&gt;忘记释放已经分配的块，而在堆里创建了垃圾。&lt;/p&gt;
-- https://eternityqjl.top/posts/csapp-9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/ - 2019-2021 By Jialong</description>
         </item>
     
     
