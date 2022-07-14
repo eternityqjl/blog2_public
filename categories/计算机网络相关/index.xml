@@ -7,7 +7,26 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 09 Dec 2021 09:31:30 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Jul 2022 21:56:32 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Socket通信总结</title>
+      <link>https://eternityqjl.top/posts/socket%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 14 Jul 2022 21:56:32 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/socket%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93/</guid>
+      <description>客户端建立连接   使用socket()系统调用创建一个套接字；
+  使用connect()系统调用将套接字连接到特定地址的服务器；
+  开始发送和接收数据。一般使用read()和write()系统调用来实现。
+  服务器建立连接   使用socket()系统调用创建一个套接字；
+  使用bing()系统调用将套接字绑定到一个IP上；
+  使用listen()系统调用监听连接；
+  使用accept()系统调用接受一个连接请求。这个调用一般会被阻塞，直到一个客户端与服务器建立连接；
+  开始发送和接收数据。
+  套接字类型 stream sockets 连续的字节流，使用TCP (Transmission Control Protocol) 协议，不可靠，面向流。
+datagram sockets 使用UDP (Unix Datagram Protocol) 协议，可靠的，面向消息。
+domain Unix domain Internet domain </description>
+    </item>
+    
     <item>
       <title>TCP三次握手四次挥手详解</title>
       <link>https://eternityqjl.top/posts/%E8%AE%A1%E7%BD%91tcp%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E8%AF%A6%E8%A7%A3/</link>

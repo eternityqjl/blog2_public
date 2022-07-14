@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Socket on Jialong&#39;s Blog</title>
+    <link>https://eternityqjl.top/tags/socket/</link>
+    <description>Recent content in Socket on Jialong&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2019-2021 By Jialong</copyright>
+    <lastBuildDate>Thu, 14 Jul 2022 21:56:32 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/tags/socket/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Socket通信总结</title>
+      <link>https://eternityqjl.top/posts/socket%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 14 Jul 2022 21:56:32 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/socket%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93/</guid>
+      <description>客户端建立连接   使用socket()系统调用创建一个套接字；
+  使用connect()系统调用将套接字连接到特定地址的服务器；
+  开始发送和接收数据。一般使用read()和write()系统调用来实现。
+  服务器建立连接   使用socket()系统调用创建一个套接字；
+  使用bing()系统调用将套接字绑定到一个IP上；
+  使用listen()系统调用监听连接；
+  使用accept()系统调用接受一个连接请求。这个调用一般会被阻塞，直到一个客户端与服务器建立连接；
+  开始发送和接收数据。
+  套接字类型 stream sockets 连续的字节流，使用TCP (Transmission Control Protocol) 协议，不可靠，面向流。
+datagram sockets 使用UDP (Unix Datagram Protocol) 协议，可靠的，面向消息。
+domain Unix domain Internet domain </description>
+    </item>
+    
+  </channel>
+</rss>
