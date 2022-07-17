@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 14 Jul 2022 21:56:32 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Jul 2022 13:32:48 +0800</lastBuildDate><atom:link href="https://eternityqjl.top/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>动态库和静态库实操</title>
+      <link>https://eternityqjl.top/posts/%E5%8A%A8%E6%80%81%E5%BA%93%E5%92%8C%E9%9D%99%E6%80%81%E5%BA%93%E5%AE%9E%E6%93%8D/</link>
+      <pubDate>Sun, 17 Jul 2022 13:32:48 +0800</pubDate>
+      
+      <guid>https://eternityqjl.top/posts/%E5%8A%A8%E6%80%81%E5%BA%93%E5%92%8C%E9%9D%99%E6%80%81%E5%BA%93%E5%AE%9E%E6%93%8D/</guid>
+      <description>之前在学习csapp的 链接 章节时学习了静态库和动态库的相关内容，但并没有在实际的开发中实践过。最近在公司开始接触项目后遇到一些编译时链接动态库相关内容，不太熟悉，所以在这里总结一下。
+静态库的制作和使用 文件结构如下图所示：
+. ├── include │ └── calculate.h ├── lib │ └── libcalculate.a ├── main ├── main.c └── src ├── add.c ├── add.o ├── multiple.c └── multiple.o 其中各个文件的内容如下所示：
+ calculate.h  int add(int,int); int multiple(int,int);  add.c  #include &amp;#34;calculate.h&amp;#34; int add(int a, int b) { return a + b; }  multiple.c  #include &amp;#34;calculate.h&amp;#34; int multiple(int a, int b) { return a * b; }  main.</description>
+    </item>
+    
     <item>
       <title>Socket通信总结</title>
       <link>https://eternityqjl.top/posts/socket%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93/</link>

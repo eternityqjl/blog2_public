@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>Socket通信总结</title>
+<title>Tags</title>
 
 
 
@@ -16,22 +16,10 @@
 
 
 
-<meta property="og:title" content="Socket通信总结" />
-<meta property="og:description" content="客户端建立连接   使用socket()系统调用创建一个套接字；
-  使用connect()系统调用将套接字连接到特定地址的服务器；
-  开始发送和接收数据。一般使用read()和write()系统调用来实现。
-  服务器建立连接   使用socket()系统调用创建一个套接字；
-  使用bing()系统调用将套接字绑定到一个IP上；
-  使用listen()系统调用监听连接；
-  使用accept()系统调用接受一个连接请求。这个调用一般会被阻塞，直到一个客户端与服务器建立连接；
-  开始发送和接收数据。
-  套接字类型 stream sockets 连续的字节流，使用TCP (Transmission Control Protocol) 协议，不可靠，面向流。
-datagram sockets 使用UDP (Unix Datagram Protocol) 协议，可靠的，面向消息。
-domain Unix domain Internet domain " />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://eternityqjl.top/posts/socket%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-07-14T21:56:32+08:00" />
-<meta property="article:modified_time" content="2022-07-14T21:58:23+08:00" /><meta property="og:site_name" content="My Blog" />
+<meta property="og:title" content="Tags" />
+<meta property="og:description" content="My HomePage Description" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://eternityqjl.top/tags/" /><meta property="og:site_name" content="My Blog" />
 
 
 
@@ -39,18 +27,8 @@ domain Unix domain Internet domain " />
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Socket通信总结"/>
-<meta name="twitter:description" content="客户端建立连接   使用socket()系统调用创建一个套接字；
-  使用connect()系统调用将套接字连接到特定地址的服务器；
-  开始发送和接收数据。一般使用read()和write()系统调用来实现。
-  服务器建立连接   使用socket()系统调用创建一个套接字；
-  使用bing()系统调用将套接字绑定到一个IP上；
-  使用listen()系统调用监听连接；
-  使用accept()系统调用接受一个连接请求。这个调用一般会被阻塞，直到一个客户端与服务器建立连接；
-  开始发送和接收数据。
-  套接字类型 stream sockets 连续的字节流，使用TCP (Transmission Control Protocol) 协议，不可靠，面向流。
-datagram sockets 使用UDP (Unix Datagram Protocol) 协议，可靠的，面向消息。
-domain Unix domain Internet domain "/>
+<meta name="twitter:title" content="Tags"/>
+<meta name="twitter:description" content="My HomePage Description"/>
 
 
 
@@ -86,29 +64,7 @@ domain Unix domain Internet domain "/>
 
 
 
-  
-    <script src="/js/toc.js"></script>
-  
 
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
-<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
-<script src="/vendor/js/md5.min.js"></script>
-<script>
-  var gitalk = new Gitalk({
-  clientID: '41f4d7bc98749bddfc28',
-  clientSecret: '2be261f48bbef3de6eb7c463857986c02f45f72d',
-  repo: 'blog2_public',
-  owner: 'eternityqjl',
-  admin: ['eternityqjl'],
-  id: md5(location.pathname),
-  distractionFreeMode: 'false'
-  });
-  window.onload = function () {
-        gitalk.render('gitalk-container')
-  }
-</script>
 
 
 
@@ -145,11 +101,9 @@ domain Unix domain Internet domain "/>
             
             
             
-                
             
             
-            
-            <a class="a-block nav-link-item active" href="/posts">
+            <a class="a-block nav-link-item false" href="/posts">
                 网志
             </a>
             
@@ -167,9 +121,11 @@ domain Unix domain Internet domain "/>
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="/tags">
+            
+            <a class="a-block nav-link-item active" href="/tags">
                 标签
             </a>
             
@@ -215,190 +171,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
 </div><div ref="extraContainer" class="extra-container">
     
     
-    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
-
-
-	<div class="toc-content">
-	
-		
-		
-		
-		<center>- 目录 -</center>
-		
-		
-		<ul>
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#%e5%ae%a2%e6%88%b7%e7%ab%af%e5%bb%ba%e7%ab%8b%e8%bf%9e%e6%8e%a5" onclick="onNavClick(`#客户端建立连接-nav`)" id="客户端建立连接-nav">
-									客户端建立连接
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e5%bb%ba%e7%ab%8b%e8%bf%9e%e6%8e%a5" onclick="onNavClick(`#服务器建立连接-nav`)" id="服务器建立连接-nav">
-									服务器建立连接
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e5%a5%97%e6%8e%a5%e5%ad%97%e7%b1%bb%e5%9e%8b" onclick="onNavClick(`#套接字类型-nav`)" id="套接字类型-nav">
-									套接字类型
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#stream-sockets" onclick="onNavClick(`#stream-sockets-nav`)" id="stream-sockets-nav">
-									stream sockets
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#datagram-sockets" onclick="onNavClick(`#datagram-sockets-nav`)" id="datagram-sockets-nav">
-									datagram sockets
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-							
-								</ul>
-							
-						
-						
-						
-							<li>
-								<a href="#domain" onclick="onNavClick(`#domain-nav`)" id="domain-nav">
-									domain
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#unix-domain" onclick="onNavClick(`#unix-domain-nav`)" id="unix-domain-nav">
-									Unix domain
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#internet-domain" onclick="onNavClick(`#internet-domain-nav`)" id="internet-domain-nav">
-									Internet domain
-								</a>
-							</li>
-						
-						
-					
-				
-			
-		</ul>
-	</div>
-
-</div>
-    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -416,6 +188,24 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
         </a>
         
         
+        
+            <div class="pagination-indicator">
+                <span style="text-align: center">
+                    8<br><div style="display: inline-block; transform: rotate(-28deg)">-</div><br>8
+                </span>
+            </div>
+            
+            
+            <a class="pagination-action" href="/tags/page/7/">
+                <i class="material-icons pagination-action-icon">
+                    chevron_left
+                </i>
+            </a>
+            
+
+            
+        
+        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -428,11 +218,9 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
-                    
                 
                 
-                
-                <a class="a-block drawer-menu-item active" href="/posts">
+                <a class="a-block drawer-menu-item false" href="/posts">
                     网志
                 </a>
                 
@@ -450,9 +238,11 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="/tags">
+                
+                <a class="a-block drawer-menu-item active" href="/tags">
                     标签
                 </a>
                 
@@ -477,190 +267,6 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
                 </a>
                 
             
-            
-            <div class="toc">
-
-
-	<div class="toc-content">
-	
-		
-		
-		
-		<center>- 目录 -</center>
-		
-		
-		<ul>
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#%e5%ae%a2%e6%88%b7%e7%ab%af%e5%bb%ba%e7%ab%8b%e8%bf%9e%e6%8e%a5" onclick="onNavClick(`#客户端建立连接-nav`)" id="客户端建立连接-nav">
-									客户端建立连接
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e5%bb%ba%e7%ab%8b%e8%bf%9e%e6%8e%a5" onclick="onNavClick(`#服务器建立连接-nav`)" id="服务器建立连接-nav">
-									服务器建立连接
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#%e5%a5%97%e6%8e%a5%e5%ad%97%e7%b1%bb%e5%9e%8b" onclick="onNavClick(`#套接字类型-nav`)" id="套接字类型-nav">
-									套接字类型
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#stream-sockets" onclick="onNavClick(`#stream-sockets-nav`)" id="stream-sockets-nav">
-									stream sockets
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#datagram-sockets" onclick="onNavClick(`#datagram-sockets-nav`)" id="datagram-sockets-nav">
-									datagram sockets
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-							
-								</ul>
-							
-						
-						
-						
-							<li>
-								<a href="#domain" onclick="onNavClick(`#domain-nav`)" id="domain-nav">
-									domain
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-							
-								
-									<ul>
-								
-							
-						
-						
-							<li>
-								<a href="#unix-domain" onclick="onNavClick(`#unix-domain-nav`)" id="unix-domain-nav">
-									Unix domain
-								</a>
-							</li>
-						
-						
-					
-				
-			
-				
-				
-					
-						
-						
-						
-						
-						
-							<li>
-								<a href="#internet-domain" onclick="onNavClick(`#internet-domain-nav`)" id="internet-domain-nav">
-									Internet domain
-								</a>
-							</li>
-						
-						
-					
-				
-			
-		</ul>
-	</div>
-
-</div>
             
         </div>
     </div>
@@ -705,127 +311,61 @@ Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> b
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-
-            <div class="post-head-wrapper-text-only"
-                
-            >
-                <div class="post-title">
-                    Socket通信总结
-                    
-                    <div class="post-meta">
-                        
-                        <time itemprop="datePublished">
-                            2022-07-14 21:56
-                        </time>
-                        
-
-                        
-                            <i class="material-icons" style="">folder</i>
-                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3">计算机网络相关</a>
-                                &nbsp;
-                        
-
-                        
-                            <i class="material-icons" style="">label</i>
-                            
-                                <a href="/tags/socket">Socket</a>
-                                &nbsp;
-                            
-                        
-                        
+        <a class="a-block">
+            <div class="post-item-wrapper post-item-wrapper-no-hover">
+                <div class="post-item post-item-no-gaps">
+                    <div class="post-item-info-wrapper">
+                        <div class="post-item-title post-item-title-small">
+                            Tags
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="post-body-wrapper">
-                
-                <div class="post-body" v-pre>
-                
-                    <h2 id="客户端建立连接">客户端建立连接</h2>
-<ul>
-<li>
-<p>使用<code>socket()</code>系统调用创建一个套接字；</p>
-</li>
-<li>
-<p>使用<code>connect()</code>系统调用将套接字连接到特定地址的服务器；</p>
-</li>
-<li>
-<p>开始发送和接收数据。一般使用<code>read()</code>和<code>write()</code>系统调用来实现。</p>
-</li>
-</ul>
-<h2 id="服务器建立连接">服务器建立连接</h2>
-<ul>
-<li>
-<p>使用<code>socket()</code>系统调用创建一个套接字；</p>
-</li>
-<li>
-<p>使用<code>bing()</code>系统调用将套接字绑定到一个IP上；</p>
-</li>
-<li>
-<p>使用<code>listen()</code>系统调用监听连接；</p>
-</li>
-<li>
-<p>使用<code>accept()</code>系统调用接受一个连接请求。这个调用一般会被阻塞，直到一个客户端与服务器建立连接；</p>
-</li>
-<li>
-<p>开始发送和接收数据。</p>
-</li>
-</ul>
-<h2 id="套接字类型">套接字类型</h2>
-<h3 id="stream-sockets">stream sockets</h3>
-<p>连续的字节流，使用TCP (Transmission Control Protocol) 协议，不可靠，面向流。</p>
-<h3 id="datagram-sockets">datagram sockets</h3>
-<p>使用UDP (Unix Datagram Protocol) 协议，可靠的，面向消息。</p>
-<h2 id="domain">domain</h2>
-<h3 id="unix-domain">Unix domain</h3>
-<h3 id="internet-domain">Internet domain</h3>
-
-                    
-                    <HR width="100%" id="EOF">
-		    <p style="color:#777;">最后修改于 2022-07-14</p>
-                    
-                </div>
-            </div>
-            
-            
-            <nav class="post-pagination">
-
-                
-                <a class="newer-posts" href="https://eternityqjl.top/posts/%E5%8A%A8%E6%80%81%E5%BA%93%E5%92%8C%E9%9D%99%E6%80%81%E5%BA%93%E5%AE%9E%E6%93%8D/">
-			下回<br>动态库和静态库实操
+        </a>
+        
+        
+                <a href="https://eternityqjl.top/tags/tls/ssl%E5%8D%8F%E8%AE%AE/" class="a-block">
+                    <div class="post-item-wrapper">
+                        <div class="post-item post-item-no-gaps">
+                            <div class="post-item-info-wrapper"> 
+                                <div class="post-item-title">
+                                    TLS/SSL协议
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </a>
-                
-                
-                
-                <a class="older-posts" href="https://eternityqjl.top/posts/freertos%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93/">
-			上回<br>FreeRTOS操作系统总结
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-<div id="gitalk-container"></div>
-
-
-
-
-
-
-
-
-
-            </div>
-        </div>
+        
     </div>
 </div>
 
-            </div><div id="single-column-footer">
+
+            </div>
+
+<div class="pagination">
+    
+    <a class="pagination-action" href="/tags/page/7/" style="opacity:1">
+    
+        <i class="material-icons pagination-action-icon">
+            chevron_left
+        </i>
+    </a>
+
+        <div class="pagination-indicator">
+            <span>8/8</span>
+        </div>
+
+        
+            <a class="pagination-action" style="opacity:0">
+        
+                <i class="material-icons pagination-action-icon">
+                    chevron_right
+                </i>
+            </a>
+</div>
+
+
+<div id="single-column-footer">
 Hugo Theme <a href="https://github.com/amazingrise/hugo-theme-diary">Diary</a> by <a href="https://amazingrise.net">Rise</a>
 <br>
 移植自 <a href="https://mak1t0.cc/" target="_blank" rel="noreferrer noopener">Makito</a>'s <a href="https://github.com/SumiMakito/hexo-theme-journal/" target="_blank" rel="noreferrer noopener">Journal.</a> <br>
@@ -1092,9 +632,6 @@ app = new Vue({
             elem.classList.add("table-hover");
         })
 
-        
-        spy();
-        window.addEventListener('scroll', this.debounce(spy, 250, { 'maxWait': 250 }), false);
         
         
     },

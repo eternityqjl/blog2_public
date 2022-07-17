@@ -6,9 +6,122 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>2019-2021 By Jialong</copyright>
-    <lastBuildDate>Thu, 14 Jul 2022 21:56:32 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 17 Jul 2022 13:32:48 +0800</lastBuildDate>
     
         <atom:link href="https://eternityqjl.top/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    
+        <item>
+        <title>cs231n——1.Nearest Neighbor Classifier</title>
+        <link>https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</link>
+        <pubDate>Wed, 09 Jun 2021 17:41:44 +0000</pubDate>
+        
+        <guid>https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/</guid>
+        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ -&lt;p&gt;图像分类规范化步骤：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;输入：输入带有不同标签的图像作为训练集&lt;/li&gt;
+&lt;li&gt;学习：使用训练集学习每种类别的抽象特征&lt;/li&gt;
+&lt;li&gt;评估：通过测试集评估分类器的质量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;nearest-neighbor-classifier&#34;&gt;Nearest Neighbor Classifier&lt;/h2&gt;
+&lt;p&gt;CIFAR-10 dataset:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;10 classes (airplane, automobile, bird, etc)&lt;/li&gt;
+&lt;li&gt;60,000 tiny images that are 32 pixels high and wide&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;k-NN通过将一张测试集图片与所有的训练集图片进行比较，预测结果。&lt;/p&gt;
+&lt;h3 id=&#34;l1-distance&#34;&gt;L1 distance:&lt;/h3&gt;
+&lt;p&gt;$$
+d_{1}\left(I_{1}, I_{2}\right)=\sum_{p}\left|I_{1}^{p}-I_{2}^{p}\right|
+$$&lt;/p&gt;
+&lt;p&gt;将两张图片分别表示为$I_1, I_2$两个向量，使用L1距离来比较两张图片。&lt;/p&gt;
+&lt;p&gt;通常使用准确率来评估分类器&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;Xtr, Ytr, Xte, Yte &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; load_CIFAR10(&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;data/cifar10/&amp;#39;&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# a magic function we provide&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# flatten out all images to be one-dimensional&lt;/span&gt;
+Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xtr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xtr_rows becomes 50000 x 3072&lt;/span&gt;
+Xte_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;reshape(Xte&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;], &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;) &lt;span style=&#34;color:#888&#34;&gt;# Xte_rows becomes 10000 x 3072&lt;/span&gt;
+
+nn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; NearestNeighbor() &lt;span style=&#34;color:#888&#34;&gt;# create a Nearest Neighbor classifier class&lt;/span&gt;
+nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr) &lt;span style=&#34;color:#888&#34;&gt;# train the classifier on the training images and labels&lt;/span&gt;
+Yte_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(Xte_rows) &lt;span style=&#34;color:#888&#34;&gt;# predict labels on the test images&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# and now print the classification accuracy, which is the average number&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# of examples that are correctly predicted (i.e. label matches)&lt;/span&gt;
+&lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; ( np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yte_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yte) )
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here is an implementation of a simple Nearest Neighbor classifier with the L1 distance that satisfies this template:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;numpy&lt;/span&gt; &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;as&lt;/span&gt; &lt;span style=&#34;color:#0e84b5;font-weight:bold&#34;&gt;np&lt;/span&gt;
+
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#b06;font-weight:bold&#34;&gt;NearestNeighbor&lt;/span&gt;(&lt;span style=&#34;color:#007020&#34;&gt;object&lt;/span&gt;):
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; __init__(self):
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;pass&lt;/span&gt;
+
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;train&lt;/span&gt;(self, X, y):
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example. Y is 1-dimension of size N &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# the nearest neighbor classifier simply remembers all the training data&lt;/span&gt;
+    self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X
+    self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; y
+
+  &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#06b;font-weight:bold&#34;&gt;predict&lt;/span&gt;(self, X):
+    &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#34;&amp;#34;&amp;#34; X is N x D where each row is an example we wish to predict label for &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+    num_test &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; X&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;shape[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;0&lt;/span&gt;]	&lt;span style=&#34;color:#888&#34;&gt;#训练样本数量&lt;/span&gt;
+    &lt;span style=&#34;color:#888&#34;&gt;# lets make sure that the output type matches the input type&lt;/span&gt;
+    Ypred &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;zeros(num_test, dtype &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;dtype)
+
+    &lt;span style=&#34;color:#888&#34;&gt;# loop over all test rows&lt;/span&gt;
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; &lt;span style=&#34;color:#007020&#34;&gt;range&lt;/span&gt;(num_test):
+      &lt;span style=&#34;color:#888&#34;&gt;# find the nearest training image to the i&amp;#39;th test image&lt;/span&gt;
+      &lt;span style=&#34;color:#888&#34;&gt;# using the L1 distance (sum of absolute value differences)&lt;/span&gt;
+      distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;abs(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;)
+      min_index &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;argmin(distances) &lt;span style=&#34;color:#888&#34;&gt;# get the index with smallest distance&lt;/span&gt;
+      Ypred[i] &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;ytr[min_index] &lt;span style=&#34;color:#888&#34;&gt;# predict the label of the nearest example&lt;/span&gt;
+
+    &lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;return&lt;/span&gt; Ypred
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;使用L1距离测试的准确率只有38.6%.&lt;/p&gt;
+&lt;h3 id=&#34;l2-distance&#34;&gt;L2 distance&lt;/h3&gt;
+&lt;p&gt;$$
+d_{2}\left(I_{1}, I_{2}\right)=\sqrt{\sum_{p}\left(I_{1}^{p}-I_{2}^{p}\right)^{2}}
+$$&lt;/p&gt;
+&lt;p&gt;only replace a single line of code above:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;distances &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sqrt(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;sum(np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;square(self&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;Xtr &lt;span style=&#34;color:#333&#34;&gt;-&lt;/span&gt; X[i,:]), axis &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;k---nearest-neighbor-classifier&#34;&gt;k - Nearest Neighbor Classifier&lt;/h2&gt;
+&lt;p&gt;找到距离最近的k个图片，k个图片中数量最多的一个标签即为测试图片所分的类别。&lt;/p&gt;
+&lt;h2 id=&#34;validation-sets-for-hyperparameter-tuning&#34;&gt;Validation sets for Hyperparameter tuning&lt;/h2&gt;
+&lt;p&gt;有很多我们可以选择的距离函数，例如L1 norm, L2 norm等，这些选择称为&lt;/p&gt;
+&lt;p&gt;Hyperparameter 。通常不能使用test set来调整Hyperparameter。Evaluate on the test set only a single time, at the very end.&lt;/p&gt;
+&lt;p&gt;将训练集划分为一个小一些的训练集和一个验证集(validation set)。例如使用CIFAR-10数据集时将训练集分为49,000个训练集和1,000个验证集。&lt;/p&gt;
+&lt;p&gt;验证集本质上是一个假的测试集，是用来调整Hyperparameter的。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;color:#888&#34;&gt;# assume we have Xtr_rows, Ytr, Xte_rows, Yte as before&lt;/span&gt;
+&lt;span style=&#34;color:#888&#34;&gt;# recall Xtr_rows is 50,000 x 3072 matrix&lt;/span&gt;
+Xval_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;, :] &lt;span style=&#34;color:#888&#34;&gt;# take first 1000 for validation&lt;/span&gt;
+Yval &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[:&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;]
+Xtr_rows &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Xtr_rows[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;:, :] &lt;span style=&#34;color:#888&#34;&gt;# keep last 49,000 for train&lt;/span&gt;
+Ytr &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; Ytr[&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1000&lt;/span&gt;:]
+
+&lt;span style=&#34;color:#888&#34;&gt;# find hyperparameters that work best on the validation set&lt;/span&gt;
+validation_accuracies &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; []
+&lt;span style=&#34;color:#080;font-weight:bold&#34;&gt;for&lt;/span&gt; k &lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;in&lt;/span&gt; [&lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;10&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;20&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;50&lt;/span&gt;, &lt;span style=&#34;color:#00d;font-weight:bold&#34;&gt;100&lt;/span&gt;]:
+
+  &lt;span style=&#34;color:#888&#34;&gt;# use a particular value of k and evaluation on validation data&lt;/span&gt;
+  nn &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; NearestNeighbor()
+  nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;train(Xtr_rows, Ytr)
+  &lt;span style=&#34;color:#888&#34;&gt;# here we assume a modified NearestNeighbor class that can take a k as input&lt;/span&gt;
+  Yval_predict &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; nn&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;predict(Xval_rows, k &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; k)
+  acc &lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;mean(Yval_predict &lt;span style=&#34;color:#333&#34;&gt;==&lt;/span&gt; Yval)
+  &lt;span style=&#34;color:#007020&#34;&gt;print&lt;/span&gt; &lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;accuracy: &lt;/span&gt;&lt;span style=&#34;background-color:#eee&#34;&gt;%f&lt;/span&gt;&lt;span style=&#34;background-color:#fff0f0&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#333&#34;&gt;%&lt;/span&gt; (acc,)
+
+  &lt;span style=&#34;color:#888&#34;&gt;# keep track of what works on the validation set&lt;/span&gt;
+  validation_accuracies&lt;span style=&#34;color:#333&#34;&gt;.&lt;/span&gt;append((k, acc))
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;cross-validation&#34;&gt;Cross-validation&lt;/h3&gt;
+&lt;p&gt;当训练集数量较少时，使用更为复杂的交叉验证来调整hyperparameter。我们通过迭代不同的验证集并平均计算这些验证集的结果来确定k。例如在5次迭代的交叉验证中，将训练集分为5份，使用4份训练，1份验证，然后改变验证集，迭代5次，最终使用5次的平均结果确定k。&lt;/p&gt;
+&lt;h2 id=&#34;nearest-neighbor-classifier的优缺点&#34;&gt;Nearest Neighbor classifier的优缺点&lt;/h2&gt;
+&lt;p&gt;验证时的时间成本较高，每个验证样本都要与每一个测试集样本进行比较，效率较低。&lt;/p&gt;
+&lt;p&gt;Nearest Neighbor classifier在低维度训练中较为常用，但在图像分类中很少用，因为图像是高维对象，高维对象之间的距离计算式违反直觉的。&lt;/p&gt;
+&lt;h2 id=&#34;summery&#34;&gt;Summery&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;如果数据的维数很高，可以使用降维技术，例如PCA(主成分分析), NCA(邻域成分分析) or Random Projections(随机投影).&lt;/li&gt;
+&lt;/ol&gt;
+- https://eternityqjl.top/posts/cs231n1-nearest-neighbor-classifier/ - 2019-2021 By Jialong</description>
+        </item>
     
     
     
@@ -2007,204 +2120,6 @@ m&lt;span style=&#34;color:#333&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;哲学思考&#34;&gt;哲学思考&lt;/h2&gt;
 &lt;p&gt;梯度下降是一个一阶最优化算法，通常也称为最陡下降法，要使用梯度下降法找到一个函数的局部极小值，必须向函数上当前点对应梯度的反方向规定的步长距离点进行迭代搜索。&lt;/p&gt;
 - https://eternityqjl.top/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/ - 2019-2021 By Jialong</description>
-        </item>
-    
-    
-    
-        <item>
-        <title>串行通信协议详解：SPI、I2C、UART、JTAG</title>
-        <link>https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</link>
-        <pubDate>Fri, 05 Feb 2021 18:20:54 +0000</pubDate>
-        
-        <guid>https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/</guid>
-        <description>Jialong&#39;s Blog https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ -&lt;p&gt;COM口：串行通信端口，是物理接口形式（硬件），一般有4针杜邦头和D型9针插头两种。可以有很多种协议&lt;/p&gt;
-&lt;p&gt;TTL、RS-232指的是电平标准&lt;/p&gt;
-&lt;p&gt;TTL电平：低电平为0，高电平为1&lt;/p&gt;
-&lt;p&gt;RS-232电平：正电平(+15V)为0，负电平(-15V)为1&lt;/p&gt;
-&lt;p&gt;最近在画PCB研究几个MCU的时候遇到引脚连接方面的一些问题，对于MCU进行串行通信传输数据的过程不太了解，因此写一篇博客来学习一下这些通信协议。&lt;/p&gt;
-&lt;h2 id=&#34;一些概念&#34;&gt;一些概念&lt;/h2&gt;
-&lt;h3 id=&#34;同步synchronous和异步asynchronous&#34;&gt;同步(Synchronous)和异步(Asynchronous)&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;同步&lt;/strong&gt;就是整个处理过程顺序执行，当各个过程都执行完毕后，返回结果。这是一种线性执行的方式，执行的流程不能跨越。一般用于流程性比较强的程序。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;异步&lt;/strong&gt;：是只发送了调用的命令，调用者无需等待被调用的方法完全执行完毕，可以继续执行下面的流程，是一种并行处理的方式。比如页面数据架子啊的过程，不需要等待所有数据获取后再显示页面。&lt;/p&gt;
-&lt;p&gt;二者的区别就在于同步需要等待，异步不需要等待。因此同步通信需要&lt;strong&gt;时钟线&lt;/strong&gt;，异步不需要，但异步需要通信双方约定好传输&lt;strong&gt;波特率&lt;/strong&gt;。&lt;/p&gt;
-&lt;h3 id=&#34;全双工和半双工&#34;&gt;全双工和半双工&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;全双工&lt;/strong&gt;是指可以&lt;strong&gt;同时&lt;/strong&gt;进行&lt;strong&gt;双向信号&lt;/strong&gt;传输。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;半双工&lt;/strong&gt;是指可以及进行&lt;strong&gt;双向信号传输&lt;/strong&gt;但&lt;strong&gt;同一时刻只能向一个&lt;/strong&gt;方向传输。&lt;/p&gt;
-&lt;h2 id=&#34;spi协议&#34;&gt;SPI协议&lt;/h2&gt;
-&lt;p&gt;串行外设接口总线（Serial Peripheral Interface Bus，SPI）是一种用于芯片通信的&lt;strong&gt;同步&lt;/strong&gt;串行通信接口规范，设备之间使用&lt;strong&gt;全双工&lt;/strong&gt;模式通信，采用一对一或一对多的主从模式。一般用于短距离通信。&lt;/p&gt;
-&lt;h3 id=&#34;spi物理层接口&#34;&gt;SPI物理层接口&lt;/h3&gt;
-&lt;p&gt;SPI总线共规定了4个逻辑信号接口：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SCLK/SCK（Serial Clock）：&lt;strong&gt;时钟&lt;/strong&gt;信号线，由主机产生，决定了SPI的通信速率。&lt;/li&gt;
-&lt;li&gt;MOSI（Master Output, Slave Input）：&lt;strong&gt;主机输出从机输入&lt;/strong&gt;信号，数据由&lt;strong&gt;主机&lt;/strong&gt;发出。&lt;/li&gt;
-&lt;li&gt;MISO（Master Input, Slave Output）：&lt;strong&gt;从机输出主机输入&lt;/strong&gt;信号，数据由&lt;strong&gt;从机&lt;/strong&gt;发出。&lt;/li&gt;
-&lt;li&gt;nSS（Slave Select）：&lt;strong&gt;片选&lt;/strong&gt;信号：用于选取SPI从设备，每个从设备独立拥有该条nSS信号线，占据主机的一个引脚，从设备的其他总线是并联到主机的。从设备的nSS引脚被置拉低时表明该从设备被主机选中。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E4%B8%80.PNG&#34; alt=&#34;SPI单连接接口示意图&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_%E4%B8%80%E5%AF%B9%E5%A4%9A.PNG&#34; alt=&#34;SPI多连接接口示意图&#34;&gt;&lt;/p&gt;
-&lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2&#34;&gt;序列周边接口&lt;/a&gt;）&lt;/p&gt;
-&lt;h3 id=&#34;spi协议层&#34;&gt;SPI协议层&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/SPI_photo_1.png&#34; alt=&#34;SPI数据位图&#34;&gt;&lt;/p&gt;
-&lt;p&gt;（图片来自&lt;a href=&#34;https://blog.csdn.net/qq_29344757/article/details/76855350&#34;&gt;SPI通讯协议介绍&lt;/a&gt;）&lt;/p&gt;
-&lt;p&gt;如图为SPI的通信时序图，nSS、SCK、MOSI信号均由主机产生，MISO信号由从机产生。当nSS为低电平时信号有效。每个时钟周期MOSI和MISO传输一位数据。偶数边采样。&lt;/p&gt;
-&lt;h4 id=&#34;通信起始结束信号&#34;&gt;通信起始/结束信号&lt;/h4&gt;
-&lt;p&gt;nSS信号由高电平变为低电平即为通信的起始，由低电平变为高电平即为通信的结束。&lt;/p&gt;
-&lt;h4 id=&#34;有效数据的采集&#34;&gt;有效数据的采集&lt;/h4&gt;
-&lt;p&gt;上图中SCK为偶数边沿时数据得到有效采样，此时MISO和MOSI的数据有效，高电平表示1，低电平表示0，其他时刻的数据无效。&lt;/p&gt;
-&lt;p&gt;数据传输时高位在先还是低位在先SPI协议并未规定，需要双方自行约定，一般采用高位在先（MSB）方式传输。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;两个概念：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;时钟极性（CPOL）：通信设备处于空闲状态（SPI开始通信前，即nSS无效）时，SCK的状态。
-&lt;ul&gt;
-&lt;li&gt;CPOL = 0：SCK在空闲时为低电平&lt;/li&gt;
-&lt;li&gt;CPOL = 1：SCK在空闲时为高电平&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;时钟相位（CPHA）：数据的采样时刻位于SCK的偶数边还是奇数边。
-&lt;ul&gt;
-&lt;li&gt;CPHA = 0：在SCK的奇数边沿采样&lt;/li&gt;
-&lt;li&gt;CPHA = 1：在SCK的偶数边沿采样&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;所以，数据的采样时刻并非由上升沿/下降沿所决定；在采样时刻，MOSI和MISO信号不能进行高低电平的变换。&lt;/p&gt;
-&lt;p&gt;所以，SPI有如下4种工作模式：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;工作模式&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;CPOL&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;CPHA&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;空闲时的SCK时钟&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;采样时钟&lt;/th&gt;
-&lt;th style=&#34;text-align:center&#34;&gt;是否常用&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;低&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;奇数次边沿&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;Y&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;低&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;偶数次边沿&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;N&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;2&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;0&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;高&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;奇数次边沿&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;Y&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;3&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;1&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;高&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;偶数次边沿&lt;/td&gt;
-&lt;td style=&#34;text-align:center&#34;&gt;N&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;mathrmi2mathrmc协议&#34;&gt;$\mathrm{I}^2\mathrm{C}$协议&lt;/h2&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$（Inter-Integrated Circuit）集成电路总线，是飞利浦设计的一种简单的双向两线&lt;strong&gt;同步串行&lt;/strong&gt;总线，为全双工，是为了实现有效的IC之间的控制；是一种串行通信总线，为了让嵌入式设备连接低速设备。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/I2C_trans.PNG&#34; alt=&#34;I2C接口示意图&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/1024px-I2C.svg.png&#34; alt=&#34;I2C传输电平图&#34;&gt;&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$只需要两个接口即可通信：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;SDA（Serial Data）&lt;/strong&gt;：串行数据接口&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;SCL（Serial Clock）&lt;/strong&gt;：串行时钟&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;SDA和SCL都是双向线路，都通过一个电流源或上拉电阻接到正的电源电压，总线&lt;strong&gt;空闲&lt;/strong&gt;时，这两条线路都是&lt;strong&gt;高电平&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$总线支持任何IC生产过程。两线在连接到总线的器件间传递信息。每个器件都有一个唯一的地址识别，而且都可以作为一个发送器或接收器。&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$总线是一个&lt;strong&gt;多主机&lt;/strong&gt;的总线，即可以连接多于一个能控制总线的器件到总线。如果两个或多个主机同时尝试初始化传输数据，为了避免产生混乱，发展出了一个&lt;strong&gt;仲裁&lt;/strong&gt;的过程。&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$的参考设计使用了一个7比特长度的地址空间，但是保留了16个地址，所以一组总线最多可以和112个节点通信。但连接到总线的接口数量其实是由总线电容是400pF的限制决定的（这里不深入了解）。&lt;/p&gt;
-&lt;p&gt;$\mathrm{I}^2\mathrm{C}$有几种常见的传输模式，标准模式（100kbps）、低速模式（10kbps），时钟频率可以被降为0，即可以暂停通信。&lt;/p&gt;
-&lt;h2 id=&#34;uart串口&#34;&gt;UART串口&lt;/h2&gt;
-&lt;h3 id=&#34;简介&#34;&gt;简介&lt;/h3&gt;
-&lt;p&gt;通用&lt;strong&gt;异步&lt;/strong&gt;收发传输器（异步串行通信口）（Universal Asynchronous Receiver/Transmitter），是一种&lt;strong&gt;串行、异步、全双工&lt;/strong&gt;的通信协议。他的工作原理是把数据的字节按照比特顺序发送，另一端的UART把比特组装为字节。&lt;/p&gt;
-&lt;p&gt;串行通信是指利用一条传输线将数据一位位地顺序传送，也可以用两个信号线组成全双工通信，如rs232。特点是通信线路简单，利用简单的线缆就可实现通信，降低成本，适用于远距离通信，但传输速度慢的应用场合。&lt;/p&gt;
-&lt;h3 id=&#34;数据帧&#34;&gt;数据帧&lt;/h3&gt;
-&lt;p&gt;每个字符表示为一个帧(10bit)，异步通信以一个字符为传输单位；两个UART设备之间通信不需要时钟线，需要在两个UART设备上指定相同的传输速率(&lt;strong&gt;波特率，bps&lt;/strong&gt;)，以及&lt;strong&gt;空闲位、起始位、校验位、结束位&lt;/strong&gt;。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;空闲位(1bit)：高电平，指没有数据传输。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;起始位(1bit)：低电平。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;数据位(8bit or 7bit)：一般先传输最低位&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;（可选）奇偶校验位(1bit)：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;无校验&lt;/li&gt;
-&lt;li&gt;奇校验：如果数据位中1的数目是偶数，则校验位为1；如果1的数目是奇数，则校验位为0&lt;/li&gt;
-&lt;li&gt;偶校验：如果数据位中1的数目是偶数，则校验位为0；如果1的数目是奇数，则校验位为1&lt;/li&gt;
-&lt;li&gt;mark parity / parity：校验位时钟为1/0。（不常用）&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;结束位(1bit)：高电平。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;协议区别和应用场景&#34;&gt;协议区别和应用场景&lt;/h2&gt;
-&lt;p&gt;I2C和SPI都是同步协议，都有时钟信号，在一条总线上也都可以挂多个从设备，但是I2C的从设备是通过地址来区分的，SPI的从设备是通过片选线来区分的，所以SPI总线上，每多挂一个从设备，就要多用一个线作为片选线，而I2C则不用，只要地址不冲突，可以随便挂设备。&lt;/p&gt;
-&lt;p&gt;I2C总线速度一般普遍慢于SPI，I2C一般的速度是100kbs、400kbps和1Mbps，而SPI的速度可以在几Mbps，也可以10+Mbps。所以看使用场合，低速的话，I2C就挺合适的，如果速度快一些，则一般都要选用SPI。&lt;/p&gt;
-&lt;p&gt;另外，I2C总线的管脚都是开漏输出，必须外接上拉电阻，阻值可以根据总线速度来推算，一般我们常用400kbps传输速率，上拉电阻选用2.2K。&lt;/p&gt;
-&lt;p&gt;UART和SPI、I2C不同，他是异步传输的，一般来说传输速度比较慢，传统的传输速度一般在115200bps或以下，不过现在大部分UART控制器也能支持到4Mbps或者8Mbps了。UART目前最常用的就是调试接口，因为UART比较简单，所以CPU输出log一般都通过一个UART口来输出。&lt;/p&gt;
-&lt;h2 id=&#34;jtag边界扫描&#34;&gt;JTAG边界扫描&lt;/h2&gt;
-&lt;p&gt;JTAG主要用于验证设计和测试印刷电路板。&lt;/p&gt;
-&lt;h3 id=&#34;电气特性&#34;&gt;电气特性&lt;/h3&gt;
-&lt;p&gt;JTAG的接口是将4/5个接口 (标准JTAG是4线) 连接到芯片上，电路板上的很多芯片可以将其JTAG接口通过Daisy Chain（菊花链）的方式连在一起，这样我们就可以访问一块印刷电路板上的所有芯片。&lt;/p&gt;
-&lt;p&gt;连接引脚为：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;TDI（Test Data Input）：测试数据输入&lt;/li&gt;
-&lt;li&gt;TDO（Test Data Output）：测试数据输出&lt;/li&gt;
-&lt;li&gt;TCK（Test Clock Input）：测试时钟&lt;/li&gt;
-&lt;li&gt;TMS（Test Model Selection）：测试模式选择&lt;/li&gt;
-&lt;li&gt;TRST（测试复位）可选&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/eternityqjl/blogGallery/master/Jtag_chain.svg.jpg&#34; alt=&#34;JTAG连接示意图&#34;&gt;&lt;/p&gt;
-&lt;p&gt;（图片来自维基百科&lt;a href=&#34;https://zh.wikipedia.org/wiki/JTAG&#34;&gt;JTAG&lt;/a&gt;）&lt;/p&gt;
-&lt;p&gt;由于只有一条数据线，所以通信使用的协议应为串行传输；时钟从TCK引脚引入；配置通过TMS引脚采用状态机的方式一次操作一位来实现；TRST引脚是可选的相对待测逻辑低电平有效复位开关，通常为异步，有时也为同步。&lt;/p&gt;
-&lt;h2 id=&#34;swd接口&#34;&gt;SWD接口&lt;/h2&gt;
-&lt;p&gt;串行调试 (Serial Wire Debug)，与JTAG使用的协议不同。SWD只需要接2个接口 (一般还接一个GND) 就可以进行下载和调试，其引脚为：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;SWDIO&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;SWCLK&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;(GND)&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;相较于传统的JTAG调试，有一些优势：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;SWD相较于JTAG在高速模式下更可靠；&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;所需的引脚很少，调试接口所需的PCB空间小，更加方便。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-- https://eternityqjl.top/posts/%E4%B8%B2%E5%8F%A3/ - 2019-2021 By Jialong</description>
         </item>
     
     
